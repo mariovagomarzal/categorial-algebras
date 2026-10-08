@@ -1,0 +1,16 @@
+title = "8. Discretization and truncation of higher-order categorial algebras"
+owner = "encosllo"
+
+[[item]]
+ref = "§8.1 discretization"
+kind = "definition"
+state = "blocked"
+reason = "Section 8.1 of the draft has only its title: there is no definition of discretization to formalize, and nothing else in the draft uses it."
+depends = []
+
+[[item]]
+ref = "Defs. 8.1–8.2"
+kind = "definition"
+state = "done"
+labels = ["compact.restrict-category", "compact.restrict-functor", "compact.truncate", "compact.truncation-functor", "compact.truncate-omega", "extended.restrict-category", "extended.restrict-functor", "extended.truncate", "extended.truncation-functor", "extended.truncate-omega", "extended.truncation-functor-omega"]
+depends = []
