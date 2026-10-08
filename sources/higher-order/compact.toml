@@ -1,58 +1,58 @@
-title = "5. Compact presentation of higher-order categorial algebras"
+title = "7. Compact presentation of higher-order categorial algebras"
 owner = "encosllo"
 
 [[item]]
-ref = "Def. 5.1"
+ref = "Def. 7.1"
 kind = "definition"
 state = "done"
 labels = ["compact.category-struct", "compact.precategory", "compact.functor", "compact.functor-comp"]
 depends = []
 
 [[item]]
-ref = "Def. 5.2"
+ref = "Def. 7.2"
 kind = "definition"
 state = "done"
 labels = ["compact.category"]
-depends = ["Def. 5.1"]
+depends = ["Def. 7.1"]
 
 [[item]]
-ref = "Def. 5.3"
+ref = "Def. 7.3"
 kind = "definition"
 state = "done"
 labels = ["compact.n-category", "compact.one-category-of-precategory", "compact.cell", "compact.n-functor", "compact.cat"]
-depends = ["Def. 5.2"]
+depends = ["Def. 7.2"]
 
 [[item]]
-ref = "Def. 5.4"
+ref = "Def. 7.4"
 kind = "definition"
 state = "done"
 labels = ["signature", "signature.arity-product", "compact.pi-category-struct", "compact.pi-category", "compact.cat-algebra", "compact.cat-algebra-hom", "compact.cat-alg"]
-depends = ["Def. 5.3"]
+depends = ["Def. 7.3"]
 
 [[item]]
-ref = "Def. 5.5"
+ref = "Def. 7.5"
 kind = "definition"
 state = "done"
 labels = ["compact.signature"]
 depends = []
 
 [[item]]
-ref = "Def. 5.6"
+ref = "Def. 7.6"
 kind = "definition"
 state = "done"
 labels = ["compact.qe-specification"]
-depends = ["Def. 5.5", "Def. 1.3"]
+depends = ["Def. 7.5", "Def. 2.4"]
 
 [[item]]
-ref = "Def. 5.7"
+ref = "Def. 7.7"
 kind = "definition"
 state = "done"
 labels = ["compact.omega-category", "compact.pi-omega-category"]
-depends = ["Def. 5.3"]
+depends = ["Def. 7.3"]
 
 [[item]]
-ref = "Def. 5.8"
+ref = "Def. 7.8"
 kind = "definition"
 state = "done"
 labels = ["compact.omega-cat-algebra", "compact.omega-cat-algebra-hom", "compact.omega-cat-alg"]
-depends = ["Def. 5.4", "Def. 5.7"]
+depends = ["Def. 7.4", "Def. 7.7"]

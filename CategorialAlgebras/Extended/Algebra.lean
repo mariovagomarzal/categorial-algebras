@@ -7,7 +7,7 @@ open Verso.Genre Manual InlineLean Stemma
 #doc (Stemma) "Extended n-categorial algebras" =>
 
 An extended $`n`-categorial algebra is a many-sorted algebra whose carrier of every sort is an
-extended $`n`-category and whose operations are extended $`n`-functors (Definitions 6.2 and 6.3
+extended $`n`-category and whose operations are extended $`n`-functors (Definitions 8.2 and 8.3
 of the draft).
 
 ```lean
@@ -22,7 +22,7 @@ variable {S : Type u}
 
 An $`S`-*sorted extended* $`n`-*category* is a family $`\mathsf{A} = (\mathsf{A}_s)_{s \in S}`
 of extended $`n`-categories, and an $`S`-*sorted extended* $`n`-*functor* a family of extended
-$`n`-functors, one for each sort (Definition 6.2 of the draft). For a word
+$`n`-functors, one for each sort (Definition 8.2 of the draft). For a word
 $`\mathbf{s} \in S^{\star}`, $`\mathsf{A}_{\mathbf{s}} = \prod_{j \in |\mathbf{s}|} \mathsf{A}_{s_j}`
 is an extended $`n`-category, whose $`k`-cells are the families of $`k`-cells.
 
@@ -84,7 +84,7 @@ every $`\sigma \in \Sigma_{\mathbf{s}, s}`, every dimension $`k \in n + 1` and e
 $`k`-cells $`(a_j)_{j \in |\mathbf{s}|} \in \mathsf{A}_{\mathbf{s}}`,
 $$`H_s\big(\sigma^{\boldsymbol{\mathsf{A}}}((a_j)_{j})\big) = \sigma^{\boldsymbol{\mathsf{B}}}\big((H_{s_j}(a_j))_{j}\big).`
 
-As Definition 6.3 of the draft says, the equation is asked for every $`k \in n + 1`, including
+As Definition 8.3 of the draft says, the equation is asked for every $`k \in n + 1`, including
 the $`n`-cells, the top dimension of an extended $`n`-category.
 
 ```lean
@@ -148,7 +148,7 @@ end CatAlgebra
 Let $`\Sigma` be an $`S`-sorted signature and $`n \in \mathbb{N}`. The *extended*
 $`n`-*categorial signature determined by* $`\Sigma`, $`\Sigma^{\mathrm{ext}(n)}`, has sorts
 $`(n + 1) \times S`, the sort $`(k, s)` standing for the $`k`-cells of sort $`s`, and the
-following operation symbols (Definition 6.4 of the draft):
+following operation symbols (Definition 8.4 of the draft):
 
 1. for every $`k \in n + 1` and $`\sigma \in \Sigma_{\mathbf{s}, s}`, a copy $`\sigma_k` of arity
    $`(k, \mathbf{s}) = ((k, s_j))_{j \in |\mathbf{s}|}` and coarity $`(k, s)`;

@@ -8,7 +8,7 @@ open Verso.Genre Manual InlineLean Stemma
 The operations of a many-sorted categorial algebra are functors out of finite products of
 compact categories: an operation symbol of arity $`\mathbf{s} = (s_0, \ldots, s_{m-1})` is
 interpreted as a functor from $`\mathsf{A}_{\mathbf{s}} = \prod_{j \in m} \mathsf{A}_{s_j}`
-(Definition 5.4 of the draft). This document builds the product of any family of compact
+(Definition 7.4 of the draft). This document builds the product of any family of compact
 categories with the same dimensions, with sources, targets and compositions computed
 componentwise. The draft takes the product for granted.
 

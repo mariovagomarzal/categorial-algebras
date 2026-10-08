@@ -1,29 +1,36 @@
-title = "2–4 and 11. Derivors and algebraic squares"
+title = "3–6 and 13. Derivors and algebraic squares"
 
 [[item]]
-ref = "§2 Hall algebras and derivors"
+ref = "§3 Hall algebras and derivors"
 kind = "definition"
 state = "excluded"
 reason = "Out of the first scope, agreed on 2026-10-08: a separate line of work."
 depends = []
 
 [[item]]
-ref = "§3 Generalized derivors"
+ref = "§4 Generalized derivors"
 kind = "definition"
 state = "excluded"
 reason = "Placeholder in the draft (a definition taken from elsewhere, marked to be replaced)."
 depends = []
 
 [[item]]
-ref = "§4 ep-derivors"
+ref = "§5 ep-derivors"
 kind = "definition"
 state = "excluded"
 reason = "Draft definition, marked by the authors as possibly incorrect."
 depends = []
 
 [[item]]
-ref = "Def. 11.1"
+ref = "Def. 13.1"
 kind = "definition"
 state = "excluded"
 reason = "Algebraic squares: out of the first scope."
+depends = []
+
+[[item]]
+ref = "§6 generalized ep-derivors"
+kind = "definition"
+state = "excluded"
+reason = "The section has only its title in the draft, and it is out of the first scope."
 depends = []

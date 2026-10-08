@@ -5,10 +5,10 @@ open Verso.Genre Manual InlineLean Stemma
 
 #doc (Stemma) "Extended ω-categorial algebras" =>
 
-Section 10 of the draft uses the category
+Section 12 of the draft uses the category
 $`\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)` of extended $`\omega`-categorial algebras,
-defined in Definition 6.6 of the draft (labelled `DOmegaExtCatAlg`) exactly as the extended
-$`n`-categorial algebras of Definition 6.3, with extended $`\omega`-categories in place of
+defined in Definition 8.6 of the draft (labelled `DOmegaExtCatAlg`) exactly as the extended
+$`n`-categorial algebras of Definition 8.3, with extended $`\omega`-categories in place of
 extended $`n`-categories.
 
 ```lean

@@ -7,7 +7,7 @@ open Verso.Genre Manual InlineLean Stemma
 #doc (Stemma) "Extended functors" =>
 
 An extended functor is a family of mappings, one for each dimension, that preserves sources,
-targets, identities and compositions (the extended $`n`-functors after Definition 6.1 of the
+targets, identities and compositions (the extended $`n`-functors after Definition 8.1 of the
 draft). Ported from the group's repository `higher_category_theory`.
 
 ```lean
