@@ -623,7 +623,7 @@ theorem limHom_congr {A₁ A₂ A₁' A₂' : ∀ n, CatAlgebra.{u, v, w} Sig n}
 
 # The universal property
 
-:::proposition (label := "extended.omega-cat-alg-limit") (central := false) (title := "Proposition 10.2")
+:::proposition (label := "extended.omega-cat-alg-limit") (central := true) (title := "Proposition 10.2")
 Let $`\mathsf{L}` be a category and, for every $`n \in \mathbb{N}`, let
 $`F_n \colon \mathsf{L} \to \mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)` be a functor. If
 $`F_m = T^{\mathrm{ext}(m,n)}_{\Sigma} \circ F_n` for all $`m \leq n`, then there exists a

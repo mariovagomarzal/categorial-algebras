@@ -36,7 +36,7 @@ example (n : ℕ) (A : S → Type w) [∀ s, NCategory n (A s)] (s : List S) :
 
 # Algebras
 
-:::definition (label := "compact.cat-algebra") (central := false) (title := "Compact n-categorial algebra")
+:::definition (label := "compact.cat-algebra") (central := true) (title := "Compact n-categorial algebra")
 Let $`(S, \Sigma)` be a many-sorted signature and $`n \in \mathbb{N}`. A *compact*
 $`n`-*categorial* $`\Sigma`-*algebra* is a pair $`(\mathsf{A}, F)` where $`\mathsf{A}` is an
 $`S`-sorted compact $`n`-category and $`F` assigns to every operation symbol

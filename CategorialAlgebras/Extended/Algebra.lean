@@ -46,7 +46,7 @@ example (n : ℕ) (A : S → NTypeFamily.{w} n) [∀ s, NCategory n (A s)] (s : 
 
 # Algebras
 
-:::definition (label := "extended.cat-algebra") (central := false) (title := "Extended n-categorial algebra")
+:::definition (label := "extended.cat-algebra") (central := true) (title := "Extended n-categorial algebra")
 Let $`(S, \Sigma)` be a many-sorted signature and $`n \in \mathbb{N}`. An *extended*
 $`n`-*categorial* $`\Sigma`-*algebra* is a pair $`(\mathsf{A}, F)` where $`\mathsf{A}` is an
 $`S`-sorted extended $`n`-category and $`F` assigns to every operation symbol
