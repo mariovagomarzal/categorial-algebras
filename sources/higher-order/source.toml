@@ -2,7 +2,11 @@ title = "Higher-order categorial algebras"
 phase = "planning"
 scope = """
 Research in progress (draft by Climent Vidal, Cosme Llópez, Ruiz Mora and Vago Marzal), \
-kept in `higher-order-categorial-algebras.tex`. First scope: Section 5 (compact presentation: \
+kept in `main.tex`, the reference document: every result of the library is checked against it. \
+Its body (Sections 1–11) is the draft, with its numbering, which the refs of this plan use; \
+Appendices A (many-sorted sets and algebras) and B (many-sorted partial algebras) are reference \
+material for completing definitions the body leaves out, and where they overlap the body (Section 2 \
+and Appendix A on derivors, Definition 1.2 and Appendix B on QE-equations) the body prevails. First scope: Section 5 (compact presentation: \
 compact n-categories, many-sorted compact n-categorial algebras and their category), Section 6 \
 (extended presentation and its algebras), then Section 8 (truncation and discretization of \
 algebras) and Sections 9–10 (ωCatAlg as a projective limit). Definitions are refined where the \
