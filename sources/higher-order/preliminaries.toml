@@ -1,0 +1,30 @@
+title = "1. Preliminaries"
+owner = "encosllo"
+
+[[item]]
+ref = "§1 words"
+kind = "notation"
+state = "done"
+labels = ["signature"]
+depends = []
+
+[[item]]
+ref = "Def. 1.1"
+kind = "definition"
+state = "done"
+labels = ["signature", "signature.arity-product"]
+depends = ["§1 words"]
+
+[[item]]
+ref = "Def. 1.2"
+kind = "definition"
+state = "done"
+labels = ["partial-algebra", "partial-algebra-hom"]
+depends = ["Def. 1.1"]
+
+[[item]]
+ref = "Def. 1.3"
+kind = "definition"
+state = "done"
+labels = ["term", "term-eval", "qe-equation", "qe-variety"]
+depends = ["Def. 1.2"]

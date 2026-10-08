@@ -40,8 +40,8 @@ depends = []
 ref = "Def. 5.6"
 kind = "definition"
 state = "done"
-labels = ["term", "partial-algebra", "partial-algebra-hom", "term-eval", "qe-equation", "qe-variety", "compact.qe-specification"]
-depends = ["Def. 5.5"]
+labels = ["compact.qe-specification"]
+depends = ["Def. 5.5", "Def. 1.3"]
 
 [[item]]
 ref = "Def. 5.7"

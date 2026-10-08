@@ -41,7 +41,7 @@ ref = "Def. 6.5"
 kind = "definition"
 state = "done"
 labels = ["extended.qe-specification"]
-depends = ["Def. 6.4"]
+depends = ["Def. 6.4", "Def. 1.3"]
 
 [[item]]
 ref = "Def. 6.6"

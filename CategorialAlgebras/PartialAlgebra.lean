@@ -10,7 +10,7 @@ open Verso.Genre Manual InlineLean Stemma
 Definitions 5.6 and 6.5 of the draft present categorial algebras as a $`\mathrm{QE}`$-variety of
 partial algebras: models of a set of quasi-existence equations. The notions of partial
 algebra, term, existence equation and $`\mathrm{QE}`$-equation are those of the preliminaries
-of the draft (Definitions 1.1 and 1.2, labelled `DPartialAlg` and `DQEEq`), the usual ones for
+of the draft (Definitions 1.2 and 1.3, labelled `DPartialAlg` and `DQEEq`), the usual ones for
 many-sorted partial algebras: an
 *existence equation* $`t \overset{\mathrm{e}}{=} t'` holds when both sides are defined and
 equal, and a $`\mathrm{QE}`$-*equation* is an implication from a finite conjunction of
