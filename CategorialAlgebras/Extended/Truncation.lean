@@ -7,14 +7,14 @@ open Verso.Genre Manual InlineLean Stemma
 
 #doc (Stemma) "Truncation of extended categorial algebras" =>
 
-Definition 10.2 of the draft (labelled `DTmnExtCatAlg`) defines the truncation functors
+Definition `DTmnExtCatAlg` of the draft defines the truncation functors
 $`T^{\mathrm{ext}(m,n)}_{\Sigma} \colon \mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma) \to \mathsf{mCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)`,
 for $`m \leq n`, and
 $`T^{\mathrm{ext}(n,\omega)}_{\Sigma} \colon \omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma) \to \mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)`.
 In the extended presentation, truncating at level $`m` keeps the cells of dimension at most
 $`m` and forgets the others: it is the restriction of every sort along the inclusion of the
 dimensions $`\{0, \ldots, m\}`. This document defines these functors and proves that they
-form a projective system (Remark 12.1 of the draft).
+form a projective system (Remark `RTmnExtCatAlgProjSys` of the draft).
 
 ```lean
 universe u v w
@@ -129,7 +129,7 @@ def truncationω (Sig : Signature.{u, v} S) (n : ℕ) :
 
 # The projective system
 
-:::proposition (label := "extended.truncation-proj-system") (central := false) (title := "Remark 12.1")
+:::proposition (label := "extended.truncation-proj-system") (central := false) (title := "The extended truncations form a projective system")
 For all $`m \leq n \leq p`,
 $`T^{\mathrm{ext}(m,n)}_{\Sigma} \circ T^{\mathrm{ext}(n,p)}_{\Sigma} = T^{\mathrm{ext}(m,p)}_{\Sigma}`,
 and $`T^{\mathrm{ext}(n,n)}_{\Sigma}` is the identity functor. Hence the categories
@@ -157,7 +157,7 @@ equal by definition.
 For all $`m \leq n`,
 $`T^{\mathrm{ext}(m,n)}_{\Sigma} \circ T^{\mathrm{ext}(n,\omega)}_{\Sigma} = T^{\mathrm{ext}(m,\omega)}_{\Sigma}`,
 so that $`(\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma), T^{\mathrm{ext}(\cdot,\omega)}_{\Sigma})`
-is a cone over the projective system (the paragraph after Remark 12.1 of the draft).
+is a cone over the projective system (the paragraph after Remark `RTmnExtCatAlgProjSys` of the draft).
 
 ```lean
 theorem truncationω_comp (Sig : Signature.{u, v} S) {m n : ℕ} (hmn : m ≤ n) :
@@ -167,7 +167,7 @@ theorem truncationω_comp (Sig : Signature.{u, v} S) {m n : ℕ} (hmn : m ≤ n)
 :::
 
 :::proof (of := "extended.truncation-omega-comp")
-As for Remark 12.1, both functors are equal by definition.
+As for Remark `RTmnExtCatAlgProjSys`, both functors are equal by definition.
 :::
 
 ```lean

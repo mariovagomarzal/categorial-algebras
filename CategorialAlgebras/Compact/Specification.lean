@@ -6,9 +6,9 @@ open Verso.Genre Manual InlineLean Stemma
 
 #doc (Stemma) "The compact QE-specification" =>
 
-Definition 7.6 of the draft presents the compact $`n`-categorial $`\Sigma`-algebras as a
+Definition `DVarCompact` of the draft presents the compact $`n`-categorial $`\Sigma`-algebras as a
 $`\mathrm{QE}`$-variety of partial $`\Sigma^{(n)}`-algebras, where $`\Sigma^{(n)}` is the
-compact $`n`-categorial signature of Definition 7.5. This document writes down the
+compact $`n`-categorial signature of Definition `DSigmaCatCompact`. This document writes down the
 specification $`\mathcal{C}^{\Sigma^{(n)}}` and the category
 $`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})` of its models.
 
@@ -26,7 +26,7 @@ variable {S : Type u}
 
 The variables $`V^{S}` are a fixed $`S`-sorted set with countably many variables of each sort;
 we take $`V^{S}_s = \mathbb{N}`. We write $`\mathrm{sc}^{k}(t)`, $`\mathrm{tg}^{k}(t)` and
-$`t \circ^{k} t'` for the terms built with the symbols of Definition 7.5, and
+$`t \circ^{k} t'` for the terms built with the symbols of Definition `DSigmaCatCompact`, and
 $`\sigma((t_j)_j)` for an operation symbol of $`\Sigma`; in the Lean they are `scT`, `tgT`,
 `compT` and `opT`, and `x i` is the variable number `i`.
 
@@ -65,7 +65,7 @@ end CTerm
 Let $`\Sigma` be an $`S`-sorted signature and $`n \in \mathbb{N}`. The specification
 $`\mathcal{C}^{\Sigma^{(n)}}` is the set of the following $`\mathrm{QE}`$-equations of
 $`\Sigma^{(n)}` with variables in $`V^{S}`, for all sorts, operation symbols, dimensions and
-variables (Definition 7.6 of the draft):
+variables (Definition `DVarCompact` of the draft):
 
 1. (A0) $`\sigma((x_j)_j) \overset{\mathrm{e}}{=} \sigma((x_j)_j)`;
 2. for every $`k \in n`:

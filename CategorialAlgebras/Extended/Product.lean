@@ -6,7 +6,7 @@ open Verso.Genre Manual InlineLean Stemma
 #doc (Stemma) "Products of extended categories" =>
 
 The operations of an extended categorial algebra are extended functors out of finite products
-of extended categories (Definition 8.3 of the draft). The product of a family of extended
+of extended categories (Definition `DExtCatAlg` of the draft). The product of a family of extended
 categories has, in each dimension, the product of the sets of cells of that dimension, with
 every operation computed componentwise.
 

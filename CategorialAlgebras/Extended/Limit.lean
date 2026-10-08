@@ -6,7 +6,7 @@ open Verso.Genre Manual InlineLean Stemma
 
 #doc (Stemma) "Extended ω-categorial algebras as a projective limit" =>
 
-This document proves Proposition 12.2 of the draft: the category
+This document proves Proposition `PUnivPropExtCatAlg` of the draft: the category
 $`\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)`, with the truncation functors
 $`T^{\mathrm{ext}(n,\omega)}_{\Sigma}`, is the projective limit of the projective system of the
 categories $`\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)` and the truncation functors
@@ -623,7 +623,7 @@ theorem limHom_congr {A₁ A₂ A₁' A₂' : ∀ n, CatAlgebra.{u, v, w} Sig n}
 
 # The universal property
 
-:::proposition (label := "extended.omega-cat-alg-limit") (central := true) (title := "Proposition 12.2")
+:::proposition (label := "extended.omega-cat-alg-limit") (central := true) (title := "ωCatᵉˣᵗAlg(Σ) is the projective limit of the nCatᵉˣᵗAlg(Σ)")
 Let $`\mathsf{L}` be a category and, for every $`n \in \mathbb{N}`, let
 $`F_n \colon \mathsf{L} \to \mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)` be a functor. If
 $`F_m = T^{\mathrm{ext}(m,n)}_{\Sigma} \circ F_n` for all $`m \leq n`, then there exists a
@@ -632,7 +632,7 @@ $`\langle F_k \rangle_{k \in \mathbb{N}} \colon \mathsf{L} \to \omega\mathsf{Cat
 such that $`F_n = T^{\mathrm{ext}(n,\omega)}_{\Sigma} \circ \langle F_k \rangle_{k \in \mathbb{N}}`
 for every $`n \in \mathbb{N}`.
 
-Together with Remark 12.1, this says that
+Together with Remark `RTmnExtCatAlgProjSys`, this says that
 $`(\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma), T^{\mathrm{ext}(\cdot,\omega)}_{\Sigma})`
 is the projective limit of the projective system
 $`((\cdot)\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma), T^{\mathrm{ext}(\cdot)}_{\Sigma})` in

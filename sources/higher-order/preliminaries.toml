@@ -1,37 +1,37 @@
-title = "2. Preliminaries"
+title = "Preliminaries"
 owner = "encosllo"
 
 [[item]]
-ref = "§2 words"
+ref = "SPreliminaries, words"
 kind = "notation"
 state = "done"
 labels = ["signature"]
 depends = []
 
 [[item]]
-ref = "Def. 2.1"
+ref = "DSortedSet"
 kind = "definition"
 state = "done"
 labels = ["sorted-set"]
 depends = []
 
 [[item]]
-ref = "Def. 2.2"
+ref = "DSignature"
 kind = "definition"
 state = "done"
 labels = ["signature", "signature.arity-product"]
-depends = ["§2 words", "Def. 2.1"]
+depends = ["SPreliminaries, words", "DSortedSet"]
 
 [[item]]
-ref = "Def. 2.3"
+ref = "DPartialAlg"
 kind = "definition"
 state = "done"
 labels = ["partial-algebra", "partial-algebra-hom"]
-depends = ["Def. 2.2"]
+depends = ["DSignature"]
 
 [[item]]
-ref = "Def. 2.4"
+ref = "DQEEq"
 kind = "definition"
 state = "done"
 labels = ["term", "term-eval", "qe-equation", "qe-variety"]
-depends = ["Def. 2.3"]
+depends = ["DPartialAlg"]

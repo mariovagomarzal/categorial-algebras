@@ -10,7 +10,7 @@ open Verso.Genre Manual InlineLean Stemma
 In the *compact* presentation of a higher-order category all the cells, whatever their
 dimension, live in a single set, and the dimension of a cell is read off from sources and
 targets: a cell is a $`k`-cell when its $`k`-source is itself. This is the presentation of
-Section 7 of the draft on higher-order categorial algebras. The formalization below is ported
+Section `SCompact` of the draft on higher-order categorial algebras. The formalization below is ported
 from the group's repository
 [`higher_category_theory`](https://github.com/mariovagomarzal/higher_category_theory) (by Enric
 Cosme Llópez, Raúl Ruiz Mora and Mario Vago Marzal, Apache 2.0), where the compact presentation
@@ -35,7 +35,7 @@ Let $`I` be a set of dimensions. A *compact categorial structure* on a set $`C` 
 consists, for every $`k \in I`, of two mappings $`\mathrm{sc}^{k}, \mathrm{tg}^{k} \colon C \to C`,
 the $`k`-*source* and the $`k`-*target*, and of a partial binary operation $`\#^{k}` on $`C`,
 the $`k`-*composition*, such that $`g \#^{k} f` is defined if and only if
-$`\mathrm{sc}^{k}(g) = \mathrm{tg}^{k}(f)`. This is condition (C2) of Definition 7.1 of the
+$`\mathrm{sc}^{k}(g) = \mathrm{tg}^{k}(f)`. This is condition (C2) of Definition `DCompactCat` of the
 draft, for every dimension.
 
 ```lean
@@ -122,7 +122,7 @@ end Congruence
 :::definition (label := "compact.precategory") (central := false) (title := "Compact categories, dimensionwise")
 A compact categorial structure is a *compact precategory* if, for every dimension $`k`, the
 triple $`(\#^{k}, \mathrm{sc}^{k}, \mathrm{tg}^{k})` is a structure of compact category on
-$`C` (Definition 7.1 of the draft): for all $`f, g, h \in C`,
+$`C` (Definition `DCompactCat` of the draft): for all $`f, g, h \in C`,
 
 1. (C1) $`\mathrm{sc}^{k}\mathrm{sc}^{k} f = \mathrm{sc}^{k} f`,
    $`\mathrm{tg}^{k}\mathrm{sc}^{k} f = \mathrm{sc}^{k} f`,
@@ -135,7 +135,7 @@ $`C` (Definition 7.1 of the draft): for all $`f, g, h \in C`,
 4. (C5) if $`\mathrm{sc}^{k} h = \mathrm{tg}^{k} g` and $`\mathrm{sc}^{k} g = \mathrm{tg}^{k} f`,
    then $`h \#^{k} (g \#^{k} f) = (h \#^{k} g) \#^{k} f`.
 
-A compact category in the sense of Definition 7.1 is a compact precategory with a single
+A compact category in the sense of Definition `DCompactCat` is a compact precategory with a single
 dimension.
 
 ```lean
@@ -197,8 +197,8 @@ attribute [simp] sck_sck_eq_sck tgk_sck_eq_sck sck_tgk_eq_tgk tgk_tgk_eq_tgk sck
 
 # Compact higher-order categories
 
-The conditions (2C1)–(2C3) of Definition 7.2 of the draft relate two dimensions $`j < k`; a
-compact $`n`-category (Definition 7.3) asks them for every pair of dimensions $`j < k` in $`n`.
+The conditions (2C1)–(2C3) of Definition `DCompact2Cat` of the draft relate two dimensions $`j < k`; a
+compact $`n`-category (Definition `DCompactnCat`) asks them for every pair of dimensions $`j < k` in $`n`.
 Here they are asked for every pair $`j < k` of any preordered set of dimensions.
 
 :::definition (label := "compact.category") (central := false) (title := "Compact higher-order category")
@@ -306,9 +306,9 @@ attribute [simp] sck_scj_eq_scj scj_sck_eq_scj scj_tgk_eq_scj tgk_tgj_eq_tgj tgj
 For $`n \in \mathbb{N}`, a *compact* $`n`-*category* is a compact category with dimensions in
 $`n = \{0, \ldots, n-1\}`.
 
-As in Definition 7.3 of the draft, the definition is made for every $`n`. A compact $`0`-category is a set, with no structure; a compact
-$`1`-category is a compact category in the sense of Definition 7.1, and a compact
-$`2`-category is one in the sense of Definition 7.2.
+As in Definition `DCompactnCat` of the draft, the definition is made for every $`n`. A compact $`0`-category is a set, with no structure; a compact
+$`1`-category is a compact category in the sense of Definition `DCompactCat`, and a compact
+$`2`-category is one in the sense of Definition `DCompact2Cat`.
 
 ```lean
 abbrev NCategory (n : ℕ) (C : Type u) := Category (Fin n) C

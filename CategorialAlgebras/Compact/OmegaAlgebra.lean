@@ -7,9 +7,8 @@ open Verso.Genre Manual InlineLean Stemma
 
 #doc (Stemma) "Compact ω-categorial algebras" =>
 
-Section 11 of the draft uses the category $`\omega\mathsf{CatAlg}(\Sigma)` of $`S`-sorted
-$`\omega`-categorial $`\Sigma`-algebras, defined (Definitions 7.7 and 7.8 of the draft, labelled
-`DCompactOmegaCat` and `DOmegaCatAlg`) as $`\mathsf{nCatAlg}(\Sigma)` in Definition 7.4, with
+Section `SLimitCompact` of the draft uses the category $`\omega\mathsf{CatAlg}(\Sigma)` of $`S`-sorted
+$`\omega`-categorial $`\Sigma`-algebras, defined (Definitions `DCompactOmegaCat` and `DOmegaCatAlg` of the draft) as $`\mathsf{nCatAlg}(\Sigma)` in Definition `DManySortedCatAlg`, with
 compact $`\omega`-categories in place of compact $`n`-categories. Recall that in a compact $`\omega`-category every cell is a
 $`k`-cell for some $`k \in \mathbb{N}`.
 

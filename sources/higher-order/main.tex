@@ -691,7 +691,7 @@
 
 \maketitle
 
-\section{Introduction}
+\section{Introduction}\label{SIntroduction}
 
 \subsection{Prerequisites, notation and terminology}
 
@@ -736,7 +736,7 @@ Ministerio de Ciencia e Innovaci\'{o}n, Spain, and the CIAICO/2023/007 grant  fr
 Conselleria d’Educaci\'{o}, Universitats i Ocupaci\'{o}, Generalitat Valenciana. The second author has held a Specially Appointed Professor position at Nantong University during the completion of this work. The third author was supported by the  CIACIF/2022/489 grant from the Conselleria d'Educaci\'{o}, Universitats i Ocupaci\'{o}, Generalitat Valenciana co-funded by the European Social Fund. Special thanks to Asunci\'{o}n de Montesa for her categorical knowledge. 
 
 
-\section{Preliminaries}
+\section{Preliminaries}\label{SPreliminaries}
 
 \subsection{Partial algebras and QE-equations}
 
@@ -772,7 +772,7 @@ with $m\in\mathbb{N}$; it \emph{holds} in $\mathbf{A}$ if, for every valuation $
 A \emph{$\mathrm{QE}$-specification} is a quadruple $(S,\Sigma,V,\mathcal{E})$ with $\mathcal{E}\subseteq\mathrm{QE}(\Sigma)_{V}$. Its models, the partial $\Sigma$-algebras in which every equation of $\mathcal{E}$ holds, form the \emph{$\mathrm{QE}$-variety} $\mathcal{V}(\mathcal{E})$, and, together with the homomorphisms of Definition~\ref{DPartialAlg}, the category $\mathsf{PAlg}(\mathcal{E})$.
 \end{definition}
 
-\section{Derivors}
+\section{Derivors}\label{SDerivors}
 
 In this subsection, after defining the variety of Hall algebras, we introduce the notion of derivor between many-sorted signatures. This will allow us, using the homomorphisms between Hall algebras, to obtain $\mathsf{Sig}_{\mathfrak{d}}$, the category of many-sorted signatures and derivors. Next, after defining a suitable contravariant functor from $\mathsf{Sig}_{\mathfrak{d}}$ to $\mathsf{Cat}$, the category of $\boldsymbol{\mathcal{U}}$-locally small categories and functors, we obtain, by means of the Grothendieck construction, $\mathsf{Alg}_{\mathfrak{d}}$, the category with objects the ordered pairs $((S,\Sigma),(A,F))$, with $(S,\Sigma)$ a many-sorted signature and $(A,F)$ a $\Sigma$-algebra, and morphisms from $((S,\Sigma),(A,F))$ to  $((T,\Lambda),(B,G))$ the ordered pairs $((\varphi,d),f)$, with $(\varphi,d)$ a derivor from $(S,\Sigma)$ to $(T,\Lambda)$ and $f$ a homomorphism of $\Sigma$-algebras from $(A,F)$ to $(B_{\varphi},G^{(\varphi,d)})$, a canonically derived algebra of $(B,G)$. 
 
@@ -1368,7 +1368,7 @@ The just stated definition allows us to form a category of many-sorted signature
 	%$$
 \end{remark}
 
-\section{Generalized derivors}
+\section{Generalized derivors}\label{SGenDerivors}
 \textcolor{red}{En el nostre cas no volem els sorts ordenats, no treballem en fòrmules, treballem en E-equacions. Tampoc necessitem predicats. La $d_{\mathbf{w}}$ de l'apartat 4, ha de correspondre amb la $d$ de la Definició~\ref{DDerivor}}
 
 \begin{definition}\label{DGeneralDerivor}
@@ -1396,7 +1396,7 @@ The just stated definition allows us to form a category of many-sorted signature
 	When no confusion arises, we often write $s'$ instead of $\tau(s)$. Moreover, an ordinary derivor can be seen as a general derivor by taking, for every $f\in\Sigma_{\mathbf{w},s}$, the equation $y = d_{\mathbf{w},s}(f)$, with $y\in X'_{s'}$ a fresh variable, instead of the term $d_{\mathbf{w},s}(f)\in\mathrm{T}_{\Sigma'}(X')_{\tau(s)}$.
 \end{definition}
 
-\section{ep-derivors}
+\section{ep-derivors}\label{SEpDerivors}
 
 An equationally partial signature is an ordred triple $(S,\Sigma,\mathrm{def})$ in which $(S,\Sigma)$ is a sorted signature and, for every $(\mathbf{w},s)\in S^{\star}\times S$ and every $\sigma\in \Sigma_{\mathbf{w},s}$, $\mathrm{def}(\sigma)\subseteq \coprod_{s\in S}\mathrm{T}_{\Sigma}(\downarrow\mathbf{w})^{2}_{s}$ or, what is equivalent, a subset of $(\mathrm{T}_{\Sigma}(\downarrow\mathbf{w})^{2}_{s})_{s\in S}$. We call $\mathrm{def}(\sigma)$ the set of domain conditions associated to $\sigma$.
 
@@ -1428,7 +1428,7 @@ $\mathrm{Cn}(\mathrm{def}(d_{\mathbf{w},s}^{\sharp}(\sigma)))$.
 
 I am not sure that this is the correct definition. For it to be the case, the morphism between ep-signatures should induce a functor from the category of algebras for $(S',\Sigma',\mathrm{def}')$ to the category of algebras for $(S,\Sigma,\mathrm{def})$. This may be the reason why Reichel requires the semantic consequences of $d_{\mathbf{s},s}^{\sharp}\times d_{\mathbf{s},s}^{\sharp}[\mathrm{def}(\sigma)]$ and $\mathrm{def}(d_{\mathbf{w},s}^{\sharp}(\sigma))$ to coincide.
 
-\section{generalized ep-derivors}
+\section{generalized ep-derivors}\label{SGenEpDerivors}
 
 \section{Compact presentation of higher-order categorial algebras}\label{SCompact}
 
@@ -2109,7 +2109,7 @@ Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. An \emph{extended $
 
 %The axioms (EA0), (EA$^{j,k}$7) and (EA$^{j,k}$8) state, as in the compact case, that the operations of $\Sigma$ act layer by layer and compatibly with the $n$-categorial structure, i.e., that they are $n$-functors between $n$-categories in their globular presentation. The relation between the two presentations, however, does not come from these axioms, but from the correspondence between the globular and the single-set presentations of $n$-categories. A model of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}}$ gives rise to a model of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$ by keeping only its $n$-cells, on which $k$-sources and $k$-targets are obtained by composing $(k,n)$-sources and $(k,n)$-targets with $(n,k)$-identities. Conversely, a model of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$ gives rise to a model of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}}$ by taking, as $k$-cells of sort $s$, for $k\in n$, the cells $x$ with $\mathrm{sc}^{k}_{s}(x)=x$. Going from the compact presentation to the extended one and back gives the original algebra, whereas going from the extended presentation to the compact one and back only gives an isomorphic algebra, in which every $k$-cell has been replaced by its identity $n$-cell. It is therefore to be expected that $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}})$ is equivalent to $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$, and hence to $\mathsf{nCatAlg}(\mathbf{\Sigma})$, although the two canonical functors are not mutually inverse; proving this equivalence in a way that is functorial in $\mathbf{\Sigma}$ is part of Objective~II.2.
 
-\section{Graduation and Unification of Higher-Order Categorial Algebras}
+\section{Graduation and Unification of Higher-Order Categorial Algebras}\label{SGraduation}
 
 \subsection{Graduation of higher-order categorial algebras}
 
@@ -2119,9 +2119,9 @@ Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. An \emph{extended $
 
 \section{Discretization and Truncation of Higher-Order Categorial Algebras}\label{STruncation}
 
-\subsection{Discretization of higher-order categorial algebras}
+\subsection{Discretization of higher-order categorial algebras}\label{SDiscretization}
 
-\subsection{Truncation of higher-order categorial algebras}
+\subsection{Truncation of higher-order categorial algebras}\label{STruncationAlg}
 
 Truncating a higher-order categorial algebra at level $m$ keeps its cells of dimension at most $m$, together with the structure of the dimensions below $m$. In the compact presentation, where all the cells of a sort lie in a single set, these are the cells that are $k$-cells for every forgotten dimension $k$; in the extended presentation, where the cells of each dimension form a separate sort, they are the sorts of dimension at most $m$.
 
@@ -2178,7 +2178,7 @@ Let $\mathsf{L}$ be a category and, for every $n\in\omega$, let $F_{n}$ be a fun
 \end{proposition}
 
 
-\section{$\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ as a projective limit}
+\section{$\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ as a projective limit}\label{SLimitExtended}
 
 In this section we prove that the category $\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ of $S$-sorted extended $\omega$-categorial $\Sigma$-algebras and extended $\omega$-categorial $\Sigma$-homomorphisms is the projective limit of the projective system $(\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma}),T^{\mathrm{ext}(\bigcdot)}_{\mathbf{\Sigma}})$, where the functors $T^{\mathrm{ext}(m,n)}_{\mathbf{\Sigma}}$ are the truncation functors defined in Definition~\ref{DTmnExtCatAlg} and $T^{\mathrm{ext}(n,\omega)}_{\mathbf{\Sigma}}$ are the corresponding functors from $\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ to $\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$.
 
@@ -2216,7 +2216,7 @@ For an object $X$ of $\mathsf{L}$ the family $(F_{n}(X))_{n\in\omega}$ is compat
 \end{proof}
 
 
-\section{An algebraic square}
+\section{An algebraic square}\label{SAlgSquare}
 
 We say that four adjunctions form an \emph{algebraic square} when there exist natural isomorphisms between the appropriate composites, as described in the following definition (taken from the Curry-Howard documents).
 

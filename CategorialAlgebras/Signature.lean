@@ -5,7 +5,7 @@ open Verso.Genre Manual InlineLean Stemma
 
 #doc (Stemma) "Many-sorted signatures" =>
 
-Throughout, $`S` is a set of *sorts*. Following the preliminaries of the draft (Section 2),
+Throughout, $`S` is a set of *sorts*. Following the preliminaries of the draft (Section `SPreliminaries`),
 a *word* on $`S` is a mapping $`\mathbf{s} \colon m \to S` from some natural number
 $`m = \{0, \ldots, m-1\}`, written $`\mathbf{s} = (s_j)_{j \in |\mathbf{s}|}`, with *length*
 $`|\mathbf{s}| = m`; $`S^{\star}` is the set of words on $`S`, and $`\lambda` is the empty
@@ -19,7 +19,7 @@ namespace CategorialAlgebras
 ```
 
 :::definition (label := "sorted-set") (central := false) (title := "Many-sorted sets")
-An $`S`-*sorted set* (Definition 2.1 of the draft, labelled `DSortedSet`) is a family
+An $`S`-*sorted set* (Definition `DSortedSet` of the draft) is a family
 $`A = (A_s)_{s \in S}` of small sets. An $`S`-*sorted subset* $`X \subseteq A` is a family of
 subsets $`X_s \subseteq A_s`, and an $`S`-*sorted mapping* $`f \colon A \to B` is a family of
 mappings $`f_s \colon A_s \to B_s`, for $`s \in S`.
@@ -37,7 +37,7 @@ abbrev SortedSet.Hom {S : Type u} (A B : SortedSet.{u, w} S) := (s : S) → A s 
 :::
 
 :::definition (label := "signature") (central := false) (title := "Many-sorted signature")
-An $`S`-*sorted signature* (Definition 2.2 of the draft, labelled `DSignature`) is an
+An $`S`-*sorted signature* (Definition `DSignature` of the draft) is an
 $`S^{\star} \times S`-sorted set
 $`\Sigma = (\Sigma_{\mathbf{s}, s})_{(\mathbf{s}, s) \in S^{\star} \times S}` of small sets. An
 element $`\sigma \in \Sigma_{\mathbf{s}, s}` is a *formal operation* of *arity* $`\mathbf{s}`,

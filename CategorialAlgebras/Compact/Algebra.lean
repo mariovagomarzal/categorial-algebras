@@ -7,7 +7,7 @@ open Verso.Genre Manual InlineLean Stemma
 #doc (Stemma) "Compact n-categorial algebras" =>
 
 A many-sorted $`n`-categorial algebra is a many-sorted algebra whose carrier of every sort is a
-compact $`n`-category and whose operations are compact $`n`-functors (Definition 7.4 of the
+compact $`n`-category and whose operations are compact $`n`-functors (Definition `DManySortedCatAlg` of the
 draft).
 
 ```lean
@@ -79,7 +79,7 @@ $`\sigma \in \Sigma_{\mathbf{s}, s}` and every family of cells
 $`(a_j)_{j \in |\mathbf{s}|} \in \mathsf{A}_{\mathbf{s}}`,
 $$`H_s\big(\sigma^{\boldsymbol{\mathsf{A}}}((a_j)_{j})\big) = \sigma^{\boldsymbol{\mathsf{B}}}\big((H_{s_j}(a_j))_{j}\big).`
 
-As Definition 7.4 of the draft says, the equation is asked for all cells, the $`n`-cells
+As Definition `DManySortedCatAlg` of the draft says, the equation is asked for all cells, the $`n`-cells
 ($`C_n = C`), and not only for the $`k`-cells with $`k \in n`, which are the cells of dimension
 below $`n`: otherwise a homomorphism would say nothing about the cells of top dimension.
 
@@ -151,7 +151,7 @@ $`n`-*categorial signature determined by* $`\Sigma`, $`\Sigma^{(n)}`, is the exp
 $`\Sigma` obtained by adding, for every $`k \in n` and every $`s \in S`, two operation symbols
 $`\mathrm{sc}^{k}_{s}` and $`\mathrm{tg}^{k}_{s}` of arity $`(s)` and coarity $`s`, the
 $`k`-source and the $`k`-target, and an operation symbol $`\circ^{k}_{s}` of arity $`(s, s)`
-and coarity $`s`, the $`k`-composition (Definition 7.5 of the draft).
+and coarity $`s`, the $`k`-composition (Definition `DSigmaCatCompact` of the draft).
 
 ```lean
 inductive CompactSignature (Sig : Signature.{u, v} S) (n : ℕ) : List S → S → Type (max u v)

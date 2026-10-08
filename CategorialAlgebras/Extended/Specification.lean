@@ -6,9 +6,9 @@ open Verso.Genre Manual InlineLean Stemma
 
 #doc (Stemma) "The extended QE-specification" =>
 
-Definition 8.5 of the draft presents the extended $`n`-categorial $`\Sigma`-algebras as a
+Definition `DVarExtended` of the draft presents the extended $`n`-categorial $`\Sigma`-algebras as a
 $`\mathrm{QE}`$-variety of partial $`\Sigma^{\mathrm{ext}(n)}`-algebras, where
-$`\Sigma^{\mathrm{ext}(n)}` is the extended $`n`-categorial signature of Definition 8.4, with
+$`\Sigma^{\mathrm{ext}(n)}` is the extended $`n`-categorial signature of Definition `DSigmaCatExtended`, with
 sorts $`(n+1) \times S`. This document writes down the specification
 $`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}` and the category of its models.
 
@@ -74,7 +74,7 @@ end ETerm
 :::definition (label := "extended.qe-specification") (central := false) (title := "The specification C^Σᵉˣᵗ⁽ⁿ⁾")
 Let $`\Sigma` be an $`S`-sorted signature and $`n \in \mathbb{N}`. The specification
 $`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}` is the set of the following $`\mathrm{QE}`$-equations,
-for all sorts, operation symbols, dimensions and variables (Definition 8.5 of the draft):
+for all sorts, operation symbols, dimensions and variables (Definition `DVarExtended` of the draft):
 
 1. (EA0) $`\sigma_k((x_p)_p)` is defined, for every $`k \in n + 1`;
 2. for all $`j < k` in $`n + 1`:
@@ -110,7 +110,7 @@ for all sorts, operation symbols, dimensions and variables (Definition 8.5 of th
    $`\mathrm{i}^{(k,j)}(u \circ^{(h,j)} v) \overset{\mathrm{e}}{=} \mathrm{i}^{(k,j)}(u) \circ^{(h,k)} \mathrm{i}^{(k,j)}(v)`.
 
 The axioms (EA$`^{h,j,k}`1)–(EA$`^{h,j,k}`5) are the counterparts of the conditions (MS1),
-(MS4), (MS3), (MS9) and (MS8) of Definition 8.1, so that the models of the specification are,
+(MS4), (MS3), (MS9) and (MS8) of Definition `DOmegaCatExt`, so that the models of the specification are,
 as the draft says, the extended $`n`-categories with operations that are extended
 $`n`-functors.
 
