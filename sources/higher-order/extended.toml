@@ -39,6 +39,6 @@ depends = []
 [[item]]
 ref = "Def. 6.5"
 kind = "definition"
-state = "blocked"
-reason = "QE-specification of partial algebras: needs partial many-sorted algebras and QE-equations, not yet in the library."
+state = "done"
+labels = ["extended.qe-specification"]
 depends = ["Def. 6.4"]
