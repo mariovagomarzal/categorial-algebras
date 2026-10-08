@@ -1,4 +1,6 @@
 import Stemma
+import CategorialAlgebras.Init
+import CategorialAlgebras.Tactic
 
 open Verso.Genre Manual InlineLean Stemma
 

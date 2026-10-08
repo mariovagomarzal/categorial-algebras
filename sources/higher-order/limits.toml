@@ -1,0 +1,26 @@
+title = "9–10. The ω-categorial algebras as projective limits"
+owner = "encosllo"
+
+[[item]]
+ref = "Rem. 9.1"
+kind = "remark"
+state = "planned"
+depends = []
+
+[[item]]
+ref = "Prop. 9.2"
+kind = "statement"
+state = "planned"
+depends = ["Rem. 9.1"]
+
+[[item]]
+ref = "Rem. 10.1"
+kind = "remark"
+state = "planned"
+depends = []
+
+[[item]]
+ref = "Prop. 10.2"
+kind = "statement"
+state = "planned"
+depends = ["Rem. 10.1"]

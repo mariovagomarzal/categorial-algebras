@@ -1,0 +1,14 @@
+title = "8. Discretization and truncation of higher-order categorial algebras"
+owner = "encosllo"
+
+[[item]]
+ref = "§8.1 discretization"
+kind = "definition"
+state = "planned"
+depends = []
+
+[[item]]
+ref = "§8.2 truncation"
+kind = "definition"
+state = "planned"
+depends = []

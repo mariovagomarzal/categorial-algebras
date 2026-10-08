@@ -1,0 +1,39 @@
+title = "5. Compact presentation of higher-order categorial algebras"
+owner = "encosllo"
+
+[[item]]
+ref = "Def. 5.1"
+kind = "definition"
+state = "planned"
+depends = []
+
+[[item]]
+ref = "Def. 5.2"
+kind = "definition"
+state = "planned"
+depends = ["Def. 5.1"]
+
+[[item]]
+ref = "Def. 5.3"
+kind = "definition"
+state = "planned"
+depends = ["Def. 5.2"]
+
+[[item]]
+ref = "Def. 5.4"
+kind = "definition"
+state = "planned"
+depends = ["Def. 5.3"]
+
+[[item]]
+ref = "Def. 5.5"
+kind = "definition"
+state = "planned"
+depends = []
+
+[[item]]
+ref = "Def. 5.6"
+kind = "definition"
+state = "blocked"
+reason = "QE-specification of partial algebras: needs partial many-sorted algebras and QE-equations, not yet in the library."
+depends = ["Def. 5.5"]

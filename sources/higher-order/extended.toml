@@ -1,0 +1,39 @@
+title = "6. Extended presentation of higher-order categorial algebras"
+owner = "encosllo"
+
+[[item]]
+ref = "Def. 6.1"
+kind = "definition"
+state = "planned"
+depends = []
+
+[[item]]
+ref = "p. 6, extended n-categories and n-functors"
+kind = "definition"
+state = "planned"
+depends = ["Def. 6.1"]
+
+[[item]]
+ref = "Def. 6.2"
+kind = "definition"
+state = "planned"
+depends = ["p. 6, extended n-categories and n-functors"]
+
+[[item]]
+ref = "Def. 6.3"
+kind = "definition"
+state = "planned"
+depends = ["Def. 6.2"]
+
+[[item]]
+ref = "Def. 6.4"
+kind = "definition"
+state = "planned"
+depends = []
+
+[[item]]
+ref = "Def. 6.5"
+kind = "definition"
+state = "blocked"
+reason = "QE-specification of partial algebras: needs partial many-sorted algebras and QE-equations, not yet in the library."
+depends = ["Def. 6.4"]
