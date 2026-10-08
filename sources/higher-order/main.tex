@@ -1038,9 +1038,9 @@ $$
 That is, ${\Sigma}^{(n)}$ is the expansion of $\Sigma$ obtained by adding, for every $k\in n$ and every sort $s\in S$, two unary operation symbols $\mathrm{sc}^{k}_{s}$ and $\mathrm{tg}^{k}_{s}$, the \emph{$k$-source} and the \emph{$k$-target}, of arity $(s)$ and coarity $s$, and a binary operation symbol $\circ^{k}_{s}$, the \emph{$k$-composition}, of arity $(s,s)$ and coarity $s$.
 \end{definition}
 
-Note that $\Sigma^{(0)}=\Sigma$ and that, for every $n,m\in\mathbb{N}$ with $n\leq m$, $\Sigma^{(n)}\subseteq\Sigma^{(m)}$. Moreover, for a rewriting system $\boldsymbol{\mathcal{A}}$, the categorial signature $\Sigma^{\boldsymbol{\mathcal{A}}}$ of~\cite[Chapter~9]{CVCLRM26} is $\Sigma^{(1)}$ enlarged with a constant for every rewrite rule, and, similarly, the categorial signature $\Sigma^{\boldsymbol{\mathcal{A}}^{(2)}}$ of~\cite[Chapter~21]{CVCLRM26} is $\Sigma^{(2)}$ enlarged with constants for the rewrite rules of both orders.
+Note that $\Sigma^{(0)}=\Sigma$ and that, for every $n,m\in\mathbb{N}$ with $n\leq m$, $\Sigma^{(n)}\subseteq\Sigma^{(m)}$.
 
-We next present the $n$-categorial $\mathbf{\Sigma}$-algebras as a $\mathrm{QE}$-variety of partial $\Sigma^{(n)}$-algebras. The specification follows the pattern of the specification $\boldsymbol{\mathcal{E}}^{\boldsymbol{\mathcal{A}}^{(2)}}$ of~\cite[Definition~32.1.1]{CVCLRM26}: the axioms (A1)--(A8), about the $0$-dimensional structure, and (B1)--(B8), about the $1$-dimensional structure, are now stated uniformly for every dimension $k\in n$, and the axioms (AB1)--(AB3), which relate dimensions $0$ and $1$, for every pair of dimensions $l<k$ in $n$. Since no rewrite rules are involved, there are no counterparts of (A9) and (B9). Informally, these equations state that the operations of $\Sigma$ are always defined, that, for every sort $s\in S$, sources, targets and compositions of sort $s$ of every dimension behave as in an $n$-category, and that the operations of $\Sigma$ are compatible with them.
+We next present the $n$-categorial $\mathbf{\Sigma}$-algebras as a $\mathrm{QE}$-variety of partial $\Sigma^{(n)}$-algebras. The axioms (A$^{k}$1)--(A$^{k}$8), stated for every dimension $k\in n$, describe the $k$-dimensional structure, and the axioms (AB$^{l,k}$1)--(AB$^{l,k}$3), stated for every pair of dimensions $l<k$ in $n$, relate the $l$-dimensional and the $k$-dimensional structures. Informally, these equations state that the operations of $\Sigma$ are always defined, that, for every sort $s\in S$, sources, targets and compositions of sort $s$ of every dimension behave as in an $n$-category, and that the operations of $\Sigma$ are compatible with them.
 
 \begin{definition}\label{DVarCompact}
 Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $n\in\mathbb{N}$. We will denote by $(S,\Sigma^{(n)},V^{S},\mathcal{C}^{\mathbf{\Sigma}^{(n)}})$, written $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$ for short, the specification in which $\Sigma^{(n)}$ is the compact $n$-categorial signature introduced in Definition~\ref{DSigmaCatCompact}, $V^{S}$ a fixed $S$-sorted set with a countable infinity of variables in each coordinate, and $\mathcal{C}^{\mathbf{\Sigma}^{(n)}}$ the subset of $\mathrm{QE}(\Sigma^{(n)})_{V^{S}}$, the set of all $\mathrm{QE}$-equations with variables in $V^{S}$, consisting of the following equations:
@@ -1176,7 +1176,7 @@ For every sort $s\in S$ and every quadruple of variables $x,y,z,t\in V^{S}_{s}$,
 \label{DVarCompactABlk3}\tag{AB$^{l,k}$3}
 \end{multline*}
 
-A model of the axioms (A$^{k}$1)--(A$^{k}$6), for $k\in n$, and (AB$^{l,k}$1)--(AB$^{l,k}$3), for $l<k$ in $n$, is an $S$-sorted compact $n$-category, see Definition~\ref{DManySortedCatAlg}, presented with all the cells of a given sort, whatever their dimension, in a single set. For $n=2$, the axioms (A$^{0}$$i$), (A$^{1}$$i$) and (AB$^{0,1}$$i$) are, respectively, the axioms (A$i$), (B$i$) and (AB$i$) of the specification $\boldsymbol{\mathcal{E}}^{\boldsymbol{\mathcal{A}}^{(2)}}$ of~\cite[Definition~32.1.1]{CVCLRM26}.
+A model of the axioms (A$^{k}$1)--(A$^{k}$6), for $k\in n$, and (AB$^{l,k}$1)--(AB$^{l,k}$3), for $l<k$ in $n$, is an $S$-sorted compact $n$-category, see Definition~\ref{DManySortedCatAlg}, presented with all the cells of a given sort, whatever their dimension, in a single set.
 
 We will let $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ stand for the category canonically associated to the $\mathrm{QE}$-variety $\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ determined by the specification $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$.
 \end{definition}
@@ -1200,13 +1200,11 @@ Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. An \emph{$\omega$-c
 %\end{proposition}
 %
 %The proof reduces to the classical correspondence between the globular and the single-set presentations of $n$-categories, see, e.g.,~\cite{Str87,abgmmm23}, together with two observations: under this correspondence, the $n$-functors from $\mathsf{A}_{\mathbf{s}}$ to $\mathsf{A}_{s}$ are exactly the total operations that satisfy (A$^{k}$7) and (A$^{k}$8), for $k\in n$; and the $S$-sorted $n$-functors between the underlying $S$-sorted $n$-categories are exactly the homomorphisms of partial $\Sigma^{(n)}$-algebras defined above.
-%
-%In particular, the $\Sigma^{(1)}$-reducts of the partial algebras in $\mathbf{PAlg}(\boldsymbol{\mathcal{E}}^{\boldsymbol{\mathcal{A}}})$ of~\cite[Definition~16.1.1]{CVCLRM26} and the $\Sigma^{(2)}$-reducts of those in $\mathbf{PAlg}(\boldsymbol{\mathcal{E}}^{\boldsymbol{\mathcal{A}}^{(2)}})$ of~\cite[Definition~32.1.1]{CVCLRM26} are $1$-categorial and $2$-categorial $\mathbf{\Sigma}$-algebras, respectively: the specifications of those chapters are obtained from $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(1)}}$ and $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(2)}}$ by adding the rewrite rules as constants that are always defined.
 
 \section{Extended presentation of higher-order categorial algebras}\label{SExtended}
 
 
-We begin by recalling the definition of extended $\omega$-category from~\cite[Section~5.3]{CVCLRM26}, which presents $\omega$-categories with separate sorts for each dimension. An extended $n$-category is then an extended $\omega$-category truncated at level $n$.
+We begin by defining extended $\omega$-categories, which present $\omega$-categories with separate sorts for each dimension. An extended $n$-category is then an extended $\omega$-category truncated at level $n$.
 
 \begin{definition}\label{DOmegaCatExt}
 An \emph{extended $\omega$-category} is an ordered pair $\mathsf{C} = ((C_{k})_{k\in\omega},\zeta)$ consisting of an $\omega$-sorted set $(C_{k})_{k\in\omega}$ and a $\coprod_{k\in \omega}k$-indexed family
@@ -1384,7 +1382,7 @@ That is, the sort $(k,s)$ of ${\Sigma}^{\mathrm{ext}(n)}$ stands for the $k$-cel
 
 In contrast with the compact case, $\Sigma^{\mathrm{ext}(n)}$ is not a subset of $\Sigma^{\mathrm{ext}(m)}$ for $n\leq m$, since the sets of sorts are different; however, the inclusion of $(n+1)\times S$ into $(m+1)\times S$ induces a canonical embedding of $\Sigma^{\mathrm{ext}(n)}$ into $\Sigma^{\mathrm{ext}(m)}$. Note also that, for $n=0$, $\Sigma^{\mathrm{ext}(0)}$ is, up to the identification of $1\times S$ with $S$, the signature $\Sigma$.
 
-The specification of the extended presentation also follows the pattern of the specification $\boldsymbol{\mathcal{E}}^{\boldsymbol{\mathcal{A}}^{(2)}}$ of~\cite[Definition~32.1.1]{CVCLRM26}. Now, however, the role played in the compact case by a dimension $k\in n$ is played by a pair of dimensions $j<k$ in $n+1$, since the $j$-composition acts on the $k$-cells and the $(k,j)$-identities take the place of the $k$-sources and $k$-targets as unit elements; and the role played by a pair of dimensions $l<k$ in $n$ is played by a triple of dimensions $h<j<k$ in $n+1$. Informally, the equations state that the operations of $\Sigma$ are always defined, that, for every sort $s\in S$ and every pair $j<k$, the $j$-cells and the $k$-cells of sort $s$ are the objects and the morphisms of a category, that these categories fit together as in an $n$-category, and that the operations of $\Sigma$ are compatible with them. In what follows, we abbreviate $V^{(n+1)\times S}$ to $V$.
+The specification of the extended presentation follows the pattern of that of the compact presentation, see Definition~\ref{DVarCompact}. Now, however, the role played in the compact case by a dimension $k\in n$ is played by a pair of dimensions $j<k$ in $n+1$, since the $j$-composition acts on the $k$-cells and the $(k,j)$-identities take the place of the $k$-sources and $k$-targets as unit elements; and the role played by a pair of dimensions $l<k$ in $n$ is played by a triple of dimensions $h<j<k$ in $n+1$. Informally, the equations state that the operations of $\Sigma$ are always defined, that, for every sort $s\in S$ and every pair $j<k$, the $j$-cells and the $k$-cells of sort $s$ are the objects and the morphisms of a category, that these categories fit together as in an $n$-category, and that the operations of $\Sigma$ are compatible with them. In what follows, we abbreviate $V^{(n+1)\times S}$ to $V$.
 
 \begin{definition}\label{DVarExtended}
 Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $n\in\mathbb{N}$. We will denote by $((n+1)\times S,\Sigma^{\mathrm{ext}(n)},V^{(n+1)\times S},\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}})$, written $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}}$ for short, the specification in which $\Sigma^{\mathrm{ext}(n)}$ is the extended $n$-categorial signature introduced in Definition~\ref{DSigmaCatExtended}, $V^{(n+1)\times S}$ a fixed $(n+1)\times S$-sorted set with a countable infinity of variables in each coordinate, and $\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}}$ the subset of $\mathrm{QE}(\Sigma^{\mathrm{ext}(n)})_{V^{(n+1)\times S}}$, the set of all $\mathrm{QE}$-equations with variables in $V^{(n+1)\times S}$, consisting of the following equations:
@@ -4852,6 +4850,54 @@ Then $(\boldsymbol{\mathfrak{d}}(\coprod_{i\in I}\mathbf{\Sigma}^{i}),(\eta_{\co
 \end{remark}
 
 %\newpage
+\subsection{Adjunctions and the Grothendieck construction}\label{SAdjGrot}
+
+We recall the notions of adjunction and of the Grothendieck construction, which we use in the next subsection. We let ``$\ast$'' and ``$\circ$'' stand for the horizontal and vertical composition of natural transformations, respectively; we denote by $\mathrm{Id}_{\mathsf{X}}$ the identity functor at $\mathsf{X}$; and we denote by $\mathrm{id}_{G}$ the identity natural transformation at $G\colon \mathsf{A}\mor \mathsf{X}$.
+
+\begin{definition}\label{DAdj}
+An \emph{adjointness} is a $6$-tuple $(\mathsf{A},\mathsf{X},G,F,\eta,\varepsilon)$ where $\mathsf{A}$ and $\mathsf{X}$ are categories, $G$ a functor from $\mathsf{A}$ to $\mathsf{X}$, $F$ a functor from $\mathsf{X}$ to $\mathsf{A}$, $\eta$ a natural transformation from $\mathrm{Id}_{\mathsf{X}}$ to $G\circ F$ and $\varepsilon$ a natural transformation from $F\circ G$ to $\mathrm{Id}_{\mathsf{A}}$ subject to the so called triangular identities
+$$
+(G\ast \varepsilon)\circ (\eta\ast G) = \mathrm{id}_{G} \text{ and }
+(\varepsilon\ast F)\circ (F\ast\eta) = \mathrm{id}_{F}.
+$$
+If $(\mathsf{A},\mathsf{X},G,F,\eta,\varepsilon)$ is an adjointness, then we will say that $F$ is a \emph{left adjoint} of $G$, that $G$ is a \emph{right adjoint} of $F$, that $\eta$ is the \emph{unit} of the adjunction and that $\varepsilon$ is the \emph{counit} of the adjunction. We will also speak of an \emph{adjunction from} $\mathsf{X}$ \emph{to} $\mathsf{A}$, meaning by it a $4$-tuple $(G,F,\eta,\varepsilon)$ such that $(\mathsf{A},\mathsf{X},G,F,\eta,\varepsilon)$ is an adjointness, and we will write $F\dashv G$ to indicate that $F$ is a left adjoint of $G$.
+\end{definition}
+
+An adjunction determines an equivalence between the full subcategories of its fixed points (see~\cite{PT91}).
+
+\begin{proposition}\label{UOp}
+Let $(G,F,\eta,\varepsilon)$ be an adjunction from a category $\mathsf{X}$ to another $\mathsf{A}$. Then the categories $\mathsf{Fix}(\eta)$ and $\mathsf{Fix}(\varepsilon)$, where $\mathsf{Fix}(\eta)$ is the full subcategory of $\mathsf{X}$ determined by
+$$
+\{x\in \mathrm{Ob}(\mathsf{X})\mid \eta_{x}\text{ is an isomorphism}\}
+$$
+and $\mathsf{Fix}(\varepsilon)$ the full subcategory of $\mathsf{A}$ determined by
+$$
+\{a\in \mathrm{Ob}(\mathsf{A})\mid \varepsilon_{a}\text{ is an isomorphism}\},
+$$
+are equivalent, i.e., there exists a functor from $\mathsf{Fix}(\eta)$ to $\mathsf{Fix}(\varepsilon)$ which is an equivalence (one can say, following~\cite{Lk81}, that the equivalence between $\mathsf{Fix}(\eta)$ and $\mathsf{Fix}(\varepsilon)$ is the ``unity of opposites'').
+\end{proposition}
+
+\begin{definition}\label{DSplitIndexed}
+Let $\mathsf{I}$ be a category. A \emph{split} $\mathsf{I}$-\emph{indexed category} is a contravariant functor $F$ from $\mathsf{I}$ to $\mathsf{Cat}$. Given an object $i\in \mathrm{Ob}(\mathsf{I})$, we write $\mathsf{F}_{i}$ for the category $F(i)$, and given a morphism $\varphi\in \mathrm{Hom}_{\mathsf{I}}(i,j)$, we write $F_{\varphi}$ for the functor $F(\varphi)\colon \mathsf{F}_{j}\mor \mathsf{F}_{i}$. A \emph{split indexed category} is an ordered pair $(\mathsf{I},F)$ in which $\mathsf{I}$ is a category and $F$ a split $\mathsf{I}$-indexed category.
+\end{definition}
+
+We next define the Grothendieck construction, which assigns to a split indexed category a split fibration (see~\cite{Gro71} and, for split fibrations, \cite{BW12}, pp.~327--329). We follow the notation of~\cite{JY21}, Chapter~10, but add the domain of $F$ as a superscript to indicate the contravariance of $F$.
+
+\begin{definition}\label{DGConst}
+Let $(\mathsf{I},F)$ be a split indexed category. Then the \emph{Grothen\-dieck construction} at $(\mathsf{I},F)$ is $(\int^{\mathsf{I}}F,\pi_{F})$, where $\int^{\mathsf{I}}F$ is the category defined as follows:
+\begin{enumerate}
+\item $\mathrm{Ob}(\int^{\mathsf{I}}F) = \bigcup_{i\in\mathrm{Ob}(\mathsf{I})}(\{i\}\times\mathrm{Ob}(\mathsf{F}_{i}))$.
+\item For every $(i,x), (j,y)\in \mathrm{Ob}(\int^{\mathsf{I}}F)$, $\mathrm{Hom}_{\int^{\mathsf{I}}F}((i,x),(j,y))$ is the set of all ordered pairs $(\varphi,f)$, where $\varphi\in \mathrm{Hom}_{\mathsf{I}}(i,j)$ and $f\in \mathrm{Hom}_{\mathsf{F}_{i}}(x,F_{\varphi}(y))$.
+\item For every $(i,x)\in \mathrm{Ob}(\int^{\mathsf{I}}F)$, the identity morphism at $(i,x)$ is $(\mathrm{id}_{i},\mathrm{id}_{x})$.
+\item\label{DGrotCons} For every $(i,x), (j,y), (k,z)\in \mathrm{Ob}(\int^{\mathsf{I}}F)$, every $(\varphi,f)\colon (i,x)\mor (j,y)$, and every $(\psi,g)\colon (j,y)\mor (k,z)$, the composite morphism $(\psi,g)\circ (\varphi,f)$ from $(i,x)$ to $(k,z)$ is
+$$
+(\psi,g)\circ (\varphi,f) = (\psi\circ \varphi,F_{\varphi}(g)\circ f)\colon (i,x)\mor (k,z).
+$$
+Notice that $f\colon x\mor F_{\varphi}(y)$ and $g\colon y\mor F_{\psi}(z)$, hence, since $F_{\varphi}$ is a functor from $\mathsf{F}_{j}$ to $\mathsf{F}_{i}$, $F_{\varphi}(g)\colon F_{\varphi}(y)\mor F_{\varphi}(F_{\psi}(z))$. Therefore $F_{\varphi}(g)\circ f\colon x\mor F_{\varphi}(F_{\psi}(z)) = F_{\psi\circ\varphi}(z)$.
+\end{enumerate}
+And $\pi_{F}$ is the functor from $\int^{\mathsf{I}}F$ to $\mathsf{I}$ that sends an object $(i,x)$ of $\int^{\mathsf{I}}F$ to $i$ and a morphism $(\varphi,f)\colon (i,x)\mor (j,y)$ of $\int^{\mathsf{I}}F$ to $\varphi\colon i\mor j$. The functor $\pi_{F}$ is a split fibration, the \emph{canonical split fibration} from $\int^{\mathsf{I}}F$ to $\mathsf{I}$ (determined by $(\mathsf{I},F)$).
+\end{definition}
+
 \subsection{\texorpdfstring{The category $\mathsf{Alg}_{\mathfrak{d}}$}
 {The category Algd}}
 
@@ -5059,7 +5105,7 @@ commutes.
 \begin{definition}\label{DAlgCat}
 The category $\mathsf{Alg}_{\mathfrak{d}}$ is $\int^{\mathsf{Sig}_{\scriptscriptstyle\mathfrak{d}}}\mathrm{Alg}_{\mathfrak{d}}$, i.e., the category obtained by means of the Grothendieck construction applied to the contravariant functor $\mathrm{Alg}_{\mathfrak{d}}$. Thus the category $\mathsf{Alg}_{\mathfrak{d}}$ has as objects the ordered pairs $(\mathbf{\Sigma},\mathbf{A})$, with $\mathbf{\Sigma}$ a many-sorted signature and $\mathbf{A}$ a $\Sigma$-algebra, and as morphisms from $(\mathbf{\Sigma},\mathbf{A})$ to $(\mathbf{\Lambda},\mathbf{B})$ the ordered pairs $(\mathbf{d},h)$, with $\mathbf{d}$ a derivor from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ and $h$ a homomorphism of $\Sigma$-algebras from $\mathbf{A}$ to $\mathbf{d}^{\ast}_{\mathfrak{d}}(\mathbf{B})$.
 
-Let $P^{(-1)}_{\mathfrak{d}}$ be equal to $\pi_{\mathrm{Alg}_{\mathfrak{d}}}$, the canonical split fibration from $\mathsf{Alg}_{\mathfrak{d}}$ to $\mathsf{Sig}_{\mathfrak{d}}$ introduced in~\cite[Definition~4.2.4]{CVCLRM26}. We recall that $P^{(-1)}_{\mathfrak{d}}\colon \mathsf{Alg}_{\mathfrak{d}}\mor \mathsf{Sig}_{\mathfrak{d}}$ is the functor that sends and object $(\mathbf{\Sigma},\mathbf{A})$ in $\mathsf{Alg}_{\mathfrak{d}}$ to $\mathbf{\Sigma}$ in $\mathsf{Sig}_{\mathfrak{d}}$ and a morphism $(\mathbf{d},h)\colon (\mathbf{\Sigma},\mathbf{A})\mor (\mathbf{\Lambda},\mathbf{B})$ in $\mathsf{Alg}_{\mathfrak{d}}$ to $\mathbf{d}\colon \mathbf{\Sigma}\mor \mathbf{\Lambda}$ in $\mathsf{Sig}_{\mathfrak{d}}$.
+Let $P^{(-1)}_{\mathfrak{d}}$ be equal to $\pi_{\mathrm{Alg}_{\mathfrak{d}}}$, the canonical split fibration from $\mathsf{Alg}_{\mathfrak{d}}$ to $\mathsf{Sig}_{\mathfrak{d}}$ introduced in Definition~\ref{DGConst}. We recall that $P^{(-1)}_{\mathfrak{d}}\colon \mathsf{Alg}_{\mathfrak{d}}\mor \mathsf{Sig}_{\mathfrak{d}}$ is the functor that sends and object $(\mathbf{\Sigma},\mathbf{A})$ in $\mathsf{Alg}_{\mathfrak{d}}$ to $\mathbf{\Sigma}$ in $\mathsf{Sig}_{\mathfrak{d}}$ and a morphism $(\mathbf{d},h)\colon (\mathbf{\Sigma},\mathbf{A})\mor (\mathbf{\Lambda},\mathbf{B})$ in $\mathsf{Alg}_{\mathfrak{d}}$ to $\mathbf{d}\colon \mathbf{\Sigma}\mor \mathbf{\Lambda}$ in $\mathsf{Sig}_{\mathfrak{d}}$.
 
 %Moreover, we let $\mathsf{FAlg}_{\mathfrak{d}}$ stand for the full subcategory of $\mathsf{Alg}_{\mathfrak{d}}$ whose objects are the ordered pairs $(\mathbf{\Sigma},\mathbf{T}_{\Sigma}(X))$, with $\mathbf{\Sigma} = (S,\Sigma)$ a many-sorted signature and $X$ an $S$-sorted set.
 \end{definition}
@@ -5270,7 +5316,7 @@ The functor $J^{(-1)}_{\mathfrak{d}}$ is left adjoint to the functor $P^{(-1)}_{
 \end{proposition}
 
 \begin{proof}
-We will provide the remaining items to complete the adjunction. In this regard, see~\cite[Definition~4.1.1]{CVCLRM26}.
+We will provide the remaining items to complete the adjunction. In this regard, see Definition~\ref{DAdj}.
 
 
 \textsf{Unit of the adjunction.}
@@ -5366,7 +5412,7 @@ Moreover, the following chain of equalities holds
 
 In the just stated chain of equalities, the first equality unravels the definition of the morphism $\varepsilon^{(\mathbf{\Sigma}, \mathbf{A})}$;
 %
-the second equality unravels the definition of the composition of morphisms in $\mathsf{Alg}_{\mathfrak{d}}$. In this regard, see~\cite[Definition~4.2.4]{CVCLRM26};
+the second equality unravels the definition of the composition of morphisms in $\mathsf{Alg}_{\mathfrak{d}}$. In this regard, see Definition~\ref{DGConst};
 %
 the third equality follows from the fact that, according to Proposition~\ref{PSigdCat-app}, $\mathsf{Sig}_{\mathfrak{d}}$ is a category;
 %
@@ -5490,7 +5536,7 @@ scale=1
 \end{figure}
 
 \begin{remark}
-	Following~\cite[Proposition~4.1.7]{CVCLRM26}, the categories $\mathsf{Fix}(\eta^{(-1)})$ and $\mathsf{Fix}(\varepsilon^{(-1)})$ are equivalent. Note that, since $\eta^{(-1)}$ is the identity natural transformation, it follows that $\mathsf{Fix}(\eta^{(-1)})$ is equal to $\mathsf{Sig}_{\mathfrak{d}}$. On the other hand, following the definition of $\varepsilon^{(-1)}$, for every object $(\mathbf{\Sigma}, \mathbf{A})$ of $\mathsf{Alg}_{\mathfrak{d}}$, with $\mathbf{\Sigma}=(S,\Sigma)$, the component $\varepsilon^{(\mathbf{\Sigma}, \mathbf{A})}$  is an isomorphism if and only if $\mathbf{A} \cong \mathbf{T}_{\Sigma}(\varnothing^{S})$. Thus, $\mathsf{Fix}(\varepsilon^{(-1)})$ is the full subcategory of $\mathsf{Alg}_{\mathfrak{d}}$ determined by
+	Following Proposition~\ref{UOp}, the categories $\mathsf{Fix}(\eta^{(-1)})$ and $\mathsf{Fix}(\varepsilon^{(-1)})$ are equivalent. Note that, since $\eta^{(-1)}$ is the identity natural transformation, it follows that $\mathsf{Fix}(\eta^{(-1)})$ is equal to $\mathsf{Sig}_{\mathfrak{d}}$. On the other hand, following the definition of $\varepsilon^{(-1)}$, for every object $(\mathbf{\Sigma}, \mathbf{A})$ of $\mathsf{Alg}_{\mathfrak{d}}$, with $\mathbf{\Sigma}=(S,\Sigma)$, the component $\varepsilon^{(\mathbf{\Sigma}, \mathbf{A})}$  is an isomorphism if and only if $\mathbf{A} \cong \mathbf{T}_{\Sigma}(\varnothing^{S})$. Thus, $\mathsf{Fix}(\varepsilon^{(-1)})$ is the full subcategory of $\mathsf{Alg}_{\mathfrak{d}}$ determined by
 	$$
 	\left\{ \left(\mathbf{\Sigma}, \mathbf{A}\right) \in \mathrm{Ob}(\mathsf{Alg}_{\mathfrak{d}}) \mid \mathbf{A} \cong \mathbf{T}_{\Sigma}(\varnothing^{S}) \right\}.
 	$$
