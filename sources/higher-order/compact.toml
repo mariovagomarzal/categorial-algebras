@@ -4,31 +4,36 @@ owner = "encosllo"
 [[item]]
 ref = "Def. 5.1"
 kind = "definition"
-state = "planned"
+state = "done"
+labels = ["compact.category-struct", "compact.precategory", "compact.functor", "compact.functor-comp"]
 depends = []
 
 [[item]]
 ref = "Def. 5.2"
 kind = "definition"
-state = "planned"
+state = "done"
+labels = ["compact.category"]
 depends = ["Def. 5.1"]
 
 [[item]]
 ref = "Def. 5.3"
 kind = "definition"
-state = "planned"
+state = "done"
+labels = ["compact.n-category", "compact.one-category-of-precategory", "compact.cell", "compact.n-functor", "compact.cat"]
 depends = ["Def. 5.2"]
 
 [[item]]
 ref = "Def. 5.4"
 kind = "definition"
-state = "planned"
+state = "done"
+labels = ["signature", "signature.arity-product", "compact.pi-category-struct", "compact.pi-category", "compact.cat-algebra", "compact.cat-algebra-hom", "compact.cat-alg"]
 depends = ["Def. 5.3"]
 
 [[item]]
 ref = "Def. 5.5"
 kind = "definition"
-state = "planned"
+state = "done"
+labels = ["compact.signature"]
 depends = []
 
 [[item]]
