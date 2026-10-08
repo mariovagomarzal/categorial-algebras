@@ -1,0 +1,24 @@
+name = "categorialalgebras"
+defaultTargets = ["CategorialAlgebras"]
+
+[[require]]
+name = "stemma"
+git = { url = "https://github.com/stemma-math/stemma", subDir = "lean" }
+rev = "v0.4.0"
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "v4.34.1"
+
+[[lean_lib]]
+name = "CategorialAlgebras"
+# Verso warns about Lean lines longer than 60 columns, for narrow screens.
+leanOptions = { weak.verso.code.warnLineLength = 0 }
+
+# The program that builds the site; `stemma preview` writes it.
+[[lean_exe]]
+name = "stemma-site"
+srcDir = ".stemma/site"
+root = "StemmaSite"
+supportInterpreter = true
