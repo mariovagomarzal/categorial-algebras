@@ -16,11 +16,13 @@ depends = ["Rem. 9.1"]
 [[item]]
 ref = "Rem. 10.1"
 kind = "remark"
-state = "planned"
+state = "done"
+labels = ["extended.truncation-proj-system", "extended.truncation-omega-comp"]
 depends = []
 
 [[item]]
 ref = "Prop. 10.2"
 kind = "statement"
-state = "planned"
+state = "done"
+labels = ["extended.omega-cat-alg-limit", "extended.limit-algebra", "extended.limit-hom"]
 depends = ["Rem. 10.1"]

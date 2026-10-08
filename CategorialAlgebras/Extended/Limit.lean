@@ -129,6 +129,114 @@ lemma trInv_op (E : B.truncate h = B') {ws : List S} {s : S} (σ : Sig ws s) (a 
     trInv E s a (B'.op σ a y) = B.op σ (dimIncl h a) (fun l => trInv E (ws.get l) a (y l)) := by
   subst E; rfl
 
+lemma sc_heq (E : B.truncate h = B') (s : S) {a b : FinSucc m} (hab : a < b)
+    {x : B' s b} {y : B s (dimIncl h b)} (hxy : x ≍ y) :
+    sc hab x ≍ sc (dimIncl_strictMono h hab) y := by
+  subst E; obtain rfl := eq_of_heq hxy; rfl
+
+lemma tg_heq (E : B.truncate h = B') (s : S) {a b : FinSucc m} (hab : a < b)
+    {x : B' s b} {y : B s (dimIncl h b)} (hxy : x ≍ y) :
+    tg hab x ≍ tg (dimIncl_strictMono h hab) y := by
+  subst E; obtain rfl := eq_of_heq hxy; rfl
+
+lemma idm_heq (E : B.truncate h = B') (s : S) {a b : FinSucc m} (hab : a < b)
+    {x : B' s a} {y : B s (dimIncl h a)} (hxy : x ≍ y) :
+    idm hab x ≍ idm (dimIncl_strictMono h hab) y := by
+  subst E; obtain rfl := eq_of_heq hxy; rfl
+
+lemma pcomp_heq (E : B.truncate h = B') (s : S) {a b : FinSucc m} (hab : a < b)
+    {g f : B' s b} {g' f' : B s (dimIncl h b)} (hg : g ≍ g') (hf : f ≍ f') :
+    CategoryStruct.pcomp hab g f ≍ CategoryStruct.pcomp (dimIncl_strictMono h hab) g' f' := by
+  subst E; obtain rfl := eq_of_heq hg; obtain rfl := eq_of_heq hf; rfl
+
+lemma op_heq (E : B.truncate h = B') {ws : List S} {s : S} (σ : Sig ws s) (a : FinSucc m)
+    {x : ExtArity B'.carrier ws a} {y : ExtArity B.carrier ws (dimIncl h a)} (hxy : x ≍ y) :
+    B'.op σ a x ≍ B.op σ (dimIncl h a) y := by
+  subst E; obtain rfl := eq_of_heq hxy; rfl
+
+section Hom
+
+variable {C : CatAlgebra.{u, v, w} Sig n} {C' : CatAlgebra.{u, v, w} Sig m}
+
+lemma map_tr (E : B.truncate h = B') (E' : C.truncate h = C') {K : Hom B C} {K' : Hom B' C'}
+    (hK : K.truncate h ≍ K') (s : S) (a : FinSucc m) (x : B s (dimIncl h a)) :
+    K'.map s a (tr E s a x) = tr E' s a (K.map s (dimIncl h a) x) := by
+  subst E E'; obtain rfl := eq_of_heq hK; rfl
+
+lemma trInv_map (E : B.truncate h = B') (E' : C.truncate h = C') {K : Hom B C} {K' : Hom B' C'}
+    (hK : K.truncate h ≍ K') (s : S) (a : FinSucc m) (y : B' s a) :
+    trInv E' s a (K'.map s a y) = K.map s (dimIncl h a) (trInv E s a y) := by
+  subst E E'; obtain rfl := eq_of_heq hK; rfl
+
+lemma map_heq (E : B.truncate h = B') (E' : C.truncate h = C') {K : Hom B C} {K' : Hom B' C'}
+    (hK : K.truncate h ≍ K') (s : S) (a : FinSucc m) {x : B' s a} {y : B s (dimIncl h a)}
+    (hxy : x ≍ y) : K'.map s a x ≍ K.map s (dimIncl h a) y := by
+  subst E E'; obtain rfl := eq_of_heq hK; obtain rfl := eq_of_heq hxy; rfl
+
+end Hom
+
+end CatAlgebra
+
+theorem CategoryStruct.ext_of {I : Type} [Preorder I] {C : TypeFamily.{w} I}
+    {X Y : CategoryStruct I C}
+    (hsc : ∀ {k j : I} (h : j < k) (x : C k), X.sc h x = Y.sc h x)
+    (htg : ∀ {k j : I} (h : j < k) (x : C k), X.tg h x = Y.tg h x)
+    (hidm : ∀ {k j : I} (h : j < k) (x : C j), X.idm h x = Y.idm h x)
+    (hpcomp : ∀ {k j : I} (h : j < k) (g f : C k), X.pcomp h g f = Y.pcomp h g f) :
+    X = Y := by
+  cases X with | mk sc₁ tg₁ idm₁ pcomp₁ =>
+  cases Y with | mk sc₂ tg₂ idm₂ pcomp₂ =>
+  have e₁ : @sc₁ = @sc₂ := by funext k j h x; exact hsc h x
+  have e₂ : @tg₁ = @tg₂ := by funext k j h x; exact htg h x
+  have e₃ : @idm₁ = @idm₂ := by funext k j h x; exact hidm h x
+  have e₄ : @pcomp₁ = @pcomp₂ := by funext k j h g f; exact hpcomp h g f
+  subst e₁ e₂ e₃ e₄; rfl
+
+theorem Category.ext_of {I : Type} [Preorder I] {C : TypeFamily.{w} I} {X Y : Category I C}
+    (h : X.toCategoryStruct = Y.toCategoryStruct) : X = Y := by
+  cases X with | @mk P₁ =>
+  cases P₁ with | @mk S₁ =>
+  cases Y with | @mk P₂ =>
+  cases P₂ with | @mk S₂ =>
+  subst h
+  rfl
+
+namespace CatAlgebra
+
+theorem ext_of_heq {A B : CatAlgebra.{u, v, w} Sig n} (hc : A.carrier = B.carrier)
+    (hsc : ∀ s {a b : FinSucc n} (h : a < b) (x : A s b) (y : B s b), x ≍ y → sc h x ≍ sc h y)
+    (htg : ∀ s {a b : FinSucc n} (h : a < b) (x : A s b) (y : B s b), x ≍ y → tg h x ≍ tg h y)
+    (hidm : ∀ s {a b : FinSucc n} (h : a < b) (x : A s a) (y : B s a), x ≍ y →
+      idm h x ≍ idm h y)
+    (hpcomp : ∀ s {a b : FinSucc n} (h : a < b) (g f : A s b) (g' f' : B s b), g ≍ g' → f ≍ f' →
+      CategoryStruct.pcomp h g f ≍ CategoryStruct.pcomp h g' f')
+    (hop : ∀ {ws : List S} {s : S} (σ : Sig ws s) (a : FinSucc n) (x : ExtArity A.carrier ws a)
+      (y : ExtArity B.carrier ws a), x ≍ y → A.op σ a x ≍ B.op σ a y) :
+    A = B := by
+  cases A with | @mk C strA opA =>
+  cases B with | @mk D strB opB =>
+  dsimp only at hc
+  subst hc
+  have hstr : strA = strB := by
+    funext s
+    exact Category.ext_of (CategoryStruct.ext_of
+      (fun h x => eq_of_heq (hsc s h x x HEq.rfl))
+      (fun h x => eq_of_heq (htg s h x x HEq.rfl))
+      (fun h x => eq_of_heq (hidm s h x x HEq.rfl))
+      (fun h g f => eq_of_heq (hpcomp s h g f g f HEq.rfl HEq.rfl)))
+  subst hstr
+  have hop' : @opA = @opB := by
+    funext ws s σ
+    exact Functor.ext fun a x => eq_of_heq (hop σ a x x HEq.rfl)
+  subst hop'
+  rfl
+
+theorem Hom.heq_of {A₁ A₂ B₁ B₂ : CatAlgebra.{u, v, w} Sig n} (E₁ : A₁ = A₂) (E₂ : B₁ = B₂)
+    {K : Hom A₁ B₁} {K' : Hom A₂ B₂}
+    (h : ∀ s a (x : A₁ s a) (y : A₂ s a), x ≍ y → K.map s a x ≍ K'.map s a y) : K ≍ K' := by
+  subst E₁ E₂
+  exact heq_of_eq (Hom.ext fun s => Functor.ext fun a x => eq_of_heq (h s a x x HEq.rfl))
+
 end CatAlgebra
 ```
 
@@ -327,8 +435,261 @@ def limCategory (s : S) : OmegaCategory (limCarrier A s) where
       (lim_sc_is_tg hA j_lt_k p₁) (lim_sc_is_tg hA j_lt_k p₂)
       (lim_sc_is_tg hA (i_lt_j.trans j_lt_k) p₃) (lim_sc_is_tg hA (i_lt_j.trans j_lt_k) p₄)
 
+lemma lim_op_sc {ws : List S} (σ : Sig ws s) {k j : ℕ} (h : j < k)
+    (a : ExtArity (A k).carrier ws (Fin.last k)) :
+    (A j).op σ (Fin.last j)
+      (fun l => tr (hA j k h.le) (ws.get l) (Fin.last j) (sc (last_lt h) (a l))) =
+    tr (hA j k h.le) s (Fin.last j) (sc (last_lt h) ((A k).op σ (Fin.last k) a)) := by
+  rw [op_tr]
+  exact congrArg _ (((A k).op σ).map_sc_eq_sc_map (last_lt h) a)
+
+lemma lim_op_tg {ws : List S} (σ : Sig ws s) {k j : ℕ} (h : j < k)
+    (a : ExtArity (A k).carrier ws (Fin.last k)) :
+    (A j).op σ (Fin.last j)
+      (fun l => tr (hA j k h.le) (ws.get l) (Fin.last j) (tg (last_lt h) (a l))) =
+    tr (hA j k h.le) s (Fin.last j) (tg (last_lt h) ((A k).op σ (Fin.last k) a)) := by
+  rw [op_tr]
+  exact congrArg _ (((A k).op σ).map_tg_eq_tg_map (last_lt h) a)
+
+lemma lim_op_idm {ws : List S} (σ : Sig ws s) {k j : ℕ} (h : j < k)
+    (u : ExtArity (A j).carrier ws (Fin.last j)) :
+    (A k).op σ (Fin.last k)
+      (fun l => idm (last_lt h) (trInv (hA j k h.le) (ws.get l) (Fin.last j) (u l))) =
+    idm (last_lt h) (trInv (hA j k h.le) s (Fin.last j) ((A j).op σ (Fin.last j) u)) := by
+  rw [trInv_op]
+  exact ((A k).op σ).map_idm_eq_idm_map (last_lt h) _
+
+```
+
+:::construction (label := "extended.limit-algebra") (central := false) (title := "The ω-categorial algebra of a compatible family")
+Let $`(\boldsymbol{\mathsf{A}}_n)_{n \in \mathbb{N}}` be a compatible family of extended
+$`n`-categorial $`\Sigma`-algebras. Its *limit* $`\varprojlim_n \boldsymbol{\mathsf{A}}_n` is the
+extended $`\omega`-categorial $`\Sigma`-algebra whose $`k`-cells of sort $`s` are the $`k`-cells of
+sort $`s` of $`\boldsymbol{\mathsf{A}}_k`, its cells of top dimension. For $`j < k`, the
+$`(j,k)`-source of a $`k`-cell $`x` is its $`(j,k)`-source in $`\boldsymbol{\mathsf{A}}_k`,
+which is a $`j`-cell of $`\boldsymbol{\mathsf{A}}_k` and so, by compatibility, a $`j`-cell of
+$`\boldsymbol{\mathsf{A}}_j`; targets, identities and compositions are defined in the same way,
+and an operation symbol acts on $`k`-cells as it does in $`\boldsymbol{\mathsf{A}}_k`. Every
+axiom involves finitely many dimensions $`i < j < k`, and holds because it holds in
+$`\boldsymbol{\mathsf{A}}_k`.
+
+```lean
+variable (A) in
+/-- The extended `ω`-categorial algebra of a compatible family: its `k`-cells, and the action
+of the operations on them, are those of the `k`-th member of the family. -/
+def lim : OmegaCatAlgebra.{u, v, w} Sig :=
+  letI := limCategory A hA
+  { carrier := limCarrier A
+    str := limCategory A hA
+    op := fun {ws s} σ =>
+    { map := fun k a => (A k).op σ (Fin.last k) a
+      map_sc_eq_sc_map := fun h a => lim_op_sc hA σ h a
+      map_tg_eq_tg_map := fun h a => lim_op_tg hA σ h a
+      map_idm_eq_idm_map := fun h u => lim_op_idm hA σ h u
+      map_comp_eq_comp_map := by
+        intro k j h f g p
+        exact ((A k).op σ).map_comp_eq_comp_map (j_lt_k := last_lt h)
+          (funext fun l => lim_sc_is_tg hA h (congrFun p l)) } }
+
+```
+:::
+
+```lean
 end Limit
 ```
+
+```lean
+section LimitProps
+
+open CatAlgebra
+
+variable {A : ∀ n, CatAlgebra.{u, v, w} Sig n} (hA : ∀ m n (h : m ≤ n), (A n).truncate h = A m)
+
+theorem lim_truncate (n : ℕ) : (lim A hA).truncate n = A n := by
+  apply CatAlgebra.ext_of_heq
+  · funext s i
+    exact (congrFun (congrFun (congrArg CatAlgebra.carrier
+      (hA i n (Nat.lt_succ_iff.mp i.isLt))) s) (Fin.last i)).symm
+  · intro s a b h x y hxy
+    exact (tr_heq _ _ _ _).trans (sc_heq (hA b n (Nat.lt_succ_iff.mp b.isLt)) s (last_lt h) hxy)
+  · intro s a b h x y hxy
+    exact (tr_heq _ _ _ _).trans (tg_heq (hA b n (Nat.lt_succ_iff.mp b.isLt)) s (last_lt h) hxy)
+  · intro s a b h x y hxy
+    exact idm_heq (hA b n (Nat.lt_succ_iff.mp b.isLt)) s (last_lt h)
+      ((trInv_heq _ _ _ _).trans hxy)
+  · intro s a b h g f g' f' hg hf
+    exact pcomp_heq (hA b n (Nat.lt_succ_iff.mp b.isLt)) s (last_lt h) hg hf
+  · intro ws s σ a x y hxy
+    exact op_heq (hA a n (Nat.lt_succ_iff.mp a.isLt)) σ (Fin.last a) hxy
+
+theorem lim_self (B : OmegaCatAlgebra.{u, v, w} Sig) :
+    lim (fun n => B.truncate n) (fun _ _ _ => rfl) = B :=
+  rfl
+
+theorem lim_congr {A' : ∀ n, CatAlgebra.{u, v, w} Sig n}
+    (hA' : ∀ m n (h : m ≤ n), (A' n).truncate h = A' m) (e : A = A') :
+    lim A hA = lim A' hA' := by
+  subst e; rfl
+
+end LimitProps
+```
+
+# Homomorphisms between limits
+
+```lean
+section LimitHom
+
+open CatAlgebra
+
+variable {A A' : ∀ n, CatAlgebra.{u, v, w} Sig n}
+  {hA : ∀ m n (h : m ≤ n), (A n).truncate h = A m}
+  {hA' : ∀ m n (h : m ≤ n), (A' n).truncate h = A' m}
+  (H : ∀ n, CatAlgebra.Hom (A n) (A' n))
+  (hH : ∀ m n (h : m ≤ n), (H n).truncate h ≍ H m)
+
+```
+
+:::construction (label := "extended.limit-hom") (central := false) (title := "The homomorphism of a compatible family")
+Let $`(\boldsymbol{\mathsf{A}}_n)_n` and $`(\boldsymbol{\mathsf{A}}'_n)_n` be compatible families
+and $`(H_n \colon \boldsymbol{\mathsf{A}}_n \to \boldsymbol{\mathsf{A}}'_n)_n` a family of
+homomorphisms such that $`T^{\mathrm{ext}(m,n)}_{\Sigma}(H_n) = H_m` for $`m \leq n`. Then the
+mappings $`H_{k,s,k}`, which send the $`k`-cells of $`\boldsymbol{\mathsf{A}}_k` to those of
+$`\boldsymbol{\mathsf{A}}'_k`, form a homomorphism
+$`\varprojlim_n H_n \colon \varprojlim_n \boldsymbol{\mathsf{A}}_n \to \varprojlim_n \boldsymbol{\mathsf{A}}'_n`.
+
+```lean
+/-- The homomorphism between the limits of two compatible families determined by a compatible
+family of homomorphisms: on `k`-cells it is the `k`-th homomorphism of the family. -/
+def limHom : OmegaCatAlgebra.Hom (lim A hA) (lim A' hA') where
+  map s :=
+    { map := fun k x => (H k).map s (Fin.last k) x
+      map_sc_eq_sc_map := by
+        intro k j h x
+        change (H j).map s (Fin.last j) (tr (hA j k h.le) s (Fin.last j) (sc (last_lt h) x)) =
+          tr (hA' j k h.le) s (Fin.last j) (sc (last_lt h) ((H k).map s (Fin.last k) x))
+        rw [map_tr (hA j k h.le) (hA' j k h.le) (hH j k h.le)]
+        exact congrArg _ (((H k).map s).map_sc_eq_sc_map (last_lt h) x)
+      map_tg_eq_tg_map := by
+        intro k j h x
+        change (H j).map s (Fin.last j) (tr (hA j k h.le) s (Fin.last j) (tg (last_lt h) x)) =
+          tr (hA' j k h.le) s (Fin.last j) (tg (last_lt h) ((H k).map s (Fin.last k) x))
+        rw [map_tr (hA j k h.le) (hA' j k h.le) (hH j k h.le)]
+        exact congrArg _ (((H k).map s).map_tg_eq_tg_map (last_lt h) x)
+      map_idm_eq_idm_map := by
+        intro k j h u
+        exact (((H k).map s).map_idm_eq_idm_map (last_lt h) _).trans
+          (congrArg (idm (last_lt h))
+            (trInv_map (hA j k h.le) (hA' j k h.le) (hH j k h.le) s (Fin.last j) u).symm)
+      map_comp_eq_comp_map := by
+        intro k j h f g p
+        exact ((H k).map s).map_comp_eq_comp_map (j_lt_k := last_lt h) (lim_sc_is_tg hA h p) }
+  map_op σ k a := (H k).map_op σ (Fin.last k) a
+
+```
+:::
+
+Truncating the limit gives back the family, and every extended $`\omega`-categorial algebra,
+or homomorphism, is the limit of its truncations.
+
+```lean
+theorem limHom_truncate (n : ℕ) :
+    (limHom (hA := hA) (hA' := hA') H hH).truncate n ≍ H n := by
+  refine Hom.heq_of (lim_truncate hA n) (lim_truncate hA' n) ?_
+  intro s a x y hxy
+  exact map_heq (hA a n (Nat.lt_succ_iff.mp a.isLt)) (hA' a n (Nat.lt_succ_iff.mp a.isLt))
+    (hH a n (Nat.lt_succ_iff.mp a.isLt)) s (Fin.last a) hxy
+
+end LimitHom
+
+theorem limHom_self {B B' : OmegaCatAlgebra.{u, v, w} Sig} (K : OmegaCatAlgebra.Hom B B') :
+    limHom (hA := fun _ _ _ => rfl) (hA' := fun _ _ _ => rfl) (fun n => K.truncate n)
+      (fun _ _ _ => HEq.rfl) = K :=
+  rfl
+
+theorem limHom_congr {A₁ A₂ A₁' A₂' : ∀ n, CatAlgebra.{u, v, w} Sig n}
+    {hA₁ : ∀ m n (h : m ≤ n), (A₁ n).truncate h = A₁ m}
+    {hA₂ : ∀ m n (h : m ≤ n), (A₂ n).truncate h = A₂ m}
+    {hA₁' : ∀ m n (h : m ≤ n), (A₁' n).truncate h = A₁' m}
+    {hA₂' : ∀ m n (h : m ≤ n), (A₂' n).truncate h = A₂' m}
+    {H₁ : ∀ n, CatAlgebra.Hom (A₁ n) (A₁' n)} {H₂ : ∀ n, CatAlgebra.Hom (A₂ n) (A₂' n)}
+    (hH₁ : ∀ m n (h : m ≤ n), (H₁ n).truncate h ≍ H₁ m)
+    (hH₂ : ∀ m n (h : m ≤ n), (H₂ n).truncate h ≍ H₂ m)
+    (e : A₁ = A₂) (e' : A₁' = A₂') (eH : H₁ ≍ H₂) :
+    limHom (hA := hA₁) (hA' := hA₁') H₁ hH₁ ≍ limHom (hA := hA₂) (hA' := hA₂') H₂ hH₂ := by
+  subst e e'
+  obtain rfl := eq_of_heq eH
+  rfl
+```
+
+# The universal property
+
+:::proposition (label := "extended.omega-cat-alg-limit") (central := false) (title := "Proposition 10.2")
+Let $`\mathsf{L}` be a category and, for every $`n \in \mathbb{N}`, let
+$`F_n \colon \mathsf{L} \to \mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)` be a functor. If
+$`F_m = T^{\mathrm{ext}(m,n)}_{\Sigma} \circ F_n` for all $`m \leq n`, then there exists a
+unique functor
+$`\langle F_k \rangle_{k \in \mathbb{N}} \colon \mathsf{L} \to \omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)`
+such that $`F_n = T^{\mathrm{ext}(n,\omega)}_{\Sigma} \circ \langle F_k \rangle_{k \in \mathbb{N}}`
+for every $`n \in \mathbb{N}`.
+
+Together with Remark 10.1, this says that
+$`(\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma), T^{\mathrm{ext}(\cdot,\omega)}_{\Sigma})`
+is the projective limit of the projective system
+$`((\cdot)\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma), T^{\mathrm{ext}(\cdot)}_{\Sigma})` in
+$`\mathsf{Cat}`. The draft writes $`T^{(m,n)}_{\Sigma}` and $`T^{(n,\omega)}_{\Sigma}` in the
+statement; the functors meant are the extended ones.
+
+```lean
+theorem omegaCatAlg_isLimit {L : Type*} [CategoryTheory.Category L] (F : ∀ n, L ⥤ CatAlgebra.{u, v, w} Sig n)
+    (hF : ∀ m n (h : m ≤ n), F n ⋙ truncation Sig h = F m) :
+    ∃! G : L ⥤ OmegaCatAlgebra.{u, v, w} Sig, ∀ n, G ⋙ truncationω Sig n = F n := by
+  let G : L ⥤ OmegaCatAlgebra.{u, v, w} Sig :=
+    { obj := fun X => lim (fun n => (F n).obj X) (fun m n h => Functor.congr_obj (hF m n h) X)
+      map := fun f => limHom (fun n => (F n).map f) (fun m n h => Functor.hcongr_hom (hF m n h) f)
+      map_id := by
+        intro X
+        refine OmegaCatAlgebra.Hom.ext fun s => CategorialAlgebras.Extended.Functor.ext ?_
+        intro k x
+        change ((F k).map (𝟙 X)).map s (Fin.last k) x = x
+        rw [(F k).map_id]
+        rfl
+      map_comp := by
+        intro X Y Z f g
+        refine OmegaCatAlgebra.Hom.ext fun s => CategorialAlgebras.Extended.Functor.ext ?_
+        intro k x
+        change ((F k).map (f ≫ g)).map s (Fin.last k) x =
+          ((F k).map g).map s (Fin.last k) (((F k).map f).map s (Fin.last k) x)
+        rw [(F k).map_comp]
+        rfl }
+  refine ⟨G, fun n => ?_, fun G' hG' => ?_⟩
+  · exact Functor.hext (fun X => lim_truncate _ n)
+      (fun X Y f => limHom_truncate _ (fun m n h => Functor.hcongr_hom (hF m n h) f) n)
+  · refine Functor.hext (fun X => ?_) (fun X Y f => ?_)
+    · exact (lim_self (G'.obj X)).symm.trans
+        (lim_congr _ _ (funext fun n => Functor.congr_obj (hG' n) X))
+    · exact (heq_of_eq (limHom_self (G'.map f)).symm).trans
+        (limHom_congr _ (fun m n h => Functor.hcongr_hom (hF m n h) f)
+          (funext fun n => Functor.congr_obj (hG' n) X)
+          (funext fun n => Functor.congr_obj (hG' n) Y)
+          (Function.hfunext rfl fun n n' hn => by
+            cases hn
+            exact Functor.hcongr_hom (hG' n) f))
+```
+:::
+
+:::proof (of := "extended.omega-cat-alg-limit")
+For an object $`X` of $`\mathsf{L}`, the family $`(F_n(X))_{n}` is compatible, and
+$`\langle F_k \rangle_k(X)` is its limit; for a morphism $`f`, the family $`(F_n(f))_n` is
+compatible, and $`\langle F_k \rangle_k(f)` is its limit. This is a functor because each
+$`F_k` is, and $`T^{\mathrm{ext}(n,\omega)}_{\Sigma}` sends it to $`F_n`, since truncating the
+limit of a compatible family gives back the family.
+
+For uniqueness, let $`G` be another functor with
+$`T^{\mathrm{ext}(n,\omega)}_{\Sigma} \circ G = F_n` for every $`n`. An extended
+$`\omega`-categorial algebra is the limit of its truncations, so
+$`G(X) = \varprojlim_n T^{\mathrm{ext}(n,\omega)}_{\Sigma}(G(X)) = \varprojlim_n F_n(X)`, and in
+the same way $`G(f) = \varprojlim_n F_n(f)`.
+:::
 
 ```lean
 end CategorialAlgebras.Extended

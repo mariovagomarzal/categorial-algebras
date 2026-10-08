@@ -10,5 +10,5 @@ depends = []
 [[item]]
 ref = "§8.2 truncation"
 kind = "definition"
-state = "planned"
+state = "in-progress"
 depends = []
