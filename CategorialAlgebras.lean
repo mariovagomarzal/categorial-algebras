@@ -10,6 +10,9 @@ import CategorialAlgebras.Extended.Category
 import CategorialAlgebras.Extended.Functor
 import CategorialAlgebras.Extended.Product
 import CategorialAlgebras.Extended.Algebra
+import CategorialAlgebras.Extended.Restriction
+import CategorialAlgebras.Extended.OmegaAlgebra
+import CategorialAlgebras.Extended.Truncation
 
 open Verso.Genre Manual InlineLean Stemma
 
