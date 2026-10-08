@@ -6,6 +6,9 @@ import CategorialAlgebras.Compact.Category
 import CategorialAlgebras.Compact.Functor
 import CategorialAlgebras.Compact.Product
 import CategorialAlgebras.Compact.Algebra
+import CategorialAlgebras.Compact.Restriction
+import CategorialAlgebras.Compact.OmegaAlgebra
+import CategorialAlgebras.Compact.Truncation
 import CategorialAlgebras.Extended.Category
 import CategorialAlgebras.Extended.Functor
 import CategorialAlgebras.Extended.Product

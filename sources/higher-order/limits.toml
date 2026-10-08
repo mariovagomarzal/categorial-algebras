@@ -4,20 +4,22 @@ owner = "encosllo"
 [[item]]
 ref = "Rem. 9.1"
 kind = "remark"
-state = "planned"
+state = "done"
+labels = ["compact.truncation-proj-system", "compact.pi-omega-category", "compact.omega-cat-algebra", "compact.omega-cat-algebra-hom", "compact.omega-cat-alg"]
 depends = []
 
 [[item]]
 ref = "Prop. 9.2"
 kind = "statement"
-state = "planned"
+state = "blocked"
+reason = "In the compact presentation the truncation functors compose only up to canonical isomorphism (Rem. 9.1 is formalized as natural isomorphisms), so the strict universal property of the draft cannot be stated faithfully. It needs a decision: a pseudo-limit version (families coherent up to isomorphism), or deriving it from Prop. 10.2 through the equivalence between the compact and the extended presentations."
 depends = ["Rem. 9.1"]
 
 [[item]]
 ref = "Rem. 10.1"
 kind = "remark"
 state = "done"
-labels = ["extended.truncation-proj-system", "extended.truncation-omega-comp"]
+labels = ["extended.truncation-proj-system", "extended.truncation-omega-comp", "extended.omega-cat-algebra", "extended.omega-cat-algebra-hom", "extended.omega-cat-alg"]
 depends = []
 
 [[item]]
