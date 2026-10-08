@@ -6,7 +6,7 @@ stemma = "0.4.0"
 # The group's members, their roles, and the public keys they sign with.
 [members]
 "mariovagomarzal" = { roles = ["maintainer", "signer"], keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO/707M6eyzrXPQjJTSYzKksHy35vGXsmO5FtPamb4aG"] }
-"encosllo" = { roles = ["maintainer", "signer"], keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPvY3UkEPBl2SUrxTvKAfPwKuF9uicBIDzGiPcoo6RJO"] }
+"encosllo" = { roles = ["maintainer", "signer"], keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPvY3UkEPBl2SUrxTvKAfPwKuF9uicBIDzGiPcoo6RJO", "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM+/iDsQ1oYJL1ufPIiVkNIByOE4NQmrfa+IKxbK1+9G"] }
 "ruizmoraraul" = { roles = ["maintainer", "signer"], keys = [] }
 
 # What the library requires: every central environment carries a current
