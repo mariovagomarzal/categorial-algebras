@@ -6,7 +6,7 @@ open Verso.Genre Manual InlineLean Stemma
 
 #doc (Stemma) "Truncation of compact categorial algebras" =>
 
-Definition 8.1 of the draft (labelled `DTmnCatAlg`) defines the truncation
+Definition `DTmnCatAlg` of the draft defines the truncation
 functors $`T^{(m,n)}_{\Sigma} \colon \mathsf{nCatAlg}(\Sigma) \to \mathsf{mCatAlg}(\Sigma)`, for
 $`m \leq n`, and $`T^{(n,\omega)}_{\Sigma} \colon \omega\mathsf{CatAlg}(\Sigma) \to \mathsf{nCatAlg}(\Sigma)`.
 In the compact presentation, truncating at level $`m` keeps the cells of dimension at most
@@ -17,7 +17,7 @@ Unlike the extended truncation functors, these functors compose only up to a can
 isomorphism: the $`m`-truncation of the $`n`-truncation of $`\boldsymbol{\mathsf{A}}` has as
 cells the $`m`-cells *of the set of* $`n`-cells of $`\boldsymbol{\mathsf{A}}`, which are the
 $`m`-cells of $`\boldsymbol{\mathsf{A}}` with a proof that they are $`n`-cells, not the
-$`m`-cells of $`\boldsymbol{\mathsf{A}}` themselves. Remark 9.1 is therefore stated below as a
+$`m`-cells of $`\boldsymbol{\mathsf{A}}` themselves. Remark `RTmnCatAlgProjSys` is therefore stated below as a
 natural isomorphism.
 
 ```lean
@@ -200,19 +200,19 @@ def truncToTruncTrunc (A : OmegaCatAlgebra.{u, v, w} Sig) :
 end OmegaCatAlgebra
 ```
 
-:::proposition (label := "compact.truncation-proj-system") (central := false) (title := "Remark 9.1")
+:::proposition (label := "compact.truncation-proj-system") (central := false) (title := "The compact truncations form a projective system")
 For all $`m \leq n \leq p`, the functors $`T^{(m,n)}_{\Sigma} \circ T^{(n,p)}_{\Sigma}` and
 $`T^{(m,p)}_{\Sigma}` are naturally isomorphic, by the isomorphism that sends a cell to itself,
 and $`T^{(n,n)}_{\Sigma}` is naturally isomorphic to the identity functor. Likewise
 $`T^{(m,n)}_{\Sigma} \circ T^{(n,\omega)}_{\Sigma}` is naturally isomorphic to
 $`T^{(m,\omega)}_{\Sigma}`.
 
-Remark 9.1 of the draft states the equations
+Remark `RTmnCatAlgProjSys` of the draft states the equations
 $`T^{(m,n)}_{\Sigma} \circ T^{(n,p)}_{\Sigma} = T^{(m,p)}_{\Sigma}` on the nose: in set theory,
 where the cells of a truncation are a subset of the cells, they hold; in the formalization, a
 cell of the truncation is a cell together with a proof that it has the right dimension, and the
 two sides only agree up to the canonical isomorphism. In the extended presentation the
-equations hold on the nose (Remark 10.1).
+equations hold on the nose (Remark `RTmnExtCatAlgProjSys`).
 
 ```lean
 def truncation_comp_iso (Sig : Signature.{u, v} S) {m n p : ℕ} (hmn : m ≤ n) (hnp : n ≤ p) :

@@ -1,51 +1,51 @@
-title = "6. Extended presentation of higher-order categorial algebras"
+title = "Extended presentation of higher-order categorial algebras"
 owner = "encosllo"
 
 [[item]]
-ref = "Def. 6.1"
+ref = "DOmegaCatExt"
 kind = "definition"
 state = "done"
 labels = ["extended.category-struct", "extended.precategory", "extended.category", "extended.n-category", "extended.one-category-of-precategory"]
 depends = []
 
 [[item]]
-ref = "p. 6, extended n-categories and n-functors"
+ref = "SExtended, extended n-categories and n-functors"
 kind = "definition"
 state = "done"
 labels = ["extended.functor", "extended.functor-comp", "extended.n-functor", "extended.cat"]
-depends = ["Def. 6.1"]
+depends = ["DOmegaCatExt"]
 
 [[item]]
-ref = "Def. 6.2"
+ref = "DSortednCatExt"
 kind = "definition"
 state = "done"
 labels = ["extended.pi-category-struct", "extended.pi-category", "extended.arity-product"]
-depends = ["p. 6, extended n-categories and n-functors"]
+depends = ["SExtended, extended n-categories and n-functors"]
 
 [[item]]
-ref = "Def. 6.3"
+ref = "DExtCatAlg"
 kind = "definition"
 state = "done"
 labels = ["extended.cat-algebra", "extended.cat-algebra-hom", "extended.cat-alg"]
-depends = ["Def. 6.2"]
+depends = ["DSortednCatExt"]
 
 [[item]]
-ref = "Def. 6.4"
+ref = "DSigmaCatExtended"
 kind = "definition"
 state = "done"
 labels = ["extended.signature"]
 depends = []
 
 [[item]]
-ref = "Def. 6.5"
+ref = "DVarExtended"
 kind = "definition"
 state = "done"
 labels = ["extended.qe-specification"]
-depends = ["Def. 6.4"]
+depends = ["DSigmaCatExtended", "DQEEq"]
 
 [[item]]
-ref = "Def. 6.6"
+ref = "DOmegaExtCatAlg"
 kind = "definition"
 state = "done"
 labels = ["extended.omega-cat-algebra", "extended.omega-cat-algebra-hom", "extended.omega-cat-alg"]
-depends = ["Def. 6.3"]
+depends = ["DExtCatAlg"]

@@ -1,0 +1,37 @@
+title = "Preliminaries"
+owner = "encosllo"
+
+[[item]]
+ref = "SPreliminaries, words"
+kind = "notation"
+state = "done"
+labels = ["signature"]
+depends = []
+
+[[item]]
+ref = "DSortedSet"
+kind = "definition"
+state = "done"
+labels = ["sorted-set"]
+depends = []
+
+[[item]]
+ref = "DSignature"
+kind = "definition"
+state = "done"
+labels = ["signature", "signature.arity-product"]
+depends = ["SPreliminaries, words", "DSortedSet"]
+
+[[item]]
+ref = "DPartialAlg"
+kind = "definition"
+state = "done"
+labels = ["partial-algebra", "partial-algebra-hom"]
+depends = ["DSignature"]
+
+[[item]]
+ref = "DQEEq"
+kind = "definition"
+state = "done"
+labels = ["term", "term-eval", "qe-equation", "qe-variety"]
+depends = ["DPartialAlg"]

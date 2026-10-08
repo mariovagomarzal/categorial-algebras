@@ -2,13 +2,22 @@ title = "Higher-order categorial algebras"
 phase = "planning"
 scope = """
 Research in progress (draft by Climent Vidal, Cosme Llópez, Ruiz Mora and Vago Marzal), \
-kept in `higher-order-categorial-algebras.tex`. First scope: Section 5 (compact presentation: \
-compact n-categories, many-sorted compact n-categorial algebras and their category), Section 6 \
-(extended presentation and its algebras), then Section 8 (truncation and discretization of \
-algebras) and Sections 9–10 (ωCatAlg as a projective limit). Definitions are refined where the \
-draft is wrong or incomplete; every refinement is recorded in the item's `reason` or in the \
-prose. Sections 2–4 (Hall algebras, derivors) and 11 are out of this first scope. The QE \
-specifications (Defs. 5.6, 6.5) wait until partial-algebra machinery exists."""
+kept in `main.tex`, the reference document: every result of the library is checked against it. \
+The refs of this plan, and the citations of the documents, are the LaTeX labels of `main.tex` \
+(such as `DManySortedCatAlg` or `SCompact`), never its numbers, so that new text in `main.tex` \
+changes nothing here. `SIntroduction` holds the prerequisites, notation and terminology; the \
+sections after it are the body of the draft. Appendices A (`S0C`, many-sorted sets and algebras) \
+and B (`S0D`, many-sorted partial algebras) are reference material for completing definitions \
+the body leaves out; where they overlap the body (`SDerivors` and Appendix A on derivors, `DQEEq` \
+and Appendix B on QE-equations) the body prevails. First scope: `SPreliminaries` (words, \
+many-sorted sets, signatures, partial algebras and QE-equations), `SCompact` (compact \
+n-categories, many-sorted compact n-categorial algebras, their category and their QE \
+specification), `SExtended` (the extended presentation and its algebras), then `STruncation` \
+(truncation and discretization of algebras) and `SLimitCompact`, `SLimitExtended` (ωCatAlg as \
+a projective limit). Definitions are refined where the draft is wrong or incomplete; every \
+refinement is recorded in the item's `reason` or in the prose. `SDerivors`, `SGenDerivors`, \
+`SEpDerivors`, `SGenEpDerivors` (Hall algebras, derivors), `SGraduation` (graduation and \
+unification) and `SAlgSquare` (algebraic squares) are out of this first scope."""
 reuse = """
 The categorial core is ported from the group's repository \
 https://github.com/mariovagomarzal/higher_category_theory (Apache 2.0; authors Cosme Llópez, \

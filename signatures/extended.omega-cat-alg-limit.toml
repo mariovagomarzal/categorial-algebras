@@ -3,12 +3,11 @@ kind = "statement"
 central = true
 
 signer = "encosllo"
-signed = 2026-10-08T12:10:41Z
-agent = "claude-opus-5-5"
+signed = 2026-10-08T13:12:45Z
 
 [fingerprints]
 version = 1
-prose = "sha256:f7972c682697180902ca3be7680d8dfb93e1b1da516998fb8c8ce190504619a9"
+prose = "sha256:e1818b118da6137362052db6f1ada8ef630f539fe4120043dd9de51feb35588f"
 formal = "sha256:d40aa87cd7d524ab81d6e5b8c8e25d9822cfa90e9ea991efd57ed5e04eeb07dd"
 
 [closure]
