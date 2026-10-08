@@ -99,35 +99,20 @@ for all sorts, operation symbols, dimensions and variables (Definition 6.5 of th
    $`\mathrm{sc}^{(h,j)}\mathrm{tg}^{(j,k)}(x)` are equal to $`\mathrm{sc}^{(h,k)}(x)`, and
    $`\mathrm{tg}^{(h,j)}\mathrm{tg}^{(j,k)}(x)` and $`\mathrm{tg}^{(h,j)}\mathrm{sc}^{(j,k)}(x)`
    to $`\mathrm{tg}^{(h,k)}(x)`;
-   (EA$`^{h,j,k}`2) $`\mathrm{sc}^{(h,j)}\mathrm{i}^{(j,h)}(v) \overset{\mathrm{e}}{=} v`,
-   $`\mathrm{tg}^{(h,j)}\mathrm{i}^{(j,h)}(v) \overset{\mathrm{e}}{=} v`,
-   $`\mathrm{sc}^{(h,k)}\mathrm{i}^{(k,h)}(v) \overset{\mathrm{e}}{=} v` and
-   $`\mathrm{tg}^{(h,k)}\mathrm{i}^{(k,h)}(v) \overset{\mathrm{e}}{=} v`;
+   (EA$`^{h,j,k}`2) $`\mathrm{i}^{(k,j)}\mathrm{i}^{(j,h)}(u) \overset{\mathrm{e}}{=} \mathrm{i}^{(k,h)}(u)`;
    (EA$`^{h,j,k}`3) if $`x \circ^{(h,k)} y` is defined, then
    $`\mathrm{sc}^{(j,k)}(x \circ^{(h,k)} y) \overset{\mathrm{e}}{=} \mathrm{sc}^{(j,k)}(x) \circ^{(h,j)} \mathrm{sc}^{(j,k)}(y)`,
    and likewise for targets;
    (EA$`^{h,j,k}`4) if $`x \circ^{(j,k)} y`, $`z \circ^{(j,k)} t`, $`x \circ^{(h,k)} z` and
    $`y \circ^{(h,k)} t` are defined, then
-   $`(x \circ^{(j,k)} y) \circ^{(h,k)} (z \circ^{(j,k)} t) \overset{\mathrm{e}}{=} (x \circ^{(h,k)} z) \circ^{(j,k)} (y \circ^{(h,k)} t)`.
+   $`(x \circ^{(j,k)} y) \circ^{(h,k)} (z \circ^{(j,k)} t) \overset{\mathrm{e}}{=} (x \circ^{(h,k)} z) \circ^{(j,k)} (y \circ^{(h,k)} t)`;
+   (EA$`^{h,j,k}`5) if $`u \circ^{(h,j)} v` is defined, then
+   $`\mathrm{i}^{(k,j)}(u \circ^{(h,j)} v) \overset{\mathrm{e}}{=} \mathrm{i}^{(k,j)}(u) \circ^{(h,k)} \mathrm{i}^{(k,j)}(v)`.
 
-Three of the axioms of the draft are not well typed, and are stated here with the least change
-that makes them so:
-
-- in (EA$`^{h,j,k}`2) the draft writes $`\mathrm{sc}^{(h,k)}(\mathrm{i}^{(k,h)}(u))` for a
-  $`j`-cell $`u`, but $`\mathrm{i}^{(k,h)}` applies to $`h`-cells: the variable is $`v`. All four
-  equations are then instances of (EA$`^{j,k}`2);
-- in (EA$`^{h,j,k}`3) the draft writes
-  $`\mathrm{sc}^{(h,k)}(x \circ^{(j,k)} y) = \mathrm{sc}^{(h,k)}(x) \circ^{(h,j)} \mathrm{sc}^{(h,k)}(y)`,
-  where $`\circ^{(h,j)}` is applied to $`h`-cells; the axiom meant is (MS3) of Definition 6.1, in
-  which a $`(j,k)`-source is taken of an $`h`-composite;
-- in (EA$`^{h,j,k}`4) the draft composes the $`k`-cells $`x \circ^{(h,k)} z` and
-  $`y \circ^{(h,k)} t` with $`\circ^{(h,j)}`; the composition meant is $`\circ^{(j,k)}`.
-
-Moreover, the draft says that the models of the specification are the extended
-$`n`-categories, but the specification has no counterpart of the conditions (MS4),
-$`\mathrm{i}^{(k,j)}\mathrm{i}^{(j,h)}(u) = \mathrm{i}^{(k,h)}(u)`, and (MS8), that identities
-preserve composition, of Definition 6.1. Perhaps (EA$`^{h,j,k}`2) was meant to be (MS4). They are
-not added here; this is a question for the authors.
+The axioms (EA$`^{h,j,k}`1)–(EA$`^{h,j,k}`5) are the counterparts of the conditions (MS1),
+(MS4), (MS3), (MS9) and (MS8) of Definition 6.1, so that the models of the specification are,
+as the draft says, the extended $`n`-categories with operations that are extended
+$`n`-functors.
 
 ```lean
 open ETerm in
@@ -199,16 +184,9 @@ inductive ExtendedAxiom (Sig : Signature.{u, v} S) (n : ℕ) :
   | EA1'_tg_sc {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i : ℕ) :
       ExtendedAxiom Sig n
         ⟨[], .mk' (tgT h₁ (scT h₂ (x (t := (c, s)) i))) (tgT (h₁.trans h₂) (x i))⟩
-  | EA2'_sc_ab {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i : ℕ) :
-      ExtendedAxiom Sig n ⟨[], .mk' (scT h₁ (idmT h₁ (x (t := (a, s)) i))) (x i)⟩
-  | EA2'_tg_ab {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i : ℕ) :
-      ExtendedAxiom Sig n ⟨[], .mk' (tgT h₁ (idmT h₁ (x (t := (a, s)) i))) (x i)⟩
-  | EA2'_sc_ac {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i : ℕ) :
+  | EA2' {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i : ℕ) :
       ExtendedAxiom Sig n
-        ⟨[], .mk' (scT (h₁.trans h₂) (idmT (h₁.trans h₂) (x (t := (a, s)) i))) (x i)⟩
-  | EA2'_tg_ac {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i : ℕ) :
-      ExtendedAxiom Sig n
-        ⟨[], .mk' (tgT (h₁.trans h₂) (idmT (h₁.trans h₂) (x (t := (a, s)) i))) (x i)⟩
+        ⟨[], .mk' (idmT h₂ (idmT h₁ (x (t := (a, s)) i))) (idmT (h₁.trans h₂) (x i))⟩
   | EA3'_sc {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i i' : ℕ) :
       ExtendedAxiom Sig n ⟨[.defined (compT (h₁.trans h₂) (x (t := (c, s)) i) (x i'))],
         .mk' (scT h₂ (compT (h₁.trans h₂) (x (t := (c, s)) i) (x i')))
@@ -226,6 +204,10 @@ inductive ExtendedAxiom (Sig : Signature.{u, v} S) (n : ℕ) :
           .mk' (compT (h₁.trans h₂) (compT h₂ (x (t := (c, s)) i) (x i'))
               (compT h₂ (x p) (x q)))
             (compT h₂ (compT (h₁.trans h₂) (x i) (x p)) (compT (h₁.trans h₂) (x i') (x q)))⟩
+  | EA5' {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i i' : ℕ) :
+      ExtendedAxiom Sig n ⟨[.defined (compT h₁ (x (t := (b, s)) i) (x i'))],
+        .mk' (idmT h₂ (compT h₁ (x (t := (b, s)) i) (x i')))
+          (compT (h₁.trans h₂) (idmT h₂ (x i)) (idmT h₂ (x i')))⟩
 
 /-- The specification `C^{Σ^{ext(n)}}`. -/
 def extendedSpec (Sig : Signature.{u, v} S) (n : ℕ) :

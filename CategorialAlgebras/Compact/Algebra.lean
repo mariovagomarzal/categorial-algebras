@@ -79,11 +79,9 @@ $`\sigma \in \Sigma_{\mathbf{s}, s}` and every family of cells
 $`(a_j)_{j \in |\mathbf{s}|} \in \mathsf{A}_{\mathbf{s}}`,
 $$`H_s\big(\sigma^{\boldsymbol{\mathsf{A}}}((a_j)_{j})\big) = \sigma^{\boldsymbol{\mathsf{B}}}\big((H_{s_j}(a_j))_{j}\big).`
 
-This refines Definition 5.4 of the draft, which asks the equation only for families of
-$`k`-cells with $`k \in n`. In the compact presentation the cells that are $`k`-cells for some
-$`k \in n` are only the cells of dimension below $`n`; the condition must hold for all cells,
-the $`n`-cells of the draft ($`C_n = C`), or a homomorphism would say nothing about the
-cells of top dimension.
+As Definition 5.4 of the draft says, the equation is asked for all cells, the $`n`-cells
+($`C_n = C`), and not only for the $`k`-cells with $`k \in n`, which are the cells of dimension
+below $`n`: otherwise a homomorphism would say nothing about the cells of top dimension.
 
 ```lean
 structure Hom (A B : CatAlgebra.{u, v, w} Sig n) where

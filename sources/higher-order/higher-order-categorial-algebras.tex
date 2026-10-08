@@ -692,6 +692,30 @@
 
 \section{Preliminaries}
 
+\subsection{Partial algebras and QE-equations}
+
+Throughout, $S$ is a set of sorts, $S^{\star}$ the set of words on $S$, and, for an $S$-sorted set $A$ and a word $\mathbf{s}=(s_{j})_{j\in\bb{\mathbf{s}}}\in S^{\star}$, $A_{\mathbf{s}}=\prod_{j\in\bb{\mathbf{s}}}A_{s_{j}}$. Sections~\ref{SCompact} and~\ref{SExtended} present higher-order categorial algebras as models of sets of $\mathrm{QE}$-equations between partial algebras. We fix here these notions, following~\cite{pb86, pb02}.
+
+\begin{definition}\label{DPartialAlg}
+Let $\Sigma$ be an $S$-sorted signature. A \emph{partial $\Sigma$-algebra} is a pair $\mathbf{A}=(A,F)$ where $A$ is an $S$-sorted set and $F$ assigns to every $\sigma\in\Sigma_{\mathbf{s},s}$ a partial mapping $F_{\sigma}\colon A_{\mathbf{s}}\dmor A_{s}$. A \emph{homomorphism} from $\mathbf{A}=(A,F)$ to $\mathbf{B}=(B,G)$ is an $S$-sorted mapping $h\colon A\mor B$ such that, for every $\sigma\in\Sigma_{\mathbf{s},s}$ and every $(a_{j})_{j\in\bb{\mathbf{s}}}\in\mathrm{Dom}(F_{\sigma})$, the family $(h_{s_{j}}(a_{j}))_{j\in\bb{\mathbf{s}}}$ is in $\mathrm{Dom}(G_{\sigma})$ and
+\[
+h_{s}(F_{\sigma}((a_{j})_{j\in\bb{\mathbf{s}}}))=G_{\sigma}((h_{s_{j}}(a_{j}))_{j\in\bb{\mathbf{s}}}).
+\]
+Homomorphisms preserve, but need not reflect, definedness.
+\end{definition}
+
+\begin{definition}\label{DQEEq}
+Let $\Sigma$ be an $S$-sorted signature and $V$ an $S$-sorted set of variables, and let $\mathrm{T}_{\Sigma}(V)$ be the $S$-sorted set of terms. For a partial $\Sigma$-algebra $\mathbf{A}$ and a valuation $v\colon V\mor A$, the value $t^{\mathbf{A}}[v]$ of a term $t$ is partial: $x^{\mathbf{A}}[v]=v(x)$ for a variable $x$, and $\sigma((t_{j})_{j})^{\mathbf{A}}[v]$ is defined if and only if every $t_{j}^{\mathbf{A}}[v]$ is defined and $(t_{j}^{\mathbf{A}}[v])_{j}\in\mathrm{Dom}(F_{\sigma})$, in which case it is $F_{\sigma}((t_{j}^{\mathbf{A}}[v])_{j})$.
+
+An \emph{existence equation} is a pair of terms $t,t'\in\mathrm{T}_{\Sigma}(V)_{s}$ of the same sort, written $t\overset{\mathrm{e}}{=}t'$; it \emph{holds} in $\mathbf{A}$ under $v$ if $t^{\mathbf{A}}[v]$ and $t'^{\mathbf{A}}[v]$ are both defined and are equal. In particular, $t\overset{\mathrm{e}}{=}t$ states that $t$ is defined. A \emph{$\mathrm{QE}$-equation} is an expression
+\[
+\textstyle\bigwedge_{i\in m}(t_{i}\overset{\mathrm{e}}{=}t'_{i})\;\longrightarrow\;t\overset{\mathrm{e}}{=}t',
+\]
+with $m\in\mathbb{N}$; it \emph{holds} in $\mathbf{A}$ if, for every valuation $v\colon V\mor A$ under which every premise $t_{i}\overset{\mathrm{e}}{=}t'_{i}$ holds, the conclusion $t\overset{\mathrm{e}}{=}t'$ holds. We denote by $\mathrm{QE}(\Sigma)_{V}$ the set of all $\mathrm{QE}$-equations with variables in $V$.
+
+A \emph{$\mathrm{QE}$-specification} is a quadruple $(S,\Sigma,V,\mathcal{E})$ with $\mathcal{E}\subseteq\mathrm{QE}(\Sigma)_{V}$. Its models, the partial $\Sigma$-algebras in which every equation of $\mathcal{E}$ holds, form the \emph{$\mathrm{QE}$-variety} $\mathcal{V}(\mathcal{E})$, and, together with the homomorphisms of Definition~\ref{DPartialAlg}, the category $\mathsf{PAlg}(\mathcal{E})$.
+\end{definition}
+
 \section{Derivors}
 
 In this subsection, after defining the variety of Hall algebras, we introduce the notion of derivor between many-sorted signatures. This will allow us, using the homomorphisms between Hall algebras, to obtain $\mathsf{Sig}_{\mathfrak{d}}$, the category of many-sorted signatures and derivors. Next, after defining a suitable contravariant functor from $\mathsf{Sig}_{\mathfrak{d}}$ to $\mathsf{Cat}$, the category of $\boldsymbol{\mathcal{U}}$-locally small categories and functors, we obtain, by means of the Grothendieck construction, $\mathsf{Alg}_{\mathfrak{d}}$, the category with objects the ordered pairs $((S,\Sigma),(A,F))$, with $(S,\Sigma)$ a many-sorted signature and $(A,F)$ a $\Sigma$-algebra, and morphisms from $((S,\Sigma),(A,F))$ to  $((T,\Lambda),(B,G))$ the ordered pairs $((\varphi,d),f)$, with $(\varphi,d)$ a derivor from $(S,\Sigma)$ to $(T,\Lambda)$ and $f$ a homomorphism of $\Sigma$-algebras from $(A,F)$ to $(B_{\varphi},G^{(\varphi,d)})$, a canonically derived algebra of $(B,G)$. 
@@ -1333,7 +1357,7 @@ Moreover, we will say that $\mathbf{A}$ is an equationally partial $\Sigma$-alge
 
 To define the notion of morphism from an equationally partial signature $(S,\Sigma,\mathrm{def})$ to another $(S',\Sigma',\mathrm{def}')$ we extend $\mathrm{def}$ to the terms by algebraic recursion (See Reichel). We denote by the same symbol such an extension or by $\mathrm{deft}$.
 
-\begin{definition}\label{DDerivor}Let $\mathbf{\Sigma} = (S,\Sigma)$ and $\mathbf{\Lambda} = (T,\Lambda)$ be many-sorted signatures. A \emph{derivor} from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ is an ordered pair $\mathbf{d} = (\varphi,d)$, where $\varphi\colon S\mor T$ and  $d\colon\Sigma\mor\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$. Thus, for every $(\mathbf{s},s)\in S^{\star}\times S$, %
+\begin{definition}\label{DDerivorEP}Let $\mathbf{\Sigma} = (S,\Sigma)$ and $\mathbf{\Lambda} = (T,\Lambda)$ be many-sorted signatures. A \emph{derivor} from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ is an ordered pair $\mathbf{d} = (\varphi,d)$, where $\varphi\colon S\mor T$ and  $d\colon\Sigma\mor\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$. Thus, for every $(\mathbf{s},s)\in S^{\star}\times S$, %
 	$$
 	d_{\mathbf{s},s}\colon \Sigma_{\mathbf{s},s}\mor\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}(\mathbf{s}),\varphi(s)}=
 	\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}.
@@ -1350,7 +1374,7 @@ I am not sure that this is the correct definition. For it to be the case, the mo
 
 \section{generalized ep-derivors}
 
-\section{Compact presentation of higher-order categorial algebras}
+\section{Compact presentation of higher-order categorial algebras}\label{SCompact}
 
 We begin by recalling the definitions of compact category, compact $2$-category, compact $n$-category, and many-sorted categorial algebra. These are the compact (single-sorted) presentations of the corresponding categorical structures.
 
@@ -1465,7 +1489,7 @@ $2$-categories and compact $2$-functors.
 \end{definition}
 
 \begin{definition}\label{DCompactnCat} 
-A \emph{compact $n$-category}, for $n\in\mathbb{N}$ with $n\geq 2$, is an ordered pair $\mathsf{C} = (C,(\xi_{k})_{k\in n})$ where $C$ is a set and, for every $k\in n$, $\xi_{k}$ a structure of  compact category on $C$ such that, for every $j,k\in n$ with $j<k$, the ordered pair $(C,(\xi_{i})_{i\in\{j,k\}})$ is a compact $2$-category. For $j<k$, we identify $(\xi_{i})_{i\in \{j,k\}}$ with $(\xi_{j},\xi_{k})$. 
+A \emph{compact $n$-category}, for $n\in\mathbb{N}$, is an ordered pair $\mathsf{C} = (C,(\xi_{k})_{k\in n})$ where $C$ is a set and, for every $k\in n$, $\xi_{k}$ a structure of  compact category on $C$ such that, for every $j,k\in n$ with $j<k$, the ordered pair $(C,(\xi_{i})_{i\in\{j,k\}})$ is a compact $2$-category. For $j<k$, we identify $(\xi_{i})_{i\in \{j,k\}}$ with $(\xi_{j},\xi_{k})$. Thus a compact $0$-category is just a set, a compact $1$-category is a compact category in the sense of Definition~\ref{DCompactCat}, and a compact $2$-category is one in the sense of Definition~\ref{DCompact2Cat}.
 
 For \(k\in n\) we will say that \(f\in C\) is a \emph{\(k\)-cell} if \(f=\mathrm{sc}^{k}(f)\) or, equivalently, by item~(C1) in Definition~\ref{DCompactCat}, if \(f=\mathrm{tg}^{k}(f)\). Then we denote by \(C_{k}\) the set of \(k\)-cells of \(\mathsf{C}\), i.e.,
 \[
@@ -1488,9 +1512,9 @@ $\mathsf{B}$ \emph{$S$-sorted compact $n$-functors}. Thus, an $S$-sorted compact
 Let $\mathsf{A}$ be an $S$-sorted compact $n$-category. The $S^{\star}\times S$-sorted set of finitary operations on $\mathsf{A}$ is $(\mathrm{nFunc}(\mathsf{A}_{\mathbf{s}},\mathsf{A}_{s}))_{(\mathbf{s},s)\in S^{\star}\times S}$, where, for every $\mathbf{s}\in S^{\star}$, $\mathsf{A}_{\mathbf{s}}=\prod_{j\in\bb{\mathbf{s}}}\mathsf{A}_{s_{j}}$, with $\bb{\mathbf{s}}$ denoting the length of the word $\mathbf{s}$ (if $\mathbf{s}=\lambda$, then $\mathsf{A}_{\lambda}$ is a final compact $n$-category). 
 
 Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. 
- A \emph{structure of many-sorted $n$-categorial $\Sigma$-algebra on} an $S$-sorted $n$-category $\mathsf{A}$ is a family $F = (F_{\mathbf{s},s})_{(\mathbf{s},s)\in S^{\star}\times S}$, where, for $(\mathbf{s},s)\in S^{\star}\times S$, $F_{\mathbf{s},s}$ is a mapping from $\Sigma_{\mathbf{s},s}$ to $\mathrm{nFunc}(\mathsf{A}_{\mathbf{s}},\mathsf{A}_{s})$ (if $(\mathbf{s},s) = (\lambda,s)$ and $\sigma\in \Sigma_{\lambda,s}$, then $F_{\lambda,s}(\sigma)$, picks out an object of $\mathsf{A}_{s}$ and its identity morphism).  An \emph{$S$-sorted compact $n$-categorial $\Sigma$-algebra} or, simply, an \emph{many-sorted $n$-categorial $\mathbf{\Sigma}$-algebra}, is a pair $(\mathsf{A},F)$, abbreviated to $\boldsymbol{\mathsf{A}}$, where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted compact $n$-category and $F$ a structure of many-sorted $n$-categorial $\Sigma$-algebra on $\mathsf{A}$.  For a pair $(\mathbf{s},s)\in S^{\star}\times S$ and a formal operation $\sigma\in \Sigma_{\mathbf{s},s}$, in order to simplify the notation, the $n$-functor $F_{\mathbf{s},s}(\sigma)$ from $\mathsf{A}_{\mathbf{s}}$ to $\mathsf{A}_{s}$ will be written as $F_{\sigma}$, or simply as $\sigma^{\boldsymbol{\mathsf{A}}}$. 
+ A \emph{structure of many-sorted $n$-categorial $\Sigma$-algebra on} an $S$-sorted $n$-category $\mathsf{A}$ is a family $F = (F_{\mathbf{s},s})_{(\mathbf{s},s)\in S^{\star}\times S}$, where, for $(\mathbf{s},s)\in S^{\star}\times S$, $F_{\mathbf{s},s}$ is a mapping from $\Sigma_{\mathbf{s},s}$ to $\mathrm{nFunc}(\mathsf{A}_{\mathbf{s}},\mathsf{A}_{s})$ (if $(\mathbf{s},s) = (\lambda,s)$ and $\sigma\in \Sigma_{\lambda,s}$, then $F_{\lambda,s}(\sigma)$ picks out a cell of $\mathsf{A}_{s}$ which is a $k$-cell for every $k\in n$, since $\mathsf{A}_{\lambda}$ is a final compact $n$-category). The finite products $\mathsf{A}_{\mathbf{s}}$ are taken componentwise: sources and targets are computed componentwise, and $(\mathsf{g}_{j})_{j}\#^{k}(\mathsf{f}_{j})_{j}$ is defined if and only if every $\mathsf{g}_{j}\#^{k}\mathsf{f}_{j}$ is defined, and then it is $(\mathsf{g}_{j}\#^{k}\mathsf{f}_{j})_{j}$.  An \emph{$S$-sorted compact $n$-categorial $\Sigma$-algebra} or, simply, a \emph{many-sorted $n$-categorial $\mathbf{\Sigma}$-algebra}, is a pair $(\mathsf{A},F)$, abbreviated to $\boldsymbol{\mathsf{A}}$, where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted compact $n$-category and $F$ a structure of many-sorted $n$-categorial $\Sigma$-algebra on $\mathsf{A}$.  For a pair $(\mathbf{s},s)\in S^{\star}\times S$ and a formal operation $\sigma\in \Sigma_{\mathbf{s},s}$, in order to simplify the notation, the $n$-functor $F_{\mathbf{s},s}(\sigma)$ from $\mathsf{A}_{\mathbf{s}}$ to $\mathsf{A}_{s}$ will be written as $F_{\sigma}$, or simply as $\sigma^{\boldsymbol{\mathsf{A}}}$. 
 
-An \emph{$S$-sorted compact $n$-categorial $\Sigma$-homomorphism} or, simply, an \emph{many-sorted $n$-categorial $\mathbf{\Sigma}$-ho\-mo\-mor\-phism}, from $\boldsymbol{\mathsf{A}}$ to $\boldsymbol{\mathsf{B}}$, where $\boldsymbol{\mathsf{B}}=(\mathsf{B},G)$, is a triple $(\boldsymbol{\mathsf{A}},F,\boldsymbol{\mathsf{B}})$, abbreviated to $F\colon\boldsymbol{\mathsf{A}}\mor\boldsymbol{\mathsf{B}}$, where $F$ is an $S$-sorted compact $n$-functor from $\mathsf{A}$ to $\mathsf{B}$ such that, for every $k\in n$, every $(\mathbf{s},s)\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{s},s}$ and every family of $k$-cells $(\mathsf{a}_{j})_{j\in\bb{\mathbf{s}}}\in\mathsf{A}_{\mathbf{s}}$, we have that
+An \emph{$S$-sorted compact $n$-categorial $\Sigma$-homomorphism} or, simply, a \emph{many-sorted $n$-categorial $\mathbf{\Sigma}$-ho\-mo\-mor\-phism}, from $\boldsymbol{\mathsf{A}}$ to $\boldsymbol{\mathsf{B}}$, where $\boldsymbol{\mathsf{B}}=(\mathsf{B},G)$, is a triple $(\boldsymbol{\mathsf{A}},F,\boldsymbol{\mathsf{B}})$, abbreviated to $F\colon\boldsymbol{\mathsf{A}}\mor\boldsymbol{\mathsf{B}}$, where $F$ is an $S$-sorted compact $n$-functor from $\mathsf{A}$ to $\mathsf{B}$ such that, for every $(\mathbf{s},s)\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{s},s}$ and every family of cells $(\mathsf{a}_{j})_{j\in\bb{\mathbf{s}}}\in\mathsf{A}_{\mathbf{s}}$ (i.e., of $n$-cells, since $C_{n}=C$), we have that
 $$
 F_{s}\left(\sigma^{\boldsymbol{\mathsf{A}}}
 \left(\left(\mathsf{a}_{j}
@@ -1527,7 +1551,7 @@ That is, ${\Sigma}^{(n)}$ is the expansion of $\Sigma$ obtained by adding, for e
 
 Note that $\Sigma^{(0)}=\Sigma$ and that, for every $n,m\in\mathbb{N}$ with $n\leq m$, $\Sigma^{(n)}\subseteq\Sigma^{(m)}$. Moreover, for a rewriting system $\boldsymbol{\mathcal{A}}$, the categorial signature $\Sigma^{\boldsymbol{\mathcal{A}}}$ of Chapter~2 is $\Sigma^{(1)}$ enlarged with a constant for every rewrite rule, and, similarly, $\Sigma^{\boldsymbol{\mathcal{A}}^{(2)}}$ is $\Sigma^{(2)}$ enlarged with constants for the rewrite rules of both orders.
 
-We next present the $n$-categorial $\mathbf{\Sigma}$-algebras as a $\mathrm{QE}$-variety of partial $\Sigma^{(n)}$-algebras. The specification follows the pattern of the specification $\boldsymbol{\mathcal{E}}^{\boldsymbol{\mathcal{A}}^{(2)}}$ of Definition~\ref{DVar2}: the axioms (A1)--(A8), about the $0$-dimensional structure, and (B1)--(B8), about the $1$-dimensional structure, are now stated uniformly for every dimension $k\in n$, and the axioms (AB1)--(AB3), which relate dimensions $0$ and $1$, for every pair of dimensions $l<k$ in $n$. Since no rewrite rules are involved, there are no counterparts of (A9) and (B9). Informally, these equations state that the operations of $\Sigma$ are always defined, that, for every sort $s\in S$, sources, targets and compositions of sort $s$ of every dimension behave as in an $n$-category, and that the operations of $\Sigma$ are compatible with them.
+We next present the $n$-categorial $\mathbf{\Sigma}$-algebras as a $\mathrm{QE}$-variety of partial $\Sigma^{(n)}$-algebras. The specification follows the pattern of the specification $\boldsymbol{\mathcal{E}}^{\boldsymbol{\mathcal{A}}^{(2)}}$ of Chapter~3: the axioms (A1)--(A8), about the $0$-dimensional structure, and (B1)--(B8), about the $1$-dimensional structure, are now stated uniformly for every dimension $k\in n$, and the axioms (AB1)--(AB3), which relate dimensions $0$ and $1$, for every pair of dimensions $l<k$ in $n$. Since no rewrite rules are involved, there are no counterparts of (A9) and (B9). Informally, these equations state that the operations of $\Sigma$ are always defined, that, for every sort $s\in S$, sources, targets and compositions of sort $s$ of every dimension behave as in an $n$-category, and that the operations of $\Sigma$ are compatible with them.
 
 \begin{definition}\label{DVarCompact}
 Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $n\in\mathbb{N}$. We will denote by $(S,\Sigma^{(n)},V^{S},\mathcal{C}^{\mathbf{\Sigma}^{(n)}})$, written $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$ for short, the specification in which $\Sigma^{(n)}$ is the compact $n$-categorial signature introduced in Definition~\ref{DSigmaCatCompact}, $V^{S}$ a fixed $S$-sorted set with a countable infinity of variables in each coordinate, and $\mathcal{C}^{\mathbf{\Sigma}^{(n)}}$ the subset of $\mathrm{QE}(\Sigma^{(n)})_{V^{S}}$, the set of all $\mathrm{QE}$-equations with variables in $V^{S}$, consisting of the following equations:
@@ -1663,9 +1687,21 @@ For every sort $s\in S$ and every quadruple of variables $x,y,z,t\in V^{S}_{s}$,
 \label{DVarCompactABlk3}\tag{AB$^{l,k}$3}
 \end{multline*}
 
-A model of the axioms (A$^{k}$1)--(A$^{k}$6), for $k\in n$, and (AB$^{l,k}$1)--(AB$^{l,k}$3), for $l<k$ in $n$, is an $S$-sorted $n$-category, see Definition~\ref{DnCat}, presented with all the cells of a given sort, whatever their dimension, in a single set. For $n=2$, the axioms (A$^{0}$$i$), (A$^{1}$$i$) and (AB$^{0,1}$$i$) are, respectively, the axioms (A$i$), (B$i$) and (AB$i$) of Definition~\ref{DVar2}.
+A model of the axioms (A$^{k}$1)--(A$^{k}$6), for $k\in n$, and (AB$^{l,k}$1)--(AB$^{l,k}$3), for $l<k$ in $n$, is an $S$-sorted compact $n$-category, see Definition~\ref{DManySortedCatAlg}, presented with all the cells of a given sort, whatever their dimension, in a single set. For $n=2$, the axioms (A$^{0}$$i$), (A$^{1}$$i$) and (AB$^{0,1}$$i$) are, respectively, the axioms (A$i$), (B$i$) and (AB$i$) of the specification $\boldsymbol{\mathcal{E}}^{\boldsymbol{\mathcal{A}}^{(2)}}$ of Chapter~3.
 
 We will let $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ stand for the category canonically associated to the $\mathrm{QE}$-variety $\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ determined by the specification $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$.
+\end{definition}
+
+Sections~\ref{STruncation} and~\ref{SLimitCompact} also use the $\omega$-dimensional counterparts of these notions.
+
+\begin{definition}\label{DCompactOmegaCat}
+A \emph{compact $\omega$-category} is an ordered pair $\mathsf{C} = (C,(\xi_{k})_{k\in\omega})$ where $C$ is a set and, for every $k\in\omega$, $\xi_{k}$ a structure of compact category on $C$ such that, for every $j,k\in\omega$ with $j<k$, the ordered pair $(C,(\xi_{j},\xi_{k}))$ is a compact $2$-category, and such that every $f\in C$ is a $k$-cell, i.e., $\mathrm{sc}^{k}(f)=f$, for some $k\in\omega$. Note that, by~(2C1), a $j$-cell is a $k$-cell for every $k\geq j$.
+
+A \emph{compact $\omega$-functor} is a mapping $F\colon C\mor C'$ which is a compact functor from $(C,\xi_{k})$ to $(C',\xi'_{k})$ for every $k\in\omega$. We denote by $\omega\mathsf{Cat}$ the category of compact $\omega$-categories and compact $\omega$-functors.
+\end{definition}
+
+\begin{definition}\label{DOmegaCatAlg}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. An \emph{$\omega$-categorial $\mathbf{\Sigma}$-algebra} is a pair $\boldsymbol{\mathsf{A}}=(\mathsf{A},F)$ where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted compact $\omega$-category and $F$ assigns to every $\sigma\in\Sigma_{\mathbf{s},s}$ a compact $\omega$-functor $\sigma^{\boldsymbol{\mathsf{A}}}\colon\mathsf{A}_{\mathbf{s}}\mor\mathsf{A}_{s}$. Here $\mathsf{A}_{\mathbf{s}}$ is a compact $\omega$-category: if each $\mathsf{a}_{j}$ is a $k_{j}$-cell, then $(\mathsf{a}_{j})_{j\in\bb{\mathbf{s}}}$ is a $k$-cell for $k=\max_{j}k_{j}$. An \emph{$\omega$-categorial $\mathbf{\Sigma}$-homomorphism} is an $S$-sorted compact $\omega$-functor commuting with the operations, as in Definition~\ref{DManySortedCatAlg}. We denote by $\omega\mathsf{CatAlg}(\mathbf{\Sigma})$ the category of $\omega$-categorial $\mathbf{\Sigma}$-algebras and $\omega$-categorial $\mathbf{\Sigma}$-homomorphisms.
 \end{definition}
 
 %The axiom (A0) states that the operations of $\Sigma$ are total, and the axioms (A$^{k}$7) and (A$^{k}$8), for $k\in n$, state that they preserve sources, targets and compositions of every dimension, i.e., that they are $n$-functors. As in Chapters~2 and~3, the morphisms of $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ are the homomorphisms of partial $\Sigma^{(n)}$-algebras, i.e., the $S$-sorted mappings $h$ such that, whenever an operation is defined on a family of elements, it is also defined on the image of that family under $h$, and $h$ sends the result of the former to the result of the latter. These are the appropriate morphisms here: closed homomorphisms, which also reflect definedness, would be too restrictive, since an $n$-functor may send cells that are not composable to cells that are. Consequently, we have the following result.
@@ -1678,12 +1714,12 @@ We will let $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ st
 %
 %In particular, the $\Sigma^{(1)}$-reducts of the partial algebras in $\mathbf{PAlg}(\boldsymbol{\mathcal{E}}^{\boldsymbol{\mathcal{A}}})$ of Chapter~2 and the $\Sigma^{(2)}$-reducts of those in $\mathbf{PAlg}(\boldsymbol{\mathcal{E}}^{\boldsymbol{\mathcal{A}}^{(2)}})$ of Chapter~3 are $1$-categorial and $2$-categorial $\mathbf{\Sigma}$-algebras, respectively: the specifications of those chapters are obtained from $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(1)}}$ and $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(2)}}$ by adding the rewrite rules as constants that are always defined.
 
-\section{Extended presentation of higher-order categorial algebras}
+\section{Extended presentation of higher-order categorial algebras}\label{SExtended}
 
 
 We begin by recalling the definition of extended $\omega$-category from~\cite{CH0Ebis}, which presents $\omega$-categories with separate sorts for each dimension. An extended $n$-category is then an extended $\omega$-category truncated at level $n$.
 
-\begin{definition}\label{DnCatExt}
+\begin{definition}\label{DOmegaCatExt}
 An \emph{extended $\omega$-category} is an ordered pair $\mathsf{C} = ((C_{k})_{k\in\omega},\zeta)$ consisting of an $\omega$-sorted set $(C_{k})_{k\in\omega}$ and a $\coprod_{k\in \omega}k$-indexed family
 \[
 \zeta = (\zeta_{j,k})_{(j,k)\in \coprod_{k\in \omega}k},
@@ -1708,12 +1744,12 @@ $$
 i.e., the fibered product of $C_{k}$ and $C_{k}$ over $\mathrm{sc}^{(j,k)}$ and $\mathrm{tg}^{(j,k)}$, and
 which sends a pair $(f,g)\in \mathrm{Dom}(\circ^{(j)})$ to its \emph{$j$-composition in $C_{k}$}.
 \end{enumerate}
-These data are required to satisfy the following conditions for all $i,j,k\in \omega$ with $i<j<k$:
+These data are required to satisfy the following conditions for all $i,j,k\in \omega$ with $i<j<k$ (the conditions (MS2), (MS6) and (MS7) only involve the dimensions $j<k$, and are required for every such pair):
 \begin{itemize}
 \item[(MS1)] For every $f\in C_{k}$,
 \begin{align*}
-\mathrm{sc}^{(h,j)}(\mathrm{sc}^{(j,k)}(f))&=\mathrm{sc}^{(h,k)}(f)=\mathrm{sc}^{(h,j)}(\mathrm{tg}^{(j,k)}(f)),\\
-\mathrm{tg}^{(h,j)}(\mathrm{tg}^{(j,k)}(f))&=\mathrm{tg}^{(h,k)}(f)=\mathrm{tg}^{(h,j)}(\mathrm{sc}^{(j,k)}(f)).
+\mathrm{sc}^{(i,j)}(\mathrm{sc}^{(j,k)}(f))&=\mathrm{sc}^{(i,k)}(f)=\mathrm{sc}^{(i,j)}(\mathrm{tg}^{(j,k)}(f)),\\
+\mathrm{tg}^{(i,j)}(\mathrm{tg}^{(j,k)}(f))&=\mathrm{tg}^{(i,k)}(f)=\mathrm{tg}^{(i,j)}(\mathrm{sc}^{(j,k)}(f)).
 \end{align*}
 \item[(MS2)] If $g,f\in C_{k}$ are such that $\mathrm{sc}^{(j,k)}(g)=\mathrm{tg}^{(j,k)}(f)$, then
 \begin{align*}
@@ -1755,10 +1791,11 @@ $$
 h\circ^{(j)}(g\circ^{(j)}f)=
 (h\circ^{(j)}g)\circ^{(j)}f.
 $$
-\item[(MS8)] If $g,f\in C_{k}$ are such that $\mathrm{sc}^{(j,k)}(g)=\mathrm{tg}^{(j,k)}(f)$, then
+\item[(MS8)] If $g,f\in C_{j}$ are such that $\mathrm{sc}^{(i,j)}(g)=\mathrm{tg}^{(i,j)}(f)$, then
 $$
-\mathrm{i}^{(l,k)}(g\circ^{(j)}f)=\mathrm{i}^{(l,k)}(g)\circ^{(j)}\mathrm{i}^{(l,k)}(f).
+\mathrm{i}^{(k,j)}(g\circ^{(i)}f)=\mathrm{i}^{(k,j)}(g)\circ^{(i)}\mathrm{i}^{(k,j)}(f),
 $$
+where on the left $\circ^{(i)}$ is the $i$-composition in $C_{j}$ and on the right the $i$-composition in $C_{k}$.
 \item[(MS9)] If $g',g,f',f\in C_{k}$ are such that
 \begin{align*}
 \mathrm{sc}^{(j,k)}(g')&=\mathrm{tg}^{(j,k)}(g); &
@@ -1774,6 +1811,15 @@ $$
 .
 $$
 \end{itemize}
+
+An \emph{extended $\omega$-functor} $F$ from $\mathsf{C}$ to $\mathsf{C}'$ is a family $F=(F_{k})_{k\in\omega}$ of mappings $F_{k}\colon C_{k}\mor C'_{k}$ such that, for all $j,k\in\omega$ with $j<k$,
+\begin{align*}
+F_{j}\circ \mathrm{sc}^{(j,k)} &= \mathrm{sc}'^{(j,k)}\circ F_{k}, &
+F_{j}\circ \mathrm{tg}^{(j,k)} &= \mathrm{tg}'^{(j,k)}\circ F_{k},\\
+F_{k}\circ \mathrm{i}^{(k,j)} &= \mathrm{i}'^{(k,j)}\circ F_{j}, &
+F_{k}(g\circ^{(j)}f) &= F_{k}(g)\circ^{(j)} F_{k}(f),
+\end{align*}
+the last one whenever $g\circ^{(j)}f$ is defined. We denote by $\omega\mathsf{Cat}^{\mathrm{ext}}$ the category of extended $\omega$-categories and extended $\omega$-functors.
 \end{definition}
 
 For $n\in\omega$, an \emph{extended $n$-category} is an ordered pair $\mathsf{C} = ((C_{k})_{k\in n+1},\zeta)$ consisting of an $n+1$-sorted set $(C_{k})_{k\in n+1}$ and a structure of extended $n$-category 
@@ -1782,7 +1828,7 @@ For $n\in\omega$, an \emph{extended $n$-category} is an ordered pair $\mathsf{C}
 \] 
 on $(C_{k})_{k\in n+1}$, where, for every $k\in n+1$ and every $j\in k$, $\zeta_{j,k} = (\circ^{(j)},\mathrm{sc}^{(j,k)},\mathrm{tg}^{(j,k)},\mathrm{i}^{(k,j)})$ with the same data as above, required to satisfy the same conditions truncated to the $n$-th level.
 
-The notion of extended $n$-functor between $n$-categories is entirely analogous to that of extended $\omega$-functor between $\omega$-categories, but truncated to the $n$-th level. An extended $n$-functor $F$ from $\mathsf{C}$ to $\mathsf{C}'$ is a family $F=(F_{k})_{k\in n+1}$ of mappings $F_{k}\colon C_{k}\to C'_{k}$ such that for all $i,j,k\in n+1$ with $i<j<k$, the following diagrams commute:
+The notion of extended $n$-functor between $n$-categories is entirely analogous to that of extended $\omega$-functor between $\omega$-categories, but truncated to the $n$-th level. An extended $n$-functor $F$ from $\mathsf{C}$ to $\mathsf{C}'$ is a family $F=(F_{k})_{k\in n+1}$ of mappings $F_{k}\colon C_{k}\to C'_{k}$ such that for all $j,k\in n+1$ with $j<k$, the following equations hold (the last one whenever $g\circ^{(j)}f$ is defined):
 \begin{align*}
 F_{j}\circ \mathrm{sc}^{(j,k)} &= \mathrm{sc}'^{(j,k)}\circ F_{k}, &
 F_{j}\circ \mathrm{tg}^{(j,k)} &= \mathrm{tg}'^{(j,k)}\circ F_{k},\\
@@ -1792,7 +1838,7 @@ F_{k}(g\circ^{(j)}f) &= F_{k}(g)\circ^{(j)} F_{k}(f).
 We denote by $\mathsf{nCat}^{\mathrm{ext}}$ the category consisting of extended $n$-categories and extended $n$-functors.
 
 
-\begin{definition}\label{DnCatExt}
+\begin{definition}\label{DSortednCatExt}
 Let $S$ be a set of sorts and $n\in\mathbb{N}$.
 We will call the objects of the functor category $(\mathsf{nCat}^{\mathrm{ext}})^{S}$ \emph{$S$-sorted extended $n$-categories}. Thus, an $S$-sorted extended $n$-category is an $S$-indexed family $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ such that, for every sort $s\in S$, $\mathsf{A}_{s}$ is an extended $n$-category. Given two $S$-sorted extended $n$-categories 
 $\mathsf{A}$ and $\mathsf{B}$, we will call the morphisms in $(\mathsf{nCat}^{\mathrm{ext}})^{S}$ from $\mathsf{A}$ to 
@@ -1801,28 +1847,29 @@ We recall that for $F\colon \mathsf{A}\mor\mathsf{B}$ and $G\colon \mathsf{B}\mo
 $S$-sorted extended $n$-functor at $\mathsf{A}$, that is, $\mathrm{Id}_{\mathsf{A}}$, is $(\mathrm{Id}_{\mathsf{A}_{s}})_{s\in S}$. 
 \end{definition}
 
-Next we define the corresponding notion of extended $n$-categorial algebra, following the style of the compact $n$-categorial algebra (Definition~\ref{DnCatAlg}).
+Next we define the corresponding notion of extended $n$-categorial algebra, following the style of the compact $n$-categorial algebra (Definition~\ref{DManySortedCatAlg}).
 
 \begin{definition}\label{DExtCatAlg}
 Let $\mathsf{A}$ be an $S$-sorted extended $n$-category. The $S^{\star}\times S$-sorted set of finitary operations on $\mathsf{A}$ is $(\mathrm{nFunc}^{\mathrm{ext}}(\mathsf{A}_{\mathbf{s}},\mathsf{A}_{s}))_{(\mathbf{s},s)\in S^{\star}\times S}$, where, for every $\mathbf{s}\in S^{\star}$, $\mathsf{A}_{\mathbf{s}}=\prod_{j\in\bb{\mathbf{s}}}\mathsf{A}_{s_{j}}$, with $\bb{\mathbf{s}}$ denoting the length of the word $\mathbf{s}$ (if $\mathbf{s}=\lambda$, then $\mathsf{A}_{\lambda}$ is a final extended $n$-category). 
 
 Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. 
-A \emph{structure of extended $n$-categorial $\Sigma$-algebra on} an $S$-sorted extended $n$-category $\mathsf{A}$ is a family $F = (F_{\mathbf{s},s})_{(\mathbf{s},s)\in S^{\star}\times S}$, where, for $(\mathbf{s},s)\in S^{\star}\times S$, $F_{\mathbf{s},s}$ is a mapping from $\Sigma_{\mathbf{s},s}$ to $\mathrm{nFunc}^{\mathrm{ext}}(\mathsf{A}_{\mathbf{s}},\mathsf{A}_{s})$ (if $(\mathbf{s},s) = (\lambda,s)$ and $\sigma\in \Sigma_{\lambda,s}$, then $F_{\lambda,s}(\sigma)$ picks out an object of $\mathsf{A}_{s}$ and its identity morphism). An \emph{$S$-sorted extended $n$-categorial $\Sigma$-algebra} or, simply, an \emph{extended $n$-categorial $\mathbf{\Sigma}$-algebra}, is a pair $(\mathsf{A},F)$, abbreviated to $\boldsymbol{\mathsf{A}}$, where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted extended $n$-category and $F$ a structure of extended $n$-categorial $\Sigma$-algebra on $\mathsf{A}$. For a pair $(\mathbf{s},s)\in S^{\star}\times S$ and a formal operation $\sigma\in \Sigma_{\mathbf{s},s}$, in order to simplify the notation, the $n$-functor $F_{\mathbf{s},s}(\sigma)$ from $\mathsf{A}_{\mathbf{s}}$ to $\mathsf{A}_{s}$ will be written as $F_{\sigma}$, or simply as $\sigma^{\boldsymbol{\mathsf{A}}}$. 
+A \emph{structure of extended $n$-categorial $\Sigma$-algebra on} an $S$-sorted extended $n$-category $\mathsf{A}$ is a family $F = (F_{\mathbf{s},s})_{(\mathbf{s},s)\in S^{\star}\times S}$, where, for $(\mathbf{s},s)\in S^{\star}\times S$, $F_{\mathbf{s},s}$ is a mapping from $\Sigma_{\mathbf{s},s}$ to $\mathrm{nFunc}^{\mathrm{ext}}(\mathsf{A}_{\mathbf{s}},\mathsf{A}_{s})$ (if $(\mathbf{s},s) = (\lambda,s)$ and $\sigma\in \Sigma_{\lambda,s}$, then $F_{\lambda,s}(\sigma)$ picks out a $0$-cell $u$ of $\mathsf{A}_{s}$ together with its identities $\mathrm{i}^{(k,0)}(u)$, $k\in n+1$, since $\mathsf{A}_{\lambda}$ is a final extended $n$-category, with a single cell in each dimension). The finite products $\mathsf{A}_{\mathbf{s}}$ are taken dimensionwise: the $k$-cells of $\mathsf{A}_{\mathbf{s}}$ are the families of $k$-cells, and all the operations are computed componentwise. An \emph{$S$-sorted extended $n$-categorial $\Sigma$-algebra} or, simply, an \emph{extended $n$-categorial $\mathbf{\Sigma}$-algebra}, is a pair $(\mathsf{A},F)$, abbreviated to $\boldsymbol{\mathsf{A}}$, where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted extended $n$-category and $F$ a structure of extended $n$-categorial $\Sigma$-algebra on $\mathsf{A}$. For a pair $(\mathbf{s},s)\in S^{\star}\times S$ and a formal operation $\sigma\in \Sigma_{\mathbf{s},s}$, in order to simplify the notation, the $n$-functor $F_{\mathbf{s},s}(\sigma)$ from $\mathsf{A}_{\mathbf{s}}$ to $\mathsf{A}_{s}$ will be written as $F_{\sigma}$, or simply as $\sigma^{\boldsymbol{\mathsf{A}}}$. 
 
-An \emph{$S$-sorted extended $n$-categorial $\Sigma$-homomorphism} or, simply, an \emph{extended $n$-categorial $\mathbf{\Sigma}$-homomorphism}, from $\boldsymbol{\mathsf{A}}$ to $\boldsymbol{\mathsf{B}}$, where $\boldsymbol{\mathsf{B}}=(\mathsf{B},G)$, is a triple $(\boldsymbol{\mathsf{A}},F,\boldsymbol{\mathsf{B}})$, abbreviated to $F\colon\boldsymbol{\mathsf{A}}\mor\boldsymbol{\mathsf{B}}$, where $F$ is an $S$-sorted extended $n$-functor from $\mathsf{A}$ to $\mathsf{B}$ such that, for every $k\in n$, every $(\mathbf{s},s)\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{s},s}$ and every family of $k$-cells $(\mathsf{a}_{j})_{j\in\bb{\mathbf{s}}}\in\mathsf{A}_{\mathbf{s}}$, we have that
+An \emph{$S$-sorted extended $n$-categorial $\Sigma$-homomorphism} or, simply, an \emph{extended $n$-categorial $\mathbf{\Sigma}$-homomorphism}, from $\boldsymbol{\mathsf{A}}$ to $\boldsymbol{\mathsf{B}}$, where $\boldsymbol{\mathsf{B}}=(\mathsf{B},G)$, is a triple $(\boldsymbol{\mathsf{A}},F,\boldsymbol{\mathsf{B}})$, abbreviated to $F\colon\boldsymbol{\mathsf{A}}\mor\boldsymbol{\mathsf{B}}$, where $F$ is an $S$-sorted extended $n$-functor from $\mathsf{A}$ to $\mathsf{B}$ such that, for every $k\in n+1$, every $(\mathbf{s},s)\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{s},s}$ and every family of $k$-cells $(\mathsf{a}_{j})_{j\in\bb{\mathbf{s}}}\in\mathsf{A}_{\mathbf{s}}$, we have that
 $$
-F_{s}\left(\sigma^{\boldsymbol{\mathsf{A}}}
+F_{s,k}\left(\sigma^{\boldsymbol{\mathsf{A}}}_{k}
 \left(\left(\mathsf{a}_{j}
 \right)_{j\in\bb{\mathbf{s}}}\right)\right)
 =
-\sigma^{\boldsymbol{\mathsf{B}}}
+\sigma^{\boldsymbol{\mathsf{B}}}_{k}
 \left(\left(
-F_{s_{j}}\left(
+F_{s_{j},k}\left(
 \mathsf{a}_{j}
 \right)
 \right)_{j\in\bb{\mathbf{s}}}
-\right).
+\right),
 $$
+where $F_{s,k}$ is the component at $k$-cells of the extended $n$-functor $F_{s}$ and $\sigma^{\boldsymbol{\mathsf{A}}}_{k}$ that of $\sigma^{\boldsymbol{\mathsf{A}}}$. The equation is required for the $n$-cells too, the cells of top dimension.
 We denote by $\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ the category of extended $n$-categorial  $\mathbf{\Sigma}$-algebras and extended $n$-categorial $\mathbf{\Sigma}$-homomorphisms.
 \end{definition}
 
@@ -1848,7 +1895,7 @@ That is, the sort $(k,s)$ of ${\Sigma}^{\mathrm{ext}(n)}$ stands for the $k$-cel
 
 In contrast with the compact case, $\Sigma^{\mathrm{ext}(n)}$ is not a subset of $\Sigma^{\mathrm{ext}(m)}$ for $n\leq m$, since the sets of sorts are different; however, the inclusion of $(n+1)\times S$ into $(m+1)\times S$ induces a canonical embedding of $\Sigma^{\mathrm{ext}(n)}$ into $\Sigma^{\mathrm{ext}(m)}$. Note also that, for $n=0$, $\Sigma^{\mathrm{ext}(0)}$ is, up to the identification of $1\times S$ with $S$, the signature $\Sigma$.
 
-The specification of the extended presentation also follows the pattern of Definition~\ref{DVar2}. Now, however, the role played in the compact case by a dimension $k\in n$ is played by a pair of dimensions $j<k$ in $n+1$, since the $j$-composition acts on the $k$-cells and the $(k,j)$-identities take the place of the $k$-sources and $k$-targets as unit elements; and the role played by a pair of dimensions $l<k$ in $n$ is played by a triple of dimensions $h<j<k$ in $n+1$. Informally, the equations state that the operations of $\Sigma$ are always defined, that, for every sort $s\in S$ and every pair $j<k$, the $j$-cells and the $k$-cells of sort $s$ are the objects and the morphisms of a category, that these categories fit together as in an $n$-category, and that the operations of $\Sigma$ are compatible with them. In what follows, we abbreviate $V^{(n+1)\times S}$ to $V$.
+The specification of the extended presentation also follows the pattern of the specification $\boldsymbol{\mathcal{E}}^{\boldsymbol{\mathcal{A}}^{(2)}}$ of Chapter~3. Now, however, the role played in the compact case by a dimension $k\in n$ is played by a pair of dimensions $j<k$ in $n+1$, since the $j$-composition acts on the $k$-cells and the $(k,j)$-identities take the place of the $k$-sources and $k$-targets as unit elements; and the role played by a pair of dimensions $l<k$ in $n$ is played by a triple of dimensions $h<j<k$ in $n+1$. Informally, the equations state that the operations of $\Sigma$ are always defined, that, for every sort $s\in S$ and every pair $j<k$, the $j$-cells and the $k$-cells of sort $s$ are the objects and the morphisms of a category, that these categories fit together as in an $n$-category, and that the operations of $\Sigma$ are compatible with them. In what follows, we abbreviate $V^{(n+1)\times S}$ to $V$.
 
 \begin{definition}\label{DVarExtended}
 Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $n\in\mathbb{N}$. We will denote by $((n+1)\times S,\Sigma^{\mathrm{ext}(n)},V^{(n+1)\times S},\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}})$, written $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}}$ for short, the specification in which $\Sigma^{\mathrm{ext}(n)}$ is the extended $n$-categorial signature introduced in Definition~\ref{DSigmaCatExtended}, $V^{(n+1)\times S}$ a fixed $(n+1)\times S$-sorted set with a countable infinity of variables in each coordinate, and $\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}}$ the subset of $\mathrm{QE}(\Sigma^{\mathrm{ext}(n)})_{V^{(n+1)\times S}}$, the set of all $\mathrm{QE}$-equations with variables in $V^{(n+1)\times S}$, consisting of the following equations:
@@ -1954,28 +2001,23 @@ For every sort $s\in S$ and every variable $x\in V_{(k,s)}$, the $(h,j)$-source 
 \mathrm{tg}^{(h,j)}_{s}(\mathrm{sc}^{(j,k)}_{s}(x))&\overset{\mathrm{e}}{=}\mathrm{tg}^{(h,k)}_{s}(x).\label{DVarExtendedEAhjk1}\tag{EA$^{h,j,k}$1}
 \end{align*}
 
-For every sort $s\in S$, every variable $u\in V_{(j,s)}$ and every variable $v\in V_{(h,s)}$, the $(h,j)$-source and the $(h,j)$-target of the $(j,h)$-identity of $v$ are equal to $v$, and the $(h,k)$-source and the $(h,k)$-target of the $(k,h)$-identity of $u$ are equal to $u$. Formally,
+For every sort $s\in S$ and every variable $u\in V_{(h,s)}$, the $(k,j)$-identity of the $(j,h)$-identity of $u$ is the $(k,h)$-identity of $u$. Formally,
 \allowdisplaybreaks
 \begin{align*}
-\mathrm{sc}^{(h,j)}_{s}(\mathrm{i}^{(j,h)}_{s}(v))&\overset{\mathrm{e}}{=}v;
-&
-\mathrm{tg}^{(h,j)}_{s}(\mathrm{i}^{(j,h)}_{s}(v))&\overset{\mathrm{e}}{=}v;\\
-\mathrm{sc}^{(h,k)}_{s}(\mathrm{i}^{(k,h)}_{s}(u))&\overset{\mathrm{e}}{=}u;
-&
-\mathrm{tg}^{(h,k)}_{s}(\mathrm{i}^{(k,h)}_{s}(u))&\overset{\mathrm{e}}{=}u.\label{DVarExtendedEAhjk2}\tag{EA$^{h,j,k}$2}
+\mathrm{i}^{(k,j)}_{s}(\mathrm{i}^{(j,h)}_{s}(u))&\overset{\mathrm{e}}{=}\mathrm{i}^{(k,h)}_{s}(u).\label{DVarExtendedEAhjk2}\tag{EA$^{h,j,k}$2}
 \end{align*}
 
-For every sort $s\in S$ and every pair of variables $x,y\in V_{(k,s)}$, if $x\circ^{(j,k)}_{s}y$ is defined, then the $(h,k)$-source of $x\circ^{(j,k)}_{s}y$ is the $h$-composition of the $(h,k)$-source of $x$ with the $(h,k)$-source of $y$, and the $(h,k)$-target of $x\circ^{(j,k)}_{s}y$ is the $h$-composition of the $(h,k)$-target of $x$ with the $(h,k)$-target of $y$. Formally,
+For every sort $s\in S$ and every pair of variables $x,y\in V_{(k,s)}$, if $x\circ^{(h,k)}_{s}y$ is defined, then the $(j,k)$-source of $x\circ^{(h,k)}_{s}y$ is the $h$-composition of the $(j,k)$-source of $x$ with the $(j,k)$-source of $y$, and the $(j,k)$-target of $x\circ^{(h,k)}_{s}y$ is the $h$-composition of the $(j,k)$-target of $x$ with the $(j,k)$-target of $y$. Formally,
 \allowdisplaybreaks
 \begin{align*}
-x\circ^{(j,k)}_{s}y&\overset{\mathrm{e}}{=}x\circ^{(j,k)}_{s}y \;\;\longrightarrow\;\;
-\mathrm{sc}^{(h,k)}_{s}(x\circ^{(j,k)}_{s}y)\overset{\mathrm{e}}{=}\mathrm{sc}^{(h,k)}_{s}(x)\circ^{(h,j)}_{s}\mathrm{sc}^{(h,k)}_{s}(y);\\
-x\circ^{(j,k)}_{s}y&\overset{\mathrm{e}}{=}x\circ^{(j,k)}_{s}y \;\;\longrightarrow\;\;
-\mathrm{tg}^{(h,k)}_{s}(x\circ^{(j,k)}_{s}y)\overset{\mathrm{e}}{=}\mathrm{tg}^{(h,k)}_{s}(x)\circ^{(h,j)}_{s}\mathrm{tg}^{(h,k)}_{s}(y).
+x\circ^{(h,k)}_{s}y&\overset{\mathrm{e}}{=}x\circ^{(h,k)}_{s}y \;\;\longrightarrow\;\;
+\mathrm{sc}^{(j,k)}_{s}(x\circ^{(h,k)}_{s}y)\overset{\mathrm{e}}{=}\mathrm{sc}^{(j,k)}_{s}(x)\circ^{(h,j)}_{s}\mathrm{sc}^{(j,k)}_{s}(y);\\
+x\circ^{(h,k)}_{s}y&\overset{\mathrm{e}}{=}x\circ^{(h,k)}_{s}y \;\;\longrightarrow\;\;
+\mathrm{tg}^{(j,k)}_{s}(x\circ^{(h,k)}_{s}y)\overset{\mathrm{e}}{=}\mathrm{tg}^{(j,k)}_{s}(x)\circ^{(h,j)}_{s}\mathrm{tg}^{(j,k)}_{s}(y).
 \label{DVarExtendedEAhjk3}\tag{EA$^{h,j,k}$3}
 \end{align*}
 
-For every sort $s\in S$ and every quadruple of variables $x,y,z,t\in V_{(k,s)}$, if the compositions $x\circ^{(j,k)}_{s}y$, $z\circ^{(j,k)}_{s}t$, $x\circ^{(h,k)}_{s}z$ and $y\circ^{(h,k)}_{s}t$ are defined, the $(h,k)$-composition of $x\circ^{(j,k)}_{s}y$ with $z\circ^{(j,k)}_{s}t$ is equal to the $(h,j)$-composition of $x\circ^{(h,k)}_{s}z$ with $y\circ^{(h,k)}_{s}t$. Formally,
+For every sort $s\in S$ and every quadruple of variables $x,y,z,t\in V_{(k,s)}$, if the compositions $x\circ^{(j,k)}_{s}y$, $z\circ^{(j,k)}_{s}t$, $x\circ^{(h,k)}_{s}z$ and $y\circ^{(h,k)}_{s}t$ are defined, the $(h,k)$-composition of $x\circ^{(j,k)}_{s}y$ with $z\circ^{(j,k)}_{s}t$ is equal to the $(j,k)$-composition of $x\circ^{(h,k)}_{s}z$ with $y\circ^{(h,k)}_{s}t$. Formally,
 \allowdisplaybreaks
 \begin{multline*}
 (x\circ^{(j,k)}_{s}y\overset{\mathrm{e}}{=}x\circ^{(j,k)}_{s}y)
@@ -1988,13 +2030,25 @@ For every sort $s\in S$ and every quadruple of variables $x,y,z,t\in V_{(k,s)}$,
 \\
 \;\;\longrightarrow\;\;
 (x\circ^{(j,k)}_{s}y)\circ^{(h,k)}_{s}(z\circ^{(j,k)}_{s}t)\overset{\mathrm{e}}{=}
-(x\circ^{(h,k)}_{s}z)\circ^{(h,j)}_{s}(y\circ^{(h,k)}_{s}t).
+(x\circ^{(h,k)}_{s}z)\circ^{(j,k)}_{s}(y\circ^{(h,k)}_{s}t).
 \label{DVarExtendedEAhjk4}\tag{EA$^{h,j,k}$4}
 \end{multline*}
 
-A model of the axioms (EA$^{j,k}$1)--(EA$^{j,k}$6), for $j<k$ in $n+1$, and (EA$^{h,j,k}$1)--(EA$^{h,j,k}$4), for $h<j<k$ in $n+1$, is an $S$-sorted $n$-category, see Definition~\ref{DnCat}, presented in its globular form, i.e., with the cells of each dimension in a separate sort.
+For every sort $s\in S$ and every pair of variables $u,v\in V_{(j,s)}$, if $u\circ^{(h,j)}_{s}v$ is defined, then the $(k,j)$-identity of $u\circ^{(h,j)}_{s}v$ is the $h$-composition of the $(k,j)$-identities of $u$ and $v$. Formally,
+\allowdisplaybreaks
+\begin{align*}
+u\circ^{(h,j)}_{s}v\overset{\mathrm{e}}{=}u\circ^{(h,j)}_{s}v \;\;\longrightarrow\;\;
+\mathrm{i}^{(k,j)}_{s}(u\circ^{(h,j)}_{s}v)\overset{\mathrm{e}}{=}\mathrm{i}^{(k,j)}_{s}(u)\circ^{(h,k)}_{s}\mathrm{i}^{(k,j)}_{s}(v).
+\label{DVarExtendedEAhjk5}\tag{EA$^{h,j,k}$5}
+\end{align*}
+
+The axioms (EA$^{h,j,k}$1)--(EA$^{h,j,k}$5) are the counterparts of the conditions (MS1), (MS4), (MS3), (MS9) and (MS8) of Definition~\ref{DOmegaCatExt}, and (EA$^{j,k}$1)--(EA$^{j,k}$6) those of (MS2), (MS5), (MS6) and (MS7). Hence a model of the axioms (EA$^{j,k}$1)--(EA$^{j,k}$6), for $j<k$ in $n+1$, and (EA$^{h,j,k}$1)--(EA$^{h,j,k}$5), for $h<j<k$ in $n+1$, is an $S$-sorted extended $n$-category, see Definition~\ref{DSortednCatExt}, presented in its globular form, i.e., with the cells of each dimension in a separate sort.
 
 We will let $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}})$ stand for the category canonically associated to the $\mathrm{QE}$-variety $\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}})$ determined by the specification $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}}$.
+\end{definition}
+
+\begin{definition}\label{DOmegaExtCatAlg}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. An \emph{extended $\omega$-categorial $\mathbf{\Sigma}$-algebra} is a pair $\boldsymbol{\mathsf{A}}=(\mathsf{A},F)$ where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted extended $\omega$-category and $F$ assigns to every $\sigma\in\Sigma_{\mathbf{s},s}$ an extended $\omega$-functor $\sigma^{\boldsymbol{\mathsf{A}}}\colon\mathsf{A}_{\mathbf{s}}\mor\mathsf{A}_{s}$. An \emph{extended $\omega$-categorial $\mathbf{\Sigma}$-homomorphism} is an $S$-sorted extended $\omega$-functor satisfying the equation of Definition~\ref{DExtCatAlg} for every $k\in\omega$. We denote by $\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ the category of extended $\omega$-categorial $\mathbf{\Sigma}$-algebras and extended $\omega$-categorial $\mathbf{\Sigma}$-homomorphisms.
 \end{definition}
 
 %The axioms (EA0), (EA$^{j,k}$7) and (EA$^{j,k}$8) state, as in the compact case, that the operations of $\Sigma$ act layer by layer and compatibly with the $n$-categorial structure, i.e., that they are $n$-functors between $n$-categories in their globular presentation. The relation between the two presentations, however, does not come from these axioms, but from the correspondence between the globular and the single-set presentations of $n$-categories. A model of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}}$ gives rise to a model of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$ by keeping only its $n$-cells, on which $k$-sources and $k$-targets are obtained by composing $(k,n)$-sources and $(k,n)$-targets with $(n,k)$-identities. Conversely, a model of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$ gives rise to a model of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}}$ by taking, as $k$-cells of sort $s$, for $k\in n$, the cells $x$ with $\mathrm{sc}^{k}_{s}(x)=x$. Going from the compact presentation to the extended one and back gives the original algebra, whereas going from the extended presentation to the compact one and back only gives an isomorphic algebra, in which every $k$-cell has been replaced by its identity $n$-cell. It is therefore to be expected that $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}})$ is equivalent to $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$, and hence to $\mathsf{nCatAlg}(\mathbf{\Sigma})$, although the two canonical functors are not mutually inverse; proving this equivalence in a way that is functorial in $\mathbf{\Sigma}$ is part of Objective~II.2.
@@ -2007,25 +2061,44 @@ We will let $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ex
 
 \subsection{On the relationship between graduation and unification}
 
-\section{Discretization and Truncation of Higher-Order Categorial Algebras}
+\section{Discretization and Truncation of Higher-Order Categorial Algebras}\label{STruncation}
 
 \subsection{Discretization of higher-order categorial algebras}
 
 \subsection{Truncation of higher-order categorial algebras}
 
+Truncating a higher-order categorial algebra at level $m$ keeps its cells of dimension at most $m$, together with the structure of the dimensions below $m$. In the compact presentation, where all the cells of a sort lie in a single set, these are the cells that are $k$-cells for every forgotten dimension $k$; in the extended presentation, where the cells of each dimension form a separate sort, they are the sorts of dimension at most $m$.
+
+\begin{definition}\label{DTmnCatAlg}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$. For a compact $n$-category $\mathsf{C}=(C,(\xi_{k})_{k\in n})$, let
+\[
+T^{(m,n)}(C)=\{f\in C\mid \mathrm{sc}^{k}(f)=f\text{ for every }k\in n\text{ with }k\geq m\}.
+\]
+For $k<m$, the $k$-source and the $k$-target of any cell are in $T^{(m,n)}(C)$, by~(2C1), and, by~(2C2), so is $g\#^{k}f$ whenever $f,g\in T^{(m,n)}(C)$ and $\mathrm{sc}^{k}(g)=\mathrm{tg}^{k}(f)$. Hence $T^{(m,n)}(\mathsf{C})=(T^{(m,n)}(C),(\xi_{k}|_{T^{(m,n)}(C)})_{k\in m})$ is a compact $m$-category, and every compact $n$-functor $F\colon\mathsf{C}\mor\mathsf{C}'$, which preserves $k$-sources, restricts to a compact $m$-functor $T^{(m,n)}(F)\colon T^{(m,n)}(\mathsf{C})\mor T^{(m,n)}(\mathsf{C}')$.
+
+The \emph{truncation functor} $T^{(m,n)}_{\mathbf{\Sigma}}\colon\mathsf{nCatAlg}(\mathbf{\Sigma})\mor\mathsf{mCatAlg}(\mathbf{\Sigma})$ sends an $n$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}=(\mathsf{A},F)$ to the $m$-categorial $\mathbf{\Sigma}$-algebra with underlying $S$-sorted compact $m$-category $(T^{(m,n)}(\mathsf{A}_{s}))_{s\in S}$ and with the restrictions of the operations $\sigma^{\boldsymbol{\mathsf{A}}}$, which preserve these cells because they are compact $n$-functors; and it sends an $n$-categorial $\mathbf{\Sigma}$-homomorphism to its restriction. In the same way, for $n\in\mathbb{N}$, the cells of a compact $\omega$-category that are $k$-cells for every $k\geq n$ form a compact $n$-category, and this defines the truncation functor $T^{(n,\omega)}_{\mathbf{\Sigma}}\colon\omega\mathsf{CatAlg}(\mathbf{\Sigma})\mor\mathsf{nCatAlg}(\mathbf{\Sigma})$.
+\end{definition}
+
+\begin{definition}\label{DTmnExtCatAlg}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$. For an extended $n$-category $\mathsf{C}=((C_{k})_{k\in n+1},\zeta)$, let $T^{\mathrm{ext}(m,n)}(\mathsf{C})=((C_{k})_{k\in m+1},(\zeta_{j,k})_{(j,k)\in\coprod_{k\in m+1}k})$, the extended $m$-category formed by the cells of dimension at most $m$; for an extended $n$-functor $F$, let $T^{\mathrm{ext}(m,n)}(F)=(F_{k})_{k\in m+1}$.
+
+The \emph{truncation functor} $T^{\mathrm{ext}(m,n)}_{\mathbf{\Sigma}}\colon\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})\mor\mathsf{mCat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ sends an extended $n$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$ to the extended $m$-categorial $\mathbf{\Sigma}$-algebra with underlying $S$-sorted extended $m$-category $(T^{\mathrm{ext}(m,n)}(\mathsf{A}_{s}))_{s\in S}$ and operations $T^{\mathrm{ext}(m,n)}(\sigma^{\boldsymbol{\mathsf{A}}})$, and an extended $n$-categorial $\mathbf{\Sigma}$-homomorphism $F$ to $(T^{\mathrm{ext}(m,n)}(F_{s}))_{s\in S}$. In the same way, keeping the cells of dimension at most $n$ of an extended $\omega$-categorial $\mathbf{\Sigma}$-algebra defines the truncation functor $T^{\mathrm{ext}(n,\omega)}_{\mathbf{\Sigma}}\colon\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})\mor\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$.
+\end{definition}
+
 \subsection{On the relationship between discretization and truncation}
 
 
 
-\section{$\omega\mathsf{CatAlg}(\mathbf{\Sigma})$ as a projective limit}
+\section{$\omega\mathsf{CatAlg}(\mathbf{\Sigma})$ as a projective limit}\label{SLimitCompact}
 
 In this section we prove that the category $\omega\mathsf{CatAlg}(\mathbf{\Sigma})$ of $S$-sorted $\omega$-categorial $\Sigma$-algebras and $\omega$-categorial $\Sigma$-homomorphisms is the projective limit of the projective system $(\mathsf{nCatAlg}(\mathbf{\Sigma}),T^{(\bigcdot)}_{\mathbf{\Sigma}})$, where the functors $T^{(m,n)}_{\mathbf{\Sigma}}$ are the truncation functors defined in Definition~\ref{DTmnCatAlg} and $T^{(n,\omega)}_{\mathbf{\Sigma}}$ are the corresponding functors from $\omega\mathsf{CatAlg}(\mathbf{\Sigma})$ to $\mathsf{nCatAlg}(\mathbf{\Sigma})$.
 
 \begin{remark}\label{RTmnCatAlgProjSys}
-We let $(\bigcdot)\mathsf{CatAlg}(\mathbf{\Sigma})$ stand for the family of categories $(\mathsf{nCatAlg}(\mathbf{\Sigma}))_{n\in\omega}$ and we let $T^{(\bigcdot)}_{\mathbf{\Sigma}}$ stand for the family of functors $(T^{(m,n)}_{\mathbf{\Sigma}})_{(m,n)\in\leq}$. Note that, for every $m<n<p$,
+We let $(\bigcdot)\mathsf{CatAlg}(\mathbf{\Sigma})$ stand for the family of categories $(\mathsf{nCatAlg}(\mathbf{\Sigma}))_{n\in\omega}$ and we let $T^{(\bigcdot)}_{\mathbf{\Sigma}}$ stand for the family of functors $(T^{(m,n)}_{\mathbf{\Sigma}})_{(m,n)\in\leq}$. Note that $T^{(n,n)}_{\mathbf{\Sigma}}=\mathrm{Id}_{\mathsf{nCatAlg}(\mathbf{\Sigma})}$ and that, for every $m\leq n\leq p$,
 \[
-T^{(m,n)}_{\mathbf{\Sigma}}\circ T^{(n,p)}_{\mathbf{\Sigma}}=T^{(m,p)}_{\mathbf{\Sigma}}.
+T^{(m,n)}_{\mathbf{\Sigma}}\circ T^{(n,p)}_{\mathbf{\Sigma}}=T^{(m,p)}_{\mathbf{\Sigma}},
 \]
+since a cell that is a $k$-cell for every $k\geq n$ is a $k$-cell for every $k\geq m$ exactly when, moreover, it is a $k$-cell for every $k$ with $m\leq k<n$.
 Therefore, we obtain the projective system $((\bigcdot)\mathsf{CatAlg}(\mathbf{\Sigma}),T^{(\bigcdot)}_{\mathbf{\Sigma}})$ in $\mathsf{Cat}$ and its projective limit $\varprojlim ((\bigcdot)\mathsf{CatAlg}(\mathbf{\Sigma}),T^{(\bigcdot)}_{\mathbf{\Sigma}})$.
 \end{remark}
 
@@ -2054,7 +2127,7 @@ Let $\mathsf{L}$ be a category and, for every $n\in\omega$, let $F_{n}$ be a fun
 In this section we prove that the category $\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ of $S$-sorted extended $\omega$-categorial $\Sigma$-algebras and extended $\omega$-categorial $\Sigma$-homomorphisms is the projective limit of the projective system $(\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma}),T^{\mathrm{ext}(\bigcdot)}_{\mathbf{\Sigma}})$, where the functors $T^{\mathrm{ext}(m,n)}_{\mathbf{\Sigma}}$ are the truncation functors defined in Definition~\ref{DTmnExtCatAlg} and $T^{\mathrm{ext}(n,\omega)}_{\mathbf{\Sigma}}$ are the corresponding functors from $\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ to $\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$.
 
 \begin{remark}\label{RTmnExtCatAlgProjSys}
-	We let $(\bigcdot)\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ stand for the family of categories $(\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma}))_{n\in\omega}$ and we let $T^{\mathrm{ext}(\bigcdot)}_{\mathbf{\Sigma}}$ stand for the family of functors $(T^{\mathrm{ext}(m,n)}_{\mathbf{\Sigma}})_{(m,n)\in\leq}$. Note that, for every $m<n<p$,
+	We let $(\bigcdot)\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ stand for the family of categories $(\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma}))_{n\in\omega}$ and we let $T^{\mathrm{ext}(\bigcdot)}_{\mathbf{\Sigma}}$ stand for the family of functors $(T^{\mathrm{ext}(m,n)}_{\mathbf{\Sigma}})_{(m,n)\in\leq}$. Note that $T^{\mathrm{ext}(n,n)}_{\mathbf{\Sigma}}=\mathrm{Id}_{\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})}$ and that, for every $m\leq n\leq p$,
 	\[
 	T^{\mathrm{ext}(m,n)}_{\mathbf{\Sigma}}\circ T^{\mathrm{ext}(n,p)}_{\mathbf{\Sigma}}=T^{\mathrm{ext}(m,p)}_{\mathbf{\Sigma}}.
 	\]
@@ -2064,7 +2137,7 @@ In this section we prove that the category $\omega\mathsf{Cat}^{\mathrm{ext}}\ma
 Our next goal is to prove that such limit is isomorphic to $(\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma}),T^{\mathrm{ext}(\bigcdot,\omega)}_{\mathbf{\Sigma}})$ with $T^{\mathrm{ext}(\bigcdot,\omega)}_{\mathbf{\Sigma}}$ being the family of functors $(T^{\mathrm{ext}(n,\omega)}_{\mathbf{\Sigma}})_{n\in\omega}$. That the composition of functors $T^{\mathrm{ext}(m,n)}_{\mathbf{\Sigma}}\circ T^{\mathrm{ext}(n,\omega)}_{\mathbf{\Sigma}}$ is equal to the functor $T^{\mathrm{ext}(m,\omega)}_{\mathbf{\Sigma}}$ follows from the just stated consideration. Thus, all that remains to be proven is that $(\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma}),T^{\mathrm{ext}(\bigcdot,\omega)}_{\mathbf{\Sigma}})$ satisfies the universal property.
 
 \begin{proposition}\label{PUnivPropExtCatAlg}
-	Let $\mathsf{L}$ be a category and, for every $n\in\omega$, let $F_{n}$ be a functor from $\mathsf{L}$ to $\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$. If, for every $m,n\in\omega$ with $m\leq n$, $F_{m} = T^{(m,n)}_{\mathbf{\Sigma}} \circ F_{n}$, then there exists a unique functor $\langle F_{k}\rangle_{k\in\omega}$ from $\mathsf{L}$ to the category $\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ such that, for every $n\in\omega$, $F_{n} = T^{(n,\omega)}_{\mathbf{\Sigma}} \circ \langle F_{k}\rangle_{k\in\omega}$. The diagram in Figure~\ref{FUnivPropExtCatAlg} depicts this situation.
+	Let $\mathsf{L}$ be a category and, for every $n\in\omega$, let $F_{n}$ be a functor from $\mathsf{L}$ to $\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$. If, for every $m,n\in\omega$ with $m\leq n$, $F_{m} = T^{\mathrm{ext}(m,n)}_{\mathbf{\Sigma}} \circ F_{n}$, then there exists a unique functor $\langle F_{k}\rangle_{k\in\omega}$ from $\mathsf{L}$ to the category $\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ such that, for every $n\in\omega$, $F_{n} = T^{\mathrm{ext}(n,\omega)}_{\mathbf{\Sigma}} \circ \langle F_{k}\rangle_{k\in\omega}$. The diagram in Figure~\ref{FUnivPropExtCatAlg} depicts this situation.
 	\begin{figure}
 		\[
 		\xymatrix{
@@ -2079,6 +2152,12 @@ Our next goal is to prove that such limit is isomorphic to $(\omega\mathsf{Cat}^
 		\label{FUnivPropExtCatAlg}
 	\end{figure}
 \end{proposition}
+
+\begin{proof}
+Call a family $(\boldsymbol{\mathsf{A}}_{n})_{n\in\omega}$, with $\boldsymbol{\mathsf{A}}_{n}$ an extended $n$-categorial $\mathbf{\Sigma}$-algebra, \emph{compatible} if $T^{\mathrm{ext}(m,n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}_{n})=\boldsymbol{\mathsf{A}}_{m}$ for all $m\leq n$. Its \emph{limit} $\varprojlim_{n}\boldsymbol{\mathsf{A}}_{n}$ is the extended $\omega$-categorial $\mathbf{\Sigma}$-algebra whose $k$-cells of sort $s$ are the $k$-cells of sort $s$ of $\boldsymbol{\mathsf{A}}_{k}$, its cells of top dimension. For $j<k$, the $(j,k)$-source of a $k$-cell $x$ is its $(j,k)$-source in $\boldsymbol{\mathsf{A}}_{k}$, which is a $j$-cell of $\boldsymbol{\mathsf{A}}_{k}$ and hence, by compatibility, a $j$-cell of $\boldsymbol{\mathsf{A}}_{j}$; the targets, identities and compositions are defined in the same way, and every $\sigma\in\Sigma_{\mathbf{s},s}$ acts on $k$-cells as $\sigma^{\boldsymbol{\mathsf{A}}_{k}}$ does. Each of the conditions of Definition~\ref{DOmegaCatExt} involves finitely many dimensions $i<j<k$, and holds because it holds in $\boldsymbol{\mathsf{A}}_{k}$. Likewise, a family of homomorphisms $(H_{n}\colon\boldsymbol{\mathsf{A}}_{n}\mor\boldsymbol{\mathsf{A}}'_{n})_{n\in\omega}$ between compatible families, with $T^{\mathrm{ext}(m,n)}_{\mathbf{\Sigma}}(H_{n})=H_{m}$ for $m\leq n$, has a limit $\varprojlim_{n}H_{n}$, which acts on $k$-cells as $H_{k}$. By construction, $T^{\mathrm{ext}(n,\omega)}_{\mathbf{\Sigma}}(\varprojlim_{m}\boldsymbol{\mathsf{A}}_{m})=\boldsymbol{\mathsf{A}}_{n}$ and $T^{\mathrm{ext}(n,\omega)}_{\mathbf{\Sigma}}(\varprojlim_{m}H_{m})=H_{n}$; and every extended $\omega$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{B}}$, and every homomorphism, is the limit of its truncations: $\boldsymbol{\mathsf{B}}=\varprojlim_{n}T^{\mathrm{ext}(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$.
+
+For an object $X$ of $\mathsf{L}$ the family $(F_{n}(X))_{n\in\omega}$ is compatible, and for a morphism $f$ of $\mathsf{L}$ so is $(F_{n}(f))_{n\in\omega}$. Let $\langle F_{k}\rangle_{k\in\omega}(X)=\varprojlim_{n}F_{n}(X)$ and $\langle F_{k}\rangle_{k\in\omega}(f)=\varprojlim_{n}F_{n}(f)$. This is a functor, because every $F_{k}$ is, and $T^{\mathrm{ext}(n,\omega)}_{\mathbf{\Sigma}}\circ\langle F_{k}\rangle_{k\in\omega}=F_{n}$. If $G\colon\mathsf{L}\mor\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ also satisfies $T^{\mathrm{ext}(n,\omega)}_{\mathbf{\Sigma}}\circ G=F_{n}$ for every $n$, then $G(X)=\varprojlim_{n}T^{\mathrm{ext}(n,\omega)}_{\mathbf{\Sigma}}(G(X))=\varprojlim_{n}F_{n}(X)$, and in the same way $G(f)=\varprojlim_{n}F_{n}(f)$, so that $G=\langle F_{k}\rangle_{k\in\omega}$.
+\end{proof}
 
 
 \section{An algebraic square}

@@ -7,8 +7,7 @@ open Verso.Genre Manual InlineLean Stemma
 
 #doc (Stemma) "Truncation of extended categorial algebras" =>
 
-Section 8 of the draft, on the truncation of higher-order categorial algebras, has only its
-title, but Sections 9 and 10 use the truncation functors
+Definition 8.2 of the draft (labelled `DTmnExtCatAlg`) defines the truncation functors
 $`T^{\mathrm{ext}(m,n)}_{\Sigma} \colon \mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma) \to \mathsf{mCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)`,
 for $`m \leq n`, and
 $`T^{\mathrm{ext}(n,\omega)}_{\Sigma} \colon \omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma) \to \mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)`.
@@ -136,9 +135,6 @@ $`T^{\mathrm{ext}(m,n)}_{\Sigma} \circ T^{\mathrm{ext}(n,p)}_{\Sigma} = T^{\math
 and $`T^{\mathrm{ext}(n,n)}_{\Sigma}` is the identity functor. Hence the categories
 $`\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)` and the truncation functors form a
 projective system of categories.
-
-The draft states the equation for $`m < n < p`; it holds for $`m \leq n \leq p`, which is what
-a projective system indexed by $`(\mathbb{N}, \leq)` needs.
 
 ```lean
 theorem truncation_comp (Sig : Signature.{u, v} S) {m n p : ℕ} (hmn : m ≤ n) (hnp : n ≤ p) :

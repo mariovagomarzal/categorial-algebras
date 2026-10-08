@@ -5,7 +5,7 @@ owner = "encosllo"
 ref = "Rem. 9.1"
 kind = "remark"
 state = "done"
-labels = ["compact.truncation-proj-system", "compact.pi-omega-category", "compact.omega-cat-algebra", "compact.omega-cat-algebra-hom", "compact.omega-cat-alg"]
+labels = ["compact.truncation-proj-system"]
 depends = []
 
 [[item]]
@@ -19,7 +19,7 @@ depends = ["Rem. 9.1"]
 ref = "Rem. 10.1"
 kind = "remark"
 state = "done"
-labels = ["extended.truncation-proj-system", "extended.truncation-omega-comp", "extended.omega-cat-algebra", "extended.omega-cat-algebra-hom", "extended.omega-cat-alg"]
+labels = ["extended.truncation-proj-system", "extended.truncation-omega-comp"]
 depends = []
 
 [[item]]

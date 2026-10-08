@@ -5,9 +5,9 @@ open Verso.Genre Manual InlineLean Stemma
 
 #doc (Stemma) "Extended ω-categorial algebras" =>
 
-Sections 9 and 10 of the draft use the categories $`\omega\mathsf{CatAlg}(\Sigma)` and
-$`\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)` of $`\omega`-categorial algebras without
-defining them. In the extended presentation they are defined exactly as the extended
+Section 10 of the draft uses the category
+$`\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)` of extended $`\omega`-categorial algebras,
+defined in Definition 6.6 of the draft (labelled `DOmegaExtCatAlg`) exactly as the extended
 $`n`-categorial algebras of Definition 6.3, with extended $`\omega`-categories in place of
 extended $`n`-categories.
 

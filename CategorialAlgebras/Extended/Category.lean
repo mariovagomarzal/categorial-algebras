@@ -248,10 +248,7 @@ theorem PreCategory.injetive_idm {Index : Type} [Preorder Index] {C : TypeFamily
 ```
 
 The conditions that relate three dimensions $`i < j < k` are (MS1), (MS3), (MS4), (MS8) and
-(MS9) of Definition 6.1 of the draft. The draft states them with misprints in the indices
-((MS1) uses a dimension $`h` while quantifying over $`i < j < k`, and (MS8) uses an undefined
-$`l`); the definition below states them as they must read, and in this form they are those of
-the ported repository.
+(MS9) of Definition 6.1 of the draft; in this form they are those of the ported repository.
 
 :::definition (label := "extended.category") (central := false) (title := "Extended higher-order category")
 An *extended category with dimensions in* $`I` is an extended precategory such that, for all

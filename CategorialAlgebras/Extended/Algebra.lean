@@ -84,8 +84,8 @@ every $`\sigma \in \Sigma_{\mathbf{s}, s}`, every dimension $`k \in n + 1` and e
 $`k`-cells $`(a_j)_{j \in |\mathbf{s}|} \in \mathsf{A}_{\mathbf{s}}`,
 $$`H_s\big(\sigma^{\boldsymbol{\mathsf{A}}}((a_j)_{j})\big) = \sigma^{\boldsymbol{\mathsf{B}}}\big((H_{s_j}(a_j))_{j}\big).`
 
-This refines Definition 6.3 of the draft, which asks the equation only for $`k \in n`, leaving
-out the $`n`-cells, the top dimension of an extended $`n`-category.
+As Definition 6.3 of the draft says, the equation is asked for every $`k \in n + 1`, including
+the $`n`-cells, the top dimension of an extended $`n`-category.
 
 ```lean
 structure Hom (A B : CatAlgebra.{u, v, w} Sig n) where

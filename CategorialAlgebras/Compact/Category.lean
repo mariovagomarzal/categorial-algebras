@@ -306,9 +306,7 @@ attribute [simp] sck_scj_eq_scj scj_sck_eq_scj scj_tgk_eq_scj tgk_tgj_eq_tgj tgj
 For $`n \in \mathbb{N}`, a *compact* $`n`-*category* is a compact category with dimensions in
 $`n = \{0, \ldots, n-1\}`.
 
-This refines Definition 5.3 of the draft, which asks $`n \geq 2`: the definition makes sense
-for every $`n`, and Section 5 uses it for every $`n` (for instance the signature
-$`\Sigma^{(0)} = \Sigma`). A compact $`0`-category is a set, with no structure; a compact
+As in Definition 5.3 of the draft, the definition is made for every $`n`. A compact $`0`-category is a set, with no structure; a compact
 $`1`-category is a compact category in the sense of Definition 5.1, and a compact
 $`2`-category is one in the sense of Definition 5.2.
 

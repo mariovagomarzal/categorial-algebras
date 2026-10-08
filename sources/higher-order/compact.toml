@@ -42,3 +42,17 @@ kind = "definition"
 state = "done"
 labels = ["term", "partial-algebra", "partial-algebra-hom", "term-eval", "qe-equation", "qe-variety", "compact.qe-specification"]
 depends = ["Def. 5.5"]
+
+[[item]]
+ref = "Def. 5.7"
+kind = "definition"
+state = "done"
+labels = ["compact.omega-category", "compact.pi-omega-category"]
+depends = ["Def. 5.3"]
+
+[[item]]
+ref = "Def. 5.8"
+kind = "definition"
+state = "done"
+labels = ["compact.omega-cat-algebra", "compact.omega-cat-algebra-hom", "compact.omega-cat-alg"]
+depends = ["Def. 5.4", "Def. 5.7"]

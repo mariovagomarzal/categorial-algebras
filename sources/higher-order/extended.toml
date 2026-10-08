@@ -42,3 +42,10 @@ kind = "definition"
 state = "done"
 labels = ["extended.qe-specification"]
 depends = ["Def. 6.4"]
+
+[[item]]
+ref = "Def. 6.6"
+kind = "definition"
+state = "done"
+labels = ["extended.omega-cat-algebra", "extended.omega-cat-algebra-hom", "extended.omega-cat-alg"]
+depends = ["Def. 6.3"]

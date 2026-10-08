@@ -6,7 +6,7 @@ open Verso.Genre Manual InlineLean Stemma
 
 #doc (Stemma) "Truncation of compact categorial algebras" =>
 
-Section 8 of the draft, on truncation, has only its title, but Section 9 uses the truncation
+Definition 8.1 of the draft (labelled `DTmnCatAlg`) defines the truncation
 functors $`T^{(m,n)}_{\Sigma} \colon \mathsf{nCatAlg}(\Sigma) \to \mathsf{mCatAlg}(\Sigma)`, for
 $`m \leq n`, and $`T^{(n,\omega)}_{\Sigma} \colon \omega\mathsf{CatAlg}(\Sigma) \to \mathsf{nCatAlg}(\Sigma)`.
 In the compact presentation, truncating at level $`m` keeps the cells of dimension at most
@@ -207,7 +207,7 @@ and $`T^{(n,n)}_{\Sigma}` is naturally isomorphic to the identity functor. Likew
 $`T^{(m,n)}_{\Sigma} \circ T^{(n,\omega)}_{\Sigma}` is naturally isomorphic to
 $`T^{(m,\omega)}_{\Sigma}`.
 
-This refines Remark 9.1 of the draft, which states the equations
+Remark 9.1 of the draft states the equations
 $`T^{(m,n)}_{\Sigma} \circ T^{(n,p)}_{\Sigma} = T^{(m,p)}_{\Sigma}` on the nose: in set theory,
 where the cells of a truncation are a subset of the cells, they hold; in the formalization, a
 cell of the truncation is a cell together with a proof that it has the right dimension, and the

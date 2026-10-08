@@ -636,8 +636,7 @@ Together with Remark 10.1, this says that
 $`(\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma), T^{\mathrm{ext}(\cdot,\omega)}_{\Sigma})`
 is the projective limit of the projective system
 $`((\cdot)\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma), T^{\mathrm{ext}(\cdot)}_{\Sigma})` in
-$`\mathsf{Cat}`. The draft writes $`T^{(m,n)}_{\Sigma}` and $`T^{(n,\omega)}_{\Sigma}` in the
-statement; the functors meant are the extended ones.
+$`\mathsf{Cat}`.
 
 ```lean
 theorem omegaCatAlg_isLimit {L : Type*} [CategoryTheory.Category L] (F : ∀ n, L ⥤ CatAlgebra.{u, v, w} Sig n)
