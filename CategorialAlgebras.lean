@@ -6,6 +6,7 @@ import CategorialAlgebras.Compact.Category
 import CategorialAlgebras.Compact.Functor
 import CategorialAlgebras.Compact.Product
 import CategorialAlgebras.Compact.Algebra
+import CategorialAlgebras.Extended.Category
 
 open Verso.Genre Manual InlineLean Stemma
 
