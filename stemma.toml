@@ -7,7 +7,7 @@ stemma = "0.4.0"
 [members]
 "mariovagomarzal" = { roles = ["maintainer", "signer"], keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO/707M6eyzrXPQjJTSYzKksHy35vGXsmO5FtPamb4aG"] }
 "encosllo" = { roles = ["maintainer", "signer"], keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPvY3UkEPBl2SUrxTvKAfPwKuF9uicBIDzGiPcoo6RJO", "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM+/iDsQ1oYJL1ufPIiVkNIByOE4NQmrfa+IKxbK1+9G"] }
-"ruizmoraraul" = { roles = ["maintainer", "signer"], keys = [] }
+"ruizmoraraul" = { roles = ["maintainer", "signer"], keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMOSHz4q5bjF9/oxbbWyN4pjZTMk/CkQ8fXvNSKEbsJ7"] }
 
 # What the library requires: every central environment carries a current
 # signature, or `stemma check` fails.
