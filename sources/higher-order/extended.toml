@@ -4,31 +4,36 @@ owner = "encosllo"
 [[item]]
 ref = "Def. 6.1"
 kind = "definition"
-state = "planned"
+state = "done"
+labels = ["extended.category-struct", "extended.precategory", "extended.category", "extended.n-category", "extended.one-category-of-precategory"]
 depends = []
 
 [[item]]
 ref = "p. 6, extended n-categories and n-functors"
 kind = "definition"
-state = "planned"
+state = "done"
+labels = ["extended.functor", "extended.functor-comp", "extended.n-functor", "extended.cat"]
 depends = ["Def. 6.1"]
 
 [[item]]
 ref = "Def. 6.2"
 kind = "definition"
-state = "planned"
+state = "done"
+labels = ["extended.pi-category-struct", "extended.pi-category", "extended.arity-product"]
 depends = ["p. 6, extended n-categories and n-functors"]
 
 [[item]]
 ref = "Def. 6.3"
 kind = "definition"
-state = "planned"
+state = "done"
+labels = ["extended.cat-algebra", "extended.cat-algebra-hom", "extended.cat-alg"]
 depends = ["Def. 6.2"]
 
 [[item]]
 ref = "Def. 6.4"
 kind = "definition"
-state = "planned"
+state = "done"
+labels = ["extended.signature"]
 depends = []
 
 [[item]]
