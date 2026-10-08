@@ -13,6 +13,7 @@ import CategorialAlgebras.Extended.Algebra
 import CategorialAlgebras.Extended.Restriction
 import CategorialAlgebras.Extended.OmegaAlgebra
 import CategorialAlgebras.Extended.Truncation
+import CategorialAlgebras.Extended.Limit
 
 open Verso.Genre Manual InlineLean Stemma
 
