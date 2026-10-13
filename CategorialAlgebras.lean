@@ -3,6 +3,7 @@ import CategorialAlgebras.Init
 import CategorialAlgebras.Tactic
 import CategorialAlgebras.Signature
 import CategorialAlgebras.PartialAlgebra
+import CategorialAlgebras.Derivor
 import CategorialAlgebras.Compact.Category
 import CategorialAlgebras.Compact.Functor
 import CategorialAlgebras.Compact.Product
