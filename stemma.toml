@@ -1,7 +1,7 @@
 [library]
 name = "CategorialAlgebras"
 title = "CategorialAlgebras"
-stemma = "0.4.0"
+stemma = "0.5.0"
 
 # The group's members, their roles, and the public keys they sign with.
 [members]
