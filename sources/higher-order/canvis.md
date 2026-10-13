@@ -572,3 +572,46 @@ etiquetes duplicades.
   que les condicions traduïdes siguen *equivalents* a la definició de
   $d(\sigma)$; ací només es demana una implicació, perquè el domini de
   $\sigma$ queda retallat per les condicions de domini.
+
+---
+---
+
+# Cinquena ronda: introducció directa dels *generalized ep-derivors*
+
+Data: 2026-10-13.
+
+**Comentari.** La secció no ha de passar per «generalized derivor» ni per
+«ep-derivor»: ha d'introduir directament la noció de *generalized
+ep-derivor*, tan simplificada com siga possible i autocontinguda.
+
+**Què he fet.**
+- **Nova definició `DGenEpDerivor`.** És l'única definició de la noció i ara
+  obri la subsecció. Un *generalized ep-derivor* entre ep-especificacions és
+  una tripla $(\varphi,D,d)$ que compleix quatre condicions:
+  1. $\varphi$ és una aplicació entre els conjunts de sorts;
+  2. per a cada sort, un domini $D_s$ tancat;
+  3. per a cada símbol, un terme $d(\sigma)$, és a dir, $(\varphi,d)$ és un
+     derivor;
+  4. per a cada model $\mathbf B$, $\mathbf d^\ast_{\mathfrak{gd}}(\mathbf B)$
+     és un model.
+- **Ordre de la resta de la subsecció.** Defineix $\mathbf d^\ast_{\mathfrak{gd}}$
+  per a qualsevol tripla que complisca (1)–(3) i sobre qualsevol àlgebra
+  parcial. Els resultats van en aquest ordre:
+  - $\Delta_{(\varphi,D)}$;
+  - el domini i la traducció;
+  - $\mathbf d^\ast_{\mathfrak{gd}}(\mathbf B)$;
+  - el lema de traducció;
+  - la caracterització del domini;
+  - el functor;
+  - els subconjunts tancats i les congruències;
+  - el criteri sintàctic (GEP1)–(GEP2) per a la condició (4);
+  - el remark.
+- **Eliminat.** La definició `DGeneralDerivor` i l'expressió «generalized
+  derivor» han desaparegut de tot el document actiu. Les construccions de les
+  seccions posteriors es diuen ara «el triple … definit com segueix», i les
+  proposicions corresponents en demostren que és un *generalized ep-derivor*.
+- **Introducció.** La de la secció parla directament de *generalized
+  ep-derivors*.
+- **Subsecció fusionada.** L'antiga subsecció *Generalized derivors and their
+  functors* desapareix: el seu contingut s'ha integrat a *Generalized
+  ep-derivors*.
