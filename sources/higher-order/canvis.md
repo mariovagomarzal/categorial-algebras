@@ -197,3 +197,213 @@ $j$». Caldria unificar les dues convencions algun dia.
 `DTranslation`, `LTranslation`, `PEpDerivorFunctor`, `REpDerivor`,
 `DGenEpDerivor`, `PGenEpDerivorFunctor`, `RGenEpDerivor`, `RCompactEp`.
 `DGeneralDerivor` i `DDerivorEP` conserven l'etiqueta, però el contingut és nou.
+
+---
+---
+
+# Segona ronda: nous comentaris en roig
+
+Data: 2026-10-13. Hi havia 18 comentaris nous en roig, a més del bloc de
+resultats sobre derivors que havies enganxat dins la secció d'ep-derivors
+generalitzats. Tots s'han resolt i eliminat. El document compila sense
+errors, sense referències indefinides i sense etiquetes duplicades (pdflatex +
+bibtex). Ara té 113 pàgines.
+
+Al final hi ha les **decisions que has de revisar**.
+
+## 1. Estructura: comentar les seccions 3, 4 i 5
+
+**Comentari.** Comentar les tres seccions anteriors (*Derivors*,
+*Generalized derivors*, *ep-derivors*) i introduir directament els
+*generalized ep-derivors*. La secció ha d'incloure les nocions anteriors que
+calguen, excepte les àlgebres de Hall, que no s'han de copiar però de les quals
+sí es poden fer servir els resultats.
+
+**Què he fet.**
+- He comentat les tres seccions línia a línia amb `%`; per recuperar-les, n'hi ha prou de llevar el `%`. Abans he esborrat els seus comentaris en roig, perquè els resol la secció nova.
+- He reescrit la secció *Generalized ep-derivors*, que ara és la secció 3 del PDF, amb sis subseccions:
+  1. **Notation**: variables, termes i subterme, E-equacions i substitucions. Dels derivors només recorde la definició i tres fets de l'apèndix, (H1)–(H3): $d^\sharp$ és un homomorfisme d'àlgebres de Hall i la composició és la de $\mathsf{Sig}_{\mathfrak d}$. No hi copie res de les àlgebres de Hall. Inclou `RSubst` i un remark nou, `RHomTerm`: els homomorfismes conserven els valors definits.
+  2. **ep-signatures**: `DEpSignature`, `DDeft`, `LDeft` i `DCn`.
+  3. **Generalized derivors and translations**: `DGeneralDerivor`, `PDeltaFunctor`, `DDerivedPAlg`, `DTranslation` i `LTranslation`.
+  4. **Generalized ep-derivors**: `DGenEpDerivor`, `PGenEpDerivorAlg`, `PGenEpDerivorFunctor` i `RGenEpDerivor`.
+  5. **La categoria $\mathsf{epSig}_{\mathfrak{gd}}$**: composició, `PEpSiggdCat`, `PGenAlgFun`, `PGenDerClCong` i `DEpAlgCat`.
+  6. **Generalized ep-derivors between ep-specifications**: vegeu la decisió C.
+
+## 2. Notació de variables (comentari a l'antiga §4)
+
+**Comentari.** Prendre la notació de variables de la secció de *derived
+operations* del document Curry-Howard.
+
+**Què he fet.**
+- He adoptat la notació $\downarrow\mathbf{s}$, amb $(\downarrow\mathbf{s})_s=\mathbf{s}^{-1}[\{s\}]$, i l'he identificada amb $V^S_{\mathbf{s}}=\{v^s_i\mid i\in|\mathbf{s}|_s\}$, numerades per sort com al Curry-Howard.
+- Aquesta part del Curry-Howard ja és a l'apèndix del `main.tex`, així que hi faig referència (`DLR`, `isovsV`) i no cite el document, que ja no és a `Biblio.bib`.
+- $v^{\mathbf{s}}_j$ queda només com a abreviatura de la variable corresponent a la lletra $j$. Així, $v^{\mathbf{s}}_j=v^{s_j}_i$ si aquella lletra és l'aparició $i$-èsima del seu sort.
+
+## 3. Functor $\Delta_{(\varphi,D)}$ (comentari a l'antiga §4)
+
+**Comentari.** Llevar el remark `RGenDerivorSem` i fer una proposició que
+definisca $\Delta_{(\varphi,D)}$.
+
+**Què he fet.**
+- He eliminat el remark.
+- He afegit la nova Proposició `PDeltaFunctor`. Defineix $\Delta_{(\varphi,D)}\colon\mathsf{PAlg}(\Lambda)\to\mathsf{Set}^S$, que envia $\mathbf{B}$ a $B_{(\varphi,D)}$ i $f$ a $f_\varphi|^{B_{(\varphi,D)}}_{A_{(\varphi,D)}}$, exactament com demanaves.
+- Les fletxes són els homomorfismes, que conserven les E-equacions; per això el domini és $\mathsf{PAlg}(\Lambda)$.
+- També demostre que $\Delta_{(\varphi,\varnothing)}=\Delta_\varphi\circ\mathrm{G}_\Lambda$.
+
+## 4. Notació $\mathsf{epAlg}$
+
+**Comentari.** $\mathsf{epAlg}(S,\Sigma,\mathrm{def}^{\mathbf\Sigma})$ ha de
+ser la subcategoria plena de $\mathsf{PAlg}(S,\Sigma)$ de les ep-àlgebres, i
+cal canviar la notació a tot el document.
+
+**Què he fet.**
+- L'he introduïda a `DEpSignature` i l'he usada a tot arreu on la categoria era d'ep-àlgebres.
+- $\mathsf{PAlg}(\boldsymbol{\mathcal C}^{\dots})$ es manté per a les QE-varietats.
+- Per a les categories compacta i estesa demostre la igualtat $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})=\mathsf{epAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{\mathbf{\Sigma}^{(n)}})$ (`RCompactEp`, `PExtendedIdent`), i el mateix per a l'estesa.
+
+## 5. `RSubst`
+
+**Comentari.** Llevar-lo si no s'usa a la resta del document.
+
+**Què he fet.** Es fa servir a `LDeft`, `LTranslation`, `PDeltaFunctor` i
+`PGenEpDerivorAlg`. Per tant, l'he mantingut, dins la subsecció de notació.
+
+## 6. Equació de $\mathrm{Cn}$ més neta
+
+**Què he fet.** He introduït la classe de models
+$\mathrm{Mod}^{\mathbf\Sigma}_X(\mathcal E)$, de manera que la definició queda
+$\mathrm{Cn}^{\mathbf\Sigma}_X(\mathcal E)=\{e\mid\mathrm{Mod}(\mathcal E)\subseteq\mathrm{Mod}(\{e\})\}$.
+
+## 7. Termes i subterme del Curry-Howard
+
+**Què he fet.**
+- Uso $\mathrm{Subt}_\Sigma(P)$, el conjunt $S$-sortit de subterme, en lloc del meu $\mathrm{Sb}(P)$.
+- També faig servir la seua caracterització recursiva.
+- Totes dues són a l'apèndix; hi he afegit les etiquetes `DSubt` i `RSubt` perquè es puguen citar.
+
+## 8. Els resultats sobre derivors, adaptats
+
+**Comentari.** Adaptar `PFunSig`, `PDerClCong`, `PAlgFun`, el diagrama i
+`DAlgCat` als *generalized ep-derivors*, mantenint-ne l'estil.
+
+**Què he fet.**
+
+| Original | Nova versió |
+|---|---|
+| `PFunSig` | `PGenEpDerivorFunctor`: $\mathrm{Alg}_{\mathfrak{gd}}(\mathbf d)=\mathbf d^\ast_{\mathfrak{gd}}$ |
+| el diagrama | dins `PGenEpDerivorFunctor`: $\mathrm G_{\mathbf\Sigma}\circ\mathbf d^\ast_{\mathfrak{gd}}=\Delta_{(\varphi,D)}\circ\mathrm{In}$ |
+| `PDerClCong` | `PGenDerClCong` |
+| `PAlgFun` | `PGenAlgFun` |
+| `DAlgCat` | `DEpAlgCat` ($\mathsf{epAlg}_{\mathfrak{gd}}$) |
+
+- Les etiquetes són noves perquè les originals ja existien a l'apèndix; el bloc enganxat les duplicava.
+- A `PGenDerClCong` no he pogut usar l'argument de l'original (el functor aplicat a la inclusió o a la projecció): el quocient d'una ep-àlgebra no és necessàriament una ep-àlgebra. Per això la prova és directa, per inducció sobre termes.
+
+## 9. $\mathsf{epSig}_{\mathfrak{gd}}$, $\mathbf d^\ast_{\mathfrak{gd}}$ i el paràgraf convertit en proposició
+
+**Què he fet.**
+- El paràgraf que definia $\mathbf d^\ast(\mathbf B)$ és ara la Proposició `PGenEpDerivorAlg`, escrita amb $\Delta_{(\varphi,D)}$. És una equivalència: (GEP1)+(GEP2) es compleixen si i només si cada $\mathbf\Lambda$-àlgebra és tancada i $\mathbf d^\ast(\mathbf B)$ és una $\mathbf\Sigma$-àlgebra.
+- `PGenEpDerivorFunctor` usa la notació $\mathbf d^\ast_{\mathfrak{gd}}$.
+- La categoria és la Proposició `PEpSiggdCat`. **L'ordre és diferent del que demanaves**: vegeu la decisió B.
+
+## 10. Graduació i unificació
+
+**Què he fet.**
+- **Graduació.** He definit el derivor $\mathbf g^{(n)}$ (`DGradDerivor`) a partir de la teua idea, amb dues correccions:
+  - per a $n$ finit, $D_{(n,s)}=\varnothing$, perquè $\mathrm{sc}^n$ no existeix a $\Sigma^{(n)}$;
+  - la identitat és $\mathrm i^{(k,j)}\mapsto v_0$, amb la notació $\mathrm i^{(k,j)}$ del document.
+- `PGradDerivor` demostra (GEP1)–(GEP3): el functor transforma àlgebres compactes en esteses. La prova tradueix cada axioma (EA) a un axioma (A)/(AB).
+- `DGraduation` defineix $\mathrm{Gd}^{(n)}_{\mathbf\Sigma}$ i la seua birestricció, també per a $n=\omega$.
+- **Unificació.** He definit $\mathbf u^{(n)}$ (`DUnifDerivor`) a partir de la teua idea, amb $\#^k\mapsto\circ^{(k,n)}$. `PUnifDerivor` en demostra les propietats i `DUnification` defineix $\mathrm{Uf}^{(n)}$.
+- **Unificació, cas $\omega$.** No pot venir d'un *generalized derivor* (vegeu la decisió E). L'he definida com un colímit dels casos finits (`DUnificationOmega`, `PUnificationOmega`).
+- **Relació entre tots dos.**
+  - `PUnifGrad`: $\mathrm{Uf}\circ\mathrm{Gd}=\mathrm{Id}$. Ho demostre veient que el derivor compost $\mathbf g\circ\mathbf u$ és equivalent a la identitat. Per a $\omega$, només és un isomorfisme natural.
+  - `PGradUnif`: $\mathrm{Gd}\circ\mathrm{Uf}\cong\mathrm{Id}$, calculant el compost $\mathbf u\circ\mathbf g$.
+  - Corol·lari nou `CGdUfEquiv`: totes dues són equivalències de categories.
+- **Identificacions prèvies.** Per definir el functor sobre $\mathsf{nCatAlg}$, he afegit `PCompactIdent`, que demostra $\mathsf{nCatAlg}(\mathbf\Sigma)=\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ i diu que, per a $\omega$, és una subcategoria plena pròpia. He afegit també `PExtendedIdent` per al cas estés.
+
+## 11. Discretització i truncació
+
+**Què he fet.**
+- He reescrit la secció sencera; del text antic sobre la truncació no queda res.
+- Per a $m\le n$, amb $n\in\mathbb N\cup\{\omega\}$, he definit els derivors de discretització, $\boldsymbol\delta^{(n,m)}$ i $\boldsymbol\delta^{\mathrm{ext}(n,m)}$, i de truncació, $\boldsymbol\tau^{(m,n)}$ i $\boldsymbol\tau^{\mathrm{ext}(m,n)}$. Demostre que són *generalized ep-derivors* (`PDiscDerivor`, `PDiscExtDerivor`, `PTruncExtDerivor`) i en definisc els functors $\mathrm D^{(n,m)}_{\mathbf\Sigma}$ i $T^{(m,n)}_{\mathbf\Sigma}$, en les versions compacta i estesa.
+- **Relacions** (`PTruncDisc`, `PDiscTruncAdj`, `PTruncComp`):
+  - $T\circ\mathrm D=\mathrm{Id}$, demostrat amb derivors compostos;
+  - $\mathrm D\dashv T$, amb unitat identitat; la counitat és la inclusió de les $m$-cel·les en la versió compacta i $\mathrm i^{(k,m)}$ en l'estesa;
+  - $T^{(m,n)}\circ T^{(n,p)}=T^{(m,p)}$, que és el fet que usen les seccions de límits. Ara el remark `RTmnCatAlgProjSys` hi remet.
+- He conservat les etiquetes `DTmnCatAlg` i `DTmnExtCatAlg`, que són al pla. El functor és el mateix que abans: les $m$-cel·les són exactament les cel·les que són $k$-cel·les per a tot $k\ge m$, per (AB$^{m,k}$1).
+
+## 12. Notació $[n]$
+
+**Comentari.** No introduir $[n]$; usar $n+1$.
+
+**Què he fet.**
+- He reescrit `DSigmaCatExtended` per a $n\in\mathbb N$ amb $n+1$. Per a $\omega$ hi ha una frase final: «les mateixes clàusules amb $\omega$ en lloc de $n+1$».
+- `DVarExtended` es completa de la mateixa manera per a $\omega$.
+- `DVarCompact` admet ara $n\in\mathbb N\cup\{\omega\}$.
+
+---
+
+## Decisions que has de revisar (segona ronda)
+
+**A. Condicions de domini per a cada operació, $D_\sigma$ (la decisió més important).**
+- **Canvi.** Ara un *generalized derivor* $(\varphi,D,d)$ té $D=((D_s)_s,(D_\sigma)_\sigma)$: a més del domini de cada sort, hi ha un conjunt d'E-equacions que restringeix el domini de cada símbol.
+- **Raó 1: discretització.** Sense $D_\sigma$, la discretització no pot venir de cap derivor. Cal que $x\circ^m y$ estiga definit si i només si $x=y$, i cap terme no ho expressa: en un monoide, vist com a categoria compacta, tot terme és total.
+- **Raó 2: composició.** Sense $D_\sigma$, la composició de dos *generalized ep-derivors* no és en general un *generalized ep-derivor*. Si $\mathbf e$ oblida una variable, $(\mathbf e\circ\mathbf d)^\ast$ pot estar definit on $\mathbf d^\ast\circ\mathbf e^\ast$ no ho està.
+- **Compatibilitat.** És la contrapartida de la fórmula $\Phi^\sigma$ de [LG18]. Amb $D_\sigma=\varnothing$ es recupera tot el que teníem: les teues idees per a $\mathrm{Gd}$ i $\mathrm{Uf}$ no en necessiten.
+
+**B. Ordre de les proposicions.**
+- **Què demanaves.** Primer la categoria $\mathsf{epSig}_{\mathfrak{gd}}$, després la proposició del paràgraf i després `PGenEpDerivorFunctor`.
+- **Per què no ho he pogut fer.** La prova que el compost de dos *generalized ep-derivors* ho torna a ser necessita saber que $\mathbf e^\ast(\mathbf C)$ és una ep-àlgebra, que és justament la proposició del paràgraf.
+- **Ordre que he fet servir.** `PGenEpDerivorAlg` → `PGenEpDerivorFunctor` → `PEpSiggdCat`. Ho explique en una frase al començament de la subsecció.
+
+**C. Morfismes de $\mathsf{epSig}_{\mathfrak{gd}}$ com a classes d'equivalència.**
+- **Problema.** La composició sintàctica (Definició `DGenEpComp`) no és associativa literalment, i la identitat no hi és neutra. Els conjunts d'equacions que resulten són diferents, encara que tinguen els mateixos models.
+- **Solució.** Els morfismes són classes. Dos *generalized ep-derivors* són equivalents si tenen la mateixa $\varphi$ i el mateix functor.
+- **Alternativa (no recomanada).** Normalitzar els conjunts $D$ a la seua clausura per $\mathrm{Cn}$; seria més feixuc d'escriure.
+
+**D. Relativització a especificacions: ep-specifications i (GEP3).**
+- **Problema.** El derivor de graduació no compleix (GEP1) sobre totes les $\mathbf\Sigma^{(n)}$-àlgebres: en una àlgebra on $\mathrm{sc}^j$ no és idempotent, la $j$-font d'una cel·la no és una $j$-cel·la. Per tant, «el functor entre ep-àlgebres» que demanaves no està definit sobre totes les ep-àlgebres, sinó només sobre els models de $\boldsymbol{\mathcal C}^{\mathbf\Sigma^{(n)}}$.
+- **Solució.** He afegit la subsecció `SEpSpec`:
+  - ep-especificacions $(\mathbf\Sigma,\mathcal E)$;
+  - $\mathrm{Cn}^{\mathbf\Lambda,\mathcal F}$;
+  - la condició (GEP3): $\mathbf d^\ast$ envia models a models;
+  - un criteri sintàctic (`LTranslationQE`);
+  - la Proposició `PGenEpSpec`, que estén tots els resultats a $\mathsf{epSpec}_{\mathfrak{gd}}$.
+- **Relació amb el que demanaves.** $\mathsf{epSig}_{\mathfrak{gd}}$ és la subcategoria plena de les especificacions amb $\mathcal E=\varnothing$. La «birestricció» que demanaves és exactament (GEP3).
+
+**E. La unificació $\omega$ no ve d'un derivor.**
+- **Problema.** Un *generalized derivor* envia cada sort a un únic sort $(k,s)$, i per tant només veu cel·les d'una dimensió. L'argument és al text: una ω-categoria estesa amb una sola cel·la fins a la dimensió $k$.
+- **Solució.** He definit $\mathrm{Uf}^{(\omega)}$ com el colímit de les àlgebres $\mathrm D^{(\omega,p)}\mathrm{Uf}^{(p)}T^{\mathrm{ext}(p,\omega)}(\mathbf A)$.
+- **Conseqüència.** Per a $\omega$, els resultats de relació són isomorfismes naturals, no igualtats.
+
+**F. Notació dels functors.**
+- $T^{(m,n)}$ va en cursiva, com a les seccions de límits.
+- La discretització és $\mathrm D^{(n,m)}$, com al Projecte-Investigador ($D^{(n+1,n)}_\Sigma$).
+- La truncació tenia dues notacions: $U^{(n,n+1)}$ al Projecte-Investigador i $T^{(m,n)}$ al `main.tex`. He mantingut la del `main.tex`.
+
+**G. Pla de formalització.**
+- No he tocat cap `.toml` ni cap fitxer Lean.
+- L'ítem `SDiscretization` de `truncation.toml` està «blocked» perquè la subsecció només tenia títol. Ara té contingut; el propietari del pla (encosllo) podria desbloquejar-lo.
+- L'ítem `DTmnCatAlg, DTmnExtCatAlg` («done») defineix el mateix functor que abans, però ara també per a $n=\omega$ i a partir d'un derivor. Convé revisar-lo.
+- Els ítems exclosos `SDerivors`, `SGenDerivors` i `SEpDerivors` apunten ara a seccions comentades.
+- No he pogut executar `stemma check`, perquè Lean no està instal·lat en aquest entorn.
+
+## Nous elements (segona ronda)
+
+`SGenEpNotation`, `RHomTerm`, `SEpSignatures`, `SGenDerivorsTr`,
+`PDeltaFunctor`, `DDerivedPAlg`, `RTrRegular`, `SGenEpDerivorsDef`,
+`PGenEpDerivorAlg`, `SEpSiggd`, `DGenEpComp`, `LGenEpComp`, `PEpSiggdCat`,
+`PGenAlgFun`, `PGenDerClCong`, `DEpAlgCat`, `SEpSpec`, `DEpSpec`,
+`DGenEpDerivorSpec`, `LTranslationQE`, `PGenEpSpec`, `PCompactIdent`,
+`PExtendedIdent`, `SGraduationSub`, `DGradDerivor`, `PGradDerivor`,
+`DGraduation`, `SUnificationSub`, `DUnifDerivor`, `PUnifDerivor`,
+`DUnification`, `DUnificationOmega`, `PUnificationOmega`, `SGradUnif`,
+`CGdUfEquiv`, `DDiscDerivor`, `PDiscDerivor`, `DDiscretization`,
+`DDiscExtDerivor`, `PDiscExtDerivor`, `DDiscretizationExt`, `DTruncDerivor`,
+`PTruncExtDerivor`, `SDiscTrunc`, `PTruncDisc`, `PDiscTruncAdj`,
+`PTruncComp`; i, a l'apèndix, `DLR`, `DSubt`, `RSubt`. Desapareixen `RGenDerivorSem` i les etiquetes que només eren a les seccions
+comentades (`DDerivor`, `PSigdCat`, `DDerivorEP`, `PEpDerivorFunctor`,
+`REpDerivor`, …). `DEpSignature`, `RSubst`, `DDeft`, `LDeft`, `DCn`,
+`DTranslation`, `LTranslation`, `DGeneralDerivor`, `DGenEpDerivor`,
+`PGenEpDerivorFunctor` i `RGenEpDerivor` es reutilitzen a la secció nova.
