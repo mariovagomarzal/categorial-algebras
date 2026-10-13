@@ -651,3 +651,60 @@ bibliografia.
     - Monoide lliure: he llevat la referència a l'apèndix.
 - **Resultat.** El document compila sense errors i sense referències
   indefinides.
+
+---
+---
+
+# Setena ronda: *generalized ep-derivors* entre ep-signatures
+
+Data: 2026-10-13.
+
+**Comentari.** Els derivors no han d'estar definits sobre ep-especificacions,
+sinó sobre ep-signatures. Després cal demostrar, quan calga, que els functors
+corresponents envien models d'una especificació a models de l'altra.
+
+**Què he fet.**
+- **`DGenEpDerivor`.** Un *generalized ep-derivor* de $\mathbf\Sigma$ a
+  $\mathbf\Lambda$ (ep-signatures) és ara simplement una tripla
+  $(\varphi,D,d)$: una aplicació entre sorts, un domini $D_s$ per a cada sort
+  i un terme $d(\sigma)$ per a cada símbol. Desapareixen les condicions de
+  tancament i de models.
+- **Functor.** $\mathbf d^\ast_{\mathfrak{gd}}$ és un functor entre totes les
+  àlgebres parcials, sense cap condició.
+- **Nova subsecció `SEpModels`.**
+  - **Propietat.** «$\mathbf d^\ast_{\mathfrak{gd}}$ envia models de
+    $(\mathbf\Lambda,\mathcal F)$ a models de $(\mathbf\Sigma,\mathcal E)$» és
+    una propietat del derivor (`DSendsModels`).
+  - **Criteri sintàctic.** És (GEP1)–(GEP2) (`PGenEpDerivorAlg`).
+  - **Ep-especificacions.** Només s'usen per descriure classes de models.
+- **Composició** (`DGenEpComp`, `LGenEpComp`).
+  - **Definició.** Està definida per a qualssevol *generalized ep-derivors*
+    entre ep-signatures.
+  - **Lema.** Si $\mathbf e^\ast$ envia models a models i $\mathbf d^\ast$
+    també, el compost també ho fa, i coincideix amb $\mathbf d^\ast\circ\mathbf e^\ast$
+    sobre els models.
+- **Nou remark `RSameFunctor`.** Dos derivors amb les mateixes $\varphi$ i
+  $d$, i dominis amb els mateixos models en una classe d'àlgebres, indueixen
+  el mateix functor en aquesta classe.
+- **Categoria $\mathsf{epSig}_{\mathfrak{gd}}$** (`PEpSiggdCat`).
+  - **Objectes:** les ep-signatures.
+  - **Morfismes:** els *generalized ep-derivors* tancats que envien àlgebres
+    a àlgebres.
+  - **Per què aquestes condicions:** sense elles la composició no seria
+    associativa ni la identitat neutra.
+  - **Conseqüència:** els derivors de graduació, unificació, discretització
+    i truncació no en són morfismes, perquè només envien models a models.
+    El text ho explica.
+- **Construccions de les seccions 6 i 7.**
+  - Es defineixen ara com a *generalized ep-derivors* entre les ep-signatures
+    $\mathbf\Sigma^{(n)}$ i $\mathbf\Sigma^{\mathrm{ext}(n)}$, amb dominis
+    escrits directament: per exemple,
+    $D_{(k,s)}=\{(v_0,\mathrm{sc}^k v_0)\}$.
+  - Cada proposició demostra que el functor corresponent envia els models
+    dels axiomes a models.
+  - Hi ha igualtats exactes: $\mathbf g\circ\mathbf u=\mathrm{id}$ i
+    $\boldsymbol\delta\circ\boldsymbol\tau=\mathrm{id}$.
+  - La composició de truncacions es demostra amb `RSameFunctor`.
+- **Eliminat.** La categoria $\mathsf{epSpec}_{\mathfrak{gd}}$.
+- **Resultat.** El document compila sense errors i sense referències
+  indefinides.
