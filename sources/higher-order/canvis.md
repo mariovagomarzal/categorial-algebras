@@ -615,3 +615,39 @@ ep-derivor*, tan simplificada com siga possible i autocontinguda.
 - **Subsecció fusionada.** L'antiga subsecció *Generalized derivors and their
   functors* desapareix: el seu contingut s'ha integrat a *Generalized
   ep-derivors*.
+
+---
+---
+
+# Sisena ronda: apèndix comentat
+
+Data: 2026-10-13.
+
+**Comentari.** Comentar tota la informació de l'apèndix excepte la
+bibliografia.
+
+**Què he fet.**
+- **Apèndix comentat.** Totes les línies, des de `\appendix` fins just abans
+  de `\bibliographystyle`, estan comentades amb `%`. La bibliografia continua
+  activa. El PDF passa de 117 a 47 pàgines.
+- **Referències que s'haurien trencat.** El text principal en tenia 15 cap a
+  l'apèndix. Per mantindre'l autocontingut:
+  - **Notació** (subsecció `SGenEpNotation`).
+    - Les variables $\downarrow\mathbf s$ es defineixen directament, sense
+      els functors $L$, $R$ ni $\vartheta$.
+    - $\mathrm{Subt}_\Sigma(P)$ es defineix per recursió.
+    - Els derivors es defineixen directament: $d^\sharp$ per recursió sobre
+      termes, amb (H1)–(H2) com a definició i (H3) com a conseqüència. Ja no
+      es parla d'àlgebres de Hall.
+  - **Preliminars.** Nova subsecció `SAdjGrot` amb les definicions
+    d'adjunció (`DAdj`) i de construcció de Grothendieck (`DGConst`). Les
+    etiquetes són les mateixes, de manera que les referències continuen
+    funcionant.
+  - **Altres referències.**
+    - Subconjunts tancats i congruències: definits en la frase que precedeix
+      `PGenDerClCong`.
+    - $\mathsf{PAlg}(\Sigma)$: remet a `DPartialAlg`.
+    - Els functors de derivors ordinaris: remeten a [CVST10b].
+    - Monoide lliure: he llevat la referència a l'apèndix.
+- **Resultat.** El document compila sense errors i sense referències
+  indefinides.
