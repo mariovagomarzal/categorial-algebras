@@ -153,8 +153,6 @@ in $\mathrm{Sub}(A)$. In the sequel, for a mapping $f$ from $A$ to $B$ and a sub
 
 More specific assumptions, conditions, and conventions will be included in subsequent chapters.
 
-\textcolor{red}{Subseccions extra}
-
 \subsection{A note from the authors}
 This project started in the fall of 2018 under the guidance of Juan Climent and Enric Cosme.  Ra\'{u}l Ruiz joined our team in October 2023, and his contributions  constitute an important part of his PhD thesis.
 
@@ -802,66 +800,174 @@ The just stated definition allows us to form a category of many-sorted signature
 \end{remark}
 
 \section{Generalized derivors}\label{SGenDerivors}
-\textcolor{red}{En el nostre cas no volem els sorts ordenats, no treballem en fòrmules, treballem en E-equacions. Tampoc necessitem predicats. La $d_{\mathbf{w}}$ de l'apartat 4, ha de correspondre amb la $d$ de la Definició~\ref{DDerivor}}
+
+The general derivors of~\cite{LG18} are morphisms between order-sorted signatures with predicates which send every sort to a formula that delimits, inside the interpretation of the image sort, the elements that interpret it, and every operation symbol to a formula. Here we need neither the order on the sorts nor the predicates, and, instead of arbitrary formulas, we use existence equations. Thus our generalized derivors are derivors in the sense of Definition~\ref{DDerivor} together with a set of existence equations for every sort.
+
+We first fix some notation. For a set of sorts $T$, a word $\mathbf{t}\in T^{\star}$ and $j\in\bb{\mathbf{t}}$, we let $v^{\mathbf{t}}_{j}$ stand for the variable of $\vs{\mathbf{t}}$ that corresponds to the $j$-th letter of $\mathbf{t}$; thus $v^{\mathbf{t}}_{j}\in(\vs{\mathbf{t}})_{t_{j}}$ and, for a word $(t)$ of length one, $v^{(t)}_{0}=v^{t}_{0}$. For a $T$-sorted signature $\Lambda$ and a $T$-sorted set $X$, we let $\mathrm{Eq}_{\Lambda}(X)$ stand for $\coprod_{t\in T}\mathrm{T}_{\Lambda}(X)^{2}_{t}$, the set of existence equations of $\Lambda$ with variables in $X$, an element $(P,Q)$ of $\mathrm{T}_{\Lambda}(X)^{2}_{t}$ being the existence equation $P\overset{\mathrm{e}}{=}Q$ of Definition~\ref{DQEEq}. Note that $\mathrm{Sub}(\mathrm{Eq}_{\Lambda}(X))\cong\mathrm{Sub}((\mathrm{T}_{\Lambda}(X)^{2}_{t})_{t\in T})$, so that a set of existence equations can be regarded, equivalently, as a $T$-sorted set. If $\mathbf{B}$ is a partial $\Lambda$-algebra, $b\colon X\mor B$ a valuation and $(P,Q)\in\mathrm{Eq}_{\Lambda}(X)$, we write $\mathbf{B}\models(P,Q)[b]$ if $P\overset{\mathrm{e}}{=}Q$ holds in $\mathbf{B}$ under $b$, and, for $\mathcal{E}\subseteq\mathrm{Eq}_{\Lambda}(X)$, $\mathbf{B}\models\mathcal{E}[b]$ if $\mathbf{B}\models(P,Q)[b]$ for every $(P,Q)\in\mathcal{E}$. A family $\mathbf{b}=(b_{j})_{j\in\bb{\mathbf{t}}}\in B_{\mathbf{t}}$ is identified with the valuation of $\vs{\mathbf{t}}$ in $B$ that sends $v^{\mathbf{t}}_{j}$ to $b_{j}$. Finally, for a $T$-sorted mapping $f\colon X\mor\mathrm{T}_{\Lambda}(Y)$ and $\mathcal{E}\subseteq\mathrm{Eq}_{\Lambda}(X)$, we let $f^{\sharp}[\mathcal{E}]$ stand for $\{(f^{\sharp}(P),f^{\sharp}(Q))\mid(P,Q)\in\mathcal{E}\}\subseteq\mathrm{Eq}_{\Lambda}(Y)$, where $f^{\sharp}$ is the substitution determined by $f$; when $X=\vs{\mathbf{t}}$, $f$ is identified with the family $(f(v^{\mathbf{t}}_{j}))_{j\in\bb{\mathbf{t}}}$.
 
 \begin{definition}\label{DGeneralDerivor}
-	\sloppy
-	Let $\mathbf{\Omega} = (S,\leq,\Sigma,\Pi)$ and $\mathbf{\Omega}' = (S',\leq',\Sigma',\Pi')$ be order-sorted signatures with predicates, and let $X$ and $X'$ be the corresponding $S$-sorted and $S'$-sorted sets of variables. Recall that a mapping $\tau\colon S\mor S'$ is \emph{monotone} if, for every $s,s'\in S$, $s\leq s'$ implies $\tau(s)\leq'\tau(s')$. A \emph{general derivor} from $\mathbf{\Omega}$ to $\mathbf{\Omega}'$ (see~\cite{LG18}) consists of
-	\begin{enumerate}
-		\item a monotone mapping $\tau\colon S\mor S'$,
-		\item a mapping $d\colon S\mor\mathrm{Form}_{\Sigma',\Pi'}$,
-		\item a family of mappings $d_{\mathbf{w},s}\colon\Sigma_{\mathbf{w},s}\mor\mathrm{Form}_{\Sigma',\Pi'}$, and
-		\item a family of mappings $d_{\mathbf{w}}\colon\Pi_{\mathbf{w}}\mor\mathrm{Form}_{\Sigma',\Pi'}$,
-	\end{enumerate}
-	such that
-	\begin{enumerate}
-		\item $d(s)$ is a formula $\Delta_{s}(x)$ with at most a single free variable
-		$x\in X_{s}\cap X'_{\tau(s)}$;
-		\item for every $f\in\Sigma_{\mathbf{w},s}$, with $\mathbf{w} = s_{1}\cdots s_{k}$,
-		$d_{\mathbf{w},s}(f)$ is a formula $\Phi^{f}_{\mathbf{w},s}(x_{1},\ldots,x_{k},y)$ in
-		$\mathrm{Form}_{\Sigma',\Pi'}$ with free variables $x_{i}\in X_{s_{i}}\cap X'_{\tau(s_{i})}$,
-		$1\leq i\leq k$, and $y\in X_{s}\cap X'_{\tau(s)}$;
-		\item for every $P\in\Pi_{\mathbf{w}}$, with $\mathbf{w} = s_{1}\cdots s_{n}$,
-		$d_{\mathbf{w}}(P)$ is a formula $\Phi^{P}_{\mathbf{w}}(x_{1},\ldots,x_{n})$ in
-		$\mathrm{Form}_{\Sigma',\Pi'}$ with free variables $x_{i}\in X_{s_{i}}\cap X'_{\tau(s_{i})}$,
-		$1\leq i\leq n$.
-	\end{enumerate}
-	When no confusion arises, we often write $s'$ instead of $\tau(s)$. Moreover, an ordinary derivor can be seen as a general derivor by taking, for every $f\in\Sigma_{\mathbf{w},s}$, the equation $y = d_{\mathbf{w},s}(f)$, with $y\in X'_{s'}$ a fresh variable, instead of the term $d_{\mathbf{w},s}(f)\in\mathrm{T}_{\Sigma'}(X')_{\tau(s)}$.
+Let $\mathbf{\Sigma}=(S,\Sigma)$ and $\mathbf{\Lambda}=(T,\Lambda)$ be many-sorted signatures. A \emph{generalized derivor} from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ is an ordered triple $\mathbf{d}=(\varphi,D,d)$ such that
+\begin{enumerate}
+\item $(\varphi,d)$ is a derivor from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$, see Definition~\ref{DDerivor}, i.e., $\varphi\colon S\mor T$ and, for every $(\mathbf{s},s)\in S^{\star}\times S$, $d_{\mathbf{s},s}\colon\Sigma_{\mathbf{s},s}\mor\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$; and
+\item $D=(D_{s})_{s\in S}$ assigns to every sort $s\in S$ a set $D_{s}\subseteq\mathrm{Eq}_{\Lambda}(\vs{(\varphi(s))})$ of existence equations of $\Lambda$ in the single variable $v^{\varphi(s)}_{0}$, which we call the \emph{domain} of $s$.
+\end{enumerate}
+For a word $\mathbf{s}\in S^{\star}$, we let $D_{\mathbf{s}}\subseteq\mathrm{Eq}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})$ stand for $\bigcup_{j\in\bb{\mathbf{s}}}(\iota^{\mathbf{s}}_{j})^{\sharp}[D_{s_{j}}]$, where $\iota^{\mathbf{s}}_{j}$ sends $v^{\varphi(s_{j})}_{0}$ to $v^{\varphi^{\star}(\mathbf{s})}_{j}$, i.e., $D_{\mathbf{s}}$ is the set of the domain conditions of the letters of $\mathbf{s}$, each one stated for the corresponding variable of $\vs{\varphi^{\star}(\mathbf{s})}$.
 \end{definition}
+
+The set $D_{s}$ is the counterpart of the formula $\Delta_{s}(x)$ of~\cite{LG18}, and the term $d_{\mathbf{s},s}(\sigma)$ is the counterpart of the formula $\Phi^{\sigma}_{\mathbf{s},s}(x_{0},\ldots,x_{\bb{\mathbf{s}}-1},y)$, which for an ordinary derivor is, in~\cite{LG18}, the equation $y=d_{\mathbf{s},s}(\sigma)$. Every derivor $(\varphi,d)$ is the generalized derivor $(\varphi,\varnothing,d)$, where $\varnothing$ stands for the family $(\varnothing)_{s\in S}$.
+
+\begin{remark}\label{RGenDerivorSem}
+Let $\mathbf{d}=(\varphi,D,d)$ be a generalized derivor from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ and $\mathbf{B}$ a $\Lambda$-algebra. For $s\in S$, let $B^{D}_{s}=\{b\in B_{\varphi(s)}\mid\mathbf{B}\models D_{s}[b]\}$ and, for $\mathbf{s}\in S^{\star}$, $B^{D}_{\mathbf{s}}=\prod_{j\in\bb{\mathbf{s}}}B^{D}_{s_{j}}$; since $\iota^{\mathbf{s}}_{j}$ only renames a variable, $B^{D}_{\mathbf{s}}=\{\mathbf{b}\in B_{\varphi^{\star}(\mathbf{s})}\mid\mathbf{B}\models D_{\mathbf{s}}[\mathbf{b}]\}$. The intended interpretation of $\mathbf{d}$ sends $\mathbf{B}$ to the $\Sigma$-algebra with underlying $S$-sorted set $(B^{D}_{s})_{s\in S}$ in which every $\sigma\in\Sigma_{\mathbf{s},s}$ is interpreted as the restriction of the derived operation $d_{\mathbf{s},s}(\sigma)^{\mathbf{B}}$ to $B^{D}_{\mathbf{s}}$. This is a $\Sigma$-algebra only if, for every $\sigma\in\Sigma_{\mathbf{s},s}$, $d_{\mathbf{s},s}(\sigma)^{\mathbf{B}}$ sends $B^{D}_{\mathbf{s}}$ into $B^{D}_{s}$. This closure condition is not part of Definition~\ref{DGeneralDerivor}; a syntactic condition that guarantees it for every $\mathbf{B}$ is condition~(GEP1) of Definition~\ref{DGenEpDerivor}, see Remark~\ref{RGenEpDerivor}. For $D=\varnothing$, $B^{D}_{s}=B_{\varphi(s)}$ and the condition always holds.
+\end{remark}
 
 \section{ep-derivors}\label{SEpDerivors}
 
-An equationally partial signature is an ordred triple $(S,\Sigma,\mathrm{def})$ in which $(S,\Sigma)$ is a sorted signature and, for every $(\mathbf{w},s)\in S^{\star}\times S$ and every $\sigma\in \Sigma_{\mathbf{w},s}$, $\mathrm{def}(\sigma)\subseteq \coprod_{s\in S}\mathrm{T}_{\Sigma}(\downarrow\mathbf{w})^{2}_{s}$ or, what is equivalent, a subset of $(\mathrm{T}_{\Sigma}(\downarrow\mathbf{w})^{2}_{s})_{s\in S}$. We call $\mathrm{def}(\sigma)$ the set of domain conditions associated to $\sigma$.
+Equationally partial signatures, see~\cite{Rei87}, are signatures in which every operation symbol carries a set of existence equations that describes its domain of definition. In this section we state them in our notation, extend the domain conditions from the operation symbols to the terms, and define the morphisms between them that are induced by derivors. We use the notation fixed in Section~\ref{SGenDerivors}.
 
-Note that $\mathrm{Sub}(\coprod_{s\in S}\mathrm{T}_{\Sigma}(\downarrow\mathbf{w})^{2}_{s})\cong 
-\mathrm{Sub}((\mathrm{T}_{\Sigma}(\downarrow\mathbf{w})^{2}_{s})_{s\in S})$.
+\begin{definition}\label{DEpSignature}
+An \emph{equationally partial signature}, or \emph{ep-signature}, is an ordered triple $\mathbf{\Sigma}=(S,\Sigma,\mathrm{def}^{\mathbf{\Sigma}})$ in which $(S,\Sigma)$ is a many-sorted signature and $\mathrm{def}^{\mathbf{\Sigma}}$ assigns to every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$ a set $\mathrm{def}^{\mathbf{\Sigma}}(\sigma)\subseteq\mathrm{Eq}_{\Sigma}(\vs{\mathbf{s}})$ of existence equations with variables in $\vs{\mathbf{s}}$, the set of \emph{domain conditions} of $\sigma$.
 
-Let $\mathbf{A}$ be a partial $\Sigma$-algebra and $\sigma\in \Sigma_{\mathbf{w},s}$. We denote by 
-$A_{\mathrm{def}(\sigma)}$ the subset of $A_{\mathbf{w}}$ defined as:
+Let $\mathbf{A}=(A,F)$ be a partial $\Sigma$-algebra, see Definition~\ref{DPartialAlg}. For $(\mathbf{s},s)\in S^{\star}\times S$ and $\sigma\in\Sigma_{\mathbf{s},s}$, we let $A_{\mathrm{def}^{\mathbf{\Sigma}}(\sigma)}$ stand for the subset of $A_{\mathbf{s}}$ defined as
 $$
-A_{\mathrm{def}(\sigma)} = \{\mathbf{a}\in A_{\mathbf{w}}\mid \forall\, 
-(P,Q)\in \mathrm{def}(\sigma)\, (\mathbf{A}\models_{\mathbf{a}} (P,Q))\}.
+A_{\mathrm{def}^{\mathbf{\Sigma}}(\sigma)}=\{\mathbf{a}\in A_{\mathbf{s}}\mid\mathbf{A}\models\mathrm{def}^{\mathbf{\Sigma}}(\sigma)[\mathbf{a}]\}.
 $$
-Moreover, we will say that $\mathbf{A}$ is an equationally partial $\Sigma$-algebra of type $(S,\Sigma,\mathrm{def})$ if, for every $(\mathbf{w},s)\in S^{\star}\times S$ and every $\sigma\in \Sigma_{\mathbf{w},s}$, $\mathrm{Dom}(F^{\mathbf{A}}_{\sigma}) = A_{\mathrm{def}(\sigma)}$.
-
-To define the notion of morphism from an equationally partial signature $(S,\Sigma,\mathrm{def})$ to another $(S',\Sigma',\mathrm{def}')$ we extend $\mathrm{def}$ to the terms by algebraic recursion (See Reichel). We denote by the same symbol such an extension or by $\mathrm{deft}$.
-
-\begin{definition}\label{DDerivorEP}Let $\mathbf{\Sigma} = (S,\Sigma)$ and $\mathbf{\Lambda} = (T,\Lambda)$ be many-sorted signatures. A \emph{derivor} from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ is an ordered pair $\mathbf{d} = (\varphi,d)$, where $\varphi\colon S\mor T$ and  $d\colon\Sigma\mor\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$. Thus, for every $(\mathbf{s},s)\in S^{\star}\times S$, %
-	$$
-	d_{\mathbf{s},s}\colon \Sigma_{\mathbf{s},s}\mor\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}(\mathbf{s}),\varphi(s)}=
-	\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}.
-	$$
-	Hence, for every $\sigma\in \Sigma_{\mathbf{s},s}$, $d_{\mathbf{s},s}(\sigma)\in \mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$, i.e., $d_{\mathbf{s},s}(\sigma)$ is a term of sort $\varphi(s)$ with variables in $\vs{\varphi^{\star}(\mathbf{s})}$.
+We say that $\mathbf{A}$ is an \emph{ep-algebra of type $\mathbf{\Sigma}$}, or a \emph{$\mathbf{\Sigma}$-algebra}, if, for every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$, $\mathrm{Dom}(F_{\sigma})=A_{\mathrm{def}^{\mathbf{\Sigma}}(\sigma)}$. We denote by $\mathsf{PAlg}(\mathbf{\Sigma})$ the category of $\mathbf{\Sigma}$-algebras and the homomorphisms of partial $\Sigma$-algebras between them.
 \end{definition}
 
-Let $(S,\Sigma,\mathrm{def})$ and $(S',\Sigma',\mathrm{def}')$ be  equationally partial signature (ep-signatures). A morphism from $(S,\Sigma,\mathrm{def})$ to $(S',\Sigma',\mathrm{def}')$ is a derivor $\mathbf{d} = (\varphi,d)$ from $(S,\Sigma)$ to $(S',\Sigma')$ such that, for every 
-$(\mathbf{w},s)\in S^{\star}\times S$ and every $\sigma\in \Sigma_{\mathbf{w},s}$, 
-$d_{\mathbf{s},s}^{\sharp}\times d_{\mathbf{s},s}^{\sharp}[\mathrm{def}(\sigma)]$ is included in 
-$\mathrm{Cn}(\mathrm{def}(d_{\mathbf{w},s}^{\sharp}(\sigma)))$.
+Note that the domain conditions of $\sigma$ are evaluated in $\mathbf{A}$ itself, so they may involve $\sigma$ and the other partial operations of $\mathbf{A}$. A many-sorted signature $(S,\Sigma)$ is identified with the ep-signature $(S,\Sigma,\varnothing)$ in which every operation symbol has an empty set of domain conditions; its ep-algebras are exactly the (total) $\Sigma$-algebras.
 
-I am not sure that this is the correct definition. For it to be the case, the morphism between ep-signatures should induce a functor from the category of algebras for $(S',\Sigma',\mathrm{def}')$ to the category of algebras for $(S,\Sigma,\mathrm{def})$. This may be the reason why Reichel requires the semantic consequences of $d_{\mathbf{s},s}^{\sharp}\times d_{\mathbf{s},s}^{\sharp}[\mathrm{def}(\sigma)]$ and $\mathrm{def}(d_{\mathbf{w},s}^{\sharp}(\sigma))$ to coincide.
+\begin{remark}\label{RSubst}
+Let $\mathbf{A}$ be a partial $\Sigma$-algebra, $X$ and $Y$ $S$-sorted sets, $f\colon Y\mor\mathrm{T}_{\Sigma}(X)$ an $S$-sorted mapping and $a\colon X\mor A$ a valuation such that, for every $y\in Y$, $f(y)^{\mathbf{A}}[a]$ is defined. Let $f^{\mathbf{A}}[a]\colon Y\mor A$ be the valuation that sends $y$ to $f(y)^{\mathbf{A}}[a]$. Then, by induction on terms, for every term $R\in\mathrm{T}_{\Sigma}(Y)_{t}$, $f^{\sharp}(R)^{\mathbf{A}}[a]$ is defined if and only if $R^{\mathbf{A}}[f^{\mathbf{A}}[a]]$ is defined, and then they are equal. Consequently, for every $\mathcal{E}\subseteq\mathrm{Eq}_{\Sigma}(Y)$, $\mathbf{A}\models f^{\sharp}[\mathcal{E}][a]$ if and only if $\mathbf{A}\models\mathcal{E}[f^{\mathbf{A}}[a]]$. The hypothesis on $f$ cannot be dropped: if $y$ does not occur in $R$, then $f^{\sharp}(R)^{\mathbf{A}}[a]$ may be defined although $f(y)^{\mathbf{A}}[a]$ is not.
+\end{remark}
 
-\section{generalized ep-derivors}\label{SGenEpDerivors}
+To define the morphisms between ep-signatures we extend the domain conditions from the operation symbols to the terms by algebraic recursion, as in~\cite{Rei87}.
+
+\begin{definition}\label{DDeft}
+Let $\mathbf{\Sigma}=(S,\Sigma,\mathrm{def}^{\mathbf{\Sigma}})$ be an ep-signature and $X$ an $S$-sorted set. We let $\mathrm{deft}^{\mathbf{\Sigma}}_{X}$, or simply $\mathrm{deft}^{\mathbf{\Sigma}}$, stand for the $S$-sorted mapping that sends every term $P\in\mathrm{T}_{\Sigma}(X)_{t}$, $t\in S$, to the set $\mathrm{deft}^{\mathbf{\Sigma}}(P)\subseteq\mathrm{Eq}_{\Sigma}(X)$ defined by recursion on $P$ as follows:
+\begin{enumerate}
+\item if $P=x$, with $x\in X_{t}$, then $\mathrm{deft}^{\mathbf{\Sigma}}(x)=\varnothing$;
+\item if $P=\sigma((P_{j})_{j\in\bb{\mathbf{s}}})$, with $\sigma\in\Sigma_{\mathbf{s},t}$ and $(P_{j})_{j\in\bb{\mathbf{s}}}\in\mathrm{T}_{\Sigma}(X)_{\mathbf{s}}$, then
+$$
+\textstyle
+\mathrm{deft}^{\mathbf{\Sigma}}(\sigma((P_{j})_{j\in\bb{\mathbf{s}}}))=
+\bigcup_{j\in\bb{\mathbf{s}}}\mathrm{deft}^{\mathbf{\Sigma}}(P_{j})
+\cup
+(P_{j})_{j\in\bb{\mathbf{s}}}^{\sharp}[\mathrm{def}^{\mathbf{\Sigma}}(\sigma)],
+$$
+where $(P_{j})_{j\in\bb{\mathbf{s}}}^{\sharp}$ is the substitution that sends $v^{\mathbf{s}}_{j}$ to $P_{j}$, for every $j\in\bb{\mathbf{s}}$.
+\end{enumerate}
+\end{definition}
+
+\begin{lemma}\label{LDeft}
+Let $\mathbf{\Sigma}$ be an ep-signature, $\mathbf{A}$ a $\mathbf{\Sigma}$-algebra, $X$ an $S$-sorted set, $a\colon X\mor A$ a valuation and $P\in\mathrm{T}_{\Sigma}(X)_{t}$. Then $P^{\mathbf{A}}[a]$ is defined if and only if $\mathbf{A}\models\mathrm{deft}^{\mathbf{\Sigma}}(P)[a]$.
+\end{lemma}
+\begin{proof}
+By induction on $P$. For a variable both conditions hold. Let $P=\sigma((P_{j})_{j\in\bb{\mathbf{s}}})$. If $P^{\mathbf{A}}[a]$ is defined, then every $P_{j}^{\mathbf{A}}[a]$ is defined, hence, by the induction hypothesis, $\mathbf{A}\models\mathrm{deft}^{\mathbf{\Sigma}}(P_{j})[a]$, and $\mathbf{c}=(P_{j}^{\mathbf{A}}[a])_{j\in\bb{\mathbf{s}}}$ is in $\mathrm{Dom}(F_{\sigma})=A_{\mathrm{def}^{\mathbf{\Sigma}}(\sigma)}$, i.e., $\mathbf{A}\models\mathrm{def}^{\mathbf{\Sigma}}(\sigma)[\mathbf{c}]$, which, by Remark~\ref{RSubst}, means that $\mathbf{A}\models(P_{j})_{j\in\bb{\mathbf{s}}}^{\sharp}[\mathrm{def}^{\mathbf{\Sigma}}(\sigma)][a]$. Conversely, if $\mathbf{A}\models\mathrm{deft}^{\mathbf{\Sigma}}(P)[a]$, then, by the induction hypothesis, every $P_{j}^{\mathbf{A}}[a]$ is defined and, by Remark~\ref{RSubst}, $\mathbf{c}\in A_{\mathrm{def}^{\mathbf{\Sigma}}(\sigma)}=\mathrm{Dom}(F_{\sigma})$, so $P^{\mathbf{A}}[a]$ is defined.
+\end{proof}
+
+\begin{definition}\label{DCn}
+Let $\mathbf{\Sigma}=(S,\Sigma,\mathrm{def}^{\mathbf{\Sigma}})$ be an ep-signature and $X$ an $S$-sorted set. The \emph{semantic consequence operator} for $\mathbf{\Sigma}$ and $X$ is the mapping $\mathrm{Cn}^{\mathbf{\Sigma}}_{X}$ from $\mathrm{Sub}(\mathrm{Eq}_{\Sigma}(X))$ to $\mathrm{Sub}(\mathrm{Eq}_{\Sigma}(X))$ that sends $\mathcal{E}\subseteq\mathrm{Eq}_{\Sigma}(X)$ to
+\begin{multline*}
+\mathrm{Cn}^{\mathbf{\Sigma}}_{X}(\mathcal{E})=
+\{(P,Q)\in\mathrm{Eq}_{\Sigma}(X)\mid
+\text{for every $\mathbf{\Sigma}$-algebra $\mathbf{A}$ and every $a\colon X\mor A$,}\\
+\text{if $\mathbf{A}\models\mathcal{E}[a]$, then $\mathbf{A}\models(P,Q)[a]$}\}.
+\end{multline*}
+\end{definition}
+
+$\mathrm{Cn}^{\mathbf{\Sigma}}_{X}$ is a closure operator on $\mathrm{Eq}_{\Sigma}(X)$, i.e., it is extensive, monotone and idempotent. Moreover, for $\mathcal{E},\mathcal{E}'\subseteq\mathrm{Eq}_{\Sigma}(X)$, $\mathrm{Cn}^{\mathbf{\Sigma}}_{X}(\mathcal{E})=\mathrm{Cn}^{\mathbf{\Sigma}}_{X}(\mathcal{E}')$ if and only if, for every $\mathbf{\Sigma}$-algebra $\mathbf{A}$ and every valuation $a\colon X\mor A$, $\mathbf{A}\models\mathcal{E}[a]$ if and only if $\mathbf{A}\models\mathcal{E}'[a]$. In fact, if $\mathrm{Cn}^{\mathbf{\Sigma}}_{X}(\mathcal{E})=\mathrm{Cn}^{\mathbf{\Sigma}}_{X}(\mathcal{E}')$ and $\mathbf{A}\models\mathcal{E}'[a]$, then $\mathbf{A}\models(P,Q)[a]$ for every $(P,Q)\in\mathrm{Cn}^{\mathbf{\Sigma}}_{X}(\mathcal{E}')=\mathrm{Cn}^{\mathbf{\Sigma}}_{X}(\mathcal{E})\supseteq\mathcal{E}$; the converse is immediate.
+
+Let $\mathbf{d}=(\varphi,d)$ be a derivor from $(S,\Sigma)$ to $(T,\Lambda)$. Recall that $d^{\sharp}$, the homomorphism of Hall algebras determined by $d$, sends, for every $(\mathbf{s},t)\in S^{\star}\times S$, the terms in $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{t}$ to terms in $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(t)}$; since it is a homomorphism of Hall algebras, $d^{\sharp}(v^{\mathbf{s}}_{j})=v^{\varphi^{\star}(\mathbf{s})}_{j}$ and $d^{\sharp}(\sigma((R_{j})_{j\in\bb{\mathbf{r}}}))=(d^{\sharp}(R_{j}))_{j\in\bb{\mathbf{r}}}^{\sharp}(d_{\mathbf{r},t}(\sigma))$, for $\sigma\in\Sigma_{\mathbf{r},t}$. For a partial $\Lambda$-algebra $\mathbf{B}$, we let $\mathbf{d}^{\ast}(\mathbf{B})$ stand for the partial $\Sigma$-algebra whose underlying $S$-sorted set is $(B_{\varphi(s)})_{s\in S}$ and in which every $\sigma\in\Sigma_{\mathbf{s},s}$ is interpreted as the partial term operation $d_{\mathbf{s},s}(\sigma)^{\mathbf{B}}\colon B_{\varphi^{\star}(\mathbf{s})}\dmor B_{\varphi(s)}$, which sends $\mathbf{b}$ to $d_{\mathbf{s},s}(\sigma)^{\mathbf{B}}[\mathbf{b}]$ whenever the latter is defined.
+
+As the last sentence of Remark~\ref{RSubst} shows, the existence equation $(d^{\sharp}(P),d^{\sharp}(Q))$ need not express, in $\mathbf{B}$, that $(P,Q)$ holds in $\mathbf{d}^{\ast}(\mathbf{B})$: if $d_{\mathbf{s},s}(\sigma)$ does not contain the variable $v^{\varphi^{\star}(\mathbf{s})}_{j}$, then $d^{\sharp}(\sigma((P_{i})_{i}))$ can be defined in $\mathbf{B}$ although $P_{j}$, and hence $\sigma((P_{i})_{i})$, is not defined in $\mathbf{d}^{\ast}(\mathbf{B})$. For this reason we also translate the definedness of every subterm. For a term $P$, we let $\mathrm{Sb}(P)$ stand for the set of its subterms, defined by $\mathrm{Sb}(x)=\{x\}$ and $\mathrm{Sb}(\sigma((P_{j})_{j}))=\{\sigma((P_{j})_{j})\}\cup\bigcup_{j}\mathrm{Sb}(P_{j})$.
+
+\begin{definition}\label{DTranslation}
+Let $\mathbf{d}=(\varphi,d)$ be a derivor from $(S,\Sigma)$ to $(T,\Lambda)$ and $\mathbf{s}\in S^{\star}$. The \emph{translation along $\mathbf{d}$} of an existence equation $(P,Q)\in\mathrm{Eq}_{\Sigma}(\vs{\mathbf{s}})$ is the set
+$$
+\mathrm{tr}_{\mathbf{d}}(P,Q)=\{(d^{\sharp}(P),d^{\sharp}(Q))\}\cup\{(d^{\sharp}(R),d^{\sharp}(R))\mid R\in\mathrm{Sb}(P)\cup\mathrm{Sb}(Q)\}\subseteq\mathrm{Eq}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})}),
+$$
+and, for $\mathcal{E}\subseteq\mathrm{Eq}_{\Sigma}(\vs{\mathbf{s}})$, $\mathrm{tr}_{\mathbf{d}}[\mathcal{E}]=\bigcup_{(P,Q)\in\mathcal{E}}\mathrm{tr}_{\mathbf{d}}(P,Q)$.
+\end{definition}
+
+If, for every $\sigma\in\Sigma_{\mathbf{s},s}$, every variable of $\vs{\varphi^{\star}(\mathbf{s})}$ occurs in $d_{\mathbf{s},s}(\sigma)$, then every $d^{\sharp}(R)$, for $R\in\mathrm{Sb}(P)$, is a subterm of $d^{\sharp}(P)$, and the existence equation $(d^{\sharp}(P),d^{\sharp}(Q))$ alone has the same models as $\mathrm{tr}_{\mathbf{d}}(P,Q)$.
+
+\begin{lemma}\label{LTranslation}
+Let $\mathbf{d}=(\varphi,d)$ be a derivor from $(S,\Sigma)$ to $(T,\Lambda)$, $\mathbf{B}$ a partial $\Lambda$-algebra, $\mathbf{s}\in S^{\star}$ and $\mathbf{b}\in B_{\varphi^{\star}(\mathbf{s})}$. Then, for every $R\in\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{t}$,
+\begin{enumerate}
+\item if $R^{\mathbf{d}^{\ast}(\mathbf{B})}[\mathbf{b}]$ is defined, then $d^{\sharp}(R)^{\mathbf{B}}[\mathbf{b}]$ is defined and equal to it;
+\item if $d^{\sharp}(R')^{\mathbf{B}}[\mathbf{b}]$ is defined for every $R'\in\mathrm{Sb}(R)$, then $R^{\mathbf{d}^{\ast}(\mathbf{B})}[\mathbf{b}]$ is defined.
+\end{enumerate}
+Consequently, for every $\mathcal{E}\subseteq\mathrm{Eq}_{\Sigma}(\vs{\mathbf{s}})$, $\mathbf{d}^{\ast}(\mathbf{B})\models\mathcal{E}[\mathbf{b}]$ if and only if $\mathbf{B}\models\mathrm{tr}_{\mathbf{d}}[\mathcal{E}][\mathbf{b}]$.
+\end{lemma}
+\begin{proof}
+Both statements are proved by induction on $R$. For $R=v^{\mathbf{s}}_{j}$ both values are $b_{j}$. Let $R=\sigma((R_{j})_{j\in\bb{\mathbf{r}}})$, with $\sigma\in\Sigma_{\mathbf{r},t}$, so that $d^{\sharp}(R)=(d^{\sharp}(R_{j}))_{j\in\bb{\mathbf{r}}}^{\sharp}(d_{\mathbf{r},t}(\sigma))$. (1) If $R^{\mathbf{d}^{\ast}(\mathbf{B})}[\mathbf{b}]$ is defined, then so is every $c_{j}=R_{j}^{\mathbf{d}^{\ast}(\mathbf{B})}[\mathbf{b}]$, which, by the induction hypothesis, is $d^{\sharp}(R_{j})^{\mathbf{B}}[\mathbf{b}]$, and $d_{\mathbf{r},t}(\sigma)^{\mathbf{B}}[\mathbf{c}]$ is defined and equal to $R^{\mathbf{d}^{\ast}(\mathbf{B})}[\mathbf{b}]$; by Remark~\ref{RSubst}, $d^{\sharp}(R)^{\mathbf{B}}[\mathbf{b}]$ is defined and equal to $d_{\mathbf{r},t}(\sigma)^{\mathbf{B}}[\mathbf{c}]$. (2) By the induction hypothesis every $c_{j}=R_{j}^{\mathbf{d}^{\ast}(\mathbf{B})}[\mathbf{b}]$ is defined and, by~(1), equal to $d^{\sharp}(R_{j})^{\mathbf{B}}[\mathbf{b}]$; since $d^{\sharp}(R)^{\mathbf{B}}[\mathbf{b}]$ is defined, Remark~\ref{RSubst} shows that $d_{\mathbf{r},t}(\sigma)^{\mathbf{B}}[\mathbf{c}]$ is defined, i.e., that $R^{\mathbf{d}^{\ast}(\mathbf{B})}[\mathbf{b}]$ is defined.
+
+For the last statement, if $(P,Q)$ holds in $\mathbf{d}^{\ast}(\mathbf{B})$ under $\mathbf{b}$, then every subterm of $P$ and of $Q$ is defined in $\mathbf{d}^{\ast}(\mathbf{B})$ under $\mathbf{b}$ and, by~(1), $\mathbf{B}\models\mathrm{tr}_{\mathbf{d}}(P,Q)[\mathbf{b}]$. Conversely, if $\mathbf{B}\models\mathrm{tr}_{\mathbf{d}}(P,Q)[\mathbf{b}]$, then, by~(2), $P$ and $Q$ are defined in $\mathbf{d}^{\ast}(\mathbf{B})$ under $\mathbf{b}$ and, by~(1), their values are $d^{\sharp}(P)^{\mathbf{B}}[\mathbf{b}]=d^{\sharp}(Q)^{\mathbf{B}}[\mathbf{b}]$.
+\end{proof}
+
+\begin{definition}\label{DDerivorEP}
+Let $\mathbf{\Sigma}=(S,\Sigma,\mathrm{def}^{\mathbf{\Sigma}})$ and $\mathbf{\Lambda}=(T,\Lambda,\mathrm{def}^{\mathbf{\Lambda}})$ be ep-signatures. An \emph{ep-derivor} from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ is a derivor $\mathbf{d}=(\varphi,d)$ from $(S,\Sigma)$ to $(T,\Lambda)$ such that, for every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$,
+$$
+\mathrm{Cn}^{\mathbf{\Lambda}}_{\vs{\varphi^{\star}(\mathbf{s})}}\left(\mathrm{tr}_{\mathbf{d}}[\mathrm{def}^{\mathbf{\Sigma}}(\sigma)]\right)
+=
+\mathrm{Cn}^{\mathbf{\Lambda}}_{\vs{\varphi^{\star}(\mathbf{s})}}\left(\mathrm{deft}^{\mathbf{\Lambda}}(d_{\mathbf{s},s}(\sigma))\right).
+$$
+\end{definition}
+
+\begin{proposition}\label{PEpDerivorFunctor}
+Let $\mathbf{\Sigma}$ and $\mathbf{\Lambda}$ be ep-signatures and $\mathbf{d}=(\varphi,d)$ a derivor from $(S,\Sigma)$ to $(T,\Lambda)$. Then $\mathbf{d}$ is an ep-derivor from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ if and only if, for every $\mathbf{\Lambda}$-algebra $\mathbf{B}$, $\mathbf{d}^{\ast}(\mathbf{B})$ is a $\mathbf{\Sigma}$-algebra. In this case, $\mathbf{d}^{\ast}$ is the object mapping of a functor $\mathbf{d}^{\ast}\colon\mathsf{PAlg}(\mathbf{\Lambda})\mor\mathsf{PAlg}(\mathbf{\Sigma})$ that sends a homomorphism $h\colon\mathbf{B}\mor\mathbf{B}'$ to $(h_{\varphi(s)})_{s\in S}$.
+\end{proposition}
+\begin{proof}
+Let $\mathbf{B}$ be a $\mathbf{\Lambda}$-algebra, $\sigma\in\Sigma_{\mathbf{s},s}$ and $\mathbf{b}\in B_{\varphi^{\star}(\mathbf{s})}$. By Lemma~\ref{LDeft}, $\mathbf{b}\in\mathrm{Dom}(d_{\mathbf{s},s}(\sigma)^{\mathbf{B}})$ if and only if $\mathbf{B}\models\mathrm{deft}^{\mathbf{\Lambda}}(d_{\mathbf{s},s}(\sigma))[\mathbf{b}]$, and, by Lemma~\ref{LTranslation}, $\mathbf{b}$ satisfies the domain conditions of $\sigma$ in $\mathbf{d}^{\ast}(\mathbf{B})$, i.e., $\mathbf{d}^{\ast}(\mathbf{B})\models\mathrm{def}^{\mathbf{\Sigma}}(\sigma)[\mathbf{b}]$, if and only if $\mathbf{B}\models\mathrm{tr}_{\mathbf{d}}[\mathrm{def}^{\mathbf{\Sigma}}(\sigma)][\mathbf{b}]$. Hence $\mathbf{d}^{\ast}(\mathbf{B})$ is a $\mathbf{\Sigma}$-algebra for every $\mathbf{B}$ if and only if, for every $\sigma$, the sets $\mathrm{tr}_{\mathbf{d}}[\mathrm{def}^{\mathbf{\Sigma}}(\sigma)]$ and $\mathrm{deft}^{\mathbf{\Lambda}}(d_{\mathbf{s},s}(\sigma))$ have the same models, which, as noted after Definition~\ref{DCn}, means that they have the same semantic consequences.
+
+Let $h\colon\mathbf{B}\mor\mathbf{B}'$ be a homomorphism of partial $\Lambda$-algebras. By induction on terms, if $R^{\mathbf{B}}[\mathbf{b}]$ is defined, then $R^{\mathbf{B}'}[h\circ\mathbf{b}]$ is defined and equal to $h(R^{\mathbf{B}}[\mathbf{b}])$. Applied to the terms $d_{\mathbf{s},s}(\sigma)$, this shows that $(h_{\varphi(s)})_{s\in S}$ is a homomorphism from $\mathbf{d}^{\ast}(\mathbf{B})$ to $\mathbf{d}^{\ast}(\mathbf{B}')$. Identities and composites are clearly preserved.
+\end{proof}
+
+\begin{remark}\label{REpDerivor}
+An earlier draft of Definition~\ref{DDerivorEP} only required that $(d^{\sharp}\times d^{\sharp})[\mathrm{def}^{\mathbf{\Sigma}}(\sigma)]\subseteq\mathrm{Cn}^{\mathbf{\Lambda}}(\mathrm{deft}^{\mathbf{\Lambda}}(d_{\mathbf{s},s}(\sigma)))$. Such an inclusion only guarantees that every family in $\mathrm{Dom}(d_{\mathbf{s},s}(\sigma)^{\mathbf{B}})$ satisfies the domain conditions of $\sigma$ in $\mathbf{d}^{\ast}(\mathbf{B})$, so the operations of $\mathbf{d}^{\ast}(\mathbf{B})$ could be undefined on families that satisfy their domain conditions, and $\mathbf{d}^{\ast}$ would not send $\mathbf{\Lambda}$-algebras to $\mathbf{\Sigma}$-algebras. By Proposition~\ref{PEpDerivorFunctor}, the equality of the semantic consequences, which is the condition required in~\cite{Rei87}, is exactly what is needed for $\mathbf{d}^{\ast}$ to be a functor from $\mathsf{PAlg}(\mathbf{\Lambda})$ to $\mathsf{PAlg}(\mathbf{\Sigma})$. Moreover, the translation $\mathrm{tr}_{\mathbf{d}}$ replaces $d^{\sharp}\times d^{\sharp}$ because of the phenomenon described before Definition~\ref{DTranslation}.
+
+If $\mathbf{\Sigma}$ and $\mathbf{\Lambda}$ are many-sorted signatures, regarded as ep-signatures with empty sets of domain conditions, then $\mathrm{tr}_{\mathbf{d}}[\varnothing]=\varnothing$ and $\mathrm{deft}^{\mathbf{\Lambda}}(P)=\varnothing$ for every term $P$, so that every derivor is an ep-derivor and $\mathbf{d}^{\ast}$ is the usual functor between categories of algebras.
+\end{remark}
+
+\section{Generalized ep-derivors}\label{SGenEpDerivors}
+
+We now combine the two previous sections: a generalized ep-derivor is a generalized derivor between ep-signatures which, as an ep-derivor, transforms $\mathbf{\Lambda}$-algebras into $\mathbf{\Sigma}$-algebras, but now on the subsets delimited by the domains of the sorts. We keep the notation of Sections~\ref{SGenDerivors} and~\ref{SEpDerivors}.
+
+\begin{definition}\label{DGenEpDerivor}
+Let $\mathbf{\Sigma}=(S,\Sigma,\mathrm{def}^{\mathbf{\Sigma}})$ and $\mathbf{\Lambda}=(T,\Lambda,\mathrm{def}^{\mathbf{\Lambda}})$ be ep-signatures. A \emph{generalized ep-derivor} from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ is a generalized derivor $\mathbf{d}=(\varphi,D,d)$ from $(S,\Sigma)$ to $(T,\Lambda)$, see Definition~\ref{DGeneralDerivor}, such that, for every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$, the following conditions hold, where $\mathrm{Cn}$ stands for $\mathrm{Cn}^{\mathbf{\Lambda}}_{\vs{\varphi^{\star}(\mathbf{s})}}$:
+\begin{enumerate}
+\item[(GEP1)] The domain of the sort $s$ is preserved by $\sigma$:
+$$
+d_{\mathbf{s},s}(\sigma)^{\sharp}[D_{s}]\subseteq
+\mathrm{Cn}\left(D_{\mathbf{s}}\cup\mathrm{deft}^{\mathbf{\Lambda}}(d_{\mathbf{s},s}(\sigma))\right),
+$$
+where $d_{\mathbf{s},s}(\sigma)^{\sharp}$ is the substitution that sends $v^{\varphi(s)}_{0}$ to $d_{\mathbf{s},s}(\sigma)$.
+\item[(GEP2)] The domain conditions of $\sigma$ are respected inside the domains of the sorts:
+$$
+\mathrm{Cn}\left(D_{\mathbf{s}}\cup\mathrm{tr}_{(\varphi,d)}[\mathrm{def}^{\mathbf{\Sigma}}(\sigma)]\right)
+=
+\mathrm{Cn}\left(D_{\mathbf{s}}\cup\mathrm{deft}^{\mathbf{\Lambda}}(d_{\mathbf{s},s}(\sigma))\right).
+$$
+\end{enumerate}
+For a $\mathbf{\Lambda}$-algebra $\mathbf{B}$, we let $\mathbf{d}^{\ast}(\mathbf{B})$ stand for the partial $\Sigma$-algebra whose underlying $S$-sorted set is $(B^{D}_{s})_{s\in S}$, with $B^{D}_{s}=\{b\in B_{\varphi(s)}\mid\mathbf{B}\models D_{s}[b]\}$ as in Remark~\ref{RGenDerivorSem}, and in which every $\sigma\in\Sigma_{\mathbf{s},s}$ is interpreted as the restriction of $d_{\mathbf{s},s}(\sigma)^{\mathbf{B}}$ to $B^{D}_{\mathbf{s}}$.
+\end{definition}
+
+\begin{proposition}\label{PGenEpDerivorFunctor}
+Let $\mathbf{d}=(\varphi,D,d)$ be a generalized ep-derivor from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$. Then, for every $\mathbf{\Lambda}$-algebra $\mathbf{B}$, $\mathbf{d}^{\ast}(\mathbf{B})$ is a $\mathbf{\Sigma}$-algebra, and $\mathbf{d}^{\ast}$ is the object mapping of a functor $\mathbf{d}^{\ast}\colon\mathsf{PAlg}(\mathbf{\Lambda})\mor\mathsf{PAlg}(\mathbf{\Sigma})$ that sends a homomorphism $h\colon\mathbf{B}\mor\mathbf{B}'$ to the family of the restrictions of the $h_{\varphi(s)}$ to $B^{D}_{s}$, for $s\in S$.
+\end{proposition}
+\begin{proof}
+Let $\mathbf{B}$ be a $\mathbf{\Lambda}$-algebra, $\sigma\in\Sigma_{\mathbf{s},s}$ and $\mathbf{b}\in B^{D}_{\mathbf{s}}$, i.e., $\mathbf{B}\models D_{\mathbf{s}}[\mathbf{b}]$. If $c=d_{\mathbf{s},s}(\sigma)^{\mathbf{B}}[\mathbf{b}]$ is defined, then, by Lemma~\ref{LDeft}, $\mathbf{B}\models D_{\mathbf{s}}\cup\mathrm{deft}^{\mathbf{\Lambda}}(d_{\mathbf{s},s}(\sigma))[\mathbf{b}]$, hence, by~(GEP1), $\mathbf{B}\models d_{\mathbf{s},s}(\sigma)^{\sharp}[D_{s}][\mathbf{b}]$, which, by Remark~\ref{RSubst}, means that $\mathbf{B}\models D_{s}[c]$, i.e., that $c\in B^{D}_{s}$. Thus $\mathbf{d}^{\ast}(\mathbf{B})$ is well defined: it is obtained from the partial $\Sigma$-algebra $(\varphi,d)^{\ast}(\mathbf{B})$ of Section~\ref{SEpDerivors} by restricting its underlying $S$-sorted set to $(B^{D}_{s})_{s\in S}$ and its operations to the families in $B^{D}_{\mathbf{s}}$, and these restrictions take their values in $(B^{D}_{s})_{s\in S}$. Hence, by induction on terms, for every term $R$ with variables in $\vs{\mathbf{s}}$, $R^{\mathbf{d}^{\ast}(\mathbf{B})}[\mathbf{b}]$ is defined if and only if $R^{(\varphi,d)^{\ast}(\mathbf{B})}[\mathbf{b}]$ is defined, and then they are equal. By Lemma~\ref{LTranslation}, $\mathbf{d}^{\ast}(\mathbf{B})\models\mathrm{def}^{\mathbf{\Sigma}}(\sigma)[\mathbf{b}]$ if and only if $\mathbf{B}\models\mathrm{tr}_{(\varphi,d)}[\mathrm{def}^{\mathbf{\Sigma}}(\sigma)][\mathbf{b}]$, and, by Lemma~\ref{LDeft}, $\mathbf{b}$ is in the domain of $\sigma$ in $\mathbf{d}^{\ast}(\mathbf{B})$ if and only if $\mathbf{B}\models\mathrm{deft}^{\mathbf{\Lambda}}(d_{\mathbf{s},s}(\sigma))[\mathbf{b}]$. Since $\mathbf{B}\models D_{\mathbf{s}}[\mathbf{b}]$, these two conditions are equivalent by~(GEP2) and the remark after Definition~\ref{DCn}. Therefore $\mathbf{d}^{\ast}(\mathbf{B})$ is a $\mathbf{\Sigma}$-algebra.
+
+Let $h\colon\mathbf{B}\mor\mathbf{B}'$ be a homomorphism of partial $\Lambda$-algebras. Since $h$ preserves the values of the terms that are defined, if $\mathbf{B}\models(P,Q)[b]$, then $\mathbf{B}'\models(P,Q)[h(b)]$; hence $h_{\varphi(s)}$ sends $B^{D}_{s}$ into $B'^{D}_{s}$, and, as in the proof of Proposition~\ref{PEpDerivorFunctor}, these restrictions form a homomorphism from $\mathbf{d}^{\ast}(\mathbf{B})$ to $\mathbf{d}^{\ast}(\mathbf{B}')$. Identities and composites are clearly preserved.
+\end{proof}
+
+\begin{remark}\label{RGenEpDerivor}
+\begin{enumerate}
+\item An ep-derivor $(\varphi,d)$ is the same as the generalized ep-derivor $(\varphi,\varnothing,d)$: for $D=\varnothing$, (GEP1) holds trivially, (GEP2) is the condition of Definition~\ref{DDerivorEP}, and both definitions of $\mathbf{d}^{\ast}$ agree.
+\item If $\mathbf{\Sigma}$ and $\mathbf{\Lambda}$ are many-sorted signatures, regarded as ep-signatures with empty sets of domain conditions, then (GEP2) holds trivially and $\mathrm{Cn}$ is the semantic consequence over total $\Lambda$-algebras. Then a generalized ep-derivor is a generalized derivor (Definition~\ref{DGeneralDerivor}) that satisfies (GEP1), and (GEP1) is equivalent to the closure condition of Remark~\ref{RGenDerivorSem} holding for every $\Lambda$-algebra $\mathbf{B}$.
+\item Conversely to Proposition~\ref{PGenEpDerivorFunctor}, (GEP1) holds as soon as the closure condition of Remark~\ref{RGenDerivorSem} holds for every $\mathbf{\Lambda}$-algebra and, given (GEP1), (GEP2) holds as soon as $\mathbf{d}^{\ast}(\mathbf{B})$ is a $\mathbf{\Sigma}$-algebra for every $\mathbf{\Lambda}$-algebra $\mathbf{B}$, by the same arguments read backwards.
+\end{enumerate}
+\end{remark}
 
 \section{Compact presentation of higher-order categorial algebras}\label{SCompact}
 
@@ -1020,10 +1126,23 @@ $$
 We denote by $\mathsf{nCat}\mathsf{Alg}(\mathbf{\Sigma})$ the category of $n$-categorial  $\mathbf{\Sigma}$-algebras and $n$-categorial $\mathbf{\Sigma}$-homomorphisms.
 \end{definition}
 
+We next state the $\omega$-dimensional counterparts of these notions, which are used in Sections~\ref{STruncation} and~\ref{SLimitCompact}.
+
+\begin{definition}\label{DCompactOmegaCat}
+A \emph{compact $\omega$-category} is an ordered pair $\mathsf{C} = (C,(\xi_{k})_{k\in\omega})$ where $C$ is a set and, for every $k\in\omega$, $\xi_{k}$ a structure of compact category on $C$ such that, for every $j,k\in\omega$ with $j<k$, the ordered pair $(C,(\xi_{j},\xi_{k}))$ is a compact $2$-category, and such that every $f\in C$ is a $k$-cell, i.e., $\mathrm{sc}^{k}(f)=f$, for some $k\in\omega$. Note that, by~(2C1), a $j$-cell is a $k$-cell for every $k\geq j$.
+
+A \emph{compact $\omega$-functor} is a mapping $F\colon C\mor C'$ which is a compact functor from $(C,\xi_{k})$ to $(C',\xi'_{k})$ for every $k\in\omega$. We denote by $\omega\mathsf{Cat}$ the category of compact $\omega$-categories and compact $\omega$-functors.
+\end{definition}
+
+\begin{definition}\label{DOmegaCatAlg}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. An \emph{$\omega$-categorial $\mathbf{\Sigma}$-algebra} is a pair $\boldsymbol{\mathsf{A}}=(\mathsf{A},F)$ where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted compact $\omega$-category and $F$ assigns to every $\sigma\in\Sigma_{\mathbf{s},s}$ a compact $\omega$-functor $\sigma^{\boldsymbol{\mathsf{A}}}\colon\mathsf{A}_{\mathbf{s}}\mor\mathsf{A}_{s}$. Here $\mathsf{A}_{\mathbf{s}}$ is a compact $\omega$-category: if each $\mathsf{a}_{j}$ is a $k_{j}$-cell, then $(\mathsf{a}_{j})_{j\in\bb{\mathbf{s}}}$ is a $k$-cell for $k=\max_{j}k_{j}$. An \emph{$\omega$-categorial $\mathbf{\Sigma}$-homomorphism} is an $S$-sorted compact $\omega$-functor commuting with the operations, as in Definition~\ref{DManySortedCatAlg}. We denote by $\omega\mathsf{CatAlg}(\mathbf{\Sigma})$ the category of $\omega$-categorial $\mathbf{\Sigma}$-algebras and $\omega$-categorial $\mathbf{\Sigma}$-homomorphisms.
+\end{definition}
+
+
 In the compact presentation, an $n$-categorial $\mathbf{\Sigma}$-algebra is regarded as a partial algebra on a single $S$-sorted set of cells, for a signature that enlarges $\Sigma$ with sources, targets and compositions of every dimension below $n$.
 
 \begin{definition}\label{DSigmaCatCompact}
-Let $\Sigma$ be an $S$-sorted signature and $n\in\mathbb{N}$. The \emph{compact $n$-categorial signature determined by $\Sigma$}, denoted by $\Sigma^{(n)}$, is the $S$-sorted signature defined, for every $(\mathbf{s},s)\in S^{\star}\times S$, as follows:
+Let $\Sigma$ be an $S$-sorted signature and $n\in\mathbb{N}\cup\{\omega\}$. The \emph{compact $n$-categorial signature determined by $\Sigma$}, denoted by $\Sigma^{(n)}$, is the $S$-sorted signature defined, for every $(\mathbf{s},s)\in S^{\star}\times S$, as follows:
 $$
 {\Sigma}^{(n)}_{\mathbf{s},s}=
 \begin{cases}
@@ -1035,10 +1154,16 @@ $$
 & \text{if $\mathbf{s}= (s,s)$.}
 \end{cases}
 $$
-That is, ${\Sigma}^{(n)}$ is the expansion of $\Sigma$ obtained by adding, for every $k\in n$ and every sort $s\in S$, two unary operation symbols $\mathrm{sc}^{k}_{s}$ and $\mathrm{tg}^{k}_{s}$, the \emph{$k$-source} and the \emph{$k$-target}, of arity $(s)$ and coarity $s$, and a binary operation symbol $\circ^{k}_{s}$, the \emph{$k$-composition}, of arity $(s,s)$ and coarity $s$.
+That is, ${\Sigma}^{(n)}$ is the expansion of $\Sigma$ obtained by adding, for every $k\in n$ and every sort $s\in S$, two unary operation symbols $\mathrm{sc}^{k}_{s}$ and $\mathrm{tg}^{k}_{s}$, the \emph{$k$-source} and the \emph{$k$-target}, of arity $(s)$ and coarity $s$, and a binary operation symbol $\circ^{k}_{s}$, the \emph{$k$-composition}, of arity $(s,s)$ and coarity $s$. As in Definition~\ref{DVarCompact}, we write $x\circ^{k}_{s}y$ for $\circ^{k}_{s}(x,y)$.
+
+Moreover, we regard $\Sigma^{(n)}$ as the ep-signature, see Definition~\ref{DEpSignature}, $\mathbf{\Sigma}^{(n)}=(S,\Sigma^{(n)},\mathrm{def}^{\mathbf{\Sigma}^{(n)}})$ in which the $k$-compositions are the only operation symbols with a nonempty set of domain conditions: for every $k\in n$ and every $s\in S$,
+$$
+\mathrm{def}^{\mathbf{\Sigma}^{(n)}}(\circ^{k}_{s})=\{(\mathrm{sc}^{k}_{s}(v^{s}_{0}),\mathrm{tg}^{k}_{s}(v^{s}_{1}))\},
+$$
+where $v^{s}_{0}$ and $v^{s}_{1}$ are the variables of $\vs{(s,s)}$ that correspond to the first and to the second argument, respectively, so that $v^{s}_{0}\circ^{k}_{s}v^{s}_{1}$ is defined if and only if the $k$-source of $v^{s}_{0}$ is equal to the $k$-target of $v^{s}_{1}$; and $\mathrm{def}^{\mathbf{\Sigma}^{(n)}}(\sigma)=\varnothing$, $\mathrm{def}^{\mathbf{\Sigma}^{(n)}}(\mathrm{sc}^{k}_{s})=\varnothing$ and $\mathrm{def}^{\mathbf{\Sigma}^{(n)}}(\mathrm{tg}^{k}_{s})=\varnothing$, for every $\sigma\in\Sigma$, every $k\in n$ and every $s\in S$.
 \end{definition}
 
-Note that $\Sigma^{(0)}=\Sigma$ and that, for every $n,m\in\mathbb{N}$ with $n\leq m$, $\Sigma^{(n)}\subseteq\Sigma^{(m)}$.
+Note that $\Sigma^{(0)}=\Sigma$, that, for every $n,m\in\mathbb{N}\cup\{\omega\}$ with $n\leq m$, $\Sigma^{(n)}\subseteq\Sigma^{(m)}$, and that $\Sigma^{(\omega)}=\bigcup_{n\in\mathbb{N}}\Sigma^{(n)}$.
 
 We next present the $n$-categorial $\mathbf{\Sigma}$-algebras as a $\mathrm{QE}$-variety of partial $\Sigma^{(n)}$-algebras. The axioms (A$^{k}$1)--(A$^{k}$8), stated for every dimension $k\in n$, describe the $k$-dimensional structure, and the axioms (AB$^{l,k}$1)--(AB$^{l,k}$3), stated for every pair of dimensions $l<k$ in $n$, relate the $l$-dimensional and the $k$-dimensional structures. Informally, these equations state that the operations of $\Sigma$ are always defined, that, for every sort $s\in S$, sources, targets and compositions of sort $s$ of every dimension behave as in an $n$-category, and that the operations of $\Sigma$ are compatible with them.
 
@@ -1181,17 +1306,11 @@ A model of the axioms (A$^{k}$1)--(A$^{k}$6), for $k\in n$, and (AB$^{l,k}$1)--(
 We will let $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ stand for the category canonically associated to the $\mathrm{QE}$-variety $\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ determined by the specification $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$.
 \end{definition}
 
-Sections~\ref{STruncation} and~\ref{SLimitCompact} also use the $\omega$-dimensional counterparts of these notions.
+\begin{remark}\label{RCompactEp}
+The ep-algebras of type $\mathbf{\Sigma}^{(n)}$, see Definition~\ref{DSigmaCatCompact}, are exactly the partial $\Sigma^{(n)}$-algebras that satisfy (A0), (A$^{k}$1) and (A$^{k}$3), for every $k\in n$. In fact, the empty sets of domain conditions state that the operations of $\Sigma$, the $k$-sources and the $k$-targets are total, i.e., (A0) and (A$^{k}$1), and then the domain condition of $\circ^{k}_{s}$ states that $x\circ^{k}_{s}y$ is defined if and only if $\mathrm{sc}^{k}_{s}(x)=\mathrm{tg}^{k}_{s}(y)$, i.e., (A$^{k}$3). Hence $\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ is the class of the $\mathbf{\Sigma}^{(n)}$-algebras that satisfy the remaining axioms of Definition~\ref{DVarCompact}.
 
-\begin{definition}\label{DCompactOmegaCat}
-A \emph{compact $\omega$-category} is an ordered pair $\mathsf{C} = (C,(\xi_{k})_{k\in\omega})$ where $C$ is a set and, for every $k\in\omega$, $\xi_{k}$ a structure of compact category on $C$ such that, for every $j,k\in\omega$ with $j<k$, the ordered pair $(C,(\xi_{j},\xi_{k}))$ is a compact $2$-category, and such that every $f\in C$ is a $k$-cell, i.e., $\mathrm{sc}^{k}(f)=f$, for some $k\in\omega$. Note that, by~(2C1), a $j$-cell is a $k$-cell for every $k\geq j$.
-
-A \emph{compact $\omega$-functor} is a mapping $F\colon C\mor C'$ which is a compact functor from $(C,\xi_{k})$ to $(C',\xi'_{k})$ for every $k\in\omega$. We denote by $\omega\mathsf{Cat}$ the category of compact $\omega$-categories and compact $\omega$-functors.
-\end{definition}
-
-\begin{definition}\label{DOmegaCatAlg}
-Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. An \emph{$\omega$-categorial $\mathbf{\Sigma}$-algebra} is a pair $\boldsymbol{\mathsf{A}}=(\mathsf{A},F)$ where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted compact $\omega$-category and $F$ assigns to every $\sigma\in\Sigma_{\mathbf{s},s}$ a compact $\omega$-functor $\sigma^{\boldsymbol{\mathsf{A}}}\colon\mathsf{A}_{\mathbf{s}}\mor\mathsf{A}_{s}$. Here $\mathsf{A}_{\mathbf{s}}$ is a compact $\omega$-category: if each $\mathsf{a}_{j}$ is a $k_{j}$-cell, then $(\mathsf{a}_{j})_{j\in\bb{\mathbf{s}}}$ is a $k$-cell for $k=\max_{j}k_{j}$. An \emph{$\omega$-categorial $\mathbf{\Sigma}$-homomorphism} is an $S$-sorted compact $\omega$-functor commuting with the operations, as in Definition~\ref{DManySortedCatAlg}. We denote by $\omega\mathsf{CatAlg}(\mathbf{\Sigma})$ the category of $\omega$-categorial $\mathbf{\Sigma}$-algebras and $\omega$-categorial $\mathbf{\Sigma}$-homomorphisms.
-\end{definition}
+Definition~\ref{DVarCompact} is stated for $n\in\mathbb{N}$ only. For $n=\omega$ the axioms still make sense, for every $k\in\omega$ and every $l<k$ in $\omega$, but their models need not be compact $\omega$-categories: the condition of Definition~\ref{DCompactOmegaCat} that every cell is a $k$-cell for some $k\in\omega$ is not preserved by products, whereas the models of a set of $\mathrm{QE}$-equations are closed under products. For instance, if, for every $k\in\omega$, $\mathsf{C}_{k}$ is a compact $\omega$-category with a cell $f_{k}$ that is not a $k$-cell, then $(f_{k})_{k\in\omega}$ is not a $k$-cell of $\prod_{k\in\omega}\mathsf{C}_{k}$ for any $k$.
+\end{remark}
 
 %The axiom (A0) states that the operations of $\Sigma$ are total, and the axioms (A$^{k}$7) and (A$^{k}$8), for $k\in n$, state that they preserve sources, targets and compositions of every dimension, i.e., that they are $n$-functors. As in Chapters~2 and~3, the morphisms of $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ are the homomorphisms of partial $\Sigma^{(n)}$-algebras, i.e., the $S$-sorted mappings $h$ such that, whenever an operation is defined on a family of elements, it is also defined on the image of that family under $h$, and $h$ sends the result of the former to the result of the latter. These are the appropriate morphisms here: closed homomorphisms, which also reflect definedness, would be too restrictive, since an $n$-functor may send cells that are not composable to cells that are. Consequently, we have the following result.
 %
@@ -1204,6 +1323,7 @@ Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. An \emph{$\omega$-c
 \section{Extended presentation of higher-order categorial algebras}\label{SExtended}
 
 
+
 We begin by defining extended $\omega$-categories, which present $\omega$-categories with separate sorts for each dimension. An extended $n$-category is then an extended $\omega$-category truncated at level $n$.
 
 \begin{definition}\label{DOmegaCatExt}
@@ -1211,25 +1331,25 @@ An \emph{extended $\omega$-category} is an ordered pair $\mathsf{C} = ((C_{k})_{
 \[
 \zeta = (\zeta_{j,k})_{(j,k)\in \coprod_{k\in \omega}k},
 \] 
-where, for every $k\in \omega$ and every $j\in k$, $\zeta_{j,k} = (\circ^{(j)},\mathrm{sc}^{(j,k)},\mathrm{tg}^{(j,k)},\mathrm{i}^{(k,j)})$ with
+where, for every $k\in \omega$ and every $j\in k$, $\zeta_{j,k} = (\circ^{(j,k)},\mathrm{sc}^{(j,k)},\mathrm{tg}^{(j,k)},\mathrm{i}^{(k,j)})$ with
 \begin{enumerate}
 \item $\mathrm{sc}^{(j,k)}$ and $\mathrm{tg}^{(j,k)}$ mappings from $C_{k}$ to $C_{j}$  
 which send $f\in C_{k}$ to its \emph{$(j,k)$-source} and \emph{$(j,k)$-target}, respectively;
 \item $\mathrm{i}^{(k,j)}$ a mapping from $C_{j}$ to $C_{k}$ 
 which sends $f\in C_{j}$ to its \emph{$(k,j)$-identity}; and
-\item $\circ^{(j)}$ a partial binary operation 
+\item $\circ^{(j,k)}$ a partial binary operation 
 $$
-\circ^{(j)}\colon C_{k}\times C_{k} \dmor C_{k},
+\circ^{(j,k)}\colon C_{k}\times C_{k} \dmor C_{k},
 $$ 
 whose domain of definition is
 $$
-\mathrm{Dom}\left(\circ^{(j)}\right) = 
+\mathrm{Dom}\left(\circ^{(j,k)}\right) = 
 \left\lbrace
 (f,g)\in C_{k}\times C_{k}
 \,\middle|\, \mathrm{sc}^{(j,k)}(g)=\mathrm{tg}^{(j,k)}(f) \right\rbrace,
 $$ 
 i.e., the fibered product of $C_{k}$ and $C_{k}$ over $\mathrm{sc}^{(j,k)}$ and $\mathrm{tg}^{(j,k)}$, and
-which sends a pair $(f,g)\in \mathrm{Dom}(\circ^{(j)})$ to its \emph{$j$-composition in $C_{k}$}.
+which sends a pair $(f,g)\in \mathrm{Dom}(\circ^{(j,k)})$ to its \emph{$j$-composition of $k$-cells}.
 \end{enumerate}
 These data are required to satisfy the following conditions for all $i,j,k\in \omega$ with $i<j<k$ (the conditions (MS2), (MS6) and (MS7) only involve the dimensions $j<k$, and are required for every such pair):
 \begin{itemize}
@@ -1240,13 +1360,13 @@ These data are required to satisfy the following conditions for all $i,j,k\in \o
 \end{align*}
 \item[(MS2)] If $g,f\in C_{k}$ are such that $\mathrm{sc}^{(j,k)}(g)=\mathrm{tg}^{(j,k)}(f)$, then
 \begin{align*}
-\mathrm{sc}^{(j,k)}(g\circ^{(j)}f)&=\mathrm{sc}^{(j,k)}(f), &
-\mathrm{tg}^{(j,k)}(g\circ^{(j)}f)&=\mathrm{tg}^{(j,k)}(g).
+\mathrm{sc}^{(j,k)}(g\circ^{(j,k)}f)&=\mathrm{sc}^{(j,k)}(f), &
+\mathrm{tg}^{(j,k)}(g\circ^{(j,k)}f)&=\mathrm{tg}^{(j,k)}(g).
 \end{align*}
 \item[(MS3)] If $g,f\in C_{k}$ are such that $\mathrm{sc}^{(i,k)}(g)=\mathrm{tg}^{(i,k)}(f)$, then
 \begin{align*}
-\mathrm{sc}^{(j,k)}(g\circ^{(i)}f)&=\mathrm{sc}^{(j,k)}(g)\circ^{(i)}\mathrm{sc}^{(j,k)}(f),\\
-\mathrm{tg}^{(j,k)}(g\circ^{(i)}f)&=\mathrm{tg}^{(j,k)}(g)\circ^{(i)}\mathrm{tg}^{(j,k)}(f).
+\mathrm{sc}^{(j,k)}(g\circ^{(i,k)}f)&=\mathrm{sc}^{(j,k)}(g)\circ^{(i,j)}\mathrm{sc}^{(j,k)}(f),\\
+\mathrm{tg}^{(j,k)}(g\circ^{(i,k)}f)&=\mathrm{tg}^{(j,k)}(g)\circ^{(i,j)}\mathrm{tg}^{(j,k)}(f).
 \end{align*}
 \item[(MS4)] If $f\in C_{i}$, then
 $$
@@ -1259,13 +1379,13 @@ $$
 $$
 \item[(MS6)] If $f\in C_{k}$, then
 $$
-f\circ^{(j)}
+f\circ^{(j,k)}
 (\mathrm{i}^{(k,j)}(\mathrm{sc}^{(j,k)}(f)))
 =
 f
 =
 (\mathrm{i}^{(k,j)}(\mathrm{tg}^{(j,k)}(f)))
-\circ^{(j)}
+\circ^{(j,k)}
 f.
 $$
 \item[(MS7)] If $h,g,f\in C_{k}$ are such that 
@@ -1275,14 +1395,13 @@ $$
 \end{align*}
 then
 $$
-h\circ^{(j)}(g\circ^{(j)}f)=
-(h\circ^{(j)}g)\circ^{(j)}f.
+h\circ^{(j,k)}(g\circ^{(j,k)}f)=
+(h\circ^{(j,k)}g)\circ^{(j,k)}f.
 $$
 \item[(MS8)] If $g,f\in C_{j}$ are such that $\mathrm{sc}^{(i,j)}(g)=\mathrm{tg}^{(i,j)}(f)$, then
 $$
-\mathrm{i}^{(k,j)}(g\circ^{(i)}f)=\mathrm{i}^{(k,j)}(g)\circ^{(i)}\mathrm{i}^{(k,j)}(f),
+\mathrm{i}^{(k,j)}(g\circ^{(i,j)}f)=\mathrm{i}^{(k,j)}(g)\circ^{(i,k)}\mathrm{i}^{(k,j)}(f).
 $$
-where on the left $\circ^{(i)}$ is the $i$-composition in $C_{j}$ and on the right the $i$-composition in $C_{k}$.
 \item[(MS9)] If $g',g,f',f\in C_{k}$ are such that
 \begin{align*}
 \mathrm{sc}^{(j,k)}(g')&=\mathrm{tg}^{(j,k)}(g); &
@@ -1292,9 +1411,9 @@ where on the left $\circ^{(i)}$ is the $i$-composition in $C_{j}$ and on the rig
 \end{align*}
 then,
 $$
-(g'\circ^{(i)}f')\circ^{(j)}(g\circ^{(i)} f)
+(g'\circ^{(i,k)}f')\circ^{(j,k)}(g\circ^{(i,k)} f)
 =
-(g'\circ^{(j)}g)\circ^{(i)}(f'\circ^{(j)}f)
+(g'\circ^{(j,k)}g)\circ^{(i,k)}(f'\circ^{(j,k)}f)
 .
 $$
 \end{itemize}
@@ -1304,23 +1423,23 @@ An \emph{extended $\omega$-functor} $F$ from $\mathsf{C}$ to $\mathsf{C}'$ is a 
 F_{j}\circ \mathrm{sc}^{(j,k)} &= \mathrm{sc}'^{(j,k)}\circ F_{k}, &
 F_{j}\circ \mathrm{tg}^{(j,k)} &= \mathrm{tg}'^{(j,k)}\circ F_{k},\\
 F_{k}\circ \mathrm{i}^{(k,j)} &= \mathrm{i}'^{(k,j)}\circ F_{j}, &
-F_{k}(g\circ^{(j)}f) &= F_{k}(g)\circ^{(j)} F_{k}(f),
+F_{k}(g\circ^{(j,k)}f) &= F_{k}(g)\circ'^{(j,k)} F_{k}(f),
 \end{align*}
-the last one whenever $g\circ^{(j)}f$ is defined. We denote by $\omega\mathsf{Cat}^{\mathrm{ext}}$ the category of extended $\omega$-categories and extended $\omega$-functors.
+the last one whenever $g\circ^{(j,k)}f$ is defined. We denote by $\omega\mathsf{Cat}^{\mathrm{ext}}$ the category of extended $\omega$-categories and extended $\omega$-functors.
 \end{definition}
 
 For $n\in\omega$, an \emph{extended $n$-category} is an ordered pair $\mathsf{C} = ((C_{k})_{k\in n+1},\zeta)$ consisting of an $n+1$-sorted set $(C_{k})_{k\in n+1}$ and a structure of extended $n$-category 
 \[
 \zeta = (\zeta_{j,k})_{(j,k)\in \coprod_{k\in n+1}k}
 \] 
-on $(C_{k})_{k\in n+1}$, where, for every $k\in n+1$ and every $j\in k$, $\zeta_{j,k} = (\circ^{(j)},\mathrm{sc}^{(j,k)},\mathrm{tg}^{(j,k)},\mathrm{i}^{(k,j)})$ with the same data as above, required to satisfy the same conditions truncated to the $n$-th level.
+on $(C_{k})_{k\in n+1}$, where, for every $k\in n+1$ and every $j\in k$, $\zeta_{j,k} = (\circ^{(j,k)},\mathrm{sc}^{(j,k)},\mathrm{tg}^{(j,k)},\mathrm{i}^{(k,j)})$ with the same data as above, required to satisfy the same conditions truncated to the $n$-th level.
 
-The notion of extended $n$-functor between $n$-categories is entirely analogous to that of extended $\omega$-functor between $\omega$-categories, but truncated to the $n$-th level. An extended $n$-functor $F$ from $\mathsf{C}$ to $\mathsf{C}'$ is a family $F=(F_{k})_{k\in n+1}$ of mappings $F_{k}\colon C_{k}\to C'_{k}$ such that for all $j,k\in n+1$ with $j<k$, the following equations hold (the last one whenever $g\circ^{(j)}f$ is defined):
+The notion of extended $n$-functor between $n$-categories is entirely analogous to that of extended $\omega$-functor between $\omega$-categories, but truncated to the $n$-th level. An extended $n$-functor $F$ from $\mathsf{C}$ to $\mathsf{C}'$ is a family $F=(F_{k})_{k\in n+1}$ of mappings $F_{k}\colon C_{k}\to C'_{k}$ such that for all $j,k\in n+1$ with $j<k$, the following equations hold (the last one whenever $g\circ^{(j,k)}f$ is defined):
 \begin{align*}
 F_{j}\circ \mathrm{sc}^{(j,k)} &= \mathrm{sc}'^{(j,k)}\circ F_{k}, &
 F_{j}\circ \mathrm{tg}^{(j,k)} &= \mathrm{tg}'^{(j,k)}\circ F_{k},\\
 F_{k}\circ \mathrm{i}^{(k,j)} &= \mathrm{i}'^{(k,j)}\circ F_{j}, &
-F_{k}(g\circ^{(j)}f) &= F_{k}(g)\circ^{(j)} F_{k}(f).
+F_{k}(g\circ^{(j,k)}f) &= F_{k}(g)\circ'^{(j,k)} F_{k}(f).
 \end{align*}
 We denote by $\mathsf{nCat}^{\mathrm{ext}}$ the category consisting of extended $n$-categories and extended $n$-functors.
 
@@ -1360,8 +1479,12 @@ where $F_{s,k}$ is the component at $k$-cells of the extended $n$-functor $F_{s}
 We denote by $\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ the category of extended $n$-categorial  $\mathbf{\Sigma}$-algebras and extended $n$-categorial $\mathbf{\Sigma}$-homomorphisms.
 \end{definition}
 
+\begin{definition}\label{DOmegaExtCatAlg}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. An \emph{extended $\omega$-categorial $\mathbf{\Sigma}$-algebra} is a pair $\boldsymbol{\mathsf{A}}=(\mathsf{A},F)$ where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted extended $\omega$-category and $F$ assigns to every $\sigma\in\Sigma_{\mathbf{s},s}$ an extended $\omega$-functor $\sigma^{\boldsymbol{\mathsf{A}}}\colon\mathsf{A}_{\mathbf{s}}\mor\mathsf{A}_{s}$. An \emph{extended $\omega$-categorial $\mathbf{\Sigma}$-homomorphism} is an $S$-sorted extended $\omega$-functor satisfying the equation of Definition~\ref{DExtCatAlg} for every $k\in\omega$. We denote by $\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ the category of extended $\omega$-categorial $\mathbf{\Sigma}$-algebras and extended $\omega$-categorial $\mathbf{\Sigma}$-homomorphisms.
+\end{definition}
+
 \begin{definition}\label{DSigmaCatExtended}
-Let $\Sigma$ be an $S$-sorted signature and $n\in\mathbb{N}$. For every $k\in n+1$ and every $\mathbf{s}\in S^{\star}$, we let $(k,\mathbf{s})$ stand for the word $((k,s_{j}))_{j\in\lvert\mathbf{s}\rvert}$ in $((n+1)\times S)^{\star}$; in particular, $(k,\lambda)=\lambda$. The \emph{extended $n$-categorial signature determined by $\Sigma$}, denoted by $\Sigma^{\mathrm{ext}(n)}$, is the $(n+1)\times S$-sorted signature defined, for every $(\mathbf{w},(k,s))\in((n+1)\times S)^{\star}\times((n+1)\times S)$, as follows:
+Let $\Sigma$ be an $S$-sorted signature and $n\in\mathbb{N}\cup\{\omega\}$. We let $[n]$ stand for the set of dimensions of the cells of an extended $n$-category, i.e., $[n]=n+1=\{0,\ldots,n\}$ if $n\in\mathbb{N}$, and $[\omega]=\omega$. For every $k\in [n]$ and every $\mathbf{s}\in S^{\star}$, we let $(k,\mathbf{s})$ stand for the word $((k,s_{j}))_{j\in\lvert\mathbf{s}\rvert}$ in $([n]\times S)^{\star}$; in particular, $(k,\lambda)=\lambda$. The \emph{extended $n$-categorial signature determined by $\Sigma$}, denoted by $\Sigma^{\mathrm{ext}(n)}$, is the $[n]\times S$-sorted signature defined, for every $(\mathbf{w},(k,s))\in([n]\times S)^{\star}\times([n]\times S)$, as follows:
 $$
 {\Sigma}^{\mathrm{ext}(n)}_{\mathbf{w},(k,s)}=
 \begin{cases}
@@ -1377,10 +1500,10 @@ $$
 & \text{otherwise.}
 \end{cases}
 $$
-That is, the sort $(k,s)$ of ${\Sigma}^{\mathrm{ext}(n)}$ stands for the $k$-cells of sort $s$, and ${\Sigma}^{\mathrm{ext}(n)}$ is obtained from $\Sigma$ by taking, for every $k\in n+1$ and every operation symbol $\sigma\in\Sigma_{\mathbf{s},s}$, a copy $\sigma_{k}$ of $\sigma$ of arity $(k,\mathbf{s})$ and coarity $(k,s)$, which acts on the $k$-cells, and by adding, for every $j,k\in n+1$ with $j<k$ and every sort $s\in S$, two unary operation symbols $\mathrm{sc}^{(j,k)}_{s}$ and $\mathrm{tg}^{(j,k)}_{s}$, the \emph{$(j,k)$-source} and the \emph{$(j,k)$-target}, of arity $((k,s))$ and coarity $(j,s)$, a unary operation symbol $\mathrm{i}^{(k,j)}_{s}$, the \emph{$(k,j)$-identity}, of arity $((j,s))$ and coarity $(k,s)$, and a binary operation symbol $\circ^{(j,k)}_{s}$, the \emph{$j$-composition of $k$-cells}, of arity $((k,s),(k,s))$ and coarity $(k,s)$.
+That is, the sort $(k,s)$ of ${\Sigma}^{\mathrm{ext}(n)}$ stands for the $k$-cells of sort $s$, and ${\Sigma}^{\mathrm{ext}(n)}$ is obtained from $\Sigma$ by taking, for every $k\in [n]$ and every operation symbol $\sigma\in\Sigma_{\mathbf{s},s}$, a copy $\sigma_{k}$ of $\sigma$ of arity $(k,\mathbf{s})$ and coarity $(k,s)$, which acts on the $k$-cells, and by adding, for every $j,k\in [n]$ with $j<k$ and every sort $s\in S$, two unary operation symbols $\mathrm{sc}^{(j,k)}_{s}$ and $\mathrm{tg}^{(j,k)}_{s}$, the \emph{$(j,k)$-source} and the \emph{$(j,k)$-target}, of arity $((k,s))$ and coarity $(j,s)$, a unary operation symbol $\mathrm{i}^{(k,j)}_{s}$, the \emph{$(k,j)$-identity}, of arity $((j,s))$ and coarity $(k,s)$, and a binary operation symbol $\circ^{(j,k)}_{s}$, the \emph{$j$-composition of $k$-cells}, of arity $((k,s),(k,s))$ and coarity $(k,s)$.
 \end{definition}
 
-In contrast with the compact case, $\Sigma^{\mathrm{ext}(n)}$ is not a subset of $\Sigma^{\mathrm{ext}(m)}$ for $n\leq m$, since the sets of sorts are different; however, the inclusion of $(n+1)\times S$ into $(m+1)\times S$ induces a canonical embedding of $\Sigma^{\mathrm{ext}(n)}$ into $\Sigma^{\mathrm{ext}(m)}$. Note also that, for $n=0$, $\Sigma^{\mathrm{ext}(0)}$ is, up to the identification of $1\times S$ with $S$, the signature $\Sigma$.
+In contrast with the compact case, $\Sigma^{\mathrm{ext}(n)}$ is not a subset of $\Sigma^{\mathrm{ext}(m)}$ for $n\leq m$ in $\mathbb{N}\cup\{\omega\}$, since the sets of sorts are different; however, the inclusion of $[n]\times S$ into $[m]\times S$ induces a canonical embedding of $\Sigma^{\mathrm{ext}(n)}$ into $\Sigma^{\mathrm{ext}(m)}$, and $\Sigma^{\mathrm{ext}(\omega)}$ is the union of the images of the embeddings of the $\Sigma^{\mathrm{ext}(n)}$, for $n\in\mathbb{N}$. For $n\in\mathbb{N}$, $[n]=n+1$, which is the notation used in Definitions~\ref{DOmegaCatExt}, \ref{DExtCatAlg} and~\ref{DVarExtended}. Note also that, for $n=0$, $\Sigma^{\mathrm{ext}(0)}$ is, up to the identification of $1\times S$ with $S$, the signature $\Sigma$.
 
 The specification of the extended presentation follows the pattern of that of the compact presentation, see Definition~\ref{DVarCompact}. Now, however, the role played in the compact case by a dimension $k\in n$ is played by a pair of dimensions $j<k$ in $n+1$, since the $j$-composition acts on the $k$-cells and the $(k,j)$-identities take the place of the $k$-sources and $k$-targets as unit elements; and the role played by a pair of dimensions $l<k$ in $n$ is played by a triple of dimensions $h<j<k$ in $n+1$. Informally, the equations state that the operations of $\Sigma$ are always defined, that, for every sort $s\in S$ and every pair $j<k$, the $j$-cells and the $k$-cells of sort $s$ are the objects and the morphisms of a category, that these categories fit together as in an $n$-category, and that the operations of $\Sigma$ are compatible with them. In what follows, we abbreviate $V^{(n+1)\times S}$ to $V$.
 
@@ -1532,10 +1655,6 @@ u\circ^{(h,j)}_{s}v\overset{\mathrm{e}}{=}u\circ^{(h,j)}_{s}v \;\;\longrightarro
 The axioms (EA$^{h,j,k}$1)--(EA$^{h,j,k}$5) are the counterparts of the conditions (MS1), (MS4), (MS3), (MS9) and (MS8) of Definition~\ref{DOmegaCatExt}, and (EA$^{j,k}$1)--(EA$^{j,k}$6) those of (MS2), (MS5), (MS6) and (MS7). Hence a model of the axioms (EA$^{j,k}$1)--(EA$^{j,k}$6), for $j<k$ in $n+1$, and (EA$^{h,j,k}$1)--(EA$^{h,j,k}$5), for $h<j<k$ in $n+1$, is an $S$-sorted extended $n$-category, see Definition~\ref{DSortednCatExt}, presented in its globular form, i.e., with the cells of each dimension in a separate sort.
 
 We will let $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}})$ stand for the category canonically associated to the $\mathrm{QE}$-variety $\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}})$ determined by the specification $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}}$.
-\end{definition}
-
-\begin{definition}\label{DOmegaExtCatAlg}
-Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. An \emph{extended $\omega$-categorial $\mathbf{\Sigma}$-algebra} is a pair $\boldsymbol{\mathsf{A}}=(\mathsf{A},F)$ where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted extended $\omega$-category and $F$ assigns to every $\sigma\in\Sigma_{\mathbf{s},s}$ an extended $\omega$-functor $\sigma^{\boldsymbol{\mathsf{A}}}\colon\mathsf{A}_{\mathbf{s}}\mor\mathsf{A}_{s}$. An \emph{extended $\omega$-categorial $\mathbf{\Sigma}$-homomorphism} is an $S$-sorted extended $\omega$-functor satisfying the equation of Definition~\ref{DExtCatAlg} for every $k\in\omega$. We denote by $\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\mathbf{\Sigma})$ the category of extended $\omega$-categorial $\mathbf{\Sigma}$-algebras and extended $\omega$-categorial $\mathbf{\Sigma}$-homomorphisms.
 \end{definition}
 
 %The axioms (EA0), (EA$^{j,k}$7) and (EA$^{j,k}$8) state, as in the compact case, that the operations of $\Sigma$ act layer by layer and compatibly with the $n$-categorial structure, i.e., that they are $n$-functors between $n$-categories in their globular presentation. The relation between the two presentations, however, does not come from these axioms, but from the correspondence between the globular and the single-set presentations of $n$-categories. A model of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}}$ gives rise to a model of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$ by keeping only its $n$-cells, on which $k$-sources and $k$-targets are obtained by composing $(k,n)$-sources and $(k,n)$-targets with $(n,k)$-identities. Conversely, a model of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$ gives rise to a model of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}}$ by taking, as $k$-cells of sort $s$, for $k\in n$, the cells $x$ with $\mathrm{sc}^{k}_{s}(x)=x$. Going from the compact presentation to the extended one and back gives the original algebra, whereas going from the extended presentation to the compact one and back only gives an isomorphic algebra, in which every $k$-cell has been replaced by its identity $n$-cell. It is therefore to be expected that $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{ext}(n)}})$ is equivalent to $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$, and hence to $\mathsf{nCatAlg}(\mathbf{\Sigma})$, although the two canonical functors are not mutually inverse; proving this equivalence in a way that is functorial in $\mathbf{\Sigma}$ is part of Objective~II.2.
