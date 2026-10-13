@@ -489,19 +489,86 @@ He fet 23 substitucions, totes a les seccions actives.
   quin és l'adjunt esquerre, d'acord amb el diagrama. El document
   Curry-Howard (Definició 2.1.8) té la mateixa ambigüitat.
 
-## A, C i D: pendents de decisió
+## A, C i D
 
-No he canviat la teoria dels *generalized ep-derivors*: les respostes a A, C i
-D canvien els fonaments i vull que tries abans. L'anàlisi és al missatge del
-xat; en resum:
+Les he resolt en la ronda següent; vegeu més avall.
 
-- **A.** Es pot eliminar $D_\sigma$ fent que el domini de $\sigma$ a
-  $\mathbf d^\ast_{\mathfrak{gd}}(\mathbf B)$ siga la traducció de
-  $\mathrm{def}^{\mathbf\Sigma}(\sigma)$, i no el domini del terme $d(\sigma)$.
-  Això resol la discretització i també la composició.
-- **C.** La no-associativitat que queda és només sintàctica, en els conjunts
-  $D_s$. Si $D_s$ es guarda tancat per $\mathrm{Cn}$, la categoria és
-  estricta, sense quocient.
-- **D.** No és possible per a la graduació ni per a la unificació. El que es
-  pot fer és definir el functor sobre totes les àlgebres parcials i comprovar
-  que envia models a models.
+---
+---
+
+# Quarta ronda: nou disseny dels *generalized ep-derivors* (A, C, D)
+
+Data: 2026-10-13. Has acceptat A i C. Per a D has triat definir el functor
+sobre totes les àlgebres parcials i comprovar després que envia models a
+models. He reescrit la secció *Generalized ep-derivors* i les proves que en
+depenen. El document compila sense errors i sense referències indefinides ni
+etiquetes duplicades.
+
+## A. Sense $D_\sigma$
+
+- **Generalized derivor.** Torna a ser $(\varphi,D,d)$, amb un domini per
+  a cada sort (`DGeneralDerivor`).
+- **El domini d'una operació no és una dada.** Es defineix per recursió:
+  - $\mathrm{Dom}_{\mathbf d}(\sigma)$ =
+    $D_{\mathbf s}\cup\mathrm{tr}_{\mathbf d}[\mathrm{def}(\sigma)]\cup\{(d\sigma,d\sigma)\}\cup d(\sigma)^\sharp[D_s]$;
+  - és a dir: els arguments són als dominis, les condicions de domini de
+    $\sigma$ traduïdes es compleixen, $d(\sigma)$ està definit i el seu
+    valor cau dins del domini (`DDomTr`);
+  - la traducció $\mathrm{tr}_{\mathbf d}$ i les condicions de definició
+    $\mathrm{dfd}_{\mathbf d}$ dels subterme es defineixen alhora.
+- **Hipòtesi nova.** Perquè la recursió estiga ben fundada, les
+  ep-signatures han de complir que la relació «$\tau$ apareix a
+  $\mathrm{def}(\sigma)$» siga ben fundada. Ho he afegit a `DEpSignature`, i
+  ho he comprovat per a $\mathbf\Sigma^{(n)}$ i $\mathbf\Sigma^{\mathrm{ext}(n)}$.
+- **Discretització.** Ja no necessita cap dada extra: la condició de domini
+  de $\circ^k$ es tradueix a $v_0=v_1$.
+
+## C. Categoria estricta, sense quocients
+
+- **Dominis tancats.** Els dominis $D_s$ d'un *generalized ep-derivor* han
+  de ser tancats per $\mathrm{Cn}$ respecte de l'especificació de destinació.
+  Als exemples, els escrivim pels generadors.
+- **Composició.** El domini compost és
+  $\mathrm{Cn}(E\cup\mathrm{tr}_{\mathbf e}[D_s])$.
+- **Resultat.** $\mathsf{epSpec}_{\mathfrak{gd}}$ és una categoria estricta
+  (`PEpSiggdCat`), i $\mathsf{epSig}_{\mathfrak{gd}}$ n'és la subcategoria
+  plena de les ep-signatures.
+- **Conseqüència.** Les igualtats entre derivors compostos són ara igualtats
+  de veritat, no equivalències: $\mathbf g\circ\mathbf u=\mathrm{id}$,
+  $\boldsymbol\delta\circ\boldsymbol\tau=\mathrm{id}$, i les composicions
+  de truncacions i de discretitzacions.
+
+## D. Functor sobre totes les àlgebres parcials
+
+- **Functor.** Per a qualsevol *generalized derivor*,
+  $\mathbf d^\ast_{\mathfrak{gd}}$ és un functor
+  $\mathsf{PAlg}(\Lambda)\to\mathsf{PAlg}(\Sigma)$, sense cap condició
+  (`DDerivedPAlg`, `PGenEpDerivorFunctor`).
+- **Definició.** Un *generalized ep-derivor* entre ep-especificacions és un
+  *generalized derivor*, amb els dominis tancats, que envia models a models
+  (`DGenEpDerivor`).
+- **Criteri sintàctic** (`PGenEpDerivorAlg`):
+  - (GEP1): les condicions de domini traduïdes impliquen que $d(\sigma)$
+    està definit i cau dins del domini;
+  - (GEP2): es compleixen els axiomes.
+- **Composició.** Només funciona sobre els models (`LGenEpComp`), com havies
+  acceptat. Al text hi ha un comentari que ho explica.
+- **Les sis construccions** ($\mathrm{Gd}$, $\mathrm{Uf}$, $\mathrm D$,
+  $T$, compactes i esteses) es defineixen ara sobre totes les àlgebres
+  parcials. Les proposicions corresponents en comproven les dues condicions
+  i en prenen la birestricció a les àlgebres categorials.
+
+## Altres canvis
+
+- **Eliminats.** `DDeft` i `LDeft` (la $\mathrm{deft}$ de Reichel), que ja
+  no es feien servir; també la subsecció `SEpSpec` i els resultats
+  `PGenEpSpec`, `LTranslationQE` i `RTrRegular`, que ara són innecessaris.
+- **Nous.** `DDomTr`, `PDomainDef` (el domini de $\sigma$ en
+  $\mathbf d^\ast_{\mathfrak{gd}}(\mathbf B)$ és on es compleixen les seues
+  condicions de domini i $d(\sigma)$ està definit i cau dins del domini), i
+  un comentari després de `LGenEpComp`: dos *generalized ep-derivors* amb les
+  mateixes $\varphi$ i $d$ són iguals si tenen els mateixos dominis als models.
+- **Diferència amb Reichel.** El `RGenEpDerivor` ara la indica: Reichel exigeix
+  que les condicions traduïdes siguen *equivalents* a la definició de
+  $d(\sigma)$; ací només es demana una implicació, perquè el domini de
+  $\sigma$ queda retallat per les condicions de domini.
