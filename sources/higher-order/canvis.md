@@ -407,3 +407,101 @@ comentades (`DDerivor`, `PSigdCat`, `DDerivorEP`, `PEpDerivorFunctor`,
 `REpDerivor`, …). `DEpSignature`, `RSubst`, `DDeft`, `LDeft`, `DCn`,
 `DTranslation`, `LTranslation`, `DGeneralDerivor`, `DGenEpDerivor`,
 `PGenEpDerivorFunctor` i `RGenEpDerivor` es reutilitzen a la secció nova.
+
+---
+---
+
+# Tercera ronda: respostes a les decisions A–E
+
+Data: 2026-10-13. El document compila sense errors, sense referències
+indefinides i sense etiquetes duplicades; ara té 118 pàgines.
+
+## B. Notació $\mathbf d^\ast_{\mathfrak{gd}}(\mathbf B)$
+
+Totes les àlgebres transformades s'escriuen ara amb el subíndex:
+$\mathbf d^\ast_{\mathfrak{gd}}(\mathbf B)$,
+$(\mathbf e\circ\mathbf d)^\ast_{\mathfrak{gd}}(\mathbf C)$,
+$(\boldsymbol\delta^{(n,m)})^\ast_{\mathfrak{gd}}(\mathbf B)$, etc.
+He fet 23 substitucions, totes a les seccions actives.
+
+## E. Reestructuració del cas $\omega$
+
+- **Seccions finites.** Les seccions de graduació/unificació
+  (`SGraduation`) i de discretització/truncació (`STruncation`) ara només
+  tracten casos finits ($n\in\mathbb N$, $m\le n$). Hi he afegit:
+  - `PGdUfAdj`: $\mathrm{Gd}^{(n)}\dashv\mathrm{Uf}^{(n)}$, amb unitat la
+    identitat i counitat $\theta^{-1}$. És una equivalència adjunta.
+  - A `PTruncComp`, la igualtat $T^{(n,p)}\circ\mathrm D^{(p,m)}=\mathrm D^{(n,m)}$.
+  - Nova subsecció `SCompatGdUf`, amb `PCompatGdUf`:
+    1. $T^{\mathrm{ext}}\circ\mathrm{Gd}=\mathrm{Gd}\circ T$;
+    2. $\mathrm{Gd}\circ\mathrm D=\mathrm D^{\mathrm{ext}}\circ\mathrm{Gd}$;
+    3. $\mathrm{Uf}\circ\mathrm D^{\mathrm{ext}}=\mathrm D\circ\mathrm{Uf}$;
+    4. $\mathrm{Uf}^{(m)}\circ T^{\mathrm{ext}(m,n)}\cong T^{(m,n)}\circ\mathrm{Uf}^{(n)}$,
+       amb l'isomorfisme $\beta^{(m,n)}$ donat per les identitats $\mathrm i^{(n,m)}$.
+- **`SLimitCompact`.**
+  - Defineix les projeccions $T^{(n,\omega)}$ (`DTnOmegaCatAlg`).
+  - Ara té la demostració de `PUnivPropCatAlg`, que no en tenia: el límit
+    d'una família compatible és la unió de les cel·les, i cada operació es
+    calcula en un nivell finit.
+  - Afegeix el corol·lari `CLimitNat`: morfismes i transformacions naturals
+    cap a $\omega\mathsf{CatAlg}$ es determinen nivell a nivell.
+- **`SLimitExtended`.** Defineix $T^{\mathrm{ext}(n,\omega)}$
+  (`DTnOmegaExtCatAlg`) i afegeix `CLimitNatExt`.
+- **Nova secció `SOmegaFunctors`.** Els quatre functors $\omega$ es defineixen
+  per la propietat universal:
+  - **Truncació.** $T^{(m,\omega)}$ i $T^{\mathrm{ext}(m,\omega)}$ són les
+    projeccions del límit.
+  - **Graduació.** $\mathrm{Gd}^{(\omega)}$ es defineix per la família
+    $\mathrm{Gd}^{(n)}\circ T^{(n,\omega)}$ (`DGdOmega`).
+  - **Unificació.** La família $\mathrm{Uf}^{(n)}\circ T^{\mathrm{ext}(n,\omega)}$
+    només és compatible llevat d'isomorfisme ($\beta$), i la propietat
+    universal demana igualtats. Per això he introduït la *unificació
+    normalitzada* $\widetilde{\mathrm{Uf}}^{(n)}$ (`LNormalForm`, `DNormUnif`,
+    `LNormUnif`): cada cel·la es representa per la seua forma normal,
+    $(k,y)$ amb $y$ una $k$-cel·la no degenerada. Aquesta família sí que és
+    compatible estrictament, i defineix $\mathrm{Uf}^{(\omega)}$ (`DUfOmega`).
+    També explique per què no pot venir d'un derivor (el contraexemple del
+    monoide $\{e,f\}$).
+  - **Discretització.** $\mathrm D^{(\omega,m)}$ i $\mathrm D^{\mathrm{ext}(\omega,m)}$
+    es defineixen per les famílies $F_n$ (discretització si $n\ge m$,
+    truncació si $n\le m$) (`DDiscOmega`).
+  - **Relacions.**
+    - `POmegaGdUf`: $\mathrm{Uf}^{(\omega)}\mathrm{Gd}^{(\omega)}\cong\mathrm{Id}$ i
+      $\mathrm{Gd}^{(\omega)}\mathrm{Uf}^{(\omega)}\cong\mathrm{Id}$; hi ha una
+      equivalència adjunta.
+    - `POmegaDiscTrunc`: $T\circ\mathrm D=\mathrm{Id}$ i $\mathrm D\dashv T$, en
+      les versions compacta i estesa.
+- **Quadrat algebraic (`SAlgSquare`).**
+  - **Nivell $(n,m)$** (`PAlgSquareFinite`, amb diagrama):
+    - $\mathsf C=\mathsf{mCatAlg}$, $\mathsf D=\mathsf{mCat^{ext}Alg}$,
+      $\mathsf C'=\mathsf{nCatAlg}$, $\mathsf D'=\mathsf{nCat^{ext}Alg}$;
+    - horitzontals $\mathrm{Gd}\dashv\mathrm{Uf}$; verticals $\mathrm D\dashv T$;
+    - $\alpha=\mathrm{id}$ (igualtat estricta) i $\beta=\beta^{(m,n)}$.
+  - **Nivell $(\omega,m)$** (`PAlgSquareOmega`):
+    - el mateix amb $\mathsf C'=\omega\mathsf{CatAlg}$ i $\mathsf D'=\omega\mathsf{Cat^{ext}Alg}$;
+    - $\alpha=\mathrm{id}$, per la unicitat de la propietat universal;
+    - $\beta=\nu^{-1}$: cada $m$-cel·la va a la seua forma normal.
+- **Correcció a `DefAlgSquare`.** El text deia «adjunction from
+  $\mathsf D$ to $\mathsf C$», etc. Amb la convenció de `DAdj`, això fa que
+  $F\colon\mathsf D\to\mathsf C$, i aleshores $F'\circ J$ i $H\circ F$ no
+  tipen. El diagrama, en canvi, posa $F\colon\mathsf C\to\mathsf D$, que sí
+  que tipa. He reescrit els quatre ítems indicant explícitament els tipus i
+  quin és l'adjunt esquerre, d'acord amb el diagrama. El document
+  Curry-Howard (Definició 2.1.8) té la mateixa ambigüitat.
+
+## A, C i D: pendents de decisió
+
+No he canviat la teoria dels *generalized ep-derivors*: les respostes a A, C i
+D canvien els fonaments i vull que tries abans. L'anàlisi és al missatge del
+xat; en resum:
+
+- **A.** Es pot eliminar $D_\sigma$ fent que el domini de $\sigma$ a
+  $\mathbf d^\ast_{\mathfrak{gd}}(\mathbf B)$ siga la traducció de
+  $\mathrm{def}^{\mathbf\Sigma}(\sigma)$, i no el domini del terme $d(\sigma)$.
+  Això resol la discretització i també la composició.
+- **C.** La no-associativitat que queda és només sintàctica, en els conjunts
+  $D_s$. Si $D_s$ es guarda tancat per $\mathrm{Cn}$, la categoria és
+  estricta, sense quocient.
+- **D.** No és possible per a la graduació ni per a la unificació. El que es
+  pot fer és definir el functor sobre totes les àlgebres parcials i comprovar
+  que envia models a models.
