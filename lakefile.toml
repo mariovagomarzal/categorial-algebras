@@ -4,7 +4,7 @@ defaultTargets = ["CategorialAlgebras"]
 [[require]]
 name = "stemma"
 git = { url = "https://github.com/stemma-math/stemma", subDir = "lean" }
-rev = "v0.4.0"
+rev = "v0.5.0"
 
 [[require]]
 name = "mathlib"
