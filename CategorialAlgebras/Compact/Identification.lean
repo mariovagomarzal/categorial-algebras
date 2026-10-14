@@ -7,6 +7,16 @@ open Verso.Genre Manual InlineLean Stemma
 
 #doc (Stemma) "Compact categorial algebras as models" =>
 
+Proposition `PCompactIdent` of the draft identifies the compact $`n`-categorial
+$`\Sigma`-algebras with the models of the specification $`\mathcal{C}^{\Sigma^{(n)}}`: a pair
+$`(\mathsf{A}, F)` is read as the partial $`\Sigma^{(n)}`-algebra of its cells, in which the
+$`k`-sources, $`k`-targets and $`k`-compositions of the compact $`n`-categories
+$`\mathsf{A}_s` interpret the symbols $`\mathrm{sc}^{k}_{s}`, $`\mathrm{tg}^{k}_{s}` and
+$`\circ^{k}_{s}`, and the functors $`F_\sigma` the operation symbols of $`\Sigma`. This
+document builds that partial algebra and shows that it is a model of the specification. As the
+specification, it is written once for every preordered set of dimensions $`I`, so that it covers
+$`n \in \mathbb{N}` and $`\omega` at once.
+
 ```lean
 universe u v w
 
@@ -18,6 +28,23 @@ variable {S : Type u} {Sig : Signature.{u, v} S} {Index : Type} [Preorder Index]
 ```
 
 # The partial algebra of cells
+
+:::construction (label := "compact.cell-algebra") (central := false) (title := "The partial algebra of cells")
+Let $`\Sigma` be an $`S`-sorted signature, $`I` a preordered set of dimensions, $`\mathsf{A}`
+an $`S`-sorted compact category with dimensions in $`I`, and $`F` an assignment to every
+operation symbol $`\sigma \in \Sigma_{\mathbf{s}, s}` of a compact functor
+$`F_\sigma \colon \mathsf{A}_{\mathbf{s}} \to \mathsf{A}_s`. The *partial algebra of cells*
+of $`(\mathsf{A}, F)` is the partial algebra of the compact categorial signature with dimensions
+in $`I` whose carrier of sort $`s` is the set $`A_s` of cells of $`\mathsf{A}_s`, and in which,
+for every $`k \in I` and every $`s \in S`,
+
+* $`\sigma` is interpreted as the total operation $`F_\sigma`;
+* $`\mathrm{sc}^{k}_{s}` and $`\mathrm{tg}^{k}_{s}` as the total operations $`\mathrm{sc}^{k}`
+  and $`\mathrm{tg}^{k}` of $`\mathsf{A}_s`;
+* $`\circ^{k}_{s}` as the partial operation $`\#^{k}` of $`\mathsf{A}_s`, defined at
+  $`(x, y)` exactly when $`\mathrm{sc}^{k}(x) = \mathrm{tg}^{k}(y)`.
+
+For $`I = n` this is the identification of Proposition `PCompactIdent` of the draft.
 
 ```lean
 /-- The operations of the partial algebra of cells. -/
@@ -35,7 +62,15 @@ abbrev cellAlgebra (C : S → Type w) [∀ s, Category Index (C s)]
     PartialAlgebra.{u, max u v, w} (CompactSignature Sig Index) where
   carrier := C
   op {ws s} σ := cellOp C F ws s σ
+```
+:::
 
+The proof that it is a model evaluates the terms of the specification: a source, a target or an
+operation of $`\Sigma` applied to terms with known values has the expected value, and a
+composite of two terms with known values $`a` and $`b` is defined exactly when
+$`\mathrm{sc}^{k}(a) = \mathrm{tg}^{k}(b)`.
+
+```lean
 section CellAlgebra
 
 variable {C : S → Type w} [∀ s, Category Index (C s)]
@@ -79,7 +114,16 @@ lemma cell_comp_dom {k : Index} {s : S} {t t' : CTerm Sig Index s} {a b : C s}
     (hd : (EEq.defined (compT k t t')).Holds M val) : sc_is_tg k a b := by
   rw [EEq.holds_defined_iff, cell_eval_compT h h'] at hd
   exact sc_is_tg_of_dom hd
+```
 
+:::proposition (label := "compact.cell-algebra-model") (central := false) (title := "The partial algebra of cells is a model")
+Let $`(\mathsf{A}, F)` be as in Construction `compact.cell-algebra`. Its partial algebra of
+cells satisfies every $`\mathrm{QE}`$-equation of the specification with dimensions in $`I`.
+In particular, for $`I = n`, the partial algebra of cells of a compact $`n`-categorial
+$`\Sigma`-algebra is a model of $`\mathcal{C}^{\Sigma^{(n)}}`; this is one half of the first
+part of Proposition `PCompactIdent` of the draft.
+
+```lean
 open PreCategory Category in
 /-- The partial algebra of cells is a model of the compact specification. -/
 theorem cellAlgebra_holds : ∀ q ∈ compactSpec Sig Index, q.Holds (cellAlgebra C F) := by
@@ -233,6 +277,29 @@ theorem cellAlgebra_holds : ∀ q ∈ compactSpec Sig Index, q.Holds (cellAlgebr
       (cell_eval_compT_some (cell_eval_compT_some ha hc h₃) (cell_eval_compT_some hb hd h₄)
         (Category.sc_tg_j_interchange h h₃ h₄ h₁))]
     exact interchange h h₃ h₄ h₁ h₂
+```
+:::
 
+:::proof (of := "compact.cell-algebra-model")
+Take an axiom and a valuation of its variables in the cells for which its premises hold. Every
+variable then has a value, so every term of the axiom built from sources, targets and
+operations of $`\Sigma` has a value, by the totality of these operations; this gives (A0) and
+(A$`^k`1). A premise stating that $`x \circ^{k} y` is defined says that
+$`\mathrm{sc}^{k}(x) = \mathrm{tg}^{k}(y)`, which is (A$`^k`3) in one direction; conversely,
+this equation makes $`x \#^{k} y` defined. Each remaining axiom, once both sides are evaluated,
+is a law of compact categories or of compact functors:
+
+* (A$`^k`2), (A$`^k`4), (A$`^k`5) and (A$`^k`6) are the axioms of the compact category
+  $`\mathsf{A}_s` in dimension $`k`; for (A$`^k`6), both composites are defined because
+  $`x \#^{k} y` and $`y \#^{k} z` are;
+* (A$`^k`7) and (A$`^k`8) say that $`F_\sigma` preserves $`k`-sources, $`k`-targets and
+  $`k`-composites; in (A$`^k`8), the composite $`F_\sigma((x_j)_j) \#^{k} F_\sigma((y_j)_j)` is
+  defined because the family $`(x_j)_j` is $`k`-composable with $`(y_j)_j` in the product
+  $`\mathsf{A}_{\mathbf{s}}`, componentwise;
+* (AB$`^{l,k}`1), (AB$`^{l,k}`2) and (AB$`^{l,k}`3) are the laws that relate dimensions
+  $`l < k` in $`\mathsf{A}_s`, the last one being the interchange law.
+:::
+
+```lean
 end CellAlgebra
 ```
