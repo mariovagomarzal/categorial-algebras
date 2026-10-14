@@ -584,7 +584,7 @@ theorem holds : ∀ q ∈ Compact.compactSpec Sig (Fin n), q.Holds (D n M) := by
 end Disc
 ```
 
-:::proposition (label := "discretization-models") (central := false) (title := "Compact discretization sends models to models")
+:::proposition (label := "discretization-models") (central := true) (title := "Compact discretization sends models to models")
 $`(\boldsymbol{\delta}^{(n,m)})^{\ast}_{\mathfrak{gd}}` sends the models of
 $`(\mathbf{\Sigma}^{(m)}, \mathcal{C}^{\Sigma^{(m)}})` to models of
 $`(\mathbf{\Sigma}^{(n)}, \mathcal{C}^{\Sigma^{(n)}})`. Moreover, if $`m < n`, every cell of the
@@ -988,7 +988,7 @@ end Trunc
 end CompactTrunc
 ```
 
-:::proposition (label := "truncation-models") (central := false) (title := "Compact truncation sends models to models")
+:::proposition (label := "truncation-models") (central := true) (title := "Compact truncation sends models to models")
 Let $`m \leq n`. $`(\boldsymbol{\tau}^{(m,n)})^{\ast}_{\mathfrak{gd}}` sends the models of
 $`(\mathbf{\Sigma}^{(n)}, \mathcal{C}^{\Sigma^{(n)}})` to models of
 $`(\mathbf{\Sigma}^{(m)}, \mathcal{C}^{\Sigma^{(m)}})`.
@@ -1401,7 +1401,7 @@ end TruncExt
 end ExtTrunc
 ```
 
-:::proposition (label := "truncation-ext-models") (central := false) (title := "Extended truncation sends models to models")
+:::proposition (label := "truncation-ext-models") (central := true) (title := "Extended truncation sends models to models")
 Let $`m \leq n`. $`(\boldsymbol{\tau}^{\mathrm{ext}(m,n)})^{\ast}_{\mathfrak{gd}}` sends the models of
 $`(\mathbf{\Sigma}^{\mathrm{ext}(n)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})` to models of
 $`(\mathbf{\Sigma}^{\mathrm{ext}(m)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(m)}})`.
@@ -2209,7 +2209,7 @@ theorem holds : ∀ q ∈ Extended.extendedSpec Sig (Fin (n + 1)), q.Holds (DE n
 end DiscExt
 ```
 
-:::proposition (label := "discretization-ext-models") (central := false) (title := "Extended discretization sends models to models")
+:::proposition (label := "discretization-ext-models") (central := true) (title := "Extended discretization sends models to models")
 $`(\boldsymbol{\delta}^{\mathrm{ext}(n,m)})^{\ast}_{\mathfrak{gd}}` sends the models of
 $`(\mathbf{\Sigma}^{\mathrm{ext}(m)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(m)}})` to models of
 $`(\mathbf{\Sigma}^{\mathrm{ext}(n)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})`.
@@ -2535,7 +2535,7 @@ lemma tdCounit_map (B : EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin n))
 end TruncDisc
 ```
 
-:::proposition (label := "discretization-truncation-adjunction") (central := false) (title := "Discretization is left adjoint to truncation")
+:::proposition (label := "discretization-truncation-adjunction") (central := true) (title := "Discretization is left adjoint to truncation")
 Let $`m \leq n`. $`\mathrm{D}^{(n,m)} \dashv T^{(m,n)}`, with unit the isomorphism of Proposition
 `truncation-discretization` and counit $`\varepsilon_{\mathbf{B}} \colon
 \mathrm{D}^{(n,m)}(T^{(m,n)}(\mathbf{B})) \to \mathbf{B}` the inclusion of the $`m`-cells.
@@ -3192,7 +3192,7 @@ lemma tpD_val {Am : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (m + 1))} {t t' : F
 end ExtCounitHom₂
 ```
 
-:::proposition (label := "discretization-truncation-ext-adjunction") (central := false) (title := "Extended discretization is left adjoint to extended truncation")
+:::proposition (label := "discretization-truncation-ext-adjunction") (central := true) (title := "Extended discretization is left adjoint to extended truncation")
 Let $`m \leq n`. $`\mathrm{D}^{\mathrm{ext}(n,m)} \dashv T^{\mathrm{ext}(m,n)}`, with unit the isomorphism
 of Proposition `truncation-discretization-ext` and counit $`\varepsilon^{\mathrm{ext}}` whose component
 at the sort $`(k, s)` is the identity if $`k \leq m` and $`\mathrm{i}^{(k,m)}_{s}` if $`k > m`.
