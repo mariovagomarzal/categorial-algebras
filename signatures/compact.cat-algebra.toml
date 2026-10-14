@@ -2,13 +2,13 @@ label = "compact.cat-algebra"
 kind = "definition"
 central = true
 
-signer = "encosllo"
-signed = 2026-10-08T12:10:41Z
+signer = "ruizmoraraul"
+signed = 2026-10-14T13:03:20Z
 agent = "claude-opus-5-5"
 
 [fingerprints]
 version = 1
-prose = "sha256:a88d13ebb0f32c98848707c5614ee2db02c0b8e4780eebaaf9c0680579c8fb59"
+prose = "sha256:c7d1a02662071c0fb78a742da38c4ebabf104e0bb8771f70108cab1dfff69742"
 formal = "sha256:86c118b0ce07402182e7ff35019dc91dddbe403d981dc44fa99fad79a2117871"
 
 [closure]

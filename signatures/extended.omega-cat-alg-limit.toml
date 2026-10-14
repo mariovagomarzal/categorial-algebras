@@ -2,12 +2,13 @@ label = "extended.omega-cat-alg-limit"
 kind = "statement"
 central = true
 
-signer = "encosllo"
-signed = 2026-10-08T13:12:45Z
+signer = "ruizmoraraul"
+signed = 2026-10-14T13:03:20Z
+agent = "claude-opus-5-5"
 
 [fingerprints]
 version = 1
-prose = "sha256:e1818b118da6137362052db6f1ada8ef630f539fe4120043dd9de51feb35588f"
+prose = "sha256:40cec03ee9176cc5b85708784cd360561e4d88b4151175410d6198f9b777274c"
 formal = "sha256:d40aa87cd7d524ab81d6e5b8c8e25d9822cfa90e9ea991efd57ed5e04eeb07dd"
 
 [closure]
