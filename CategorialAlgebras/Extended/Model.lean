@@ -28,6 +28,18 @@ def liftFam {A : Index × S → Type w} (k : Index) {ws : List S} (a : ∀ p : F
     Arity A (ws.map fun t => (k, t)) :=
   fun q => cast (congrArg A (by simp)) (a (Fin.cast (by simp) q))
 
+omit [Preorder Index] in
+/-- Every family of the arity of `σ_k` is a lifted family. -/
+lemma liftFam_unlift {A : Index × S → Type w} (k : Index) {ws : List S}
+    (a : Arity A (ws.map fun t => (k, t))) :
+    liftFam k (fun p => cast (congrArg A (by simp)) (a (Fin.cast (by simp) p))) = a := by
+  funext q
+  simp only [liftFam, cast_cast]
+  have key : ∀ q' (e : q' = q) (h : A ((ws.map fun t => (k, t)).get q') =
+      A ((ws.map fun t => (k, t)).get q)), cast h (a q') = a q := by
+    rintro _ rfl _; rfl
+  exact key _ (Fin.ext rfl) _
+
 lemma eval_cast {A : PartialAlgebra.{u, max u v, w} (ExtendedSignature Sig Index)}
     {val : ∀ t, EVar S Index t → Part (A t)} {t t' : Index × S} (e : t = t')
     (r : ETerm Sig Index t) (b : A t) (h : r.eval A val = Part.some b) :
@@ -214,6 +226,11 @@ lemma op_dom (k : Index) {ws : List S} {s : S} (σ : Sig ws s) (a : ∀ p, M.1 (
       exact ⟨p, rfl⟩)
     (by simp)
   rwa [EEq.holds_defined_iff, eval_opT k σ (eval_ptsFam M a)] at this
+
+/-- (EA0) for any family of the arity of `σ_k`. -/
+lemma op_dom' (k : Index) {ws : List S} {s : S} (σ : Sig ws s)
+    (a : Arity M.1 (ws.map fun t => (k, t))) : (M.1.op (.op k σ) a).Dom := by
+  rw [← liftFam_unlift k a]; exact op_dom k σ _
 
 /-! ## The operations -/
 
