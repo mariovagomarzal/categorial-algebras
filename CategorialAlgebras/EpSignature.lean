@@ -247,6 +247,10 @@ def cnClosure : ClosureOperator (Set (EEq Sp.sg.sig (Vars κ))) :=
     (fun _ e he A _ a ha => ha e he)
     (fun _ _ he A hA a ha => he A hA a fun _ he' => he' A hA a ha)
 
+theorem cn_cn (H : Set (EEq Sp.sg.sig (Vars κ))) :
+    Cn.{u, v, w} Sp κ (Cn.{u, v, w} Sp κ H) = Cn.{u, v, w} Sp κ H :=
+  (cnClosure.{u, v, w} Sp κ).idempotent H
+
 theorem holdsAll_cn_iff {H : Set (EEq Sp.sg.sig (Vars κ))} {A : PartialAlgebra.{u, v, w} Sp.sg.sig}
     (hA : Sp.IsModel A) (a : ∀ i, A (κ i)) :
     EEq.HoldsAll A (famVal a) (Cn.{u, v, w} Sp κ H) ↔ EEq.HoldsAll A (famVal a) H :=

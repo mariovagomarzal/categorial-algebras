@@ -128,6 +128,17 @@ lemma EEq.holds_map_of_agree (hf : ∀ s, Function.Injective (f s)) (O : Set (Op
   · rintro ⟨h1, h2, heq⟩
     exact ⟨h1, h2, congrArg (f _) heq⟩
 
+lemma EEq.holdsAll_famVal_map_of_agree (hf : ∀ s, Function.Injective (f s))
+    (hO : ∀ τ : Op Sig, ∀ a : Arity A τ.ws,
+      A'.op τ.σ (fun j => f _ (a j)) = (A.op τ.σ a).map (f τ.s))
+    {I : Type} {κ : I → S} (a : ∀ i, A (κ i)) (H : Set (EEq Sig (Vars κ))) :
+    EEq.HoldsAll A' (famVal fun i => f _ (a i)) H ↔ EEq.HoldsAll A (famVal a) H := by
+  rw [← famVal_map]
+  exact ⟨fun h e he => (EEq.holds_map_of_agree f hf Set.univ (fun τ _ => hO τ) _ e
+      (Set.subset_univ _)).mp (h e he),
+    fun h e he => (EEq.holds_map_of_agree f hf Set.univ (fun τ _ => hO τ) _ e
+      (Set.subset_univ _)).mpr (h e he)⟩
+
 end Agree
 
 /-- Two partial algebras of an ep-signature, related by injective mappings, have the same
@@ -512,6 +523,49 @@ end GenEpDerivor
 ```
 :::
 
+```lean
+namespace GenEpDerivor
+
+variable {Sg : EpSignature.{u, v} S} {Lg : EpSignature.{u, v} T} {Og : EpSignature.{u, v} U}
+
+lemma mk_eq {φ : S → T} {D D' : ∀ s, Set (EEq Lg.sig (Vars fun _ : Unit => φ s))}
+    {d d' : ∀ {ws : List S} {s : S}, Sg.sig ws s → Term Lg.sig (Vars (φ ∘ ws.get)) (φ s)}
+    (hD : D = D') (hd : ∀ {ws : List S} {s : S} (σ : Sg.sig ws s), d σ = d' σ) :
+    (⟨φ, D, d⟩ : GenEpDerivor Sg Lg) = ⟨φ, D', d'⟩ := by
+  subst hD
+  have : @d = @d' := by funext ws s σ; exact hd σ
+  subst this
+  rfl
+
+lemma comp_isClosed (ε : GenEpDerivor Lg Og) (δ : GenEpDerivor Sg Lg) :
+    (ε.comp.{u, v, w} δ).IsClosed.{u, v, w} :=
+  fun _ => EpSpec.cn_cn.{u, v, w} Og.toSpec _ _
+
+lemma id_isClosed : (GenEpDerivor.id.{u, v, w} Sg).IsClosed.{u, v, w} :=
+  fun _ => EpSpec.cn_cn.{u, v, w} Sg.toSpec _ _
+
+/-- `(𝐞 ∘ 𝐝)*(𝐂)` and `𝐝*(𝐞*(𝐂))` satisfy the same existence equations. -/
+lemma holdsAll_comp_derived_iff {ε : GenEpDerivor Lg Og} {δ : GenEpDerivor Sg Lg}
+    {C : PartialAlgebra.{u, v, w} Og.sig} (hC : Og.IsAlgebra C)
+    (hA : Sg.IsAlgebra (δ.derived (ε.derived C))) {I : Type} {κ : I → S}
+    (z : ∀ i, δ.derived (ε.derived C) (κ i)) (H : Set (EEq Sg.sig (Vars κ))) :
+    EEq.HoldsAll ((ε.comp.{u, v, w} δ).derived C) (famVal fun i => toComp hC _ (z i)) H ↔
+      EEq.HoldsAll (δ.derived (ε.derived C)) (famVal z) H :=
+  EEq.holdsAll_famVal_map_of_agree (toComp hC) (toComp_injective hC)
+    (fun τ a => comp_op_agree hC hA τ a) z H
+
+/-- `(id_𝚺)*(𝐀)` and `𝐀` satisfy the same existence equations. -/
+lemma holdsAll_id_derived_iff {A : PartialAlgebra.{u, v, w} Sg.sig} (hA : Sg.IsAlgebra A)
+    {I : Type} {κ : I → S} (z : ∀ i, (GenEpDerivor.id.{u, v, w} Sg).derived A (κ i))
+    (H : Set (EEq Sg.sig (Vars κ))) :
+    EEq.HoldsAll A (famVal fun i => (z i).1) H ↔
+      EEq.HoldsAll ((GenEpDerivor.id.{u, v, w} Sg).derived A) (famVal z) H :=
+  EEq.holdsAll_famVal_map_of_agree (A := (GenEpDerivor.id.{u, v, w} Sg).derived A)
+    (fun _ x => x.1) (fun _ _ _ hxy => Subtype.ext hxy) (fun τ a => id_op_agree hA τ a) z H
+
+end GenEpDerivor
+```
+
 :::proposition (label := "ep-sig-gd") (central := false) (title := "The category epSig_𝔤𝔡")
 The ep-signatures, as objects, and the closed generalized ep-derivors that send algebras to
 algebras, as morphisms, with the composites and identities of Definition `gen-ep-comp`, form a
@@ -540,13 +594,70 @@ structure Hom (X Y : EpSigGd.{u, v, w}) where
   /-- It sends algebras to algebras. -/
   sends : der.SendsModels.{u, v, u, v, w} X.sg.toSpec.eqs Y.sg.toSpec.eqs
 
+lemma Hom.ext {X Y : EpSigGd.{u, v, w}} {f g : Hom X Y} (h : f.der = g.der) : f = g := by
+  cases f; cases g; cases h; rfl
+
 noncomputable instance category : Category.{max u v} EpSigGd.{u, v, w} where
   Hom := Hom
-  id X := ⟨GenEpDerivor.id.{u, v, w} X.sg, by sorry, GenEpDerivor.id_sendsModels⟩
-  comp f g := ⟨g.der.comp.{u, v, w} f.der, by sorry, GenEpDerivor.comp_sendsModels g.sends f.sends⟩
-  id_comp := by sorry
-  comp_id := by sorry
-  assoc := by sorry
+  id X := ⟨GenEpDerivor.id.{u, v, w} X.sg, GenEpDerivor.id_isClosed, GenEpDerivor.id_sendsModels⟩
+  comp f g := ⟨g.der.comp.{u, v, w} f.der, GenEpDerivor.comp_isClosed _ _,
+    GenEpDerivor.comp_sendsModels g.sends f.sends⟩
+  id_comp {X Y} f := by
+    apply Hom.ext
+    obtain ⟨⟨φ, D, d⟩, hcl, hs⟩ := f
+    show GenEpDerivor.comp.{u, v, w} ⟨φ, D, d⟩ (GenEpDerivor.id.{u, v, w} X.sg) = ⟨φ, D, d⟩
+    refine GenEpDerivor.mk_eq ?_ fun σ => Derivor.lift_app_vars ⟨φ, d⟩ σ
+    funext s
+    refine EpSpec.eq_of_isClosed.{u, v, w} Y.sg.toSpec (fun _ : Unit => φ s)
+      (EpSpec.cn_cn _ _ _) (hcl s) fun C hC a => ?_
+    refine (EpSpec.holdsAll_cn_iff _ _ hC _).trans (EEq.holdsAll_union.trans ?_)
+    refine ⟨fun h => h.1, fun hD => ⟨hD, ?_⟩⟩
+    have hX := hs C hC
+    exact (GenEpDerivor.holdsAll_derived_iff (δ := (⟨φ, D, d⟩ : GenEpDerivor X.sg Y.sg)) (B := C)
+      (fun _ : Unit => ⟨a (), hD⟩) _).mp
+      ((EpSpec.holdsAll_cn_iff X.sg.toSpec _ hX _).mpr EEq.holdsAll_empty)
+  comp_id {X Y} f := by
+    apply Hom.ext
+    obtain ⟨⟨φ, D, d⟩, hcl, hs⟩ := f
+    show GenEpDerivor.comp.{u, v, w} (GenEpDerivor.id.{u, v, w} Y.sg) ⟨φ, D, d⟩ = ⟨φ, D, d⟩
+    refine GenEpDerivor.mk_eq ?_ fun σ => Derivor.lift_id (d σ)
+    funext s
+    refine EpSpec.eq_of_isClosed.{u, v, w} Y.sg.toSpec (fun _ : Unit => φ s)
+      (EpSpec.cn_cn _ _ _) (hcl s) fun C hC a => ?_
+    refine (EpSpec.holdsAll_cn_iff _ _ hC _).trans (EEq.holdsAll_union.trans ?_)
+    have hcell := GenEpDerivor.id_cells hC.1 (a ())
+    have key := (GenEpDerivor.holdsAll_id_derived_iff hC.1
+      (fun _ : Unit => (⟨a (), hcell⟩ : (GenEpDerivor.id.{u, v, w} Y.sg).derived C (φ s))) (D s)).trans
+      (GenEpDerivor.holdsAll_derived_iff (δ := GenEpDerivor.id.{u, v, w} Y.sg) (B := C)
+        (fun _ : Unit => (⟨a (), hcell⟩ : (GenEpDerivor.id.{u, v, w} Y.sg).derived C (φ s))) (D s))
+    exact ⟨fun h => key.mpr h.2, fun h => ⟨hcell, key.mp h⟩⟩
+  assoc {X Y Z W} f g h := by
+    apply Hom.ext
+    show GenEpDerivor.comp.{u, v, w} h.der (GenEpDerivor.comp.{u, v, w} g.der f.der) =
+      GenEpDerivor.comp.{u, v, w} (GenEpDerivor.comp.{u, v, w} h.der g.der) f.der
+    refine GenEpDerivor.mk_eq ?_ fun σ =>
+      (Derivor.lift_comp h.der.toDerivor g.der.toDerivor (f.der.op σ)).symm
+    funext s
+    refine EpSpec.eq_of_isClosed.{u, v, w} W.sg.toSpec _ (EpSpec.cn_cn _ _ _)
+      (EpSpec.cn_cn _ _ _) fun C hC a => ?_
+    have hZ := h.sends C hC
+    have hY := g.sends _ hZ
+    refine (GenEpDerivor.comp_cells_iff (ε := h.der) (δ := g.der.comp.{u, v, w} f.der)
+      hC.1 (a ())).trans (Iff.trans ?_ (GenEpDerivor.comp_cells_iff
+        (ε := h.der.comp.{u, v, w} g.der) (δ := f.der) hC.1 (a ())).symm)
+    constructor
+    · rintro ⟨hζ, hεδ⟩
+      obtain ⟨hε, hδ⟩ := (GenEpDerivor.comp_cells_iff hZ.1 _).mp hεδ
+      exact ⟨(GenEpDerivor.comp_cells_iff (ε := h.der) (δ := g.der) (s := f.der.sortMap s)
+          hC.1 _).mpr ⟨hζ, hε⟩,
+        (GenEpDerivor.holdsAll_comp_derived_iff hC.1 hY.1
+          (fun _ : Unit => ⟨⟨a (), hζ⟩, hε⟩) _).mpr hδ⟩
+    · rintro ⟨h1, h2⟩
+      obtain ⟨hζ, hε⟩ := (GenEpDerivor.comp_cells_iff (ε := h.der) (δ := g.der)
+        (s := f.der.sortMap s) hC.1 _).mp h1
+      exact ⟨hζ, (GenEpDerivor.comp_cells_iff hZ.1 _).mpr ⟨hε,
+        (GenEpDerivor.holdsAll_comp_derived_iff hC.1 hY.1
+          (fun _ : Unit => ⟨⟨a (), hζ⟩, hε⟩) _).mp h2⟩⟩
 
 end EpSigGd
 ```
