@@ -5,7 +5,7 @@ import CategorialAlgebras.Compact.Tower
 
 open Verso.Genre Manual InlineLean Stemma
 
-#doc (Stemma) "ωCatAlg(Σ) as a pseudo-limit" =>
+#doc (Stemma) "Compact ω-categorial algebras as a pseudo-limit" =>
 
 Proposition `PUnivPropCatAlg` of the draft states that $`\omega\mathsf{CatAlg}(\Sigma)`, with the
 truncation functors $`T^{(n,\omega)}_{\Sigma}`, is the projective limit of the categories
@@ -46,11 +46,15 @@ $`(\boldsymbol{\mathsf{B}}_n, \psi_n)` is a family of homomorphisms
 $`H_n \colon \boldsymbol{\mathsf{A}}_n \to \boldsymbol{\mathsf{B}}_n` such that
 $`\psi_n \circ T^{(n,n+1)}_{\Sigma}(H_{n+1}) = H_n \circ \varphi_n` for every $`n`. With the
 levelwise composition and identities, compatible families form a category, the pseudo-limit of the
-categories $`\mathsf{nCatAlg}(\Sigma)` along the truncation functors.
+categories $`\mathsf{nCatAlg}(\Sigma)` along the truncation functors. The index $`n` is the
+*level* of $`\boldsymbol{\mathsf{A}}_n` in the family.
 
 In the draft, a compatible family is one with
 $`T^{(m,n)}_{\Sigma}(\boldsymbol{\mathsf{A}}_n) = \boldsymbol{\mathsf{A}}_m`, and a morphism one with
 $`T^{(m,n)}_{\Sigma}(H_n) = H_m`; here the equalities are replaced by the isomorphisms $`\varphi_n`.
+In the extended (globular) presentation the truncations compose strictly, and the compatible
+families of the document on extended $`\omega`-categorial algebras as a projective limit keep the
+equalities of the draft.
 
 ```lean
 structure CompatibleFamily where
@@ -112,7 +116,8 @@ def truncFamilies : OmegaCatAlgebra.{u, v, w} Sig ⥤ CompatibleFamily.{u, v, w}
 # Homomorphisms
 
 Every cell of a compact $`\omega`-categorial algebra is a $`k`-cell for some $`k`, and then it lies
-in all the truncations from level $`k` on. A morphism $`(H_n)_n` between the families of
+in all the truncations from level $`k` on: in the compact (single-set) presentation, a cell lies at
+level $`n`, that is, in $`T^{(n,\omega)}_{\Sigma}`, exactly when it is an $`n`-cell. A morphism $`(H_n)_n` between the families of
 truncations of $`\boldsymbol{\mathsf{A}}` and $`\boldsymbol{\mathsf{B}}` thus gives a value at every
 cell $`x`, by computing $`H_n(x)` at any level $`n` at which $`x` lies; the compatibility of the
 $`H_n` with the isomorphisms of the families says that $`H_{n+1}(x) = H_n(x)`, so the value does not
@@ -409,7 +414,7 @@ lemma exists_cls_arity_ge {ws : List S} (z : Arity F.L ws) :
 The *limit* of a compatible family is the compact $`\omega`-categorial $`\Sigma`-algebra whose cells
 of sort $`s` are those of the limit of the tower of sort $`s`, and in which every
 $`\sigma \in \Sigma_{\mathbf{s}, s}` acts on a family of cells by acting at a common level. This
-is a compact $`\omega`-functor because, at every level, $`\sigma` is a compact functor. This is the
+is a compact $`\omega`-functor because, at every level $`n`, $`\sigma` is a compact $`n`-functor. This is the
 limit $`\varprojlim_n \boldsymbol{\mathsf{A}}_n` of the proof of Proposition `PUnivPropCatAlg` of
 the draft.
 
@@ -471,9 +476,9 @@ noncomputable def limAlgebra : OmegaCatAlgebra.{u, v, w} Sig where
 
 # The family of truncations of the limit
 
-The cells of $`\boldsymbol{\mathsf{A}}_n` are exactly the cells of the limit that are $`u`-cells for
-every $`u \geq n`: they are $`n`-cells, being $`n`-cells of $`\boldsymbol{\mathsf{A}}_{n+1}`, and a
-cell of a higher level that is a $`u`-cell for $`n \leq u` comes down to level $`n`. Sending a cell
+The cells of $`\boldsymbol{\mathsf{A}}_n` are exactly the $`n`-cells of the limit: they are
+$`n`-cells, being $`n`-cells of $`\boldsymbol{\mathsf{A}}_{n+1}`, and an $`n`-cell of a higher
+level comes down to level $`n`. Sending a cell
 of $`\boldsymbol{\mathsf{A}}_n` to itself in the limit is thus a homomorphism from
 $`\boldsymbol{\mathsf{A}}_n` to the $`n`-truncation of the limit, bijective at every sort; and a
 homomorphism of compact $`n`-categorial algebras that is bijective at every sort is an isomorphism,
