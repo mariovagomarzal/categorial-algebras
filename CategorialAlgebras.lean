@@ -9,6 +9,7 @@ import CategorialAlgebras.EpSignature
 import CategorialAlgebras.GenEpDerivor
 import CategorialAlgebras.GenEpComposition
 import CategorialAlgebras.CategorialEp
+import CategorialAlgebras.Graduation
 import CategorialAlgebras.Compact.Category
 import CategorialAlgebras.Compact.Functor
 import CategorialAlgebras.Compact.Product
