@@ -1,4 +1,5 @@
 import Stemma
+import Mathlib.Data.Fin.VecNotation
 import CategorialAlgebras.Evaluation
 import CategorialAlgebras.Compact.Specification
 import CategorialAlgebras.Compact.OmegaAlgebra
@@ -13,7 +14,8 @@ $`(\mathsf{A}, F)` is read as the partial $`\Sigma^{(n)}`-algebra of its cells, 
 $`k`-sources, $`k`-targets and $`k`-compositions of the compact $`n`-categories
 $`\mathsf{A}_s` interpret the symbols $`\mathrm{sc}^{k}_{s}`, $`\mathrm{tg}^{k}_{s}` and
 $`\circ^{k}_{s}`, and the functors $`F_\sigma` the operation symbols of $`\Sigma`. This
-document builds that partial algebra and shows that it is a model of the specification. As the
+document builds that partial algebra, shows that it is a model of the specification, and shows
+that every model of the specification arises in this way. As the
 specification, it is written once for every preordered set of dimensions $`I`, so that it covers
 $`n \in \mathbb{N}` and $`\omega` at once.
 
@@ -303,3 +305,478 @@ is a law of compact categories or of compact functors:
 ```lean
 end CellAlgebra
 ```
+
+# From models to compact categorial algebras
+
+Conversely, every model of the specification is the partial algebra of cells of a compact
+categorial algebra: the structure of the categorial algebra is read off from the
+operations of the model. Let $`\mathbf{M}` be a model of the specification with dimensions in
+$`I`. By (A$`^k`1) and (A0), the $`k`-sources, the $`k`-targets and the operations of
+$`\Sigma` are total in $`\mathbf{M}`, and by (A$`^k`3) the composite $`x \circ^{k}_{s} y` is
+defined exactly when $`\mathrm{sc}^{k}_{s}(x) = \mathrm{tg}^{k}_{s}(y)`. Each law of compact
+categories and of compact functors is then an axiom of the specification, evaluated at the
+cells it speaks about.
+
+To evaluate an axiom at given cells, the variables $`x_0, \ldots, x_{m-1}` of the axiom are sent
+to them, and the other variables are left without value: since the valuations of the library
+are partial, this works even when some sort of $`\mathbf{M}` is empty.
+
+```lean
+section Model
+
+variable (M : CompactPAlg.{u, v, w} Sig Index)
+
+/-- Every axiom of the specification holds in a model, under a valuation of finitely many
+variables that covers its variables. -/
+lemma model_holds {q : QEEq (CompactSignature Sig Index) (Var S)} (hq : CompactAxiom Sig Index q)
+    {ι : Type} {pts : ι → Σ t, Var S t} (a : ∀ i, M.1 (pts i).1)
+    (hvars : q.vars ⊆ Set.range pts)
+    (hprem : ∀ e ∈ q.premises, e.Holds M.1 (assign pts a)) :
+    q.conclusion.Holds M.1 (assign pts a) :=
+  M.2 q hq _ (fun _ hx => (assign_dom a).mpr (hvars hx)) hprem
+
+lemma injective_of_snd {ι : Type} {pts : ι → Σ t, Var S t}
+    (h : Function.Injective fun i => ((pts i).2 : ℕ)) : Function.Injective pts :=
+  fun _ _ e => h (congrArg (fun y : Σ t, Var S t => (y.2 : ℕ)) e)
+
+lemma eval_assign {ι : Type} {pts : ι → Σ t, Var S t} (hinj : Function.Injective pts)
+    (a : ∀ i, M.1 (pts i).1) (i : ι) :
+    (x (Sig := Sig) (Index := Index) (s := (pts i).1) (pts i).2).eval M.1 (assign pts a) =
+      Part.some (a i) := by
+  simp only [x, eval_var]; exact assign_apply a hinj i
+
+/-- The variables `x_0, …, x_{m-1}` of sort `s`. -/
+def ptsOf (s : S) (m : ℕ) : Fin m → Σ t, Var S t := fun i => ⟨s, i.val⟩
+
+lemma ptsOf_injective (s : S) (m : ℕ) : Function.Injective (ptsOf s m) :=
+  injective_of_snd fun _ _ h => Fin.ext h
+
+lemma mem_range_ptsOf {s : S} {m : ℕ} {y : Σ t, Var S t} :
+    y ∈ Set.range (ptsOf s m) ↔ y.1 = s ∧ (y.2 : ℕ) < m := by
+  obtain ⟨t, i⟩ := y
+  constructor
+  · rintro ⟨j, hj⟩; cases hj; exact ⟨rfl, j.2⟩
+  · rintro ⟨rfl, h⟩; exact ⟨⟨i, h⟩, rfl⟩
+
+lemma eval_ptsOf {s : S} {m : ℕ} (a : Fin m → M.1 s) (i : ℕ) (h : i < m) :
+    (x (Sig := Sig) (Index := Index) (s := s) i).eval M.1 (assign (ptsOf s m) a) =
+      Part.some (a ⟨i, h⟩) :=
+  eval_assign M (ptsOf_injective s m) a ⟨i, h⟩
+
+lemma eval_ptsOf' {s : S} {m : ℕ} (a : Fin m → M.1 s) (i : ℕ) (h : i < m) {b : M.1 s}
+    (hb : a ⟨i, h⟩ = b) :
+    (x (Sig := Sig) (Index := Index) (s := s) i).eval M.1 (assign (ptsOf s m) a) =
+      Part.some b :=
+  hb ▸ eval_ptsOf M a i h
+
+/-- The variables `x_j` of sort `s_j`, for a word `s`. -/
+def ptsFam (ws : List S) : Fin ws.length → Σ t, Var S t := fun j => ⟨ws.get j, j.val⟩
+
+lemma ptsFam_injective (ws : List S) : Function.Injective (ptsFam ws) :=
+  injective_of_snd fun _ _ h => Fin.ext h
+
+/-- The variables `x_{2j}` and `x_{2j+1}` of sort `s_j`, for a word `s`. -/
+def ptsFam₂ (ws : List S) : Fin ws.length ⊕ Fin ws.length → Σ t, Var S t :=
+  Sum.elim (fun j => ⟨ws.get j, 2 * j.val⟩) (fun j => ⟨ws.get j, 2 * j.val + 1⟩)
+
+lemma ptsFam₂_injective (ws : List S) : Function.Injective (ptsFam₂ ws) := by
+  refine injective_of_snd ?_
+  rintro (i | i) (j | j) h <;> simp only [ptsFam₂, Sum.elim_inl, Sum.elim_inr] at h
+  · exact congrArg Sum.inl (Fin.ext (by omega))
+  · omega
+  · omega
+  · exact congrArg Sum.inr (Fin.ext (by omega))
+
+/-- The families `a` and `b` as values of `x_{2j}` and `x_{2j+1}`. -/
+def vals₂ {ws : List S} (a b : Arity M.1 ws) : ∀ i, M.1 (ptsFam₂ ws i).1
+  | .inl j => a j
+  | .inr j => b j
+
+end Model
+
+/-- The variables of an axiom with variables `x_0, …, x_{m-1}` of sort `s`. -/
+local macro "model_vars" : tactic => `(tactic| (
+  rintro ⟨t, i⟩ hy
+  rw [mem_range_ptsOf]
+  simp [QEEq.vars, EEq.vars, EEq.mk', EEq.defined, scT, tgT, compT, opT, x] at hy
+  aesop))
+
+section Model
+
+variable {M : CompactPAlg.{u, v, w} Sig Index}
+
+lemma sc_dom (k : Index) {s : S} (a : M.1 s) :
+    (M.1.op (.sc k s) (fun | ⟨0, _⟩ => a)).Dom := by
+  have := model_holds M (.A1_sc k s 0) (pts := ptsOf s 1) (fun _ => a) (by model_vars) (by simp)
+  rwa [EEq.holds_defined_iff, scT, eval_app₁_of_eq_some _ _ _ (eval_ptsOf M _ 0 (by omega))] at this
+
+lemma tg_dom (k : Index) {s : S} (a : M.1 s) :
+    (M.1.op (.tg k s) (fun | ⟨0, _⟩ => a)).Dom := by
+  have := model_holds M (.A1_tg k s 0) (pts := ptsOf s 1) (fun _ => a) (by model_vars) (by simp)
+  rwa [EEq.holds_defined_iff, tgT, eval_app₁_of_eq_some _ _ _ (eval_ptsOf M _ 0 (by omega))] at this
+
+lemma op_dom {ws : List S} {s : S} (σ : Sig ws s) (a : Arity M.1 ws) :
+    (M.1.op (.op σ) a).Dom := by
+  have := model_holds M (.A0 σ fun j => j.val) (pts := ptsFam ws) a
+    (by
+      rintro y hy
+      simp [QEEq.vars, EEq.vars, EEq.defined, opT, x] at hy
+      obtain ⟨j, rfl⟩ := hy
+      exact ⟨j, rfl⟩)
+    (by simp)
+  rwa [EEq.holds_defined_iff, opT, eval_app_of_eq_some M.1 _ (.op σ) (ts := fun j => x (j : ℕ))
+    fun j => eval_assign M (ptsFam_injective ws) a j] at this
+
+variable (M) in
+/-- The `k`-source of a model. -/
+def msc (k : Index) {s : S} (a : M.1 s) : M.1 s :=
+  (M.1.op (.sc k s) (fun | ⟨0, _⟩ => a)).get (sc_dom k a)
+
+variable (M) in
+/-- The `k`-target of a model. -/
+def mtg (k : Index) {s : S} (a : M.1 s) : M.1 s :=
+  (M.1.op (.tg k s) (fun | ⟨0, _⟩ => a)).get (tg_dom k a)
+
+variable (M) in
+/-- The operation of `σ` in a model. -/
+def mop {ws : List S} {s : S} (σ : Sig ws s) (a : Arity M.1 ws) : M.1 s :=
+  (M.1.op (.op σ) a).get (op_dom σ a)
+
+variable {val : ∀ s, Var S s → Part (M.1 s)}
+
+lemma meval_scT {k : Index} {s : S} {t : CTerm Sig Index s} {a : M.1 s}
+    (h : t.eval M.1 val = Part.some a) : (scT k t).eval M.1 val = Part.some (msc M k a) := by
+  rw [scT, eval_app₁_of_eq_some _ _ _ h]; exact (Part.some_get _).symm
+
+lemma meval_tgT {k : Index} {s : S} {t : CTerm Sig Index s} {a : M.1 s}
+    (h : t.eval M.1 val = Part.some a) : (tgT k t).eval M.1 val = Part.some (mtg M k a) := by
+  rw [tgT, eval_app₁_of_eq_some _ _ _ h]; exact (Part.some_get _).symm
+
+lemma meval_compT {k : Index} {s : S} {t t' : CTerm Sig Index s} {a b : M.1 s}
+    (h : t.eval M.1 val = Part.some a) (h' : t'.eval M.1 val = Part.some b) :
+    (compT k t t').eval M.1 val = M.1.op (.comp k s) (fun | ⟨0, _⟩ => a | ⟨1, _⟩ => b) := by
+  rw [compT, eval_app₂_of_eq_some _ _ _ h h']
+  congr 1; funext j
+  match j with
+  | ⟨0, _⟩ => rfl
+  | ⟨1, _⟩ => rfl
+
+lemma meval_opT {ws : List S} {s : S} (σ : Sig ws s)
+    {ts : (j : Fin ws.length) → CTerm Sig Index (ws.get j)} {a : Arity M.1 ws}
+    (h : ∀ j, (ts j).eval M.1 val = Part.some (a j)) :
+    (opT σ ts).eval M.1 val = Part.some (mop M σ a) := by
+  rw [opT, eval_app_of_eq_some _ _ _ h]; exact (Part.some_get _).symm
+
+/-- The compact categorial structure of a model. -/
+instance modelStruct (s : S) : CategoryStruct Index (M.1 s) where
+  sc k a := msc M k a
+  tg k a := mtg M k a
+  pcomp k g f := M.1.op (.comp k s) (fun | ⟨0, _⟩ => g | ⟨1, _⟩ => f)
+  pcomp_dom := by
+    intro k f g
+    constructor
+    · intro hd
+      have := model_holds M (.A3_dom k s 0 1) (pts := ptsOf s 2) ![g, f] (by model_vars)
+        (by
+          intro e he
+          simp only [List.mem_singleton] at he; subst he
+          rw [EEq.holds_defined_iff,
+            meval_compT (eval_ptsOf M _ 0 (by omega)) (eval_ptsOf M _ 1 (by omega))]
+          exact hd)
+      rwa [EEq.holds_mk'_iff (meval_scT (eval_ptsOf M _ 0 (by omega)))
+        (meval_tgT (eval_ptsOf M _ 1 (by omega)))] at this
+    · intro hgf
+      have := model_holds M (.A3_def k s 0 1) (pts := ptsOf s 2) ![g, f] (by model_vars)
+        (by
+          intro e he
+          simp only [List.mem_singleton] at he; subst he
+          rw [EEq.holds_mk'_iff (meval_scT (eval_ptsOf M _ 0 (by omega)))
+            (meval_tgT (eval_ptsOf M _ 1 (by omega)))]
+          exact hgf)
+      rwa [EEq.holds_defined_iff,
+        meval_compT (eval_ptsOf M _ 0 (by omega)) (eval_ptsOf M _ 1 (by omega))] at this
+
+lemma meval_compT_some {k : Index} {s : S} {t t' : CTerm Sig Index s} {a b : M.1 s}
+    (h : t.eval M.1 val = Part.some a) (h' : t'.eval M.1 val = Part.some b)
+    (hab : sc_is_tg k a b) :
+    (compT k t t').eval M.1 val = Part.some (a ♯[k] b ← hab) := by
+  rw [meval_compT h h']; exact (Part.some_get _).symm
+
+lemma holds_defined_compT {k : Index} {s : S} {t t' : CTerm Sig Index s} {a b : M.1 s}
+    (h : t.eval M.1 val = Part.some a) (h' : t'.eval M.1 val = Part.some b)
+    (hab : sc_is_tg k a b) : (EEq.defined (compT k t t')).Holds M.1 val := by
+  rw [EEq.holds_defined_iff, meval_compT_some h h' hab]; trivial
+
+lemma meval_pcomp {k : Index} {s : S} {t t' : CTerm Sig Index s} {a b : M.1 s}
+    (h : t.eval M.1 val = Part.some a) (h' : t'.eval M.1 val = Part.some b) :
+    (compT k t t').eval M.1 val = a ♯.[k] b :=
+  meval_compT h h'
+
+lemma holds_mk'_of_eval {s : S} {t t' : CTerm Sig Index s} {p p' : Part (M.1 s)}
+    (ht : t.eval M.1 val = p) (ht' : t'.eval M.1 val = p') :
+    (EEq.mk' t t').Holds M.1 val ↔ ∃ (h₁ : p.Dom) (h₂ : p'.Dom), p.get h₁ = p'.get h₂ := by
+  subst ht ht'; rfl
+
+end Model
+
+set_option hygiene false in
+/-- The value of the variable `x_i` under a valuation of `x_0, …, x_{m-1}`. -/
+local macro "ev" i:num : term => `(eval_ptsOf' M _ $i (by omega) (by rfl))
+
+set_option hygiene false in
+/-- Read an equation off an axiom of the specification, for variables of one sort. -/
+local macro "law" ax:term:max m:num vals:term:max l:term:max r:term:max prem:term:max :
+    tactic =>
+  `(tactic| (
+    obtain ⟨_, _, e⟩ := (holds_mk'_of_eval $l $r).mp
+      (model_holds M $ax (pts := ptsOf _ $m) $vals (by model_vars) $prem)
+    exact e))
+
+/-- Premises stating that composites are defined, one term for each premise. -/
+local syntax "prems" term,* : term
+
+set_option hygiene false in
+macro_rules
+  | `(prems $h) => `(by
+      intro e he
+      obtain rfl := List.mem_singleton.mp he
+      exact $h)
+  | `(prems $h₁, $h₂) => `(by
+      intro e he
+      simp only [List.mem_cons, List.not_mem_nil, or_false] at he
+      rcases he with rfl | rfl
+      exacts [$h₁, $h₂])
+  | `(prems $h₁, $h₂, $h₃, $h₄) => `(by
+      intro e he
+      simp only [List.mem_cons, List.not_mem_nil, or_false] at he
+      rcases he with rfl | rfl | rfl | rfl
+      exacts [$h₁, $h₂, $h₃, $h₄])
+
+section Model
+
+variable {M : CompactPAlg.{u, v, w} Sig Index} {k l : Index} {s : S}
+
+lemma model_sc_sc (a : M.1 s) : sc k (sc k a) = sc k a := by
+  law (.A2_sc_sc k s 0) 1 ![a] (meval_scT (meval_scT (ev 0))) (meval_scT (ev 0)) (by simp)
+
+lemma model_tg_sc (a : M.1 s) : tg k (sc k a) = sc k a := by
+  law (.A2_tg_sc k s 0) 1 ![a] (meval_tgT (meval_scT (ev 0))) (meval_scT (ev 0)) (by simp)
+
+lemma model_sc_tg (a : M.1 s) : sc k (tg k a) = tg k a := by
+  law (.A2_sc_tg k s 0) 1 ![a] (meval_scT (meval_tgT (ev 0))) (meval_tgT (ev 0)) (by simp)
+
+lemma model_tg_tg (a : M.1 s) : tg k (tg k a) = tg k a := by
+  law (.A2_tg_tg k s 0) 1 ![a] (meval_tgT (meval_tgT (ev 0))) (meval_tgT (ev 0)) (by simp)
+
+lemma model_sc_comp {g f : M.1 s} (h : sc_is_tg k g f) : sc k (g ♯[k] f ← h) = sc k f := by
+  law (.A4_sc k s 0 1) 2 ![g, f] (meval_scT (meval_compT_some (ev 0) (ev 1) h))
+    (meval_scT (ev 1)) (prems holds_defined_compT (ev 0) (ev 1) h)
+
+lemma model_tg_comp {g f : M.1 s} (h : sc_is_tg k g f) : tg k (g ♯[k] f ← h) = tg k g := by
+  law (.A4_tg k s 0 1) 2 ![g, f] (meval_tgT (meval_compT_some (ev 0) (ev 1) h))
+    (meval_tgT (ev 0)) (prems holds_defined_compT (ev 0) (ev 1) h)
+
+lemma model_comp_sc (a : M.1 s) :
+    a ♯[k] (sc k a) ← (model_tg_sc a).symm = a := by
+  law (.A5_sc k s 0) 1 ![a] (meval_compT_some (ev 0) (meval_scT (ev 0)) (model_tg_sc a).symm)
+    (ev 0) (by simp)
+
+lemma model_tg_comp_self (a : M.1 s) :
+    (tg k a) ♯[k] a ← (model_sc_tg a) = a := by
+  law (.A5_tg k s 0) 1 ![a] (meval_compT_some (meval_tgT (ev 0)) (ev 0) (model_sc_tg a))
+    (ev 0) (by simp)
+
+lemma model_assoc {f g h : M.1 s} (hgf : sc_is_tg k g f) (hhg : sc_is_tg k h g) :
+    ((h ♯[k] g ← hhg) ♯[k] f ← ((model_sc_comp hhg).trans hgf)) =
+      (h ♯[k] (g ♯[k] f ← hgf) ← (hhg.trans (model_tg_comp hgf).symm)) := by
+  law (.A6 k s 0 1 2) 3 ![h, g, f] (meval_pcomp (meval_compT_some (ev 0) (ev 1) hhg) (ev 2))
+    (meval_pcomp (ev 0) (meval_compT_some (ev 1) (ev 2) hgf))
+    (prems holds_defined_compT (ev 0) (ev 1) hhg, holds_defined_compT (ev 1) (ev 2) hgf)
+
+instance modelPreCategory (s : S) : PreCategory Index (M.1 s) where
+  sck_sck_eq_sck _ := model_sc_sc
+  tgk_sck_eq_sck _ := model_tg_sc
+  sck_tgk_eq_tgk _ := model_sc_tg
+  tgk_tgk_eq_tgk _ := model_tg_tg
+  sck_compk_eq_sck := model_sc_comp
+  tgk_compk_eq_tgk := model_tg_comp
+  compk_sck_eq_id _ := model_comp_sc
+  compk_tgk_eq_id _ := model_tg_comp_self
+  assoc := model_assoc
+
+lemma model_sc_k_sc_l (a : M.1 s) (h : l < k) : sc k (sc l a) = sc l a := by
+  law (.AB1_sc_sc l k h s 0) 1 ![a] (meval_scT (meval_scT (ev 0))) (meval_scT (ev 0)) (by simp)
+
+lemma model_tg_k_tg_l (a : M.1 s) (h : l < k) : tg k (tg l a) = tg l a := by
+  law (.AB1_tg_tg l k h s 0) 1 ![a] (meval_tgT (meval_tgT (ev 0))) (meval_tgT (ev 0)) (by simp)
+
+lemma model_sc_l_sc_k (a : M.1 s) (h : l < k) : sc l (sc k a) = sc l a := by
+  law (.AB1_sc_sck l k h s 0) 1 ![a] (meval_scT (meval_scT (ev 0))) (meval_scT (ev 0)) (by simp)
+
+lemma model_tg_l_tg_k (a : M.1 s) (h : l < k) : tg l (tg k a) = tg l a := by
+  law (.AB1_tg_tgk l k h s 0) 1 ![a] (meval_tgT (meval_tgT (ev 0))) (meval_tgT (ev 0)) (by simp)
+
+lemma model_sc_l_tg_k (a : M.1 s) (h : l < k) : sc l (tg k a) = sc l a := by
+  law (.AB1_sc_tgk l k h s 0) 1 ![a] (meval_scT (meval_tgT (ev 0))) (meval_scT (ev 0)) (by simp)
+
+lemma model_tg_l_sc_k (a : M.1 s) (h : l < k) : tg l (sc k a) = tg l a := by
+  law (.AB1_tg_sck l k h s 0) 1 ![a] (meval_tgT (meval_scT (ev 0))) (meval_tgT (ev 0)) (by simp)
+
+lemma model_sc_comp_l {g f : M.1 s} (h : l < k) (hgf : sc_is_tg l g f) (hd) :
+    sc k (g ♯[l] f ← hgf) = (sc k g ♯.[l] sc k f).get hd := by
+  law (.AB2_sc l k h s 0 1) 2 ![g, f] (meval_scT (meval_compT_some (ev 0) (ev 1) hgf))
+    (meval_pcomp (meval_scT (ev 0)) (meval_scT (ev 1)))
+    (prems holds_defined_compT (ev 0) (ev 1) hgf)
+
+lemma model_tg_comp_l {g f : M.1 s} (h : l < k) (hgf : sc_is_tg l g f) (hd) :
+    tg k (g ♯[l] f ← hgf) = (tg k g ♯.[l] tg k f).get hd := by
+  law (.AB2_tg l k h s 0 1) 2 ![g, f] (meval_tgT (meval_compT_some (ev 0) (ev 1) hgf))
+    (meval_pcomp (meval_tgT (ev 0)) (meval_tgT (ev 1)))
+    (prems holds_defined_compT (ev 0) (ev 1) hgf)
+
+lemma model_interchange {f₁ f₂ g₁ g₂ : M.1 s} (h : l < k)
+    (hg : sc_is_tg k g₂ g₁) (hf : sc_is_tg k f₂ f₁)
+    (h₂ : sc_is_tg l g₂ f₂) (h₁ : sc_is_tg l g₁ f₁) (hd) (hd') :
+    ((g₂ ♯[l] f₂ ← h₂) ♯.[k] (g₁ ♯[l] f₁ ← h₁)).get hd =
+      ((g₂ ♯[k] g₁ ← hg) ♯.[l] (f₂ ♯[k] f₁ ← hf)).get hd' := by
+  law (.AB3 l k h s 0 1 2 3) 4 ![g₂, f₂, g₁, f₁]
+    (meval_pcomp (meval_compT_some (ev 0) (ev 1) h₂) (meval_compT_some (ev 2) (ev 3) h₁))
+    (meval_pcomp (meval_compT_some (ev 0) (ev 2) hg) (meval_compT_some (ev 1) (ev 3) hf))
+    (prems holds_defined_compT (ev 0) (ev 1) h₂, holds_defined_compT (ev 2) (ev 3) h₁,
+      holds_defined_compT (ev 0) (ev 2) hg, holds_defined_compT (ev 1) (ev 3) hf)
+
+```
+
+:::construction (label := "compact.model-category") (central := false) (title := "The compact categories of a model")
+Let $`\mathbf{M}` be a model of the specification with dimensions in $`I`. For every sort
+$`s`, the carrier $`M_s` is a compact category with dimensions in $`I` in which
+$`\mathrm{sc}^{k}` and $`\mathrm{tg}^{k}` are the total operations
+$`\mathrm{sc}^{k}_{s}` and $`\mathrm{tg}^{k}_{s}` of $`\mathbf{M}`, and $`\#^{k}` is the partial
+operation $`\circ^{k}_{s}`. Its axioms are (A$`^k`3) for the domain of $`\#^{k}`; (A$`^k`2),
+(A$`^k`4), (A$`^k`5) and (A$`^k`6) for (C1), (C3), (C4) and (C5); and (AB$`^{l,k}`1),
+(AB$`^{l,k}`2) and (AB$`^{l,k}`3) for (2C1), (2C2) and (2C3).
+
+```lean
+/-- The compact category of each sort of a model. -/
+instance modelCategory (s : S) : Category Index (M.1 s) where
+  sck_scj_eq_scj := model_sc_k_sc_l
+  scj_sck_eq_scj := model_sc_l_sc_k
+  scj_tgk_eq_scj := model_sc_l_tg_k
+  tgk_tgj_eq_tgj := model_tg_k_tg_l
+  tgj_tgk_eq_tgj := model_tg_l_tg_k
+  tgj_sck_eq_tgj := model_tg_l_sc_k
+  sck_compj_eq_compj_sck h hgf := model_sc_comp_l h hgf _
+  tgk_compj_eq_compj_tgk h hgf := model_tg_comp_l h hgf _
+  interchange h hg hf h₂ h₁ := model_interchange h hg hf h₂ h₁ _ _
+```
+:::
+
+:::construction (label := "compact.model-algebra") (central := false) (title := "The compact categorial algebra of a model")
+Let $`\mathbf{M}` be as above. For every $`\sigma \in \Sigma_{\mathbf{s}, s}`, the total
+operation $`\sigma^{\mathbf{M}} \colon M_{\mathbf{s}} \to M_s` is a compact functor from the
+product $`\mathsf{M}_{\mathbf{s}}` of the compact categories of Construction
+`compact.model-category` to $`\mathsf{M}_s`: it preserves $`k`-sources and $`k`-targets by
+(A$`^k`7), and $`k`-composites by (A$`^k`8), since two families are $`k`-composable in the
+product exactly when they are componentwise. For $`I = n`, this makes $`\mathbf{M}` a compact
+$`n`-categorial $`\Sigma`-algebra.
+
+```lean
+variable (M) in
+/-- The compact functor of an operation symbol of `Σ` in a model. -/
+def modelOp {ws : List S} {s : S} (σ : Sig ws s) : Functor Index (Arity M.1 ws) (M.1 s) where
+  map a := mop M σ a
+  map_sc_eq_sc_map k a := by
+    have ha := fun j => eval_assign M (ptsFam_injective ws) a j
+    obtain ⟨_, _, e⟩ := (holds_mk'_of_eval (meval_scT (meval_opT σ ha))
+      (meval_opT σ fun j => meval_scT (ha j))).mp
+      (model_holds M (.A7_sc k σ fun j => j.val) (pts := ptsFam ws) a
+        (by
+          rintro y hy
+          simp [QEEq.vars, EEq.vars, EEq.mk', opT, scT, x] at hy
+          obtain ⟨j, rfl⟩ := hy; exact ⟨j, rfl⟩)
+        (by simp))
+    exact e.symm
+  map_tg_eq_tg_map k a := by
+    have ha := fun j => eval_assign M (ptsFam_injective ws) a j
+    obtain ⟨_, _, e⟩ := (holds_mk'_of_eval (meval_tgT (meval_opT σ ha))
+      (meval_opT σ fun j => meval_tgT (ha j))).mp
+      (model_holds M (.A7_tg k σ fun j => j.val) (pts := ptsFam ws) a
+        (by
+          rintro y hy
+          simp [QEEq.vars, EEq.vars, EEq.mk', opT, tgT, x] at hy
+          obtain ⟨j, rfl⟩ := hy; exact ⟨j, rfl⟩)
+        (by simp))
+    exact e.symm
+  map_comp_eq_comp_map {k f g} h := by
+    have hg : ∀ j, (x (Sig := Sig) (Index := Index) (s := ws.get j) (2 * j.val)).eval M.1
+        (assign (ptsFam₂ ws) (vals₂ M g f)) = Part.some (g j) :=
+      fun j => eval_assign M (ptsFam₂_injective ws) (vals₂ M g f) (.inl j)
+    have hf : ∀ j, (x (Sig := Sig) (Index := Index) (s := ws.get j) (2 * j.val + 1)).eval M.1
+        (assign (ptsFam₂ ws) (vals₂ M g f)) = Part.some (f j) :=
+      fun j => eval_assign M (ptsFam₂_injective ws) (vals₂ M g f) (.inr j)
+    have h' := fun j => pi_sc_is_tg.mp h j
+    obtain ⟨_, _, e⟩ := (holds_mk'_of_eval
+      (meval_opT σ fun j => meval_compT_some (hg j) (hf j) (h' j))
+      (meval_pcomp (meval_opT σ hg) (meval_opT σ hf))).mp
+      (model_holds M (.A8 k σ (fun j => 2 * j.val) (fun j => 2 * j.val + 1)) (pts := ptsFam₂ ws)
+        (vals₂ M g f)
+        (by
+          rintro y hy
+          simp [QEEq.vars, EEq.vars, EEq.mk', EEq.defined, opT, compT, x] at hy
+          rcases hy with ((⟨j, rfl | rfl⟩ | ⟨j, rfl⟩ | ⟨j, rfl⟩) | ⟨j, rfl | rfl⟩) <;>
+            first | exact ⟨.inl j, rfl⟩ | exact ⟨.inr j, rfl⟩)
+        (by
+          intro e he
+          simp only [List.mem_ofFn] at he
+          obtain ⟨j, rfl⟩ := he
+          exact holds_defined_compT (hg j) (hf j) (h' j)))
+    exact e
+
+/-- The compact `n`-categorial algebra of a model of `C^{Σ^{(n)}}`. -/
+def modelCatAlgebra {n : ℕ} (N : CompactPAlg.{u, v, w} Sig (Fin n)) :
+    CatAlgebra.{u, v, w} Sig n where
+  carrier := N.1.carrier
+  op σ := modelOp N σ
+```
+:::
+
+:::proposition (label := "compact.model-cell-algebra") (central := false) (title := "Every model is a partial algebra of cells")
+Every model $`\mathbf{M}` of the specification with dimensions in $`I` is the partial algebra of
+cells (Construction `compact.cell-algebra`) of the compact categorial algebra of Construction
+`compact.model-algebra`. In particular, for $`I = n`, every model of
+$`\mathcal{C}^{\Sigma^{(n)}}` is the partial algebra of cells of a compact $`n`-categorial
+$`\Sigma`-algebra; this is the other half of the identification of objects in the first part of
+Proposition `PCompactIdent` of the draft.
+
+```lean
+variable (M) in
+/-- A model is the partial algebra of cells of its compact categorial structure. -/
+theorem cellAlgebra_model : cellAlgebra M.1.carrier (fun σ => modelOp M σ) = M.1 := by
+  apply congrArg (PartialAlgebra.mk M.1.carrier)
+  funext ws s σ a
+  cases σ with
+  | op σ => exact Part.some_get _
+  | sc k s =>
+    refine (Part.some_get _).trans (congrArg _ ?_)
+    funext j; match j with | ⟨0, _⟩ => rfl
+  | tg k s =>
+    refine (Part.some_get _).trans (congrArg _ ?_)
+    funext j; match j with | ⟨0, _⟩ => rfl
+  | comp k s =>
+    refine congrArg (M.1.op (.comp k s)) ?_
+    funext j; match j with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl
+
+theorem cellAlgebra_modelCatAlgebra {n : ℕ} (N : CompactPAlg.{u, v, w} Sig (Fin n)) :
+    cellAlgebra (modelCatAlgebra N).carrier (modelCatAlgebra N).op = N.1 :=
+  cellAlgebra_model N
+
+end Model
+```
+:::
+
+:::proof (of := "compact.model-cell-algebra")
+Both partial algebras have the same carriers, and their operations agree symbol by symbol: an
+operation $`\sigma` of $`\Sigma`, a $`k`-source or a $`k`-target is interpreted in the partial
+algebra of cells by its value in $`\mathbf{M}`, which is defined, and the $`k`-composition is
+interpreted by $`\circ^{k}_{s}` itself.
+:::
