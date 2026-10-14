@@ -15,7 +15,7 @@ $`k`-sources, $`k`-targets and $`k`-compositions of the compact $`n`-categories
 $`\mathsf{A}_s` interpret the symbols $`\mathrm{sc}^{k}_{s}`, $`\mathrm{tg}^{k}_{s}` and
 $`\circ^{k}_{s}`, and the functors $`F_\sigma` the operation symbols of $`\Sigma`. This
 document builds that partial algebra, shows that it is a model of the specification, and shows
-that every model of the specification arises in this way. As the
+that every model of the specification arises in this way, from exactly one algebra. As the
 specification, it is written once for every preordered set of dimensions $`I`, so that it covers
 $`n \in \mathbb{N}` and $`\omega` at once.
 
@@ -779,4 +779,101 @@ Both partial algebras have the same carriers, and their operations agree symbol 
 operation $`\sigma` of $`\Sigma`, a $`k`-source or a $`k`-target is interpreted in the partial
 algebra of cells by its value in $`\mathbf{M}`, which is defined, and the $`k`-composition is
 interpreted by $`\circ^{k}_{s}` itself.
+:::
+
+# The bijection
+
+The two constructions are inverse to each other. Starting from a model, Proposition
+`compact.model-cell-algebra` says that the partial algebra of cells of its compact categorial
+algebra is the model itself. Starting from a compact categorial algebra $`(\mathsf{A}, F)`,
+reading the structure off its partial algebra of cells gives back the same sources, targets and
+compositions, and the same functors $`F_\sigma`, since the partial algebra of cells interprets
+the symbols by them. A compact category is determined by its sources, targets and compositions,
+the rest of its structure being properties.
+
+```lean
+/-- Two compact categories with dimensions in `I` on the same set are equal when their
+sources, targets and compositions are. -/
+lemma Category.ext' {C : Type w} {i j : Category Index C}
+    (hsc : ∀ k a, @sc Index C i.toCategoryStruct k a = @sc Index C j.toCategoryStruct k a)
+    (htg : ∀ k a, @tg Index C i.toCategoryStruct k a = @tg Index C j.toCategoryStruct k a)
+    (hc : ∀ k g f, @CategoryStruct.pcomp Index C i.toCategoryStruct k g f =
+      @CategoryStruct.pcomp Index C j.toCategoryStruct k g f) : i = j := by
+  cases i with | @mk pi => cases pi with | @mk si => cases si with | mk sci tgi pi =>
+  cases j with | @mk pj => cases pj with | @mk sj => cases sj with | mk scj tgj pj =>
+  obtain rfl : sci = scj := funext fun k => funext (hsc k)
+  obtain rfl : tgi = tgj := funext fun k => funext (htg k)
+  obtain rfl : pi = pj := funext fun k => funext fun g => funext (hc k g)
+  rfl
+
+section CellModel
+
+variable (C : S → Type w) [∀ s, Category Index (C s)]
+  (F : ∀ {ws : List S} {s : S}, Sig ws s → Functor Index (Arity C ws) (C s))
+
+/-- The model of the specification of a compact categorial algebra: its partial algebra of
+cells. -/
+def cellModel : CompactPAlg.{u, v, w} Sig Index := ⟨cellAlgebra C F, cellAlgebra_holds⟩
+```
+
+:::proposition (label := "compact.model-of-cell-algebra") (central := false) (title := "The structure of the partial algebra of cells")
+Let $`\mathsf{A}` be an $`S`-sorted compact category with dimensions in $`I` and $`F` an
+assignment of compact functors $`F_\sigma \colon \mathsf{A}_{\mathbf{s}} \to \mathsf{A}_s`
+to the operation symbols of $`\Sigma`. The compact categories of its partial algebra of cells
+(Construction `compact.model-category`) are the compact categories $`\mathsf{A}_s`, and the
+functors of its operation symbols (Construction `compact.model-algebra`) are the functors
+$`F_\sigma`. In particular, for $`I = n`, the compact $`n`-categorial algebra of the partial
+algebra of cells of a compact $`n`-categorial $`\Sigma`-algebra $`\boldsymbol{\mathsf{A}}` is
+$`\boldsymbol{\mathsf{A}}`.
+
+```lean
+theorem modelCategory_cellModel (s : S) :
+    modelCategory (M := cellModel C F) s = ‹∀ s, Category Index (C s)› s :=
+  Category.ext' (fun _ _ => rfl) (fun _ _ => rfl) (fun _ _ _ => rfl)
+
+theorem modelOp_cellModel {ws : List S} {s : S} (σ : Sig ws s) (a : Arity C ws) :
+    (modelOp (cellModel C F) σ).map a = (F σ).map a := rfl
+
+end CellModel
+
+lemma CatAlgebra.mk_eq_mk {n : ℕ} {C : S → Type w} {str str' : ∀ s, NCategory n (C s)}
+    {F : ∀ {ws : List S} {s : S}, Sig ws s → letI := str; NFunctor n (Arity C ws) (C s)}
+    {F' : ∀ {ws : List S} {s : S}, Sig ws s → letI := str'; NFunctor n (Arity C ws) (C s)}
+    (h : str = str') (hF : ∀ {ws : List S} {s : S} (σ : Sig ws s) a,
+      (letI := str; (F σ).map a) = (letI := str'; (F' σ).map a)) :
+    @CatAlgebra.mk S Sig n C str F = @CatAlgebra.mk S Sig n C str' F' := by
+  subst h; congr; funext ws s σ; exact Functor.ext (hF σ)
+
+theorem modelCatAlgebra_cellModel {n : ℕ} (A : CatAlgebra.{u, v, w} Sig n) :
+    modelCatAlgebra (cellModel A.carrier A.op) = A := by
+  cases A with | @mk C str F =>
+  exact CatAlgebra.mk_eq_mk (funext (modelCategory_cellModel C F)) fun _ _ => rfl
+```
+:::
+
+:::proof (of := "compact.model-of-cell-algebra")
+In the partial algebra of cells, the symbols $`\mathrm{sc}^{k}_{s}`, $`\mathrm{tg}^{k}_{s}`,
+$`\circ^{k}_{s}` and $`\sigma` are interpreted by $`\mathrm{sc}^{k}`, $`\mathrm{tg}^{k}` and
+$`\#^{k}` of $`\mathsf{A}_s` and by $`F_\sigma`; the constructions of the previous section
+read them back unchanged. Two compact categories on the same set with the same sources, targets
+and compositions are equal, and two compact functors with the same underlying mapping are equal.
+:::
+
+:::construction (label := "compact.cat-algebra-equiv-model") (central := false) (title := "Compact n-categorial algebras are the models of C^Σ⁽ⁿ⁾")
+For $`n \in \mathbb{N}`, sending a compact $`n`-categorial $`\Sigma`-algebra to its partial
+algebra of cells is a bijection from the compact $`n`-categorial $`\Sigma`-algebras to the
+models of $`\mathcal{C}^{\Sigma^{(n)}}`, whose inverse sends a model to its compact
+$`n`-categorial algebra (Construction `compact.model-algebra`): the two composites are identities
+by Propositions `compact.model-cell-algebra` and `compact.model-of-cell-algebra`. This is the
+identification of objects in the first part of Proposition `PCompactIdent` of the draft.
+
+```lean
+/-- Compact `n`-categorial algebras are in bijection with the models of `C^{Σ^{(n)}}`. -/
+def catAlgebraEquivModel (n : ℕ) :
+    CatAlgebra.{u, v, w} Sig n ≃ CompactPAlg.{u, v, w} Sig (Fin n) where
+  toFun A := cellModel A.carrier A.op
+  invFun M := modelCatAlgebra M
+  left_inv A := modelCatAlgebra_cellModel A
+  right_inv M := Subtype.ext (cellAlgebra_modelCatAlgebra M)
+```
 :::
