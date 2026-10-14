@@ -1459,7 +1459,9 @@ Let $\mathbf{d}=(\varphi,d,\mathrm{Dom})$ and $\mathbf{d}'=(\varphi,d,\mathrm{Do
 
 \section{Single-set presentation of higher-order categorial algebras}\label{SSingleSet}
 
-We begin by recalling the definitions of single-set category, single-set $2$-category, single-set $n$-category, and many-sorted categorial algebra. These are the single-set presentations of the corresponding categorical structures, in which all the cells, whatever their dimension, form a single set and the dimension of a cell is read off from its sources and targets, as in~\cite{Str87}.
+In this section, we recall the definitions of single-set category, single-set $2$-category, single-set $n$-category, and many-sorted categorial algebra, together with their $\omega$-dimensional counterparts. These are the single-set presentations of the corresponding categorical structures, in which all the cells, whatever their dimension, form a single set and the dimension of a cell is read off from its sources and targets, as in~\cite{Str87}. Next we introduce the single-set $n$-categorial signature determined by a many-sorted signature and the $\mathrm{QE}$-variety of its models. We end this section by showing that the many-sorted $n$-categorial algebras are exactly the models of this $\mathrm{QE}$-variety, which is an ep-variety.
+
+We begin by recalling the notion of single-set category.
 
 \begin{definition}\label{DSingleSetCat}
 A \emph{single-set category} is an ordered pair $\mathsf{C} = (C,\xi)$ where $C$ is a set and $\xi = (\#,\mathrm{sc},\mathrm{tg})$ a structure of category on $C$, i.e., $\#\colon C\times C\dmor C$ is a partial operation of \emph{composition}, and $\mathrm{sc}$, $\mathrm{tg}$ are unary operations on $C$ which assign, to every morphism in $C$, its \emph{source} and its \emph{target}, respectively, subject to satisfy the following conditions:
@@ -1524,6 +1526,8 @@ We will say that a single-set category $\mathsf{C}$ is \emph{discrete} if every 
 Single-set functors can be composed. In fact, if $F$ is a single-set functor from $\mathsf{C}$ to $\mathsf{D}$ and $G$ is a single-set functor from $\mathsf{D}$ to $\mathsf{E}$, then $G\circ F$ is a single-set functor from $\mathsf{C}$ to $\mathsf{E}$, which we call the \emph{composite} of $F$ and $G$. This composition is associative. Moreover, for every single-set category $\mathsf{C}$, there is an \emph{identity} single-set functor $(\mathsf{C},\mathrm{Id}_{C},\mathsf{C})$, denoted by $\mathrm{Id}_{\mathsf{C}}\colon \mathsf{C}\mor\mathsf{C}$, where $\mathrm{Id}_{C}$ is the identity mapping  at $C$, which is the neutral element for the composition. We denote by $\mathsf{Cat}^{}$ the category consisting of single-set categories and single-set functors.
 \end{definition}
 
+We next recall the notion of single-set $2$-category, in which two structures of single-set category on the same set interact as in a $2$-category.
+
 \begin{definition}\label{DSingleSet2Cat}
 A \emph{single-set $2$-category} is an ordered pair $\mathsf{C} = (C,(\xi_{k})_{k\in 2})$
 where $C$ is a set and, for every $k\in 2$, $\xi_{k}= (\#^{k},\mathrm{sc}^{k},\mathrm{tg}^{k})$ a structure of single-set category on $C$, such that the following conditions are satisfied:
@@ -1571,6 +1575,8 @@ Single-set $2$-functors can be composed. In fact, if $F$ is a single-set $2$-fun
 $2$-categories and single-set $2$-functors.
 \end{definition}
 
+We next recall the notion of single-set $n$-category, for $n\in\mathbb{N}$, in which every pair of the $n$ structures of single-set category forms a single-set $2$-category.
+
 \begin{definition}\label{DSingleSetnCat} 
 A \emph{single-set $n$-category}, for $n\in\mathbb{N}$, is an ordered pair $\mathsf{C} = (C,(\xi_{k})_{k\in n})$ where $C$ is a set and, for every $k\in n$, $\xi_{k}$ a structure of  single-set category on $C$ such that, for every $j,k\in n$ with $j<k$, the ordered pair $(C,(\xi_{i})_{i\in\{j,k\}})$ is a single-set $2$-category. For $j<k$, we identify $(\xi_{i})_{i\in \{j,k\}}$ with $(\xi_{j},\xi_{k})$. Thus a single-set $0$-category is just a set, a single-set $1$-category is a single-set category in the sense of Definition~\ref{DSingleSetCat}, and a single-set $2$-category is one in the sense of Definition~\ref{DSingleSet2Cat}.
 
@@ -1585,6 +1591,8 @@ $F\colon \mathsf{C}\mor\mathsf{C}'$, is a mapping from $C$ to $C'$ such that, fo
 
 Single-set $n$-functors can be composed. In fact, if $F$ is a single-set $n$-functor from $\mathsf{C}$ to $\mathsf{D}$ and $G$ is a single-set $n$-functor from $\mathsf{D}$ to $\mathsf{E}$, then $G\circ F$ is a single-set $n$-functor from $\mathsf{C}$ to $\mathsf{E}$, which we call the \emph{composite} of $F$ and $G$. This composition is associative. Moreover, for every single-set $n$-category $\mathsf{C}$, there is an \emph{identity} single-set $n$-functor $(\mathsf{C},\mathrm{Id}_{C},\mathsf{C})$, denoted by $\mathrm{Id}_{\mathsf{C}}\colon \mathsf{C}\mor\mathsf{C}$, where $\mathrm{Id}_{C}$ is the identity mapping  at $C$, which is the neutral element for the composition. We denote by $\mathsf{nCat}^{}$ the category consisting of single-set $n$-categories and single-set $n$-functors.
 \end{definition}
+
+In the following definition we introduce the many-sorted $n$-categorial algebras, i.e., the many-sorted algebras whose underlying sorts are single-set $n$-categories and whose operations are single-set $n$-functors.
 
 \begin{definition}\label{DManySortedCatAlg}
 Let $S$ be a set of sorts and $n\in\mathbb{N}$.
@@ -1622,6 +1630,8 @@ A \emph{single-set $\omega$-category} is an ordered pair $\mathsf{C} = (C,(\xi_{
 A \emph{single-set $\omega$-functor} is a mapping $F\colon C\mor C'$ which is a single-set functor from $(C,\xi_{k})$ to $(C',\xi'_{k})$ for every $k\in\omega$. We denote by $\omega\mathsf{Cat}$ the category of single-set $\omega$-categories and single-set $\omega$-functors.
 \end{definition}
 
+We next introduce the $\omega$-dimensional counterpart of Definition~\ref{DManySortedCatAlg}.
+
 \begin{definition}\label{DOmegaCatAlg}
 Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. An \emph{$\omega$-categorial $\mathbf{\Sigma}$-algebra} is a pair $\boldsymbol{\mathsf{A}}=(\mathsf{A},F)$ where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted single-set $\omega$-category and $F$ assigns to every $\sigma\in\Sigma_{\mathbf{s},s}$ a single-set $\omega$-functor $\sigma^{\boldsymbol{\mathsf{A}}}\colon\mathsf{A}_{\mathbf{s}}\mor\mathsf{A}_{s}$. Here $\mathsf{A}_{\mathbf{s}}$ is a single-set $\omega$-category: if each $\mathsf{a}_{j}$ is a $k_{j}$-cell, then $(\mathsf{a}_{j})_{j\in\bb{\mathbf{s}}}$ is a $k$-cell for $k=\max_{j}k_{j}$. An \emph{$\omega$-categorial $\mathbf{\Sigma}$-homomorphism} is an $S$-sorted single-set $\omega$-functor commuting with the operations, as in Definition~\ref{DManySortedCatAlg}. We denote by $\omega\mathsf{CatAlg}(\mathbf{\Sigma})$ the category of $\omega$-categorial $\mathbf{\Sigma}$-algebras and $\omega$-categorial $\mathbf{\Sigma}$-homomorphisms.
 \end{definition}
@@ -1652,6 +1662,8 @@ where $v^{s}_{0}$ and $v^{s}_{1}$ are the variables of $\vs{(s,s)}$ that corresp
 \end{definition}
 
 Note that $\Sigma^{(0)}=\Sigma$ and that, for every $n,m\in\mathbb{N}$ with $n\leq m$, $\Sigma^{(n)}\subseteq\Sigma^{(m)}$ and $\mathrm{def}^{(S,\Sigma^{(m)})}$ extends $\mathrm{def}^{(S,\Sigma^{(n)})}$.
+
+In the following definition we introduce the $\omega$-dimensional counterpart of the single-set $n$-categorial signature.
 
 \begin{definition}\label{DSigmaCatSingleSetOmega}
 Let $\Sigma$ be an $S$-sorted signature. The \emph{single-set $\omega$-categorial signature determined by $\Sigma$} is the $S$-sorted signature $\Sigma^{(\omega)}=\bigcup_{n\in\mathbb{N}}\Sigma^{(n)}$, and $\mathbf{\Sigma}^{(\omega)}=(S,\Sigma^{(\omega)},\mathrm{def}^{(S,\Sigma^{(\omega)})})$ is the hep-signature in which $\mathrm{def}^{(S,\Sigma^{(\omega)})}$ is the union of the $\mathrm{def}^{(S,\Sigma^{(n)})}$, for $n\in\mathbb{N}$. Thus $\Sigma^{(\omega)}$ has the operation symbols $\mathrm{sc}^{k}_{s}$, $\mathrm{tg}^{k}_{s}$ and $\circ^{k}_{s}$ for every $k\in\omega$, with the same domain conditions as in Definition~\ref{DSigmaCatSingleSet}.
@@ -1793,30 +1805,121 @@ For every sort $s\in S$ and every quadruple of variables $x,y,z,t\in V^{S}_{s}$,
 \label{DVarSingleSetABlk3}\tag{AB$^{l,k}$3}
 \end{multline*}
 
-For $n\in\mathbb{N}$, a model of the axioms (A$^{k}$1)--(A$^{k}$6), for $k\in n$, and (AB$^{l,k}$1)--(AB$^{l,k}$3), for $l<k$ in $n$, is an $S$-sorted single-set $n$-category, see Definition~\ref{DManySortedCatAlg}, presented with all the cells of a given sort, whatever their dimension, in a single set; for $n=\omega$, see Proposition~\ref{PSingleSetIdent}.
+For $n\in\mathbb{N}$, a model of the axioms (A$^{k}$1)--(A$^{k}$6), for $k\in n$, and (AB$^{l,k}$1)--(AB$^{l,k}$3), for $l<k$ in $n$, is an $S$-sorted single-set $n$-category, see Definition~\ref{DManySortedCatAlg}, presented with all the cells of a given sort, whatever their dimension, in a single set; for $n=\omega$, see Proposition~\ref{PSingleSetIdentOmega}.
 
 We will let $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ stand for the category canonically associated to the $\mathrm{QE}$-variety $\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ determined by the specification $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$.
 \end{definition}
 
-\begin{remark}\label{RSingleSetEp}
-The ep-algebras of type $\mathbf{\Sigma}^{(n)}$, see Definition~\ref{DSigmaCatSingleSet}, are exactly the partial $\Sigma^{(n)}$-algebras that satisfy (A0), (A$^{k}$1) and (A$^{k}$3), for every $k\in n$. In fact, the empty sets of domain conditions state that the operations of $\Sigma$, the $k$-sources and the $k$-targets are total, i.e., (A0) and (A$^{k}$1), and then the domain condition of $\circ^{k}_{s}$ states that $x\circ^{k}_{s}y$ is defined if and only if $\mathrm{sc}^{k}_{s}(x)=\mathrm{tg}^{k}_{s}(y)$, i.e., (A$^{k}$3). Hence every model of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$ is a $\mathbf{\Sigma}^{(n)}$-algebra, so that the $\mathrm{QE}$-variety $\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ is the ep-variety $\mathcal{V}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{\mathbf{\Sigma}^{(n)}})$ determined by the hep-specification $(\mathbf{\Sigma}^{(n)},\mathcal{C}^{\mathbf{\Sigma}^{(n)}})$, see Definition~\ref{DEpVariety}, and the categories canonically associated to them are equal:
+In the following proposition we characterize the ep-algebras of type $\mathbf{\Sigma}^{(n)}$ in terms of the axioms of Definition~\ref{DVarSingleSet}.
+
+\begin{proposition}\label{PSingleSetEp}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature, $n\in\mathbb{N}\cup\{\omega\}$ and $\mathbf{A}$ a partial $\Sigma^{(n)}$-algebra. Then $\mathbf{A}$ is a $\mathbf{\Sigma}^{(n)}$-algebra, see Definitions~\ref{DEpAlgebra} and~\ref{DSigmaCatSingleSet}, if, and only if, $\mathbf{A}$ satisfies the axioms (A0), (A$^{k}$1) and (A$^{k}$3), for every $k\in n$.
+\end{proposition}
+\begin{proof}
+By Definition~\ref{DEpAlgebra}, $\mathbf{A}$ is a $\mathbf{\Sigma}^{(n)}$-algebra if, and only if, for every operation symbol $\tau$ of $\Sigma^{(n)}$, the domain of $\tau^{\mathbf{A}}$ is the set of the families that satisfy the domain conditions of $\tau$ in $\mathbf{A}$. We consider the different kinds of operation symbols of $\Sigma^{(n)}$, see Definition~\ref{DSigmaCatSingleSet}.
+
+\textsf{(Operation symbols of $\Sigma$)} For every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$, the set $\mathrm{def}^{(S,\Sigma^{(n)})}(\sigma)$ is empty, so that $A_{\mathrm{def}^{(S,\Sigma^{(n)})}(\sigma)}=A_{\mathbf{s}}$. Therefore, the condition of Definition~\ref{DEpAlgebra} for $\sigma$ states that $\sigma^{\mathbf{A}}$ is total, i.e., it is the axiom (A0).
+
+\textsf{(Sources and targets)} For every $k\in n$ and every $s\in S$, the sets $\mathrm{def}^{(S,\Sigma^{(n)})}(\mathrm{sc}^{k}_{s})$ and $\mathrm{def}^{(S,\Sigma^{(n)})}(\mathrm{tg}^{k}_{s})$ are empty. Therefore, the conditions of Definition~\ref{DEpAlgebra} for $\mathrm{sc}^{k}_{s}$ and $\mathrm{tg}^{k}_{s}$ state that $\mathrm{sc}^{k\mathbf{A}}_{s}$ and $\mathrm{tg}^{k\mathbf{A}}_{s}$ are total, i.e., they are the axiom (A$^{k}$1).
+
+\textsf{(Compositions)} For every $k\in n$ and every $s\in S$, assuming that $\mathrm{sc}^{k\mathbf{A}}_{s}$ and $\mathrm{tg}^{k\mathbf{A}}_{s}$ are total, the following equality holds
+$$
+A_{\mathrm{def}^{(S,\Sigma^{(n)})}(\circ^{k}_{s})}
+=
+\left\lbrace(x,y)\in A_{s}\times A_{s}\,\middle|\,\mathrm{sc}^{k\mathbf{A}}_{s}(x)=\mathrm{tg}^{k\mathbf{A}}_{s}(y)\right\rbrace.
+$$
+Therefore, the condition of Definition~\ref{DEpAlgebra} for $\circ^{k}_{s}$ states that $x\circ^{k}_{s}y$ is defined if, and only if, $\mathrm{sc}^{k}_{s}(x)=\mathrm{tg}^{k}_{s}(y)$, i.e., it is the axiom (A$^{k}$3).
+
+All in all, $\mathbf{A}$ is a $\mathbf{\Sigma}^{(n)}$-algebra if, and only if, it satisfies (A0), (A$^{k}$1) and (A$^{k}$3), for every $k\in n$.
+
+This completes the proof.
+\end{proof}
+
+From the above proposition, we obtain that the $\mathrm{QE}$-variety of Definition~\ref{DVarSingleSet} is an ep-variety.
+
+\begin{corollary}\label{CSingleSetEp}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $n\in\mathbb{N}\cup\{\omega\}$. Then the $\mathrm{QE}$-variety $\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ is the ep-variety $\mathcal{V}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{\mathbf{\Sigma}^{(n)}})$ determined by the hep-specification $(\mathbf{\Sigma}^{(n)},\mathcal{C}^{\mathbf{\Sigma}^{(n)}})$, see Definition~\ref{DEpVariety}. Consequently, the categories canonically associated to them are equal, i.e.,
 $$
 \mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})=\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{\mathbf{\Sigma}^{(n)}}).
 $$
-\end{remark}
+\end{corollary}
+\begin{proof}
+Let $\mathbf{A}$ be a partial $\Sigma^{(n)}$-algebra in $\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$. Then $\mathbf{A}$ satisfies, in particular, the axioms (A0), (A$^{k}$1) and (A$^{k}$3), for every $k\in n$. Hence, by Proposition~\ref{PSingleSetEp}, $\mathbf{A}$ is a $\mathbf{\Sigma}^{(n)}$-algebra in which every equation of $\mathcal{C}^{\mathbf{\Sigma}^{(n)}}$ holds, i.e., a model of $(\mathbf{\Sigma}^{(n)},\mathcal{C}^{\mathbf{\Sigma}^{(n)}})$. Conversely, by Definition~\ref{DEpVariety}, every model of $(\mathbf{\Sigma}^{(n)},\mathcal{C}^{\mathbf{\Sigma}^{(n)}})$ is a partial $\Sigma^{(n)}$-algebra in which every equation of $\mathcal{C}^{\mathbf{\Sigma}^{(n)}}$ holds. Thus, both classes are equal. Since both categories are the full subcategories of $\mathsf{PAlg}(\Sigma^{(n)})$ on these classes, they are equal.
+\end{proof}
 
-\begin{proposition}\label{PSingleSetIdent}
-Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature.
-\begin{enumerate}
-\item For $n\in\mathbb{N}$, the many-sorted $n$-categorial $\mathbf{\Sigma}$-algebras are exactly the models of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$, and the $n$-categorial $\mathbf{\Sigma}$-homomorphisms are exactly the homomorphisms of partial $\Sigma^{(n)}$-algebras between them, once a pair $(\mathsf{A},F)$ is identified with the partial $\Sigma^{(n)}$-algebra with underlying $S$-sorted set $(A_{s})_{s\in S}$, where $A_{s}$ is the set of cells of $\mathsf{A}_{s}$, in which, for every $k\in n$ and every $s\in S$, $\mathrm{sc}^{k}_{s}$, $\mathrm{tg}^{k}_{s}$ and $\circ^{k}_{s}$ are interpreted as $\mathrm{sc}^{k}$, $\mathrm{tg}^{k}$ and $\#^{k}$ of $\mathsf{A}_{s}$, and every $\sigma\in\Sigma$ as $F_{\sigma}$. Thus $\mathsf{nCatAlg}(\mathbf{\Sigma})=\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$.
-\item Under the same identification, $\omega\mathsf{CatAlg}(\mathbf{\Sigma})$ is the full subcategory of $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}})$ whose objects are the models in which every cell is a $k$-cell, i.e., satisfies $\mathrm{sc}^{k}_{s}(x)=x$, for some $k\in\omega$. It is a proper subcategory.
-\end{enumerate}
+We next relate the many-sorted $n$-categorial $\mathbf{\Sigma}$-algebras with the partial $\Sigma^{(n)}$-algebras. Let $n\in\mathbb{N}\cup\{\omega\}$. In what follows, a pair $(\mathsf{A},F)$, where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted single-set $n$-category, with $\mathsf{A}_{s}=(A_{s},(\#^{k}_{s},\mathrm{sc}^{k}_{s},\mathrm{tg}^{k}_{s})_{k\in n})$, and $F$ assigns to every $\sigma\in\Sigma_{\mathbf{s},s}$ a mapping $F_{\sigma}\colon A_{\mathbf{s}}\mor A_{s}$, is identified with the partial $\Sigma^{(n)}$-algebra with underlying $S$-sorted set $A=(A_{s})_{s\in S}$ in which, for every $k\in n$ and every $s\in S$, the operation symbols $\mathrm{sc}^{k}_{s}$, $\mathrm{tg}^{k}_{s}$ and $\circ^{k}_{s}$ are interpreted as $\mathrm{sc}^{k}_{s}$, $\mathrm{tg}^{k}_{s}$ and $\#^{k}_{s}$, respectively, and every $\sigma\in\Sigma$ is interpreted as $F_{\sigma}$.
+
+In the following proposition we prove that, under this identification, the many-sorted $n$-categorial $\mathbf{\Sigma}$-algebras are exactly the models of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$.
+
+\begin{proposition}\label{PSingleSetIdentObj}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature, $n\in\mathbb{N}$ and $(\mathsf{A},F)$ a pair as above. Then $(\mathsf{A},F)$ is a many-sorted $n$-categorial $\mathbf{\Sigma}$-algebra if, and only if, the corresponding partial $\Sigma^{(n)}$-algebra is in $\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$.
 \end{proposition}
 \begin{proof}
-(1) For every $k\in n$ and every $s\in S$, the conditions (C1)--(C5) of Definition~\ref{DSingleSetCat} for $(\#^{k},\mathrm{sc}^{k},\mathrm{tg}^{k})$ are the axioms (A$^{k}$2), (A$^{k}$3), (A$^{k}$4), (A$^{k}$5) and (A$^{k}$6), with $x\circ^{k}_{s}y$ in place of $x\#^{k}y$, the totality of $\mathrm{sc}^{k}$ and $\mathrm{tg}^{k}$ being (A$^{k}$1). For every $l<k$ in $n$, the conditions (2C1), (2C2) and (2C3) of Definition~\ref{DSingleSet2Cat} for $(\xi_{l},\xi_{k})$ are the axioms (AB$^{l,k}$1), (AB$^{l,k}$2) and (AB$^{l,k}$3); for (2C3), take $x=g'$, $y=f'$, $z=g$ and $t=f$. Since the products $\mathsf{A}_{\mathbf{s}}$ are taken componentwise, a total operation $F_{\sigma}\colon A_{\mathbf{s}}\mor A_{s}$, see (A0), is a single-set $n$-functor from $\mathsf{A}_{\mathbf{s}}$ to $\mathsf{A}_{s}$ if and only if (A$^{k}$7) and (A$^{k}$8) hold for every $k\in n$; note that, if $F_{\sigma}$ preserves $k$-sources and $k$-targets and every $x_{j}\#^{k}y_{j}$ is defined, then $F_{\sigma}((x_{j})_{j})\#^{k}F_{\sigma}((y_{j})_{j})$ is defined. Finally, an $S$-sorted mapping between two such algebras is a homomorphism of partial $\Sigma^{(n)}$-algebras if and only if it preserves the operations of $\Sigma$, the $k$-sources and the $k$-targets, and the $k$-compositions that are defined, i.e., if and only if it is an $S$-sorted single-set $n$-functor, see (Ci) and (Cii) in Definition~\ref{DSingleSetCat}, that commutes with the operations of $\Sigma$.
+We compare the conditions of Definitions~\ref{DSingleSetCat}, \ref{DSingleSet2Cat}, \ref{DSingleSetnCat} and~\ref{DManySortedCatAlg} with the axioms of Definition~\ref{DVarSingleSet}.
 
-(2) The same correspondence, for every $k\in\omega$ and every $l<k$ in $\omega$, identifies the $\omega$-categorial $\mathbf{\Sigma}$-algebras, see Definitions~\ref{DSingleSetOmegaCat} and~\ref{DOmegaCatAlg}, with the models of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}}$ in which every cell is a $k$-cell for some $k\in\omega$, and their homomorphisms with the homomorphisms of partial $\Sigma^{(\omega)}$-algebras. This condition is not a consequence of the axioms, because the models of a set of $\mathrm{QE}$-equations are closed under products, whereas the condition is not preserved by products. For instance, if, for every $k\in\omega$, $\mathsf{C}_{k}$ is a single-set $\omega$-category with a cell $f_{k}$ that is not a $k$-cell, then $(f_{k})_{k\in\omega}$ is not a $k$-cell of $\prod_{k\in\omega}\mathsf{C}_{k}$ for any $k$.
+\textsf{(Single-set categories)} For every $k\in n$ and every $s\in S$, $(A_{s},(\#^{k}_{s},\mathrm{sc}^{k}_{s},\mathrm{tg}^{k}_{s}))$ is a single-set category if, and only if, the axioms (A$^{k}$1)--(A$^{k}$6) hold for the sort $s$. In fact, the totality of $\mathrm{sc}^{k}_{s}$ and of $\mathrm{tg}^{k}_{s}$ is the axiom (A$^{k}$1), and the following correspondences hold, with $x\circ^{k}_{s}y$ in place of $x\#^{k}_{s}y$:
+\begin{align*}
+&\text{(C1)}\leftrightarrow\text{(A$^{k}$2)};
+&&\text{(C2)}\leftrightarrow\text{(A$^{k}$3)};
+&&\text{(C3)}\leftrightarrow\text{(A$^{k}$4)};
+&&\text{(C4)}\leftrightarrow\text{(A$^{k}$5)};
+&&\text{(C5)}\leftrightarrow\text{(A$^{k}$6)}.
+\end{align*}
+
+\textsf{(Single-set $2$-categories)} For every $l<k$ in $n$ and every $s\in S$, $(A_{s},(\xi_{l},\xi_{k}))$ satisfies the conditions of Definition~\ref{DSingleSet2Cat} if, and only if, the axioms (AB$^{l,k}$1)--(AB$^{l,k}$3) hold for the sort $s$. In fact, the following correspondences hold:
+\begin{align*}
+&\text{(2C1)}\leftrightarrow\text{(AB$^{l,k}$1)};
+&&\text{(2C2)}\leftrightarrow\text{(AB$^{l,k}$2)};
+&&\text{(2C3)}\leftrightarrow\text{(AB$^{l,k}$3)},
+\end{align*}
+where, for the last one, we take $x=g'$, $y=f'$, $z=g$ and $t=f$.
+
+Thus, by Definition~\ref{DSingleSetnCat}, $\mathsf{A}$ is an $S$-sorted single-set $n$-category if, and only if, the axioms (A$^{k}$1)--(A$^{k}$6), for $k\in n$, and (AB$^{l,k}$1)--(AB$^{l,k}$3), for $l<k$ in $n$, hold.
+
+\textsf{(Operations)} Let $(\mathbf{s},s)\in S^{\star}\times S$ and $\sigma\in\Sigma_{\mathbf{s},s}$. The axiom (A0) states that $F_{\sigma}$ is total. Since the products $\mathsf{A}_{\mathbf{s}}$ are taken componentwise, see Definition~\ref{DManySortedCatAlg}, a total mapping $F_{\sigma}\colon A_{\mathbf{s}}\mor A_{s}$ is a single-set $n$-functor from $\mathsf{A}_{\mathbf{s}}$ to $\mathsf{A}_{s}$ if, and only if, the axioms (A$^{k}$7) and (A$^{k}$8) hold for $\sigma$, for every $k\in n$. In fact, (A$^{k}$7) is the condition (Ci) of Definition~\ref{DSingleSetCat} for $F_{\sigma}$ and the $k$-th structure, and (A$^{k}$8) is the condition (Cii). Let us note that, if $F_{\sigma}$ preserves $k$-sources and $k$-targets and every $x_{j}\#^{k}_{s_{j}}y_{j}$ is defined, then $F_{\sigma}((x_{j})_{j\in\bb{\mathbf{s}}})\#^{k}_{s}F_{\sigma}((y_{j})_{j\in\bb{\mathbf{s}}})$ is defined.
+
+All in all, $(\mathsf{A},F)$ is a many-sorted $n$-categorial $\mathbf{\Sigma}$-algebra if, and only if, every axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$ holds in the corresponding partial $\Sigma^{(n)}$-algebra.
+
+This completes the proof.
 \end{proof}
+
+In the following proposition we prove that, under the same identification, the $n$-categorial $\mathbf{\Sigma}$-homomorphisms are exactly the homomorphisms of partial $\Sigma^{(n)}$-algebras.
+
+\begin{proposition}\label{PSingleSetIdentHom}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature, $n\in\mathbb{N}$, and $\boldsymbol{\mathsf{A}}$ and $\boldsymbol{\mathsf{B}}$ many-sorted $n$-categorial $\mathbf{\Sigma}$-algebras. Then an $S$-sorted mapping $F$ from $A$ to $B$ is an $n$-categorial $\mathbf{\Sigma}$-homomorphism from $\boldsymbol{\mathsf{A}}$ to $\boldsymbol{\mathsf{B}}$ if, and only if, it is a homomorphism between the corresponding partial $\Sigma^{(n)}$-algebras.
+\end{proposition}
+\begin{proof}
+By Definition~\ref{DPartialAlg}, $F$ is a homomorphism of partial $\Sigma^{(n)}$-algebras if, and only if, it preserves the operations of $\Sigma$, the $k$-sources and the $k$-targets, which are total, and the $k$-compositions that are defined, for every $k\in n$. By Definitions~\ref{DSingleSetCat} and~\ref{DSingleSetnCat}, preserving the $k$-sources, the $k$-targets and the defined $k$-compositions amounts to the conditions (Ci) and (Cii), for every $k\in n$, i.e., to $F$ being an $S$-sorted single-set $n$-functor from $\mathsf{A}$ to $\mathsf{B}$. Finally, by Definition~\ref{DManySortedCatAlg}, an $S$-sorted single-set $n$-functor that commutes with the operations of $\Sigma$ is an $n$-categorial $\mathbf{\Sigma}$-homomorphism.
+
+This completes the proof.
+\end{proof}
+
+From Propositions~\ref{PSingleSetIdentObj} and~\ref{PSingleSetIdentHom} we obtain the following result.
+
+\begin{proposition}\label{PSingleSetIdent}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $n\in\mathbb{N}$. Then, under the above identification,
+$$
+\mathsf{nCatAlg}(\mathbf{\Sigma})=\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}).
+$$
+\end{proposition}
+\begin{proof}
+By Proposition~\ref{PSingleSetIdentObj}, both categories have the same objects and, by Proposition~\ref{PSingleSetIdentHom}, the same morphisms. Moreover, in both categories the composition is the composition of $S$-sorted mappings and the identities are the identity $S$-sorted mappings.
+\end{proof}
+
+In dimension $\omega$ the situation is slightly different, since the condition that every cell has a finite dimension is not expressed by the axioms.
+
+\begin{proposition}\label{PSingleSetIdentOmega}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. Then, under the above identification, $\omega\mathsf{CatAlg}(\mathbf{\Sigma})$ is the full subcategory of $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}})$ whose objects are the partial $\Sigma^{(\omega)}$-algebras in which every cell is a $k$-cell, i.e., satisfies $\mathrm{sc}^{k}_{s}(x)=x$, for some $k\in\omega$.
+\end{proposition}
+\begin{proof}
+The arguments in the proofs of Propositions~\ref{PSingleSetIdentObj} and~\ref{PSingleSetIdentHom}, applied for every $k\in\omega$ and every $l<k$ in $\omega$, identify the $\omega$-categorial $\mathbf{\Sigma}$-algebras, see Definitions~\ref{DSingleSetOmegaCat} and~\ref{DOmegaCatAlg}, with the partial $\Sigma^{(\omega)}$-algebras in $\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}})$ in which every cell is a $k$-cell for some $k\in\omega$, and their homomorphisms with the homomorphisms of partial $\Sigma^{(\omega)}$-algebras.
+
+This completes the proof.
+\end{proof}
+
+\begin{remark}\label{RSingleSetIdentOmega}
+The subcategory of Proposition~\ref{PSingleSetIdentOmega} is a proper subcategory. In fact, the condition that every cell is a $k$-cell for some $k\in\omega$ is not a consequence of the axioms, because the models of a set of $\mathrm{QE}$-equations are closed under products, whereas the condition is not preserved by products. For instance, if, for every $k\in\omega$, $\mathsf{C}_{k}$ is a single-set $\omega$-category with a cell $f_{k}$ that is not a $k$-cell, then $(f_{k})_{k\in\omega}$ is not a $k$-cell of $\prod_{k\in\omega}\mathsf{C}_{k}$ for any $k$.
+\end{remark}
 
 %The axiom (A0) states that the operations of $\Sigma$ are total, and the axioms (A$^{k}$7) and (A$^{k}$8), for $k\in n$, state that they preserve sources, targets and compositions of every dimension, i.e., that they are $n$-functors. As in Chapters~2 and~3, the morphisms of $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ are the homomorphisms of partial $\Sigma^{(n)}$-algebras, i.e., the $S$-sorted mappings $h$ such that, whenever an operation is defined on a family of elements, it is also defined on the image of that family under $h$, and $h$ sends the result of the former to the result of the latter. These are the appropriate morphisms here: closed homomorphisms, which also reflect definedness, would be too restrictive, since an $n$-functor may send cells that are not composable to cells that are. Consequently, we have the following result.
 %
@@ -1828,7 +1931,7 @@ Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature.
 
 \section{Globular presentation of higher-order categorial algebras}\label{SGlobular}
 
-
+In this section, we present the higher-order categorial algebras in their globular form, in which the cells of every dimension form a separate sort. We follow the same pattern as in Section~\ref{SSingleSet}: after recalling the globular $\omega$-categories and the globular $n$-categories, we introduce the globular $n$-categorial algebras, the globular $n$-categorial signature determined by a many-sorted signature and the $\mathrm{QE}$-variety of its models. We end this section by showing that the globular $n$-categorial algebras are exactly the models of this $\mathrm{QE}$-variety, which is an ep-variety.
 
 We begin by defining globular $\omega$-categories, which present $\omega$-categories with separate sorts for each dimension, together with sources, targets and identities between dimensions, as in~\cite{abgmmm23}. A globular $n$-category is then a globular $\omega$-category truncated at level $n$.
 
@@ -1950,6 +2053,8 @@ F_{k}(g\circ^{(j,k)}f) &= F_{k}(g)\circ'^{(j,k)} F_{k}(f).
 We denote by $\mathsf{nCat}^{\mathrm{gl}}$ the category consisting of globular $n$-categories and globular $n$-functors.
 
 
+We next define the $S$-sorted globular $n$-categories and the $S$-sorted globular $n$-functors.
+
 \begin{definition}\label{DSortednCatGl}
 Let $S$ be a set of sorts and $n\in\mathbb{N}$.
 We will call the objects of the functor category $(\mathsf{nCat}^{\mathrm{gl}})^{S}$ \emph{$S$-sorted globular $n$-categories}. Thus, an $S$-sorted globular $n$-category is an $S$-indexed family $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ such that, for every sort $s\in S$, $\mathsf{A}_{s}$ is a globular $n$-category. Given two $S$-sorted globular $n$-categories 
@@ -1985,9 +2090,13 @@ where $F_{s,k}$ is the component at $k$-cells of the globular $n$-functor $F_{s}
 We denote by $\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})$ the category of globular $n$-categorial  $\mathbf{\Sigma}$-algebras and globular $n$-categorial $\mathbf{\Sigma}$-homomorphisms.
 \end{definition}
 
+We next introduce the $\omega$-dimensional counterpart of Definition~\ref{DGlCatAlg}.
+
 \begin{definition}\label{DOmegaGlCatAlg}
 Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. An \emph{globular $\omega$-categorial $\mathbf{\Sigma}$-algebra} is a pair $\boldsymbol{\mathsf{A}}=(\mathsf{A},F)$ where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted globular $\omega$-category and $F$ assigns to every $\sigma\in\Sigma_{\mathbf{s},s}$ a globular $\omega$-functor $\sigma^{\boldsymbol{\mathsf{A}}}\colon\mathsf{A}_{\mathbf{s}}\mor\mathsf{A}_{s}$. An \emph{globular $\omega$-categorial $\mathbf{\Sigma}$-homomorphism} is an $S$-sorted globular $\omega$-functor satisfying the equation of Definition~\ref{DGlCatAlg} for every $k\in\omega$. We denote by $\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})$ the category of globular $\omega$-categorial $\mathbf{\Sigma}$-algebras and globular $\omega$-categorial $\mathbf{\Sigma}$-homomorphisms.
 \end{definition}
+
+In the globular presentation, a globular $n$-categorial $\mathbf{\Sigma}$-algebra is regarded as a partial algebra on an $(n+1)\times S$-sorted set of cells, for a signature that enlarges $\Sigma$ with a copy of every operation symbol for every dimension, and with sources, targets, identities and compositions between dimensions.
 
 \begin{definition}\label{DSigmaCatGlobular}
 Let $\Sigma$ be an $S$-sorted signature and $n\in\mathbb{N}$. For every $k\in n+1$ and every $\mathbf{s}\in S^{\star}$, we let $(k,\mathbf{s})$ stand for the word $((k,s_{j}))_{j\in\lvert\mathbf{s}\rvert}$ in $((n+1)\times S)^{\star}$; in particular, $(k,\lambda)=\lambda$. The \emph{globular $n$-categorial signature determined by $\Sigma$}, denoted by $\Sigma^{\mathrm{gl}(n)}$, is the $(n+1)\times S$-sorted signature defined, for every $(\mathbf{w},(k,s))\in((n+1)\times S)^{\star}\times((n+1)\times S)$, as follows:
@@ -2175,22 +2284,98 @@ We will let $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl
 
 For $n=\omega$, we let $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(\omega)}}=(\omega\times S,\Sigma^{\mathrm{gl}(\omega)},V^{\omega\times S},\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{gl}(\omega)}})$ stand for the specification whose axioms are the equations (EA0), for every $k\in\omega$, (EA$^{j,k}$1)--(EA$^{j,k}$8), for every $j<k$ in $\omega$, and (EA$^{h,j,k}$1)--(EA$^{h,j,k}$5), for every $h<j<k$ in $\omega$, and by $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(\omega)}})$ the corresponding category.
 
-\begin{proposition}\label{PGlobularIdent}
-Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $n\in\mathbb{N}\cup\{\omega\}$.
-\begin{enumerate}
-\item The ep-algebras of type $\mathbf{\Sigma}^{\mathrm{gl}(n)}$, see Definition~\ref{DSigmaCatGlobular}, are exactly the partial $\Sigma^{\mathrm{gl}(n)}$-algebras that satisfy (EA0) and, for every pair $j<k$ of dimensions, (EA$^{j,k}$1) and (EA$^{j,k}$3). Hence $\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}})=\mathcal{V}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}})$ and $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}})=\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}})$.
-\item The globular $n$-categorial $\mathbf{\Sigma}$-algebras are exactly the models of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$, and the globular $n$-categorial $\mathbf{\Sigma}$-homomorphisms are exactly the homomorphisms of partial $\Sigma^{\mathrm{gl}(n)}$-algebras between them, once a pair $(\mathsf{A},F)$ is identified with the partial $\Sigma^{\mathrm{gl}(n)}$-algebra whose underlying set of sort $(k,s)$ is the set of $k$-cells of $\mathsf{A}_{s}$, in which $\mathrm{sc}^{(j,k)}_{s}$, $\mathrm{tg}^{(j,k)}_{s}$, $\mathrm{i}^{(k,j)}_{s}$ and $\circ^{(j,k)}_{s}$ are interpreted as the corresponding operations of $\mathsf{A}_{s}$, and $\sigma_{k}$ as the component at $k$-cells of $F_{\sigma}$. Thus $\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})=\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}})$ for $n\in\mathbb{N}$, and $\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})=\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(\omega)}})$.
-\end{enumerate}
+In the following proposition we characterize, as in the single-set case, the ep-algebras of type $\mathbf{\Sigma}^{\mathrm{gl}(n)}$ in terms of the axioms of Definition~\ref{DVarGlobular}.
+
+\begin{proposition}\label{PGlobularEp}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature, $n\in\mathbb{N}\cup\{\omega\}$ and $\mathbf{A}$ a partial $\Sigma^{\mathrm{gl}(n)}$-algebra. Then $\mathbf{A}$ is a $\mathbf{\Sigma}^{\mathrm{gl}(n)}$-algebra, see Definitions~\ref{DEpAlgebra} and~\ref{DSigmaCatGlobular}, if, and only if, $\mathbf{A}$ satisfies the axiom (EA0) and, for every pair of dimensions $j<k$, the axioms (EA$^{j,k}$1) and (EA$^{j,k}$3).
 \end{proposition}
 \begin{proof}
-(1) As in Remark~\ref{RSingleSetEp}: the empty sets of domain conditions state (EA0) and (EA$^{j,k}$1), and the domain condition of $\circ^{(j,k)}_{s}$ states (EA$^{j,k}$3).
+The proof is analogous to that of Proposition~\ref{PSingleSetEp}.
 
-(2) In a globular $n$-category, the $(j,k)$-sources, $(j,k)$-targets and $(k,j)$-identities are total mappings, i.e., (EA$^{j,k}$1) holds, and the domain of $\circ^{(j,k)}$ is the fibered product of Definition~\ref{DOmegaCatGl}, i.e., (EA$^{j,k}$3) holds. As noted after the axioms of Definition~\ref{DVarGlobular}, the remaining axioms (EA$^{j,k}$2) and (EA$^{j,k}$4)--(EA$^{j,k}$6), for $j<k$, and (EA$^{h,j,k}$1)--(EA$^{h,j,k}$5), for $h<j<k$, are the conditions (MS1)--(MS9). Since the products $\mathsf{A}_{\mathbf{s}}$ are taken dimensionwise, a family of total operations $(F_{\sigma,k})_{k}$, see (EA0), is a globular $n$-functor from $\mathsf{A}_{\mathbf{s}}$ to $\mathsf{A}_{s}$ if and only if (EA$^{j,k}$7) and (EA$^{j,k}$8) hold for every $j<k$. Finally, a homomorphism of partial $\Sigma^{\mathrm{gl}(n)}$-algebras is a family of mappings, one for each sort $(k,s)$, which preserves the $(j,k)$-sources, the $(j,k)$-targets, the $(k,j)$-identities, the defined $j$-compositions of $k$-cells and the operations $\sigma_{k}$, i.e., an $S$-sorted globular $n$-functor which satisfies the equation of Definition~\ref{DGlCatAlg} for every dimension $k$.
+\textsf{(Operation symbols $\sigma_{k}$)} The empty sets of domain conditions of the operation symbols $\sigma_{k}$ state that they are total, i.e., the axiom (EA0).
+
+\textsf{(Sources, targets and identities)} The empty sets of domain conditions of the operation symbols $\mathrm{sc}^{(j,k)}_{s}$, $\mathrm{tg}^{(j,k)}_{s}$ and $\mathrm{i}^{(k,j)}_{s}$ state that they are total, i.e., the axiom (EA$^{j,k}$1).
+
+\textsf{(Compositions)} Assuming that the $(j,k)$-sources and the $(j,k)$-targets are total, the domain condition of $\circ^{(j,k)}_{s}$ states that $x\circ^{(j,k)}_{s}y$ is defined if, and only if, $\mathrm{sc}^{(j,k)}_{s}(x)=\mathrm{tg}^{(j,k)}_{s}(y)$, i.e., the axiom (EA$^{j,k}$3).
+
+This completes the proof.
+\end{proof}
+
+\begin{corollary}\label{CGlobularEp}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $n\in\mathbb{N}\cup\{\omega\}$. Then the following equalities hold
+$$
+\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}})=\mathcal{V}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}})
+\qquad\text{and}\qquad
+\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}})=\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}).
+$$
+\end{corollary}
+\begin{proof}
+As in the proof of Corollary~\ref{CSingleSetEp}, using Proposition~\ref{PGlobularEp} instead of Proposition~\ref{PSingleSetEp}.
+\end{proof}
+
+We next relate the globular $n$-categorial $\mathbf{\Sigma}$-algebras with the partial $\Sigma^{\mathrm{gl}(n)}$-algebras. Let $n\in\mathbb{N}\cup\{\omega\}$. In what follows, a pair $(\mathsf{A},F)$, where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted globular $n$-category and $F$ assigns to every $\sigma\in\Sigma_{\mathbf{s},s}$ a family of mappings $(F_{\sigma,k})_{k}$, one for each dimension $k$, is identified with the partial $\Sigma^{\mathrm{gl}(n)}$-algebra whose underlying set of sort $(k,s)$ is the set of $k$-cells of $\mathsf{A}_{s}$, in which $\mathrm{sc}^{(j,k)}_{s}$, $\mathrm{tg}^{(j,k)}_{s}$, $\mathrm{i}^{(k,j)}_{s}$ and $\circ^{(j,k)}_{s}$ are interpreted as the corresponding operations of $\mathsf{A}_{s}$, and $\sigma_{k}$ is interpreted as $F_{\sigma,k}$, the component at $k$-cells of $F_{\sigma}$.
+
+In the following proposition we prove that, under this identification, the globular $n$-categorial $\mathbf{\Sigma}$-algebras are exactly the models of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$.
+
+\begin{proposition}\label{PGlobularIdentObj}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature, $n\in\mathbb{N}\cup\{\omega\}$ and $(\mathsf{A},F)$ a pair as above. Then $(\mathsf{A},F)$ is a globular $n$-categorial $\mathbf{\Sigma}$-algebra if, and only if, the corresponding partial $\Sigma^{\mathrm{gl}(n)}$-algebra is in $\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}})$.
+\end{proposition}
+\begin{proof}
+We compare the conditions of Definitions~\ref{DOmegaCatGl}, \ref{DGlCatAlg} and~\ref{DOmegaGlCatAlg} with the axioms of Definition~\ref{DVarGlobular}.
+
+\textsf{(Totality and domains)} In a globular $n$-category, the $(j,k)$-sources, $(j,k)$-targets and $(k,j)$-identities are total mappings, i.e., (EA$^{j,k}$1) holds, and the domain of $\circ^{(j,k)}$ is the fibered product of Definition~\ref{DOmegaCatGl}, i.e., (EA$^{j,k}$3) holds.
+
+\textsf{(Globular $n$-categories)} As noted after the axioms of Definition~\ref{DVarGlobular}, the following correspondences hold:
+\begin{align*}
+&\text{(MS1)}\leftrightarrow\text{(EA$^{h,j,k}$1)};
+&&\text{(MS2)}\leftrightarrow\text{(EA$^{j,k}$4)};
+&&\text{(MS3)}\leftrightarrow\text{(EA$^{h,j,k}$3)};
+\\
+&\text{(MS4)}\leftrightarrow\text{(EA$^{h,j,k}$2)};
+&&\text{(MS5)}\leftrightarrow\text{(EA$^{j,k}$2)};
+&&\text{(MS6)}\leftrightarrow\text{(EA$^{j,k}$5)};
+\\
+&\text{(MS7)}\leftrightarrow\text{(EA$^{j,k}$6)};
+&&\text{(MS8)}\leftrightarrow\text{(EA$^{h,j,k}$5)};
+&&\text{(MS9)}\leftrightarrow\text{(EA$^{h,j,k}$4)}.
+\end{align*}
+
+\textsf{(Operations)} Let $(\mathbf{s},s)\in S^{\star}\times S$ and $\sigma\in\Sigma_{\mathbf{s},s}$. The axiom (EA0) states that every $F_{\sigma,k}$ is total. Since the products $\mathsf{A}_{\mathbf{s}}$ are taken dimensionwise, see Definition~\ref{DGlCatAlg}, a family of total mappings $(F_{\sigma,k})_{k}$ is a globular $n$-functor from $\mathsf{A}_{\mathbf{s}}$ to $\mathsf{A}_{s}$ if, and only if, the axioms (EA$^{j,k}$7) and (EA$^{j,k}$8) hold for $\sigma$, for every pair of dimensions $j<k$.
+
+All in all, $(\mathsf{A},F)$ is a globular $n$-categorial $\mathbf{\Sigma}$-algebra if, and only if, every axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$ holds in the corresponding partial $\Sigma^{\mathrm{gl}(n)}$-algebra.
+
+This completes the proof.
+\end{proof}
+
+In the following proposition we prove that, under the same identification, the globular $n$-categorial $\mathbf{\Sigma}$-homomorphisms are exactly the homomorphisms of partial $\Sigma^{\mathrm{gl}(n)}$-algebras.
+
+\begin{proposition}\label{PGlobularIdentHom}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature, $n\in\mathbb{N}\cup\{\omega\}$, and $\boldsymbol{\mathsf{A}}$ and $\boldsymbol{\mathsf{B}}$ globular $n$-categorial $\mathbf{\Sigma}$-algebras. Then a family $F$ of mappings, one for each sort $(k,s)$, is a globular $n$-categorial $\mathbf{\Sigma}$-homomorphism from $\boldsymbol{\mathsf{A}}$ to $\boldsymbol{\mathsf{B}}$ if, and only if, it is a homomorphism between the corresponding partial $\Sigma^{\mathrm{gl}(n)}$-algebras.
+\end{proposition}
+\begin{proof}
+By Definition~\ref{DPartialAlg}, $F$ is a homomorphism of partial $\Sigma^{\mathrm{gl}(n)}$-algebras if, and only if, it preserves the $(j,k)$-sources, the $(j,k)$-targets, the $(k,j)$-identities, the defined $j$-compositions of $k$-cells and the operations $\sigma_{k}$. By Definitions~\ref{DOmegaCatGl} and~\ref{DSortednCatGl}, the first four conditions state that $F$ is an $S$-sorted globular $n$-functor, and, by Definition~\ref{DGlCatAlg}, the last one states that $F$ satisfies the equation of Definition~\ref{DGlCatAlg} for every dimension $k$.
+
+This completes the proof.
+\end{proof}
+
+From Propositions~\ref{PGlobularIdentObj} and~\ref{PGlobularIdentHom} we obtain the following result.
+
+\begin{proposition}\label{PGlobularIdent}
+Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. Then, under the above identification, the following equalities hold
+$$
+\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})=\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}),
+\text{ for }n\in\mathbb{N},
+\qquad\text{and}\qquad
+\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})=\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(\omega)}}).
+$$
+\end{proposition}
+\begin{proof}
+By Proposition~\ref{PGlobularIdentObj}, both categories have the same objects and, by Proposition~\ref{PGlobularIdentHom}, the same morphisms. Moreover, in both categories the composition and the identities are those of the many-sorted mappings.
 \end{proof}
 
 \section{Graduation and Unification of Higher-Order Categorial Algebras}\label{SGraduation}
 
-Throughout this section, $\mathbf{\Sigma}=(S,\Sigma)$ is a many-sorted signature and $n\in\mathbb{N}$, and we write $\mathcal{C}^{(n)}$ for $\mathcal{C}^{\mathbf{\Sigma}^{(n)}}$ and $\mathcal{C}^{\mathrm{gl}(n)}$ for $\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$. By Remark~\ref{RSingleSetEp} and Propositions~\ref{PSingleSetIdent} and~\ref{PGlobularIdent},
+Throughout this section, $\mathbf{\Sigma}=(S,\Sigma)$ is a many-sorted signature and $n\in\mathbb{N}$, and we write $\mathcal{C}^{(n)}$ for $\mathcal{C}^{\mathbf{\Sigma}^{(n)}}$ and $\mathcal{C}^{\mathrm{gl}(n)}$ for $\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$. By Corollaries~\ref{CSingleSetEp} and~\ref{CGlobularEp} and Propositions~\ref{PSingleSetIdent} and~\ref{PGlobularIdent},
 $$
 \mathsf{nCatAlg}(\mathbf{\Sigma})=\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})
 \qquad\text{and}\qquad
@@ -2612,7 +2797,7 @@ $$
 sends a globular $n$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$ to the globular $\omega$-categorial $\mathbf{\Sigma}$-algebra whose $k$-cells of sort $s$, for $k\in\omega$, are the $\underline{k}$-cells of sort $s$ of $\boldsymbol{\mathsf{A}}$, in which, for every pair of dimensions $j<k$, $\sigma_{k}$ is $\sigma_{\underline{k}}$, and the $(j,k)$-sources, $(j,k)$-targets, $(k,j)$-identities and $j$-compositions of $k$-cells are, for $j<n$, the $(j,\underline{k})$-sources, $(j,\underline{k})$-targets, $(\underline{k},j)$-identities and $j$-compositions of $\underline{k}$-cells of $\boldsymbol{\mathsf{A}}$, whereas, for $j\geq n$, the $(j,k)$-sources, $(j,k)$-targets and $(k,j)$-identities are identities and the $j$-composition of two $k$-cells is defined if and only if they are equal, and then it is the common cell; and it sends a globular $n$-categorial $\mathbf{\Sigma}$-homomorphism $F$ to the family whose component at $(k,s)$ is $F_{(\underline{k},s)}$.
 \end{definition}
 
-These functors are well defined. For the truncations, as in the proof of Proposition~\ref{PTruncDerivor}, the $n$-cells of an $\omega$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$ are closed under the operations of $\Sigma$, by~(A$^{n}$7), and under the $k$-sources, $k$-targets and $k$-compositions, for $k<n$, by~(AB$^{k,n}$1) and~(AB$^{k,n}$2). Since the domains of the restricted compositions are the restrictions of the domains, the values of the terms in the $n$-cells are the same as in $\boldsymbol{\mathsf{A}}$; hence the axioms of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$, which are axioms of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}}$, hold in the $n$-cells, and, by Proposition~\ref{PSingleSetIdent}, $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ is an $n$-categorial $\mathbf{\Sigma}$-algebra; homomorphisms preserve $n$-sources, hence $n$-cells. In the globular case, by Proposition~\ref{PGlobularIdent}, $\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ is a globular $n$-categorial $\mathbf{\Sigma}$-algebra, since the axioms of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$ are axioms of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(\omega)}}$ and only involve the sorts of dimension at most $n$. For the discretizations, every axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}}$, respectively of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(\omega)}}$, only involves finitely many dimensions, and, for every $p\geq n$, the operations of $\Sigma^{(p)}$ in $\mathrm{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$, respectively the cells of dimension at most $p$ and the operations of $\Sigma^{\mathrm{gl}(p)}$ in $\mathrm{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$, are those of $\mathrm{Ds}^{(p,n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$, respectively of $\mathrm{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. Hence, by Propositions~\ref{PDiscDerivor} and~\ref{PDiscGlDerivor}, every axiom holds; moreover, in the single-set case every cell is an $n$-cell, so that, by Proposition~\ref{PSingleSetIdent}, $\mathrm{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ is an $\omega$-categorial $\mathbf{\Sigma}$-algebra, and, by Proposition~\ref{PGlobularIdent}, $\mathrm{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ is a globular $\omega$-categorial $\mathbf{\Sigma}$-algebra. The images of homomorphisms are homomorphisms for the same reason. In fact, every one of these functors is the restriction to the corresponding category of categorial algebras of the functor induced by the generalized hep-derivor of Definition~\ref{DTruncDerivor}, \ref{DDiscDerivor} or~\ref{DDiscGlDerivor}, with $\omega$ in place of $n$, but we will not use this.
+These functors are well defined. For the truncations, as in the proof of Proposition~\ref{PTruncDerivor}, the $n$-cells of an $\omega$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$ are closed under the operations of $\Sigma$, by~(A$^{n}$7), and under the $k$-sources, $k$-targets and $k$-compositions, for $k<n$, by~(AB$^{k,n}$1) and~(AB$^{k,n}$2). Since the domains of the restricted compositions are the restrictions of the domains, the values of the terms in the $n$-cells are the same as in $\boldsymbol{\mathsf{A}}$; hence the axioms of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$, which are axioms of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}}$, hold in the $n$-cells, and, by Proposition~\ref{PSingleSetIdent}, $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ is an $n$-categorial $\mathbf{\Sigma}$-algebra; homomorphisms preserve $n$-sources, hence $n$-cells. In the globular case, by Proposition~\ref{PGlobularIdent}, $\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ is a globular $n$-categorial $\mathbf{\Sigma}$-algebra, since the axioms of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$ are axioms of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(\omega)}}$ and only involve the sorts of dimension at most $n$. For the discretizations, every axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}}$, respectively of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(\omega)}}$, only involves finitely many dimensions, and, for every $p\geq n$, the operations of $\Sigma^{(p)}$ in $\mathrm{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$, respectively the cells of dimension at most $p$ and the operations of $\Sigma^{\mathrm{gl}(p)}$ in $\mathrm{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$, are those of $\mathrm{Ds}^{(p,n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$, respectively of $\mathrm{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. Hence, by Propositions~\ref{PDiscDerivor} and~\ref{PDiscGlDerivor}, every axiom holds; moreover, in the single-set case every cell is an $n$-cell, so that, by Proposition~\ref{PSingleSetIdentOmega}, $\mathrm{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ is an $\omega$-categorial $\mathbf{\Sigma}$-algebra, and, by Proposition~\ref{PGlobularIdent}, $\mathrm{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ is a globular $\omega$-categorial $\mathbf{\Sigma}$-algebra. The images of homomorphisms are homomorphisms for the same reason. In fact, every one of these functors is the restriction to the corresponding category of categorial algebras of the functor induced by the generalized hep-derivor of Definition~\ref{DTruncDerivor}, \ref{DDiscDerivor} or~\ref{DDiscGlDerivor}, with $\omega$ in place of $n$, but we will not use this.
 
 \begin{remark}\label{RDiscOmegaTrunc}
 Let $m\in\mathbb{N}$. For $n\in\mathbb{N}$, let $F_{n}=\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}$, if $m\leq n$, and $F_{n}=\mathrm{Tr}^{(n,m)}_{\mathbf{\Sigma}}$, if $n\leq m$, and let $F^{\mathrm{gl}}_{n}$ be defined in the same way with the globular functors. By the explicit descriptions of these functors,
@@ -2656,7 +2841,7 @@ Let $\mathsf{L}$ be a category and, for every $n\in\omega$, let $F_{n}$ be a fun
 \end{proposition}
 
 \begin{proof}
-Call a family $(\boldsymbol{\mathsf{A}}_{n})_{n\in\omega}$, with $\boldsymbol{\mathsf{A}}_{n}$ an $n$-categorial $\mathbf{\Sigma}$-algebra, \emph{compatible} if $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}_{n})=\boldsymbol{\mathsf{A}}_{m}$ for all $m\leq n$, i.e., if, for $m\leq n$, the cells of $\boldsymbol{\mathsf{A}}_{m}$ are the $m$-cells of $\boldsymbol{\mathsf{A}}_{n}$ and its operations are the restrictions of those of $\boldsymbol{\mathsf{A}}_{n}$. Then the cells of every sort form an increasing chain of sets, and we let the \emph{limit} $\varprojlim_{n}\boldsymbol{\mathsf{A}}_{n}$ be the partial $\Sigma^{(\omega)}$-algebra whose cells of sort $s$ are those of the union of the $\boldsymbol{\mathsf{A}}_{n}$ and in which, for finitely many cells and a dimension $k$, the operations of $\Sigma$ and the $k$-sources, $k$-targets and $k$-compositions are computed in any $\boldsymbol{\mathsf{A}}_{n}$ with $n>k$ that contains the cells. This does not depend on $n$: if $n\leq n'$, the operations of $\boldsymbol{\mathsf{A}}_{n}$ of dimension $k<n$ are the restrictions of those of $\boldsymbol{\mathsf{A}}_{n'}$, with the restricted domains. Every axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}}$ involves finitely many cells and dimensions, and, since the operations of $\boldsymbol{\mathsf{A}}_{n}$ of dimension $k<n$ take their values in $\boldsymbol{\mathsf{A}}_{n}$, it holds in $\varprojlim_{n}\boldsymbol{\mathsf{A}}_{n}$ because it holds in $\boldsymbol{\mathsf{A}}_{n}$ for $n$ large enough. Every cell $x$ of $\boldsymbol{\mathsf{A}}_{n}$ is an $n$-cell of the limit, because $\boldsymbol{\mathsf{A}}_{n}=\mathrm{Tr}^{(n,n+1)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}_{n+1})$, so that $\mathrm{sc}^{n}_{s}(x)=x$ in $\boldsymbol{\mathsf{A}}_{n+1}$. By Proposition~\ref{PSingleSetIdent}, $\varprojlim_{n}\boldsymbol{\mathsf{A}}_{n}$ is an $\omega$-categorial $\mathbf{\Sigma}$-algebra. Its $n$-cells are the cells of $\boldsymbol{\mathsf{A}}_{n}$: an $n$-cell of $\boldsymbol{\mathsf{A}}_{p}$, with $p\geq n$, is a cell of $\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}_{p})=\boldsymbol{\mathsf{A}}_{n}$. Hence $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\varprojlim_{m}\boldsymbol{\mathsf{A}}_{m})=\boldsymbol{\mathsf{A}}_{n}$. Conversely, every $\omega$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{B}}$ is the limit of its truncations, since every cell of $\boldsymbol{\mathsf{B}}$ is an $n$-cell for some $n$ and the operations of $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ are restrictions of those of $\boldsymbol{\mathsf{B}}$. Likewise, a family of homomorphisms $(H_{n}\colon\boldsymbol{\mathsf{A}}_{n}\mor\boldsymbol{\mathsf{A}}'_{n})_{n\in\omega}$ between compatible families, with $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(H_{n})=H_{m}$ for $m\leq n$, i.e., such that $H_{m}$ is the restriction of $H_{n}$, has as limit the mapping $\varprojlim_{n}H_{n}$ that acts on the cells of $\boldsymbol{\mathsf{A}}_{n}$ as $H_{n}$, which is a homomorphism because every operation is computed at a finite level; it is the unique homomorphism whose truncations are the $H_{n}$.
+Call a family $(\boldsymbol{\mathsf{A}}_{n})_{n\in\omega}$, with $\boldsymbol{\mathsf{A}}_{n}$ an $n$-categorial $\mathbf{\Sigma}$-algebra, \emph{compatible} if $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}_{n})=\boldsymbol{\mathsf{A}}_{m}$ for all $m\leq n$, i.e., if, for $m\leq n$, the cells of $\boldsymbol{\mathsf{A}}_{m}$ are the $m$-cells of $\boldsymbol{\mathsf{A}}_{n}$ and its operations are the restrictions of those of $\boldsymbol{\mathsf{A}}_{n}$. Then the cells of every sort form an increasing chain of sets, and we let the \emph{limit} $\varprojlim_{n}\boldsymbol{\mathsf{A}}_{n}$ be the partial $\Sigma^{(\omega)}$-algebra whose cells of sort $s$ are those of the union of the $\boldsymbol{\mathsf{A}}_{n}$ and in which, for finitely many cells and a dimension $k$, the operations of $\Sigma$ and the $k$-sources, $k$-targets and $k$-compositions are computed in any $\boldsymbol{\mathsf{A}}_{n}$ with $n>k$ that contains the cells. This does not depend on $n$: if $n\leq n'$, the operations of $\boldsymbol{\mathsf{A}}_{n}$ of dimension $k<n$ are the restrictions of those of $\boldsymbol{\mathsf{A}}_{n'}$, with the restricted domains. Every axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}}$ involves finitely many cells and dimensions, and, since the operations of $\boldsymbol{\mathsf{A}}_{n}$ of dimension $k<n$ take their values in $\boldsymbol{\mathsf{A}}_{n}$, it holds in $\varprojlim_{n}\boldsymbol{\mathsf{A}}_{n}$ because it holds in $\boldsymbol{\mathsf{A}}_{n}$ for $n$ large enough. Every cell $x$ of $\boldsymbol{\mathsf{A}}_{n}$ is an $n$-cell of the limit, because $\boldsymbol{\mathsf{A}}_{n}=\mathrm{Tr}^{(n,n+1)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}_{n+1})$, so that $\mathrm{sc}^{n}_{s}(x)=x$ in $\boldsymbol{\mathsf{A}}_{n+1}$. By Proposition~\ref{PSingleSetIdentOmega}, $\varprojlim_{n}\boldsymbol{\mathsf{A}}_{n}$ is an $\omega$-categorial $\mathbf{\Sigma}$-algebra. Its $n$-cells are the cells of $\boldsymbol{\mathsf{A}}_{n}$: an $n$-cell of $\boldsymbol{\mathsf{A}}_{p}$, with $p\geq n$, is a cell of $\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}_{p})=\boldsymbol{\mathsf{A}}_{n}$. Hence $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\varprojlim_{m}\boldsymbol{\mathsf{A}}_{m})=\boldsymbol{\mathsf{A}}_{n}$. Conversely, every $\omega$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{B}}$ is the limit of its truncations, since every cell of $\boldsymbol{\mathsf{B}}$ is an $n$-cell for some $n$ and the operations of $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ are restrictions of those of $\boldsymbol{\mathsf{B}}$. Likewise, a family of homomorphisms $(H_{n}\colon\boldsymbol{\mathsf{A}}_{n}\mor\boldsymbol{\mathsf{A}}'_{n})_{n\in\omega}$ between compatible families, with $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(H_{n})=H_{m}$ for $m\leq n$, i.e., such that $H_{m}$ is the restriction of $H_{n}$, has as limit the mapping $\varprojlim_{n}H_{n}$ that acts on the cells of $\boldsymbol{\mathsf{A}}_{n}$ as $H_{n}$, which is a homomorphism because every operation is computed at a finite level; it is the unique homomorphism whose truncations are the $H_{n}$.
 
 For an object $X$ of $\mathsf{L}$ the family $(F_{n}(X))_{n\in\omega}$ is compatible, and for a morphism $f$ of $\mathsf{L}$ so is $(F_{n}(f))_{n\in\omega}$. Let $\langle F_{k}\rangle_{k\in\omega}(X)=\varprojlim_{n}F_{n}(X)$ and $\langle F_{k}\rangle_{k\in\omega}(f)=\varprojlim_{n}F_{n}(f)$. This is a functor, by the uniqueness of the limits of homomorphisms, and $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}\circ\langle F_{k}\rangle_{k\in\omega}=F_{n}$. If $G\colon\mathsf{L}\mor\omega\mathsf{CatAlg}(\mathbf{\Sigma})$ also satisfies $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}\circ G=F_{n}$ for every $n$, then $G(X)=\varprojlim_{n}\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(G(X))=\varprojlim_{n}F_{n}(X)$, and in the same way $G(f)=\varprojlim_{n}F_{n}(f)$, so that $G=\langle F_{k}\rangle_{k\in\omega}$.
 \end{proof}
@@ -2765,7 +2950,7 @@ The definition does not depend on the choice of $p$: if $p\leq p'$, then $\mathr
 Let $\boldsymbol{\mathsf{B}}$ be a globular $\omega$-categorial $\mathbf{\Sigma}$-algebra. Then $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ is an $\omega$-categorial $\mathbf{\Sigma}$-algebra whose $k$-cells of sort $s$ are the classes $[x]_{k}$, with $x\in B_{(k,s)}$, and, for every $n\in\omega$, $\mathrm{in}^{[n]}=(\mathrm{in}^{[n]}_{s})_{s\in S}$ is an isomorphism, natural in $\boldsymbol{\mathsf{B}}$, from $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$ onto $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$. Moreover, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$ is a functor from $\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})$ to $\omega\mathsf{CatAlg}(\mathbf{\Sigma})$, the \emph{unification functor}.
 \end{proposition}
 \begin{proof}
-Every axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}}$ involves finitely many dimensions and finitely many variables. Given a valuation of its variables in $[B]$, we choose a level $p$ greater than all these dimensions at which all the values of the variables are represented. Since $\mathrm{in}^{[p]}$ is injective and, by Definition~\ref{DUfOmega}, it preserves and reflects the definedness and the values of the operations of $\Sigma^{(p)}$, the axiom holds in $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ under the given valuation because it is an axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(p)}}$, which holds in the $p$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{U}}_{p}$. Let $x\in B_{(k,s)}$ and $p>k$. In $\boldsymbol{\mathsf{U}}_{p}$, $\mathrm{sc}^{k}_{s}(\mathrm{i}^{(p,k)}_{s}(x))=\mathrm{i}^{(p,k)}_{s}(\mathrm{sc}^{(k,p)}_{s}(\mathrm{i}^{(p,k)}_{s}(x)))=\mathrm{i}^{(p,k)}_{s}(x)$, by~(EA$^{k,p}$2), so that $[x]_{k}=[\mathrm{i}^{(p,k)}_{s}(x)]_{p}$ is a $k$-cell. Conversely, if $[y]_{p}$, with $p>k$, is a $k$-cell, then $y=\mathrm{i}^{(p,k)}_{s}(\mathrm{sc}^{(k,p)}_{s}(y))$, so that $[y]_{p}=[\mathrm{sc}^{(k,p)}_{s}(y)]_{k}$. Hence every $\omega$-cell class is a $k$-cell for some $k$, and, by Proposition~\ref{PSingleSetIdent}, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ is an $\omega$-categorial $\mathbf{\Sigma}$-algebra. In particular, $\mathrm{in}^{[n]}$ is a bijection from the cells of $\boldsymbol{\mathsf{U}}_{n}$ onto the $n$-cells of $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$, i.e., onto the cells of $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$, which, by Definition~\ref{DUfOmega}, preserves and reflects the definedness and the values of the operations of $\Sigma^{(n)}$, i.e., an isomorphism; it is natural in $\boldsymbol{\mathsf{B}}$ by the definition of $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(F)$. Finally, let $F\colon\boldsymbol{\mathsf{B}}\mor\boldsymbol{\mathsf{B}}'$ be a homomorphism. For every level $p$, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(F)\circ\mathrm{in}^{[p]}=\mathrm{in}^{[p]}\circ\mathrm{Uf}^{(p)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{\mathrm{gl}(p,\omega)}_{\mathbf{\Sigma}}(F))$, so that, since $\mathrm{Uf}^{(p)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{\mathrm{gl}(p,\omega)}_{\mathbf{\Sigma}}(F))$ is a homomorphism, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(F)$ commutes with the operations of $\Sigma^{(p)}$. Thus it is a homomorphism, and $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$ preserves identities and composites, since it acts componentwise on representatives.
+Every axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}}$ involves finitely many dimensions and finitely many variables. Given a valuation of its variables in $[B]$, we choose a level $p$ greater than all these dimensions at which all the values of the variables are represented. Since $\mathrm{in}^{[p]}$ is injective and, by Definition~\ref{DUfOmega}, it preserves and reflects the definedness and the values of the operations of $\Sigma^{(p)}$, the axiom holds in $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ under the given valuation because it is an axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(p)}}$, which holds in the $p$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{U}}_{p}$. Let $x\in B_{(k,s)}$ and $p>k$. In $\boldsymbol{\mathsf{U}}_{p}$, $\mathrm{sc}^{k}_{s}(\mathrm{i}^{(p,k)}_{s}(x))=\mathrm{i}^{(p,k)}_{s}(\mathrm{sc}^{(k,p)}_{s}(\mathrm{i}^{(p,k)}_{s}(x)))=\mathrm{i}^{(p,k)}_{s}(x)$, by~(EA$^{k,p}$2), so that $[x]_{k}=[\mathrm{i}^{(p,k)}_{s}(x)]_{p}$ is a $k$-cell. Conversely, if $[y]_{p}$, with $p>k$, is a $k$-cell, then $y=\mathrm{i}^{(p,k)}_{s}(\mathrm{sc}^{(k,p)}_{s}(y))$, so that $[y]_{p}=[\mathrm{sc}^{(k,p)}_{s}(y)]_{k}$. Hence every $\omega$-cell class is a $k$-cell for some $k$, and, by Proposition~\ref{PSingleSetIdentOmega}, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ is an $\omega$-categorial $\mathbf{\Sigma}$-algebra. In particular, $\mathrm{in}^{[n]}$ is a bijection from the cells of $\boldsymbol{\mathsf{U}}_{n}$ onto the $n$-cells of $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$, i.e., onto the cells of $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$, which, by Definition~\ref{DUfOmega}, preserves and reflects the definedness and the values of the operations of $\Sigma^{(n)}$, i.e., an isomorphism; it is natural in $\boldsymbol{\mathsf{B}}$ by the definition of $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(F)$. Finally, let $F\colon\boldsymbol{\mathsf{B}}\mor\boldsymbol{\mathsf{B}}'$ be a homomorphism. For every level $p$, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(F)\circ\mathrm{in}^{[p]}=\mathrm{in}^{[p]}\circ\mathrm{Uf}^{(p)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{\mathrm{gl}(p,\omega)}_{\mathbf{\Sigma}}(F))$, so that, since $\mathrm{Uf}^{(p)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{\mathrm{gl}(p,\omega)}_{\mathbf{\Sigma}}(F))$ is a homomorphism, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(F)$ commutes with the operations of $\Sigma^{(p)}$. Thus it is a homomorphism, and $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$ preserves identities and composites, since it acts componentwise on representatives.
 \end{proof}
 
 Explicitly, the $k$-source of a $p$-cell class $[y]_{p}$, with $k<p$, is $[\mathrm{sc}^{(k,p)}_{s}(y)]_{k}$; the $k$-composition of $[x]_{p}$ and $[y]_{p}$ is $[x\circ^{(k,p)}_{s}y]_{p}$, defined if and only if $\mathrm{sc}^{(k,p)}_{s}(x)=\mathrm{tg}^{(k,p)}_{s}(y)$; for $k\geq p$, $[y]_{p}$ is a $k$-cell, so that its $k$-source and $k$-target are $[y]_{p}$ itself; and $\sigma$ acts on classes represented at the level $p$ as $\sigma_{p}$.
