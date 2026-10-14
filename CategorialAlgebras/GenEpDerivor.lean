@@ -1,6 +1,8 @@
 import Stemma
 import Mathlib.CategoryTheory.Pi.Basic
 import Mathlib.CategoryTheory.Types.Basic
+import Mathlib.Data.Set.Finite.Basic
+import Mathlib.Data.Set.Finite.Lattice
 import CategorialAlgebras.EpSignature
 
 open Verso.Genre Manual InlineLean Stemma
@@ -673,6 +675,79 @@ def wordConclusion : EEq Sig (Vars (q.wordSort e)) :=
 def wordPremises : Set (EEq Sig (Vars (q.wordSort e))) :=
   {c' | ∃ c, ∃ hc : c ∈ q.premises,
     c' = q.renameEEq e c fun _ hp => Or.inr (Set.mem_iUnion₂_of_mem hc hp)}
+
+open Classical in
+lemma Term.eval_renameOn {X Y : S → Type} {D : Set (Σ s, X s)} (f : ∀ p ∈ D, Y p.1)
+    {A : PartialAlgebra.{u, v, w} Sig} (val : ∀ s, Y s → Part (A s)) :
+    ∀ {t : S} (R : Term Sig X t) (h : R.vars ⊆ D),
+      (R.renameOn f h).eval A val =
+        R.eval A fun s x => if hx : ⟨s, x⟩ ∈ D then val s (f ⟨s, x⟩ hx) else Part.none
+  | _, .var x, h => by simp [Term.renameOn, dif_pos (h rfl)]
+  | _, .app σ ts, h => Term.eval_app_congr σ fun j => Term.eval_renameOn f val (ts j) _
+
+lemma Term.vars_finite {X : S → Type} : ∀ {t : S} (R : Term Sig X t), R.vars.Finite
+  | _, .var _ => Set.finite_singleton _
+  | _, .app _ ts => Set.finite_iUnion fun j => Term.vars_finite (ts j)
+
+lemma vars_finite : q.vars.Finite := by
+  refine ((Term.vars_finite q.conclusion.lhs).union (Term.vars_finite q.conclusion.rhs)).union ?_
+  refine Set.Finite.subset (Set.Finite.biUnion (List.finite_toSet q.premises) fun c _ =>
+    ((Term.vars_finite c.lhs).union (Term.vars_finite c.rhs))) ?_
+  intro p hp
+  simp only [Set.mem_iUnion] at hp ⊢
+  obtain ⟨c, hc, hp⟩ := hp
+  exact ⟨c, hc, hp⟩
+
+open Classical in
+/-- The valuation of the variables of `q` given by a family indexed by their numbering. -/
+noncomputable def wordVal {A : S → Type w} (b : ∀ i, A (q.wordSort e i)) : ∀ s, V s → Part (A s) :=
+  fun s x => if hx : ⟨s, x⟩ ∈ q.vars then famVal b s (q.renameVar e ⟨s, x⟩ hx) else Part.none
+
+lemma holds_renameEEq {A : PartialAlgebra.{u, v, w} Sig} (b : ∀ i, A (q.wordSort e i))
+    (c : EEq Sig V) (hc : c.vars ⊆ q.vars) :
+    (q.renameEEq e c hc).Holds A (famVal b) ↔ c.Holds A (q.wordVal e b) := by
+  have h1 := Term.eval_renameOn (q.renameVar e) (famVal b) c.lhs fun _ hp => hc (Or.inl hp)
+  have h2 := Term.eval_renameOn (q.renameVar e) (famVal b) c.rhs fun _ hp => hc (Or.inr hp)
+  unfold EEq.Holds renameEEq
+  dsimp only
+  rw [h1, h2]
+  rfl
+
+/-- A `QE`-equation holds exactly when its renaming along a numbering of its variables holds
+for every family. -/
+theorem holds_iff_word (A : PartialAlgebra.{u, v, w} Sig) :
+    q.Holds A ↔ ∀ b : ∀ i, A (q.wordSort e i),
+      EEq.HoldsAll A (famVal b) (q.wordPremises e) → (q.wordConclusion e).Holds A (famVal b) := by
+  constructor
+  · intro h b hb
+    refine (q.holds_renameEEq e b q.conclusion _).mpr (h _ (fun p hp => ?_) fun c hc => ?_)
+    · unfold wordVal; rw [dif_pos hp]; trivial
+    · exact (q.holds_renameEEq e b c _).mp (hb _ ⟨c, hc, rfl⟩)
+  · intro h val hval hprem
+    let b : ∀ i, A (q.wordSort e i) := fun i => (val (e i).1.1 (e i).1.2).get (hval _ (e i).2)
+    have hagree : ∀ p ∈ q.vars, q.wordVal e b p.1 p.2 = val p.1 p.2 := by
+      intro p hp
+      obtain ⟨i, hi⟩ : ∃ i, e i = ⟨p, hp⟩ := ⟨e.symm ⟨p, hp⟩, e.apply_symm_apply _⟩
+      have hpi : (e i).1 = p := congrArg Subtype.val hi
+      subst hpi
+      have hmem : (⟨(e i).1.1, (e i).1.2⟩ : Σ s, V s) ∈ q.vars := (e i).2
+      have hr : q.renameVar e ⟨(e i).1.1, (e i).1.2⟩ hmem = ⟨i, rfl⟩ := by
+        apply Subtype.ext
+        simp [renameVar]
+      unfold wordVal
+      rw [dif_pos hmem, hr]
+      exact Part.some_get _
+    have hc : ∀ c : EEq Sig V, c.vars ⊆ q.vars →
+        (c.Holds A (q.wordVal e b) ↔ c.Holds A val) := by
+      intro c hcv
+      have h1 := Term.eval_congr_vars (A := A) c.lhs fun p hp => hagree p (hcv (Or.inl hp))
+      have h2 := Term.eval_congr_vars (A := A) c.rhs fun p hp => hagree p (hcv (Or.inr hp))
+      simp only [EEq.Holds, h1, h2]
+    have := h b fun c' hc' => by
+      obtain ⟨c, hcm, rfl⟩ := hc'
+      exact (q.holds_renameEEq e b c _).mpr
+        ((hc c fun _ hp => Or.inr (Set.mem_iUnion₂_of_mem hcm hp)).mpr (hprem c hcm))
+    exact (hc _ fun _ hp => Or.inl hp).mp ((q.holds_renameEEq e b _ _).mp this)
 
 end QEEq
 ```

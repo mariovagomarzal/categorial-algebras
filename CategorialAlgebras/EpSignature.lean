@@ -214,6 +214,11 @@ def Cn (H : Set (EEq Sp.sg.sig (Vars κ))) : Set (EEq Sp.sg.sig (Vars κ)) :=
   {e | ∀ A : PartialAlgebra.{u, v, w} Sp.sg.sig, Sp.IsModel A → ∀ a : ∀ i, A (κ i),
     EEq.HoldsAll A (famVal a) H → e.Holds A (famVal a)}
 
+lemma mem_cn_iff {H : Set (EEq Sp.sg.sig (Vars κ))} {e : EEq Sp.sg.sig (Vars κ)} :
+    e ∈ Cn.{u, v, w} Sp κ H ↔ ∀ A : PartialAlgebra.{u, v, w} Sp.sg.sig, Sp.IsModel A →
+      ∀ a : ∀ i, A (κ i), EEq.HoldsAll A (famVal a) H → e.Holds A (famVal a) :=
+  Iff.rfl
+
 /-- `ℋ` is closed. -/
 def IsClosed (H : Set (EEq Sp.sg.sig (Vars κ))) : Prop := Cn.{u, v, w} Sp κ H = H
 
