@@ -6,36 +6,36 @@ import CategorialAlgebras.Tactic
 
 open Verso.Genre Manual InlineLean Stemma
 
-#doc (Stemma) "Extended higher-order categories" =>
+#doc (Stemma) "Globular higher-order categories" =>
 
-In the *extended* presentation of a higher-order category the cells of each dimension form a
+In the *globular* presentation of a higher-order category the cells of each dimension form a
 separate set: $`C_k` is the set of $`k`-cells, and for $`j < k` there are mappings sending a
 $`k`-cell to its $`(j,k)`-source and $`(j,k)`-target, a mapping sending a $`j`-cell to its
 $`(k,j)`-identity, and a partial $`j`-composition of $`k`-cells. This is the presentation of
-Section `SExtended` of the draft (the extended $`\omega`-categories of Definition `DOmegaCatExt`). The formalization
+Section `SGlobular` of the draft (the globular $`\omega`-categories of Definition `DOmegaCatGl`). The formalization
 is ported from the group's repository
 [`higher_category_theory`](https://github.com/mariovagomarzal/higher_category_theory), where it
 is called *many-sorted*.
 
-As in the compact case, a single definition covers every preordered set of dimensions: an
-extended $`n`-category has the dimensions $`0, \ldots, n` (so $`n + 1` sets of cells), and an
-extended $`\omega`-category the dimensions $`k \in \mathbb{N}`.
+As in the single-set case, a single definition covers every preordered set of dimensions: a
+globular $`n`-category has the dimensions $`0, \ldots, n` (so $`n + 1` sets of cells), and a
+globular $`\omega`-category the dimensions $`k \in \mathbb{N}`.
 
 ```lean
 universe u
 
 namespace CategorialAlgebras.Extended
 
-/-- Abbreviation for `Fin (n + 1)`, the dimensions of an extended `n`-category. -/
+/-- Abbreviation for `Fin (n + 1)`, the dimensions of a globular `n`-category. -/
 abbrev FinSucc (n : ℕ) := Fin (n + 1)
 
 /-- A family of sets of cells, one for each dimension. -/
 abbrev TypeFamily (Index : Type) := Index → Type u
 
-/-- The families of sets of cells of an extended `n`-category. -/
+/-- The families of sets of cells of a globular `n`-category. -/
 abbrev NTypeFamily (n : ℕ) := TypeFamily.{u} (FinSucc n)
 
-/-- The families of sets of cells of an extended `ω`-category. -/
+/-- The families of sets of cells of a globular `ω`-category. -/
 abbrev OmegaTypeFamily := TypeFamily.{u} ℕ
 
 /-- Notation for `lt_trans`, to pass composite inequalities to the operations. -/
@@ -44,8 +44,8 @@ scoped infixr:100 "≫" => lt_trans
 
 # The data
 
-:::definition (label := "extended.category-struct") (central := false) (title := "Extended categorial structure")
-Let $`I` be a preordered set of dimensions and $`(C_k)_{k \in I}` a family of sets. An *extended
+:::definition (label := "extended.category-struct") (central := false) (title := "Globular categorial structure")
+Let $`I` be a preordered set of dimensions and $`(C_k)_{k \in I}` a family of sets. A *globular
 categorial structure* on it consists, for all $`j < k` in $`I`, of mappings
 $`\mathrm{sc}^{(j,k)}, \mathrm{tg}^{(j,k)} \colon C_k \to C_j`, the $`(j,k)`-*source* and
 *target*, a mapping $`\mathrm{i}^{(k,j)} \colon C_j \to C_k`, the $`(k,j)`-*identity*, and a
@@ -160,10 +160,10 @@ lemma congr_comp₂ (eq_f : f₁ = f₂) (eq_g : g₁ = g₂)
 end Congruence
 ```
 
-# Extended categories
+# Globular categories
 
-:::definition (label := "extended.precategory") (central := false) (title := "Extended precategory")
-An extended categorial structure is an *extended precategory* if, for all $`j < k`, the
+:::definition (label := "extended.precategory") (central := false) (title := "Globular precategory")
+A globular categorial structure is a *globular precategory* if, for all $`j < k`, the
 $`j`-cells and the $`k`-cells, with $`\mathrm{sc}^{(j,k)}`, $`\mathrm{tg}^{(j,k)}`,
 $`\mathrm{i}^{(k,j)}` and $`\circ^{(j)}`, are the objects and the morphisms of a category:
 
@@ -248,10 +248,10 @@ theorem PreCategory.injetive_idm {Index : Type} [Preorder Index] {C : TypeFamily
 ```
 
 The conditions that relate three dimensions $`i < j < k` are (MS1), (MS3), (MS4), (MS8) and
-(MS9) of Definition `DOmegaCatExt` of the draft; in this form they are those of the ported repository.
+(MS9) of Definition `DOmegaCatGl` of the draft; in this form they are those of the ported repository.
 
-:::definition (label := "extended.category") (central := false) (title := "Extended higher-order category")
-An *extended category with dimensions in* $`I` is an extended precategory such that, for all
+:::definition (label := "extended.category") (central := false) (title := "Globular higher-order category")
+A *globular category with dimensions in* $`I` is a globular precategory such that, for all
 $`i < j < k` in $`I`:
 
 1. (MS1) $`\mathrm{sc}^{(i,j)}\mathrm{sc}^{(j,k)} f = \mathrm{sc}^{(i,k)} f = \mathrm{sc}^{(i,j)}\mathrm{tg}^{(j,k)} f`
@@ -429,10 +429,10 @@ attribute [simp] scji_sckj_eq_scki scji_tgkj_eq_scki tgji_tgkj_eq_tgki tgji_sckj
   idmkj_compji_eq_compki_idmkj interchange
 ```
 
-:::definition (label := "extended.n-category") (central := false) (title := "Extended n-category and ω-category")
-An *extended* $`n`-*category* is an extended category with dimensions in
-$`n + 1 = \{0, \ldots, n\}`, and an *extended* $`\omega`-*category* one with dimensions in
-$`\mathbb{N}` (Definition `DOmegaCatExt` of the draft and the paragraph after it).
+:::definition (label := "extended.n-category") (central := false) (title := "Globular n-category and ω-category")
+A *globular* $`n`-*category* is a globular category with dimensions in
+$`n + 1 = \{0, \ldots, n\}`, and a *globular* $`\omega`-*category* one with dimensions in
+$`\mathbb{N}` (Definition `DOmegaCatGl` of the draft and the paragraph after it).
 
 ```lean
 abbrev NCategory (n : ℕ) (C : NTypeFamily.{u} n) := Category (FinSucc n) C
@@ -441,8 +441,8 @@ abbrev OmegaCategory (C : OmegaTypeFamily.{u}) := Category ℕ C
 ```
 :::
 
-:::construction (label := "extended.one-category-of-precategory") (central := false) (title := "Extended 1-categories")
-An extended precategory with dimensions $`0, 1` is an extended $`1`-category: there are no
+:::construction (label := "extended.one-category-of-precategory") (central := false) (title := "Globular 1-categories")
+A globular precategory with dimensions $`0, 1` is a globular $`1`-category: there are no
 three dimensions $`i < j < k`, and the conditions relating them hold vacuously.
 
 ```lean

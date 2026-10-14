@@ -4,11 +4,11 @@ import CategorialAlgebras.Compact.Algebra
 
 open Verso.Genre Manual InlineLean Stemma
 
-#doc (Stemma) "The compact QE-specification" =>
+#doc (Stemma) "The single-set QE-specification" =>
 
-Definition `DVarCompact` of the draft presents the compact $`n`-categorial $`\Sigma`-algebras as a
+Definition `DVarSingleSet` of the draft presents the single-set $`n`-categorial $`\Sigma`-algebras as a
 $`\mathrm{QE}`$-variety of partial $`\Sigma^{(n)}`-algebras, where $`\Sigma^{(n)}` is the
-compact $`n`-categorial signature of Definition `DSigmaCatCompact`, for $`n \in \mathbb{N}`, and
+single-set $`n`-categorial signature of Definition `DSigmaCatSingleSet`, for $`n \in \mathbb{N}`, and
 defines the same specification for $`n = \omega`. This document writes down the specification
 $`\mathcal{C}^{\Sigma^{(n)}}` and the category $`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})` of
 its models. As the categories of the library, it is written once for every preordered set of
@@ -24,11 +24,11 @@ open Term
 variable {S : Type u}
 ```
 
-# Terms of the compact signature
+# Terms of the single-set signature
 
 The variables $`V^{S}` are a fixed $`S`-sorted set with countably many variables of each sort;
 we take $`V^{S}_s = \mathbb{N}`. We write $`\mathrm{sc}^{k}(t)`, $`\mathrm{tg}^{k}(t)` and
-$`t \circ^{k} t'` for the terms built with the symbols of Definition `DSigmaCatCompact`, and
+$`t \circ^{k} t'` for the terms built with the symbols of Definition `DSigmaCatSingleSet`, and
 $`\sigma((t_j)_j)` for an operation symbol of $`\Sigma`; in the Lean they are `scT`, `tgT`,
 `compT` and `opT`, and `x i` is the variable number `i`.
 
@@ -36,7 +36,7 @@ $`\sigma((t_j)_j)` for an operation symbol of $`\Sigma`; in the Lean they are `s
 /-- The variables: countably many of each sort. -/
 abbrev Var (S : Type u) : S → Type := fun _ => ℕ
 
-/-- Terms of the compact `n`-categorial signature, with variables in `Var S`. -/
+/-- Terms of the single-set `n`-categorial signature, with variables in `Var S`. -/
 abbrev CTerm (Sig : Signature.{u, v} S) (Index : Type) := Term (CompactSignature Sig Index) (Var S)
 
 namespace CTerm
@@ -66,10 +66,10 @@ end CTerm
 :::definition (label := "compact.qe-specification") (central := false) (title := "The specification C^Σ⁽ⁿ⁾")
 Let $`\Sigma` be an $`S`-sorted signature and $`I` a preordered set of dimensions. The
 specification with dimensions in $`I` is the set of the following $`\mathrm{QE}`$-equations of
-the compact categorial signature with dimensions in $`I`, with variables in $`V^{S}`, for all
+the single-set categorial signature with dimensions in $`I`, with variables in $`V^{S}`, for all
 sorts, operation symbols, dimensions and variables. For $`I = n`, with
 $`n \in \mathbb{N} \cup \{\omega\}`, it is the specification $`\mathcal{C}^{\Sigma^{(n)}}` of
-Definition `DVarCompact` of the draft:
+Definition `DVarSingleSet` of the draft:
 
 1. (A0) $`\sigma((x_j)_j) \overset{\mathrm{e}}{=} \sigma((x_j)_j)`;
 2. for every $`k \in I`:
@@ -185,7 +185,7 @@ def compactSpec (Sig : Signature.{u, v} S) (Index : Type) [Preorder Index] :
     Set (QEEq (CompactSignature Sig Index) (Var S)) :=
   {q | CompactAxiom Sig Index q}
 
-/-- The category `PAlg(C^{Σ^{(n)}})` of models of the compact specification. -/
+/-- The category `PAlg(C^{Σ^{(n)}})` of models of the single-set specification. -/
 abbrev CompactPAlg (Sig : Signature.{u, v} S) (Index : Type) [Preorder Index] :=
   PAlg.{u, max u v, w} (compactSpec Sig Index)
 ```

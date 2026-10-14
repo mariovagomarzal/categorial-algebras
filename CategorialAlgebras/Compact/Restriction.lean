@@ -3,14 +3,14 @@ import CategorialAlgebras.Compact.Product
 
 open Verso.Genre Manual InlineLean Stemma
 
-#doc (Stemma) "Restriction of compact categories" =>
+#doc (Stemma) "Restriction of single-set categories" =>
 
-In the compact presentation all the cells live in one set, so truncating a compact category
+In the single-set presentation all the cells live in one set, so truncating a single-set category
 at some level means keeping a *subset* of its cells: those whose dimension is low enough, that
 is, those that are $`u`-cells for every dimension $`u` that is forgotten. On these cells the
-sources, targets and compositions of the remaining dimensions are again a compact category.
+sources, targets and compositions of the remaining dimensions are again a single-set category.
 
-As for extended categories, the construction is done once, for a strictly monotone mapping
+As for globular categories, the construction is done once, for a strictly monotone mapping
 $`e \colon J \to I` that says which dimension of $`I` each dimension of $`J` becomes, and a set
 $`U \subseteq I` of forgotten dimensions, each of them above every dimension $`e(j)`.
 
@@ -59,11 +59,11 @@ end Cells
 # The restriction
 
 :::construction (label := "compact.restrict-category") (central := false) (title := "Restriction to the cells of low dimension")
-Let $`C` be a compact category with dimensions in $`I`, let $`e \colon J \to I` be strictly
+Let $`C` be a single-set category with dimensions in $`I`, let $`e \colon J \to I` be strictly
 monotone and let $`U \subseteq I` be a set of dimensions with $`e(j) < u` for every $`j \in J`
 and $`u \in U`. The *restriction* of $`C` along $`e` and $`U` is the set
 $$`C|_{e,U} = \{ f \in C \mid \mathrm{sc}^{u}(f) = f \text{ for every } u \in U \}`
-of the cells that are $`u`-cells for every $`u \in U`, with the compact categorial structure
+of the cells that are $`u`-cells for every $`u \in U`, with the single-set categorial structure
 with dimensions in $`J` given, for $`j \in J`, by $`\mathrm{sc}^{e(j)}`, $`\mathrm{tg}^{e(j)}`
 and $`\#^{e(j)}`. These operations do not leave $`C|_{e,U}`: for $`u \in U`, the $`e(j)`-source
 and $`e(j)`-target of any cell are $`u`-cells by (2C1), since $`e(j) < u`, and
@@ -133,10 +133,10 @@ def Category.restrict (he : StrictMono e) (hU : ∀ j, ∀ u ∈ U, e j < u) (C 
 ```
 :::
 
-:::construction (label := "compact.restrict-functor") (central := false) (title := "Restriction of compact functors")
-A compact functor $`F \colon C \to D` sends $`C|_{e,U}` into $`D|_{e,U}`, since it preserves
-$`u`-sources, and restricts to a compact functor between the restrictions. More generally, a
-compact functor $`F \colon \prod_{l \in L} C_l \to D` restricts to a compact functor
+:::construction (label := "compact.restrict-functor") (central := false) (title := "Restriction of single-set functors")
+A single-set functor $`F \colon C \to D` sends $`C|_{e,U}` into $`D|_{e,U}`, since it preserves
+$`u`-sources, and restricts to a single-set functor between the restrictions. More generally, a
+single-set functor $`F \colon \prod_{l \in L} C_l \to D` restricts to a single-set functor
 $`\prod_{l \in L} C_l|_{e,U} \to D|_{e,U}`; this is the form needed for the operations of an
 algebra.
 

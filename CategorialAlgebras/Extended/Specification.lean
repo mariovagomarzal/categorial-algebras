@@ -4,14 +4,14 @@ import CategorialAlgebras.Extended.Algebra
 
 open Verso.Genre Manual InlineLean Stemma
 
-#doc (Stemma) "The extended QE-specification" =>
+#doc (Stemma) "The globular QE-specification" =>
 
-Definition `DVarExtended` of the draft presents the extended $`n`-categorial $`\Sigma`-algebras as a
-$`\mathrm{QE}`$-variety of partial $`\Sigma^{\mathrm{ext}(n)}`-algebras, where
-$`\Sigma^{\mathrm{ext}(n)}` is the extended $`n`-categorial signature of Definition `DSigmaCatExtended`, with
+Definition `DVarGlobular` of the draft presents the globular $`n`-categorial $`\Sigma`-algebras as a
+$`\mathrm{QE}`$-variety of partial $`\Sigma^{\mathrm{gl}(n)}`-algebras, where
+$`\Sigma^{\mathrm{gl}(n)}` is the globular $`n`-categorial signature of Definition `DSigmaCatGlobular`, with
 sorts $`(n+1) \times S`, and the draft defines the same specification for $`n = \omega`, with
 sorts $`\omega \times S`. This document writes down the specification
-$`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}` and the category of its models, once for every
+$`\mathcal{C}^{\Sigma^{\mathrm{gl}(n)}}` and the category of its models, once for every
 preordered set of dimensions $`I`: $`n + 1` is `FinSucc n` in the Lean, and $`\omega` is `ℕ`.
 
 ```lean
@@ -24,7 +24,7 @@ open Term
 variable {S : Type u}
 ```
 
-# Terms of the extended signature
+# Terms of the globular signature
 
 The variables are countably many of each sort $`(k, s)`. In the Lean, `x i` is the variable
 number `i`, and `scT h`, `tgT h`, `idmT h` and `compT h`, for `h : j < k`, build the terms
@@ -36,7 +36,7 @@ of sorts $`(k, s_p)`.
 /-- The variables: countably many of each sort. -/
 abbrev EVar (S : Type u) (Index : Type) : Index × S → Type := fun _ => ℕ
 
-/-- Terms of the extended `n`-categorial signature. -/
+/-- Terms of the globular `n`-categorial signature. -/
 abbrev ETerm (Sig : Signature.{u, v} S) (Index : Type) [Preorder Index] :=
   Term (ExtendedSignature Sig Index) (EVar S Index)
 
@@ -77,10 +77,10 @@ end ETerm
 :::definition (label := "extended.qe-specification") (central := false) (title := "The specification C^Σᵉˣᵗ⁽ⁿ⁾")
 Let $`\Sigma` be an $`S`-sorted signature and $`I` a preordered set of dimensions. The
 specification with dimensions in $`I` is the set of the following $`\mathrm{QE}`$-equations of
-the extended categorial signature with dimensions in $`I`, for all sorts, operation symbols,
+the globular categorial signature with dimensions in $`I`, for all sorts, operation symbols,
 dimensions and variables. For $`I = n + 1` it is the specification
-$`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}` of Definition `DVarExtended` of the draft, and for
-$`I = \omega` the specification $`\mathcal{C}^{\Sigma^{\mathrm{ext}(\omega)}}`:
+$`\mathcal{C}^{\Sigma^{\mathrm{gl}(n)}}` of Definition `DVarGlobular` of the draft, and for
+$`I = \omega` the specification $`\mathcal{C}^{\Sigma^{\mathrm{gl}(\omega)}}`:
 
 1. (EA0) $`\sigma_k((x_p)_p)` is defined, for every $`k \in I`;
 2. for all $`j < k` in $`I`:
@@ -117,8 +117,8 @@ $`I = \omega` the specification $`\mathcal{C}^{\Sigma^{\mathrm{ext}(\omega)}}`:
 
 The axioms (EA$`^{h,j,k}`1)–(EA$`^{h,j,k}`5) are the counterparts of the conditions (MS1),
 (MS4), (MS3), (MS9) and (MS8) of Definition `DOmegaCatExt`, so that the models of the specification are,
-as the draft says, the extended categories with dimensions in $`I` with operations that are
-extended functors.
+as the draft says, the globular categories with dimensions in $`I` with operations that are
+globular functors.
 
 ```lean
 open ETerm in
@@ -220,7 +220,7 @@ def extendedSpec (Sig : Signature.{u, v} S) (Index : Type) [Preorder Index] :
     Set (QEEq (ExtendedSignature Sig Index) (EVar S Index)) :=
   {q | ExtendedAxiom Sig Index q}
 
-/-- The category `PAlg(C^{Σ^{ext(n)}})` of models of the extended specification. -/
+/-- The category `PAlg(C^{Σ^{ext(n)}})` of models of the globular specification. -/
 abbrev ExtendedPAlg (Sig : Signature.{u, v} S) (Index : Type) [Preorder Index] :=
   PAlg.{u, max u v, w} (extendedSpec Sig Index)
 ```

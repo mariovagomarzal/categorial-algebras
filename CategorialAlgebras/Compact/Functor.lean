@@ -4,10 +4,10 @@ import CategorialAlgebras.Compact.Category
 
 open Verso.Genre Manual InlineLean Stemma
 
-#doc (Stemma) "Compact functors" =>
+#doc (Stemma) "Single-set functors" =>
 
-A compact functor is a mapping between the sets of cells that preserves, at every dimension,
-sources, targets and composition (Definitions `DCompactCat`, `DCompact2Cat` and `DCompactnCat` of the draft). As for the categories,
+A single-set functor is a mapping between the sets of cells that preserves, at every dimension,
+sources, targets and composition (Definitions `DSingleSetCat`, `DSingleSet2Cat` and `DSingleSetnCat` of the draft). As for the categories,
 the definition is given once for every preordered set of dimensions, and ported from the
 group's repository `higher_category_theory`.
 
@@ -17,8 +17,8 @@ universe u u₁ u₂ u₃
 namespace CategorialAlgebras.Compact
 ```
 
-:::definition (label := "compact.functor") (central := false) (title := "Compact functor")
-Let $`C` and $`D` be compact categories with dimensions in $`I`. A *compact functor* from $`C`
+:::definition (label := "compact.functor") (central := false) (title := "Single-set functor")
+Let $`C` and $`D` be single-set categories with dimensions in $`I`. A *single-set functor* from $`C`
 to $`D` is a mapping $`F \colon C \to D` such that, for every $`k \in I`,
 
 1. (Ci) $`F(\mathrm{sc}^{k} f) = \mathrm{sc}^{k}(F f)` and $`F(\mathrm{tg}^{k} f) = \mathrm{tg}^{k}(F f)`
@@ -64,15 +64,15 @@ instance : CoeFun (Functor Index C D) fun _ ↦ C → D := ⟨fun F ↦ F.map⟩
 
 attribute [coe] Functor.map
 
-/-- Two compact functors with the same underlying mapping are equal. -/
+/-- Two single-set functors with the same underlying mapping are equal. -/
 @[ext]
 lemma ext {F G : Functor Index C D} (h : ∀ f, F f = G f) : F = G := by
   cases F; cases G; congr; funext f; exact h f
 ```
 
 :::definition (label := "compact.functor-comp") (central := false) (title := "Composition and identities")
-Compact functors compose as mappings, and the identity mapping of a compact category is a
-compact functor.
+Single-set functors compose as mappings, and the identity mapping of a single-set category is a
+single-set functor.
 
 ```lean
 @[simp]
@@ -113,9 +113,9 @@ def id (C : Type u₁) [Category Index C] : Functor Index C C where
 end Functor
 ```
 
-:::definition (label := "compact.n-functor") (central := false) (title := "Compact n-functors")
-A *compact* $`n`-*functor* is a compact functor between compact $`n`-categories, and a
-*compact* $`\omega`-*functor* one between compact $`\omega`-categories.
+:::definition (label := "compact.n-functor") (central := false) (title := "Single-set n-functors")
+A *single-set* $`n`-*functor* is a single-set functor between single-set $`n`-categories, and a
+*single-set* $`\omega`-*functor* one between single-set $`\omega`-categories.
 
 ```lean
 abbrev NFunctor (n : ℕ)
@@ -130,7 +130,7 @@ abbrev OmegaFunctor
 ```
 :::
 
-# The categories of compact categories
+# The categories of single-set categories
 
 ```lean
 structure Cat (Index : Type) [Preorder Index] where
@@ -138,7 +138,7 @@ structure Cat (Index : Type) [Preorder Index] where
   of ::
   /-- The underlying set of cells. -/
   carrier : Type u
-  /-- The compact categorial structure on the carrier. -/
+  /-- The single-set categorial structure on the carrier. -/
   [str : Category Index carrier]
 
 attribute [instance] Cat.str
@@ -148,11 +148,11 @@ instance {Index : Type} [Preorder Index] : CoeSort (Cat Index) (Type u) := ⟨Ca
 attribute [coe] Cat.carrier
 ```
 
-:::definition (label := "compact.cat") (central := false) (title := "The category of compact categories")
-Compact categories with dimensions in $`I` and compact functors form a category, with the
+:::definition (label := "compact.cat") (central := false) (title := "The category of single-set categories")
+Single-set categories with dimensions in $`I` and single-set functors form a category, with the
 composition and identities defined above. For $`I = n` this is
-the category $`\mathsf{nCat}` of compact $`n`-categories and compact $`n`-functors
-(Definition `DCompactnCat` of the draft).
+the category $`\mathsf{nCat}` of single-set $`n`-categories and single-set $`n`-functors
+(Definition `DSingleSetnCat` of the draft).
 
 ```lean
 instance Cat.category {Index : Type} [Preorder Index] :
