@@ -128,6 +128,37 @@ Decisions:
 
 Next: `SDiscretization` and the rest of `STruncation`, then dimension ω.
 
+## Fourth scope: discretization and truncation (2026-10-14)
+
+`SDiscretization`, `STruncationAlg` and the first two results of
+`SDiscTrunc` are formalized in `Discretization`, all proved. Decisions:
+
+- The four derivors (`DDiscDerivor`, `DDiscExtDerivor`, `DTruncDerivor` and
+  the extended truncation derivor) and their functors are as in the draft.
+  The compact and extended discretization derivors are defined, and send
+  models to models, for all `m` and `n`, not only `m ≤ n`; for `m ≥ n` they
+  keep every dimension of `n`. Truncation needs `m ≤ n`.
+- In the extended discretization, for `j ≥ m` the term `v_0` has sort
+  `(min(j, m), s)`, equal to `(min(k, m), s)` but not by definition: the
+  variable carries that equality, and the proofs transport along it.
+- `PTruncDisc` is an equality of functors in the draft. Here
+  `T ∘ D ≅ Id` (compact and extended) holds by isomorphisms that send every
+  cell to itself, because the cells of the truncation are elements of a
+  subset. The draft's argument through `δ ∘ τ = id` is not used.
+- `PDiscTruncAdj` is two Mathlib adjunctions, `D ⊣ T` and
+  `D^ext ⊣ T^ext`. Their units are the isomorphisms above, not identities.
+  Their counits are the draft's: the inclusion of the `m`-cells, and
+  `i^(k,m)` at the sorts `(k, s)` with `k > m`.
+- The new truncation functors (between categories of models) and the earlier
+  ones of `Compact.Truncation` and `Extended.Truncation` (between
+  `nCatAlg(Σ)`, used for the limits) are not yet related.
+
+Next:
+- `PTruncComp`: truncations and discretizations compose.
+- `PCompatGdUf`: they commute with graduation and unification.
+- Relating the two truncations.
+- Then dimension ω (`SOmegaFunctors`).
+
 ## Left out on 2026-10-08
 
 Why each part of the derivors line was left out at that date. The draft has
