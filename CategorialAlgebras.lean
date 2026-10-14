@@ -32,6 +32,7 @@ import CategorialAlgebras.Extended.Model
 import CategorialAlgebras.CategorialEp
 import CategorialAlgebras.DerivedEval
 import CategorialAlgebras.Graduation
+import CategorialAlgebras.Discretization
 
 open Verso.Genre Manual InlineLean Stemma
 
