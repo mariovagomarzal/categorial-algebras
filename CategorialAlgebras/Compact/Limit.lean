@@ -108,9 +108,169 @@ def truncFamilies : OmegaCatAlgebra.{u, v, w} Sig ⥤ CompatibleFamily.{u, v, w}
 ```
 :::
 
+# Homomorphisms
+
+Every cell of a compact $`\omega`-categorial algebra is a $`k`-cell for some $`k`, and then it lies
+in all the truncations from level $`k` on. A morphism $`(H_n)_n` between the families of
+truncations of $`\boldsymbol{\mathsf{A}}` and $`\boldsymbol{\mathsf{B}}` thus gives a value at every
+cell $`x`, by computing $`H_n(x)` at any level $`n` at which $`x` lies; the compatibility of the
+$`H_n` with the isomorphisms of the families says that $`H_{n+1}(x) = H_n(x)`, so the value does not
+depend on the level.
+
+```lean
+variable {Sig}
+
+section Cells
+
+variable {C : Type w} [OmegaCategory C]
+
+/-- A cell of a compact ω-category lives in the truncations from some level on. -/
+lemma exists_level (x : C) : ∃ n, ∀ u ∈ upperω n, CategoryStruct.sc u x = x := by
+  obtain ⟨k, hk⟩ := OmegaCategory.is_cell x
+  exact ⟨k, fun u hu => cell_of_le hk hu⟩
+
+lemma level_mono {x : C} {n n' : ℕ} (h : n ≤ n')
+    (hx : ∀ u ∈ upperω n, CategoryStruct.sc u x = x) :
+    ∀ u ∈ upperω n', CategoryStruct.sc u x = x :=
+  fun u hu => hx u (le_trans h hu)
+
+end Cells
+
+namespace OmegaCatAlgebra
+
+variable {A B : OmegaCatAlgebra.{u, v, w} Sig}
+  (Φ : (truncFamilies Sig).obj A ⟶ (truncFamilies Sig).obj B)
+
+/-- The value of a morphism of families of truncations at a cell, computed at level `n`. -/
+def valAt {s : S} (x : A s) (n : ℕ) (hx : ∀ u ∈ upperω n, CategoryStruct.sc u x = x) : B s :=
+  (((Φ.map n).map s).map ⟨x, hx⟩).1
+
+lemma valAt_succ {s : S} (x : A s) (n : ℕ) (hx : ∀ u ∈ upperω n, CategoryStruct.sc u x = x) :
+    valAt Φ x (n + 1) (level_mono (Nat.le_succ n) hx) = valAt Φ x n hx := by
+  have := congrArg
+    (fun H : (truncation Sig (Nat.le_succ n)).obj (A.truncate (n + 1)) ⟶ B.truncate n =>
+    ((H.map s).map ⟨⟨x, level_mono (Nat.le_succ n) hx⟩, fun u hu => Subtype.ext (hx u hu)⟩).1)
+    (Φ.comm n)
+  exact this
+
+lemma valAt_eq {s : S} (x : A s) {n n' : ℕ} (hx : ∀ u ∈ upperω n, CategoryStruct.sc u x = x)
+    (hx' : ∀ u ∈ upperω n', CategoryStruct.sc u x = x) : valAt Φ x n hx = valAt Φ x n' hx' := by
+  suffices key : ∀ n n' (hx : ∀ u ∈ upperω n, CategoryStruct.sc u x = x)
+      (hx' : ∀ u ∈ upperω n', CategoryStruct.sc u x = x), n ≤ n' →
+      valAt Φ x n hx = valAt Φ x n' hx' by
+    rcases le_total n n' with h | h
+    · exact key n n' hx hx' h
+    · exact (key n' n hx' hx h).symm
+  intro n n' hx hx' h
+  induction n', h using Nat.le_induction with
+  | base => rfl
+  | succ m hm ih => exact (ih (level_mono hm hx)).trans (valAt_succ Φ x m _).symm
+
+/-- A level at which a cell lives. -/
+noncomputable def lvl {s : S} (x : A s) : ℕ := Classical.choose (exists_level x)
+
+lemma lvl_spec {s : S} (x : A s) : ∀ u ∈ upperω (lvl x), CategoryStruct.sc u x = x :=
+  Classical.choose_spec (exists_level x)
+```
+
+:::construction (label := "compact.hom-of-family") (central := false) (title := "The homomorphism of a morphism of families")
+Let $`\boldsymbol{\mathsf{A}}` and $`\boldsymbol{\mathsf{B}}` be compact $`\omega`-categorial
+$`\Sigma`-algebras and $`(H_n)_n` a morphism between their families of truncations. The mapping
+that sends a cell $`x` of $`\boldsymbol{\mathsf{A}}` to $`H_n(x)`, for any level $`n` at which $`x`
+lies, is a homomorphism $`H \colon \boldsymbol{\mathsf{A}} \to \boldsymbol{\mathsf{B}}`: to compare
+$`H` with a $`k`-source, a $`k`-target, a $`k`-composite or an operation of $`\Sigma`, compute every
+value involved at a level above $`k` at which all the cells involved lie, where $`H_n` preserves
+them. Its truncations are the $`H_n`.
+
+```lean
+/-- The homomorphism of `ω`-categorial algebras of a morphism of families of truncations. -/
+noncomputable def homOfFamily : Hom A B where
+  map s :=
+    { map := fun x => valAt Φ x (lvl x) (lvl_spec x)
+      map_sc_eq_sc_map := fun k x => by
+        have hx := level_mono (le_max_left (lvl x) (k + 1)) (lvl_spec x)
+        let y : (A.truncate (max (lvl x) (k + 1))).carrier s := ⟨x, hx⟩
+        let kk : Fin (max (lvl x) (k + 1)) := ⟨k, by omega⟩
+        refine (valAt_eq Φ (CategoryStruct.sc k x) (lvl_spec _)
+          (CategoryStruct.sc kk y).2).trans ?_
+        rw [valAt_eq Φ x (lvl_spec x) hx]
+        exact congrArg Subtype.val (((Φ.map _).map s).map_sc_eq_sc_map kk y)
+      map_tg_eq_tg_map := fun k x => by
+        have hx := level_mono (le_max_left (lvl x) (k + 1)) (lvl_spec x)
+        let y : (A.truncate (max (lvl x) (k + 1))).carrier s := ⟨x, hx⟩
+        let kk : Fin (max (lvl x) (k + 1)) := ⟨k, by omega⟩
+        refine (valAt_eq Φ (CategoryStruct.tg k x) (lvl_spec _)
+          (CategoryStruct.tg kk y).2).trans ?_
+        rw [valAt_eq Φ x (lvl_spec x) hx]
+        exact congrArg Subtype.val (((Φ.map _).map s).map_tg_eq_tg_map kk y)
+      map_comp_eq_comp_map := fun {k f g} h => by
+        let N := max (max (lvl f) (lvl g)) (k + 1)
+        have hf := level_mono (show lvl f ≤ N by omega) (lvl_spec f)
+        have hg := level_mono (show lvl g ≤ N by omega) (lvl_spec g)
+        let kk : Fin N := ⟨k, by omega⟩
+        let g' : (A.truncate N).carrier s := ⟨g, hg⟩
+        let f' : (A.truncate N).carrier s := ⟨f, hf⟩
+        have p : sc_is_tg kk g' f' := Subtype.ext h
+        refine (valAt_eq Φ _ (lvl_spec _) (CategoryStruct.comp kk g' f' p).2).trans ?_
+        exact (congrArg Subtype.val (((Φ.map N).map s).map_comp_eq_comp_map p)).trans
+          (congr_comp₂ (valAt_eq Φ f hf (lvl_spec f)) (valAt_eq Φ g hg (lvl_spec g)) _) }
+  map_op {ws s} σ a := by
+    classical
+    let N := Finset.univ.sup fun j => lvl (a j)
+    have ha : ∀ j, ∀ u ∈ upperω N, CategoryStruct.sc u (a j) = a j := fun j =>
+      level_mono (Finset.le_sup (f := fun j => lvl (a j)) (Finset.mem_univ j)) (lvl_spec (a j))
+    let b : Signature.Arity (A.truncate N) ws := fun j => ⟨a j, ha j⟩
+    change valAt Φ _ _ _ = B.op σ fun j => valAt Φ _ _ _
+    refine (valAt_eq Φ (A.op σ a) (lvl_spec _) ((A.truncate N).op σ b).2).trans ?_
+    have := congrArg Subtype.val ((Φ.map N).map_op σ b)
+    refine this.trans ?_
+    exact congrArg (B.op σ) (funext fun j => valAt_eq Φ (a j) (ha j) _)
+
+lemma truncation_homOfFamily (n : ℕ) : (truncationω Sig n).map (homOfFamily Φ) = Φ.map n := by
+  apply CatAlgebra.Hom.ext
+  intro s
+  apply Functor.ext
+  intro x
+  exact Subtype.ext (valAt_eq Φ x.1 (lvl_spec x.1) x.2)
+
+end OmegaCatAlgebra
+```
+:::
+
+:::proposition (label := "compact.trunc-families-fully-faithful") (central := false) (title := "The functor of truncations is fully faithful")
+A homomorphism of compact $`\omega`-categorial $`\Sigma`-algebras is determined by its truncations,
+and every morphism between the families of truncations is the family of truncations of a
+homomorphism: the functor of truncations is faithful and full. This is the first part of
+Corollary `CLimitNat` of the draft.
+
+```lean
+open OmegaCatAlgebra in
+instance truncFamilies_faithful : (truncFamilies.{u, v, w} Sig).Faithful where
+  map_injective {A B} {H K} h := by
+    apply OmegaCatAlgebra.Hom.ext
+    intro s
+    apply Functor.ext
+    intro x
+    have := congrArg (fun Φ : (truncFamilies Sig).obj A ⟶ (truncFamilies Sig).obj B =>
+      (((Φ.map (lvl x)).map s).map ⟨x, lvl_spec x⟩).1) h
+    exact this
+
+open OmegaCatAlgebra in
+instance truncFamilies_full : (truncFamilies.{u, v, w} Sig).Full where
+  map_surjective {A B} Φ :=
+    ⟨homOfFamily Φ, CompatibleFamily.Hom.ext (funext fun n => truncation_homOfFamily Φ n)⟩
+```
+:::
+
+:::proof (of := "compact.trunc-families-fully-faithful")
+If two homomorphisms have the same truncations, they agree at every cell, since every cell lies in
+some truncation. A morphism of families is the family of truncations of the homomorphism of
+Construction `compact.hom-of-family`.
+:::
+
 # The universal property
 
-:::theorem (label := "compact.omega-cat-alg-pseudo-limit") (central := false) (title := "ωCatAlg(Σ) is the pseudo-limit of the nCatAlg(Σ)")
+:::theorem (label := "compact.omega-cat-alg-pseudo-limit") (central := true) (title := "ωCatAlg(Σ) is the pseudo-limit of the nCatAlg(Σ)")
 For every many-sorted signature $`\Sigma`, the functor of truncations from
 $`\omega\mathsf{CatAlg}(\Sigma)` to the category of compatible families is an equivalence of
 categories. That is:
