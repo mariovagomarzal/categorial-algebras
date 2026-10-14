@@ -1,16 +1,18 @@
 import Stemma
 import Mathlib.Order.Closure
+import Mathlib.Data.Set.Lattice.Indexed
 import CategorialAlgebras.Derivor
 
 open Verso.Genre Manual InlineLean Stemma
 
 #doc (Stemma) "ep-signatures and ep-specifications" =>
 
-An *equationally partial signature*, as in Reichel's equationally partial algebras, is a
-many-sorted signature in which every operation symbol carries a set of existence equations, its
-*domain conditions*: in an algebra of this type, an operation is defined exactly on the families
-that satisfy them. This document follows Subsection `SEpSignatures` of the draft: ep-signatures,
-their algebras, ep-specifications, and the semantic consequence operator.
+An *equationally partial signature* (Subsection `SEpSignatures` of the draft, after
+{cite}`Rei87`) is a many-sorted signature in which every operation symbol carries a set of
+existence equations, its *domain conditions*, that describes where the operation is defined. Its
+algebras are the partial algebras in which every operation is defined exactly where its domain
+conditions hold. This document defines them, the ep-specifications, and the semantic consequence
+operator that the generalized ep-derivors use to compare sets of existence equations.
 
 ```lean
 universe u v w
@@ -22,247 +24,272 @@ open Signature
 variable {S : Type u}
 ```
 
-# Operation symbols occurring in a term
+# Partial algebras form a category
 
 ```lean
-/-- An operation symbol of a signature, together with its rank. -/
-abbrev Signature.Symbol (Sig : Signature.{u, v} S) : Type (max u v) :=
-  (ws : List S) × (s : S) × Sig ws s
-```
+namespace PartialAlgebra
 
-:::definition (label := "term.symbols") (central := false) (title := "Operation symbols of a term")
-The set of the operation symbols that *occur* in a term is defined by recursion: no symbol
-occurs in a variable, and the symbols of $`\sigma((P_j)_j)` are $`\sigma` and those of the
-$`P_j`. The symbols of an existence equation are those of its two sides.
+variable {Sig : Signature.{u, v} S}
 
-```lean
-def Term.symbols {Sig : Signature.{u, v} S} {X : S → Type*} :
-    {s : S} → Term Sig X s → Set Sig.Symbol
-  | _, .var _ => ∅
-  | _, .app σ ts => insert ⟨_, _, σ⟩ (⋃ j, Term.symbols (ts j))
-
-def EEq.symbols {Sig : Signature.{u, v} S} {X : S → Type*} (e : EEq Sig X) : Set Sig.Symbol :=
-  e.lhs.symbols ∪ e.rhs.symbols
-```
-:::
-
-# ep-signatures and their algebras
-
-:::definition (label := "ep-signature") (central := false) (title := "ep-signature")
-An *equationally partial signature*, or *ep-signature*, on the set of sorts $`S` is a pair
-$`\mathbf{\Sigma} = (\Sigma, \mathrm{def}^{\mathbf{\Sigma}})` where $`\Sigma` is an
-$`S`-sorted signature and $`\mathrm{def}^{\mathbf{\Sigma}}` assigns to every
-$`\sigma \in \Sigma_{\mathbf{s}, s}` a set
-$`\mathrm{def}^{\mathbf{\Sigma}}(\sigma) \subseteq \mathrm{Eq}_{\Sigma}(\downarrow\mathbf{s})` of
-existence equations, the *domain conditions* of $`\sigma`, such that the relation $`\lhd` on
-the operation symbols, $`\tau \lhd \sigma` if $`\tau` occurs in some equation of
-$`\mathrm{def}^{\mathbf{\Sigma}}(\sigma)`, is well-founded (Definition `DEpSignature` of the
-draft, where the set of sorts is part of the ep-signature).
-
-```lean
-/-- The relation `τ ◁ σ`: `τ` occurs in a domain condition of `σ`. -/
-def Signature.DefPrec {Sig : Signature.{u, v} S}
-    (defn : ∀ {ws : List S} {s : S}, Sig ws s → Set (EEq Sig (WordVar id ws)))
-    (τ σ : Sig.Symbol) : Prop :=
-  ∃ e ∈ defn σ.2.2, τ ∈ e.symbols
-
-structure EpSignature (S : Type u) where
-  /-- The underlying signature. -/
-  sig : Signature.{u, v} S
-  /-- The domain conditions of each operation symbol. -/
-  defn : ∀ {ws : List S} {s : S}, sig ws s → Set (EEq sig (WordVar id ws))
-  /-- The relation `◁` is well-founded. -/
-  wf : WellFounded (Signature.DefPrec defn)
-```
-:::
-
-The well-foundedness of $`\lhd` forbids, in particular, an operation symbol to occur in its own
-domain conditions; it is what allows the domains of the operation symbols along a generalized
-ep-derivor to be defined by recursion. It holds in all the ep-signatures of the draft, whose
-domain conditions only involve operation symbols with no domain conditions.
-
-A family $`\mathbf{a} \in A_{\mathbf{s}}` is a valuation of the variables of
-$`\downarrow\mathbf{s}` (see {name}`WordVar`).
-
-```lean
-/-- A family `𝐚 ∈ A_𝐬`, as a valuation of `↓𝐬`. -/
-abbrev Signature.Arity.val {A : S → Type w} {ws : List S} (a : Arity A ws) :
-    ∀ s, WordVar id ws s → A s :=
-  WordVar.val (φ := id) (B := A) a
-```
-
-:::definition (label := "ep-algebra") (central := false) (title := "ep-algebra")
-Let $`\mathbf{\Sigma}` be an ep-signature. A partial $`\Sigma`-algebra $`\mathbf{A} = (A, F)` is
-an *ep-algebra of type* $`\mathbf{\Sigma}`, or a $`\mathbf{\Sigma}`-*algebra*, if, for every
-$`\sigma \in \Sigma_{\mathbf{s}, s}`, the domain of $`F_\sigma` is the set of the families
-$`\mathbf{a} \in A_{\mathbf{s}}` with $`\mathbf{A} \models \mathrm{def}^{\mathbf{\Sigma}}(\sigma)[\mathbf{a}]`.
-The domain conditions are evaluated in $`\mathbf{A}` itself, so they may involve its other
-partial operations.
-
-```lean
-def EpSignature.IsAlgebra (Sg : EpSignature.{u, v} S) (A : PartialAlgebra.{u, v, w} Sg.sig) :
-    Prop :=
-  ∀ {ws : List S} {s : S} (σ : Sg.sig ws s) (a : Arity A ws),
-    (A.op σ a).Dom ↔ EEq.HoldsAll A a.val (Sg.defn σ)
-```
-:::
-
-:::definition (label := "ep-signature.of-signature") (central := false) (title := "A signature as an ep-signature")
-A many-sorted signature $`\Sigma` is identified with the ep-signature $`(\Sigma, \varnothing)`
-in which no operation symbol has domain conditions.
-
-```lean
-def EpSignature.ofSignature (Sig : Signature.{u, v} S) : EpSignature.{u, v} S where
-  sig := Sig
-  defn _ := ∅
-  wf := ⟨fun _ => ⟨_, fun _ ⟨_, he, _⟩ => he.elim⟩⟩
-```
-:::
-
-:::proposition (label := "ep-signature.of-signature-algebra") (central := false) (title := "The algebras of a signature")
-The ep-algebras of type $`(\Sigma, \varnothing)` are the (total) $`\Sigma`-algebras: the
-partial $`\Sigma`-algebras in which every operation is defined everywhere.
-
-```lean
-theorem EpSignature.isAlgebra_ofSignature_iff (Sig : Signature.{u, v} S)
-    (A : PartialAlgebra.{u, v, w} Sig) :
-    (EpSignature.ofSignature Sig).IsAlgebra A ↔
-      ∀ {ws : List S} {s : S} (σ : Sig ws s) (a : Arity A ws), (A.op σ a).Dom := by
-  constructor
-  · intro h ws s σ a
-    exact (h σ a).2 fun _ he => he.elim
-  · intro h ws s σ a
-    exact ⟨fun _ _ he => he.elim, fun _ => h σ a⟩
-```
-:::
-
-:::proof (of := "ep-signature.of-signature-algebra")
-With no domain conditions, every family satisfies them, so an ep-algebra of type
-$`(\Sigma, \varnothing)` has all its operations defined everywhere, and conversely.
-:::
-
-# ep-specifications and their models
-
-:::definition (label := "ep-specification") (central := false) (title := "ep-specification")
-An *ep-specification* is a pair $`(\mathbf{\Sigma}, \mathcal{E})` of an ep-signature
-$`\mathbf{\Sigma}` and a set $`\mathcal{E}` of $`\mathrm{QE}`$-equations of $`\Sigma`. Its
-*models* are the $`\mathbf{\Sigma}`-algebras in which every equation of $`\mathcal{E}` holds;
-with the homomorphisms of partial algebras they form the category
-$`\mathsf{epAlg}(\mathbf{\Sigma}, \mathcal{E})`, a full subcategory of $`\mathsf{PAlg}(\Sigma)`.
-An ep-signature $`\mathbf{\Sigma}` is identified with the ep-specification
-$`(\mathbf{\Sigma}, \varnothing)`, whose models are the $`\mathbf{\Sigma}`-algebras, and
-$`\mathsf{epAlg}(\mathbf{\Sigma}) = \mathsf{epAlg}(\mathbf{\Sigma}, \varnothing)`.
-
-```lean
-def EpSignature.IsModel (Sg : EpSignature.{u, v} S) {V : S → Type*}
-    (E : Set (QEEq Sg.sig V)) (A : PartialAlgebra.{u, v, w} Sg.sig) : Prop :=
-  Sg.IsAlgebra A ∧ ∀ q ∈ E, q.Holds A
-
-def EpAlg (Sg : EpSignature.{u, v} S) {V : S → Type*} (E : Set (QEEq Sg.sig V)) :
-    Type (max u v (w + 1)) :=
-  {A : PartialAlgebra.{u, v, w} Sg.sig // Sg.IsModel E A}
-
-instance (Sg : EpSignature.{u, v} S) {V : S → Type*} (E : Set (QEEq Sg.sig V)) :
-    CategoryTheory.Category.{max u w} (EpAlg.{u, v, w} Sg E) where
-  Hom A B := PartialAlgebra.Hom A.1 B.1
-  id A := PartialAlgebra.Hom.id A.1
-  comp H K := PartialAlgebra.Hom.comp K H
+instance category : CategoryTheory.Category.{max u w} (PartialAlgebra.{u, v, w} Sig) where
+  Hom A B := Hom A B
+  id A := Hom.id A
+  comp H K := Hom.comp K H
   id_comp _ := rfl
   comp_id _ := rfl
   assoc _ _ _ := rfl
+
+@[simp] lemma id_map (A : PartialAlgebra.{u, v, w} Sig) (s : S) (x : A s) :
+    (CategoryTheory.CategoryStruct.id A : Hom A A).map s x = x := rfl
+
+@[simp] lemma comp_map {A B C : PartialAlgebra.{u, v, w} Sig} (H : A ⟶ B) (K : B ⟶ C) (s : S)
+    (x : A s) :
+    (CategoryTheory.CategoryStruct.comp H K : Hom A C).map s x = K.map s (H.map s x) := rfl
+
+end PartialAlgebra
 ```
-:::
 
-# Semantic consequence
-
-:::definition (label := "ep-specification.cn") (central := false) (title := "Semantic consequence operator")
-Let $`(\mathbf{\Sigma}, \mathcal{E})` be an ep-specification and $`X` an $`S`-sorted set. For
-$`\mathcal{H} \subseteq \mathrm{Eq}_{\Sigma}(X)`, $`\mathrm{Cn}^{\mathbf{\Sigma}, \mathcal{E}}_X(\mathcal{H})`
-is the set of the existence equations $`e` such that, for every model $`\mathbf{A}` of
-$`(\mathbf{\Sigma}, \mathcal{E})` and every valuation $`a \colon X \to A` with
-$`\mathbf{A} \models \mathcal{H}[a]`, $`e` holds in $`\mathbf{A}` under $`a`; that is, every
-pair $`(\mathbf{A}, a)` in $`\mathrm{Mod}(\mathcal{H})` is in $`\mathrm{Mod}(\{e\})`. A set
-$`\mathcal{H}` is *closed* if $`\mathrm{Cn}^{\mathbf{\Sigma}, \mathcal{E}}_X(\mathcal{H}) = \mathcal{H}`.
-
-The models range over the partial algebras whose carriers lie in a fixed universe, an argument
-of the Lean definition that the draft does not see; the library always takes the universe of
-the algebras under consideration.
+# Operation symbols occurring in terms
 
 ```lean
-def EpSignature.Cn (Sg : EpSignature.{u, v} S) {V : S → Type*} (E : Set (QEEq Sg.sig V))
-    (X : S → Type*) (H : Set (EEq Sg.sig X)) : Set (EEq Sg.sig X) :=
-  {e | ∀ A : PartialAlgebra.{u, v, w} Sg.sig, Sg.IsModel E A →
-    ∀ a : ∀ s, X s → A s, EEq.HoldsAll A a H → e.Holds A a}
-```
-:::
+/-- An operation symbol of `Σ`, together with its rank. -/
+structure Op (Sig : Signature.{u, v} S) where
+  /-- The arity. -/
+  ws : List S
+  /-- The sort. -/
+  s : S
+  /-- The operation symbol. -/
+  σ : Sig ws s
 
-:::proposition (label := "ep-specification.cn-closure") (central := false) (title := "Cn is a closure operator")
-$`\mathrm{Cn}^{\mathbf{\Sigma}, \mathcal{E}}_X` is a closure operator on the subsets of
-$`\mathrm{Eq}_{\Sigma}(X)`, whose closed sets are those with
-$`\mathrm{Cn}^{\mathbf{\Sigma}, \mathcal{E}}_X(\mathcal{H}) = \mathcal{H}`.
+variable {Sig : Signature.{u, v} S}
+
+/-- The operation symbols that occur in a term. -/
+def Term.ops {X : S → Type} : {t : S} → Term Sig X t → Set (Op Sig)
+  | _, .var _ => ∅
+  | _, .app σ ts => {⟨_, _, σ⟩} ∪ ⋃ j, (ts j).ops
+
+/-- The operation symbols that occur in an existence equation. -/
+def EEq.ops {X : S → Type} (e : EEq Sig X) : Set (Op Sig) := e.lhs.ops ∪ e.rhs.ops
+```
+
+# ep-signatures
+
+:::definition (label := "ep-signature") (central := true) (title := "ep-signatures and their algebras")
+An *ep-signature* $`\mathbf{\Sigma} = (S, \Sigma, \mathrm{def}^{\mathbf{\Sigma}})` is a many-sorted
+signature $`(S, \Sigma)` together with, for every $`\sigma \in \Sigma_{\mathbf{s}, s}`, a set
+$`\mathrm{def}^{\mathbf{\Sigma}}(\sigma)` of existence equations with variables in
+$`\downarrow\mathbf{s}`, the *domain conditions* of $`\sigma`, such that the relation
+$`\tau \lhd \sigma`, "$`\tau` occurs in some equation of $`\mathrm{def}^{\mathbf{\Sigma}}(\sigma)`",
+is well-founded.
+
+A partial $`\Sigma`-algebra $`\mathbf{A} = (A, F)` is an *ep-algebra of type* $`\mathbf{\Sigma}`,
+or a $`\mathbf{\Sigma}`-*algebra*, if, for every $`\sigma \in \Sigma_{\mathbf{s}, s}`,
+$`\mathrm{Dom}(F_\sigma) = A_{\mathrm{def}^{\mathbf{\Sigma}}(\sigma)}`, the set of the families
+$`\mathbf{a} \in A_{\mathbf{s}}` with $`\mathbf{A} \models \mathrm{def}^{\mathbf{\Sigma}}(\sigma)[\mathbf{a}]`.
+The $`\mathbf{\Sigma}`-algebras form the full subcategory $`\mathsf{epAlg}(\mathbf{\Sigma})` of the
+category $`\mathsf{PAlg}(\Sigma)` of partial $`\Sigma`-algebras.
 
 ```lean
-def EpSignature.cnClosure (Sg : EpSignature.{u, v} S) {V : S → Type*}
-    (E : Set (QEEq Sg.sig V)) (X : S → Type*) : ClosureOperator (Set (EEq Sg.sig X)) :=
-  ClosureOperator.mk₂ (Sg.Cn.{u, v, w} E X)
-    (fun _ e he _ _ _ hH => hH e he)
-    (fun _ _ hle e he A hA a hH' => he A hA a fun e' he' => hle he' A hA a hH')
-```
-:::
+structure EpSignature (S : Type u) where
+  /-- The many-sorted signature. -/
+  sig : Signature.{u, v} S
+  /-- The domain conditions of each operation symbol. -/
+  defn : ∀ {ws : List S} {s : S}, sig ws s → Set (EEq sig (Vars ws.get))
+  /-- The relation "occurs in the domain conditions of" is well-founded. -/
+  wf : WellFounded fun τ σ : Op sig => ∃ e ∈ defn σ.σ, τ ∈ e.ops
 
-:::proof (of := "ep-specification.cn-closure")
-Every equation of $`\mathcal{H}` holds wherever $`\mathcal{H}` does, so
-$`\mathcal{H} \subseteq \mathrm{Cn}(\mathcal{H})`. If $`\mathcal{H} \subseteq \mathrm{Cn}(\mathcal{H}')`,
-then every pair in $`\mathrm{Mod}(\mathcal{H}')` is in $`\mathrm{Mod}(\mathcal{H})`, and hence
-$`\mathrm{Cn}(\mathcal{H}) \subseteq \mathrm{Cn}(\mathcal{H}')`. These two properties
-characterize closure operators.
-:::
-
-:::proposition (label := "ep-specification.cn-models") (central := false) (title := "Cn does not change the models")
-For every $`\mathcal{H} \subseteq \mathrm{Eq}_{\Sigma}(X)`:
-
-1. $`\mathrm{Mod}(\mathrm{Cn}(\mathcal{H})) = \mathrm{Mod}(\mathcal{H})`;
-2. $`\mathcal{H}' \subseteq \mathrm{Cn}(\mathcal{H})` if and only if
-   $`\mathrm{Mod}(\mathcal{H}) \subseteq \mathrm{Mod}(\mathcal{H}')`;
-3. two closed sets of existence equations are equal if and only if they have the same models.
-
-```lean
 namespace EpSignature
 
-variable (Sg : EpSignature.{u, v} S) {V : S → Type*} (E : Set (QEEq Sg.sig V)) {X : S → Type*}
+variable (Sg : EpSignature.{u, v} S)
 
-theorem holdsAll_cn_iff {H : Set (EEq Sg.sig X)} {A : PartialAlgebra.{u, v, w} Sg.sig}
-    (hA : Sg.IsModel E A) (a : ∀ s, X s → A s) :
-    EEq.HoldsAll A a (Sg.Cn.{u, v, w} E X H) ↔ EEq.HoldsAll A a H :=
-  ⟨fun h e he => h e fun _ _ _ hH => hH e he, fun h _ he => he A hA a h⟩
+/-- The relation `τ ◁ σ`: `τ` occurs in the domain conditions of `σ`. -/
+def Prec (τ σ : Op Sg.sig) : Prop := ∃ e ∈ Sg.defn σ.σ, τ ∈ e.ops
 
-theorem subset_cn_iff {H H' : Set (EEq Sg.sig X)} :
-    H' ⊆ Sg.Cn.{u, v, w} E X H ↔
-      ∀ A : PartialAlgebra.{u, v, w} Sg.sig, Sg.IsModel E A →
-        ∀ a : ∀ s, X s → A s, EEq.HoldsAll A a H → EEq.HoldsAll A a H' :=
-  ⟨fun h A hA a hH e he => h he A hA a hH, fun h e he A hA a hH => h A hA a hH e he⟩
+/-- `𝐀` is a `𝚺`-algebra: every operation is defined exactly where its domain conditions
+hold. -/
+def IsAlgebra (A : PartialAlgebra.{u, v, w} Sg.sig) : Prop :=
+  ∀ {ws : List S} {s : S} (σ : Sg.sig ws s) (a : Arity A ws),
+    (A.op σ a).Dom ↔ EEq.HoldsAll A (famVal a) (Sg.defn σ)
 
-theorem eq_of_closed {H H' : Set (EEq Sg.sig X)} (hH : Sg.Cn.{u, v, w} E X H = H)
-    (hH' : Sg.Cn.{u, v, w} E X H' = H') :
-    H = H' ↔ ∀ A : PartialAlgebra.{u, v, w} Sg.sig, Sg.IsModel E A →
-      ∀ a : ∀ s, X s → A s, (EEq.HoldsAll A a H ↔ EEq.HoldsAll A a H') := by
-  refine ⟨fun h _ _ _ => h ▸ Iff.rfl, fun h => ?_⟩
-  apply Set.Subset.antisymm
-  · rw [← hH']
-    exact (subset_cn_iff Sg E).2 fun A hA a hH'' => (h A hA a).2 hH''
-  · rw [← hH]
-    exact (subset_cn_iff Sg E).2 fun A hA a hH'' => (h A hA a).1 hH''
+/-- The category `epAlg(𝚺)`. -/
+def EpAlg : Type (max u v (w + 1)) := {A : PartialAlgebra.{u, v, w} Sg.sig // Sg.IsAlgebra A}
+
+instance : CategoryTheory.Category.{max u w} (EpAlg.{u, v, w} Sg) where
+  Hom A B := PartialAlgebra.Hom A.1 B.1
+  id A := PartialAlgebra.Hom.id A.1
+  comp H K := PartialAlgebra.Hom.comp K H
 
 end EpSignature
 ```
 :::
 
-:::proof (of := "ep-specification.cn-models")
-(1) A pair in $`\mathrm{Mod}(\mathrm{Cn}(\mathcal{H}))` is in $`\mathrm{Mod}(\mathcal{H})`, since
-$`\mathcal{H} \subseteq \mathrm{Cn}(\mathcal{H})`, and conversely by the definition of
-$`\mathrm{Cn}`. (2) Both sides say that every pair in $`\mathrm{Mod}(\mathcal{H})` satisfies every
-equation of $`\mathcal{H}'`. (3) If $`\mathcal{H}` and $`\mathcal{H}'` are closed and have the
-same models, then, by (2), each is contained in the closure of the other, which is the other.
+:::definition (label := "ep-signature-of-sig") (central := false) (title := "A signature as an ep-signature")
+A many-sorted signature $`(S, \Sigma)` is identified with the ep-signature
+$`(S, \Sigma, \varnothing)` in which no operation symbol has domain conditions. Its ep-algebras are
+the total $`\Sigma`-algebras.
+
+```lean
+/-- The ep-signature `(S, Σ, ∅)`. -/
+def EpSignature.ofSig (Sig : Signature.{u, v} S) : EpSignature.{u, v} S where
+  sig := Sig
+  defn _ := ∅
+  wf := ⟨fun _ => ⟨_, fun _ ⟨_, he, _⟩ => he.elim⟩⟩
+
+theorem EpSignature.ofSig_isAlgebra_iff (Sig : Signature.{u, v} S)
+    (A : PartialAlgebra.{u, v, w} Sig) :
+    (EpSignature.ofSig Sig).IsAlgebra A ↔
+      ∀ {ws : List S} {s : S} (σ : Sig ws s) (a : Arity A ws), (A.op σ a).Dom := by
+  constructor
+  · intro h ws s σ a
+    exact (h σ a).mpr fun _ he => he.elim
+  · intro h ws s σ a
+    exact ⟨fun _ _ he => he.elim, fun _ => h σ a⟩
+```
+:::
+
+:::proof (of := "ep-signature-of-sig")
+The empty set of domain conditions holds for every family.
+:::
+
+# ep-specifications
+
+The draft takes the $`\mathrm{QE}`-equations of an ep-specification with variables in a fixed
+$`S`-sorted set $`V^{S}`; the library allows any $`S`-sorted set of variables $`V`.
+
+:::definition (label := "ep-specification") (central := false) (title := "ep-specifications and their models")
+An *ep-specification* $`(\mathbf{\Sigma}, \mathcal{E})` is an ep-signature together with a set
+$`\mathcal{E}` of $`\mathrm{QE}`-equations. Its *models* are the $`\mathbf{\Sigma}`-algebras in which
+every equation of $`\mathcal{E}` holds; they form the full subcategory
+$`\mathsf{epAlg}(\mathbf{\Sigma}, \mathcal{E})` of $`\mathsf{epAlg}(\mathbf{\Sigma})`.
+
+```lean
+/-- An ep-specification `(𝚺, ℰ)`. -/
+structure EpSpec (S : Type u) (V : S → Type) where
+  /-- The ep-signature. -/
+  sg : EpSignature.{u, v} S
+  /-- The `QE`-equations. -/
+  eqs : Set (QEEq sg.sig V)
+
+namespace EpSpec
+
+variable {V : S → Type} (Sp : EpSpec.{u, v} S V)
+
+/-- `𝐀` is a model of `(𝚺, ℰ)`. -/
+def IsModel (A : PartialAlgebra.{u, v, w} Sp.sg.sig) : Prop :=
+  Sp.sg.IsAlgebra A ∧ ∀ q ∈ Sp.eqs, q.Holds A
+
+/-- The category `epAlg(𝚺, ℰ)`. -/
+def EpAlg : Type (max u v (w + 1)) := {A : PartialAlgebra.{u, v, w} Sp.sg.sig // Sp.IsModel A}
+
+instance : CategoryTheory.Category.{max u w} (EpAlg.{u, v, w} Sp) where
+  Hom A B := PartialAlgebra.Hom A.1 B.1
+  id A := PartialAlgebra.Hom.id A.1
+  comp H K := PartialAlgebra.Hom.comp K H
+
+@[ext] lemma EpAlg.hom_ext {A B : EpAlg.{u, v, w} Sp} {f g : A ⟶ B}
+    (h : ∀ s x, PartialAlgebra.Hom.map f s x = PartialAlgebra.Hom.map g s x) : f = g :=
+  PartialAlgebra.Hom.ext h
+
+end EpSpec
+```
+:::
+
+# The semantic consequence operator
+
+:::definition (label := "ep-consequence") (central := false) (title := "The semantic consequence operator")
+Let $`(\mathbf{\Sigma}, \mathcal{E})` be an ep-specification and $`\kappa \colon I \to S`. For a set
+$`\mathcal{H}` of existence equations with variables in $`\downarrow\kappa`,
+$`\mathrm{Cn}^{\mathbf{\Sigma}, \mathcal{E}}_{\kappa}(\mathcal{H})` is the set of the existence
+equations $`e` such that, for every model $`\mathbf{A}` of $`(\mathbf{\Sigma}, \mathcal{E})` and
+every family $`\mathbf{a}` with $`\mathbf{A} \models \mathcal{H}[\mathbf{a}]`,
+$`\mathbf{A} \models e[\mathbf{a}]`. The set $`\mathcal{H}` is *closed* if
+$`\mathrm{Cn}^{\mathbf{\Sigma}, \mathcal{E}}_{\kappa}(\mathcal{H}) = \mathcal{H}`.
+
+The models range over the partial algebras whose sorts are sets of a fixed universe, the
+universe `w` of the Lean.
+
+```lean
+namespace EpSpec
+
+variable {V : S → Type} (Sp : EpSpec.{u, v} S V) {I : Type} (κ : I → S)
+
+/-- The semantic consequence operator `Cn^{𝚺,ℰ}_κ`. -/
+def Cn (H : Set (EEq Sp.sg.sig (Vars κ))) : Set (EEq Sp.sg.sig (Vars κ)) :=
+  {e | ∀ A : PartialAlgebra.{u, v, w} Sp.sg.sig, Sp.IsModel A → ∀ a : ∀ i, A (κ i),
+    EEq.HoldsAll A (famVal a) H → e.Holds A (famVal a)}
+
+lemma mem_cn_iff {H : Set (EEq Sp.sg.sig (Vars κ))} {e : EEq Sp.sg.sig (Vars κ)} :
+    e ∈ Cn.{u, v, w} Sp κ H ↔ ∀ A : PartialAlgebra.{u, v, w} Sp.sg.sig, Sp.IsModel A →
+      ∀ a : ∀ i, A (κ i), EEq.HoldsAll A (famVal a) H → e.Holds A (famVal a) :=
+  Iff.rfl
+
+/-- `ℋ` is closed. -/
+def IsClosed (H : Set (EEq Sp.sg.sig (Vars κ))) : Prop := Cn.{u, v, w} Sp κ H = H
+
+end EpSpec
+```
+:::
+
+:::proposition (label := "ep-consequence-closure") (central := false) (title := "Cn is a closure operator")
+$`\mathrm{Cn}^{\mathbf{\Sigma}, \mathcal{E}}_{\kappa}` is a closure operator, and
+$`\mathcal{H}` and $`\mathrm{Cn}^{\mathbf{\Sigma}, \mathcal{E}}_{\kappa}(\mathcal{H})` hold under the
+same families in the models. Consequently,
+$`\mathcal{H}' \subseteq \mathrm{Cn}^{\mathbf{\Sigma}, \mathcal{E}}_{\kappa}(\mathcal{H})` if and
+only if every family of a model that satisfies $`\mathcal{H}` satisfies $`\mathcal{H}'`, and two
+closed sets of existence equations are equal if and only if they hold under the same families in
+the models.
+
+```lean
+namespace EpSpec
+
+variable {V : S → Type} (Sp : EpSpec.{u, v} S V) {I : Type} (κ : I → S)
+
+/-- `Cn` as a closure operator. -/
+def cnClosure : ClosureOperator (Set (EEq Sp.sg.sig (Vars κ))) :=
+  ClosureOperator.mk' (Cn.{u, v, w} Sp κ)
+    (fun _ _ hHH' _ he A hA a ha => he A hA a fun e' he' => ha e' (hHH' he'))
+    (fun _ e he A _ a ha => ha e he)
+    (fun _ _ he A hA a ha => he A hA a fun _ he' => he' A hA a ha)
+
+theorem cn_cn (H : Set (EEq Sp.sg.sig (Vars κ))) :
+    Cn.{u, v, w} Sp κ (Cn.{u, v, w} Sp κ H) = Cn.{u, v, w} Sp κ H :=
+  (cnClosure.{u, v, w} Sp κ).idempotent H
+
+theorem holdsAll_cn_iff {H : Set (EEq Sp.sg.sig (Vars κ))} {A : PartialAlgebra.{u, v, w} Sp.sg.sig}
+    (hA : Sp.IsModel A) (a : ∀ i, A (κ i)) :
+    EEq.HoldsAll A (famVal a) (Cn.{u, v, w} Sp κ H) ↔ EEq.HoldsAll A (famVal a) H :=
+  ⟨fun h e he => h e fun _ _ _ ha => ha e he, fun h _ he => he A hA a h⟩
+
+theorem subset_cn_iff {H H' : Set (EEq Sp.sg.sig (Vars κ))} :
+    H' ⊆ Cn.{u, v, w} Sp κ H ↔
+      ∀ A : PartialAlgebra.{u, v, w} Sp.sg.sig, Sp.IsModel A → ∀ a : ∀ i, A (κ i),
+        EEq.HoldsAll A (famVal a) H → EEq.HoldsAll A (famVal a) H' :=
+  ⟨fun h A hA a ha e he => h he A hA a ha, fun h e he A hA a ha => h A hA a ha e he⟩
+
+theorem eq_of_isClosed {H H' : Set (EEq Sp.sg.sig (Vars κ))} (hH : IsClosed.{u, v, w} Sp κ H)
+    (hH' : IsClosed.{u, v, w} Sp κ H')
+    (h : ∀ A : PartialAlgebra.{u, v, w} Sp.sg.sig, Sp.IsModel A → ∀ a : ∀ i, A (κ i),
+      EEq.HoldsAll A (famVal a) H ↔ EEq.HoldsAll A (famVal a) H') :
+    H = H' := by
+  rw [← hH, ← hH']
+  ext e
+  exact ⟨fun he A hA a ha => he A hA a ((h A hA a).mpr ha),
+    fun he A hA a ha => he A hA a ((h A hA a).mp ha)⟩
+
+end EpSpec
+```
+:::
+
+:::proof (of := "ep-consequence-closure")
+Every equation of $`\mathcal{H}` holds wherever $`\mathcal{H}` does, so
+$`\mathcal{H} \subseteq \mathrm{Cn}(\mathcal{H})`; a larger set holds under fewer families, so
+$`\mathrm{Cn}` is monotone; and, by definition, $`\mathrm{Cn}(\mathcal{H})` holds wherever
+$`\mathcal{H}` does, so it holds under the same families as $`\mathcal{H}`, and
+$`\mathrm{Cn}(\mathrm{Cn}(\mathcal{H})) \subseteq \mathrm{Cn}(\mathcal{H})`. The inclusion
+$`\mathcal{H}' \subseteq \mathrm{Cn}(\mathcal{H})` says, by definition, that every equation of
+$`\mathcal{H}'` holds wherever $`\mathcal{H}` does. If closed sets $`\mathcal{H}` and
+$`\mathcal{H}'` hold under the same families, then each is contained in the closure of the other,
+which is the other.
 :::
 
 ```lean

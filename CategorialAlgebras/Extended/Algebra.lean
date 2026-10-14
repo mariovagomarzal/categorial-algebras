@@ -145,37 +145,40 @@ end CatAlgebra
 # The globular n-categorial signature
 
 :::definition (label := "extended.signature") (central := false) (title := "The globular n-categorial signature")
-Let $`\Sigma` be an $`S`-sorted signature and $`n \in \mathbb{N}`. The *globular*
-$`n`-*categorial signature determined by* $`\Sigma`, $`\Sigma^{\mathrm{gl}(n)}`, has sorts
-$`(n + 1) \times S`, the sort $`(k, s)` standing for the $`k`-cells of sort $`s`, and the
-following operation symbols (Definition `DSigmaCatGlobular` of the draft):
+Let $`\Sigma` be an $`S`-sorted signature and $`I` a preordered set of dimensions. The *globular
+categorial signature determined by* $`\Sigma` *with dimensions in* $`I` has sorts
+$`I \times S`, the sort $`(k, s)` standing for the $`k`-cells of sort $`s`, and the following
+operation symbols:
 
-1. for every $`k \in n + 1` and $`\sigma \in \Sigma_{\mathbf{s}, s}`, a copy $`\sigma_k` of arity
+1. for every $`k \in I` and $`\sigma \in \Sigma_{\mathbf{s}, s}`, a copy $`\sigma_k` of arity
    $`(k, \mathbf{s}) = ((k, s_j))_{j \in |\mathbf{s}|}` and coarity $`(k, s)`;
-2. for all $`j < k` in $`n + 1` and $`s \in S`, the $`(j,k)`-source and the $`(j,k)`-target
+2. for all $`j < k` in $`I` and $`s \in S`, the $`(j,k)`-source and the $`(j,k)`-target
    $`\mathrm{sc}^{(j,k)}_s, \mathrm{tg}^{(j,k)}_s` of arity $`((k, s))` and coarity $`(j, s)`,
    the $`(k,j)`-identity $`\mathrm{i}^{(k,j)}_s` of arity $`((j, s))` and coarity $`(k, s)`, and
    the $`j`-composition of $`k`-cells $`\circ^{(j,k)}_s` of arity $`((k, s), (k, s))` and
    coarity $`(k, s)`.
 
-The draft defines it by cases on the arity; as an inductive family the symbols are exactly the
-disjoint union of the cases.
+The *globular* $`n`-*categorial signature* $`\Sigma^{\mathrm{gl}(n)}` of Definition
+`DSigmaCatGlobular` of the draft is the one with dimensions in $`n + 1` for $`n \in \mathbb{N}`,
+`ExtendedSignature Sig (FinSucc n)` in the Lean, and with dimensions in $`\omega` for
+$`n = \omega`, `ExtendedSignature Sig ℕ`. The draft defines it by cases on the arity; as an
+inductive family the symbols are exactly the disjoint union of the cases.
 
 ```lean
-inductive ExtendedSignature (Sig : Signature.{u, v} S) (n : ℕ) :
-    List (FinSucc n × S) → FinSucc n × S → Type (max u v)
+inductive ExtendedSignature (Sig : Signature.{u, v} S) (Index : Type) [Preorder Index] :
+    List (Index × S) → Index × S → Type (max u v)
   /-- The copy acting on `k`-cells of an operation symbol of `Sig`. -/
-  | op (k : FinSucc n) {w : List S} {s : S} (σ : Sig w s) :
-      ExtendedSignature Sig n (w.map fun t => (k, t)) (k, s)
+  | op (k : Index) {w : List S} {s : S} (σ : Sig w s) :
+      ExtendedSignature Sig Index (w.map fun t => (k, t)) (k, s)
   /-- The `(j,k)`-source at sort `s`. -/
-  | sc {j k : FinSucc n} (h : j < k) (s : S) : ExtendedSignature Sig n [(k, s)] (j, s)
+  | sc {j k : Index} (h : j < k) (s : S) : ExtendedSignature Sig Index [(k, s)] (j, s)
   /-- The `(j,k)`-target at sort `s`. -/
-  | tg {j k : FinSucc n} (h : j < k) (s : S) : ExtendedSignature Sig n [(k, s)] (j, s)
+  | tg {j k : Index} (h : j < k) (s : S) : ExtendedSignature Sig Index [(k, s)] (j, s)
   /-- The `(k,j)`-identity at sort `s`. -/
-  | idm {j k : FinSucc n} (h : j < k) (s : S) : ExtendedSignature Sig n [(j, s)] (k, s)
+  | idm {j k : Index} (h : j < k) (s : S) : ExtendedSignature Sig Index [(j, s)] (k, s)
   /-- The `j`-composition of `k`-cells at sort `s`. -/
-  | comp {j k : FinSucc n} (h : j < k) (s : S) :
-      ExtendedSignature Sig n [(k, s), (k, s)] (k, s)
+  | comp {j k : Index} (h : j < k) (s : S) :
+      ExtendedSignature Sig Index [(k, s), (k, s)] (k, s)
 ```
 :::
 

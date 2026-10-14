@@ -146,23 +146,27 @@ for a signature that adds to $`\Sigma` sources, targets and compositions of ever
 below $`n`.
 
 :::definition (label := "compact.signature") (central := false) (title := "The single-set n-categorial signature")
-Let $`\Sigma` be an $`S`-sorted signature and $`n \in \mathbb{N}`. The *single-set*
-$`n`-*categorial signature determined by* $`\Sigma`, $`\Sigma^{(n)}`, is the expansion of
-$`\Sigma` obtained by adding, for every $`k \in n` and every $`s \in S`, two operation symbols
+Let $`\Sigma` be an $`S`-sorted signature and $`I` a set of dimensions. The *single-set
+categorial signature determined by* $`\Sigma` *with dimensions in* $`I` is the expansion of
+$`\Sigma` obtained by adding, for every $`k \in I` and every $`s \in S`, two operation symbols
 $`\mathrm{sc}^{k}_{s}` and $`\mathrm{tg}^{k}_{s}` of arity $`(s)` and coarity $`s`, the
 $`k`-source and the $`k`-target, and an operation symbol $`\circ^{k}_{s}` of arity $`(s, s)`
-and coarity $`s`, the $`k`-composition (Definition `DSigmaCatSingleSet` of the draft).
+and coarity $`s`, the $`k`-composition. For $`n \in \mathbb{N} \cup \{\omega\}`, the *single-set*
+$`n`-*categorial signature* $`\Sigma^{(n)}` of Definition `DSigmaCatSingleSet` of the draft is the
+one with dimensions in $`n`: in the Lean, `CompactSignature Sig (Fin n)` for $`n \in \mathbb{N}`
+and `CompactSignature Sig ℕ` for $`n = \omega`.
 
 ```lean
-inductive CompactSignature (Sig : Signature.{u, v} S) (n : ℕ) : List S → S → Type (max u v)
+inductive CompactSignature (Sig : Signature.{u, v} S) (Index : Type) :
+    List S → S → Type (max u v)
   /-- An operation symbol of `Sig`. -/
-  | op {w : List S} {s : S} (σ : Sig w s) : CompactSignature Sig n w s
+  | op {w : List S} {s : S} (σ : Sig w s) : CompactSignature Sig Index w s
   /-- The `k`-source at sort `s`. -/
-  | sc (k : Fin n) (s : S) : CompactSignature Sig n [s] s
+  | sc (k : Index) (s : S) : CompactSignature Sig Index [s] s
   /-- The `k`-target at sort `s`. -/
-  | tg (k : Fin n) (s : S) : CompactSignature Sig n [s] s
+  | tg (k : Index) (s : S) : CompactSignature Sig Index [s] s
   /-- The `k`-composition at sort `s`. -/
-  | comp (k : Fin n) (s : S) : CompactSignature Sig n [s, s] s
+  | comp (k : Index) (s : S) : CompactSignature Sig Index [s, s] s
 ```
 :::
 
