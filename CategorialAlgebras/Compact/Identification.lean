@@ -1159,7 +1159,7 @@ theorem cellModel_omegaModelAlgebra (M : CompactPAlg.{u, v, w} Sig ℕ) (hM : Is
   Subtype.ext (cellAlgebra_model M)
 ```
 
-:::theorem (label := "compact.omega-cat-alg-iso") (central := false) (title := "ωCatAlg(Σ) as a full subcategory of PAlg(C^Σ⁽ω⁾)")
+:::theorem (label := "compact.omega-cat-alg-iso") (central := true) (title := "ωCatAlg(Σ) as a full subcategory of PAlg(C^Σ⁽ω⁾)")
 For every many-sorted signature $`\Sigma`, the functor of cells from
 $`\omega\mathsf{CatAlg}(\Sigma)` to the full subcategory of
 $`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(\omega)}})` of the models that have dimensions is full,
