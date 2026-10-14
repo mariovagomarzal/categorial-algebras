@@ -107,6 +107,27 @@ Next, in the order of the draft: `SGraduation` (graduation and unification,
 the passage between the single-set and the globular presentations), then
 `SDiscretization` and the rest of `STruncation`, then dimension ω.
 
+## Third scope: graduation and unification (2026-10-14)
+
+`SGraduation` is formalized in `CategorialEp` and `Graduation`, all proved.
+Decisions:
+
+- The compact and extended signatures are ep-signatures whose only domain
+  conditions are those of the compositions; their ep-specifications keep the
+  whole QE-specification (A0, A1, A3 become redundant), so that
+  `PAlg(C) = epAlg(Σ, C)` is immediate (`RCompactEp`, `PExtendedIdent`(1)).
+- `PExtendedIdent`(2) (extended categorial algebras are the models of
+  `C^ext(n)`) is not formalized: graduation and unification are stated between
+  the categories of models, which is what the draft's proofs use. Composing
+  with `compact.cat-alg-iso` gives `nCatAlg(Σ) ≃ PAlg(C^ext(n))`.
+- `g ∘ u = id` holds as an equality of derivors (`PUnifGrad`), but
+  `Uf ∘ Gd ≅ Id` only by isomorphisms that send every cell to itself, as with
+  `LGenEpComp`.
+- `CGdUfEquiv` and `PGdUfAdj` are one Mathlib adjoint equivalence: unit the
+  isomorphism above, counit `θ⁻¹`.
+
+Next: `SDiscretization` and the rest of `STruncation`, then dimension ω.
+
 ## Left out on 2026-10-08
 
 Why each part of the derivors line was left out at that date. The draft has
