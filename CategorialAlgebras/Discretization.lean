@@ -2570,6 +2570,691 @@ $`\varepsilon_{\mathbf{B}}` is a homomorphism, natural in $`\mathbf{B}`. Both tr
 on the cells, since unit and counit send every cell to itself.
 :::
 
+# Extended discretization and truncation
+
+```lean
+namespace DiscExt
+
+open Extended.Model
+
+variable {Sig n m} {M : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (m + 1))}
+
+variable (n M) in
+noncomputable abbrev model : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (n + 1)) := ⟨DE n M, holds⟩
+
+lemma sc_eq {j k : Fin (n + 1)} (h : j < k) {s : S} (x : DE n M (k, s)) :
+    sc (model n M) h x = esc M h x := Part.get_eq_of_mem (Part.eq_some_iff.mp (op_sc h x)) _
+
+lemma tg_eq {j k : Fin (n + 1)} (h : j < k) {s : S} (x : DE n M (k, s)) :
+    tg (model n M) h x = etg M h x := Part.get_eq_of_mem (Part.eq_some_iff.mp (op_tg h x)) _
+
+lemma idm_eq {j k : Fin (n + 1)} (h : j < k) {s : S} (u : DE n M (j, s)) :
+    idm (model n M) h u = eidm M h u := Part.get_eq_of_mem (Part.eq_some_iff.mp (op_idm h u)) _
+
+lemma op_eq (k : Fin (n + 1)) {ws : List S} {s : S} (σ : Sig ws s) (b : ∀ p, DE n M (k, ws.get p)) :
+    op (model n M) k σ b = eop M k σ b := Part.get_eq_of_mem (Part.eq_some_iff.mp (op_op k σ b)) _
+
+lemma comp_eq {j k : Fin (n + 1)} (h : j < k) {s : S} (x y : DE n M (k, s)) (hxy) (hxy') :
+    comp (model n M) h x y hxy = ecomp M h x y hxy' :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_comp h x y hxy')) _
+
+/-! Transports along equalities of both dimensions. -/
+
+variable {s : S}
+
+lemma tp2_sc {a a' b b' : Fin (m + 1)} (ea : a = a') (eb : b = b') (h : a < b) (h' : a' < b')
+    (x : M.1 (b, s)) :
+    tp M (by rw [ea]) (sc M h x) = sc M h' (tp M (by rw [eb] : (b, s) = (b', s)) x) := by
+  subst ea eb; rfl
+
+lemma tp2_tg {a a' b b' : Fin (m + 1)} (ea : a = a') (eb : b = b') (h : a < b) (h' : a' < b')
+    (x : M.1 (b, s)) :
+    tp M (by rw [ea]) (tg M h x) = tg M h' (tp M (by rw [eb] : (b, s) = (b', s)) x) := by
+  subst ea eb; rfl
+
+lemma tp2_idm {a a' b b' : Fin (m + 1)} (ea : a = a') (eb : b = b') (h : a < b) (h' : a' < b')
+    (u : M.1 (a, s)) :
+    tp M (by rw [eb]) (idm M h u) = idm M h' (tp M (by rw [ea] : (a, s) = (a', s)) u) := by
+  subst ea eb; rfl
+
+lemma tp2_op {k k' : Fin (m + 1)} (ek : k = k') {ws : List S} (σ : Sig ws s)
+    (b : ∀ p, M.1 (k, ws.get p)) :
+    tp M (by rw [ek]) (op M k σ b) =
+      op M k' σ (fun p => tp M (by rw [ek] : (k, ws.get p) = (k', ws.get p)) (b p)) := by
+  subst ek; rfl
+
+lemma tp2_comp {a a' b b' : Fin (m + 1)} (ea : a = a') (eb : b = b') (h : a < b) (h' : a' < b')
+    (x y : M.1 (b, s)) (hxy : sc M h x = tg M h y) :
+    tp M (by rw [eb] : (b, s) = (b', s)) (comp M h x y hxy) =
+      comp M h' (tp M (by rw [eb] : (b, s) = (b', s)) x) (tp M (by rw [eb] : (b, s) = (b', s)) y)
+        ((tp2_sc ea eb h h' x).symm.trans ((congrArg _ hxy).trans (tp2_tg ea eb h h' y))) := by
+  subst ea eb; rfl
+
+end DiscExt
+
+namespace TruncExt
+
+open Extended.Model
+
+variable {Sig n m} {hmn : m ≤ n} {M : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (n + 1))}
+
+variable (hmn M) in
+noncomputable abbrev model : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (m + 1)) := ⟨TE hmn M, holds⟩
+
+lemma sc_eq {j k : Fin (m + 1)} (h : j < k) {s : S} (x : TE hmn M (k, s)) :
+    sc (model hmn M) h x = tsc hmn M h x := Part.get_eq_of_mem (Part.eq_some_iff.mp (op_sc h x)) _
+
+lemma tg_eq {j k : Fin (m + 1)} (h : j < k) {s : S} (x : TE hmn M (k, s)) :
+    tg (model hmn M) h x = ttg hmn M h x := Part.get_eq_of_mem (Part.eq_some_iff.mp (op_tg h x)) _
+
+lemma idm_eq {j k : Fin (m + 1)} (h : j < k) {s : S} (u : TE hmn M (j, s)) :
+    idm (model hmn M) h u = tidm hmn M h u :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_idm h u)) _
+
+lemma op_eq (k : Fin (m + 1)) {ws : List S} {s : S} (σ : Sig ws s)
+    (b : ∀ p, TE hmn M (k, ws.get p)) :
+    op (model hmn M) k σ b = top hmn M k σ b :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_op k σ b)) _
+
+lemma comp_eq {j k : Fin (m + 1)} (h : j < k) {s : S} (x y : TE hmn M (k, s)) (hxy) (hxy') :
+    comp (model hmn M) h x y hxy = tcomp hmn M h x y hxy' :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_comp h x y hxy')) _
+
+end TruncExt
+
+lemma lowE_castDim {n m : ℕ} (hmn : m ≤ n) (k : Fin (m + 1)) : lowE m (castDim hmn k) = k := by
+  have := k.isLt
+  ext; simp only [lowE, castDim, Fin.coe_castLE]; omega
+
+section ExtTruncDisc
+
+open Extended.Model
+
+variable {Sig n m} (hmn : m ≤ n)
+
+lemma eK (k : Fin (m + 1)) (s : S) : (k, s) = (lowE m (castDim hmn k), s) := by
+  rw [lowE_castDim]
+
+/-- The cells of `T^ext(D^ext(𝐀))` are those of `𝐀`, up to the transport along
+`min(k, m) = k`. -/
+noncomputable def tdExtEquiv (A : EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (m + 1))))
+    (t : Fin (m + 1) × S) :
+    A.1 t ≃ ((discExtFunctor Sig n m ⋙ truncExtFunctor Sig hmn).obj A).1 t where
+  toFun a := ⟨⟨DiscExt.tp (M := ⟨A.1, A.2.2⟩) (eK hmn t.1 t.2) a, EEq.holdsAll_empty⟩,
+    EEq.holdsAll_empty⟩
+  invFun y := DiscExt.tp (M := ⟨A.1, A.2.2⟩) (eK hmn t.1 t.2).symm y.1.1
+  left_inv a := (DiscExt.tp_tp (M := ⟨A.1, A.2.2⟩) _ _ a).trans rfl
+  right_inv y := Subtype.ext (Subtype.ext ((DiscExt.tp_tp (M := ⟨A.1, A.2.2⟩) _ _ _).trans rfl))
+
+lemma castDim_val_lt {j k : Fin (m + 1)} (h : j < k) : (castDim hmn j).val < m := by
+  have := Fin.lt_def.mp h; have := k.isLt; simp only [castDim, Fin.coe_castLE]; omega
+
+theorem tdExtEquiv_op (A : EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (m + 1))))
+    {ws : List (Fin (m + 1) × S)} {t : Fin (m + 1) × S}
+    (σ : (extendedEpSpec Sig (Fin (m + 1))).sg.sig ws t) (a : Arity A.1 ws) :
+    ((discExtFunctor Sig n m ⋙ truncExtFunctor Sig hmn).obj A).1.op σ
+        (fun j => tdExtEquiv hmn A _ (a j)) = (A.1.op σ a).map (tdExtEquiv hmn A t) := by
+  let Am : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (m + 1)) := ⟨A.1, A.2.2⟩
+  let Dm := DiscExt.model n Am
+  cases σ with
+  | op k σ =>
+    obtain ⟨b, rfl⟩ : ∃ b, Extended.liftFam k b = a := ⟨_, Extended.liftFam_unlift k a⟩
+    have hf : (fun q => tdExtEquiv hmn A _ (Extended.liftFam k b q)) =
+        Extended.liftFam k (fun p => tdExtEquiv hmn A _ (b p)) := by
+      funext q
+      have key : ∀ {t t' : Fin (m + 1) × S} (e : t = t') (x : A.1 t),
+          tdExtEquiv hmn A t' (cast (congrArg (fun t => A.1 t) e) x) =
+            cast (congrArg (fun t => ((discExtFunctor Sig n m ⋙ truncExtFunctor Sig hmn).obj A).1 t) e)
+              (tdExtEquiv hmn A t x) := by
+        intro t t' e; subst e; intro x; rfl
+      exact key (by simp) _
+    have h1 : A.1.op (.op k σ) (Extended.liftFam k b) = Part.some (op Am k σ b) :=
+      (Part.some_get _).symm
+    refine Eq.trans ?_ ((congrArg (Part.map _) h1).trans (Part.map_some _ _)).symm
+    refine ((congrArg _ hf).trans (TruncExt.op_op (M := Dm) k σ _)).trans ?_
+    exact congrArg Part.some (Subtype.ext ((DiscExt.op_eq (M := Am) _ σ _).trans
+      (Subtype.ext (DiscExt.tp2_op (M := Am) (lowE_castDim hmn k).symm σ b).symm)))
+  | @sc j k h s =>
+    have hj := castDim_val_lt hmn h
+    have h1 : A.1.op (.sc h s) a = Part.some (sc Am h (a ⟨0, by simp⟩)) :=
+      op_eq_some_get (by funext i; match i with | ⟨0, _⟩ => rfl) _
+    refine Eq.trans ?_ ((congrArg (Part.map _) h1).trans (Part.map_some _ _)).symm
+    refine ((congrArg _ (by funext i; match i with | ⟨0, _⟩ => rfl)).trans
+      (TruncExt.op_sc (M := Dm) h (tdExtEquiv hmn A (k, s) (a ⟨0, by simp⟩)))).trans ?_
+    exact congrArg Part.some (Subtype.ext ((DiscExt.sc_eq (M := Am) _ _).trans (Subtype.ext
+      ((DiscExt.esc_pos (M := Am) (h := castDim_lt hmn h) hj _).trans (DiscExt.tp2_sc (M := Am) (lowE_castDim hmn j).symm
+        (lowE_castDim hmn k).symm h _ _).symm))))
+  | @tg j k h s =>
+    have hj := castDim_val_lt hmn h
+    have h1 : A.1.op (.tg h s) a = Part.some (tg Am h (a ⟨0, by simp⟩)) :=
+      op_eq_some_get (by funext i; match i with | ⟨0, _⟩ => rfl) _
+    refine Eq.trans ?_ ((congrArg (Part.map _) h1).trans (Part.map_some _ _)).symm
+    refine ((congrArg _ (by funext i; match i with | ⟨0, _⟩ => rfl)).trans
+      (TruncExt.op_tg (M := Dm) h (tdExtEquiv hmn A (k, s) (a ⟨0, by simp⟩)))).trans ?_
+    exact congrArg Part.some (Subtype.ext ((DiscExt.tg_eq (M := Am) _ _).trans (Subtype.ext
+      ((DiscExt.etg_pos (M := Am) (h := castDim_lt hmn h) hj _).trans (DiscExt.tp2_tg (M := Am) (lowE_castDim hmn j).symm
+        (lowE_castDim hmn k).symm h _ _).symm))))
+  | @idm j k h s =>
+    have hj := castDim_val_lt hmn h
+    have h1 : A.1.op (.idm h s) a = Part.some (idm Am h (a ⟨0, by simp⟩)) :=
+      op_eq_some_get (by funext i; match i with | ⟨0, _⟩ => rfl) _
+    refine Eq.trans ?_ ((congrArg (Part.map _) h1).trans (Part.map_some _ _)).symm
+    refine ((congrArg _ (by funext i; match i with | ⟨0, _⟩ => rfl)).trans
+      (TruncExt.op_idm (M := Dm) h (tdExtEquiv hmn A (j, s) (a ⟨0, by simp⟩)))).trans ?_
+    exact congrArg Part.some (Subtype.ext ((DiscExt.idm_eq (M := Am) _ _).trans (Subtype.ext
+      ((DiscExt.eidm_pos (M := Am) (h := castDim_lt hmn h) hj _).trans (DiscExt.tp2_idm (M := Am) (lowE_castDim hmn j).symm
+        (lowE_castDim hmn k).symm h _ _).symm))))
+  | @comp j k h s =>
+    have hj := castDim_val_lt hmn h
+    have ha : (fun i => tdExtEquiv hmn A _ (a i)) =
+        Extended.arg₂ (tdExtEquiv hmn A (k, s) (a ⟨0, by simp⟩))
+          (tdExtEquiv hmn A (k, s) (a ⟨1, by simp⟩)) := by
+      funext i; match i with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl
+    have hA : Extended.arg₂ (a ⟨0, by simp⟩) (a ⟨1, by simp⟩) = a := by
+      funext i; match i with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl
+    refine (congrArg _ ha).trans ?_
+    have ej := (lowE_castDim hmn j).symm
+    have ek := (lowE_castDim hmn k).symm
+    have hl := lowE_lt (castDim_lt hmn h) hj
+    by_cases hxy : sc Am h (a ⟨0, by simp⟩) = tg Am h (a ⟨1, by simp⟩)
+    · have P : sc Am hl (tdExtEquiv hmn A (k, s) (a ⟨0, by simp⟩)).1.1 =
+          tg Am hl (tdExtEquiv hmn A (k, s) (a ⟨1, by simp⟩)).1.1 :=
+        (DiscExt.tp2_sc (M := Am) ej ek h hl _).symm.trans
+          ((congrArg _ hxy).trans (DiscExt.tp2_tg (M := Am) ej ek h hl _))
+      have hd := (DiscExt.cond_pos (M := Am) (h := castDim_lt hmn h) hj).mpr P
+      have hc := (DiscExt.sc_eq (M := Am) _ _).trans (hd.trans (DiscExt.tg_eq (M := Am) _ _).symm)
+      have h1 : A.1.op (.comp h s) a = Part.some (comp Am h _ _ hxy) :=
+        op_eq_some_get hA (Extended.Model.pcomp_dom_iff.mpr hxy)
+      refine Eq.trans ?_ ((congrArg (Part.map _) h1).trans (Part.map_some _ _)).symm
+      refine (TruncExt.op_comp (M := Dm) h _ _ hc).trans ?_
+      exact congrArg Part.some (Subtype.ext ((DiscExt.comp_eq (M := Am) _ _ _ hc hd).trans
+        (Subtype.ext ((DiscExt.ecomp_pos (M := Am) (h := castDim_lt hmn h) hj _ _ hd).trans
+          (DiscExt.tp2_comp (M := Am) ej ek h hl _ _ hxy).symm))))
+    · have h1 : A.1.op (.comp h s) a = Part.none :=
+        Part.eq_none_iff'.mpr fun hd => hxy (Extended.Model.pcomp_dom_iff.mp
+          ((op_dom_congr hA).mpr hd))
+      refine Eq.trans ?_ ((congrArg (Part.map _) h1).trans (Part.map_none _)).symm
+      refine Part.eq_none_iff'.mpr fun hd => hxy ?_
+      have hc := (TruncExt.op_comp_dom (M := Dm) h _ _).mp hd
+      have hd' := (DiscExt.sc_eq (M := Am) _ _).symm.trans (hc.trans (DiscExt.tg_eq (M := Am) _ _))
+      have P := (DiscExt.cond_pos (M := Am) (h := castDim_lt hmn h) hj).mp hd'
+      exact DiscExt.tp_inj (M := Am) _ ((DiscExt.tp2_sc (M := Am) ej ek h hl _).trans
+        (P.trans (DiscExt.tp2_tg (M := Am) ej ek h hl _).symm))
+
+end ExtTruncDisc
+```
+
+:::proposition (label := "truncation-discretization-ext") (central := false) (title := "Extended truncation after extended discretization")
+Let $`m \leq n`. $`T^{\mathrm{ext}(m,n)} \circ \mathrm{D}^{\mathrm{ext}(n,m)} \cong \mathrm{Id}`, by the
+isomorphisms that send a $`k`-cell to itself; in the Lean, along the transport of the sort
+$`(\min\{k, m\}, s) = (k, s)`.
+
+```lean
+section ExtTruncDisc
+
+variable {Sig n m} (hmn : m ≤ n)
+
+/-- `T^ext ∘ D^ext ≅ Id`, by the transports along `min(k, m) = k`. -/
+noncomputable def tdExtIso :
+    𝟭 (EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (m + 1)))) ≅
+      discExtFunctor Sig n m ⋙ truncExtFunctor Sig hmn :=
+  NatIso.ofComponents (fun A => EpSpec.isoOfEquiv (tdExtEquiv hmn A) (tdExtEquiv_op hmn A))
+    (fun {X Y} f => PartialAlgebra.Hom.ext fun t x => by
+      have key : ∀ {t' : Fin (m + 1) × S} (e : t = t') (y : X.1 t),
+          DiscExt.tp (M := ⟨Y.1, Y.2.2⟩) e (PartialAlgebra.Hom.map f t y) =
+            PartialAlgebra.Hom.map f t' (DiscExt.tp (M := ⟨X.1, X.2.2⟩) e y) := by
+        intro t' e; subst e; intro y; rfl
+      exact Subtype.ext (Subtype.ext (key _ x)))
+
+end ExtTruncDisc
+```
+:::
+
+:::proof (of := "truncation-discretization-ext")
+On the dimensions $`k \leq m`, $`\boldsymbol{\delta}^{\mathrm{ext}(n,m)}` is the identity, so the cells
+and the operations of $`T^{\mathrm{ext}(m,n)}(\mathrm{D}^{\mathrm{ext}(n,m)}(\mathbf{A}))` are those of
+$`\mathbf{A}`.
+:::
+
+```lean
+
+section ExtCounit
+
+open Extended.Model
+
+variable {Sig n m} (hmn : m ≤ n) {B : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (n + 1))} {s : S}
+
+lemma cl_eq {k : Fin (n + 1)} (hk : k.val ≤ m) : castDim hmn (lowE m k) = k := by
+  ext; simp only [castDim, lowE, Fin.coe_castLE]; omega
+
+lemma cl_lt {k : Fin (n + 1)} (hk : ¬ k.val ≤ m) : castDim hmn (lowE m k) < k := by
+  rw [Fin.lt_def]; simp only [castDim, lowE, Fin.coe_castLE]; omega
+
+variable (B) in
+/-- The component of the extended counit at `(k, s)`: the transport for `k ≤ m`, and the
+`(k,m)`-identity for `k > m`. -/
+noncomputable def up' (k : Fin (n + 1)) (z : B.1 (castDim hmn (lowE m k), s)) : B.1 (k, s) :=
+  if hk : k.val ≤ m then DiscExt.tp (M := B) (by rw [cl_eq hmn hk]) z else idm B (cl_lt hmn hk) z
+
+lemma up'_le {k : Fin (n + 1)} (hk : k.val ≤ m) (z : B.1 (castDim hmn (lowE m k), s)) :
+    up' hmn B k z = DiscExt.tp (M := B) (by rw [cl_eq hmn hk]) z := dif_pos hk
+
+lemma up'_gt {k : Fin (n + 1)} (hk : ¬ k.val ≤ m) (z : B.1 (castDim hmn (lowE m k), s)) :
+    up' hmn B k z = idm B (cl_lt hmn hk) z := dif_neg hk
+
+omit hmn in
+lemma sc_idm_tp {a j k : Fin (n + 1)} (e : a = j) (h : j < k) (h' : a < k) (z : B.1 (a, s)) :
+    sc B h (idm B h' z) = DiscExt.tp (M := B) (by rw [e]) z := by
+  subst e; exact sc_idm z
+
+omit hmn in
+lemma tg_idm_tp {a j k : Fin (n + 1)} (e : a = j) (h : j < k) (h' : a < k) (z : B.1 (a, s)) :
+    tg B h (idm B h' z) = DiscExt.tp (M := B) (by rw [e]) z := by
+  subst e; exact tg_idm z
+
+omit hmn in
+lemma idm_tp {a a' j : Fin (n + 1)} (e : a = a') (h : a' < j) (h' : a < j) (z : B.1 (a, s)) :
+    idm B h (DiscExt.tp (M := B) (by rw [e]) z) = idm B h' z := by
+  subst e; rfl
+
+omit hmn in
+lemma comp_lower {a a' b : Fin (n + 1)} (e : a = a') (h : a < b) (h' : a' < b) (x y : B.1 (b, s))
+    (hxy : sc B h x = tg B h y) (hxy' : sc B h' x = tg B h' y) :
+    comp B h x y hxy = comp B h' x y hxy' := by
+  subst e; rfl
+
+omit hmn in
+lemma sc_idm_lower {a j k : Fin (n + 1)} (h₁ : a < j) (h₂ : j < k) (z : B.1 (a, s)) :
+    sc B h₂ (idm B (h₁.trans h₂) z) = idm B h₁ z := by
+  rw [← idm_idm (h₁ := h₁) (h₂ := h₂), sc_idm]
+
+omit hmn in
+lemma tg_idm_lower {a j k : Fin (n + 1)} (h₁ : a < j) (h₂ : j < k) (z : B.1 (a, s)) :
+    tg B h₂ (idm B (h₁.trans h₂) z) = idm B h₁ z := by
+  rw [← idm_idm (h₁ := h₁) (h₂ := h₂), tg_idm]
+
+lemma lt_cl {j k : Fin (n + 1)} (hj : j.val < m) (hk : ¬ k.val ≤ m) : j < castDim hmn (lowE m k) := by
+  rw [Fin.lt_def]; simp only [castDim, lowE, Fin.coe_castLE]; omega
+
+lemma cl_eq_cl {j k : Fin (n + 1)} (h : j < k) (hj : ¬ j.val < m) :
+    castDim hmn (lowE m k) = castDim hmn (lowE m j) := by rw [lowE_eq h hj]
+
+lemma E_sc_pos {j k : Fin (n + 1)} (h : j < k) (hj : j.val < m)
+    (z : B.1 (castDim hmn (lowE m k), s)) :
+    up' hmn B j (sc B (castDim_lt hmn (lowE_lt h hj)) z) = sc B h (up' hmn B k z) := by
+  rw [up'_le hmn hj.le]
+  by_cases hk : k.val ≤ m
+  · rw [up'_le hmn hk]; exact DiscExt.tp2_sc (M := B) (cl_eq hmn hj.le) (cl_eq hmn hk) _ h z
+  · rw [up'_gt hmn hk]
+    exact (DiscExt.tp2_sc (M := B) (cl_eq hmn hj.le) rfl _ (lt_cl hmn hj hk) z).trans
+      (sc_idm_low (h₁ := lt_cl hmn hj hk) (h₂ := cl_lt hmn hk) z).symm
+
+lemma E_tg_pos {j k : Fin (n + 1)} (h : j < k) (hj : j.val < m)
+    (z : B.1 (castDim hmn (lowE m k), s)) :
+    up' hmn B j (tg B (castDim_lt hmn (lowE_lt h hj)) z) = tg B h (up' hmn B k z) := by
+  rw [up'_le hmn hj.le]
+  by_cases hk : k.val ≤ m
+  · rw [up'_le hmn hk]; exact DiscExt.tp2_tg (M := B) (cl_eq hmn hj.le) (cl_eq hmn hk) _ h z
+  · rw [up'_gt hmn hk]
+    exact (DiscExt.tp2_tg (M := B) (cl_eq hmn hj.le) rfl _ (lt_cl hmn hj hk) z).trans
+      (tg_idm_low (h₁ := lt_cl hmn hj hk) (h₂ := cl_lt hmn hk) z).symm
+
+lemma gt_of_neg {j k : Fin (n + 1)} (h : j < k) (hj : ¬ j.val < m) : ¬ k.val ≤ m := by
+  have := Fin.lt_def.mp h; omega
+
+lemma E_sc_neg {j k : Fin (n + 1)} (h : j < k) (hj : ¬ j.val < m)
+    (z : B.1 (castDim hmn (lowE m k), s)) :
+    up' hmn B j (DiscExt.tp (M := B) (by rw [cl_eq_cl hmn h hj]) z) = sc B h (up' hmn B k z) := by
+  have hk := gt_of_neg h hj
+  rw [up'_gt hmn hk]
+  by_cases hj' : j.val ≤ m
+  · rw [up'_le hmn hj']
+    exact (DiscExt.tp_tp _ _ _).trans
+      (sc_idm_tp (by rw [cl_eq_cl hmn h hj, cl_eq hmn hj']) h (cl_lt hmn hk) z).symm
+  · rw [up'_gt hmn hj']
+    have h₁ : castDim hmn (lowE m k) < j := by rw [cl_eq_cl hmn h hj]; exact cl_lt hmn hj'
+    exact (idm_tp (cl_eq_cl hmn h hj) _ h₁ z).trans (sc_idm_lower h₁ h z).symm
+
+lemma E_tg_neg {j k : Fin (n + 1)} (h : j < k) (hj : ¬ j.val < m)
+    (z : B.1 (castDim hmn (lowE m k), s)) :
+    up' hmn B j (DiscExt.tp (M := B) (by rw [cl_eq_cl hmn h hj]) z) = tg B h (up' hmn B k z) := by
+  have hk := gt_of_neg h hj
+  rw [up'_gt hmn hk]
+  by_cases hj' : j.val ≤ m
+  · rw [up'_le hmn hj']
+    exact (DiscExt.tp_tp _ _ _).trans
+      (tg_idm_tp (by rw [cl_eq_cl hmn h hj, cl_eq hmn hj']) h (cl_lt hmn hk) z).symm
+  · rw [up'_gt hmn hj']
+    have h₁ : castDim hmn (lowE m k) < j := by rw [cl_eq_cl hmn h hj]; exact cl_lt hmn hj'
+    exact (idm_tp (cl_eq_cl hmn h hj) _ h₁ z).trans (tg_idm_lower h₁ h z).symm
+
+lemma E_idm_pos {j k : Fin (n + 1)} (h : j < k) (hj : j.val < m)
+    (u : B.1 (castDim hmn (lowE m j), s)) :
+    up' hmn B k (idm B (castDim_lt hmn (lowE_lt h hj)) u) = idm B h (up' hmn B j u) := by
+  rw [up'_le hmn hj.le]
+  by_cases hk : k.val ≤ m
+  · rw [up'_le hmn hk]; exact DiscExt.tp2_idm (M := B) (cl_eq hmn hj.le) (cl_eq hmn hk) _ h u
+  · rw [up'_gt hmn hk, idm_idm]
+    exact (idm_tp (cl_eq hmn hj.le) h _ u).symm
+
+lemma E_idm_neg {j k : Fin (n + 1)} (h : j < k) (hj : ¬ j.val < m)
+    (u : B.1 (castDim hmn (lowE m j), s)) :
+    up' hmn B k (DiscExt.tp (M := B) (by rw [cl_eq_cl hmn h hj]) u) = idm B h (up' hmn B j u) := by
+  have hk := gt_of_neg h hj
+  rw [up'_gt hmn hk]
+  have h₁ : castDim hmn (lowE m j) < k := by rw [← cl_eq_cl hmn h hj]; exact cl_lt hmn hk
+  refine (idm_tp (cl_eq_cl hmn h hj).symm _ h₁ u).trans ?_
+  by_cases hj' : j.val ≤ m
+  · rw [up'_le hmn hj']; exact (idm_tp (cl_eq hmn hj') h h₁ u).symm
+  · rw [up'_gt hmn hj', idm_idm]
+
+lemma E_op (k : Fin (n + 1)) {ws : List S} (σ : Sig ws s)
+    (c : ∀ p, B.1 (castDim hmn (lowE m k), ws.get p)) :
+    up' hmn B k (op B (castDim hmn (lowE m k)) σ c) = op B k σ (fun p => up' hmn B k (c p)) := by
+  by_cases hk : k.val ≤ m
+  · rw [up'_le hmn hk]
+    exact (DiscExt.tp2_op (M := B) (cl_eq hmn hk) σ c).trans
+      (congrArg (op B k σ) (funext fun p => (up'_le hmn hk (c p)).symm))
+  · rw [up'_gt hmn hk]
+    exact (idm_op (cl_lt hmn hk) σ c).trans
+      (congrArg (op B k σ) (funext fun p => (up'_gt hmn hk (c p)).symm))
+
+lemma E_comp_pos {j k : Fin (n + 1)} (h : j < k) (hj : j.val < m)
+    (z z' : B.1 (castDim hmn (lowE m k), s))
+    (hzz : sc B (castDim_lt hmn (lowE_lt h hj)) z = tg B (castDim_lt hmn (lowE_lt h hj)) z') :
+    up' hmn B k (comp B _ z z' hzz) = comp B h (up' hmn B k z) (up' hmn B k z')
+      ((E_sc_pos hmn h hj z).symm.trans ((congrArg _ hzz).trans (E_tg_pos hmn h hj z'))) := by
+  by_cases hk : k.val ≤ m
+  · exact (up'_le hmn hk _).trans ((DiscExt.tp2_comp (M := B) (cl_eq hmn hj.le) (cl_eq hmn hk) _ h
+      z z' hzz).trans (comp_congr (up'_le hmn hk z).symm (up'_le hmn hk z').symm _ _))
+  · have X : sc B (lt_cl hmn hj hk) z = tg B (lt_cl hmn hj hk) z' :=
+      (DiscExt.tp2_sc (M := B) (cl_eq hmn hj.le) rfl _ (lt_cl hmn hj hk) z).symm.trans
+        ((congrArg _ hzz).trans (DiscExt.tp2_tg (M := B) (cl_eq hmn hj.le) rfl _ (lt_cl hmn hj hk) z'))
+    have Q : sc B h (idm B (cl_lt hmn hk) z) = tg B h (idm B (cl_lt hmn hk) z') :=
+      ((sc_idm_low (h₁ := lt_cl hmn hj hk) (h₂ := cl_lt hmn hk) z).trans X).trans
+        (tg_idm_low (h₁ := lt_cl hmn hj hk) (h₂ := cl_lt hmn hk) z').symm
+    exact (up'_gt hmn hk _).trans ((idm_comp (h₁ := castDim_lt hmn (lowE_lt h hj))
+      (h₂ := cl_lt hmn hk) hzz).trans ((comp_lower (cl_eq hmn hj.le) _ h _ _ _ Q).trans
+        (comp_congr (up'_gt hmn hk z).symm (up'_gt hmn hk z').symm _ _)))
+
+omit hmn in
+lemma comp_self_of {j k : Fin (n + 1)} (h : j < k) (x : B.1 (k, s))
+    (hx : idm B h (sc B h x) = x) (P : sc B h x = tg B h x) : comp B h x x P = x :=
+  (comp_congr rfl hx.symm P (tg_idm _).symm).trans (comp_idm_sc x)
+
+lemma E_comp_neg {j k : Fin (n + 1)} (h : j < k) (hj : ¬ j.val < m)
+    (z : B.1 (castDim hmn (lowE m k), s)) (P : sc B h (up' hmn B k z) = tg B h (up' hmn B k z)) :
+    up' hmn B k z = comp B h (up' hmn B k z) (up' hmn B k z) P := by
+  have hk := gt_of_neg h hj
+  refine (comp_self_of h _ ?_ P).symm
+  rw [up'_gt hmn hk]
+  by_cases hj' : j.val ≤ m
+  · have e1 : castDim hmn (lowE m k) = j := by rw [cl_eq_cl hmn h hj, cl_eq hmn hj']
+    rw [sc_idm_tp e1 h (cl_lt hmn hk) z]
+    exact idm_tp e1 h _ z
+  · have h₁ : castDim hmn (lowE m k) < j := by rw [cl_eq_cl hmn h hj]; exact cl_lt hmn hj'
+    rw [sc_idm_lower h₁ h z, idm_idm]
+
+end ExtCounit
+
+section ExtCounitHom
+
+open Extended.Model
+
+variable {Sig n m} (hmn : m ≤ n) {Bm : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (n + 1))}
+
+/-- Transports in the truncated algebra are transports of the underlying cells. -/
+lemma tp_val {t t' : Fin (m + 1) × S} (e : t = t')
+    (e' : (castDim hmn t.1, t.2) = (castDim hmn t'.1, t'.2)) (y : TruncExt.TE hmn Bm t) :
+    (DiscExt.tp (M := TruncExt.model hmn Bm) e y).1 = DiscExt.tp (M := Bm) e' y.1 := by
+  subst e; rfl
+
+variable {s : S}
+
+local notation "Tm" => TruncExt.model hmn Bm
+
+lemma val_esc_pos {j k : Fin (n + 1)} (h : j < k) (hj : j.val < m) (x : DiscExt.DE n Tm (k, s)) :
+    (DiscExt.esc Tm h x).1.1 = sc Bm (castDim_lt hmn (lowE_lt h hj)) x.1.1 :=
+  congrArg Subtype.val ((DiscExt.esc_pos (M := Tm) (h := h) hj x).trans (TruncExt.sc_eq _ _))
+
+lemma val_esc_neg {j k : Fin (n + 1)} (h : j < k) (hj : ¬ j.val < m) (x : DiscExt.DE n Tm (k, s)) :
+    (DiscExt.esc Tm h x).1.1 =
+      DiscExt.tp (M := Bm) (congrArg (·, s) (cl_eq_cl hmn h hj)) x.1.1 :=
+  (congrArg Subtype.val (DiscExt.esc_neg (M := Tm) (h := h) hj x)).trans (tp_val hmn _ _ _)
+
+lemma val_etg_pos {j k : Fin (n + 1)} (h : j < k) (hj : j.val < m) (x : DiscExt.DE n Tm (k, s)) :
+    (DiscExt.etg Tm h x).1.1 = tg Bm (castDim_lt hmn (lowE_lt h hj)) x.1.1 :=
+  congrArg Subtype.val ((DiscExt.etg_pos (M := Tm) (h := h) hj x).trans (TruncExt.tg_eq _ _))
+
+lemma val_etg_neg {j k : Fin (n + 1)} (h : j < k) (hj : ¬ j.val < m) (x : DiscExt.DE n Tm (k, s)) :
+    (DiscExt.etg Tm h x).1.1 =
+      DiscExt.tp (M := Bm) (congrArg (·, s) (cl_eq_cl hmn h hj)) x.1.1 :=
+  (congrArg Subtype.val (DiscExt.etg_neg (M := Tm) (h := h) hj x)).trans (tp_val hmn _ _ _)
+
+lemma val_eidm_pos {j k : Fin (n + 1)} (h : j < k) (hj : j.val < m) (u : DiscExt.DE n Tm (j, s)) :
+    (DiscExt.eidm Tm h u).1.1 = idm Bm (castDim_lt hmn (lowE_lt h hj)) u.1.1 :=
+  congrArg Subtype.val ((DiscExt.eidm_pos (M := Tm) (h := h) hj u).trans (TruncExt.idm_eq _ _))
+
+lemma val_eidm_neg {j k : Fin (n + 1)} (h : j < k) (hj : ¬ j.val < m) (u : DiscExt.DE n Tm (j, s)) :
+    (DiscExt.eidm Tm h u).1.1 =
+      DiscExt.tp (M := Bm) (congrArg (·, s) (cl_eq_cl hmn h hj).symm) u.1.1 :=
+  (congrArg Subtype.val (DiscExt.eidm_neg (M := Tm) (h := h) hj u)).trans (tp_val hmn _ _ _)
+
+lemma sc_up' {j k : Fin (n + 1)} (h : j < k) (x : DiscExt.DE n Tm (k, s)) :
+    sc Bm h (up' hmn Bm k x.1.1) = up' hmn Bm j (DiscExt.esc Tm h x).1.1 := by
+  by_cases hj : j.val < m
+  · rw [val_esc_pos hmn h hj]; exact (E_sc_pos hmn h hj _).symm
+  · rw [val_esc_neg hmn h hj]; exact (E_sc_neg hmn h hj _).symm
+
+lemma tg_up' {j k : Fin (n + 1)} (h : j < k) (x : DiscExt.DE n Tm (k, s)) :
+    tg Bm h (up' hmn Bm k x.1.1) = up' hmn Bm j (DiscExt.etg Tm h x).1.1 := by
+  by_cases hj : j.val < m
+  · rw [val_etg_pos hmn h hj]; exact (E_tg_pos hmn h hj _).symm
+  · rw [val_etg_neg hmn h hj]; exact (E_tg_neg hmn h hj _).symm
+
+lemma idm_up' {j k : Fin (n + 1)} (h : j < k) (u : DiscExt.DE n Tm (j, s)) :
+    idm Bm h (up' hmn Bm j u.1.1) = up' hmn Bm k (DiscExt.eidm Tm h u).1.1 := by
+  by_cases hj : j.val < m
+  · rw [val_eidm_pos hmn h hj]; exact (E_idm_pos hmn h hj _).symm
+  · rw [val_eidm_neg hmn h hj]; exact (E_idm_neg hmn h hj _).symm
+
+lemma val_ecomp_pos {j k : Fin (n + 1)} (h : j < k) (hj : j.val < m) (x y : DiscExt.DE n Tm (k, s))
+    (hc : DiscExt.esc Tm h x = DiscExt.etg Tm h y) :
+    (DiscExt.ecomp Tm h x y hc).1.1 = comp Bm (castDim_lt hmn (lowE_lt h hj)) x.1.1 y.1.1
+      ((val_esc_pos hmn h hj x).symm.trans ((congrArg (fun z => z.1.1) hc).trans
+        (val_etg_pos hmn h hj y))) := by
+  have P : sc Bm (castDim_lt hmn (lowE_lt h hj)) x.1.1 = tg Bm (castDim_lt hmn (lowE_lt h hj)) y.1.1 :=
+    (val_esc_pos hmn h hj x).symm.trans ((congrArg (fun z => z.1.1) hc).trans (val_etg_pos hmn h hj y))
+  exact congrArg Subtype.val ((DiscExt.ecomp_pos (M := Tm) hj x y hc).trans
+    (TruncExt.comp_eq _ _ _ _ P))
+
+end ExtCounitHom
+
+section ExtCounitHom₂
+
+open Extended.Model
+
+variable {Sig n m} (hmn : m ≤ n)
+
+lemma get_of_eq' {α : Type*} {o : Part α} {c : α} (e : o = Part.some c) (h : o.Dom) : o.get h = c :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp e) h
+
+/-- The extended counit `D^ext(T^ext(𝐁)) → 𝐁`. -/
+noncomputable def tdExtCounit (B : EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (n + 1)))) :
+    (truncExtFunctor Sig hmn ⋙ discExtFunctor Sig n m).obj B ⟶ B where
+  map t y := up' hmn ⟨B.1, B.2.2⟩ t.1 y.1.1
+  map_dom σ a ha := by
+    let Bm : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (n + 1)) := ⟨B.1, B.2.2⟩
+    cases σ with
+    | op k σ => exact op_dom' (M := Bm) k σ _
+    | sc h s =>
+      exact (op_dom_congr (by funext i; match i with | ⟨0, _⟩ => rfl)).mp
+        (sc_dom (M := Bm) h (up' hmn Bm _ (a ⟨0, by simp⟩).1.1))
+    | tg h s =>
+      exact (op_dom_congr (by funext i; match i with | ⟨0, _⟩ => rfl)).mp
+        (tg_dom (M := Bm) h (up' hmn Bm _ (a ⟨0, by simp⟩).1.1))
+    | idm h s =>
+      exact (op_dom_congr (by funext i; match i with | ⟨0, _⟩ => rfl)).mp
+        (idm_dom (M := Bm) h (up' hmn Bm _ (a ⟨0, by simp⟩).1.1))
+    | @comp j k h s =>
+      obtain ⟨x, y, rfl⟩ : ∃ x y : DiscExt.DE n (TruncExt.model hmn Bm) (k, s),
+          Extended.arg₂ x y = a :=
+        ⟨a ⟨0, by simp⟩, a ⟨1, by simp⟩, by funext i; match i with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl⟩
+      have hc := (DiscExt.op_comp_dom (M := TruncExt.model hmn Bm) h x y).mp ha
+      have e : sc Bm h (up' hmn Bm k x.1.1) = tg Bm h (up' hmn Bm k y.1.1) :=
+        (sc_up' hmn h x).trans ((congrArg (fun z => up' hmn Bm j z.1.1) hc).trans
+          (tg_up' hmn h y).symm)
+      exact (op_dom_congr (by funext i; match i with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl)).mp
+        (pcomp_dom_iff (M := Bm).mpr e)
+  map_op σ a ha := by
+    let Bm : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (n + 1)) := ⟨B.1, B.2.2⟩
+    cases σ with
+    | @op k ws s σ =>
+      obtain ⟨b, rfl⟩ : ∃ b, Extended.liftFam k b = a := ⟨_, Extended.liftFam_unlift k a⟩
+      have hf : (fun q => up' hmn Bm _ (Extended.liftFam k b q).1.1) =
+          Extended.liftFam k (fun p => up' hmn Bm k (b p).1.1) := by
+        funext q
+        have key : ∀ {t t' : Fin (n + 1) × S} (e : t = t')
+            (x : ((truncExtFunctor Sig hmn ⋙ discExtFunctor Sig n m).obj B).1 t),
+            up' hmn Bm t'.1 (cast (congrArg
+              (fun t => ((truncExtFunctor Sig hmn ⋙ discExtFunctor Sig n m).obj B).1 t) e) x).1.1 =
+              cast (congrArg Bm.1 e) (up' hmn Bm t.1 x.1.1) := by
+          intro t t' e; subst e; intro x; rfl
+        exact key (by simp) _
+      refine (congrArg (fun z => up' hmn Bm k z.1.1)
+        (get_of_eq' (DiscExt.op_op (M := TruncExt.model hmn Bm) k σ b) ha)).trans ?_
+      refine (congrArg (up' hmn Bm k) (congrArg Subtype.val (TruncExt.op_eq _ σ _))).trans ?_
+      refine (E_op hmn k σ _).trans ?_
+      exact Part.get_eq_get_of_eq _ (op_dom k σ _) (congrArg _ hf.symm)
+    | @sc j k h s =>
+      obtain ⟨x, rfl⟩ : ∃ x : DiscExt.DE n (TruncExt.model hmn Bm) (k, s), Extended.arg₁ x = a :=
+        ⟨a ⟨0, by simp⟩, by funext i; match i with | ⟨0, _⟩ => rfl⟩
+      refine (congrArg (fun z => up' hmn Bm j z.1.1)
+        (get_of_eq' (DiscExt.op_sc (M := TruncExt.model hmn Bm) h x) ha)).trans ?_
+      exact (sc_up' hmn h x).symm.trans (Part.get_eq_get_of_eq _ (sc_dom (M := Bm) h _)
+        (congrArg _ (by funext i; match i with | ⟨0, _⟩ => rfl)))
+    | @tg j k h s =>
+      obtain ⟨x, rfl⟩ : ∃ x : DiscExt.DE n (TruncExt.model hmn Bm) (k, s), Extended.arg₁ x = a :=
+        ⟨a ⟨0, by simp⟩, by funext i; match i with | ⟨0, _⟩ => rfl⟩
+      refine (congrArg (fun z => up' hmn Bm j z.1.1)
+        (get_of_eq' (DiscExt.op_tg (M := TruncExt.model hmn Bm) h x) ha)).trans ?_
+      exact (tg_up' hmn h x).symm.trans (Part.get_eq_get_of_eq _ (tg_dom (M := Bm) h _)
+        (congrArg _ (by funext i; match i with | ⟨0, _⟩ => rfl)))
+    | @idm j k h s =>
+      obtain ⟨u, rfl⟩ : ∃ u : DiscExt.DE n (TruncExt.model hmn Bm) (j, s), Extended.arg₁ u = a :=
+        ⟨a ⟨0, by simp⟩, by funext i; match i with | ⟨0, _⟩ => rfl⟩
+      refine (congrArg (fun z => up' hmn Bm k z.1.1)
+        (get_of_eq' (DiscExt.op_idm (M := TruncExt.model hmn Bm) h u) ha)).trans ?_
+      exact (idm_up' hmn h u).symm.trans (Part.get_eq_get_of_eq _ (idm_dom (M := Bm) h _)
+        (congrArg _ (by funext i; match i with | ⟨0, _⟩ => rfl)))
+    | @comp j k h s =>
+      obtain ⟨x, y, rfl⟩ : ∃ x y : DiscExt.DE n (TruncExt.model hmn Bm) (k, s),
+          Extended.arg₂ x y = a :=
+        ⟨a ⟨0, by simp⟩, a ⟨1, by simp⟩, by funext i; match i with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl⟩
+      have hc := (DiscExt.op_comp_dom (M := TruncExt.model hmn Bm) h x y).mp ha
+      have e : sc Bm h (up' hmn Bm k x.1.1) = tg Bm h (up' hmn Bm k y.1.1) :=
+        (sc_up' hmn h x).trans ((congrArg (fun z => up' hmn Bm j z.1.1) hc).trans
+          (tg_up' hmn h y).symm)
+      refine (congrArg (fun z => up' hmn Bm k z.1.1)
+        (get_of_eq' (DiscExt.op_comp (M := TruncExt.model hmn Bm) h x y hc) ha)).trans ?_
+      refine Eq.trans ?_ (Part.get_eq_get_of_eq _ (pcomp_dom_iff (M := Bm).mpr e)
+        (congrArg (B.1.op (.comp h s)) (by funext i; match i with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl)))
+      by_cases hj : j.val < m
+      · exact (congrArg (up' hmn Bm k) (val_ecomp_pos hmn h hj x y hc)).trans
+          (E_comp_pos hmn h hj _ _ _)
+      · obtain rfl := (DiscExt.cond_neg (M := TruncExt.model hmn Bm) hj).mp hc
+        exact (congrArg (fun z => up' hmn Bm k z.1.1)
+          (DiscExt.ecomp_neg (M := TruncExt.model hmn Bm) hj x x hc)).trans
+          (E_comp_neg hmn h hj _ e)
+
+lemma map_up' {B B' : EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (n + 1)))} (f : B ⟶ B')
+    (k : Fin (n + 1)) {s : S} (z : B.1 (castDim hmn (lowE m k), s)) :
+    PartialAlgebra.Hom.map f _ (up' hmn ⟨B.1, B.2.2⟩ k z) =
+      up' hmn ⟨B'.1, B'.2.2⟩ k (PartialAlgebra.Hom.map f _ z) := by
+  by_cases hk : k.val ≤ m
+  · have key : ∀ {t t' : Fin (n + 1) × S} (e : t = t') (y : B.1 t),
+        PartialAlgebra.Hom.map f t' (DiscExt.tp (M := ⟨B.1, B.2.2⟩) e y) =
+          DiscExt.tp (M := ⟨B'.1, B'.2.2⟩) e (PartialAlgebra.Hom.map f t y) := by
+      intro t t' e; subst e; intro y; rfl
+    exact (congrArg (PartialAlgebra.Hom.map f (k, s)) (up'_le (B := ⟨B.1, B.2.2⟩) hmn hk z)).trans
+      ((key _ z).trans (up'_le (B := ⟨B'.1, B'.2.2⟩) hmn hk _).symm)
+  · refine (congrArg (PartialAlgebra.Hom.map f (k, s)) (up'_gt (B := ⟨B.1, B.2.2⟩) hmn hk z)).trans
+      (Eq.trans ?_ (up'_gt (B := ⟨B'.1, B'.2.2⟩) hmn hk _).symm)
+    refine (PartialAlgebra.Hom.map_op f (.idm (cl_lt hmn hk) s) (Extended.arg₁ z)
+      (idm_dom (M := ⟨B.1, B.2.2⟩) _ z)).trans (Part.get_eq_get_of_eq _ _ ?_)
+    exact congrArg _ (by funext i; match i with | ⟨0, _⟩ => rfl)
+
+lemma tpD_val {Am : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (m + 1))} {t t' : Fin (n + 1) × S}
+    (e : t = t') (e' : (lowE m t.1, t.2) = (lowE m t'.1, t'.2)) (y : DiscExt.DE n Am t) :
+    (DiscExt.tp (M := DiscExt.model n Am) e y).1 = DiscExt.tp (M := Am) e' y.1 := by
+  subst e; rfl
+
+end ExtCounitHom₂
+```
+
+:::proposition (label := "discretization-truncation-ext-adjunction") (central := false) (title := "Extended discretization is left adjoint to extended truncation")
+Let $`m \leq n`. $`\mathrm{D}^{\mathrm{ext}(n,m)} \dashv T^{\mathrm{ext}(m,n)}`, with unit the isomorphism
+of Proposition `truncation-discretization-ext` and counit $`\varepsilon^{\mathrm{ext}}` whose component
+at the sort $`(k, s)` is the identity if $`k \leq m` and $`\mathrm{i}^{(k,m)}_{s}` if $`k > m`.
+
+```lean
+section ExtCounitHom₂
+
+variable {Sig n m} (hmn : m ≤ n)
+
+/-- Extended discretization is left adjoint to extended truncation. -/
+noncomputable def discTruncExtAdj :
+    Adjunction (discExtFunctor Sig n m) (truncExtFunctor Sig hmn) :=
+  Adjunction.mkOfUnitCounit
+    { unit := (tdExtIso hmn).hom
+      counit :=
+        { app := tdExtCounit hmn
+          naturality := fun _ _ f => PartialAlgebra.Hom.ext fun t z => (map_up' hmn f t.1 z.1.1).symm }
+      left_triangle := by
+        ext A ⟨k, s⟩ x
+        apply Subtype.ext
+        change (up' hmn (DiscExt.model n ⟨A.1, A.2.2⟩) k _).1 = x.1
+        by_cases hk : k.val ≤ m
+        · have e' : (lowE m (castDim hmn (lowE m k)), s) = (lowE m k, s) := by rw [lowE_castDim]
+          exact (congrArg Subtype.val (up'_le hmn hk _)).trans ((tpD_val _ e' _).trans
+            ((DiscExt.tp_tp (M := ⟨A.1, A.2.2⟩) _ e' _).trans rfl))
+        · have hneg : ¬ (castDim hmn (lowE m k)).val < m := by
+            simp only [castDim, lowE, Fin.coe_castLE]; omega
+          exact (congrArg Subtype.val ((up'_gt hmn hk _).trans
+            (DiscExt.idm_eq (M := ⟨A.1, A.2.2⟩) _ _))).trans
+            ((DiscExt.eidm_neg (M := ⟨A.1, A.2.2⟩) (h := cl_lt hmn hk) hneg _).trans
+              ((DiscExt.tp_tp (M := ⟨A.1, A.2.2⟩) _ _ _).trans rfl))
+      right_triangle := by
+        ext B ⟨a, s⟩ y
+        apply Subtype.ext
+        have hca : (castDim hmn a).val ≤ m := by
+          have := a.isLt; simp only [castDim, Fin.coe_castLE]; omega
+        have e'' : (castDim hmn (lowE m (castDim hmn a)), s) = (castDim hmn a, s) := by
+          rw [lowE_castDim]
+        have e3 : (castDim hmn a, s) = (castDim hmn (lowE m (castDim hmn a)), s) := by
+          rw [lowE_castDim]
+        exact (up'_le (B := ⟨B.1, B.2.2⟩) hmn hca _).trans
+          ((congrArg (DiscExt.tp (M := ⟨B.1, B.2.2⟩) e'') (tp_val (Bm := ⟨B.1, B.2.2⟩) hmn (eK hmn a s) e3 y)).trans
+          (DiscExt.tp_tp (M := ⟨B.1, B.2.2⟩) e3 e'' y.1)) }
+
+end ExtCounitHom₂
+```
+:::
+
+:::proof (of := "discretization-truncation-ext-adjunction")
+By (EA$`^{m,k}`7), $`\mathrm{i}^{(k,m)}_{s}` commutes with the $`\sigma`'s. Let $`j < k` with $`k > m`. If
+$`j < m`, then $`\mathrm{sc}^{(j,k)}_{s}(\mathrm{i}^{(k,m)}_{s}(x)) = \mathrm{sc}^{(j,m)}_{s}(x)`, by
+(EA$`^{j,m,k}`1) and (EA$`^{m,k}`2), $`\mathrm{i}^{(k,m)}_{s}(\mathrm{i}^{(m,j)}_{s}(u)) = \mathrm{i}^{(k,j)}_{s}(u)`,
+by (EA$`^{j,m,k}`2), and $`\mathrm{i}^{(k,m)}_{s}` preserves the $`j`-compositions, by (EA$`^{j,m,k}`5). If
+$`j \geq m`, then $`\mathrm{i}^{(k,m)}_{s} = \mathrm{i}^{(k,j)}_{s} \circ \mathrm{i}^{(j,m)}_{s}`, so that
+$`\mathrm{sc}^{(j,k)}_{s}(\mathrm{i}^{(k,m)}_{s}(x)) = \mathrm{i}^{(j,m)}_{s}(x)` and
+$`\mathrm{i}^{(k,m)}_{s}(x) \circ^{(j,k)}_{s} \mathrm{i}^{(k,m)}_{s}(x) = \mathrm{i}^{(k,m)}_{s}(x)`, by
+(EA$`^{j,k}`5). Hence $`\varepsilon^{\mathrm{ext}}_{\mathbf{B}}` is a homomorphism, natural because
+homomorphisms commute with the identities. The triangle identities hold because
+$`T^{\mathrm{ext}(m,n)}(\varepsilon^{\mathrm{ext}}_{\mathbf{B}})` is the identity and the
+$`(k,m)`-identities of $`\mathrm{D}^{\mathrm{ext}(n,m)}(\mathbf{A})` are transports.
+:::
+
 ```lean
 end CategorialAlgebras
 ```
