@@ -2318,7 +2318,7 @@ In the following proposition we characterize, as in the single-set case, the ep-
 Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature, $n\in\mathbb{N}\cup\{\omega\}$ and $\mathbf{A}$ a partial $\Sigma^{\mathrm{gl}(n)}$-algebra. Then $\mathbf{A}$ is a $\mathbf{\Sigma}^{\mathrm{gl}(n)}$-algebra, see Definitions~\ref{DEpAlgebra} and~\ref{DSigmaCatGlobular}, if, and only if, $\mathbf{A}$ satisfies the axiom (EA0) and, for every pair of dimensions $j<k$, the axioms (EA$^{j,k}$1) and (EA$^{j,k}$3).
 \end{proposition}
 \begin{proof}
-The proof is analogous to that of Proposition~\ref{PSingleSetEp}.
+By Definition~\ref{DEpAlgebra}, $\mathbf{A}$ is a $\mathbf{\Sigma}^{\mathrm{gl}(n)}$-algebra if, and only if, for every operation symbol $\tau$ of $\Sigma^{\mathrm{gl}(n)}$, the domain of $\tau^{\mathbf{A}}$ is the set of the families that satisfy the domain conditions of $\tau$ in $\mathbf{A}$. We consider the different kinds of operation symbols of $\Sigma^{\mathrm{gl}(n)}$, see Definition~\ref{DSigmaCatGlobular}. Let $j<k$ be dimensions and $s\in S$.
 
 \textsf{(Operation symbols $\sigma_{k}$)} The empty sets of domain conditions of the operation symbols $\sigma_{k}$ state that they are total, i.e., the axiom (EA0).
 
@@ -2338,7 +2338,7 @@ $$
 $$
 \end{corollary}
 \begin{proof}
-As in the proof of Corollary~\ref{CSingleSetEp}, using Proposition~\ref{PGlobularEp} instead of Proposition~\ref{PSingleSetEp}.
+Let $\mathbf{A}$ be a partial $\Sigma^{\mathrm{gl}(n)}$-algebra in $\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}})$. Then $\mathbf{A}$ satisfies, in particular, the axiom (EA0) and, for every pair of dimensions $j<k$, the axioms (EA$^{j,k}$1) and (EA$^{j,k}$3). Hence, by Proposition~\ref{PGlobularEp}, $\mathbf{A}$ is a $\mathbf{\Sigma}^{\mathrm{gl}(n)}$-algebra in which every equation of $\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$ holds, i.e., a model of $(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}})$. Conversely, by Definition~\ref{DEpVariety}, every model of $(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}})$ is a partial $\Sigma^{\mathrm{gl}(n)}$-algebra in which every equation of $\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$ holds. Thus, both classes are equal. Since both categories are the full subcategories of $\mathsf{PAlg}(\Sigma^{\mathrm{gl}(n)})$ on these classes, they are equal.
 \end{proof}
 
 We next relate the globular $n$-categorial $\mathbf{\Sigma}$-algebras with the partial $\Sigma^{\mathrm{gl}(n)}$-algebras. Let $n\in\mathbb{N}\cup\{\omega\}$. In what follows, a pair $(\mathsf{A},F)$, where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted globular $n$-category and $F$ assigns to every $\sigma\in\Sigma_{\mathbf{s},s}$ a family of mappings $(F_{\sigma,k})_{k}$, one for each dimension $k$, is identified with the partial $\Sigma^{\mathrm{gl}(n)}$-algebra whose underlying set of sort $(k,s)$ is the set of $k$-cells of $\mathsf{A}_{s}$, in which $\mathrm{sc}^{(j,k)}_{s}$, $\mathrm{tg}^{(j,k)}_{s}$, $\mathrm{i}^{(k,j)}_{s}$ and $\circ^{(j,k)}_{s}$ are interpreted as the corresponding operations of $\mathsf{A}_{s}$, and $\sigma_{k}$ is interpreted as $F_{\sigma,k}$, the component at $k$-cells of $F_{\sigma}$.
@@ -3479,13 +3479,34 @@ $$
 $$
 \end{proposition}
 \begin{proof}
-If two of the dimensions are equal, the statement follows from Definition~\ref{DTruncDerivor} and Lemma~\ref{LGenEpId}, since $\mathrm{Tr}^{(n,n)}_{\mathbf{\Sigma}}$ and $\mathrm{Tr}^{\mathrm{gl}(n,n)}_{\mathbf{\Sigma}}$ are identities. Let $m<n<p$. We consider the single-set case; the globular case is analogous.
+If two of the dimensions are equal, the statement follows from Definition~\ref{DTruncDerivor} and Lemma~\ref{LGenEpId}, since $\mathrm{Tr}^{(n,n)}_{\mathbf{\Sigma}}$ and $\mathrm{Tr}^{\mathrm{gl}(n,n)}_{\mathbf{\Sigma}}$ are identities. Let $m<n<p$. We consider first the single-set case and then the globular case.
 
-\textsf{(Underlying derivors)} By~(H1) and~(H2), the composite of the derivors underlying $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ and $\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}$ is the derivor underlying $\mathrm{Tr}^{(m,p)}_{\mathbf{\Sigma}}$, since all of them send the operation symbols of $\Sigma^{(m)}$ to themselves, applied to variables.
+\textsf{(Single-set case: underlying derivors)} By~(H1) and~(H2), the composite of the derivors underlying $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ and $\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}$ is the derivor underlying $\mathrm{Tr}^{(m,p)}_{\mathbf{\Sigma}}$, since all of them send the operation symbols of $\Sigma^{(m)}$ to themselves, applied to variables.
 
-\textsf{(Cells)} For a $p$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{B}}$, the cells of $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$ are the $m$-cells among the $n$-cells of $\boldsymbol{\mathsf{B}}$, i.e., by Lemma~\ref{LGradCells}~(3), its $m$-cells, which are the cells of $\mathrm{Tr}^{(m,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$.
+\textsf{(Single-set case: cells)} For a $p$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{B}}$, the cells of $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$ are the $m$-cells among the $n$-cells of $\boldsymbol{\mathsf{B}}$, i.e., by Lemma~\ref{LGradCells}~(3), its $m$-cells, which are the cells of $\mathrm{Tr}^{(m,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$.
 
-Hence $\mathrm{Tr}^{(m,p)}_{\mathbf{\Sigma}}$ is a composite of $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ and $\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}$ on the ep-variety $\mathcal{V}(\mathbf{\Sigma}^{(p)},\mathcal{C}^{(p)})$, and the statement follows from Proposition~\ref{PTruncDerivor} and Lemma~\ref{LGenEpComp}.
+Hence $\mathrm{Tr}^{(m,p)}_{\mathbf{\Sigma}}$ is a composite of $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ and $\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}$ on the ep-variety $\mathcal{V}(\mathbf{\Sigma}^{(p)},\mathcal{C}^{(p)})$, and the single-set equality follows from Proposition~\ref{PTruncDerivor} and Lemma~\ref{LGenEpComp}.
+
+\textsf{(Globular case: underlying derivors)} By Definition~\ref{DTruncDerivor}, the derivors underlying $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$, $\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}$ and $\mathrm{Tr}^{\mathrm{gl}(m,p)}_{\mathbf{\Sigma}}$ are determined by the canonical embeddings of $\Sigma^{\mathrm{gl}(m)}$ into $\Sigma^{\mathrm{gl}(n)}$, of $\Sigma^{\mathrm{gl}(n)}$ into $\Sigma^{\mathrm{gl}(p)}$, and of $\Sigma^{\mathrm{gl}(m)}$ into $\Sigma^{\mathrm{gl}(p)}$, respectively. Their mappings on sorts send $(k,s)$ to $(k,s)$. Moreover, for every operation symbol $\tau$ of $\Sigma^{\mathrm{gl}(m)}$ of arity $\mathbf{w}$, the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\left(\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}\right)^{\sharp}\left(\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}(\tau)\right)
+&=
+\left(\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}\right)^{\sharp}\left(\tau\left((v^{\mathbf{w}}_{q})_{q\in\bb{\mathbf{w}}}\right)\right)
+\tag{1}
+\\&=
+\tau\left((v^{\mathbf{w}}_{q})_{q\in\bb{\mathbf{w}}}\right)
+\tag{2}
+\\&=
+\mathrm{Tr}^{\mathrm{gl}(m,p)}_{\mathbf{\Sigma}}(\tau).
+\tag{3}
+\end{align*}
+
+The first equality unravels Definition~\ref{DTruncDerivor}; the second equality follows from~(H1) and~(H2), taking into account that $\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}(\tau)=\tau((v^{\mathbf{w}}_{q})_{q\in\bb{\mathbf{w}}})$; finally, the last equality unravels Definition~\ref{DTruncDerivor}. Thus the composite of the derivors underlying $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ and $\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}$ is the derivor underlying $\mathrm{Tr}^{\mathrm{gl}(m,p)}_{\mathbf{\Sigma}}$.
+
+\textsf{(Globular case: cells)} Since the domains of the globular truncation derivors are empty, for a globular $p$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{B}}$ and $k\leq m$, the cells of sort $(k,s)$ of $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$ are the cells of sort $(k,s)$ of $\boldsymbol{\mathsf{B}}$, which are the cells of sort $(k,s)$ of $\mathrm{Tr}^{\mathrm{gl}(m,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$.
+
+Hence $\mathrm{Tr}^{\mathrm{gl}(m,p)}_{\mathbf{\Sigma}}$ is a composite of $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ and $\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}$ on the ep-variety $\mathcal{V}(\mathbf{\Sigma}^{\mathrm{gl}(p)},\mathcal{C}^{\mathrm{gl}(p)})$, and the globular equality follows from Proposition~\ref{PTruncGlDerivor} and Lemma~\ref{LGenEpComp}.
 
 This completes the proof.
 \end{proof}
@@ -3499,13 +3520,42 @@ $$
 $$
 \end{proposition}
 \begin{proof}
-If two of the dimensions are equal, the statement follows from Definition~\ref{DDiscGlDerivor} and Lemma~\ref{LGenEpId}. Let $m<n<p$. We consider the single-set case; the globular case is analogous.
+If two of the dimensions are equal, the statement follows from Definition~\ref{DDiscGlDerivor} and Lemma~\ref{LGenEpId}. Let $m<n<p$. We consider first the single-set case and then the globular case.
 
-\textsf{(Underlying derivors)} By~(H1) and~(H2), the composite of the derivors underlying $\mathrm{Ds}^{(p,n)}_{\mathbf{\Sigma}}$ and $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}$ is the derivor underlying $\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}$: the operation symbols of dimension $k<m$ are sent to themselves, applied to variables, and those of dimension $k\geq m$ are sent to $v^{s}_{0}$.
+\textsf{(Single-set case: underlying derivors)} By~(H1) and~(H2), the composite of the derivors underlying $\mathrm{Ds}^{(p,n)}_{\mathbf{\Sigma}}$ and $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}$ is the derivor underlying $\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}$: the operation symbols of dimension $k<m$ are sent to themselves, applied to variables, and those of dimension $k\geq m$ are sent to $v^{s}_{0}$.
 
-\textsf{(Cells)} For an $m$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$, the cells of $\mathrm{Ds}^{(p,n)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ and of $\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ are all the cells of $\boldsymbol{\mathsf{A}}$.
+\textsf{(Single-set case: cells)} For an $m$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$, the cells of $\mathrm{Ds}^{(p,n)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ and of $\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ are all the cells of $\boldsymbol{\mathsf{A}}$.
 
-Hence $\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}$ is a composite of $\mathrm{Ds}^{(p,n)}_{\mathbf{\Sigma}}$ and $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}$ on the ep-variety $\mathcal{V}(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})$, and the statement follows from Proposition~\ref{PDiscDerivor} and Lemma~\ref{LGenEpComp}.
+Hence $\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}$ is a composite of $\mathrm{Ds}^{(p,n)}_{\mathbf{\Sigma}}$ and $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}$ on the ep-variety $\mathcal{V}(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})$, and the single-set equality follows from Proposition~\ref{PDiscDerivor} and Lemma~\ref{LGenEpComp}.
+
+\textsf{(Globular case: mappings on sorts)} The mappings on sorts of $\mathrm{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}$ and $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$ send $(k,s)$ to $(\min\{k,n\},s)$ and to $(\min\{k,m\},s)$, respectively. Since $m<n$, their composite sends $(k,s)$ to $(\min\{\min\{k,n\},m\},s)=(\min\{k,m\},s)$, i.e., it is the mapping on sorts of $\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}$.
+
+\textsf{(Globular case: terms)} Let $j<k$ be dimensions in $p+1$ and $s\in S$, and let us write $c$ for $(\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}})^{\sharp}\circ\mathrm{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}$. We compute $c$ by~(H1) and~(H2) and Definition~\ref{DDiscGlDerivor}, distinguishing the position of $j$.
+\begin{enumerate}
+\item For every $\sigma\in\Sigma_{\mathbf{s},s}$, $\mathrm{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}$ sends $\sigma_{k}$ to $\sigma_{\min\{k,n\}}$, applied to variables, and $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$ sends $\sigma_{\min\{k,n\}}$ to $\sigma_{\min\{k,m\}}$, applied to variables. Thus $c(\sigma_{k})=\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}(\sigma_{k})$.
+\item If $j<m$, then $j<n$, and $\mathrm{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}$ sends $\mathrm{sc}^{(j,k)}_{s}$, $\mathrm{tg}^{(j,k)}_{s}$, $\mathrm{i}^{(k,j)}_{s}$ and $\circ^{(j,k)}_{s}$ to the corresponding operation symbols of dimensions $j$ and $\min\{k,n\}$, applied to variables, which $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$ sends to the corresponding operation symbols of dimensions $j$ and $\min\{k,m\}$, applied to variables. For instance, the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+c\left(\mathrm{sc}^{(j,k)}_{s}\right)
+&=
+\left(\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}\right)^{\sharp}\left(\mathrm{sc}^{(j,\min\{k,n\})}_{s}\left(v^{(\min\{k,n\},s)}_{0}\right)\right)
+\tag{1}
+\\&=
+\mathrm{sc}^{(j,\min\{k,m\})}_{s}\left(v^{(\min\{k,m\},s)}_{0}\right)
+\tag{2}
+\\&=
+\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}\left(\mathrm{sc}^{(j,k)}_{s}\right).
+\tag{3}
+\end{align*}
+The first equality unravels Definition~\ref{DDiscGlDerivor} for $\mathrm{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}$; the second equality follows from~(H1) and~(H2) and Definition~\ref{DDiscGlDerivor} for $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$; finally, the last equality unravels Definition~\ref{DDiscGlDerivor} for $\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}$. By a similar argument, the same holds for $\mathrm{tg}^{(j,k)}_{s}$, $\mathrm{i}^{(k,j)}_{s}$ and $\circ^{(j,k)}_{s}$.
+\item If $m\leq j<n$, then $\mathrm{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}$ sends $\mathrm{sc}^{(j,k)}_{s}$, $\mathrm{tg}^{(j,k)}_{s}$, $\mathrm{i}^{(k,j)}_{s}$ and $\circ^{(j,k)}_{s}$ to the corresponding operation symbols of dimensions $j$ and $\min\{k,n\}$, applied to variables, which, since $j\geq m$, $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$ sends to variables of sort $(m,s)$. These are the values of $\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}$, since $j\geq m$.
+\item If $j\geq n$, then $\mathrm{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}$ sends these operation symbols to variables of sort $(n,s)$, which, by~(H1), $(\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}})^{\sharp}$ sends to variables of sort $(m,s)$. These are the values of $\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}$, since $j\geq m$.
+\end{enumerate}
+Thus the composite of the derivors underlying $\mathrm{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}$ and $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$ is the derivor underlying $\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}$.
+
+\textsf{(Globular case: cells)} Since the domains of the globular discretization derivors are empty, for a globular $m$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$, by Lemma~\ref{LDiscGlDescription}, the cells of sort $(k,s)$ of $\mathrm{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ are the $\min\{\min\{k,n\},m\}$-cells of sort $s$ of $\boldsymbol{\mathsf{A}}$, i.e., its $\min\{k,m\}$-cells, which are the cells of sort $(k,s)$ of $\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$.
+
+Hence $\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}$ is a composite of $\mathrm{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}$ and $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$ on the ep-variety $\mathcal{V}(\mathbf{\Sigma}^{\mathrm{gl}(m)},\mathcal{C}^{\mathrm{gl}(m)})$, and the globular equality follows from Proposition~\ref{PDiscGlDerivor} and Lemma~\ref{LGenEpComp}.
 
 This completes the proof.
 \end{proof}
@@ -3524,13 +3574,19 @@ $$
 and the same holds for the globular truncation and discretization functors.
 \end{proposition}
 \begin{proof}
-If $n=p$, the truncation is the identity, and if $m=p$, so is the discretization; in both cases the statement is clear. Let $m<p$ and $n<p$, and let $\boldsymbol{\mathsf{A}}$ be an $m$-categorial $\mathbf{\Sigma}$-algebra. We consider the single-set case; the globular case is analogous, since, by Lemma~\ref{LDiscGlDescription}, the $k$-cells of $\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ are the $\underline{k}$-cells of $\boldsymbol{\mathsf{A}}$.
+If $n=p$, the truncation is the identity, and if $m=p$, so is the discretization; in both cases the statement is clear. Let $m<p$ and $n<p$, and let $\boldsymbol{\mathsf{A}}$ be an $m$-categorial $\mathbf{\Sigma}$-algebra. We consider first the single-set case and then the globular case.
 
-\textsf{(Underlying derivors)} By~(H1) and~(H2), the composite of the derivors underlying $\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}$ and $\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}$ sends the operation symbols of $\Sigma^{(n)}$ of dimension $k<\min\{m,n\}$ to themselves and, if $m\leq n$, those of dimension $k\geq m$ to $v^{s}_{0}$. Hence it is the derivor underlying $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}$, if $m\leq n$, and the one underlying $\mathrm{Tr}^{(n,m)}_{\mathbf{\Sigma}}$, if $n\leq m$.
+\textsf{(Single-set case: underlying derivors)} By~(H1) and~(H2), the composite of the derivors underlying $\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}$ and $\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}$ sends the operation symbols of $\Sigma^{(n)}$ of dimension $k<\min\{m,n\}$ to themselves and, if $m\leq n$, those of dimension $k\geq m$ to $v^{s}_{0}$. Hence it is the derivor underlying $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}$, if $m\leq n$, and the one underlying $\mathrm{Tr}^{(n,m)}_{\mathbf{\Sigma}}$, if $n\leq m$.
 
-\textsf{(Cells)} The cells of $\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ are the cells $x$ of $\boldsymbol{\mathsf{A}}$ such that $\mathrm{sc}^{n}_{s}(x)=x$ in $\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. If $m\leq n$, then, by Lemma~\ref{LDiscDescription}, $\mathrm{sc}^{n}_{s}$ acts as the identity, so that they are all the cells of $\boldsymbol{\mathsf{A}}$, which are the cells of $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. If $n<m$, then $\mathrm{sc}^{n}_{s}$ acts as in $\boldsymbol{\mathsf{A}}$, so that they are the $n$-cells of $\boldsymbol{\mathsf{A}}$, which are the cells of $\mathrm{Tr}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$.
+\textsf{(Single-set case: cells)} The cells of $\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ are the cells $x$ of $\boldsymbol{\mathsf{A}}$ such that $\mathrm{sc}^{n}_{s}(x)=x$ in $\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. If $m\leq n$, then, by Lemma~\ref{LDiscDescription}, $\mathrm{sc}^{n}_{s}$ acts as the identity, so that they are all the cells of $\boldsymbol{\mathsf{A}}$, which are the cells of $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. If $n<m$, then $\mathrm{sc}^{n}_{s}$ acts as in $\boldsymbol{\mathsf{A}}$, so that they are the $n$-cells of $\boldsymbol{\mathsf{A}}$, which are the cells of $\mathrm{Tr}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. Thus, by Propositions~\ref{PDiscDerivor} and~\ref{PTruncDerivor} and Lemma~\ref{LGenEpComp}, the single-set equality holds.
 
-All in all, the statement follows from Propositions~\ref{PDiscDerivor} and~\ref{PTruncDerivor} and Lemma~\ref{LGenEpComp}.
+\textsf{(Globular case: mappings on sorts)} Let $\boldsymbol{\mathsf{A}}$ be a globular $m$-categorial $\mathbf{\Sigma}$-algebra. The composite of the mappings on sorts of $\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}$ and $\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}$ sends $(k,s)$, for $k\leq n$, to $(\min\{k,m\},s)$. If $m\leq n$, it is the mapping on sorts of $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$; if $n\leq m$, then $\min\{k,m\}=k$, and it is the mapping on sorts of $\mathrm{Tr}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$.
+
+\textsf{(Globular case: terms)} Since $\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}$ sends every operation symbol $\tau$ of $\Sigma^{\mathrm{gl}(n)}$ to itself, applied to variables, by~(H1) and~(H2), the composite derivor sends $\tau$ to $\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}(\tau)$. If $m\leq n$, then, by Definition~\ref{DDiscGlDerivor}, the clauses that define $\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}(\tau)$, for the operation symbols of $\Sigma^{\mathrm{gl}(n)}$, are those that define $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\tau)$, since both only depend on the dimensions involved and on $m$. If $n\leq m$, then all the dimensions of $\Sigma^{\mathrm{gl}(n)}$ are at most $m$, so that, by Definition~\ref{DDiscGlDerivor}, $\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}(\tau)$ is $\tau$, applied to variables, i.e., $\mathrm{Tr}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\tau)$.
+
+\textsf{(Globular case: cells)} Since the domains of the globular truncation and discretization derivors are empty, by Lemma~\ref{LDiscGlDescription}, the cells of sort $(k,s)$ of $\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$, for $k\leq n$, are the $\min\{k,m\}$-cells of sort $s$ of $\boldsymbol{\mathsf{A}}$. If $m\leq n$, they are the cells of sort $(k,s)$ of $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$; if $n\leq m$, they are the $k$-cells of $\boldsymbol{\mathsf{A}}$, i.e., the cells of sort $(k,s)$ of $\mathrm{Tr}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$.
+
+Thus, by Propositions~\ref{PDiscGlDerivor} and~\ref{PTruncGlDerivor} and Lemma~\ref{LGenEpComp}, the globular equality holds.
 
 This completes the proof.
 \end{proof}
@@ -3880,7 +3936,15 @@ This completes the proof.
 The statements of Corollary~\ref{CLimitNat} hold for $\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})$ and the truncation functors $\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}$ and $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$.
 \end{corollary}
 \begin{proof}
-As for Corollary~\ref{CLimitNat}, using Claim~\ref{CUnivPropGlCatAlgB} in the proof of Proposition~\ref{PUnivPropGlCatAlg}.
+(1) It follows from Claim~\ref{CUnivPropGlCatAlgB} in the proof of Proposition~\ref{PUnivPropGlCatAlg}.
+
+(2) Let $F,G\colon\mathsf{L}\mor\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})$ be functors and, for every $n\in\omega$, $\varphi^{n}$ a natural transformation from $\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}\circ F$ to $\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}\circ G$ such that $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}\ast\varphi^{n}=\varphi^{m}$ for $m\leq n$. By~(1), for every object $X$ of $\mathsf{L}$ there exists a unique homomorphism $\varphi_{X}$ with $\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}(\varphi_{X})=\varphi^{n}_{X}$ for every $n$.
+
+\textsf{(Naturality)} For a morphism $f\colon X\mor Y$, the homomorphisms $G(f)\circ\varphi_{X}$ and $\varphi_{Y}\circ F(f)$ have the same truncations, by the naturality of every $\varphi^{n}$, so that, by~(1), they are equal.
+
+\textsf{(Isomorphism)} If every $\varphi^{n}_{X}$ is an isomorphism, the inverses form a family as in~(1), whose image under the bijection of~(1) is the inverse of $\varphi_{X}$.
+
+This completes the proof.
 \end{proof}
 
 \section{Graduation, unification, discretization and truncation in dimension \texorpdfstring{$\omega$}{omega}}\label{SOmegaFunctors}
@@ -4108,11 +4172,11 @@ We next consider discretization and truncation.
 Let $m\in\mathbb{N}$. Then $\mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{(\omega,m)}_{\mathbf{\Sigma}}=\mathrm{Id}_{\mathsf{mCatAlg}(\mathbf{\Sigma})}$ and $\mathrm{Ds}^{(\omega,m)}_{\mathbf{\Sigma}}$ is left adjoint to $\mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}$, with the identity as unit and, as counit, the natural transformation $\varepsilon$ whose component at an $\omega$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{B}}$ is the inclusion of the $m$-cells. The same holds for $\mathrm{Ds}^{\mathrm{gl}(\omega,m)}_{\mathbf{\Sigma}}$ and $\mathrm{Tr}^{\mathrm{gl}(m,\omega)}_{\mathbf{\Sigma}}$, the component of the counit at the sort $(k,s)$ being the identity, if $k\leq m$, and $\mathrm{i}^{(k,m)}_{s}$, if $k>m$.
 \end{proposition}
 \begin{proof}
-We consider the single-set case; the globular case is proved in the same way, with Proposition~\ref{PDiscTruncAdjGl} and Corollary~\ref{CLimitNatGl}.
+We consider first the single-set case and then the globular case.
 
-\textsf{(Unit)} The equation $\mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{(\omega,m)}_{\mathbf{\Sigma}}=\mathrm{Id}_{\mathsf{mCatAlg}(\mathbf{\Sigma})}$ is Remark~\ref{RDiscOmegaTrunc}~(2) for $n=m$.
+\textsf{(Single-set case: unit)} The equation $\mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{(\omega,m)}_{\mathbf{\Sigma}}=\mathrm{Id}_{\mathsf{mCatAlg}(\mathbf{\Sigma})}$ is Remark~\ref{RDiscOmegaTrunc}~(2) for $n=m$.
 
-\textsf{(Counit)} Let $\boldsymbol{\mathsf{B}}$ be an $\omega$-categorial $\mathbf{\Sigma}$-algebra and $n\in\mathbb{N}$. By Remark~\ref{RDiscOmegaTrunc}, the following equality holds
+\textsf{(Single-set case: counit)} Let $\boldsymbol{\mathsf{B}}$ be an $\omega$-categorial $\mathbf{\Sigma}$-algebra and $n\in\mathbb{N}$. By Remark~\ref{RDiscOmegaTrunc}, the following equality holds
 $$
 \mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}\left(\mathrm{Ds}^{(\omega,m)}_{\mathbf{\Sigma}}\left(\mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})\right)\right)
 =
@@ -4123,7 +4187,22 @@ $$
 $$
 Let $\varepsilon^{n}$ be the counit of Proposition~\ref{PDiscTruncAdj} at $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$, if $m\leq n$, and the identity, if $n<m$. All of them are inclusions of $m$-cells, or identities, so that they satisfy the compatibility condition of Corollary~\ref{CLimitNat}, and they induce a natural transformation $\varepsilon$, whose component at $\boldsymbol{\mathsf{B}}$ is the inclusion of the $m$-cells.
 
-\textsf{(Triangular identities)} They hold because they hold after applying every $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}$, by Proposition~\ref{PDiscTruncAdj}, and, by Corollary~\ref{CLimitNat}, a homomorphism is determined by its truncations.
+\textsf{(Single-set case: triangular identities)} They hold because they hold after applying every $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}$, by Proposition~\ref{PDiscTruncAdj}, and, by Corollary~\ref{CLimitNat}, a homomorphism is determined by its truncations.
+
+\textsf{(Globular case: unit)} The equation $\mathrm{Tr}^{\mathrm{gl}(m,\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{\mathrm{gl}(\omega,m)}_{\mathbf{\Sigma}}=\mathrm{Id}_{\mathsf{mCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})}$ is Remark~\ref{RDiscOmegaTrunc}~(2) for $n=m$.
+
+\textsf{(Globular case: counit)} Let $\boldsymbol{\mathsf{B}}$ be a globular $\omega$-categorial $\mathbf{\Sigma}$-algebra and $n\in\mathbb{N}$. By Remark~\ref{RDiscOmegaTrunc}, the following equality holds
+$$
+\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}\left(\mathrm{Ds}^{\mathrm{gl}(\omega,m)}_{\mathbf{\Sigma}}\left(\mathrm{Tr}^{\mathrm{gl}(m,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})\right)\right)
+=
+\begin{cases}
+\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}\left(\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}\left(\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})\right)\right), & \text{if $m\leq n$;}\\
+\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}), & \text{if $n<m$.}
+\end{cases}
+$$
+Let $\varepsilon^{\mathrm{gl},n}$ be the counit of Proposition~\ref{PDiscTruncAdjGl} at $\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$, if $m\leq n$, and the identity, if $n<m$. By Lemma~\ref{LDiscTruncCounitGl}, the component of $\varepsilon^{\mathrm{gl},n}$ at the sort $(k,s)$, for $k\leq n$, is the identity, if $k\leq m$, and $\mathrm{i}^{(k,m)}_{s}$, if $k>m$. Hence, for $n\leq n'$, the components of $\varepsilon^{\mathrm{gl},n}$ are the components of $\varepsilon^{\mathrm{gl},n'}$ at the sorts of dimension at most $n$, i.e., $\mathrm{Tr}^{\mathrm{gl}(n,n')}_{\mathbf{\Sigma}}(\varepsilon^{\mathrm{gl},n'})=\varepsilon^{\mathrm{gl},n}$. Thus the family satisfies the compatibility condition of Corollary~\ref{CLimitNatGl}, and it induces a natural transformation $\varepsilon^{\mathrm{gl}}$, whose component at $\boldsymbol{\mathsf{B}}$ and at the sort $(k,s)$ is the identity, if $k\leq m$, and $\mathrm{i}^{(k,m)}_{s}$, if $k>m$.
+
+\textsf{(Globular case: triangular identities)} They hold because they hold after applying every $\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}$, by Proposition~\ref{PDiscTruncAdjGl}, and, by Corollary~\ref{CLimitNatGl}, a homomorphism is determined by its truncations.
 
 This completes the proof.
 \end{proof}
