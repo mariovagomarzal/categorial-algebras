@@ -2375,17 +2375,19 @@ By Proposition~\ref{PGlobularIdentObj}, both categories have the same objects an
 
 \section{Graduation and Unification of Higher-Order Categorial Algebras}\label{SGraduation}
 
-Throughout this section, $\mathbf{\Sigma}=(S,\Sigma)$ is a many-sorted signature and $n\in\mathbb{N}$, and we write $\mathcal{C}^{(n)}$ for $\mathcal{C}^{\mathbf{\Sigma}^{(n)}}$ and $\mathcal{C}^{\mathrm{gl}(n)}$ for $\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$. By Corollaries~\ref{CSingleSetEp} and~\ref{CGlobularEp} and Propositions~\ref{PSingleSetIdent} and~\ref{PGlobularIdent},
+In this section, we associate to a single-set $n$-categorial $\mathbf{\Sigma}$-algebra a globular $n$-categorial $\mathbf{\Sigma}$-algebra by means of the notion of graduation and, conversely, to a globular $n$-categorial $\mathbf{\Sigma}$-algebra a single-set $n$-categorial $\mathbf{\Sigma}$-algebra by means of the notion of unification. Both constructions are induced by generalized hep-derivors. We end this section by showing that graduation and unification are mutually quasi-inverse equivalences of categories.
+
+Throughout this section, $\mathbf{\Sigma}=(S,\Sigma)$ is a many-sorted signature and $n\in\mathbb{N}$, and we write $\mathcal{C}^{(n)}$ for $\mathcal{C}^{\mathbf{\Sigma}^{(n)}}$ and $\mathcal{C}^{\mathrm{gl}(n)}$ for $\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$. By Corollaries~\ref{CSingleSetEp} and~\ref{CGlobularEp} and Propositions~\ref{PSingleSetIdent} and~\ref{PGlobularIdent}, the following equalities hold
 $$
 \mathsf{nCatAlg}(\mathbf{\Sigma})=\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})
 \qquad\text{and}\qquad
-\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})=\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)}),
+\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})=\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)}).
 $$
-so that the categories of higher-order categorial algebras are the categories canonically associated to the ep-varieties $\mathcal{V}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ and $\mathcal{V}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ of hep-specifications. The functors of this section are induced by generalized hep-derivors between the corresponding hep-signatures, see Definition~\ref{DGenEpDerivor}; they are defined on all the partial algebras, and we prove that their restrictions to the categories of higher-order categorial algebras corestrict to categories of higher-order categorial algebras, see Definition~\ref{DSendsModels}. By abuse of notation, we denote these corestrictions as the functors themselves. The dimensions of $\Sigma^{\mathrm{gl}(n)}$ are the elements of $n+1$. In this section and in Section~\ref{STruncation} we only consider finite dimensions; the $\omega$-dimensional functors are obtained in Section~\ref{SOmegaFunctors} from the projective limits of Sections~\ref{SLimitSingleSet} and~\ref{SLimitGlobular}.
+Thus, the categories of higher-order categorial algebras are the categories canonically associated to the ep-varieties $\mathcal{V}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ and $\mathcal{V}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ of hep-specifications. The functors of this section are induced by generalized hep-derivors between the corresponding hep-signatures, see Definition~\ref{DGenEpDerivor}; they are defined on all the partial algebras, and we prove that their restrictions to the categories of higher-order categorial algebras corestrict to categories of higher-order categorial algebras, see Definition~\ref{DSendsModels}. By abuse of notation, we denote these corestrictions as the functors themselves. The dimensions of $\Sigma^{\mathrm{gl}(n)}$ are the elements of $n+1$. In this section and in Section~\ref{STruncation} we only consider finite dimensions; the $\omega$-dimensional functors are considered in Subsection~\ref{SDTOmega} and in Section~\ref{SOmegaFunctors}.
 
 \subsection{Graduation of higher-order categorial algebras}\label{SGraduationSub}
 
-Graduating a single-set $n$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$ consists in distributing its cells into sorts according to their dimension: for $k\in n$, the $k$-cells of sort $s$, i.e., the cells $x$ of sort $s$ with $\mathrm{sc}^{k}_{s}(x)=x$, become the cells of sort $(k,s)$, and all the cells of sort $s$ become the cells of sort $(n,s)$. The $(j,k)$-source and the $(j,k)$-target of a $k$-cell are its $j$-source and its $j$-target, the $(k,j)$-identity of a $j$-cell is the cell itself, the $j$-composition of two $k$-cells is their $j$-composition, and $\sigma_{k}$ acts on $k$-cells as $\sigma$. All these data are given by a single generalized hep-derivor.
+Graduating a single-set $n$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$ consists in distributing its cells into sorts according to their dimension: for $k\in n$, the $k$-cells of sort $s$, i.e., the cells $x$ of sort $s$ with $\mathrm{sc}^{k}_{s}(x)=x$, become the cells of sort $(k,s)$, and all the cells of sort $s$ become the cells of sort $(n,s)$. The $(j,k)$-source and the $(j,k)$-target of a $k$-cell are its $j$-source and its $j$-target, the $(k,j)$-identity of a $j$-cell is the cell itself, the $j$-composition of two $k$-cells is their $j$-composition, and $\sigma_{k}$ acts on $k$-cells as $\sigma$. All these data are given by a single generalized hep-derivor, which we define next.
 
 \begin{definition}\label{DGradDerivor}
 Let $n\in\mathbb{N}$. The \emph{graduation derivor} is the generalized hep-derivor $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ from $\mathbf{\Sigma}^{\mathrm{gl}(n)}$ to $\mathbf{\Sigma}^{(n)}$ defined as follows, where, as for every generalized hep-derivor of this work, we denote by $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ also its mapping on sorts and its assignment of terms to operation symbols, and by $\mathrm{Dom}^{\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}}$ its domains:
@@ -2403,34 +2405,212 @@ Let $n\in\mathbb{N}$. The \emph{graduation derivor} is the generalized hep-deriv
 \end{enumerate}
 \end{definition}
 
-Note that $(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}})^{\star}((k,\mathbf{s}))=\mathbf{s}$, so that $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\sigma_{k})$ is a term with variables in $\vs{\mathbf{s}}$, and that $j\in n$ whenever $j<k$, so that $\mathrm{sc}^{j}_{s}$, $\mathrm{tg}^{j}_{s}$ and $\circ^{j}_{s}$ are operation symbols of $\Sigma^{(n)}$.
+Let us note that $(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}})^{\star}((k,\mathbf{s}))=\mathbf{s}$, so that $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\sigma_{k})$ is a term with variables in $\vs{\mathbf{s}}$, and that $j\in n$ whenever $j<k$, so that $\mathrm{sc}^{j}_{s}$, $\mathrm{tg}^{j}_{s}$ and $\circ^{j}_{s}$ are operation symbols of $\Sigma^{(n)}$.
 
 \begin{definition}\label{DGraduation}
 Let $n\in\mathbb{N}$. The \emph{graduation functor} $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ is the functor $(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}$ induced by the derivor $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ from $\mathsf{PAlg}(\Sigma^{(n)})$ to $\mathsf{PAlg}(\Sigma^{\mathrm{gl}(n)})$, see Proposition~\ref{PGenEpDerivorFunctor}.
 \end{definition}
 
+In the following lemma we collect the facts about cells of a single-set $n$-categorial $\mathbf{\Sigma}$-algebra that we need to graduate it.
+
+\begin{lemma}\label{LGradCells}
+Let $n\in\mathbb{N}$, $\mathbf{B}$ an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, $s\in S$ and $j<k$ dimensions in $n+1$. Then the following statements hold:
+\begin{enumerate}
+\item if $k\in n$, $(\mathbf{s},s)\in S^{\star}\times S$, $\sigma\in\Sigma_{\mathbf{s},s}$ and $(x_{p})_{p\in\bb{\mathbf{s}}}$ is a family of $k$-cells, then $\sigma^{\mathbf{B}}((x_{p})_{p\in\bb{\mathbf{s}}})$ is a $k$-cell;
+\item for every cell $x$ of sort $s$, $\mathrm{sc}^{j}_{s}(x)$ and $\mathrm{tg}^{j}_{s}(x)$ are $j$-cells;
+\item if $k\in n$, then every $j$-cell of sort $s$ is a $k$-cell;
+\item if $k\in n$ and $x$, $y$ are $k$-cells of sort $s$ such that $\mathrm{sc}^{j}_{s}(x)=\mathrm{tg}^{j}_{s}(y)$, then $x\circ^{j}_{s}y$ is defined and it is a $k$-cell.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+(1) The following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{sc}^{k}_{s}\left(\sigma\left((x_{p})_{p\in\bb{\mathbf{s}}}\right)\right)
+&=
+\sigma\left(\left(\mathrm{sc}^{k}_{s_{p}}(x_{p})\right)_{p\in\bb{\mathbf{s}}}\right)
+\tag{1}
+\\&=
+\sigma\left((x_{p})_{p\in\bb{\mathbf{s}}}\right).
+\tag{2}
+\end{align*}
+
+The first equality follows from~(A$^{k}$7); finally, the last equality follows from the fact that every $x_{p}$ is a $k$-cell.
+
+(2) The following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{sc}^{j}_{s}\left(\mathrm{sc}^{j}_{s}(x)\right)
+&=
+\mathrm{sc}^{j}_{s}(x),
+&
+\mathrm{sc}^{j}_{s}\left(\mathrm{tg}^{j}_{s}(x)\right)
+&=
+\mathrm{tg}^{j}_{s}(x),
+\end{align*}
+by~(A$^{j}$2).
+
+(3) Let $u$ be a $j$-cell of sort $s$. Then the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{sc}^{k}_{s}(u)
+&=
+\mathrm{sc}^{k}_{s}\left(\mathrm{sc}^{j}_{s}(u)\right)
+\tag{1}
+\\&=
+\mathrm{sc}^{j}_{s}(u)
+\tag{2}
+\\&=
+u.
+\tag{3}
+\end{align*}
+
+The first equality follows from the fact that $u$ is a $j$-cell; the second equality follows from~(AB$^{j,k}$1); finally, the last equality follows, again, from the fact that $u$ is a $j$-cell.
+
+(4) By~(A$^{j}$3), $x\circ^{j}_{s}y$ is defined. Moreover, the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{sc}^{k}_{s}\left(x\circ^{j}_{s}y\right)
+&=
+\mathrm{sc}^{k}_{s}(x)\circ^{j}_{s}\mathrm{sc}^{k}_{s}(y)
+\tag{1}
+\\&=
+x\circ^{j}_{s}y.
+\tag{2}
+\end{align*}
+
+The first equality follows from~(AB$^{j,k}$2); finally, the last equality follows from the fact that $x$ and $y$ are $k$-cells.
+
+This completes the proof.
+\end{proof}
+
+In the following lemma we describe the transformed algebra along the graduation derivor.
+
+\begin{lemma}\label{LGradDescription}
+Let $n\in\mathbb{N}$, $\mathbf{B}$ an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ and $\mathbf{A}=\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathbf{B})$. Then $\mathbf{A}$ is a $\mathbf{\Sigma}^{\mathrm{gl}(n)}$-algebra whose cells of sort $(k,s)$ are the $k$-cells of sort $s$ of $\mathbf{B}$, for $k\in n$, and all the cells of sort $s$ of $\mathbf{B}$, for $k=n$. Moreover, for every pair of dimensions $j<k$ and every $s\in S$,
+\begin{enumerate}
+\item $\sigma_{k}$, $\mathrm{sc}^{(j,k)}_{s}$, $\mathrm{tg}^{(j,k)}_{s}$ and $\mathrm{i}^{(k,j)}_{s}$ are total and act as $\sigma$, $\mathrm{sc}^{j}_{s}$, $\mathrm{tg}^{j}_{s}$ and the inclusion, respectively; and
+\item for every pair of $k$-cells $x$, $y$ of sort $s$, $x\circ^{(j,k)}_{s}y$ is defined if, and only if, $\mathrm{sc}^{j}_{s}(x)=\mathrm{tg}^{j}_{s}(y)$, and, in this case, $x\circ^{(j,k)}_{s}y=x\circ^{j}_{s}y$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+The description of the cells follows from Definitions~\ref{DCells} and~\ref{DGradDerivor}. By Proposition~\ref{PDomainDef}, to prove that $\mathbf{A}$ is a $\mathbf{\Sigma}^{\mathrm{gl}(n)}$-algebra, we have to show that, for every operation symbol $\tau$ of $\Sigma^{\mathrm{gl}(n)}$ and every family $\mathbf{x}$ of cells of $\mathbf{A}$ that satisfies the domain conditions of $\tau$ in $\mathbf{A}$, the partial term operation $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\tau)^{\mathbf{B}}$ is defined at $\mathbf{x}$ and takes a value in the domain of the coarity of $\tau$. We consider the different kinds of operation symbols of $\Sigma^{\mathrm{gl}(n)}$. Let $j<k$ be dimensions and $s\in S$.
+
+\textsf{(Operation symbols $\sigma_{k}$)} The set of domain conditions of $\sigma_{k}$ is empty and the term $\sigma((v^{\mathbf{s}}_{p})_{p\in\bb{\mathbf{s}}})$ is defined everywhere in $\mathbf{B}$, by~(A0). If $k=n$, there is nothing more to prove. If $k\in n$, then, by Lemma~\ref{LGradCells}~(1), the value at a family of $k$-cells is a $k$-cell.
+
+\textsf{(Sources and targets)} The sets of domain conditions of $\mathrm{sc}^{(j,k)}_{s}$ and $\mathrm{tg}^{(j,k)}_{s}$ are empty and the terms $\mathrm{sc}^{j}_{s}(v^{s}_{0})$ and $\mathrm{tg}^{j}_{s}(v^{s}_{0})$ are defined everywhere in $\mathbf{B}$, by~(A$^{j}$1). By Lemma~\ref{LGradCells}~(2), their values are $j$-cells.
+
+\textsf{(Identities)} The set of domain conditions of $\mathrm{i}^{(k,j)}_{s}$ is empty and the term $v^{s}_{0}$ is defined everywhere. If $k=n$, there is nothing more to prove. If $k\in n$, then, by Lemma~\ref{LGradCells}~(3), every $j$-cell is a $k$-cell.
+
+Therefore, in $\mathbf{A}$, $\sigma_{k}$, $\mathrm{sc}^{(j,k)}_{s}$, $\mathrm{tg}^{(j,k)}_{s}$ and $\mathrm{i}^{(k,j)}_{s}$ are total and act as $\sigma$, $\mathrm{sc}^{j}_{s}$, $\mathrm{tg}^{j}_{s}$ and the inclusion, respectively.
+
+\textsf{(Compositions)} By the above, two $k$-cells $x$, $y$ of sort $s$ satisfy the domain condition of $\circ^{(j,k)}_{s}$ in $\mathbf{A}$ if, and only if, $\mathrm{sc}^{j}_{s}(x)=\mathrm{tg}^{j}_{s}(y)$. In this case, by~(A$^{j}$3), $x\circ^{j}_{s}y$ is defined. If $k=n$, there is nothing more to prove. If $k\in n$, then, by Lemma~\ref{LGradCells}~(4), $x\circ^{j}_{s}y$ is a $k$-cell.
+
+All in all, by Proposition~\ref{PDomainDef}, $\mathbf{A}$ is a $\mathbf{\Sigma}^{\mathrm{gl}(n)}$-algebra and, by Proposition~\ref{PDerivedPAlg}, its operations are as stated.
+
+This completes the proof.
+\end{proof}
+
+We next prove that the graduation of a single-set $n$-categorial $\mathbf{\Sigma}$-algebra is a globular $n$-categorial $\mathbf{\Sigma}$-algebra.
+
 \begin{proposition}\label{PGradDerivor}
 Let $n\in\mathbb{N}$. Then the restriction of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$.
 \end{proposition}
 \begin{proof}
-Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ and $\mathbf{A}=\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathbf{B})$. The cells of sort $(k,s)$ of $\mathbf{A}$ are the $k$-cells of sort $s$ of $\mathbf{B}$, for $k\in n$, and all the cells of sort $s$, for $k=n$.
+Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ and $\mathbf{A}=\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathbf{B})$. By Proposition~\ref{PGenEpDerivorAlg}, we must check the conditions (GHEP1) and (GHEP2).
 
-(GHEP1) By Proposition~\ref{PGenEpDerivorAlg}, we have to show that, for every operation symbol $\tau$ and every family $\mathbf{x}$ of cells of $\mathbf{A}$ that satisfies the domain conditions of $\tau$ in $\mathbf{A}$, the partial term operation $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\tau)^{\mathbf{B}}$ is defined at $\mathbf{x}$ and takes a value in the domain of the coarity of $\tau$. We first consider the operation symbols with empty domain conditions, whose derived operations are total. Let $j<k$ be dimensions. If $x_{p}$ is a $k$-cell for every $p$ and $k\in n$, then, by~(A$^{k}$7), $\mathrm{sc}^{k}_{s}(\sigma((x_{p})_{p}))=\sigma((\mathrm{sc}^{k}_{s_{p}}(x_{p}))_{p})=\sigma((x_{p})_{p})$. For every cell $x$, $\mathrm{sc}^{j}_{s}(x)$ and $\mathrm{tg}^{j}_{s}(x)$ are $j$-cells, by~(A$^{j}$2). If $u$ is a $j$-cell and $k\in n$, then, by~(AB$^{j,k}$1), $\mathrm{sc}^{k}_{s}(u)=\mathrm{sc}^{k}_{s}(\mathrm{sc}^{j}_{s}(u))=\mathrm{sc}^{j}_{s}(u)=u$, i.e., $u$ is a $k$-cell. If $k=n$ there is nothing to prove. Hence, in $\mathbf{A}$, $\sigma_{k}$, $\mathrm{sc}^{(j,k)}_{s}$, $\mathrm{tg}^{(j,k)}_{s}$ and $\mathrm{i}^{(k,j)}_{s}$ are total and act as $\sigma$, $\mathrm{sc}^{j}_{s}$, $\mathrm{tg}^{j}_{s}$ and the inclusion, respectively. Therefore, two $k$-cells $x$, $y$ satisfy the domain condition of $\circ^{(j,k)}_{s}$ in $\mathbf{A}$ if and only if $\mathrm{sc}^{j}_{s}(x)=\mathrm{tg}^{j}_{s}(y)$. In this case, $x\circ^{j}_{s}y$ is defined, by~(A$^{j}$3), and, if $k\in n$, it is a $k$-cell, since, by~(AB$^{j,k}$2), $\mathrm{sc}^{k}_{s}(x\circ^{j}_{s}y)=\mathrm{sc}^{k}_{s}(x)\circ^{j}_{s}\mathrm{sc}^{k}_{s}(y)=x\circ^{j}_{s}y$.
+\textsf{(GHEP1)} By Proposition~\ref{PDomainDef}, it is equivalent to the fact that $\mathbf{A}$ is a $\mathbf{\Sigma}^{\mathrm{gl}(n)}$-algebra, which follows from Lemma~\ref{LGradDescription}.
 
-(GHEP2) By the above, $\mathbf{A}$ is the graduated algebra described at the beginning of this subsection: its operations are the restrictions of those of $\mathbf{B}$, and $x\circ^{(j,k)}_{s}y$ is defined if and only if $x\circ^{j}_{s}y$ is defined. Let $h<j<k$ be dimensions. Under this description, the axioms of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$ become the following statements on $\mathbf{B}$: (EA0) becomes (A0); (EA$^{j,k}$1) becomes (A$^{j}$1); (EA$^{j,k}$2) becomes $\mathrm{sc}^{j}_{s}(u)=u=\mathrm{tg}^{j}_{s}(u)$, for a $j$-cell $u$, which holds by the definition of $j$-cell and~(A$^{j}$2); (EA$^{j,k}$3)--(EA$^{j,k}$8) become (A$^{j}$3)--(A$^{j}$8), except for the last equation of (EA$^{j,k}$7), which becomes trivial; (EA$^{h,j,k}$1), (EA$^{h,j,k}$3) and (EA$^{h,j,k}$4) become (AB$^{h,j}$1), (AB$^{h,j}$2) and (AB$^{h,j}$3), the last one after exchanging the variables $y$ and $z$; and (EA$^{h,j,k}$2) and (EA$^{h,j,k}$5) become trivial. Since all these equations are axioms of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$, they hold in $\mathbf{B}$, so that $\mathbf{A}$ is an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$.
+\textsf{(GHEP2)} We have to show that every axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$ holds in $\mathbf{A}$. By Lemma~\ref{LGradDescription}, the operations of $\mathbf{A}$ are the restrictions of those of $\mathbf{B}$, and $x\circ^{(j,k)}_{s}y$ is defined if, and only if, $x\circ^{j}_{s}y$ is defined. Under this description, the axioms of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$ become statements on $\mathbf{B}$, which we check in turn. Let $h<j<k$ be dimensions and $s\in S$.
+
+\textsf{(EA0) and (EA$^{j,k}$1)} They hold by Lemma~\ref{LGradDescription}~(1).
+
+\textsf{(EA$^{j,k}$2)} Let $u$ be a $j$-cell of sort $s$. Then the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{sc}^{(j,k)}_{s}\left(\mathrm{i}^{(k,j)}_{s}(u)\right)
+&=
+\mathrm{sc}^{j}_{s}(u)
+\tag{1}
+\\&=
+u.
+\tag{2}
+\end{align*}
+
+The first equality follows from Lemma~\ref{LGradDescription}~(1); finally, the last equality follows from the fact that $u$ is a $j$-cell. By a similar argument we also have that $\mathrm{tg}^{(j,k)}_{s}(\mathrm{i}^{(k,j)}_{s}(u))=u$.
+
+\textsf{(EA$^{j,k}$3)} It holds by Lemma~\ref{LGradDescription}~(2).
+
+\textsf{(EA$^{j,k}$4)--(EA$^{j,k}$8)} By Lemma~\ref{LGradDescription}, they become the axioms (A$^{j}$4)--(A$^{j}$8) restricted to $k$-cells, except for the last equation of (EA$^{j,k}$7), which becomes trivial, since the identities are inclusions. For instance, for every $k$-cell $x$ of sort $s$, the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+x\circ^{(j,k)}_{s}\mathrm{i}^{(k,j)}_{s}\left(\mathrm{sc}^{(j,k)}_{s}(x)\right)
+&=
+x\circ^{j}_{s}\mathrm{sc}^{j}_{s}(x)
+\tag{1}
+\\&=
+x.
+\tag{2}
+\end{align*}
+
+The first equality follows from Lemma~\ref{LGradDescription}; finally, the last equality follows from~(A$^{j}$5).
+
+\textsf{(EA$^{h,j,k}$1)} Let $x$ be a $k$-cell of sort $s$. Then the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{sc}^{(h,j)}_{s}\left(\mathrm{sc}^{(j,k)}_{s}(x)\right)
+&=
+\mathrm{sc}^{h}_{s}\left(\mathrm{sc}^{j}_{s}(x)\right)
+\tag{1}
+\\&=
+\mathrm{sc}^{h}_{s}(x)
+\tag{2}
+\\&=
+\mathrm{sc}^{(h,k)}_{s}(x).
+\tag{3}
+\end{align*}
+
+The first equality follows from Lemma~\ref{LGradDescription}; the second equality follows from~(AB$^{h,j}$1); finally, the last equality follows from Lemma~\ref{LGradDescription}. By a similar argument, the remaining equations of (EA$^{h,j,k}$1) also hold.
+
+\textsf{(EA$^{h,j,k}$2) and (EA$^{h,j,k}$5)} They become trivial, since the identities are inclusions.
+
+\textsf{(EA$^{h,j,k}$3)} Let $x$, $y$ be $k$-cells of sort $s$ such that $x\circ^{(h,k)}_{s}y$ is defined. Then the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{sc}^{(j,k)}_{s}\left(x\circ^{(h,k)}_{s}y\right)
+&=
+\mathrm{sc}^{j}_{s}\left(x\circ^{h}_{s}y\right)
+\tag{1}
+\\&=
+\mathrm{sc}^{j}_{s}(x)\circ^{h}_{s}\mathrm{sc}^{j}_{s}(y)
+\tag{2}
+\\&=
+\mathrm{sc}^{(j,k)}_{s}(x)\circ^{(h,j)}_{s}\mathrm{sc}^{(j,k)}_{s}(y).
+\tag{3}
+\end{align*}
+
+The first equality follows from Lemma~\ref{LGradDescription}; the second equality follows from~(AB$^{h,j}$2); finally, the last equality follows from Lemma~\ref{LGradDescription}, taking into account that, by Lemma~\ref{LGradCells}~(2), $\mathrm{sc}^{j}_{s}(x)$ and $\mathrm{sc}^{j}_{s}(y)$ are $j$-cells. By a similar argument we also have the equation for the targets.
+
+\textsf{(EA$^{h,j,k}$4)} By Lemma~\ref{LGradDescription}, it becomes the axiom (AB$^{h,j}$3) restricted to $k$-cells, after exchanging the variables $y$ and $z$.
+
+All in all, every axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$ holds in $\mathbf{A}$, so that $\mathbf{A}$ is an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$.
+
+This completes the proof.
 \end{proof}
 
+\begin{remark}\label{RGradNotEp}
 The restriction of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)})$ does not corestrict to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)})$: in a $\mathbf{\Sigma}^{(n)}$-algebra in which $\mathrm{sc}^{j}_{s}$ is not idempotent, the $j$-source of a cell need not be a $j$-cell, so that $\mathrm{sc}^{(j,k)}_{s}$ need not be total in the transformed algebra. This is why we restrict $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ to the category canonically associated to the ep-variety $\mathcal{V}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$.
+\end{remark}
 
 By Propositions~\ref{PGradDerivor}, \ref{PSingleSetIdent} and~\ref{PGlobularIdent}, the restriction of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ to $\mathsf{nCatAlg}(\mathbf{\Sigma})$ corestricts to $\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})$, and, by abuse of notation, we denote the corestriction by
 $$
 \mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\colon\mathsf{nCatAlg}(\mathbf{\Sigma})\mor\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma}).
 $$
-Explicitly, $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ is the graduated algebra described at the beginning of this subsection, and $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ sends an $n$-categorial $\mathbf{\Sigma}$-homomorphism $F$ to the family of its restrictions to the $k$-cells, see Proposition~\ref{PGenEpDerivorFunctor}.
+Explicitly, by Lemma~\ref{LGradDescription}, $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ is the graduated algebra described at the beginning of this subsection, and, by Proposition~\ref{PGenEpDerivorFunctor}, $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ sends an $n$-categorial $\mathbf{\Sigma}$-homomorphism $F$ to the family of its restrictions to the $k$-cells.
 
 \subsection{Unification of higher-order categorial algebras}\label{SUnificationSub}
 
-Unifying a globular $n$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$, for $n\in\mathbb{N}$, consists in keeping only its $n$-cells, in which every $k$-cell has been replaced by its $(n,k)$-identity: the $k$-source of an $n$-cell is the $(n,k)$-identity of its $(k,n)$-source, the $k$-composition is the $k$-composition of $n$-cells, and $\sigma$ acts as $\sigma_{n}$.
+Unifying a globular $n$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$, for $n\in\mathbb{N}$, consists in keeping only its $n$-cells, in which every $k$-cell has been replaced by its $(n,k)$-identity: the $k$-source of an $n$-cell is the $(n,k)$-identity of its $(k,n)$-source, the $k$-composition is the $k$-composition of $n$-cells, and $\sigma$ acts as $\sigma_{n}$. These data are given by the following generalized hep-derivor.
 
 \begin{definition}\label{DUnifDerivor}
 Let $n\in\mathbb{N}$. The \emph{unification derivor} is the generalized hep-derivor $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ from $\mathbf{\Sigma}^{(n)}$ to $\mathbf{\Sigma}^{\mathrm{gl}(n)}$ defined as follows: $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(s)=(n,s)$ and $\mathrm{Dom}^{\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}}_{s}=\varnothing$, for every $s\in S$, and, for every $\sigma\in\Sigma_{\mathbf{s},s}$, every $k\in n$ and every $s\in S$,
@@ -2446,39 +2626,161 @@ Let $n\in\mathbb{N}$. The \emph{unification derivor} is the generalized hep-deri
 Let $n\in\mathbb{N}$. The \emph{unification functor} $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ is the functor $(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}$ induced by the derivor $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ from $\mathsf{PAlg}(\Sigma^{\mathrm{gl}(n)})$ to $\mathsf{PAlg}(\Sigma^{(n)})$, see Proposition~\ref{PGenEpDerivorFunctor}.
 \end{definition}
 
+In the following lemma we prove that the identities of a globular $n$-categorial $\mathbf{\Sigma}$-algebra are injective.
+
+\begin{lemma}\label{LUnifInj}
+Let $n\in\mathbb{N}$, $\mathbf{A}$ an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$, $j<k$ dimensions and $s\in S$. Then, for every $j$-cell $u$ of sort $s$, the following equalities hold
+$$
+\mathrm{sc}^{(j,k)}_{s}\left(\mathrm{i}^{(k,j)}_{s}(u)\right)=u=\mathrm{tg}^{(j,k)}_{s}\left(\mathrm{i}^{(k,j)}_{s}(u)\right).
+$$
+In particular, $\mathrm{i}^{(k,j)}_{s}$ is injective.
+\end{lemma}
+\begin{proof}
+The equalities are the axiom (EA$^{j,k}$2). Hence $\mathrm{i}^{(k,j)}_{s}$ has a left inverse, so that it is injective.
+\end{proof}
+
+In the following lemma we describe the transformed algebra along the unification derivor.
+
+\begin{lemma}\label{LUnifDescription}
+Let $n\in\mathbb{N}$, $\mathbf{A}$ an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ and $\mathbf{B}=\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathbf{A})$. Then $\mathbf{B}$ is a $\mathbf{\Sigma}^{(n)}$-algebra whose cells of sort $s$ are the $n$-cells of sort $s$ of $\mathbf{A}$. Moreover, for every $k\in n$ and every $s\in S$,
+\begin{enumerate}
+\item $\sigma$, $\mathrm{sc}^{k}_{s}$ and $\mathrm{tg}^{k}_{s}$ are total and act as $\sigma_{n}$, $\mathrm{i}^{(n,k)}_{s}\circ\mathrm{sc}^{(k,n)}_{s}$ and $\mathrm{i}^{(n,k)}_{s}\circ\mathrm{tg}^{(k,n)}_{s}$, respectively; and
+\item for every pair of $n$-cells $x$, $y$ of sort $s$, $x\circ^{k}_{s}y$ is defined if, and only if, $\mathrm{sc}^{(k,n)}_{s}(x)=\mathrm{tg}^{(k,n)}_{s}(y)$, and, in this case, $x\circ^{k}_{s}y=x\circ^{(k,n)}_{s}y$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+Since the domains of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ are empty, the cells of sort $s$ of $\mathbf{B}$ are the $n$-cells of sort $s$ of $\mathbf{A}$. By Proposition~\ref{PDomainDef}, we check that, for every operation symbol of $\Sigma^{(n)}$, the corresponding partial term operation is defined on the families that satisfy its domain conditions in $\mathbf{B}$.
+
+\textsf{(Operation symbols of $\Sigma$, sources and targets)} Their sets of domain conditions are empty, and the terms $\sigma_{n}((v^{(n,\mathbf{s})}_{p})_{p\in\bb{\mathbf{s}}})$, $\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(v^{(n,s)}_{0}))$ and $\mathrm{i}^{(n,k)}_{s}(\mathrm{tg}^{(k,n)}_{s}(v^{(n,s)}_{0}))$ are defined everywhere in $\mathbf{A}$, by~(EA0) and~(EA$^{k,n}$1). Moreover, all the $n$-cells are cells of $\mathbf{B}$.
+
+\textsf{(Compositions)} By the above, two $n$-cells $x$, $y$ of sort $s$ satisfy the domain condition of $\circ^{k}_{s}$ in $\mathbf{B}$ if, and only if,
+$$
+\mathrm{i}^{(n,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}(x)\right)=\mathrm{i}^{(n,k)}_{s}\left(\mathrm{tg}^{(k,n)}_{s}(y)\right),
+$$
+i.e., by Lemma~\ref{LUnifInj}, if, and only if, $\mathrm{sc}^{(k,n)}_{s}(x)=\mathrm{tg}^{(k,n)}_{s}(y)$. In this case, by~(EA$^{k,n}$3), $x\circ^{(k,n)}_{s}y$ is defined.
+
+All in all, by Proposition~\ref{PDomainDef}, $\mathbf{B}$ is a $\mathbf{\Sigma}^{(n)}$-algebra and, by Proposition~\ref{PDerivedPAlg}, its operations are as stated.
+
+This completes the proof.
+\end{proof}
+
+We next prove that the unification of a globular $n$-categorial $\mathbf{\Sigma}$-algebra is a single-set $n$-categorial $\mathbf{\Sigma}$-algebra.
+
 \begin{proposition}\label{PUnifDerivor}
 Let $n\in\mathbb{N}$. Then the restriction of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$.
 \end{proposition}
 \begin{proof}
-Let $\mathbf{A}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ and $\mathbf{B}=\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathbf{A})$. The cells of sort $s$ of $\mathbf{B}$ are the $n$-cells of sort $s$ of $\mathbf{A}$. By~(EA$^{k,n}$2), $\mathrm{sc}^{(k,n)}_{s}(\mathrm{i}^{(n,k)}_{s}(u))=u$ for every $k$-cell $u$, so that $\mathrm{i}^{(n,k)}_{s}$ is injective.
+Let $\mathbf{A}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ and $\mathbf{B}=\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathbf{A})$. By Proposition~\ref{PGenEpDerivorAlg}, we must check the conditions (GHEP1) and (GHEP2).
 
-(GHEP1) The derived operations of $\sigma$, $\mathrm{sc}^{k}_{s}$ and $\mathrm{tg}^{k}_{s}$ are total, and all the $n$-cells are in the domains of the sorts. Hence, in $\mathbf{B}$, $\sigma$ acts as $\sigma_{n}$, and $\mathrm{sc}^{k}_{s}$ and $\mathrm{tg}^{k}_{s}$ act as $\mathrm{i}^{(n,k)}_{s}\circ\mathrm{sc}^{(k,n)}_{s}$ and $\mathrm{i}^{(n,k)}_{s}\circ\mathrm{tg}^{(k,n)}_{s}$. Therefore, two $n$-cells $x$, $y$ satisfy the domain condition of $\circ^{k}_{s}$ in $\mathbf{B}$ if and only if $\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x))=\mathrm{i}^{(n,k)}_{s}(\mathrm{tg}^{(k,n)}_{s}(y))$, i.e., since $\mathrm{i}^{(n,k)}_{s}$ is injective, if and only if $\mathrm{sc}^{(k,n)}_{s}(x)=\mathrm{tg}^{(k,n)}_{s}(y)$; and then $x\circ^{(k,n)}_{s}y$ is defined, by~(EA$^{k,n}$3).
+\textsf{(GHEP1)} By Proposition~\ref{PDomainDef}, it is equivalent to the fact that $\mathbf{B}$ is a $\mathbf{\Sigma}^{(n)}$-algebra, which follows from Lemma~\ref{LUnifDescription}.
 
-(GHEP2) By the above, $\mathbf{B}$ is the partial algebra on the $n$-cells of $\mathbf{A}$ in which $\sigma$, $\mathrm{sc}^{k}_{s}$, $\mathrm{tg}^{k}_{s}$ and $\circ^{k}_{s}$ act as $\sigma_{n}$, $\mathrm{i}^{(n,k)}_{s}\circ\mathrm{sc}^{(k,n)}_{s}$, $\mathrm{i}^{(n,k)}_{s}\circ\mathrm{tg}^{(k,n)}_{s}$ and $\circ^{(k,n)}_{s}$. We have to show that the axioms of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$, which we call their translations, hold under this description. Let $l<k$ in $n$. The translations of (A0), (A$^{k}$1), (A$^{k}$3), (A$^{k}$4), (A$^{k}$5), (A$^{k}$6) and (A$^{k}$8) are consequences of (EA0), (EA$^{k,n}$1), (EA$^{k,n}$3) and the injectivity of $\mathrm{i}^{(n,k)}_{s}$, (EA$^{k,n}$4), (EA$^{k,n}$5), (EA$^{k,n}$6) and (EA$^{k,n}$8), respectively. The translation of (A$^{k}$2) follows from $\mathrm{sc}^{(k,n)}_{s}(\mathrm{i}^{(n,k)}_{s}(u))=u=\mathrm{tg}^{(k,n)}_{s}(\mathrm{i}^{(n,k)}_{s}(u))$, i.e., from~(EA$^{k,n}$2). The translation of (A$^{k}$7) is
-$$
-\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(\sigma_{n}((x_{p})_{p})))=\mathrm{i}^{(n,k)}_{s}(\sigma_{k}((\mathrm{sc}^{(k,n)}_{s_{p}}(x_{p}))_{p}))=\sigma_{n}((\mathrm{i}^{(n,k)}_{s_{p}}(\mathrm{sc}^{(k,n)}_{s_{p}}(x_{p})))_{p}),
-$$
-by the first and the third equations of~(EA$^{k,n}$7), and similarly for the targets. For (AB$^{l,k}$1), let $u=\mathrm{sc}^{(l,n)}_{s}(x)$. By~(EA$^{l,k,n}$2) and~(EA$^{k,n}$2),
-$$
-\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(\mathrm{i}^{(n,l)}_{s}(\mathrm{sc}^{(l,n)}_{s}(x))))=\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(\mathrm{i}^{(n,k)}_{s}(\mathrm{i}^{(k,l)}_{s}(u))))=\mathrm{i}^{(n,k)}_{s}(\mathrm{i}^{(k,l)}_{s}(u))=\mathrm{i}^{(n,l)}_{s}(\mathrm{sc}^{(l,n)}_{s}(x)),
-$$
-and, by~(EA$^{l,k,n}$1) and~(EA$^{k,n}$2), $\mathrm{sc}^{(l,n)}_{s}(\mathrm{i}^{(n,k)}_{s}(w))=\mathrm{sc}^{(l,k)}_{s}(w)$ for every $k$-cell $w$, hence $\mathrm{i}^{(n,l)}_{s}(\mathrm{sc}^{(l,n)}_{s}(\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x))))=\mathrm{i}^{(n,l)}_{s}(\mathrm{sc}^{(l,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x)))=\mathrm{i}^{(n,l)}_{s}(\mathrm{sc}^{(l,n)}_{s}(x))$; the remaining equations of~(AB$^{l,k}$1) are proved in the same way. The translation of (AB$^{l,k}$2) follows from~(EA$^{l,k,n}$3) and~(EA$^{l,k,n}$5):
-$$
-\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x\circ^{(l,n)}_{s}y))=\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x)\circ^{(l,k)}_{s}\mathrm{sc}^{(k,n)}_{s}(y))=\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x))\circ^{(l,n)}_{s}\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(y)),
-$$
-and similarly for the targets. Finally, the translation of (AB$^{l,k}$3) is (EA$^{l,k,n}$4), after exchanging the variables $y$ and $z$.
+\textsf{(GHEP2)} We have to show that every axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$ holds in $\mathbf{B}$. By Lemma~\ref{LUnifDescription}, the axioms of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$ become statements on the $n$-cells of $\mathbf{A}$, which we call their translations and which we check in turn. Let $l<k$ in $n$ and $s\in S$.
+
+\textsf{(A0), (A$^{k}$1) and (A$^{k}$3)} Their translations are consequences of (EA0), (EA$^{k,n}$1), and (EA$^{k,n}$3) together with Lemma~\ref{LUnifInj}, respectively.
+
+\textsf{(A$^{k}$2)} Let $x$ be an $n$-cell of sort $s$. Then the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{i}^{(n,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}\left(
+\mathrm{i}^{(n,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}(x)\right)
+\right)\right)
+&=
+\mathrm{i}^{(n,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}(x)\right).
+\tag{1}
+\end{align*}
+
+The equality follows from Lemma~\ref{LUnifInj}. By a similar argument, the remaining equations of (A$^{k}$2) also hold.
+
+\textsf{(A$^{k}$4), (A$^{k}$5), (A$^{k}$6) and (A$^{k}$8)} Their translations are consequences of (EA$^{k,n}$4), (EA$^{k,n}$5), (EA$^{k,n}$6) and (EA$^{k,n}$8), respectively.
+
+\textsf{(A$^{k}$7)} Let $(\mathbf{s},s)\in S^{\star}\times S$, $\sigma\in\Sigma_{\mathbf{s},s}$ and $(x_{p})_{p\in\bb{\mathbf{s}}}$ a family of $n$-cells. Then the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{i}^{(n,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}\left(\sigma_{n}\left((x_{p})_{p\in\bb{\mathbf{s}}}\right)\right)\right)
+&=
+\mathrm{i}^{(n,k)}_{s}\left(\sigma_{k}\left(\left(\mathrm{sc}^{(k,n)}_{s_{p}}(x_{p})\right)_{p\in\bb{\mathbf{s}}}\right)\right)
+\tag{1}
+\\&=
+\sigma_{n}\left(\left(\mathrm{i}^{(n,k)}_{s_{p}}\left(\mathrm{sc}^{(k,n)}_{s_{p}}(x_{p})\right)\right)_{p\in\bb{\mathbf{s}}}\right).
+\tag{2}
+\end{align*}
+
+The first equality follows from the first equation of~(EA$^{k,n}$7); finally, the last equality follows from the third equation of~(EA$^{k,n}$7). By a similar argument we also have the equation for the targets.
+
+\textsf{(AB$^{l,k}$1)} Let $x$ be an $n$-cell of sort $s$ and $u=\mathrm{sc}^{(l,n)}_{s}(x)$. Then the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{i}^{(n,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}\left(\mathrm{i}^{(n,l)}_{s}\left(\mathrm{sc}^{(l,n)}_{s}(x)\right)\right)\right)
+&=
+\mathrm{i}^{(n,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}\left(\mathrm{i}^{(n,k)}_{s}\left(\mathrm{i}^{(k,l)}_{s}(u)\right)\right)\right)
+\tag{1}
+\\&=
+\mathrm{i}^{(n,k)}_{s}\left(\mathrm{i}^{(k,l)}_{s}(u)\right)
+\tag{2}
+\\&=
+\mathrm{i}^{(n,l)}_{s}\left(\mathrm{sc}^{(l,n)}_{s}(x)\right).
+\tag{3}
+\end{align*}
+
+The first equality follows from~(EA$^{l,k,n}$2); the second equality follows from Lemma~\ref{LUnifInj}; finally, the last equality follows from~(EA$^{l,k,n}$2).
+
+Moreover, by~(EA$^{l,k,n}$1) and Lemma~\ref{LUnifInj}, for every $k$-cell $w$ of sort $s$, the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{sc}^{(l,n)}_{s}\left(\mathrm{i}^{(n,k)}_{s}(w)\right)
+&=
+\mathrm{sc}^{(l,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}\left(\mathrm{i}^{(n,k)}_{s}(w)\right)\right)
+\tag{1}
+\\&=
+\mathrm{sc}^{(l,k)}_{s}(w).
+\tag{2}
+\end{align*}
+
+Hence, taking $w=\mathrm{sc}^{(k,n)}_{s}(x)$, we have that
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{i}^{(n,l)}_{s}\left(\mathrm{sc}^{(l,n)}_{s}\left(\mathrm{i}^{(n,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}(x)\right)\right)\right)
+&=
+\mathrm{i}^{(n,l)}_{s}\left(\mathrm{sc}^{(l,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}(x)\right)\right)
+\tag{1}
+\\&=
+\mathrm{i}^{(n,l)}_{s}\left(\mathrm{sc}^{(l,n)}_{s}(x)\right).
+\tag{2}
+\end{align*}
+
+The first equality follows from the above; finally, the last equality follows from~(EA$^{l,k,n}$1). By a similar argument, the remaining equations of (AB$^{l,k}$1) also hold.
+
+\textsf{(AB$^{l,k}$2)} Let $x$, $y$ be $n$-cells of sort $s$ such that $x\circ^{(l,n)}_{s}y$ is defined. Then the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{i}^{(n,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}\left(x\circ^{(l,n)}_{s}y\right)\right)
+&=
+\mathrm{i}^{(n,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}(x)\circ^{(l,k)}_{s}\mathrm{sc}^{(k,n)}_{s}(y)\right)
+\tag{1}
+\\&=
+\mathrm{i}^{(n,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}(x)\right)\circ^{(l,n)}_{s}\mathrm{i}^{(n,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}(y)\right).
+\tag{2}
+\end{align*}
+
+The first equality follows from~(EA$^{l,k,n}$3); finally, the last equality follows from~(EA$^{l,k,n}$5). By a similar argument we also have the equation for the targets.
+
+\textsf{(AB$^{l,k}$3)} Its translation is the axiom (EA$^{l,k,n}$4), after exchanging the variables $y$ and $z$.
+
+All in all, every axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$ holds in $\mathbf{B}$, so that $\mathbf{B}$ is an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$.
+
+This completes the proof.
 \end{proof}
 
 By Propositions~\ref{PUnifDerivor}, \ref{PSingleSetIdent} and~\ref{PGlobularIdent}, the restriction of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ to $\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})$ corestricts to $\mathsf{nCatAlg}(\mathbf{\Sigma})$, and, by abuse of notation, we denote the corestriction by
 $$
 \mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}\colon\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})\mor\mathsf{nCatAlg}(\mathbf{\Sigma}).
 $$
-Explicitly, the cells of sort $s$ of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ are the $n$-cells of sort $s$ of $\boldsymbol{\mathsf{A}}$, $\mathrm{sc}^{k}_{s}=\mathrm{i}^{(n,k)}_{s}\circ\mathrm{sc}^{(k,n)}_{s}$, $\mathrm{tg}^{k}_{s}=\mathrm{i}^{(n,k)}_{s}\circ\mathrm{tg}^{(k,n)}_{s}$, $\circ^{k}_{s}=\circ^{(k,n)}_{s}$, $\sigma$ acts as $\sigma_{n}$, and $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(F)$ is the family of the components of $F$ at the $n$-cells.
+Explicitly, by Lemma~\ref{LUnifDescription}, the cells of sort $s$ of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ are the $n$-cells of sort $s$ of $\boldsymbol{\mathsf{A}}$, $\mathrm{sc}^{k}_{s}=\mathrm{i}^{(n,k)}_{s}\circ\mathrm{sc}^{(k,n)}_{s}$, $\mathrm{tg}^{k}_{s}=\mathrm{i}^{(n,k)}_{s}\circ\mathrm{tg}^{(k,n)}_{s}$, $\circ^{k}_{s}=\circ^{(k,n)}_{s}$ and $\sigma$ acts as $\sigma_{n}$; and, by Proposition~\ref{PGenEpDerivorFunctor}, $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(F)$ is the family of the components of $F$ at the $n$-cells.
 
 
 \subsection{On the relationship between graduation and unification}\label{SGradUnif}
 
-In this section, we investigate the relation between the functors $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ and $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$.
+In this subsection, we investigate the relation between the functors $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ and $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$.
 \begin{center}
 	\begin{tikzpicture}
 		[ACliment/.style={-{To [angle'=45, length=5.75pt, width=4pt, round]}}
@@ -2506,7 +2808,39 @@ Both functors are induced by generalized hep-derivors, so that we compute their 
 $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}=\mathrm{Id}_{\mathsf{nCatAlg}(\mathbf{\Sigma})}$.
 \end{proposition}
 \begin{proof}
-Let $c=(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}})^{\sharp}\circ \mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$, see~(H3). By~(H1) and~(H2), $c(\sigma)=\sigma((v^{\mathbf{s}}_{p})_{p})$, $c(\mathrm{sc}^{k}_{s})=\mathrm{sc}^{k}_{s}(v^{s}_{0})$, $c(\mathrm{tg}^{k}_{s})=\mathrm{tg}^{k}_{s}(v^{s}_{0})$ and $c(\circ^{k}_{s})=v^{s}_{0}\circ^{k}_{s}v^{s}_{1}$, i.e., $c=\eta^{\Sigma^{(n)}}$, and the composite of the mappings on sorts of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ and $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ is $\mathrm{id}_{S}$. Let $\boldsymbol{\mathsf{A}}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$. Since $\mathrm{Dom}^{\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}}_{(n,s)}$ and the domains of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ are empty, the cells of sort $s$ of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ are all the cells of sort $s$ of $\boldsymbol{\mathsf{A}}$, i.e., the cells of $(\mathrm{id}_{\mathbf{\Sigma}^{(n)}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})$. Thus $\mathrm{id}_{\mathbf{\Sigma}^{(n)}}$ is a composite of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ and $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ on the ep-variety $\mathcal{V}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, see Definition~\ref{DGenEpComp}. By Propositions~\ref{PGradDerivor} and~\ref{PUnifDerivor}, $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ is a $\mathbf{\Sigma}^{(n)}$-algebra, so that, by Lemma~\ref{LGenEpComp}, $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ is the restriction of $(\mathrm{id}_{\mathbf{\Sigma}^{(n)}})^{\ast}_{\mathfrak{gd}}$ to $\mathsf{nCatAlg}(\mathbf{\Sigma})$, which is the identity.
+In order to compute the composite functor, we prove the following two claims.
+
+\begin{claim}\label{CUnifGradA}
+The composite of the derivors underlying $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ and $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ is the identity derivor $(\mathrm{id}_{S},\eta^{\Sigma^{(n)}})$.
+\end{claim}
+
+Let $c$ stand for $(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}})^{\sharp}\circ\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$, see~(H3). The composite of the mappings on sorts of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ and $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ sends $s$ to $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(n,s)=s$, i.e., it is $\mathrm{id}_{S}$. Let $k\in n$ and $s\in S$. Then the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+c\left(\mathrm{sc}^{k}_{s}\right)
+&=
+(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}})^{\sharp}\left(\mathrm{i}^{(n,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}(v^{(n,s)}_{0})\right)\right)
+\tag{1}
+\\&=
+\mathrm{sc}^{k}_{s}(v^{s}_{0}).
+\tag{2}
+\end{align*}
+
+The first equality unravels Definition~\ref{DUnifDerivor}; finally, the last equality follows from~(H1) and~(H2), taking into account that, by Definition~\ref{DGradDerivor}, $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{i}^{(n,k)}_{s})$ is a variable and $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{sc}^{(k,n)}_{s})=\mathrm{sc}^{k}_{s}(v^{s}_{0})$. By a similar argument we also have that $c(\mathrm{tg}^{k}_{s})=\mathrm{tg}^{k}_{s}(v^{s}_{0})$, $c(\circ^{k}_{s})=v^{s}_{0}\circ^{k}_{s}v^{s}_{1}$ and $c(\sigma)=\sigma((v^{\mathbf{s}}_{p})_{p\in\bb{\mathbf{s}}})$, for every $\sigma\in\Sigma_{\mathbf{s},s}$. Thus $c=\eta^{\Sigma^{(n)}}$.
+
+Claim~\ref{CUnifGradA} follows.
+
+\begin{claim}\label{CUnifGradB}
+The identity $\mathrm{id}_{\mathbf{\Sigma}^{(n)}}$ is a composite of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ and $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ on the ep-variety $\mathcal{V}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, see Definition~\ref{DGenEpComp}.
+\end{claim}
+
+Let $\boldsymbol{\mathsf{A}}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$. Since $\mathrm{Dom}^{\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}}_{(n,s)}$ and the domains of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ are empty, the cells of sort $s$ of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ are all the cells of sort $s$ of $\boldsymbol{\mathsf{A}}$, i.e., the cells of $(\mathrm{id}_{\mathbf{\Sigma}^{(n)}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})$. By Claim~\ref{CUnifGradA}, the underlying derivor of $\mathrm{id}_{\mathbf{\Sigma}^{(n)}}$ is the composite of those of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ and $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$.
+
+Claim~\ref{CUnifGradB} follows.
+
+By Propositions~\ref{PGradDerivor} and~\ref{PUnifDerivor}, for every object $\boldsymbol{\mathsf{A}}$ in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ is a $\mathbf{\Sigma}^{(n)}$-algebra. Therefore, by Claim~\ref{CUnifGradB} and Lemma~\ref{LGenEpComp}, $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ is the restriction of $(\mathrm{id}_{\mathbf{\Sigma}^{(n)}})^{\ast}_{\mathfrak{gd}}$ to $\mathsf{nCatAlg}(\mathbf{\Sigma})$, which, by Lemma~\ref{LGenEpId}, is the identity functor.
+
+This completes the proof.
 \end{proof}
 
 In contrast to the previous result, the process of unification followed by that of graduation does not give rise to the identity functor on the category of globular $n$-categorial algebras, since the $k$-cells of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ are the $(n,k)$-identities of the $k$-cells of $\boldsymbol{\mathsf{A}}$. However, we will show that both functors are naturally isomorphic.
@@ -2515,15 +2849,186 @@ In contrast to the previous result, the process of unification followed by that 
 $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}\cong \mathrm{Id}_{\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})}$.
 \end{proposition}
 \begin{proof}
-Let $(\chi,c)$ be the composite of the derivors underlying $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ and $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$, see~(H3). Then $\chi(k,s)=(n,s)$ and, by~(H1) and~(H2),
+Throughout this proof, for every $s\in S$, we let $\mathrm{i}^{(n,n)}_{s}$ and $\mathrm{sc}^{(n,n)}_{s}$ stand for the identity mapping on the $n$-cells of sort $s$. We prove the following claims.
+
+\begin{claim}\label{CGradUnifA}
+Let $(\chi,c)$ be the composite of the derivors underlying $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ and $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$, see~(H3). Then $\chi(k,s)=(n,s)$ and, for every pair of dimensions $j<k$ and every $s\in S$,
 \begin{align*}
-c(\sigma_{k})&=\sigma_{n}((v^{(n,\mathbf{s})}_{p})_{p}), &
+c(\sigma_{k})&=\sigma_{n}((v^{(n,\mathbf{s})}_{p})_{p\in\bb{\mathbf{s}}}), &
 c(\mathrm{i}^{(k,j)}_{s})&=v^{(n,s)}_{0},\\
 c(\mathrm{sc}^{(j,k)}_{s})&=\mathrm{i}^{(n,j)}_{s}(\mathrm{sc}^{(j,n)}_{s}(v^{(n,s)}_{0})), &
 c(\circ^{(j,k)}_{s})&=v^{(n,s)}_{0}\circ^{(j,n)}_{s}v^{(n,s)}_{1},
 \end{align*}
-and similarly for the targets. Let $\mathbf{c}=(\chi,c,\mathrm{Dom}^{(\chi,c)})$ be the generalized hep-derivor with $\mathrm{Dom}^{(\chi,c)}_{(k,s)}=\{(v^{(n,s)}_{0},\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(v^{(n,s)}_{0})))\}$, for $k\in n$, and $\mathrm{Dom}^{(\chi,c)}_{(n,s)}=\varnothing$. Let $\boldsymbol{\mathsf{A}}$ be a globular $n$-categorial $\mathbf{\Sigma}$-algebra. The cells of sort $(k,s)$ of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ are the $n$-cells $x$ of sort $s$ of $\boldsymbol{\mathsf{A}}$ that are $k$-cells of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$, i.e., such that $x=\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x))$, which are the cells of sort $(k,s)$ of $\mathbf{c}^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})$. Thus $\mathbf{c}$ is a composite of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ and $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ on the ep-variety $\mathcal{V}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ and, by Propositions~\ref{PGradDerivor} and~\ref{PUnifDerivor} and Lemma~\ref{LGenEpComp}, $\mathbf{c}^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})=\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$, whose operations are, therefore, the restrictions of those given by $c$. Let $\theta_{\boldsymbol{\mathsf{A}}}$ be the family of mappings that sends a $k$-cell $u$ of sort $s$ to $\mathrm{i}^{(n,k)}_{s}(u)$, with $\mathrm{i}^{(n,n)}_{s}$ the identity. By~(EA$^{k,n}$2), $\theta_{\boldsymbol{\mathsf{A}}}$ is a bijection onto the cells of $\mathbf{c}^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})$, whose inverse sends $x$ to $\mathrm{sc}^{(k,n)}_{s}(x)$. It is a homomorphism: it commutes with the $\sigma_{k}$ by~(EA$^{k,n}$7); with the $(j,k)$-sources because, by~(EA$^{j,k,n}$1) and~(EA$^{k,n}$2), $\mathrm{i}^{(n,j)}_{s}(\mathrm{sc}^{(j,n)}_{s}(\mathrm{i}^{(n,k)}_{s}(u)))=\mathrm{i}^{(n,j)}_{s}(\mathrm{sc}^{(j,k)}_{s}(u))$, and similarly with the targets; with the identities because $\mathrm{i}^{(n,k)}_{s}(\mathrm{i}^{(k,j)}_{s}(w))=\mathrm{i}^{(n,j)}_{s}(w)$, by~(EA$^{j,k,n}$2); and with the compositions because, by~(EA$^{j,k,n}$5), $\mathrm{i}^{(n,k)}_{s}(u\circ^{(j,k)}_{s}u')=\mathrm{i}^{(n,k)}_{s}(u)\circ^{(j,n)}_{s}\mathrm{i}^{(n,k)}_{s}(u')$, whereas, by the computation of the $(j,k)$-sources and the injectivity of $\mathrm{i}^{(n,j)}_{s}$, $\theta_{\boldsymbol{\mathsf{A}}}(u)\circ^{(j,n)}_{s}\theta_{\boldsymbol{\mathsf{A}}}(u')$ is defined if and only if $u\circ^{(j,k)}_{s}u'$ is defined. Hence $\theta_{\boldsymbol{\mathsf{A}}}$ is a bijective homomorphism that reflects definedness, i.e., an isomorphism, and it is natural in $\boldsymbol{\mathsf{A}}$ because homomorphisms commute with the identities.
+and similarly for the targets.
+\end{claim}
+
+It follows from~(H1) and~(H2), and Definitions~\ref{DGradDerivor} and~\ref{DUnifDerivor}. For instance, the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+c\left(\mathrm{sc}^{(j,k)}_{s}\right)
+&=
+(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}})^{\sharp}\left(\mathrm{sc}^{j}_{s}(v^{s}_{0})\right)
+\tag{1}
+\\&=
+\mathrm{i}^{(n,j)}_{s}\left(\mathrm{sc}^{(j,n)}_{s}(v^{(n,s)}_{0})\right).
+\tag{2}
+\end{align*}
+
+The first equality unravels Definition~\ref{DGradDerivor}; finally, the last equality follows from~(H1) and~(H2) and Definition~\ref{DUnifDerivor}.
+
+Claim~\ref{CGradUnifA} follows.
+
+Let $\mathbf{c}=(\chi,c,\mathrm{Dom}^{(\chi,c)})$ be the generalized hep-derivor with
+\begin{align*}
+\mathrm{Dom}^{(\chi,c)}_{(k,s)}&=\left\lbrace\left(v^{(n,s)}_{0},\mathrm{i}^{(n,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}\left(v^{(n,s)}_{0}\right)\right)\right)\right\rbrace,
+&&\text{for }k\in n,
+\\
+\mathrm{Dom}^{(\chi,c)}_{(n,s)}&=\varnothing.
+\end{align*}
+
+\begin{claim}\label{CGradUnifB}
+The generalized hep-derivor $\mathbf{c}$ is a composite of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ and $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ on the ep-variety $\mathcal{V}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$. Consequently, for every globular $n$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$, $\mathbf{c}^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})=\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$.
+\end{claim}
+
+Let $\boldsymbol{\mathsf{A}}$ be a globular $n$-categorial $\mathbf{\Sigma}$-algebra. By Lemmas~\ref{LGradDescription} and~\ref{LUnifDescription}, the cells of sort $(k,s)$ of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$, for $k\in n$, are the $n$-cells $x$ of sort $s$ of $\boldsymbol{\mathsf{A}}$ that are $k$-cells of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$, i.e., such that $x=\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x))$; and, for $k=n$, all the $n$-cells of sort $s$. These are the cells of sort $(k,s)$ of $\mathbf{c}^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})$. By Claim~\ref{CGradUnifA}, $\mathbf{c}$ is a composite of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ and $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ on $\mathcal{V}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$. Finally, by Propositions~\ref{PGradDerivor} and~\ref{PUnifDerivor}, $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ is a $\mathbf{\Sigma}^{\mathrm{gl}(n)}$-algebra, so that, by Lemma~\ref{LGenEpComp}, $\mathbf{c}^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})=\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$.
+
+Claim~\ref{CGradUnifB} follows.
+
+Let $\boldsymbol{\mathsf{A}}$ be a globular $n$-categorial $\mathbf{\Sigma}$-algebra. We let $\theta_{\boldsymbol{\mathsf{A}}}$ stand for the family of mappings that sends, for every $k\in n+1$ and every $s\in S$, a $k$-cell $u$ of sort $s$ of $\boldsymbol{\mathsf{A}}$ to $\mathrm{i}^{(n,k)}_{s}(u)$.
+
+\begin{claim}\label{CGradUnifC}
+$\theta_{\boldsymbol{\mathsf{A}}}$ is a bijection from the cells of $\boldsymbol{\mathsf{A}}$ onto the cells of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$, whose inverse sends, for every $k\in n+1$ and every $s\in S$, a cell $x$ of sort $(k,s)$ to $\mathrm{sc}^{(k,n)}_{s}(x)$.
+\end{claim}
+
+Let $k\in n$, $s\in S$ and $u$ a $k$-cell of sort $s$. Then, by Lemma~\ref{LUnifInj}, the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{i}^{(n,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}\left(\theta_{\boldsymbol{\mathsf{A}}}(u)\right)\right)
+&=
+\mathrm{i}^{(n,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}\left(\mathrm{i}^{(n,k)}_{s}(u)\right)\right)
+\tag{1}
+\\&=
+\mathrm{i}^{(n,k)}_{s}(u)
+\tag{2}
+\\&=
+\theta_{\boldsymbol{\mathsf{A}}}(u).
+\tag{3}
+\end{align*}
+
+Thus, by Claim~\ref{CGradUnifB}, $\theta_{\boldsymbol{\mathsf{A}}}(u)$ is a cell of sort $(k,s)$ of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$. Moreover, by Lemma~\ref{LUnifInj}, $\mathrm{sc}^{(k,n)}_{s}(\theta_{\boldsymbol{\mathsf{A}}}(u))=u$, and, for every cell $x$ of sort $(k,s)$ of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$, $\theta_{\boldsymbol{\mathsf{A}}}(\mathrm{sc}^{(k,n)}_{s}(x))=\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x))=x$. For $k=n$, both mappings are identities.
+
+Claim~\ref{CGradUnifC} follows.
+
+\begin{claim}\label{CGradUnifD}
+$\theta_{\boldsymbol{\mathsf{A}}}$ is a homomorphism of partial $\Sigma^{\mathrm{gl}(n)}$-algebras from $\boldsymbol{\mathsf{A}}$ to $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ that reflects definedness. Hence it is an isomorphism.
+\end{claim}
+
+By Claims~\ref{CGradUnifA} and~\ref{CGradUnifB}, the operations of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ are the restrictions of those given by $c$. Let $j<k$ be dimensions and $s\in S$. We consider the different kinds of operation symbols of $\Sigma^{\mathrm{gl}(n)}$.
+
+\textsf{(Operation symbols $\sigma_{k}$)} Let $(\mathbf{s},s)\in S^{\star}\times S$, $\sigma\in\Sigma_{\mathbf{s},s}$ and $(u_{p})_{p\in\bb{\mathbf{s}}}$ a family of $k$-cells. Then the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\theta_{\boldsymbol{\mathsf{A}}}\left(\sigma_{k}\left((u_{p})_{p\in\bb{\mathbf{s}}}\right)\right)
+&=
+\mathrm{i}^{(n,k)}_{s}\left(\sigma_{k}\left((u_{p})_{p\in\bb{\mathbf{s}}}\right)\right)
+\tag{1}
+\\&=
+\sigma_{n}\left(\left(\mathrm{i}^{(n,k)}_{s_{p}}(u_{p})\right)_{p\in\bb{\mathbf{s}}}\right)
+\tag{2}
+\\&=
+\sigma_{k}^{\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))}\left(\left(\theta_{\boldsymbol{\mathsf{A}}}(u_{p})\right)_{p\in\bb{\mathbf{s}}}\right).
+\tag{3}
+\end{align*}
+
+The first equality unravels the definition of $\theta_{\boldsymbol{\mathsf{A}}}$; the second equality follows from the third equation of~(EA$^{k,n}$7); finally, the last equality follows from Claim~\ref{CGradUnifA}.
+
+\textsf{(Sources and targets)} Let $u$ be a $k$-cell of sort $s$. Then the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\theta_{\boldsymbol{\mathsf{A}}}\left(\mathrm{sc}^{(j,k)}_{s}(u)\right)
+&=
+\mathrm{i}^{(n,j)}_{s}\left(\mathrm{sc}^{(j,k)}_{s}(u)\right)
+\tag{1}
+\\&=
+\mathrm{i}^{(n,j)}_{s}\left(\mathrm{sc}^{(j,k)}_{s}\left(\mathrm{sc}^{(k,n)}_{s}\left(\mathrm{i}^{(n,k)}_{s}(u)\right)\right)\right)
+\tag{2}
+\\&=
+\mathrm{i}^{(n,j)}_{s}\left(\mathrm{sc}^{(j,n)}_{s}\left(\mathrm{i}^{(n,k)}_{s}(u)\right)\right)
+\tag{3}
+\\&=
+\mathrm{sc}^{(j,k)\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))}_{s}\left(\theta_{\boldsymbol{\mathsf{A}}}(u)\right).
+\tag{4}
+\end{align*}
+
+The first equality unravels the definition of $\theta_{\boldsymbol{\mathsf{A}}}$; the second equality follows from Lemma~\ref{LUnifInj}; the third equality follows from~(EA$^{j,k,n}$1); finally, the last equality follows from Claim~\ref{CGradUnifA}. By a similar argument, $\theta_{\boldsymbol{\mathsf{A}}}$ commutes with the $(j,k)$-targets.
+
+\textsf{(Identities)} Let $w$ be a $j$-cell of sort $s$. Then the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\theta_{\boldsymbol{\mathsf{A}}}\left(\mathrm{i}^{(k,j)}_{s}(w)\right)
+&=
+\mathrm{i}^{(n,k)}_{s}\left(\mathrm{i}^{(k,j)}_{s}(w)\right)
+\tag{1}
+\\&=
+\mathrm{i}^{(n,j)}_{s}(w)
+\tag{2}
+\\&=
+\mathrm{i}^{(k,j)\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))}_{s}\left(\theta_{\boldsymbol{\mathsf{A}}}(w)\right).
+\tag{3}
+\end{align*}
+
+The first equality unravels the definition of $\theta_{\boldsymbol{\mathsf{A}}}$; the second equality follows from~(EA$^{j,k,n}$2); finally, the last equality follows from Claim~\ref{CGradUnifA}, since $c(\mathrm{i}^{(k,j)}_{s})$ is a variable.
+
+\textsf{(Compositions)} Let $u$, $u'$ be $k$-cells of sort $s$. By the computation of the $(j,k)$-sources and the $(j,k)$-targets and by Lemma~\ref{LUnifInj}, $\theta_{\boldsymbol{\mathsf{A}}}(u)\circ^{(j,k)}_{s}\theta_{\boldsymbol{\mathsf{A}}}(u')$ is defined in $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ if, and only if, $\mathrm{i}^{(n,j)}_{s}(\mathrm{sc}^{(j,k)}_{s}(u))=\mathrm{i}^{(n,j)}_{s}(\mathrm{tg}^{(j,k)}_{s}(u'))$, if, and only if, $\mathrm{sc}^{(j,k)}_{s}(u)=\mathrm{tg}^{(j,k)}_{s}(u')$, i.e., by~(EA$^{j,k}$3), if, and only if, $u\circ^{(j,k)}_{s}u'$ is defined. In this case, the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\theta_{\boldsymbol{\mathsf{A}}}\left(u\circ^{(j,k)}_{s}u'\right)
+&=
+\mathrm{i}^{(n,k)}_{s}\left(u\circ^{(j,k)}_{s}u'\right)
+\tag{1}
+\\&=
+\mathrm{i}^{(n,k)}_{s}(u)\circ^{(j,n)}_{s}\mathrm{i}^{(n,k)}_{s}(u')
+\tag{2}
+\\&=
+\theta_{\boldsymbol{\mathsf{A}}}(u)\circ^{(j,k)\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))}_{s}\theta_{\boldsymbol{\mathsf{A}}}(u').
+\tag{3}
+\end{align*}
+
+The first equality unravels the definition of $\theta_{\boldsymbol{\mathsf{A}}}$; the second equality follows from~(EA$^{j,k,n}$5); finally, the last equality follows from Claim~\ref{CGradUnifA}.
+
+Therefore, $\theta_{\boldsymbol{\mathsf{A}}}$ is a homomorphism that reflects definedness and, by Claim~\ref{CGradUnifC}, it is bijective. Hence it is an isomorphism.
+
+Claim~\ref{CGradUnifD} follows.
+
+\begin{claim}\label{CGradUnifE}
+The family $\theta=(\theta_{\boldsymbol{\mathsf{A}}})_{\boldsymbol{\mathsf{A}}}$ is a natural transformation from $\mathrm{Id}_{\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})}$ to $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$.
+\end{claim}
+
+Let $F\colon\boldsymbol{\mathsf{A}}\mor\boldsymbol{\mathsf{A}}'$ be a globular $n$-categorial $\mathbf{\Sigma}$-homomorphism. By Claim~\ref{CGradUnifB} and Proposition~\ref{PGenEpDerivorFunctor}, $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(F))$ acts on the cells of sort $(k,s)$ as $F_{(n,s)}$. Then, for every $k$-cell $u$ of sort $s$, the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\left(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(F)\right)_{(k,s)}\left(\theta_{\boldsymbol{\mathsf{A}}}(u)\right)
+&=
+F_{(n,s)}\left(\mathrm{i}^{(n,k)}_{s}(u)\right)
+\tag{1}
+\\&=
+\mathrm{i}^{(n,k)}_{s}\left(F_{(k,s)}(u)\right)
+\tag{2}
+\\&=
+\theta_{\boldsymbol{\mathsf{A}}'}\left(F_{(k,s)}(u)\right).
+\tag{3}
+\end{align*}
+
+The first equality unravels the definitions of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(F))$ and of $\theta_{\boldsymbol{\mathsf{A}}}$; the second equality follows from the fact that $F$ commutes with the identities, see Proposition~\ref{PGlobularIdentHom}; finally, the last equality unravels the definition of $\theta_{\boldsymbol{\mathsf{A}}'}$.
+
+Claim~\ref{CGradUnifE} follows.
+
+All in all, by Claims~\ref{CGradUnifD} and~\ref{CGradUnifE}, $\theta$ is a natural isomorphism from $\mathrm{Id}_{\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})}$ to $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$.
+
+This completes the proof.
 \end{proof}
+
+From Propositions~\ref{PUnifGrad} and~\ref{PGradUnif} we obtain the following corollary.
 
 \begin{corollary}\label{CGdUfEquiv}
 $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ and $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ are mutually quasi-inverse equivalences of categories between $\mathsf{nCatAlg}(\mathbf{\Sigma})$ and $\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})$.
@@ -2535,7 +3040,13 @@ We will use the following, more precise, form of Corollary~\ref{CGdUfEquiv} in S
 For $n\in\mathbb{N}$, let $\theta$ be the natural isomorphism from $\mathrm{Id}_{\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})}$ to $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ of the proof of Proposition~\ref{PGradUnif}. Then $(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}},\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}},\mathrm{id},\theta^{-1})$ is an adjunction, see Definition~\ref{DAdj}, i.e., $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\dashv\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$, with unit the identity and counit $\theta^{-1}$. Thus it is an adjoint equivalence.
 \end{proposition}
 \begin{proof}
-By Proposition~\ref{PUnifGrad}, the identity is a natural transformation from $\mathrm{Id}_{\mathsf{nCatAlg}(\mathbf{\Sigma})}$ to $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$. For the triangular identities we have to show that $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\theta^{-1}_{\boldsymbol{\mathsf{A}}})$ and $\theta^{-1}_{\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})}$ are identities, for every globular $n$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$ and every $n$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{B}}$. The first holds because $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ only keeps the components at the $n$-cells, and the component of $\theta_{\boldsymbol{\mathsf{A}}}$ at the $n$-cells is the identity. The second holds because the $(n,k)$-identities of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ are inclusions, so that $\theta_{\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})}$ sends every $k$-cell to itself.
+By Proposition~\ref{PUnifGrad}, the identity is a natural transformation from $\mathrm{Id}_{\mathsf{nCatAlg}(\mathbf{\Sigma})}$ to $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$. By Definition~\ref{DAdj}, we must check the triangular identities, i.e., that, for every globular $n$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$ and every $n$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{B}}$, the homomorphisms $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\theta^{-1}_{\boldsymbol{\mathsf{A}}})$ and $\theta^{-1}_{\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})}$ are identities.
+
+\textsf{(First triangular identity)} $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ only keeps the components at the $n$-cells, and the component of $\theta_{\boldsymbol{\mathsf{A}}}$ at the $n$-cells is the identity. Therefore $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\theta^{-1}_{\boldsymbol{\mathsf{A}}})$ is the identity.
+
+\textsf{(Second triangular identity)} By Lemma~\ref{LGradDescription}, the $(n,k)$-identities of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ are inclusions, so that $\theta_{\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})}$ sends every $k$-cell to itself. Therefore $\theta^{-1}_{\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})}$ is the identity.
+
+This completes the proof.
 \end{proof}
 
 \section{Discretization and Truncation of Higher-Order Categorial Algebras}\label{STruncation}
