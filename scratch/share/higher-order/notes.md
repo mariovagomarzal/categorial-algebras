@@ -59,16 +59,28 @@ the library's own.
 
 ## Open: what the library could not do
 
-- **`PUnivPropCatAlg`** (universal property of ωCatAlg, compact
-  presentation). In the compact presentation the truncation functors compose
-  only up to canonical isomorphism (`RTmnCatAlgProjSys` is formalized as
-  natural isomorphisms), so the strict universal property of the draft cannot
-  be stated faithfully. It needs a decision: a pseudo-limit version (families
-  coherent up to isomorphism), or deriving it from `PUnivPropExtCatAlg`
-  through the equivalence between the compact and the extended presentations.
 - **`SDiscretization`**. The subsection has only its title: there is no
   definition of discretization to formalize, and nothing else in the draft
   uses it.
+
+## Decided: `PUnivPropCatAlg` as a pseudo-limit (2026-10-14)
+
+In the compact presentation the truncation functors compose only up to
+canonical isomorphism (`RTmnCatAlgProjSys` is formalized as natural
+isomorphisms), so the strict universal property of the draft cannot be stated
+faithfully: `T(m,n) ∘ T(n,ω) = T(m,ω)` fails already for the projections. Of
+the two routes considered (a pseudo-limit, or deriving it from
+`PUnivPropExtCatAlg` through the equivalence between the compact and the
+extended presentations), the group chose the pseudo-limit.
+
+The library states it as an equivalence between ωCatAlg(Σ) and the category of
+compatible families: algebras `A_n` with isomorphisms
+`T(n,n+1)(A_{n+1}) ≅ A_n` between consecutive levels (no coherence condition
+is needed for a tower indexed by ℕ), and families of homomorphisms commuting
+with them. Fullness and faithfulness are the first part of `CLimitNat`; essential
+surjectivity is the limit of a compatible family, built as the union of the
+chain of cells. The form with functors, and the second part of `CLimitNat`, follow
+formally and are stated only in prose.
 
 ## Left out on 2026-10-08
 
