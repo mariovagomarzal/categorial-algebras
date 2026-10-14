@@ -36,12 +36,12 @@ occurs in a variable, and the symbols of $`\sigma((P_j)_j)` are $`\sigma` and th
 $`P_j`. The symbols of an existence equation are those of its two sides.
 
 ```lean
-def Term.symbols {Sig : Signature.{u, v} S} {X : S → Type} :
+def Term.symbols {Sig : Signature.{u, v} S} {X : S → Type*} :
     {s : S} → Term Sig X s → Set Sig.Symbol
   | _, .var _ => ∅
   | _, .app σ ts => insert ⟨_, _, σ⟩ (⋃ j, Term.symbols (ts j))
 
-def EEq.symbols {Sig : Signature.{u, v} S} {X : S → Type} (e : EEq Sig X) : Set Sig.Symbol :=
+def EEq.symbols {Sig : Signature.{u, v} S} {X : S → Type*} (e : EEq Sig X) : Set Sig.Symbol :=
   e.lhs.symbols ∪ e.rhs.symbols
 ```
 :::
@@ -154,15 +154,15 @@ $`(\mathbf{\Sigma}, \varnothing)`, whose models are the $`\mathbf{\Sigma}`-algeb
 $`\mathsf{epAlg}(\mathbf{\Sigma}) = \mathsf{epAlg}(\mathbf{\Sigma}, \varnothing)`.
 
 ```lean
-def EpSignature.IsModel (Sg : EpSignature.{u, v} S) {V : S → Type}
+def EpSignature.IsModel (Sg : EpSignature.{u, v} S) {V : S → Type*}
     (E : Set (QEEq Sg.sig V)) (A : PartialAlgebra.{u, v, w} Sg.sig) : Prop :=
   Sg.IsAlgebra A ∧ ∀ q ∈ E, q.Holds A
 
-def EpAlg (Sg : EpSignature.{u, v} S) {V : S → Type} (E : Set (QEEq Sg.sig V)) :
+def EpAlg (Sg : EpSignature.{u, v} S) {V : S → Type*} (E : Set (QEEq Sg.sig V)) :
     Type (max u v (w + 1)) :=
   {A : PartialAlgebra.{u, v, w} Sg.sig // Sg.IsModel E A}
 
-instance (Sg : EpSignature.{u, v} S) {V : S → Type} (E : Set (QEEq Sg.sig V)) :
+instance (Sg : EpSignature.{u, v} S) {V : S → Type*} (E : Set (QEEq Sg.sig V)) :
     CategoryTheory.Category.{max u w} (EpAlg.{u, v, w} Sg E) where
   Hom A B := PartialAlgebra.Hom A.1 B.1
   id A := PartialAlgebra.Hom.id A.1
@@ -189,8 +189,8 @@ of the Lean definition that the draft does not see; the library always takes the
 the algebras under consideration.
 
 ```lean
-def EpSignature.Cn (Sg : EpSignature.{u, v} S) {V : S → Type} (E : Set (QEEq Sg.sig V))
-    (X : S → Type) (H : Set (EEq Sg.sig X)) : Set (EEq Sg.sig X) :=
+def EpSignature.Cn (Sg : EpSignature.{u, v} S) {V : S → Type*} (E : Set (QEEq Sg.sig V))
+    (X : S → Type*) (H : Set (EEq Sg.sig X)) : Set (EEq Sg.sig X) :=
   {e | ∀ A : PartialAlgebra.{u, v, w} Sg.sig, Sg.IsModel E A →
     ∀ a : ∀ s, X s → A s, EEq.HoldsAll A a H → e.Holds A a}
 ```
@@ -202,8 +202,8 @@ $`\mathrm{Eq}_{\Sigma}(X)`, whose closed sets are those with
 $`\mathrm{Cn}^{\mathbf{\Sigma}, \mathcal{E}}_X(\mathcal{H}) = \mathcal{H}`.
 
 ```lean
-def EpSignature.cnClosure (Sg : EpSignature.{u, v} S) {V : S → Type}
-    (E : Set (QEEq Sg.sig V)) (X : S → Type) : ClosureOperator (Set (EEq Sg.sig X)) :=
+def EpSignature.cnClosure (Sg : EpSignature.{u, v} S) {V : S → Type*}
+    (E : Set (QEEq Sg.sig V)) (X : S → Type*) : ClosureOperator (Set (EEq Sg.sig X)) :=
   ClosureOperator.mk₂ (Sg.Cn.{u, v, w} E X)
     (fun _ e he _ _ _ hH => hH e he)
     (fun _ _ hle e he A hA a hH' => he A hA a fun e' he' => hle he' A hA a hH')
@@ -229,7 +229,7 @@ For every $`\mathcal{H} \subseteq \mathrm{Eq}_{\Sigma}(X)`:
 ```lean
 namespace EpSignature
 
-variable (Sg : EpSignature.{u, v} S) {V : S → Type} (E : Set (QEEq Sg.sig V)) {X : S → Type}
+variable (Sg : EpSignature.{u, v} S) {V : S → Type*} (E : Set (QEEq Sg.sig V)) {X : S → Type*}
 
 theorem holdsAll_cn_iff {H : Set (EEq Sg.sig X)} {A : PartialAlgebra.{u, v, w} Sg.sig}
     (hA : Sg.IsModel E A) (a : ∀ s, X s → A s) :

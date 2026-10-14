@@ -17,7 +17,7 @@ equal, and a $`\mathrm{QE}`$-*equation* is an implication from a finite conjunct
 existence equations to an existence equation.
 
 ```lean
-universe u v w
+universe u v w z
 
 namespace CategorialAlgebras
 
@@ -36,7 +36,7 @@ symbols: $`\sigma((t_j)_{j \in |\mathbf{s}|}) \in \mathrm{T}_{\Sigma}(V)_s` for
 $`\sigma \in \Sigma_{\mathbf{s}, s}` and $`t_j \in \mathrm{T}_{\Sigma}(V)_{s_j}`.
 
 ```lean
-inductive Term (Sig : Signature.{u, v} S) (V : S → Type) : S → Type (max u v)
+inductive Term (Sig : Signature.{u, v} S) (V : S → Type z) : S → Type (max u v z)
   /-- A variable. -/
   | var {s : S} (x : V s) : Term Sig V s
   /-- An operation symbol applied to a family of terms. -/
@@ -127,7 +127,7 @@ $`t_j^{\mathbf{A}}[v]` is defined and $`F_\sigma` is defined on their family, an
 $`F_\sigma((t_j^{\mathbf{A}}[v])_j)`.
 
 ```lean
-def Term.eval {Sig : Signature.{u, v} S} {V : S → Type} (A : PartialAlgebra.{u, v, w} Sig)
+def Term.eval {Sig : Signature.{u, v} S} {V : S → Type*} (A : PartialAlgebra.{u, v, w} Sig)
     (val : ∀ s, V s → A s) : {s : S} → Term Sig V s → Part (A s)
   | _, .var x => Part.some (val _ x)
   | _, .app σ ts =>
@@ -151,7 +151,7 @@ premises hold, the conclusion holds. A $`\mathrm{QE}`$-equation without premises
 existence equation.
 
 ```lean
-structure EEq (Sig : Signature.{u, v} S) (V : S → Type) where
+structure EEq (Sig : Signature.{u, v} S) (V : S → Type*) where
   /-- The sort of both sides. -/
   sort : S
   /-- The left-hand side. -/
@@ -159,13 +159,13 @@ structure EEq (Sig : Signature.{u, v} S) (V : S → Type) where
   /-- The right-hand side. -/
   rhs : Term Sig V sort
 
-structure QEEq (Sig : Signature.{u, v} S) (V : S → Type) where
+structure QEEq (Sig : Signature.{u, v} S) (V : S → Type*) where
   /-- The premises. -/
   premises : List (EEq Sig V)
   /-- The conclusion. -/
   conclusion : EEq Sig V
 
-variable {Sig : Signature.{u, v} S} {V : S → Type}
+variable {Sig : Signature.{u, v} S} {V : S → Type*}
 
 def EEq.Holds (A : PartialAlgebra.{u, v, w} Sig) (val : ∀ s, V s → A s) (e : EEq Sig V) :
     Prop :=
@@ -205,7 +205,7 @@ applied to one, two or a family of terms. The helpers below build them.
 ```lean
 namespace Term
 
-variable {Sig : Signature.{u, v} S} {V : S → Type}
+variable {Sig : Signature.{u, v} S} {V : S → Type*}
 
 /-- The family of arguments of a unary operation symbol. -/
 def args₁ {s : S} (t : Term Sig V s) : (j : Fin [s].length) → Term Sig V ([s].get j)
@@ -228,12 +228,12 @@ def app₂ {s₀ s₁ t : S} (σ : Sig [s₀, s₁] t) (x : Term Sig V s₀) (y 
 end Term
 
 /-- The existence equation `t ≐ t'`. -/
-def EEq.mk' {Sig : Signature.{u, v} S} {V : S → Type} {s : S} (t t' : Term Sig V s) :
+def EEq.mk' {Sig : Signature.{u, v} S} {V : S → Type*} {s : S} (t t' : Term Sig V s) :
     EEq Sig V :=
   ⟨s, t, t'⟩
 
 /-- The existence equation `t ≐ t`, saying that `t` is defined. -/
-def EEq.defined {Sig : Signature.{u, v} S} {V : S → Type} {s : S} (t : Term Sig V s) :
+def EEq.defined {Sig : Signature.{u, v} S} {V : S → Type*} {s : S} (t : Term Sig V s) :
     EEq Sig V :=
   ⟨s, t, t⟩
 

@@ -33,7 +33,7 @@ $`f^{\sharp}(\sigma((P_j)_j)) = \sigma((f^{\sharp}(P_j))_j)`. It is the unique h
 $`\Sigma`-algebras of terms that extends $`f`.
 
 ```lean
-def Term.subst {Sig : Signature.{u, v} S} {X Y : S → Type} (f : ∀ s, X s → Term Sig Y s) :
+def Term.subst {Sig : Signature.{u, v} S} {X Y : S → Type*} (f : ∀ s, X s → Term Sig Y s) :
     {s : S} → Term Sig X s → Term Sig Y s
   | _, .var x => f _ x
   | _, .app σ ts => .app σ fun j => Term.subst f (ts j)
@@ -45,22 +45,22 @@ namespace Term
 
 variable {Sig : Signature.{u, v} S}
 
-@[simp] lemma subst_var {X Y : S → Type} (f : ∀ s, X s → Term Sig Y s) {s : S} (x : X s) :
+@[simp] lemma subst_var {X Y : S → Type*} (f : ∀ s, X s → Term Sig Y s) {s : S} (x : X s) :
     (Term.var x : Term Sig X s).subst f = f s x := rfl
 
-@[simp] lemma subst_app {X Y : S → Type} (f : ∀ s, X s → Term Sig Y s) {ws : List S} {s : S}
+@[simp] lemma subst_app {X Y : S → Type*} (f : ∀ s, X s → Term Sig Y s) {ws : List S} {s : S}
     (σ : Sig ws s) (ts : (j : Fin ws.length) → Term Sig X (ws.get j)) :
     (Term.app σ ts).subst f = .app σ fun j => (ts j).subst f := rfl
 
 /-- Substituting every variable by itself does nothing. -/
-@[simp] lemma subst_var_eq {X : S → Type} {s : S} (P : Term Sig X s) :
+@[simp] lemma subst_var_eq {X : S → Type*} {s : S} (P : Term Sig X s) :
     P.subst (fun _ x => .var x) = P := by
   induction P with
   | var x => rfl
   | app σ ts ih => simp only [subst_app, ih]
 
 /-- Substitutions compose. -/
-lemma subst_subst {X Y Z : S → Type} (f : ∀ s, X s → Term Sig Y s)
+lemma subst_subst {X Y Z : S → Type*} (f : ∀ s, X s → Term Sig Y s)
     (g : ∀ s, Y s → Term Sig Z s) {s : S} (P : Term Sig X s) :
     (P.subst f).subst g = P.subst fun s x => (f s x).subst g := by
   induction P with
@@ -73,7 +73,7 @@ def appPart (A : PartialAlgebra.{u, v, w} Sig) {ws : List S} {s : S} (σ : Sig w
   ⟨∃ h : ∀ j, (p j).Dom, (A.op σ fun j => (p j).get (h j)).Dom,
     fun h => (A.op σ fun j => (p j).get (h.1 j)).get h.2⟩
 
-lemma eval_app {V : S → Type} (A : PartialAlgebra.{u, v, w} Sig) (val : ∀ s, V s → A s)
+lemma eval_app {V : S → Type*} (A : PartialAlgebra.{u, v, w} Sig) (val : ∀ s, V s → A s)
     {ws : List S} {s : S} (σ : Sig ws s) (ts : (j : Fin ws.length) → Term Sig V (ws.get j)) :
     (Term.app σ ts).eval A val = appPart A σ fun j => (ts j).eval A val := rfl
 
@@ -96,7 +96,7 @@ $`f^{\sharp}(R)^{\mathbf{A}}[a]` is defined if and only if $`R^{\mathbf{A}}[f^{\
 is, and then they are equal.
 
 ```lean
-theorem Term.eval_subst {Sig : Signature.{u, v} S} {X Y : S → Type}
+theorem Term.eval_subst {Sig : Signature.{u, v} S} {X Y : S → Type*}
     (A : PartialAlgebra.{u, v, w} Sig) (f : ∀ s, X s → Term Sig Y s) (a : ∀ s, Y s → A s)
     (hf : ∀ s x, ((f s x).eval A a).Dom) {s : S} (R : Term Sig X s) :
     (R.subst f).eval A a = R.eval A fun s x => ((f s x).eval A a).get (hf s x) := by
@@ -120,7 +120,7 @@ $`P^{\mathbf{B}}[h \circ a]` is defined and equal to $`h(P^{\mathbf{A}}[a])` (Re
 of the draft).
 
 ```lean
-theorem Term.eval_hom {Sig : Signature.{u, v} S} {X : S → Type}
+theorem Term.eval_hom {Sig : Signature.{u, v} S} {X : S → Type*}
     {A B : PartialAlgebra.{u, v, w} Sig} (h : PartialAlgebra.Hom A B) (a : ∀ s, X s → A s)
     {s : S} (P : Term Sig X s) (hP : (P.eval A a).Dom) :
     ∃ hB : (P.eval B fun s x => h.map s (a s x)).Dom,
@@ -163,11 +163,11 @@ set of the equations $`f^{\sharp}(P) \overset{\mathrm{e}}{=} f^{\sharp}(Q)`, for
 $`(P \overset{\mathrm{e}}{=} Q) \in \mathcal{H}`.
 
 ```lean
-def EEq.HoldsAll {Sig : Signature.{u, v} S} {X : S → Type} (A : PartialAlgebra.{u, v, w} Sig)
+def EEq.HoldsAll {Sig : Signature.{u, v} S} {X : S → Type*} (A : PartialAlgebra.{u, v, w} Sig)
     (a : ∀ s, X s → A s) (H : Set (EEq Sig X)) : Prop :=
   ∀ e ∈ H, e.Holds A a
 
-def EEq.subst {Sig : Signature.{u, v} S} {X Y : S → Type} (f : ∀ s, X s → Term Sig Y s)
+def EEq.subst {Sig : Signature.{u, v} S} {X Y : S → Type*} (f : ∀ s, X s → Term Sig Y s)
     (e : EEq Sig X) : EEq Sig Y :=
   ⟨e.sort, e.lhs.subst f, e.rhs.subst f⟩
 ```
@@ -175,7 +175,7 @@ def EEq.subst {Sig : Signature.{u, v} S} {X Y : S → Type} (f : ∀ s, X s → 
 
 ```lean
 /-- An existence equation holds when both sides have a common value. -/
-lemma EEq.holds_iff_mem {Sig : Signature.{u, v} S} {X : S → Type}
+lemma EEq.holds_iff_mem {Sig : Signature.{u, v} S} {X : S → Type*}
     (A : PartialAlgebra.{u, v, w} Sig) (a : ∀ s, X s → A s) (e : EEq Sig X) :
     e.Holds A a ↔ ∃ x, x ∈ e.lhs.eval A a ∧ x ∈ e.rhs.eval A a := by
   constructor
@@ -192,7 +192,7 @@ $`\mathbf{A} \models f^{\sharp}[\mathcal{H}][a]` if and only if
 $`\mathbf{A} \models \mathcal{H}[f^{\mathbf{A}}[a]]`.
 
 ```lean
-theorem EEq.holdsAll_subst {Sig : Signature.{u, v} S} {X Y : S → Type}
+theorem EEq.holdsAll_subst {Sig : Signature.{u, v} S} {X Y : S → Type*}
     (A : PartialAlgebra.{u, v, w} Sig) (f : ∀ s, X s → Term Sig Y s) (a : ∀ s, Y s → A s)
     (hf : ∀ s x, ((f s x).eval A a).Dom) (H : Set (EEq Sig X)) :
     EEq.HoldsAll A a (EEq.subst f '' H) ↔
@@ -217,7 +217,7 @@ $`a \colon X \to A` a valuation and $`\mathcal{H} \subseteq \mathrm{Eq}_{\Sigma}
 $`\mathbf{A} \models \mathcal{H}[a]`, then $`\mathbf{B} \models \mathcal{H}[h \circ a]`.
 
 ```lean
-theorem EEq.holdsAll_hom {Sig : Signature.{u, v} S} {X : S → Type}
+theorem EEq.holdsAll_hom {Sig : Signature.{u, v} S} {X : S → Type*}
     {A B : PartialAlgebra.{u, v, w} Sig} (h : PartialAlgebra.Hom A B) (a : ∀ s, X s → A s)
     {H : Set (EEq Sig X)} (hH : EEq.HoldsAll A a H) :
     EEq.HoldsAll B (fun s x => h.map s (a s x)) H := by
@@ -315,7 +315,7 @@ namespace Derivor
 
 variable {T : Type u'} {Sig : Signature.{u, v} S} {Lam : Signature.{u', v'} T}
 
-def trans (d : Derivor Sig Lam) {X : S → Type} {Y : T → Type}
+def trans (d : Derivor Sig Lam) {X : S → Type*} {Y : T → Type*}
     (ρ : ∀ s, X s → Term Lam Y (d.sortMap s)) : {s : S} → Term Sig X s → Term Lam Y (d.sortMap s)
   | _, .var x => ρ _ x
   | _, .app σ ts => (d.op σ).subst fun _ v => v.2 ▸ d.trans ρ (ts v.1)
@@ -339,17 +339,17 @@ namespace Derivor
 
 variable {T : Type u'} {Sig : Signature.{u, v} S} {Lam : Signature.{u', v'} T}
 
-@[simp] lemma trans_var (d : Derivor Sig Lam) {X : S → Type} {Y : T → Type}
+@[simp] lemma trans_var (d : Derivor Sig Lam) {X : S → Type*} {Y : T → Type*}
     (ρ : ∀ s, X s → Term Lam Y (d.sortMap s)) {s : S} (x : X s) :
     d.trans ρ (.var x) = ρ s x := rfl
 
-lemma trans_app (d : Derivor Sig Lam) {X : S → Type} {Y : T → Type}
+lemma trans_app (d : Derivor Sig Lam) {X : S → Type*} {Y : T → Type*}
     (ρ : ∀ s, X s → Term Lam Y (d.sortMap s)) {ws : List S} {s : S} (σ : Sig ws s)
     (ts : (j : Fin ws.length) → Term Sig X (ws.get j)) :
     d.trans ρ (.app σ ts) = (d.op σ).subst fun _ v => v.2 ▸ d.trans ρ (ts v.1) := rfl
 
 /-- A transport of the sort of a term commutes with its translation. -/
-lemma trans_cast (d : Derivor Sig Lam) {X : S → Type} {Y : T → Type}
+lemma trans_cast (d : Derivor Sig Lam) {X : S → Type*} {Y : T → Type*}
     (ρ : ∀ s, X s → Term Lam Y (d.sortMap s)) {s s' : S} (h : s = s') (R : Term Sig X s) :
     d.trans ρ (h ▸ R) = (congrArg d.sortMap h) ▸ d.trans ρ R := by
   subst h; rfl
@@ -368,7 +368,7 @@ draft.
 
 ```lean
 theorem Derivor.trans_subst {T : Type u'} {Sig : Signature.{u, v} S}
-    {Lam : Signature.{u', v'} T} (d : Derivor Sig Lam) {X X' : S → Type} {Y : T → Type}
+    {Lam : Signature.{u', v'} T} (d : Derivor Sig Lam) {X X' : S → Type*} {Y : T → Type*}
     (ρ : ∀ s, X' s → Term Lam Y (d.sortMap s)) (f : ∀ s, X s → Term Sig X' s) {s : S}
     (Q : Term Sig X s) :
     d.trans ρ (Q.subst f) = d.trans (fun s x => d.trans ρ (f s x)) Q := by
@@ -377,7 +377,7 @@ theorem Derivor.trans_subst {T : Type u'} {Sig : Signature.{u, v} S}
   | app σ ts ih => simp only [Term.subst_app, trans_app, ih]
 
 theorem Derivor.subst_trans {T : Type u'} {Sig : Signature.{u, v} S}
-    {Lam : Signature.{u', v'} T} (d : Derivor Sig Lam) {X : S → Type} {Y Y' : T → Type}
+    {Lam : Signature.{u', v'} T} (d : Derivor Sig Lam) {X : S → Type*} {Y Y' : T → Type*}
     (ρ : ∀ s, X s → Term Lam Y (d.sortMap s)) (g : ∀ t, Y t → Term Lam Y' t) {s : S}
     (Q : Term Sig X s) :
     (d.trans ρ Q).subst g = d.trans (fun s x => (ρ s x).subst g) Q := by
@@ -436,7 +436,7 @@ $`(e^{\sharp} \circ d)^{\sharp}_{e^{\sharp}_{\kappa} \circ \rho} = e^{\sharp}_{\
 (property (H3) of the draft).
 
 ```lean
-theorem Derivor.trans_id {Sig : Signature.{u, v} S} {X Y : S → Type}
+theorem Derivor.trans_id {Sig : Signature.{u, v} S} {X Y : S → Type*}
     (ρ : ∀ s, X s → Term Sig Y s) {s : S} (R : Term Sig X s) :
     (Derivor.id Sig).trans ρ R = R.subst ρ := by
   induction R with
@@ -449,7 +449,7 @@ theorem Derivor.trans_id {Sig : Signature.{u, v} S} {X Y : S → Type}
 
 theorem Derivor.trans_comp {T : Type u'} {U : Type u''} {Sig : Signature.{u, v} S}
     {Lam : Signature.{u', v'} T} {Om : Signature.{u'', v''} U} (e : Derivor Lam Om)
-    (d : Derivor Sig Lam) {X : S → Type} {Y : T → Type} {Z : U → Type}
+    (d : Derivor Sig Lam) {X : S → Type*} {Y : T → Type*} {Z : U → Type*}
     (ρ : ∀ s, X s → Term Lam Y (d.sortMap s)) (κ : ∀ t, Y t → Term Om Z (e.sortMap t))
     {s : S} (R : Term Sig X s) :
     (e.comp d).trans (fun s x => e.trans κ (ρ s x)) R = e.trans κ (d.trans ρ R) := by

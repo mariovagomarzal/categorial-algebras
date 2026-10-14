@@ -77,7 +77,7 @@ $`(a(x), b(x)) \in \Phi` for every variable $`x`, then $`P^{\mathbf{A}}[a]` and
 $`P^{\mathbf{A}}[b]`, when both defined, are $`\Phi`-related.
 
 ```lean
-theorem Term.eval_mem_closed {Sig : Signature.{u, v} S} {V : S → Type}
+theorem Term.eval_mem_closed {Sig : Signature.{u, v} S} {V : S → Type*}
     {A : PartialAlgebra.{u, v, w} Sig} {Y : ∀ s, Set (A s)} (hY : A.IsClosed Y)
     (a : ∀ s, V s → A s) (ha : ∀ s x, a s x ∈ Y s) {s : S} (P : Term Sig V s)
     (h : (P.eval A a).Dom) : (P.eval A a).get h ∈ Y s := by
@@ -85,7 +85,7 @@ theorem Term.eval_mem_closed {Sig : Signature.{u, v} S} {V : S → Type}
   | var x => exact ha _ x
   | app σ ts ih => exact hY σ _ (fun j => ih j _) h.2
 
-theorem Term.eval_congruence {Sig : Signature.{u, v} S} {V : S → Type}
+theorem Term.eval_congruence {Sig : Signature.{u, v} S} {V : S → Type*}
     {A : PartialAlgebra.{u, v, w} Sig} {Φ : ∀ s, A s → A s → Prop} (hΦ : A.IsCongruence Φ)
     (a b : ∀ s, V s → A s) (hab : ∀ s x, Φ s (a s x) (b s x)) {s : S} (P : Term Sig V s)
     (ha : (P.eval A a).Dom) (hb : (P.eval A b).Dom) :
@@ -122,7 +122,7 @@ def WordVar.single {φ : S → T} {s : S} {F : T → Sort*} (x : F (φ s)) :
     ∀ t, WordVar φ [s] t → F t :=
   fun _ v => v.single_eq ▸ x
 
-lemma Term.eval_cast {Sig : Signature.{u, v} S} {V : S → Type} (A : PartialAlgebra.{u, v, w} Sig)
+lemma Term.eval_cast {Sig : Signature.{u, v} S} {V : S → Type*} (A : PartialAlgebra.{u, v, w} Sig)
     (a : ∀ s, V s → A s) {s s' : S} (h : s = s') (P : Term Sig V s) :
     (h ▸ P).eval A a = h ▸ P.eval A a := by
   subst h; rfl
@@ -132,7 +132,7 @@ lemma Part.cast_dom {α : Type*} {F : α → Type*} {x y : α} (h : x = y) (p : 
   subst h; rfl
 
 /-- Substituting a term `P` for the single variable: all images are defined if `P` is. -/
-lemma eval_single {Sig : Signature.{u', v} T} {Y : T → Type} (A : PartialAlgebra.{u', v, w} Sig)
+lemma eval_single {Sig : Signature.{u', v} T} {Y : T → Type*} (A : PartialAlgebra.{u', v, w} Sig)
     (a : ∀ t, Y t → A t) {φ : S → T} {s : S} (P : Term Sig Y (φ s)) (hP : (P.eval A a).Dom) :
     ∀ t (x : WordVar φ [s] t), ((WordVar.single (F := fun t => Term Sig Y t) P t x).eval A a).Dom
   | t, x => by
@@ -140,7 +140,7 @@ lemma eval_single {Sig : Signature.{u', v} T} {Y : T → Type} (A : PartialAlgeb
     rw [Term.eval_cast, Part.cast_dom]
     exact hP
 
-lemma eval_single_get {Sig : Signature.{u', v} T} {Y : T → Type}
+lemma eval_single_get {Sig : Signature.{u', v} T} {Y : T → Type*}
     (A : PartialAlgebra.{u', v, w} Sig) (a : ∀ t, Y t → A t) {φ : S → T} {s : S}
     (P : Term Sig Y (φ s)) (hP : (P.eval A a).Dom) :
     (fun t x => ((WordVar.single (F := fun t => Term Sig Y t) P t x).eval A a).get
@@ -170,13 +170,13 @@ lemma wordVar_val_map {φ : S → T} {ws : List S} {F G : T → Type*} (g : ∀ 
   subst h
   rfl
 
-lemma holdsAll_union {Sig : Signature.{u', v'} T} {Y : T → Type}
+lemma holdsAll_union {Sig : Signature.{u', v'} T} {Y : T → Type*}
     {A : PartialAlgebra.{u', v', w} Sig} {c : ∀ t, Y t → A t} {H H' : Set (EEq Sig Y)} :
     EEq.HoldsAll A c (H ∪ H') ↔ EEq.HoldsAll A c H ∧ EEq.HoldsAll A c H' :=
   ⟨fun h => ⟨fun e he => h e (Or.inl he), fun e he => h e (Or.inr he)⟩,
     fun h e he => he.elim (h.1 e) (h.2 e)⟩
 
-lemma holdsAll_iUnion {Sig : Signature.{u', v'} T} {Y : T → Type} {ι : Sort*}
+lemma holdsAll_iUnion {Sig : Signature.{u', v'} T} {Y : T → Type*} {ι : Sort*}
     {A : PartialAlgebra.{u', v', w} Sig} {c : ∀ t, Y t → A t} {H : ι → Set (EEq Sig Y)} :
     EEq.HoldsAll A c (⋃ i, H i) ↔ ∀ i, EEq.HoldsAll A c (H i) :=
   ⟨fun h i e he => h e (Set.mem_iUnion.2 ⟨i, he⟩),
@@ -358,22 +358,22 @@ abbrev DomAssign (d : GenEpDerivor Sg Lg) : Type _ :=
   ∀ σ : Sg.sig.Symbol, Set (EEq Lg.sig (WordVar d.sortMap σ.1))
 
 /-- The substitution `(d♯(R_j))♯_j`. -/
-def argSubst (d : GenEpDerivor Sg Lg) {X : S → Type} {Y : T → Type}
+def argSubst (d : GenEpDerivor Sg Lg) {X : S → Type*} {Y : T → Type*}
     (ρ : ∀ s, X s → Term Lg.sig Y (d.sortMap s)) {ws : List S}
     (ts : (j : Fin ws.length) → Term Sg.sig X (ws.get j)) :
     ∀ t, WordVar d.sortMap ws t → Term Lg.sig Y t :=
   fun _ v => v.2 ▸ d.trans ρ (ts v.1)
 
-def dfd (d : GenEpDerivor Sg Lg) (δ : d.DomAssign) {X : S → Type} {Y : T → Type}
+def dfd (d : GenEpDerivor Sg Lg) (δ : d.DomAssign) {X : S → Type*} {Y : T → Type*}
     (ρ : ∀ s, X s → Term Lg.sig Y (d.sortMap s)) : {s : S} → Term Sg.sig X s → Set (EEq Lg.sig Y)
   | _, .var _ => ∅
   | _, .app σ ts => (⋃ j, d.dfd δ ρ (ts j)) ∪ EEq.subst (d.argSubst ρ ts) '' δ ⟨_, _, σ⟩
 
-def tr (d : GenEpDerivor Sg Lg) (δ : d.DomAssign) {X : S → Type} {Y : T → Type}
+def tr (d : GenEpDerivor Sg Lg) (δ : d.DomAssign) {X : S → Type*} {Y : T → Type*}
     (ρ : ∀ s, X s → Term Lg.sig Y (d.sortMap s)) (e : EEq Sg.sig X) : Set (EEq Lg.sig Y) :=
   insert ⟨_, d.trans ρ e.lhs, d.trans ρ e.rhs⟩ (d.dfd δ ρ e.lhs ∪ d.dfd δ ρ e.rhs)
 
-def trSet (d : GenEpDerivor Sg Lg) (δ : d.DomAssign) {X : S → Type} {Y : T → Type}
+def trSet (d : GenEpDerivor Sg Lg) (δ : d.DomAssign) {X : S → Type*} {Y : T → Type*}
     (ρ : ∀ s, X s → Term Lg.sig Y (d.sortMap s)) (H : Set (EEq Sg.sig X)) :
     Set (EEq Lg.sig Y) :=
   ⋃ e ∈ H, d.tr δ ρ e
@@ -393,7 +393,7 @@ def Dom (d : GenEpDerivor Sg Lg) : d.DomAssign :=
 :::
 
 ```lean
-lemma dfd_congr (d : GenEpDerivor Sg Lg) {δ δ' : d.DomAssign} {X : S → Type} {Y : T → Type}
+lemma dfd_congr (d : GenEpDerivor Sg Lg) {δ δ' : d.DomAssign} {X : S → Type*} {Y : T → Type*}
     (ρ : ∀ s, X s → Term Lg.sig Y (d.sortMap s)) {s : S} (R : Term Sg.sig X s)
     (h : ∀ τ ∈ R.symbols, δ τ = δ' τ) : d.dfd δ ρ R = d.dfd δ' ρ R := by
   induction R with
@@ -530,7 +530,7 @@ $`\rho(x)^{\mathbf{B}}[c] = a(x)` for every $`x`, in place of $`d^{\sharp}` and 
 
 ```lean
 theorem eval_derived (d : GenEpDerivor Sg Lg) (B : PartialAlgebra.{u', v', w} Lg.sig)
-    {X : S → Type} {Y : T → Type} (ρ : ∀ s, X s → Term Lg.sig Y (d.sortMap s))
+    {X : S → Type*} {Y : T → Type*} (ρ : ∀ s, X s → Term Lg.sig Y (d.sortMap s))
     (c : ∀ t, Y t → B t) (a : ∀ s, X s → d.derived B s)
     (hρ : ∀ s x, (a s x).1 ∈ (ρ s x).eval B c) {s : S} (R : Term Sg.sig X s) :
     ((R.eval (d.derived B) a).Dom ↔ EEq.HoldsAll B c (d.dfd d.Dom ρ R)) ∧
@@ -569,7 +569,7 @@ theorem eval_derived (d : GenEpDerivor Sg Lg) (B : PartialAlgebra.{u', v', w} Lg
       exact Part.get_mem _
 
 theorem holdsAll_derived (d : GenEpDerivor Sg Lg) (B : PartialAlgebra.{u', v', w} Lg.sig)
-    {X : S → Type} {Y : T → Type} (ρ : ∀ s, X s → Term Lg.sig Y (d.sortMap s))
+    {X : S → Type*} {Y : T → Type*} (ρ : ∀ s, X s → Term Lg.sig Y (d.sortMap s))
     (c : ∀ t, Y t → B t) (a : ∀ s, X s → d.derived B s)
     (hρ : ∀ s x, (a s x).1 ∈ (ρ s x).eval B c) (H : Set (EEq Sg.sig X)) :
     EEq.HoldsAll (d.derived B) a H ↔ EEq.HoldsAll B c (d.trSet d.Dom ρ H) := by
