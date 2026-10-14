@@ -407,5 +407,58 @@ $`(e^{\sharp} \circ d)^{\sharp} = e^{\sharp} \circ d^{\sharp}`, Proposition
 :::
 
 ```lean
+namespace EEq
+
+variable {X : S → Type} {A : PartialAlgebra.{u, v, w} Sig} {val : ∀ s, X s → Part (A s)}
+
+@[simp] lemma holdsAll_empty : HoldsAll A val ∅ := fun _ h => h.elim
+
+lemma holdsAll_mono {H H' : Set (EEq Sig X)} (h : H ⊆ H') : HoldsAll A val H' → HoldsAll A val H :=
+  fun h' e he => h' e (h he)
+
+lemma holdsAll_union {H H' : Set (EEq Sig X)} :
+    HoldsAll A val (H ∪ H') ↔ HoldsAll A val H ∧ HoldsAll A val H' :=
+  ⟨fun h => ⟨fun e he => h e (Or.inl he), fun e he => h e (Or.inr he)⟩,
+    fun ⟨h, h'⟩ e he => he.elim (h e) (h' e)⟩
+
+lemma holdsAll_iUnion {ι : Sort*} {H : ι → Set (EEq Sig X)} :
+    HoldsAll A val (⋃ i, H i) ↔ ∀ i, HoldsAll A val (H i) :=
+  ⟨fun h i e he => h e (Set.mem_iUnion.mpr ⟨i, he⟩),
+    fun h e he => by obtain ⟨i, he⟩ := Set.mem_iUnion.mp he; exact h i e he⟩
+
+lemma holdsAll_biUnion {ι : Type*} {I : Set ι} {H : ι → Set (EEq Sig X)} :
+    HoldsAll A val (⋃ i ∈ I, H i) ↔ ∀ i ∈ I, HoldsAll A val (H i) := by
+  simp only [holdsAll_iUnion]
+
+lemma holdsAll_insert {e : EEq Sig X} {H : Set (EEq Sig X)} :
+    HoldsAll A val (insert e H) ↔ e.Holds A val ∧ HoldsAll A val H :=
+  ⟨fun h => ⟨h e (Set.mem_insert _ _), fun e' he' => h e' (Set.mem_insert_of_mem _ he')⟩,
+    fun ⟨h, h'⟩ e' he' => (Set.mem_insert_iff.mp he').elim (fun h'' => h'' ▸ h) (h' e')⟩
+
+lemma holdsAll_singleton {e : EEq Sig X} : HoldsAll A val {e} ↔ e.Holds A val :=
+  ⟨fun h => h e rfl, fun h _ he => he ▸ h⟩
+
+end EEq
+
+lemma famVal_map {I : Type} {κ : I → S} {A B : S → Type w} (H : ∀ s, A s → B s)
+    (a : ∀ i, A (κ i)) :
+    (fun s x => (famVal a s x).map (H s)) = famVal fun i => H _ (a i) := by
+  funext s x; obtain ⟨i, rfl⟩ := x; rfl
+
+lemma famSubst_eval {I : Type} {κ : I → S} {Y : S → Type} {A : PartialAlgebra.{u, v, w} Sig}
+    {val : ∀ s, Y s → Part (A s)} {P : ∀ i, Term Sig Y (κ i)} {c : ∀ i, A (κ i)}
+    (h : ∀ i, (P i).eval A val = Part.some (c i)) :
+    (fun s x => (famSubst P s x).eval A val) = famVal c := by
+  funext s x; obtain ⟨i, rfl⟩ := x; exact h i
+
+/-- The value of a term only depends on the values of its variables. -/
+lemma Term.eval_congr_vars {X : S → Type} {A : PartialAlgebra.{u, v, w} Sig}
+    {val val' : ∀ s, X s → Part (A s)} :
+    ∀ {t : S} (R : Term Sig X t), (∀ p ∈ R.vars, val p.1 p.2 = val' p.1 p.2) →
+      R.eval A val = R.eval A val'
+  | _, .var x, h => by simpa using h ⟨_, x⟩ rfl
+  | _, .app σ ts, h => Term.eval_app_congr σ fun j =>
+      eval_congr_vars (ts j) fun p hp => h p (Set.mem_iUnion.mpr ⟨j, hp⟩)
+
 end CategorialAlgebras
 ```

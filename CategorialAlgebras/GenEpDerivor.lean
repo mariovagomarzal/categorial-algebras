@@ -30,6 +30,10 @@ variable {S : Type u} {T : Type u'}
 /-- The valuation of the single variable of the word `(t)` at `b`. -/
 def val₁ {A : T → Type w} {t : T} (b : A t) : ∀ t', Vars (fun _ : Unit => t) t' → Part (A t') :=
   famVal (κ := fun _ : Unit => t) fun _ => b
+
+lemma eq_val₁ {A : T → Type w} {t₀ : T} {f : ∀ t, Vars (fun _ : Unit => t₀) t → Part (A t)}
+    {b : A t₀} (h : f t₀ ⟨(), rfl⟩ = Part.some b) : f = val₁ b := by
+  funext t x; obtain ⟨⟨⟩, rfl⟩ := x; exact h
 ```
 
 # Generalized ep-derivors
@@ -110,7 +114,9 @@ def cells (B : PartialAlgebra.{u', v', w} Lg.sig) (s : S) : Type w :=
 
 lemma cells_map {B B' : PartialAlgebra.{u', v', w} Lg.sig} (f : B ⟶ B') {s : S} (b : δ.cells B s) :
     EEq.HoldsAll B' (val₁ (f.map _ b.1)) (δ.sortDom s) := by
-  sorry
+  have key : (fun t x => (val₁ b.1 t x).map (f.map t)) = val₁ (f.map _ b.1) := famVal_map _ _
+  rw [← key]
+  exact EEq.holdsAll_hom f (val₁ b.1) b.2
 
 /-- The functor `Δ_(φ,D)`. -/
 def delta : PartialAlgebra.{u', v', w} Lg.sig ⥤ (S → Type w) where
@@ -120,7 +126,12 @@ def delta : PartialAlgebra.{u', v', w} Lg.sig ⥤ (S → Type w) where
 theorem holdsAll_famDom_iff {B : PartialAlgebra.{u', v', w} Lg.sig} {I : Type} {κ : I → S}
     (b : ∀ i, B (δ.sortMap (κ i))) :
     EEq.HoldsAll B (famVal b) (δ.famDom κ) ↔ ∀ i, EEq.HoldsAll B (val₁ (b i)) (δ.sortDom (κ i)) := by
-  sorry
+  rw [famDom, EEq.holdsAll_iUnion]
+  refine forall_congr' fun i => ?_
+  rw [EEq.holdsAll_substSet]
+  have : (fun t x => (δ.famDomRen κ i t x).eval B (famVal b)) = val₁ (b i) :=
+    eq_val₁ (by simp only [famDomRen, Term.eval_var]; rfl)
+  rw [this]
 ```
 :::
 
@@ -175,6 +186,30 @@ def domStep (σ : Op Sg.sig) (dm : ∀ τ : Op Sg.sig, Set (EEq Lg.sig (Vars (δ
     Set (EEq Lg.sig (Vars (δ.sortMap ∘ σ.ws.get))) :=
   δ.famDom σ.ws.get ∪ δ.trSetWith dm (Sg.defn σ.σ) ∪ {⟨_, δ.op σ.σ, δ.op σ.σ⟩} ∪
     EEq.substSet (δ.resultSubst σ) (δ.sortDom σ.s)
+
+lemma dfdWith_congr {dm dm' : ∀ τ : Op Sg.sig, Set (EEq Lg.sig (Vars (δ.sortMap ∘ τ.ws.get)))}
+    {I : Type} {κ : I → S} : ∀ {t : S} (R : Term Sg.sig (Vars κ) t), (∀ τ ∈ R.ops, dm τ = dm' τ) →
+      δ.dfdWith dm R = δ.dfdWith dm' R
+  | _, .var _, _ => rfl
+  | _, .app τ ts, h => by
+    simp only [dfdWith]
+    rw [h ⟨_, _, τ⟩ (Or.inl rfl)]
+    exact congrArg₂ (· ∪ ·) (congrArg Set.iUnion (funext fun j =>
+      dfdWith_congr (ts j) fun τ' hτ' => h τ' (Or.inr (Set.mem_iUnion.mpr ⟨j, hτ'⟩)))) rfl
+
+lemma trSetWith_congr {dm dm' : ∀ τ : Op Sg.sig, Set (EEq Lg.sig (Vars (δ.sortMap ∘ τ.ws.get)))}
+    {I : Type} {κ : I → S} (H : Set (EEq Sg.sig (Vars κ)))
+    (h : ∀ e ∈ H, ∀ τ ∈ e.ops, dm τ = dm' τ) : δ.trSetWith dm H = δ.trSetWith dm' H := by
+  unfold trSetWith trWith
+  refine congrArg Set.iUnion (funext fun e => congrArg Set.iUnion (funext fun he => ?_))
+  rw [δ.dfdWith_congr e.lhs fun τ hτ => h e he τ (Or.inl hτ),
+    δ.dfdWith_congr e.rhs fun τ hτ => h e he τ (Or.inr hτ)]
+
+lemma domStep_congr (σ : Op Sg.sig)
+    {dm dm' : ∀ τ : Op Sg.sig, Set (EEq Lg.sig (Vars (δ.sortMap ∘ τ.ws.get)))}
+    (h : ∀ τ, Sg.Prec τ σ → dm τ = dm' τ) : δ.domStep σ dm = δ.domStep σ dm' := by
+  unfold domStep
+  rw [δ.trSetWith_congr _ fun e he τ hτ => h τ ⟨e, he, hτ⟩]
 ```
 
 :::definition (label := "gen-ep-domains") (central := false) (title := "Domains, definedness conditions and translations")
@@ -217,7 +252,11 @@ noncomputable def trSet {I : Type} {κ : I → S} (H : Set (EEq Sg.sig (Vars κ)
   δ.trSetWith δ.opDom H
 
 theorem opDom_eq (σ : Op Sg.sig) : δ.opDom σ = δ.domStep σ δ.opDom := by
-  sorry
+  unfold opDom
+  rw [WellFounded.fix_eq]
+  apply domStep_congr
+  intro τ h
+  simp only [dif_pos h]
 ```
 :::
 
@@ -228,6 +267,27 @@ conditions of a term only depend on the domains of the operation symbols that oc
 step that defines $`\mathrm{Dom}_{\mathbf{d}}(\sigma)` only uses the domains of the symbols that
 precede $`\sigma`.
 :::
+
+```lean
+lemma holdsAll_opDom_iff {B : PartialAlgebra.{u', v', w} Lg.sig} {ws : List S} {s : S}
+    (σ : Sg.sig ws s) (b : ∀ j, B (δ.sortMap (ws.get j))) :
+    EEq.HoldsAll B (famVal b) (δ.opDom ⟨ws, s, σ⟩) ↔
+      EEq.HoldsAll B (famVal b) (δ.famDom ws.get) ∧
+        EEq.HoldsAll B (famVal b) (δ.trSet (Sg.defn σ)) ∧
+        ∃ h : ((δ.op σ).eval B (famVal b)).Dom,
+          EEq.HoldsAll B (val₁ (((δ.op σ).eval B (famVal b)).get h)) (δ.sortDom s) := by
+  rw [δ.opDom_eq]
+  simp only [domStep, EEq.holdsAll_union, EEq.holdsAll_singleton, EEq.holdsAll_substSet]
+  have hv : ∀ h : ((δ.op σ).eval B (famVal b)).Dom,
+      (fun t x => (δ.resultSubst ⟨ws, s, σ⟩ t x).eval B (famVal b)) =
+        val₁ (((δ.op σ).eval B (famVal b)).get h) :=
+    fun h => eq_val₁ (Part.some_get h).symm
+  constructor
+  · rintro ⟨⟨⟨h1, h2⟩, ⟨hd, -, -⟩⟩, h4⟩
+    exact ⟨h1, h2, hd, by rw [← hv hd]; exact h4⟩
+  · rintro ⟨h1, h2, hd, h4⟩
+    exact ⟨⟨⟨h1, h2⟩, ⟨hd, hd, rfl⟩⟩, by rw [hv hd]; exact h4⟩
+```
 
 # The derived algebra
 
@@ -248,12 +308,14 @@ variable {B : PartialAlgebra.{u', v', w} Lg.sig}
 
 lemma op_dom_of_holds {ws : List S} {s : S} {σ : Sg.sig ws s} {b : ∀ j, B (δ.sortMap (ws.get j))}
     (h : EEq.HoldsAll B (famVal b) (δ.opDom ⟨ws, s, σ⟩)) : ((δ.op σ).eval B (famVal b)).Dom := by
-  sorry
+  obtain ⟨-, -, hd, -⟩ := (δ.holdsAll_opDom_iff σ b).mp h
+  exact hd
 
 lemma op_mem_of_holds {ws : List S} {s : S} {σ : Sg.sig ws s} {b : ∀ j, B (δ.sortMap (ws.get j))}
     (h : EEq.HoldsAll B (famVal b) (δ.opDom ⟨ws, s, σ⟩)) :
     EEq.HoldsAll B (val₁ (((δ.op σ).eval B (famVal b)).get (δ.op_dom_of_holds h))) (δ.sortDom s) := by
-  sorry
+  obtain ⟨-, -, hd, h4⟩ := (δ.holdsAll_opDom_iff σ b).mp h
+  exact h4
 
 /-- The derived partial algebra `𝐝*_𝔤𝔡(𝐁)`. -/
 noncomputable def derived (B : PartialAlgebra.{u', v', w} Lg.sig) : PartialAlgebra.{u, v, w} Sg.sig where
