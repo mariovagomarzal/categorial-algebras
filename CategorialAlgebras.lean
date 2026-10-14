@@ -13,6 +13,7 @@ import CategorialAlgebras.Compact.Restriction
 import CategorialAlgebras.Compact.OmegaAlgebra
 import CategorialAlgebras.Compact.Identification
 import CategorialAlgebras.Compact.Truncation
+import CategorialAlgebras.Compact.Tower
 import CategorialAlgebras.Compact.Limit
 import CategorialAlgebras.Extended.Category
 import CategorialAlgebras.Extended.Functor
