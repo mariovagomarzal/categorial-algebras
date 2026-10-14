@@ -1023,6 +1023,417 @@ noncomputable def truncFunctor {m n : ℕ} (hmn : m ≤ n) :
 ```
 :::
 
+# Extended truncation
+
+:::definition (label := "truncation-ext-derivor") (central := false) (title := "The extended truncation derivor")
+Let $`m \leq n`. The *extended truncation derivor* $`\boldsymbol{\tau}^{\mathrm{ext}(m,n)}` is the
+generalized ep-derivor from $`\mathbf{\Sigma}^{\mathrm{ext}(m)}` to $`\mathbf{\Sigma}^{\mathrm{ext}(n)}`
+determined by the embedding of $`\Sigma^{\mathrm{ext}(m)}` into $`\Sigma^{\mathrm{ext}(n)}`:
+$`\varphi(k, s) = (k, s)`, $`D_{(k,s)} = \varnothing`, and every operation symbol is sent to itself,
+applied to variables.
+
+```lean
+section ExtTrunc
+
+variable {n m}
+
+/-- A dimension of `m + 1`, as a dimension of `n + 1`. -/
+def castDim (hmn : m ≤ n) (k : Fin (m + 1)) : Fin (n + 1) := Fin.castLE (by omega) k
+
+lemma castDim_lt (hmn : m ≤ n) {j k : Fin (m + 1)} (h : j < k) : castDim hmn j < castDim hmn k :=
+  Fin.lt_def.mpr (Fin.lt_def.mp h)
+
+/-- The terms of the extended truncation derivor: every symbol is sent to itself. -/
+def truncExtOp (hmn : m ≤ n) : ∀ {ws : List (Fin (m + 1) × S)} {t : Fin (m + 1) × S},
+    Extended.ExtendedSignature Sig (Fin (m + 1)) ws t →
+    Term (Extended.ExtendedSignature Sig (Fin (n + 1)))
+      (Vars ((fun t => (castDim hmn t.1, t.2)) ∘ ws.get)) (castDim hmn t.1, t.2)
+  | _, _, .op k σ => .app (.op (castDim hmn k) σ) fun q => .var ⟨Fin.cast (by simp) q, by simp⟩
+  | _, _, .sc h s => app₁ (.sc (castDim_lt hmn h) s) (.var ⟨⟨0, by simp⟩, rfl⟩)
+  | _, _, .tg h s => app₁ (.tg (castDim_lt hmn h) s) (.var ⟨⟨0, by simp⟩, rfl⟩)
+  | _, _, .idm h s => app₁ (.idm (castDim_lt hmn h) s) (.var ⟨⟨0, by simp⟩, rfl⟩)
+  | _, _, .comp h s =>
+      app₂ (.comp (castDim_lt hmn h) s) (.var ⟨⟨0, by simp⟩, rfl⟩) (.var ⟨⟨1, by simp⟩, rfl⟩)
+
+/-- The extended truncation derivor `𝛕^{ext(m,n)}`. -/
+def truncExt (hmn : m ≤ n) : GenEpDerivor (extendedEpSig Sig (Fin (m + 1))) (extendedEpSig Sig (Fin (n + 1))) where
+  sortMap t := (castDim hmn t.1, t.2)
+  sortDom _ := ∅
+  op := truncExtOp Sig hmn
+
+end ExtTrunc
+```
+:::
+
+```lean
+section ExtTrunc
+
+variable {n m}
+
+namespace TruncExt
+
+open Extended.Model
+
+variable {Sig}
+
+/-- The truncated algebra of an extended model. -/
+noncomputable abbrev TE (hmn : m ≤ n) (M : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (n + 1))) :=
+  (truncExt Sig hmn).derived M.1
+
+variable {hmn : m ≤ n} {M : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (n + 1))}
+
+variable (hmn M) in
+noncomputable def tsc {j k : Fin (m + 1)} (h : j < k) {s : S} (x : TE hmn M (k, s)) :
+    TE hmn M (j, s) :=
+  ⟨sc M (castDim_lt hmn h) x.1, EEq.holdsAll_empty⟩
+
+variable (hmn M) in
+noncomputable def ttg {j k : Fin (m + 1)} (h : j < k) {s : S} (x : TE hmn M (k, s)) :
+    TE hmn M (j, s) :=
+  ⟨tg M (castDim_lt hmn h) x.1, EEq.holdsAll_empty⟩
+
+variable (hmn M) in
+noncomputable def tidm {j k : Fin (m + 1)} (h : j < k) {s : S} (u : TE hmn M (j, s)) :
+    TE hmn M (k, s) :=
+  ⟨idm M (castDim_lt hmn h) u.1, EEq.holdsAll_empty⟩
+
+variable (hmn M) in
+noncomputable def tcomp {j k : Fin (m + 1)} (h : j < k) {s : S} (x y : TE hmn M (k, s))
+    (hxy : sc M (castDim_lt hmn h) x.1 = tg M (castDim_lt hmn h) y.1) : TE hmn M (k, s) :=
+  ⟨comp M (castDim_lt hmn h) x.1 y.1 hxy, EEq.holdsAll_empty⟩
+
+variable (hmn M) in
+noncomputable def top (k : Fin (m + 1)) {ws : List S} {s : S} (σ : Sig ws s)
+    (b : ∀ p, TE hmn M (k, ws.get p)) : TE hmn M (k, s) :=
+  ⟨op M (castDim hmn k) σ fun p => (b p).1, EEq.holdsAll_empty⟩
+
+lemma op_sc {j k : Fin (m + 1)} (h : j < k) {s : S} (x : TE hmn M (k, s)) :
+    (TE hmn M).op (.sc h s) (Extended.arg₁ x) = Part.some (tsc hmn M h x) :=
+  (truncExt Sig hmn).derived_op_eq_some EEq.holdsAll_empty (Unif.meval_sc _ rfl) _
+
+lemma op_tg {j k : Fin (m + 1)} (h : j < k) {s : S} (x : TE hmn M (k, s)) :
+    (TE hmn M).op (.tg h s) (Extended.arg₁ x) = Part.some (ttg hmn M h x) :=
+  (truncExt Sig hmn).derived_op_eq_some EEq.holdsAll_empty (Unif.meval_tg _ rfl) _
+
+lemma op_idm {j k : Fin (m + 1)} (h : j < k) {s : S} (u : TE hmn M (j, s)) :
+    (TE hmn M).op (.idm h s) (Extended.arg₁ u) = Part.some (tidm hmn M h u) :=
+  (truncExt Sig hmn).derived_op_eq_some EEq.holdsAll_empty (Unif.meval_idm _ rfl) _
+
+lemma eval_var_lift (k : Fin (m + 1)) {ws : List S} (b : ∀ p, TE hmn M (k, ws.get p))
+    (q : Fin (ws.map fun t => (castDim hmn k, t)).length) (hq) :
+    (Term.var ⟨Fin.cast (by simp) q, hq⟩ :
+        Term (Extended.ExtendedSignature Sig (Fin (n + 1)))
+          (Vars ((fun t => (castDim hmn t.1, t.2)) ∘ (ws.map fun t => (k, t)).get))
+          ((ws.map fun t => (castDim hmn k, t)).get q)).eval M.1
+      (famVal fun i => (Extended.liftFam k b i).1) =
+      Part.some (Extended.liftFam (castDim hmn k) (fun p => (b p).1) q) := by
+  have key : ∀ {t' : Fin (m + 1) × S} (e : (k, ws.get (Fin.cast (by simp) q)) = t')
+      {u' : Fin (n + 1) × S} (hq : (castDim hmn t'.1, t'.2) = u')
+      (e' : (castDim hmn k, ws.get (Fin.cast (by simp) q)) = u'),
+      hq ▸ (cast (congrArg (TE hmn M) e) (b (Fin.cast (by simp) q))).1 =
+        cast (congrArg M.1 e') (b (Fin.cast (by simp) q)).1 := by
+    intro t' e; subst e; intro u' hq; subst hq; intro e'; rfl
+  exact congrArg Part.some (key (by simp) hq (by simp))
+
+lemma op_op (k : Fin (m + 1)) {ws : List S} {s : S} (σ : Sig ws s)
+    (b : ∀ p, TE hmn M (k, ws.get p)) :
+    (TE hmn M).op (.op k σ) (Extended.liftFam k b) = Part.some (top hmn M k σ b) :=
+  (truncExt Sig hmn).derived_op_eq_some EEq.holdsAll_empty
+    ((eval_app_of_eq_some _ _ _ fun q => eval_var_lift k b q _).trans (Part.some_get _).symm) _
+
+lemma comp_defn_iff {j k : Fin (m + 1)} (h : j < k) {s : S} (x y : TE hmn M (k, s)) :
+    EEq.HoldsAll (TE hmn M) (famVal (Extended.arg₂ x y))
+      ((extendedEpSig Sig (Fin (m + 1))).defn (.comp h s)) ↔
+      sc M (castDim_lt hmn h) x.1 = tg M (castDim_lt hmn h) y.1 := by
+  refine EEq.holdsAll_singleton.trans ?_
+  refine (EEq.holds_mk'_iff ((Extended.eval_app₁ _ rfl).trans (op_sc h x))
+    ((Extended.eval_app₁ _ rfl).trans (op_tg h y))).trans ?_
+  exact ⟨fun e => congrArg Subtype.val e, fun e => Subtype.ext e⟩
+
+lemma op_comp {j k : Fin (m + 1)} (h : j < k) {s : S} (x y : TE hmn M (k, s))
+    (hxy : sc M (castDim_lt hmn h) x.1 = tg M (castDim_lt hmn h) y.1) :
+    (TE hmn M).op (.comp h s) (Extended.arg₂ x y) = Part.some (tcomp hmn M h x y hxy) :=
+  (truncExt Sig hmn).derived_op_eq_some ((comp_defn_iff h x y).mpr hxy)
+    (Unif.meval_comp _ rfl rfl hxy) _
+
+lemma op_comp_dom {j k : Fin (m + 1)} (h : j < k) {s : S} (x y : TE hmn M (k, s)) :
+    ((TE hmn M).op (.comp h s) (Extended.arg₂ x y)).Dom ↔
+      sc M (castDim_lt hmn h) x.1 = tg M (castDim_lt hmn h) y.1 :=
+  ⟨fun hd => (comp_defn_iff h x y).mp (((truncExt Sig hmn).op_derived_dom_iff _ _).mp hd).1,
+    fun hxy => (Part.eq_some_iff.mp (op_comp h x y hxy)).1⟩
+
+theorem isAlgebra : (extendedEpSig Sig (Fin (m + 1))).IsAlgebra (TE hmn M) := by
+  intro ws t σ a
+  cases σ with
+  | op k σ =>
+    obtain ⟨b, rfl⟩ : ∃ b, Extended.liftFam k b = a := ⟨_, Extended.liftFam_unlift k a⟩
+    exact ⟨fun _ => EEq.holdsAll_empty, fun _ => (Part.eq_some_iff.mp (op_op k σ b)).1⟩
+  | sc h s =>
+    have ha : Extended.arg₁ (a ⟨0, by simp⟩) = a := by funext i; match i with | ⟨0, _⟩ => rfl
+    exact ⟨fun _ => EEq.holdsAll_empty, fun _ => ha ▸ (Part.eq_some_iff.mp (op_sc h _)).1⟩
+  | tg h s =>
+    have ha : Extended.arg₁ (a ⟨0, by simp⟩) = a := by funext i; match i with | ⟨0, _⟩ => rfl
+    exact ⟨fun _ => EEq.holdsAll_empty, fun _ => ha ▸ (Part.eq_some_iff.mp (op_tg h _)).1⟩
+  | idm h s =>
+    have ha : Extended.arg₁ (a ⟨0, by simp⟩) = a := by funext i; match i with | ⟨0, _⟩ => rfl
+    exact ⟨fun _ => EEq.holdsAll_empty, fun _ => ha ▸ (Part.eq_some_iff.mp (op_idm h _)).1⟩
+  | comp h s =>
+    have ha : Extended.arg₂ (a ⟨0, by simp⟩) (a ⟨1, by simp⟩) = a := by
+      funext i; match i with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl
+    exact ha ▸ (op_comp_dom h _ _).trans (comp_defn_iff h _ _).symm
+
+section Eval
+
+variable {val : ∀ t, Extended.EVar S (Fin (m + 1)) t → Part ((TE hmn M) t)}
+
+lemma ev_scT {j k : Fin (m + 1)} (h : j < k) {s : S} {t : Extended.ETerm Sig (Fin (m + 1)) (k, s)}
+    {x : TE hmn M (k, s)} (ht : t.eval (TE hmn M) val = Part.some x) :
+    (Extended.ETerm.scT h t).eval (TE hmn M) val = Part.some (tsc hmn M h x) :=
+  (Extended.eval_app₁ _ ht).trans (op_sc h x)
+
+lemma ev_tgT {j k : Fin (m + 1)} (h : j < k) {s : S} {t : Extended.ETerm Sig (Fin (m + 1)) (k, s)}
+    {x : TE hmn M (k, s)} (ht : t.eval (TE hmn M) val = Part.some x) :
+    (Extended.ETerm.tgT h t).eval (TE hmn M) val = Part.some (ttg hmn M h x) :=
+  (Extended.eval_app₁ _ ht).trans (op_tg h x)
+
+lemma ev_idmT {j k : Fin (m + 1)} (h : j < k) {s : S}
+    {t : Extended.ETerm Sig (Fin (m + 1)) (j, s)} {u : TE hmn M (j, s)}
+    (ht : t.eval (TE hmn M) val = Part.some u) :
+    (Extended.ETerm.idmT h t).eval (TE hmn M) val = Part.some (tidm hmn M h u) :=
+  (Extended.eval_app₁ _ ht).trans (op_idm h u)
+
+lemma ev_compT {j k : Fin (m + 1)} (h : j < k) {s : S}
+    {t t' : Extended.ETerm Sig (Fin (m + 1)) (k, s)} {x y : TE hmn M (k, s)}
+    (ht : t.eval (TE hmn M) val = Part.some x) (ht' : t'.eval (TE hmn M) val = Part.some y)
+    (hxy : sc M (castDim_lt hmn h) x.1 = tg M (castDim_lt hmn h) y.1) :
+    (Extended.ETerm.compT h t t').eval (TE hmn M) val = Part.some (tcomp hmn M h x y hxy) :=
+  (Extended.eval_app₂ _ ht ht').trans (op_comp h x y hxy)
+
+lemma ev_compT_dom {j k : Fin (m + 1)} (h : j < k) {s : S}
+    {t t' : Extended.ETerm Sig (Fin (m + 1)) (k, s)} {x y : TE hmn M (k, s)}
+    (ht : t.eval (TE hmn M) val = Part.some x) (ht' : t'.eval (TE hmn M) val = Part.some y)
+    (hd : ((Extended.ETerm.compT h t t').eval (TE hmn M) val).Dom) :
+    sc M (castDim_lt hmn h) x.1 = tg M (castDim_lt hmn h) y.1 :=
+  (op_comp_dom h x y).mp ((Extended.eval_app₂ _ ht ht') ▸ hd)
+
+lemma ev_opT (k : Fin (m + 1)) {ws : List S} {s : S} (σ : Sig ws s)
+    {ts : (p : Fin ws.length) → Extended.ETerm Sig (Fin (m + 1)) (k, ws.get p)}
+    {b : ∀ p, TE hmn M (k, ws.get p)} (h : ∀ p, (ts p).eval (TE hmn M) val = Part.some (b p)) :
+    (Extended.ETerm.opT k σ ts).eval (TE hmn M) val = Part.some (top hmn M k σ b) :=
+  (Extended.eval_opT k σ h).trans (op_op k σ b)
+
+end Eval
+
+/-- The variables of an axiom. -/
+local macro "vm" : tactic => `(tactic| (
+  simp [QEEq.vars, EEq.vars, EEq.mk', EEq.defined, Extended.ETerm.scT, Extended.ETerm.tgT,
+    Extended.ETerm.idmT, Extended.ETerm.compT, Extended.ETerm.x, Extended.vars_opT]))
+
+/-- A premise of an axiom. -/
+local macro "pm" : tactic => `(tactic| (
+  first
+    | exact List.Mem.head _
+    | exact List.Mem.tail _ (List.Mem.head _)
+    | exact List.Mem.tail _ (List.Mem.tail _ (List.Mem.head _))
+    | exact List.Mem.tail _ (List.Mem.tail _ (List.Mem.tail _ (List.Mem.head _)))))
+
+open Extended.ETerm in
+theorem holds : ∀ q ∈ Extended.extendedSpec Sig (Fin (m + 1)), q.Holds (TE hmn M) := by
+  intro q hq val hvars hprem
+  have var : ∀ {t : Fin (m + 1) × S} (i : ℕ),
+      (⟨t, i⟩ : Σ t, Extended.EVar S (Fin (m + 1)) t) ∈ q.vars →
+      ∃ x, (Extended.ETerm.x (Sig := Sig) (t := t) i).eval (TE hmn M) val = Part.some x :=
+    fun i hi => ⟨_, (Part.some_get (hvars _ hi)).symm⟩
+  have prem : ∀ e ∈ q.premises, e.Holds (TE hmn M) val := hprem
+  have cl := fun {a b : Fin (m + 1)} (h : a < b) => castDim_lt hmn h
+  cases hq with
+  | @EA0 k ws s σ xs =>
+    choose b hb using fun p => var (t := (k, ws.get p)) (xs p) (by vm; exact ⟨p, rfl, rfl⟩)
+    exact EEq.holds_defined_iff.mpr (Part.eq_some_iff.mp (ev_opT k σ hb)).1
+  | @EA1_sc j k h s i =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    exact EEq.holds_defined_iff.mpr (Part.eq_some_iff.mp (ev_scT h ha)).1
+  | @EA1_tg j k h s i =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    exact EEq.holds_defined_iff.mpr (Part.eq_some_iff.mp (ev_tgT h ha)).1
+  | @EA1_idm j k h s i =>
+    obtain ⟨a, ha⟩ := var (t := (j, s)) i (by vm)
+    exact EEq.holds_defined_iff.mpr (Part.eq_some_iff.mp (ev_idmT h ha)).1
+  | @EA2_sc j k h s i =>
+    obtain ⟨u, hu⟩ := var (t := (j, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_scT h (ev_idmT h hu)) hu).mpr (Subtype.ext (sc_idm _))
+  | @EA2_tg j k h s i =>
+    obtain ⟨u, hu⟩ := var (t := (j, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_tgT h (ev_idmT h hu)) hu).mpr (Subtype.ext (tg_idm _))
+  | @EA3_dom j k h s i i' =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    obtain ⟨b, hb⟩ := var (t := (k, s)) i' (by vm)
+    have hab := ev_compT_dom h ha hb (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_scT h ha) (ev_tgT h hb)).mpr (Subtype.ext hab)
+  | @EA3_def j k h s i i' =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    obtain ⟨b, hb⟩ := var (t := (k, s)) i' (by vm)
+    have hab : sc M (cl h) a.1 = tg M (cl h) b.1 := congrArg Subtype.val
+      ((EEq.holds_mk'_iff (ev_scT h ha) (ev_tgT h hb)).mp (prem _ (by pm)))
+    exact EEq.holds_defined_iff.mpr (Part.eq_some_iff.mp (ev_compT h ha hb hab)).1
+  | @EA4_sc j k h s i i' =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    obtain ⟨b, hb⟩ := var (t := (k, s)) i' (by vm)
+    have hab := ev_compT_dom h ha hb (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_scT h (ev_compT h ha hb hab)) (ev_scT h hb)).mpr
+      (Subtype.ext (sc_comp hab))
+  | @EA4_tg j k h s i i' =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    obtain ⟨b, hb⟩ := var (t := (k, s)) i' (by vm)
+    have hab := ev_compT_dom h ha hb (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_tgT h (ev_compT h ha hb hab)) (ev_tgT h ha)).mpr
+      (Subtype.ext (tg_comp hab))
+  | @EA5_sc j k h s i =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_compT h ha (ev_idmT h (ev_scT h ha)) (tg_idm _).symm) ha).mpr
+      (Subtype.ext (comp_idm_sc a.1))
+  | @EA5_tg j k h s i =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_compT h (ev_idmT h (ev_tgT h ha)) ha (sc_idm _)) ha).mpr
+      (Subtype.ext (idm_tg_comp a.1))
+  | @EA6 j k h s i i' i'' =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    obtain ⟨b, hb⟩ := var (t := (k, s)) i' (by vm)
+    obtain ⟨c, hc⟩ := var (t := (k, s)) i'' (by vm)
+    have hab := ev_compT_dom h ha hb (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    have hbc := ev_compT_dom h hb hc (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_compT h (ev_compT h ha hb hab) hc ((sc_comp hab).trans hbc))
+      (ev_compT h ha (ev_compT h hb hc hbc) (hab.trans (tg_comp hbc).symm))).mpr
+      (Subtype.ext (comp_assoc hab hbc))
+  | @EA7_sc j k h ws s σ xs =>
+    choose b hb using fun p => var (t := (k, ws.get p)) (xs p) (by vm; exact ⟨p, rfl, rfl⟩)
+    exact (EEq.holds_mk'_iff (ev_scT h (ev_opT k σ hb)) (ev_opT j σ fun p => ev_scT h (hb p))).mpr
+      (Subtype.ext (sc_op (cl h) σ _))
+  | @EA7_tg j k h ws s σ xs =>
+    choose b hb using fun p => var (t := (k, ws.get p)) (xs p) (by vm; exact ⟨p, rfl, rfl⟩)
+    exact (EEq.holds_mk'_iff (ev_tgT h (ev_opT k σ hb)) (ev_opT j σ fun p => ev_tgT h (hb p))).mpr
+      (Subtype.ext (tg_op (cl h) σ _))
+  | @EA7_idm j k h ws s σ us =>
+    choose b hb using fun p => var (t := (j, ws.get p)) (us p) (by vm; exact ⟨p, rfl, rfl⟩)
+    exact (EEq.holds_mk'_iff (ev_idmT h (ev_opT j σ hb)) (ev_opT k σ fun p => ev_idmT h (hb p))).mpr
+      (Subtype.ext (idm_op (cl h) σ _))
+  | @EA8 j k h ws s σ xs ys =>
+    choose a ha using fun p => var (t := (k, ws.get p)) (xs p)
+      (by vm; exact Or.inl (Or.inr (Or.inl ⟨p, rfl, rfl⟩)))
+    choose b hb using fun p => var (t := (k, ws.get p)) (ys p)
+      (by vm; exact Or.inl (Or.inr (Or.inr ⟨p, rfl, rfl⟩)))
+    have hab : ∀ p, sc M (cl h) (a p).1 = tg M (cl h) (b p).1 := fun p =>
+      ev_compT_dom h (ha p) (hb p) (EEq.holds_defined_iff.mp (prem _ (List.mem_ofFn.mpr ⟨p, rfl⟩)))
+    exact (EEq.holds_mk'_iff (ev_opT k σ fun p => ev_compT h (ha p) (hb p) (hab p))
+      (ev_compT h (ev_opT k σ ha) (ev_opT k σ hb)
+        ((sc_op (cl h) σ _).trans ((congrArg (op M _ σ) (funext hab)).trans
+          (tg_op (cl h) σ _).symm)))).mpr
+      (Subtype.ext (Extended.Model.op_comp (cl h) σ _ _ hab))
+  | @EA1'_sc_sc a b c h₁ h₂ s i =>
+    obtain ⟨x, hx⟩ := var (t := (c, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_scT h₁ (ev_scT h₂ hx)) (ev_scT (h₁.trans h₂) hx)).mpr
+      (Subtype.ext (sc_sc (h₁ := cl h₁) (h₂ := cl h₂) x.1))
+  | @EA1'_tg_tg a b c h₁ h₂ s i =>
+    obtain ⟨x, hx⟩ := var (t := (c, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_tgT h₁ (ev_tgT h₂ hx)) (ev_tgT (h₁.trans h₂) hx)).mpr
+      (Subtype.ext (tg_tg (h₁ := cl h₁) (h₂ := cl h₂) x.1))
+  | @EA1'_sc_tg a b c h₁ h₂ s i =>
+    obtain ⟨x, hx⟩ := var (t := (c, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_scT h₁ (ev_tgT h₂ hx)) (ev_scT (h₁.trans h₂) hx)).mpr
+      (Subtype.ext (sc_tg (h₁ := cl h₁) (h₂ := cl h₂) x.1))
+  | @EA1'_tg_sc a b c h₁ h₂ s i =>
+    obtain ⟨x, hx⟩ := var (t := (c, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_tgT h₁ (ev_scT h₂ hx)) (ev_tgT (h₁.trans h₂) hx)).mpr
+      (Subtype.ext (tg_sc (h₁ := cl h₁) (h₂ := cl h₂) x.1))
+  | @EA2' a b c h₁ h₂ s i =>
+    obtain ⟨u, hu⟩ := var (t := (a, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_idmT h₂ (ev_idmT h₁ hu)) (ev_idmT (h₁.trans h₂) hu)).mpr
+      (Subtype.ext (idm_idm (h₁ := cl h₁) (h₂ := cl h₂) u.1))
+  | @EA3'_sc a b c h₁ h₂ s i i' =>
+    obtain ⟨x, hx⟩ := var (t := (c, s)) i (by vm)
+    obtain ⟨y, hy⟩ := var (t := (c, s)) i' (by vm)
+    have hxy := ev_compT_dom (h₁.trans h₂) hx hy (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_scT h₂ (ev_compT (h₁.trans h₂) hx hy hxy))
+      (ev_compT h₁ (ev_scT h₂ hx) (ev_scT h₂ hy)
+        ((sc_sc (h₁ := cl h₁) (h₂ := cl h₂) _).trans (hxy.trans
+          (tg_sc (h₁ := cl h₁) (h₂ := cl h₂) _).symm)))).mpr
+      (Subtype.ext (sc_comp' (h₁ := cl h₁) (h₂ := cl h₂) hxy))
+  | @EA3'_tg a b c h₁ h₂ s i i' =>
+    obtain ⟨x, hx⟩ := var (t := (c, s)) i (by vm)
+    obtain ⟨y, hy⟩ := var (t := (c, s)) i' (by vm)
+    have hxy := ev_compT_dom (h₁.trans h₂) hx hy (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_tgT h₂ (ev_compT (h₁.trans h₂) hx hy hxy))
+      (ev_compT h₁ (ev_tgT h₂ hx) (ev_tgT h₂ hy)
+        ((sc_tg (h₁ := cl h₁) (h₂ := cl h₂) _).trans (hxy.trans
+          (tg_tg (h₁ := cl h₁) (h₂ := cl h₂) _).symm)))).mpr
+      (Subtype.ext (tg_comp' (h₁ := cl h₁) (h₂ := cl h₂) hxy))
+  | @EA4' a b c h₁ h₂ s i i' p q =>
+    obtain ⟨x, hx⟩ := var (t := (c, s)) i (by vm)
+    obtain ⟨y, hy⟩ := var (t := (c, s)) i' (by vm)
+    obtain ⟨z, hz⟩ := var (t := (c, s)) p (by vm)
+    obtain ⟨t, ht⟩ := var (t := (c, s)) q (by vm)
+    have hxy := ev_compT_dom h₂ hx hy (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    have hzt := ev_compT_dom h₂ hz ht (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    have hxz := ev_compT_dom (h₁.trans h₂) hx hz (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    have hyt := ev_compT_dom (h₁.trans h₂) hy ht (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff
+      (ev_compT (h₁.trans h₂) (ev_compT h₂ hx hy hxy) (ev_compT h₂ hz ht hzt)
+        ((sc_comp_low (h₁ := cl h₁) (h₂ := cl h₂) hxy).trans
+          ((sc_eq_sc_of_comp (h₁ := cl h₁) (h₂ := cl h₂) hxy).symm.trans
+            (hxz.trans (tg_comp_low (h₁ := cl h₁) (h₂ := cl h₂) hzt).symm))))
+      (ev_compT h₂ (ev_compT (h₁.trans h₂) hx hz hxz) (ev_compT (h₁.trans h₂) hy ht hyt)
+        ((sc_comp' (h₁ := cl h₁) (h₂ := cl h₂) hxz).trans ((comp_congr hxy hzt _ _).trans
+          (tg_comp' (h₁ := cl h₁) (h₂ := cl h₂) hyt).symm)))).mpr
+      (Subtype.ext (interchange (h₁ := cl h₁) (h₂ := cl h₂) hxy hzt hxz hyt))
+  | @EA5' a b c h₁ h₂ s i i' =>
+    obtain ⟨u, hu⟩ := var (t := (b, s)) i (by vm)
+    obtain ⟨v, hv⟩ := var (t := (b, s)) i' (by vm)
+    have huv := ev_compT_dom h₁ hu hv (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_idmT h₂ (ev_compT h₁ hu hv huv))
+      (ev_compT (h₁.trans h₂) (ev_idmT h₂ hu) (ev_idmT h₂ hv)
+        ((sc_idm_low (h₁ := cl h₁) (h₂ := cl h₂) _).trans (huv.trans
+          (tg_idm_low (h₁ := cl h₁) (h₂ := cl h₂) _).symm)))).mpr
+      (Subtype.ext (idm_comp (h₁ := cl h₁) (h₂ := cl h₂) huv))
+
+end TruncExt
+
+end ExtTrunc
+```
+
+:::proposition (label := "truncation-ext-models") (central := false) (title := "Extended truncation sends models to models")
+Let $`m \leq n`. $`(\boldsymbol{\tau}^{\mathrm{ext}(m,n)})^{\ast}_{\mathfrak{gd}}` sends the models of
+$`(\mathbf{\Sigma}^{\mathrm{ext}(n)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})` to models of
+$`(\mathbf{\Sigma}^{\mathrm{ext}(m)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(m)}})`.
+
+```lean
+theorem truncExt_sendsModels {m n : ℕ} (hmn : m ≤ n) :
+    (truncExt Sig hmn).SendsModels.{u, max u v, u, max u v, w}
+      (Extended.extendedSpec Sig (Fin (m + 1))) (Extended.extendedSpec Sig (Fin (n + 1))) :=
+  fun B hB => ⟨TruncExt.isAlgebra (M := ⟨B, hB.2⟩), TruncExt.holds (M := ⟨B, hB.2⟩)⟩
+```
+:::
+
+:::proof (of := "truncation-ext-models")
+Every operation symbol is sent to itself, and all the cells of dimension at most $`m` are in the
+domains, so the truncated algebra keeps the cells of dimension at most $`m` with the restrictions of
+the operations, and it is an ep-algebra. Its axioms are axioms of
+$`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}`, with the dimensions renamed, and the values of terms are
+their values in $`\mathbf{B}`.
+:::
+
+:::definition (label := "truncation-ext-functor") (central := false) (title := "The extended truncation functor")
+Let $`m \leq n`. The *extended truncation functor* $`T^{\mathrm{ext}(m,n)}` is the birestriction of
+$`(\boldsymbol{\tau}^{\mathrm{ext}(m,n)})^{\ast}_{\mathfrak{gd}}` to the categories of models.
+
+```lean
+/-- The extended truncation functor `T^{ext(m,n)}`. -/
+noncomputable def truncExtFunctor {m n : ℕ} (hmn : m ≤ n) :
+    EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (n + 1))) ⥤
+      EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (m + 1))) :=
+  (truncExt Sig hmn).restrict (truncExt_sendsModels Sig hmn)
+```
+:::
+
 ```lean
 end CategorialAlgebras
 ```
