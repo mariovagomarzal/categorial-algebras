@@ -169,43 +169,72 @@ Conselleria d’Educaci\'{o}, Universitats i Ocupaci\'{o}, Generalitat Valencian
 
 \section{Preliminaries}\label{SPreliminaries}
 
-Sections~\ref{SSingleSet} and~\ref{SGlobular} present higher-order categorial algebras as models of sets of $\mathrm{QE}$-equations between partial algebras, and Section~\ref{SGenEpDerivors} relates such models through derivors. We fix here these notions, following~\cite{pb86, pb02} for partial algebras and $\mathrm{QE}$-equations.
+In this section we fix the notions on sorted sets, partial algebras, terms, equations, derivors and adjunctions that we use in the rest of this work. Sections~\ref{SSingleSet} and~\ref{SGlobular} present higher-order categorial algebras as models of sets of $\mathrm{QE}$-equations between partial algebras, and Section~\ref{SGenEpDerivors} relates such models through derivors. We follow~\cite{pb86, pb02} for partial algebras and $\mathrm{QE}$-equations.
 
 \subsection{Sorted sets and partial algebras}\label{SSortedPartial}
 
 For a set $A$, a \emph{word on} $A$ is a mapping $\mathbf{a}\colon n\mor A$ from some natural number $n=\{0,\ldots,n-1\}$ to $A$; it is denoted as a sequence $(a_{i})_{i\in\bb{\mathbf{a}}}$, where $a_{i}=\mathbf{a}(i)$ and $\bb{\mathbf{a}}=n$ is the \emph{length} of $\mathbf{a}$. The set of all words on $A$ is $A^{\star}=\bigcup_{n\in\mathbb{N}}\mathrm{Hom}(n,A)$, and $\lambda$, the \emph{empty word}, is the unique word of length $0$. Together with the concatenation $\curlywedge$ of words, which sends $(\mathbf{a},\mathbf{b})$ to the word $\mathbf{a}\curlywedge\mathbf{b}$ of length $\bb{\mathbf{a}}+\bb{\mathbf{b}}$ whose letters are those of $\mathbf{a}$ followed by those of $\mathbf{b}$, and with $\lambda$, they form the free monoid on $A$. For a set of sorts $S$, a word on $S$ is denoted by a lower case bold type $\mathbf{s}=(s_{j})_{j\in\bb{\mathbf{s}}}$, and the letter $s$ represents an arbitrary sort in $S$.
 
+We begin by recalling the notion of sorted set.
+
 \begin{definition}\label{DSortedSet}
 An \emph{$S$-sorted set} is a mapping $A=(A_{s})_{s\in S}$ from $S$ to $\boldsymbol{\mathcal{U}}$. If $A$ and $X$ are $S$-sorted sets, then $X$ is an \emph{$S$-sorted subset} of $A$, denoted by $X\subseteq A$, if, for every $s\in S$, $X_{s}\subseteq A_{s}$. If $A$ and $B$ are $S$-sorted sets, then an \emph{$S$-sorted mapping} from $A$ to $B$, denoted by $f\colon A\mor B$, is a family $f=(f_{s})_{s\in S}$ where, for every $s\in S$, $f_{s}$ is a mapping from $A_{s}$ to $B_{s}$. For an $S$-sorted set $A$ and a word $\mathbf{s}\in S^{\star}$, $A_{\mathbf{s}}=\prod_{j\in\bb{\mathbf{s}}}A_{s_{j}}$; in particular, $A_{\lambda}$ is a final set, i.e., it has exactly one element.
 \end{definition}
 
+We next recall the notion of many-sorted signature.
+
 \begin{definition}\label{DSignature}
 An \emph{$S$-sorted signature} is an $S^{\star}\times S$-sorted set $\Sigma=(\Sigma_{\mathbf{s},s})_{(\mathbf{s},s)\in S^{\star}\times S}$, i.e., a mapping from $S^{\star}\times S$ to $\boldsymbol{\mathcal{U}}$ which sends a pair $(\mathbf{s},s)$ to the set $\Sigma_{\mathbf{s},s}$ of the \emph{formal operations} of \emph{arity} $\mathbf{s}$, \emph{sort} (or \emph{coarity}) $s$, and \emph{rank} $(\mathbf{s},s)$. A formal operation $\sigma\in\Sigma_{\lambda,s}$ is a \emph{constant} of sort $s$. A \emph{many-sorted signature} is a pair $\mathbf{\Sigma}=(S,\Sigma)$, where $S$ is a set of sorts and $\Sigma$ an $S$-sorted signature.
 \end{definition}
+
+In the following definition we recall the partial algebras and their homomorphisms.
 
 \begin{definition}\label{DPartialAlg}
 Let $\Sigma$ be an $S$-sorted signature. A \emph{partial $\Sigma$-algebra} is a pair $\mathbf{A}=(A,F)$ where $A$ is an $S$-sorted set and $F$ assigns to every $\sigma\in\Sigma_{\mathbf{s},s}$ a partial mapping $F_{\sigma}\colon A_{\mathbf{s}}\dmor A_{s}$, also denoted by $\sigma^{\mathbf{A}}$. A \emph{homomorphism} from $\mathbf{A}=(A,F)$ to $\mathbf{B}=(B,G)$ is an $S$-sorted mapping $h\colon A\mor B$ such that, for every $\sigma\in\Sigma_{\mathbf{s},s}$ and every $(a_{j})_{j\in\bb{\mathbf{s}}}\in\mathrm{Dom}(F_{\sigma})$, the family $(h_{s_{j}}(a_{j}))_{j\in\bb{\mathbf{s}}}$ is in $\mathrm{Dom}(G_{\sigma})$ and
 \[
 h_{s}(F_{\sigma}((a_{j})_{j\in\bb{\mathbf{s}}}))=G_{\sigma}((h_{s_{j}}(a_{j}))_{j\in\bb{\mathbf{s}}}).
 \]
-Homomorphisms preserve, but need not reflect, definedness.
+We denote by $\mathsf{PAlg}(\Sigma)$ the category of partial $\Sigma$-algebras and their homomorphisms.
 \end{definition}
+
+Let us note that homomorphisms preserve, but need not reflect, definedness.
 
 \subsection{Terms and equations}\label{STermsEq}
 
+We begin by recalling the partial term operations of a partial algebra.
+
+\begin{definition}\label{DTermOp}
+Let $\Sigma$ be an $S$-sorted signature and $X$ an $S$-sorted set. We let $\mathrm{T}_{\Sigma}(X)$ stand for the $S$-sorted set of the terms for $\Sigma$ with variables in $X$ and, for an $S$-sorted set $A$, $A_{X}=\mathrm{Hom}(X,A)$ for the set of the valuations of $X$ in $A$. For a partial $\Sigma$-algebra $\mathbf{A}$, $s\in S$ and $P\in\mathrm{T}_{\Sigma}(X)_{s}$, the \emph{partial term operation} $P^{\mathbf{A}}$ induced by $P$ is the partial mapping from $A_{X}=\mathrm{Hom}(X,A)$ to $A_{s}$ defined by recursion on $P$ as follows:
+\begin{enumerate}
+\item if $P=x$ is a variable, then $P^{\mathbf{A}}$ is total and sends $a$ to $a_{s}(x)$; and
+\item if $P=\sigma((P_{j})_{j\in\bb{\mathbf{s}}})$, then $a\in\mathrm{Dom}(P^{\mathbf{A}})$ if, and only if, $a\in\mathrm{Dom}(P_{j}^{\mathbf{A}})$ for every $j\in\bb{\mathbf{s}}$ and $(P_{j}^{\mathbf{A}}(a))_{j\in\bb{\mathbf{s}}}\in\mathrm{Dom}(\sigma^{\mathbf{A}})$, in which case
+$$
+P^{\mathbf{A}}(a)=\sigma^{\mathbf{A}}\left((P_{j}^{\mathbf{A}}(a))_{j\in\bb{\mathbf{s}}}\right).
+$$
+\end{enumerate}
+\end{definition}
+
+We next recall the existence equations and their satisfaction.
+
+\begin{definition}\label{DEEq}
+Let $\Sigma$ be an $S$-sorted signature, $X$ an $S$-sorted set and $\mathbf{A}$ a partial $\Sigma$-algebra. We let $\mathrm{Eeqt}(\Sigma)_{X}$ stand for the $S$-sorted set $(\mathrm{T}_{\Sigma}(X)^{2}_{s})_{s\in S}$. An element $(P,Q)$ of $\mathrm{Eeqt}(\Sigma)_{X,s}$ is an \emph{existence equation} of sort $s$, or \emph{$\mathrm{E}$-equation}, also denoted by $P\overset{\mathrm{e}}{=}Q$. We will say that $\mathbf{A}$ \emph{satisfies} it \emph{with respect to} a valuation $a\in A_{X}$, denoted by $\mathbf{A}\models^{\Sigma}_{X,s}(P,Q)[a]$, if $a\in\mathrm{Dom}(P^{\mathbf{A}})\cap\mathrm{Dom}(Q^{\mathbf{A}})$ and $P^{\mathbf{A}}(a)=Q^{\mathbf{A}}(a)$. A \emph{set of $\mathrm{E}$-equations} with variables in $X$ is an $S$-sorted subset $\mathcal{E}\subseteq\mathrm{Eeqt}(\Sigma)_{X}$, and $\mathbf{A}\models^{\Sigma}_{X}\mathcal{E}[a]$ if $\mathbf{A}\models^{\Sigma}_{X,s}(P,Q)[a]$ for every $s\in S$ and every $(P,Q)\in\mathcal{E}_{s}$. We omit the sub- and superscripts when this is unlikely to cause confusion.
+\end{definition}
+
+Let us note that $\mathbf{A}\models^{\Sigma}_{X,s}(P,P)[a]$ if, and only if, $a\in\mathrm{Dom}(P^{\mathbf{A}})$, i.e., the $\mathrm{E}$-equation $P\overset{\mathrm{e}}{=}P$ states that $P$ is defined.
+
+In the following definition we recall the quasi-existence equations and the varieties they determine.
+
 \begin{definition}\label{DQEEq}
-Let $\Sigma$ be an $S$-sorted signature and $X$ an $S$-sorted set. We let $\mathrm{T}_{\Sigma}(X)$ stand for the $S$-sorted set of the terms for $\Sigma$ with variables in $X$ and, for an $S$-sorted set $A$, $A_{X}=\mathrm{Hom}(X,A)$ for the set of the valuations of $X$ in $A$. For a partial $\Sigma$-algebra $\mathbf{A}$, $s\in S$ and $P\in\mathrm{T}_{\Sigma}(X)_{s}$, the \emph{partial term operation} $P^{\mathbf{A}}$ induced by $P$ is the partial mapping from $A_{X}=\mathrm{Hom}(X,A)$ to $A_{s}$ defined by recursion on $P$: if $P=x$ is a variable, then $P^{\mathbf{A}}$ is total and sends $a$ to $a_{s}(x)$; and if $P=\sigma((P_{j})_{j\in\bb{\mathbf{s}}})$, then $a\in\mathrm{Dom}(P^{\mathbf{A}})$ if and only if $a\in\mathrm{Dom}(P_{j}^{\mathbf{A}})$ for every $j\in\bb{\mathbf{s}}$ and $(P_{j}^{\mathbf{A}}(a))_{j\in\bb{\mathbf{s}}}\in\mathrm{Dom}(\sigma^{\mathbf{A}})$, in which case $P^{\mathbf{A}}(a)=\sigma^{\mathbf{A}}((P_{j}^{\mathbf{A}}(a))_{j\in\bb{\mathbf{s}}})$.
-
-We let $\mathrm{Eeqt}(\Sigma)_{X}$ stand for the $S$-sorted set $(\mathrm{T}_{\Sigma}(X)^{2}_{s})_{s\in S}$. An element $(P,Q)$ of $\mathrm{Eeqt}(\Sigma)_{X,s}$ is an \emph{existence equation} of sort $s$, or \emph{$\mathrm{E}$-equation}, also denoted by $P\overset{\mathrm{e}}{=}Q$; $\mathbf{A}$ \emph{satisfies} it \emph{with respect to} a valuation $a\in A_{X}$, denoted by $\mathbf{A}\models^{\Sigma}_{X,s}(P,Q)[a]$, if $a\in\mathrm{Dom}(P^{\mathbf{A}})\cap\mathrm{Dom}(Q^{\mathbf{A}})$ and $P^{\mathbf{A}}(a)=Q^{\mathbf{A}}(a)$. In particular, $\mathbf{A}\models^{\Sigma}_{X,s}(P,P)[a]$ if and only if $a\in\mathrm{Dom}(P^{\mathbf{A}})$: the $\mathrm{E}$-equation $P\overset{\mathrm{e}}{=}P$ states that $P$ is defined. A \emph{set of $\mathrm{E}$-equations} with variables in $X$ is an $S$-sorted subset $\mathcal{E}\subseteq\mathrm{Eeqt}(\Sigma)_{X}$, and $\mathbf{A}\models^{\Sigma}_{X}\mathcal{E}[a]$ if $\mathbf{A}\models^{\Sigma}_{X,s}(P,Q)[a]$ for every $s\in S$ and every $(P,Q)\in\mathcal{E}_{s}$. We omit the sub- and superscripts when this is unlikely to cause confusion.
-
-A \emph{quasi-existence equation}, or \emph{$\mathrm{QE}$-equation}, is an expression
+Let $\Sigma$ be an $S$-sorted signature, $X$ an $S$-sorted set and $\mathbf{A}$ a partial $\Sigma$-algebra. A \emph{quasi-existence equation}, or \emph{$\mathrm{QE}$-equation}, is an expression
 \[
 \textstyle\bigwedge_{j\in\bb{\mathbf{s}}}(P_{j}\overset{\mathrm{e}}{=}Q_{j})\;\longrightarrow\;P\overset{\mathrm{e}}{=}Q,
 \]
-where $\mathbf{s}\in S^{\star}$, $(P_{j},Q_{j})\in\mathrm{T}_{\Sigma}(X)^{2}_{s_{j}}$, for every $j\in\bb{\mathbf{s}}$, and $(P,Q)\in\mathrm{T}_{\Sigma}(X)^{2}_{s}$; it \emph{holds} in $\mathbf{A}$ if, for every valuation $a\in A_{X}$ such that $\mathbf{A}\models^{\Sigma}_{X,s_{j}}(P_{j},Q_{j})[a]$ for every $j\in\bb{\mathbf{s}}$, $\mathbf{A}\models^{\Sigma}_{X,s}(P,Q)[a]$. We denote by $\mathrm{QEeqt}(\Sigma)_{X}$ the set of all $\mathrm{QE}$-equations with variables in $X$.
+where $\mathbf{s}\in S^{\star}$, $(P_{j},Q_{j})\in\mathrm{T}_{\Sigma}(X)^{2}_{s_{j}}$, for every $j\in\bb{\mathbf{s}}$, and $(P,Q)\in\mathrm{T}_{\Sigma}(X)^{2}_{s}$. We will say that it \emph{holds} in $\mathbf{A}$ if, for every valuation $a\in A_{X}$ such that $\mathbf{A}\models^{\Sigma}_{X,s_{j}}(P_{j},Q_{j})[a]$ for every $j\in\bb{\mathbf{s}}$, $\mathbf{A}\models^{\Sigma}_{X,s}(P,Q)[a]$. We denote by $\mathrm{QEeqt}(\Sigma)_{X}$ the set of all $\mathrm{QE}$-equations with variables in $X$.
 
 A \emph{$\mathrm{QE}$-specification} is a quadruple $(S,\Sigma,X,\mathcal{E})$ with $\mathcal{E}\subseteq\mathrm{QEeqt}(\Sigma)_{X}$. Its models, the partial $\Sigma$-algebras in which every equation of $\mathcal{E}$ holds, form the \emph{$\mathrm{QE}$-variety} $\mathcal{V}(\mathcal{E})$ determined by the specification, and we let $\mathsf{PAlg}(\mathcal{E})$ stand for the category canonically associated to $\mathcal{V}(\mathcal{E})$, i.e., the full subcategory of $\mathsf{PAlg}(\Sigma)$ whose objects are the partial $\Sigma$-algebras in $\mathcal{V}(\mathcal{E})$, together with the homomorphisms of Definition~\ref{DPartialAlg}.
 \end{definition}
+
+We next fix the variables that we use throughout this work and the notation for substitutions.
 
 \textbf{Variables.} We let $V^{S}=(V^{S}_{s})_{s\in S}$, with $V^{S}_{s}=\{v^{s}_{n}\mid n\in\mathbb{N}\}$, be a fixed $S$-sorted set of variables. For a word $\mathbf{s}\in S^{\star}$, we let $\vs{\mathbf{s}}$ stand for the finite $S$-sorted set of variables defined, for every $s\in S$, as $(\vs{\mathbf{s}})_{s}=\{v^{s}_{i}\mid i\in\bb{\mathbf{s}}_{s}\}$, where $\bb{\mathbf{s}}_{s}$ is the number of occurrences of $s$ in $\mathbf{s}$. For $j\in\bb{\mathbf{s}}$, we let $v^{\mathbf{s}}_{j}$ stand for the variable that corresponds to the $j$-th letter of $\mathbf{s}$, i.e., $v^{\mathbf{s}}_{j}=v^{s_{j}}_{i}$ if the $j$-th letter of $\mathbf{s}$ is the $i$-th occurrence, counting from $0$, of the sort $s_{j}$ in $\mathbf{s}$; thus $j\mapsto v^{\mathbf{s}}_{j}$ is a bijection from $\bb{\mathbf{s}}$ onto the variables of $\vs{\mathbf{s}}$. Accordingly, for an $S$-sorted set $A$, we identify a family $\mathbf{a}=(a_{j})_{j\in\bb{\mathbf{s}}}\in A_{\mathbf{s}}$ with the valuation of $\vs{\mathbf{s}}$ in $A$ that sends $v^{\mathbf{s}}_{j}$ to $a_{j}$, for every $j\in\bb{\mathbf{s}}$. For instance, $\vs{s}=\{v^{s}_{0}\}$, and the variables of $\vs{(s,s)}$ are $v^{(s,s)}_{0}=v^{s}_{0}$ and $v^{(s,s)}_{1}=v^{s}_{1}$.
 
@@ -214,7 +243,7 @@ A \emph{$\mathrm{QE}$-specification} is a quadruple $(S,\Sigma,X,\mathcal{E})$ w
 The following two facts on the partial term operations are proved by induction on terms.
 
 \begin{remark}\label{RSubst}
-Let $\mathbf{A}$ be a partial $\Sigma$-algebra, $X$ and $Y$ $S$-sorted sets, $f\colon Y\mor\mathrm{T}_{\Sigma}(X)$ an $S$-sorted mapping and $a\in A_{X}$ a valuation such that, for every $s\in S$ and every $y\in Y_{s}$, $a\in\mathrm{Dom}(f_{s}(y)^{\mathbf{A}})$. Let $f^{\mathbf{A}}(a)\in A_{Y}$ be the valuation that sends $y\in Y_{s}$ to $f_{s}(y)^{\mathbf{A}}(a)$. Then, for every $s\in S$ and every $R\in\mathrm{T}_{\Sigma}(Y)_{s}$, $a\in\mathrm{Dom}(f^{\sharp}_{s}(R)^{\mathbf{A}})$ if and only if $f^{\mathbf{A}}(a)\in\mathrm{Dom}(R^{\mathbf{A}})$, and then $f^{\sharp}_{s}(R)^{\mathbf{A}}(a)=R^{\mathbf{A}}(f^{\mathbf{A}}(a))$. Consequently, for every $\mathcal{E}\subseteq\mathrm{Eeqt}(\Sigma)_{Y}$, $\mathbf{A}\models f^{\sharp}[\mathcal{E}][a]$ if and only if $\mathbf{A}\models\mathcal{E}[f^{\mathbf{A}}(a)]$.
+Let $\mathbf{A}$ be a partial $\Sigma$-algebra, $X$ and $Y$ $S$-sorted sets, $f\colon Y\mor\mathrm{T}_{\Sigma}(X)$ an $S$-sorted mapping and $a\in A_{X}$ a valuation such that, for every $s\in S$ and every $y\in Y_{s}$, $a\in\mathrm{Dom}(f_{s}(y)^{\mathbf{A}})$. Let $f^{\mathbf{A}}(a)\in A_{Y}$ be the valuation that sends $y\in Y_{s}$ to $f_{s}(y)^{\mathbf{A}}(a)$. Then, for every $s\in S$ and every $R\in\mathrm{T}_{\Sigma}(Y)_{s}$, $a\in\mathrm{Dom}(f^{\sharp}_{s}(R)^{\mathbf{A}})$ if, and only if, $f^{\mathbf{A}}(a)\in\mathrm{Dom}(R^{\mathbf{A}})$, and then $f^{\sharp}_{s}(R)^{\mathbf{A}}(a)=R^{\mathbf{A}}(f^{\mathbf{A}}(a))$. Consequently, for every $\mathcal{E}\subseteq\mathrm{Eeqt}(\Sigma)_{Y}$, $\mathbf{A}\models f^{\sharp}[\mathcal{E}][a]$ if, and only if, $\mathbf{A}\models\mathcal{E}[f^{\mathbf{A}}(a)]$.
 \end{remark}
 
 \begin{remark}\label{RHomTerm}
@@ -223,7 +252,7 @@ Let $h\colon\mathbf{A}\mor\mathbf{B}$ be a homomorphism of partial $\Sigma$-alge
 
 \subsection{Derivors}\label{SGenEpNotation}
 
-A \emph{derivor} from a many-sorted signature $(S,\Sigma)$ to another $(T,\Lambda)$ is an ordered pair $(\varphi,d)$, where $\varphi\colon S\mor T$ and $d$ assigns to every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$ a term $d(\sigma)\in\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$, where $\varphi^{\star}(\mathbf{s})=(\varphi(s_{j}))_{j\in\bb{\mathbf{s}}}$. For every $\mathbf{s}\in S^{\star}$, the derivor determines a mapping $d^{\sharp}$, which sends, for every $s'\in S$, the terms in $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s'}$ to terms in $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s')}$, defined by recursion on terms as follows:
+We next recall the notion of derivor between many-sorted signatures, see~\cite{CVST10b}. A \emph{derivor} from a many-sorted signature $(S,\Sigma)$ to another $(T,\Lambda)$ is an ordered pair $(\varphi,d)$, where $\varphi\colon S\mor T$ and $d$ assigns to every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$ a term $d(\sigma)\in\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$, where $\varphi^{\star}(\mathbf{s})=(\varphi(s_{j}))_{j\in\bb{\mathbf{s}}}$. For every $\mathbf{s}\in S^{\star}$, the derivor determines a mapping $d^{\sharp}$, which sends, for every $s'\in S$, the terms in $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s'}$ to terms in $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s')}$, defined by recursion on terms as follows:
 \begin{enumerate}
 \item[(H1)] $d^{\sharp}(v^{\mathbf{s}}_{j})=v^{\varphi^{\star}(\mathbf{s})}_{j}$, for every $j\in\bb{\mathbf{s}}$;
 \item[(H2)] $d^{\sharp}(\sigma((R_{j})_{j\in\bb{\mathbf{r}}}))=(d^{\sharp}(R_{j}))^{\sharp}_{j\in\bb{\mathbf{r}}}(d(\sigma))$, for every $(\mathbf{r},s')\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{r},s'}$ and every $(R_{j})_{j\in\bb{\mathbf{r}}}\in\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{\mathbf{r}}$, i.e., $d(\sigma)$ with $d^{\sharp}(R_{j})$ substituted for $v^{\varphi^{\star}(\mathbf{r})}_{j}$.
@@ -235,12 +264,11 @@ In particular, $d^{\sharp}(\sigma((v^{\mathbf{r}}_{j})_{j\in\bb{\mathbf{r}}}))=d
 
 \subsection{Adjunctions}\label{SAdjGrot}
 
-We let ``$\ast$'' and ``$\circ$'' stand for the horizontal and vertical composition of natural transformations, respectively, $\mathrm{Id}_{\mathsf{X}}$ for the identity functor at $\mathsf{X}$, and $\mathrm{id}_{G}$ for the identity natural transformation at a functor $G$. We follow~\cite{sM98}.
+We let ``$\ast$'' and ``$\circ$'' stand for the horizontal and vertical composition of natural transformations, respectively, $\mathrm{Id}_{\mathsf{X}}$ for the identity functor at $\mathsf{X}$, and $\mathrm{id}_{G}$ for the identity natural transformation at a functor $G$. We follow~\cite{sM98}, and we recall the notion of adjunction in the following definition.
 
 \begin{definition}\label{DAdj}
 Let $\mathsf{A}$ and $\mathsf{X}$ be categories. An \emph{adjunction from $\mathsf{X}$ to $\mathsf{A}$} is a $4$-tuple $(G,F,\eta,\varepsilon)$, where $G$ is a functor from $\mathsf{A}$ to $\mathsf{X}$, $F$ a functor from $\mathsf{X}$ to $\mathsf{A}$, $\eta$ a natural transformation from $\mathrm{Id}_{\mathsf{X}}$ to $G\circ F$, the \emph{unit}, and $\varepsilon$ a natural transformation from $F\circ G$ to $\mathrm{Id}_{\mathsf{A}}$, the \emph{counit}, such that $(G\ast\varepsilon)\circ(\eta\ast G)=\mathrm{id}_{G}$ and $(\varepsilon\ast F)\circ(F\ast\eta)=\mathrm{id}_{F}$. Then $F$ is a \emph{left adjoint} of $G$, written $F\dashv G$.
 \end{definition}
-
 
 % \section{Derivors}\label{SDerivors}
 %
@@ -1350,7 +1378,7 @@ We proceed by induction on the term $P$.
 
 If $P$ is a variable, then the statement follows from~(H1).
 
-Let us assume that $P=\lambda((P_{j})_{j\in\bb{\mathbf{r}}})$, with $\lambda\in\Lambda_{\mathbf{r},t}$, and that the statement holds for every $P_{j}$. Let $\mathbf{b}\in\mathrm{Dom}(P^{\mathbf{B}})$ and let $\mathbf{y}$ stand for the family $(P_{j}^{\mathbf{B}}(\mathbf{b}))_{j\in\bb{\mathbf{r}}}$, which, by Definition~\ref{DQEEq}, is in $\mathrm{Dom}(\lambda^{\mathbf{B}})$. By Proposition~\ref{PDerivedPAlg}, $\mathbf{y}\in\mathrm{Dom}(e(\lambda)^{\mathbf{C}})$ and $\lambda^{\mathbf{B}}(\mathbf{y})=e(\lambda)^{\mathbf{C}}(\mathbf{y})$. By~(H2), $e^{\sharp}(P)=(e^{\sharp}(P_{j}))^{\sharp}_{j\in\bb{\mathbf{r}}}(e(\lambda))$. Therefore, by the induction hypothesis and Remark~\ref{RSubst}, $\mathbf{b}\in\mathrm{Dom}(e^{\sharp}(P)^{\mathbf{C}})$, and the following chain of equalities holds
+Let us assume that $P=\lambda((P_{j})_{j\in\bb{\mathbf{r}}})$, with $\lambda\in\Lambda_{\mathbf{r},t}$, and that the statement holds for every $P_{j}$. Let $\mathbf{b}\in\mathrm{Dom}(P^{\mathbf{B}})$ and let $\mathbf{y}$ stand for the family $(P_{j}^{\mathbf{B}}(\mathbf{b}))_{j\in\bb{\mathbf{r}}}$, which, by Definition~\ref{DTermOp}, is in $\mathrm{Dom}(\lambda^{\mathbf{B}})$. By Proposition~\ref{PDerivedPAlg}, $\mathbf{y}\in\mathrm{Dom}(e(\lambda)^{\mathbf{C}})$ and $\lambda^{\mathbf{B}}(\mathbf{y})=e(\lambda)^{\mathbf{C}}(\mathbf{y})$. By~(H2), $e^{\sharp}(P)=(e^{\sharp}(P_{j}))^{\sharp}_{j\in\bb{\mathbf{r}}}(e(\lambda))$. Therefore, by the induction hypothesis and Remark~\ref{RSubst}, $\mathbf{b}\in\mathrm{Dom}(e^{\sharp}(P)^{\mathbf{C}})$, and the following chain of equalities holds
 \allowdisplaybreaks
 \begin{align*}
 e^{\sharp}(P)^{\mathbf{C}}\left(\mathbf{b}\right)
@@ -1371,7 +1399,7 @@ P^{\mathbf{B}}\left(\mathbf{b}\right).
 \tag{5}
 \end{align*}
 
-The first equality follows from~(H2); the second equality follows from Remark~\ref{RSubst}; the third equality follows from the induction hypothesis; the fourth equality follows from Proposition~\ref{PDerivedPAlg}; finally, the last equality unravels the definition of the partial term operation $P^{\mathbf{B}}$, see Definition~\ref{DQEEq}.
+The first equality follows from~(H2); the second equality follows from Remark~\ref{RSubst}; the third equality follows from the induction hypothesis; the fourth equality follows from Proposition~\ref{PDerivedPAlg}; finally, the last equality unravels the definition of the partial term operation $P^{\mathbf{B}}$, see Definition~\ref{DTermOp}.
 
 This completes the proof.
 \end{proof}
