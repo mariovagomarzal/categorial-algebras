@@ -1,5 +1,6 @@
 import CategorialAlgebras.GenEpDerivor
 import CategorialAlgebras.Compact.Identification
+import CategorialAlgebras.EpSignature
 
 /-!
 # Values in derived algebras and in compact models
@@ -14,7 +15,7 @@ universe u v w
 
 namespace CategorialAlgebras
 
-open Signature Term
+open Signature Term CategoryTheory
 
 /-- The argument of a unary operation symbol. -/
 def arityOne {S : Type u} {A : S → Type w} {t : S} (a : A t) : Arity A [t] := fun | ⟨0, _⟩ => a
@@ -36,6 +37,53 @@ lemma eval_app₂_arity {t₀ t₁ t' : S} (σ : Sig [t₀, t₁] t') {r : Term 
     (app₂ σ r r').eval A val = A.op σ (arityTwo a b) := by
   rw [eval_app₂_of_eq_some _ _ _ h h']; rfl
 end
+
+namespace PartialAlgebra
+
+variable {S : Type u} {Sig : Signature.{u, v} S} {A B : PartialAlgebra.{u, v, w} Sig}
+  (e : ∀ s, A s ≃ B s)
+  (he : ∀ {ws : List S} {s : S} (σ : Sig ws s) (a : Arity A ws),
+    B.op σ (fun j => e _ (a j)) = (A.op σ a).map (e s))
+
+include he in
+lemma op_symm {ws : List S} {s : S} (σ : Sig ws s) (b : Arity B ws) :
+    B.op σ b = (A.op σ fun j => (e _).symm (b j)).map (e s) := by
+  have := he σ fun j => (e _).symm (b j)
+  simp only [Equiv.apply_symm_apply] at this
+  exact this
+
+include e he in
+/-- A family of bijections that commutes with the operations is a homomorphism. -/
+def homOfEquiv : Hom A B where
+  map s := e s
+  map_dom σ a ha := by rw [he]; exact ha
+  map_op σ a ha := (Part.get_eq_of_mem (show e _ ((A.op σ a).get ha) ∈ B.op σ (fun j => e _ (a j))
+    by rw [he]; exact Part.mem_map _ (Part.get_mem ha)) _).symm
+
+include e he in
+/-- The inverse of a family of bijections that commutes with the operations is a homomorphism. -/
+def homOfEquivSymm : Hom B A where
+  map s := (e s).symm
+  map_dom σ b hb := by rw [op_symm e he σ b] at hb; exact hb
+  map_op σ b hb := by
+    have hm : (A.op σ fun j => (e _).symm (b j)).Dom := by
+      have := hb; rw [op_symm e he σ b] at this; exact this
+    have : (B.op σ b).get hb = e _ ((A.op σ fun j => (e _).symm (b j)).get hm) :=
+      Part.get_eq_of_mem (show e _ ((A.op σ fun j => (e _).symm (b j)).get hm) ∈ B.op σ b
+        by rw [op_symm e he σ b]; exact Part.mem_map _ (Part.get_mem hm)) _
+    rw [this, Equiv.symm_apply_apply]
+
+end PartialAlgebra
+
+/-- A family of bijections that commutes with the operations is an isomorphism of models. -/
+def EpSpec.isoOfEquiv {S : Type u} {V : S → Type} {Sp : EpSpec.{u, v} S V}
+    {A B : EpSpec.EpAlg.{u, v, w} Sp} (e : ∀ s, A.1 s ≃ B.1 s)
+    (he : ∀ {ws : List S} {s : S} (σ : Sp.sg.sig ws s) (a : Arity A.1 ws),
+      B.1.op σ (fun j => e _ (a j)) = (A.1.op σ a).map (e s)) : A ≅ B where
+  hom := PartialAlgebra.homOfEquiv e he
+  inv := PartialAlgebra.homOfEquivSymm e he
+  hom_inv_id := PartialAlgebra.Hom.ext fun s x => (e s).symm_apply_apply x
+  inv_hom_id := PartialAlgebra.Hom.ext fun s x => (e s).apply_symm_apply x
 
 namespace GenEpDerivor
 

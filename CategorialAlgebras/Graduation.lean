@@ -983,6 +983,489 @@ likewise for the targets, and $`d_{\mathbf{g}}^{\sharp}(v_0 \circ^{(k,n)}_{s} v_
 those of the identity.
 :::
 
+
+# Unification after graduation
+
+The functors are computed on the cells: the operations of the algebras derived along
+$`\mathbf{g}^{(n)}` and $`\mathbf{u}^{(n)}` are those described above.
+
+```lean
+namespace Grad
+
+variable {Sig n} {M : Compact.CompactPAlg.{u, v, w} Sig (Fin n)}
+
+variable (M) in
+/-- The graduated algebra of a model, as a model of the extended specification. -/
+noncomputable abbrev model : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (n + 1)) := ⟨D M, holds⟩
+
+lemma sc_eq {j k : Fin (n + 1)} (h : j < k) {s : S} (x : D M (k, s)) :
+    Extended.Model.sc (model M) h x = gsc M h x :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_sc h x)) _
+
+lemma tg_eq {j k : Fin (n + 1)} (h : j < k) {s : S} (x : D M (k, s)) :
+    Extended.Model.tg (model M) h x = gtg M h x :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_tg h x)) _
+
+lemma idm_eq {j k : Fin (n + 1)} (h : j < k) {s : S} (u : D M (j, s)) :
+    Extended.Model.idm (model M) h u = gidm M h u :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_idm h u)) _
+
+lemma op_eq (k : Fin (n + 1)) {ws : List S} {s : S} (σ : Sig ws s) (b : ∀ p, D M (k, ws.get p)) :
+    Extended.Model.op (model M) k σ b = gop M k σ b :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_op k σ b)) _
+
+lemma comp_eq {j k : Fin (n + 1)} (h : j < k) {s : S} (x y : D M (k, s)) (hxy) (hxy') :
+    Extended.Model.comp (model M) h x y hxy = gcomp M h x y hxy' :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_comp h x y hxy')) _
+
+end Grad
+
+namespace Unif
+
+variable {Sig n} {M : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (n + 1))}
+
+variable (M) in
+/-- The unified algebra of a model, as a model of the compact specification. -/
+noncomputable abbrev model : Compact.CompactPAlg.{u, v, w} Sig (Fin n) := ⟨U M, holds⟩
+
+lemma sc_eq (k : Fin n) {s : S} (x : U M s) : Compact.msc (model M) k x = usc M k x :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_sc k x)) _
+
+lemma tg_eq (k : Fin n) {s : S} (x : U M s) : Compact.mtg (model M) k x = utg M k x :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_tg k x)) _
+
+lemma op_eq {ws : List S} {s : S} (σ : Sig ws s) (a : Arity (U M) ws) :
+    Compact.mop (model M) σ a = uop M σ a :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_op σ a)) _
+
+lemma comp_eq (k : Fin n) {s : S} (x y : U M s) (hxy) (hxy') :
+    @Compact.CategoryStruct.comp _ _ (Compact.modelStruct (M := model M) s) k x y hxy =
+      ucomp M k x y hxy' := by
+  unfold Compact.CategoryStruct.comp
+  have e : @Compact.CategoryStruct.pcomp _ _ (Compact.modelStruct (M := model M) s) k x y =
+      (U M).op (.comp k s) (arityTwo x y) := by
+    show (U M).op _ _ = _
+    congr 1; funext j; match j with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl
+  exact Part.get_eq_of_mem (e ▸ Part.eq_some_iff.mp (op_comp k x y hxy')) _
+
+end Unif
+
+section Unit
+
+variable {Sig n}
+
+/-- The cells of `Uf(Gd(𝐁))` are those of `𝐁`. -/
+noncomputable def unitEquiv (B : EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin n))) (s : S) :
+    B.1 s ≃ ((gradFunctor Sig n ⋙ unifFunctor Sig n).obj B).1 s where
+  toFun b := ⟨⟨b, Grad.dom_top (M := ⟨B.1, B.2.2⟩) (k := Fin.last n) (lt_irrefl n) b⟩,
+    EEq.holdsAll_empty⟩
+  invFun y := y.1.1
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+theorem unitEquiv_op (B : EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin n)))
+    {ws : List S} {s : S} (σ : (compactEpSpec Sig (Fin n)).sg.sig ws s) (a : Arity B.1 ws) :
+    ((gradFunctor Sig n ⋙ unifFunctor Sig n).obj B).1.op σ (fun j => unitEquiv B _ (a j)) =
+      (B.1.op σ a).map (unitEquiv B s) := by
+  let Bm : Compact.CompactPAlg.{u, v, w} Sig (Fin n) := ⟨B.1, B.2.2⟩
+  cases σ with
+  | op σ =>
+    have h1 : B.1.op (.op σ) a = Part.some (Compact.mop Bm σ a) := (Part.some_get _).symm
+    refine Eq.trans ?_ ((congrArg (Part.map (unitEquiv B s)) h1).trans (Part.map_some _ _)).symm
+    exact (Unif.op_op (M := Grad.model Bm) σ _).trans (congrArg Part.some (Subtype.ext
+      ((Grad.op_eq (M := Bm) (Fin.last n) σ _).trans (Subtype.ext rfl))))
+  | sc k s =>
+    have h1 : B.1.op (.sc k s) a = Part.some (Compact.msc Bm k (a ⟨0, by simp⟩)) :=
+      Compact.op_get_eq (M := Bm) (by funext j; match j with | ⟨0, _⟩ => rfl) _
+    refine Eq.trans ?_ ((congrArg (Part.map (unitEquiv B s)) h1).trans (Part.map_some _ _)).symm
+    refine ((congrArg _ (by funext j; match j with | ⟨0, _⟩ => rfl)).trans
+      (Unif.op_sc (M := Grad.model Bm) k (unitEquiv B s (a ⟨0, by simp⟩)))).trans ?_
+    exact congrArg Part.some (Subtype.ext (((congrArg (Extended.Model.idm (Grad.model Bm) _)
+      (Grad.sc_eq (M := Bm) _ _)).trans (Grad.idm_eq (M := Bm) _ _)).trans (Subtype.ext rfl)))
+  | tg k s =>
+    have h1 : B.1.op (.tg k s) a = Part.some (Compact.mtg Bm k (a ⟨0, by simp⟩)) :=
+      Compact.op_get_eq (M := Bm) (by funext j; match j with | ⟨0, _⟩ => rfl) _
+    refine Eq.trans ?_ ((congrArg (Part.map (unitEquiv B s)) h1).trans (Part.map_some _ _)).symm
+    refine ((congrArg _ (by funext j; match j with | ⟨0, _⟩ => rfl)).trans
+      (Unif.op_tg (M := Grad.model Bm) k (unitEquiv B s (a ⟨0, by simp⟩)))).trans ?_
+    exact congrArg Part.some (Subtype.ext (((congrArg (Extended.Model.idm (Grad.model Bm) _)
+      (Grad.tg_eq (M := Bm) _ _)).trans (Grad.idm_eq (M := Bm) _ _)).trans (Subtype.ext rfl)))
+  | comp k s =>
+    have ha : (fun j => unitEquiv B _ (a j)) = arityTwo (unitEquiv B s (a ⟨0, by simp⟩))
+        (unitEquiv B s (a ⟨1, by simp⟩)) := by
+      funext j; match j with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl
+    by_cases hxy : Compact.msc Bm k (a ⟨0, by simp⟩) = Compact.mtg Bm k (a ⟨1, by simp⟩)
+    · have hxy' : Extended.Model.sc (Grad.model Bm) (Unif.top k) (unitEquiv B s (a ⟨0, by simp⟩)).1 =
+          Extended.Model.tg (Grad.model Bm) (Unif.top k) (unitEquiv B s (a ⟨1, by simp⟩)).1 :=
+        (Grad.sc_eq (M := Bm) _ _).trans ((Subtype.ext hxy).trans (Grad.tg_eq (M := Bm) _ _).symm)
+      have h1 : B.1.op (.comp k s) a =
+          Part.some (Compact.CategoryStruct.comp (C := Bm.1 s) k _ _ hxy) :=
+        Compact.op_get_eq (M := Bm) (by funext j; match j with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl) _
+      refine Eq.trans ?_ ((congrArg (Part.map (unitEquiv B s)) h1).trans (Part.map_some _ _)).symm
+      refine ((congrArg _ ha).trans (Unif.op_comp (M := Grad.model Bm) k _ _ hxy')).trans ?_
+      exact congrArg Part.some (Subtype.ext ((Grad.comp_eq (M := Bm) (Unif.top k) _ _ hxy' hxy).trans
+        (Subtype.ext rfl)))
+    · have h1 : B.1.op (.comp k s) a = Part.none := by
+        refine Part.eq_none_iff'.mpr fun hd => hxy ?_
+        have hd' : (@Compact.CategoryStruct.pcomp _ _ (Compact.modelStruct (M := Bm) s) k
+            (a ⟨0, by simp⟩) (a ⟨1, by simp⟩)).Dom := by
+          show (Bm.1.op _ _).Dom
+          exact (op_dom_congr (by funext j; match j with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl)).mp hd
+        exact Compact.CategoryStruct.pcomp_dom.mp hd'
+      refine Eq.trans ?_ ((congrArg (Part.map (unitEquiv B s)) h1).trans (Part.map_none _)).symm
+      refine (congrArg _ ha).trans (Part.eq_none_iff'.mpr fun hd => hxy ?_)
+      have := (Unif.op_comp_dom (M := Grad.model Bm) k _ _).mp hd
+      exact congrArg Subtype.val
+        ((Grad.sc_eq (M := Bm) _ _).symm.trans (this.trans (Grad.tg_eq (M := Bm) _ _)))
+
+end Unit
+```
+
+:::proposition (label := "unification-graduation") (central := false) (title := "Unification after graduation")
+$`\mathrm{Uf}^{(n)} \circ \mathrm{Gd}^{(n)} \cong \mathrm{Id}`, by isomorphisms that send every cell
+to itself. In the draft, Proposition `PUnifGrad` states an equality of functors: here the cells of
+$`\mathrm{Uf}^{(n)}(\mathrm{Gd}^{(n)}(\mathbf{B}))` are the cells of $`\mathbf{B}` seen twice as
+elements of a subset, the same elements but not the same set.
+
+```lean
+section Unit
+
+variable {Sig n}
+
+/-- `Uf ∘ Gd ≅ Id`, by isomorphisms that send every cell to itself. -/
+noncomputable def unitIso :
+    𝟭 (EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin n))) ≅
+      gradFunctor Sig n ⋙ unifFunctor Sig n :=
+  NatIso.ofComponents (fun B => EpSpec.isoOfEquiv (unitEquiv B) (unitEquiv_op B))
+    (fun _ => PartialAlgebra.Hom.ext fun _ _ => rfl)
+
+theorem unitIso_inv_map (B : EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin n))) (s : S)
+    (y : ((gradFunctor Sig n ⋙ unifFunctor Sig n).obj B).1 s) :
+    PartialAlgebra.Hom.map (unitIso.inv.app B) s y = y.1.1 :=
+  rfl
+
+end Unit
+```
+:::
+
+:::proof (of := "unification-graduation")
+The cells of sort $`s` of $`\mathrm{Uf}^{(n)}(\mathrm{Gd}^{(n)}(\mathbf{B}))` are the $`n`-cells of
+$`\mathrm{Gd}^{(n)}(\mathbf{B})` of sort $`s`, that is, the cells of $`\mathbf{B}` of sort $`s`. Under
+this bijection, $`\sigma` acts as $`\sigma_n`, that is, as $`\sigma`; $`\mathrm{sc}^{k}_{s}` acts as
+$`\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x)) = \mathrm{sc}^{k}_{s}(x)`, since the identities of
+$`\mathrm{Gd}^{(n)}(\mathbf{B})` are inclusions; likewise for the targets; and $`\circ^{k}_{s}` acts as
+$`\circ^{(k,n)}_{s}`, that is, as $`\circ^{k}_{s}`, with the same domain. Hence the bijection is an
+isomorphism, natural in $`\mathbf{B}`.
+:::
+
+# Graduation after unification
+
+Unification followed by graduation does not give the identity: the $`k`-cells of
+$`\mathrm{Gd}^{(n)}(\mathrm{Uf}^{(n)}(\mathbf{A}))` are the $`(n,k)`-identities of the $`k`-cells of
+$`\mathbf{A}`. Sending a $`k`-cell $`u` to $`\mathrm{i}^{(n,k)}_{s}(u)`, and an $`n`-cell to itself,
+is an isomorphism $`\theta_{\mathbf{A}}`.
+
+```lean
+section Counit
+
+variable {Sig n} (A : EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (n + 1))))
+
+/-- An extended model, as a model of the extended specification. -/
+noncomputable abbrev am : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (n + 1)) := ⟨A.1, A.2.2⟩
+
+/-- The `(n,k)`-identity, and the identity for `k = n`. -/
+noncomputable def up (k : Fin (n + 1)) {s : S} : A.1 (k, s) → A.1 (Fin.last n, s) :=
+  Fin.lastCases (motive := fun k => A.1 (k, s) → A.1 (Fin.last n, s)) id
+    (fun k' => Extended.Model.idm (am A) (Unif.top k')) k
+
+/-- The `(k,n)`-source, and the identity for `k = n`. -/
+noncomputable def down (k : Fin (n + 1)) {s : S} : A.1 (Fin.last n, s) → A.1 (k, s) :=
+  Fin.lastCases (motive := fun k => A.1 (Fin.last n, s) → A.1 (k, s)) id
+    (fun k' => Extended.Model.sc (am A) (Unif.top k')) k
+
+variable {A}
+
+@[simp] lemma up_last {s : S} (u : A.1 (Fin.last n, s)) : up A (Fin.last n) u = u := by
+  simp [up]
+
+@[simp] lemma up_castSucc (k : Fin n) {s : S} (u : A.1 (k.castSucc, s)) :
+    up A k.castSucc u = Extended.Model.idm (am A) (Unif.top k) u := by
+  simp [up]
+
+@[simp] lemma down_last {s : S} (x : A.1 (Fin.last n, s)) : down A (Fin.last n) x = x := by
+  simp [down]
+
+@[simp] lemma down_castSucc (k : Fin n) {s : S} (x : A.1 (Fin.last n, s)) :
+    down A k.castSucc x = Extended.Model.sc (am A) (Unif.top k) x := by
+  simp [down]
+
+lemma down_up (k : Fin (n + 1)) {s : S} (u : A.1 (k, s)) : down A k (up A k u) = u := by
+  induction k using Fin.lastCases with
+  | last => simp
+  | cast k => simp [Extended.Model.sc_idm]
+
+lemma up_mem (k : Fin (n + 1)) {s : S} (u : A.1 (k, s)) :
+    EEq.HoldsAll (Unif.model (am A)).1
+      (val₁ (⟨up A k u, EEq.holdsAll_empty⟩ : Unif.U (am A) s)) (gradDom Sig n (k, s)) := by
+  induction k using Fin.lastCases with
+  | last => exact Grad.dom_top (lt_irrefl n) _
+  | cast k =>
+    refine (Grad.dom_iff (M := Unif.model (am A)) k.isLt _).mpr ?_
+    refine (Unif.sc_eq (M := am A) k _).trans (Subtype.ext ?_)
+    change Extended.Model.idm (am A) _ (Extended.Model.sc (am A) _ (up A _ u)) = up A _ u
+    rw [up_castSucc, Extended.Model.sc_idm]
+
+lemma up_down (k : Fin (n + 1)) {s : S}
+    (y : ((unifFunctor Sig n ⋙ gradFunctor Sig n).obj A).1 (k, s)) :
+    up A k (down A k y.1.1) = y.1.1 := by
+  induction k using Fin.lastCases with
+  | last => rw [up_last]; exact down_last _
+  | cast k =>
+    have := (Grad.dom_iff (M := Unif.model (am A)) k.isLt y.1).mp y.2
+    have h2 := congrArg Subtype.val ((Unif.sc_eq (M := am A) k _).symm.trans this)
+    rw [up_castSucc]
+    exact (congrArg (Extended.Model.idm (am A) (Unif.top k)) (down_castSucc k _)).trans h2
+
+lemma up_lt {j : Fin (n + 1)} (hj : j < Fin.last n) {s : S} (u : A.1 (j, s)) :
+    up A j u = Extended.Model.idm (am A) hj u := by
+  obtain ⟨j', rfl⟩ := Fin.exists_castSucc_eq.mpr (Fin.ne_last_of_lt hj)
+  exact up_castSucc j' u
+
+lemma up_op (k : Fin (n + 1)) {ws : List S} {s : S} (σ : Sig ws s) (b : ∀ p, A.1 (k, ws.get p)) :
+    up A k (Extended.Model.op (am A) k σ b) =
+      Extended.Model.op (am A) (Fin.last n) σ (fun p => up A k (b p)) := by
+  induction k using Fin.lastCases with
+  | last => simp
+  | cast k => simp only [up_castSucc]; exact Extended.Model.idm_op (M := am A) _ σ b
+
+lemma sc_up {j k : Fin (n + 1)} (h : j < k) {s : S} (x : A.1 (k, s)) :
+    Extended.Model.sc (am A) (lt_of_lt_of_le h (Fin.le_last k)) (up A k x) =
+      Extended.Model.sc (am A) h x := by
+  induction k using Fin.lastCases with
+  | last => simp
+  | cast k =>
+    simp only [up_castSucc]
+    exact Extended.Model.sc_idm_low (M := am A) (h₁ := h) (h₂ := Unif.top k) x
+
+lemma tg_up {j k : Fin (n + 1)} (h : j < k) {s : S} (x : A.1 (k, s)) :
+    Extended.Model.tg (am A) (lt_of_lt_of_le h (Fin.le_last k)) (up A k x) =
+      Extended.Model.tg (am A) h x := by
+  induction k using Fin.lastCases with
+  | last => simp
+  | cast k =>
+    simp only [up_castSucc]
+    exact Extended.Model.tg_idm_low (M := am A) (h₁ := h) (h₂ := Unif.top k) x
+
+lemma up_idm {j k : Fin (n + 1)} (h : j < k) {s : S} (u : A.1 (j, s)) :
+    up A k (Extended.Model.idm (am A) h u) = up A j u := by
+  rw [up_lt (lt_of_lt_of_le h (Fin.le_last k))]
+  induction k using Fin.lastCases with
+  | last => simp
+  | cast k =>
+    simp only [up_castSucc]
+    exact Extended.Model.idm_idm (M := am A) (h₁ := h) (h₂ := Unif.top k) u
+
+lemma up_comp {j k : Fin (n + 1)} (h : j < k) {s : S} (x y : A.1 (k, s))
+    (hxy : Extended.Model.sc (am A) h x = Extended.Model.tg (am A) h y) :
+    up A k (Extended.Model.comp (am A) h x y hxy) =
+      Extended.Model.comp (am A) (lt_of_lt_of_le h (Fin.le_last k)) (up A k x) (up A k y)
+        ((sc_up h x).trans (hxy.trans (tg_up h y).symm)) := by
+  induction k using Fin.lastCases with
+  | last => simp only [up_last]
+  | cast k =>
+    simp only [up_castSucc]
+    exact Extended.Model.idm_comp (M := am A) (h₁ := h) (h₂ := Unif.top k) hxy
+
+/-- The cells of `𝐀` are those of `Gd(Uf(𝐀))`, up to the `(n,k)`-identities. -/
+noncomputable def counitEquiv (t : Fin (n + 1) × S) :
+    A.1 t ≃ ((unifFunctor Sig n ⋙ gradFunctor Sig n).obj A).1 t where
+  toFun u := ⟨⟨up A t.1 u, EEq.holdsAll_empty⟩, up_mem t.1 u⟩
+  invFun y := down A t.1 y.1.1
+  left_inv u := down_up t.1 u
+  right_inv y := Subtype.ext (Subtype.ext (up_down t.1 y))
+
+theorem counitEquiv_op {ws : List (Fin (n + 1) × S)} {t : Fin (n + 1) × S}
+    (σ : (extendedEpSpec Sig (Fin (n + 1))).sg.sig ws t) (a : Arity A.1 ws) :
+    ((unifFunctor Sig n ⋙ gradFunctor Sig n).obj A).1.op σ (fun j => counitEquiv (A := A) _ (a j)) =
+      (A.1.op σ a).map (counitEquiv t) := by
+  cases σ with
+  | op k σ =>
+    obtain ⟨b, rfl⟩ : ∃ b, Extended.liftFam k b = a := ⟨_, Extended.liftFam_unlift k a⟩
+    have hf : (fun q => counitEquiv (A := A) _ (Extended.liftFam k b q)) =
+        Extended.liftFam k (fun p => counitEquiv (A := A) _ (b p)) := by
+      funext q
+      have key : ∀ {t t' : Fin (n + 1) × S} (e : t = t') (x : A.1 t),
+          counitEquiv (A := A) t' (cast (congrArg (fun t => A.1 t) e) x) =
+            cast (congrArg (fun t => ((unifFunctor Sig n ⋙ gradFunctor Sig n).obj A).1 t) e)
+              (counitEquiv t x) := by
+        intro t t' e; subst e; intro x; rfl
+      exact key (by simp) _
+    have h1 : A.1.op (.op k σ) (Extended.liftFam k b) =
+        Part.some (Extended.Model.op (am A) k σ b) := (Part.some_get _).symm
+    refine Eq.trans ?_ ((congrArg (Part.map _) h1).trans (Part.map_some _ _)).symm
+    refine ((congrArg _ hf).trans (Grad.op_op (M := Unif.model (am A)) k σ _)).trans ?_
+    exact congrArg Part.some (Subtype.ext ((Unif.op_eq (M := am A) σ _).trans
+      (Subtype.ext (up_op k σ b).symm)))
+  | @sc j k h s =>
+    have ha : (fun i => counitEquiv (A := A) _ (a i)) =
+        Extended.arg₁ (counitEquiv (A := A) (k, s) (a ⟨0, by simp⟩)) := by
+      funext i; match i with | ⟨0, _⟩ => rfl
+    have h1 : A.1.op (.sc h s) a = Part.some (Extended.Model.sc (am A) h (a ⟨0, by simp⟩)) :=
+      op_eq_some_get (by funext i; match i with | ⟨0, _⟩ => rfl) _
+    refine Eq.trans ?_ ((congrArg (Part.map _) h1).trans (Part.map_some _ _)).symm
+    refine ((congrArg _ ha).trans (Grad.op_sc (M := Unif.model (am A)) h _)).trans ?_
+    exact congrArg Part.some (Subtype.ext ((Unif.sc_eq (M := am A) _ _).trans (Subtype.ext
+      ((congrArg (Extended.Model.idm (am A) (Unif.top (lowDim h))) (sc_up h _)).trans
+        (up_lt _ _).symm))))
+  | @tg j k h s =>
+    have ha : (fun i => counitEquiv (A := A) _ (a i)) =
+        Extended.arg₁ (counitEquiv (A := A) (k, s) (a ⟨0, by simp⟩)) := by
+      funext i; match i with | ⟨0, _⟩ => rfl
+    have h1 : A.1.op (.tg h s) a = Part.some (Extended.Model.tg (am A) h (a ⟨0, by simp⟩)) :=
+      op_eq_some_get (by funext i; match i with | ⟨0, _⟩ => rfl) _
+    refine Eq.trans ?_ ((congrArg (Part.map _) h1).trans (Part.map_some _ _)).symm
+    refine ((congrArg _ ha).trans (Grad.op_tg (M := Unif.model (am A)) h _)).trans ?_
+    exact congrArg Part.some (Subtype.ext ((Unif.tg_eq (M := am A) _ _).trans (Subtype.ext
+      ((congrArg (Extended.Model.idm (am A) (Unif.top (lowDim h))) (tg_up h _)).trans
+        (up_lt _ _).symm))))
+  | @idm j k h s =>
+    have ha : (fun i => counitEquiv (A := A) _ (a i)) =
+        Extended.arg₁ (counitEquiv (A := A) (j, s) (a ⟨0, by simp⟩)) := by
+      funext i; match i with | ⟨0, _⟩ => rfl
+    have h1 : A.1.op (.idm h s) a = Part.some (Extended.Model.idm (am A) h (a ⟨0, by simp⟩)) :=
+      op_eq_some_get (by funext i; match i with | ⟨0, _⟩ => rfl) _
+    refine Eq.trans ?_ ((congrArg (Part.map _) h1).trans (Part.map_some _ _)).symm
+    refine ((congrArg _ ha).trans (Grad.op_idm (M := Unif.model (am A)) h _)).trans ?_
+    exact congrArg Part.some (Subtype.ext (Subtype.ext (up_idm h _).symm))
+  | @comp j k h s =>
+    have ha : (fun i => counitEquiv (A := A) _ (a i)) =
+        Extended.arg₂ (counitEquiv (A := A) (k, s) (a ⟨0, by simp⟩))
+          (counitEquiv (A := A) (k, s) (a ⟨1, by simp⟩)) := by
+      funext i; match i with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl
+    have hA : Extended.arg₂ (a ⟨0, by simp⟩) (a ⟨1, by simp⟩) = a := by
+      funext i; match i with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl
+    refine (congrArg _ ha).trans ?_
+    by_cases hxy : Extended.Model.sc (am A) h (a ⟨0, by simp⟩) =
+        Extended.Model.tg (am A) h (a ⟨1, by simp⟩)
+    · have P := (sc_up h (a ⟨0, by simp⟩)).trans (hxy.trans (tg_up h (a ⟨1, by simp⟩)).symm)
+      have hc : Compact.msc (Unif.model (am A)) (lowDim h)
+          (counitEquiv (A := A) (k, s) (a ⟨0, by simp⟩)).1 =
+          Compact.mtg (Unif.model (am A)) (lowDim h)
+            (counitEquiv (A := A) (k, s) (a ⟨1, by simp⟩)).1 :=
+        (Unif.sc_eq (M := am A) _ _).trans (((Unif.usc_eq_utg_iff (M := am A) (lowDim h)
+          (counitEquiv (A := A) (k, s) (a ⟨0, by simp⟩)).1
+          (counitEquiv (A := A) (k, s) (a ⟨1, by simp⟩)).1).mpr P).trans
+          (Unif.tg_eq (M := am A) _ _).symm)
+      have h1 : A.1.op (.comp h s) a =
+          Part.some (Extended.Model.comp (am A) h _ _ hxy) :=
+        op_eq_some_get hA (Extended.Model.pcomp_dom_iff.mpr hxy)
+      rw [h1, Part.map_some]
+      refine (Grad.op_comp (M := Unif.model (am A)) h _ _ hc).trans ?_
+      exact congrArg Part.some (Subtype.ext ((Unif.comp_eq (M := am A) _ _ _ hc P).trans
+        (Subtype.ext (up_comp h _ _ hxy).symm)))
+    · have h1 : A.1.op (.comp h s) a = Part.none :=
+        Part.eq_none_iff'.mpr fun hd => hxy (Extended.Model.pcomp_dom_iff.mp
+          ((op_dom_congr hA).mpr hd))
+      rw [h1, Part.map_none]
+      refine Part.eq_none_iff'.mpr fun hd => hxy ?_
+      have hc := (Grad.op_comp_dom (M := Unif.model (am A)) h _ _).mp hd
+      have P := (Unif.usc_eq_utg_iff (M := am A) (lowDim h)
+          (counitEquiv (A := A) (k, s) (a ⟨0, by simp⟩)).1
+          (counitEquiv (A := A) (k, s) (a ⟨1, by simp⟩)).1).mp
+        ((Unif.sc_eq (M := am A) _ _).symm.trans (hc.trans (Unif.tg_eq (M := am A) _ _)))
+      exact (sc_up h _).symm.trans (P.trans (tg_up h _))
+
+lemma map_up {A' : EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (n + 1)))} (f : A ⟶ A')
+    (k : Fin (n + 1)) {s : S} (u : A.1 (k, s)) :
+    PartialAlgebra.Hom.map f _ (up A k u) = up A' k (PartialAlgebra.Hom.map f _ u) := by
+  induction k using Fin.lastCases with
+  | last => simp only [up_last]
+  | cast k =>
+    simp only [up_castSucc]
+    refine (PartialAlgebra.Hom.map_op f (.idm (Unif.top k) s) (Extended.arg₁ u)
+      (Extended.Model.idm_dom (M := am A) _ u)).trans (Part.get_eq_get_of_eq _ _ ?_)
+    exact congrArg _ (by funext i; match i with | ⟨0, _⟩ => rfl)
+
+end Counit
+```
+
+:::proposition (label := "graduation-unification") (central := false) (title := "Graduation after unification")
+$`\mathrm{Gd}^{(n)} \circ \mathrm{Uf}^{(n)} \cong \mathrm{Id}`, by the isomorphisms
+$`\theta_{\mathbf{A}}` that send a $`k`-cell $`u` of sort $`s` to $`\mathrm{i}^{(n,k)}_{s}(u)`.
+
+```lean
+section Counit
+
+/-- `Id ≅ Gd ∘ Uf`, by the isomorphisms `θ` that send a `k`-cell to its `(n,k)`-identity. -/
+noncomputable def counitIsoInv :
+    𝟭 (EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (n + 1)))) ≅
+      unifFunctor Sig n ⋙ gradFunctor Sig n :=
+  NatIso.ofComponents (fun A => EpSpec.isoOfEquiv (counitEquiv (A := A)) (counitEquiv_op (A := A)))
+    (fun f => PartialAlgebra.Hom.ext fun _ u => Subtype.ext (Subtype.ext (map_up f _ u).symm))
+
+theorem counitIsoInv_hom_map (A : EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (n + 1))))
+    (k : Fin n) (s : S) (u : A.1 (k.castSucc, s)) :
+    (PartialAlgebra.Hom.map ((counitIsoInv Sig n).hom.app A) (k.castSucc, s) u).1.1 =
+      Extended.Model.idm (am A) (Unif.top k) u :=
+  up_castSucc k u
+
+end Counit
+```
+:::
+
+:::proof (of := "graduation-unification")
+The cells of sort $`(k, s)` of $`\mathrm{Gd}^{(n)}(\mathrm{Uf}^{(n)}(\mathbf{A}))` are the $`n`-cells
+$`x` with $`x = \mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x))`. By (EA$`^{k,n}`2),
+$`\theta_{\mathbf{A}}` is a bijection onto them, whose inverse sends $`x` to
+$`\mathrm{sc}^{(k,n)}_{s}(x)`. It commutes with the $`\sigma_k`, by (EA$`^{k,n}`7); with the
+$`(j,k)`-sources and targets, since
+$`\mathrm{sc}^{(j,n)}_{s}(\mathrm{i}^{(n,k)}_{s}(u)) = \mathrm{sc}^{(j,k)}_{s}(u)` by (EA$`^{j,k,n}`1)
+and (EA$`^{k,n}`2); with the identities, by (EA$`^{j,k,n}`2); and with the compositions, by
+(EA$`^{j,k,n}`5), with the same domains, since $`\mathrm{i}^{(n,j)}_{s}` is injective. It is natural
+because homomorphisms commute with the identities.
+:::
+
+# The equivalence
+
+:::theorem (label := "graduation-equivalence") (central := false) (title := "Graduation and unification are equivalences")
+$`\mathrm{Gd}^{(n)}` and $`\mathrm{Uf}^{(n)}` are mutually quasi-inverse equivalences between
+$`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})` and $`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})`.
+More precisely (Proposition `PGdUfAdj` of the draft), they form an adjoint equivalence whose unit is
+the isomorphism of Proposition `unification-graduation`, which sends every cell to itself, and whose
+counit is $`\theta^{-1}`.
+
+```lean
+section Equivalence
+
+/-- Graduation and unification are mutually quasi-inverse equivalences. -/
+noncomputable def gradEquivalence :
+    EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin n)) ≌
+      EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (n + 1))) where
+  functor := gradFunctor Sig n
+  inverse := unifFunctor Sig n
+  unitIso := unitIso
+  counitIso := (counitIsoInv Sig n).symm
+  functor_unitIso_comp B := by
+    apply EpSpec.EpAlg.hom_ext
+    rintro ⟨k, s⟩ x
+    induction k using Fin.lastCases with
+    | last => exact (down_last (A := (gradFunctor Sig n).obj B) _).trans (Subtype.ext rfl)
+    | cast k =>
+      exact (down_castSucc (A := (gradFunctor Sig n).obj B) k _).trans
+        ((Grad.sc_eq (M := ⟨B.1, B.2.2⟩) (Unif.top k) _).trans
+          (Subtype.ext (Grad.isCell (M := ⟨B.1, B.2.2⟩) (k := k.castSucc) x k.isLt)))
+
+end Equivalence
+```
+:::
+
+:::proof (of := "graduation-equivalence")
+By Propositions `unification-graduation` and `graduation-unification`, it remains to check the
+triangle identity: for a compact model $`\mathbf{B}` and a $`k`-cell $`x` of
+$`\mathrm{Gd}^{(n)}(\mathbf{B})`, the image of $`x` under $`\mathrm{Gd}^{(n)}` of the unit is $`x`,
+seen as an $`n`-cell, and $`\theta^{-1}` sends it to its $`(k,n)`-source $`\mathrm{sc}^{k}(x) = x`.
+:::
+
 ```lean
 end CategorialAlgebras
 ```
