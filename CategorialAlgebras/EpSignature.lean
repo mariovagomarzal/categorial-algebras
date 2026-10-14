@@ -186,6 +186,10 @@ instance : CategoryTheory.Category.{max u w} (EpAlg.{u, v, w} Sp) where
   id A := PartialAlgebra.Hom.id A.1
   comp H K := PartialAlgebra.Hom.comp K H
 
+@[ext] lemma EpAlg.hom_ext {A B : EpAlg.{u, v, w} Sp} {f g : A ⟶ B}
+    (h : ∀ s x, PartialAlgebra.Hom.map f s x = PartialAlgebra.Hom.map g s x) : f = g :=
+  PartialAlgebra.Hom.ext h
+
 end EpSpec
 ```
 :::

@@ -691,15 +691,48 @@ to itself and therefore satisfy the coherence conditions of a pseudofunctor.
 ```lean
 namespace EpSigGd
 
+/-- The functor `Alg_𝔤𝔡(𝐝)`, as a morphism of `Cat`. -/
+noncomputable def algGdMap {b b' : EpSigGd.{u, v, w}ᵒᵖ} (f : b ⟶ b') :
+    Cat.of (EpSpec.EpAlg.{u, v, w} b.unop.sg.toSpec) ⟶ Cat.of (EpSpec.EpAlg.{u, v, w} b'.unop.sg.toSpec) :=
+  (f.unop.der.restrict f.unop.sends).toCatHom
+
+/-- The isomorphisms between the functors of equal morphisms send every cell to itself. -/
+lemma algGdMap_eqToHom_val {b b' : EpSigGd.{u, v, w}ᵒᵖ} {k k' : b ⟶ b'} (hk : k = k')
+    (p : algGdMap k = algGdMap k') (X : EpSpec.EpAlg.{u, v, w} b.unop.sg.toSpec) (s : b'.unop.sorts)
+    (x : ((algGdMap k).toFunctor.obj X).1 s) :
+    HEq (PartialAlgebra.Hom.map ((eqToHom p).toNatTrans.app X) s x).1 x.1 := by
+  subst hk
+  rfl
+
 /-- The pseudofunctor `Alg_𝔤𝔡`. -/
 noncomputable def algGd :
     Pseudofunctor (LocallyDiscrete EpSigGd.{u, v, w}ᵒᵖ) Cat.{max u w, max u v (w + 1)} :=
   LocallyDiscrete.mkPseudofunctor
     (fun X => Cat.of (EpSpec.EpAlg.{u, v, w} X.unop.sg.toSpec))
-    (fun f => (f.unop.der.restrict f.unop.sends).toCatHom)
+    (fun f => algGdMap f)
     (fun X => Cat.Hom.isoMk GenEpDerivor.idIso)
     (fun f g => Cat.Hom.isoMk (GenEpDerivor.compIso f.unop.sends g.unop.sends))
-    (by sorry) (by sorry) (by sorry)
+    (by
+      intro _ _ _ _ f g h
+      ext X
+      apply EpSpec.EpAlg.hom_ext
+      intro s x
+      apply Subtype.ext
+      exact (eq_of_heq (algGdMap_eqToHom_val (Category.assoc f g h) _ X s x)).symm)
+    (by
+      intro _ _ f
+      ext X
+      apply EpSpec.EpAlg.hom_ext
+      intro s x
+      apply Subtype.ext
+      exact (eq_of_heq (algGdMap_eqToHom_val (Category.id_comp f) _ X s x)).symm)
+    (by
+      intro _ _ f
+      ext X
+      apply EpSpec.EpAlg.hom_ext
+      intro s x
+      apply Subtype.ext
+      exact (eq_of_heq (algGdMap_eqToHom_val (Category.comp_id f) _ X s x)).symm)
 
 end EpSigGd
 ```
