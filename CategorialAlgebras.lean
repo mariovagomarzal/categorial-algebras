@@ -8,8 +8,6 @@ import CategorialAlgebras.Derivor
 import CategorialAlgebras.EpSignature
 import CategorialAlgebras.GenEpDerivor
 import CategorialAlgebras.GenEpComposition
-import CategorialAlgebras.CategorialEp
-import CategorialAlgebras.Graduation
 import CategorialAlgebras.Compact.Category
 import CategorialAlgebras.Compact.Functor
 import CategorialAlgebras.Compact.Product
@@ -31,6 +29,9 @@ import CategorialAlgebras.Extended.OmegaAlgebra
 import CategorialAlgebras.Extended.Truncation
 import CategorialAlgebras.Extended.Limit
 import CategorialAlgebras.Extended.Model
+import CategorialAlgebras.CategorialEp
+import CategorialAlgebras.DerivedEval
+import CategorialAlgebras.Graduation
 
 open Verso.Genre Manual InlineLean Stemma
 

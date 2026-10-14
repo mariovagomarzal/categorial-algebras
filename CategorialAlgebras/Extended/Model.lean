@@ -82,8 +82,9 @@ def arg₂ {A : Index × S → Type w} {t t' : Index × S} (a : A t) (b : A t') 
   fun | ⟨0, _⟩ => a | ⟨1, _⟩ => b
 
 lemma eval_app₁ {A : PartialAlgebra.{u, max u v, w} (ExtendedSignature Sig Index)}
-    {val : ∀ t, EVar S Index t → Part (A t)} {t t' : Index × S} (σ : ExtendedSignature Sig Index [t] t')
-    {r : ETerm Sig Index t} {a : A t} (h : r.eval A val = Part.some a) :
+    {V : Index × S → Type} {val : ∀ t, V t → Part (A t)} {t t' : Index × S}
+    (σ : ExtendedSignature Sig Index [t] t') {r : Term (ExtendedSignature Sig Index) V t} {a : A t}
+    (h : r.eval A val = Part.some a) :
     (app₁ σ r).eval A val = A.op σ (arg₁ a) := by
   rw [eval_app₁_of_eq_some _ _ _ h]
   congr 1; funext i
@@ -91,8 +92,9 @@ lemma eval_app₁ {A : PartialAlgebra.{u, max u v, w} (ExtendedSignature Sig Ind
   | ⟨0, _⟩ => rfl
 
 lemma eval_app₂ {A : PartialAlgebra.{u, max u v, w} (ExtendedSignature Sig Index)}
-    {val : ∀ t, EVar S Index t → Part (A t)} {t₀ t₁ t' : Index × S}
-    (σ : ExtendedSignature Sig Index [t₀, t₁] t') {r : ETerm Sig Index t₀} {r' : ETerm Sig Index t₁}
+    {V : Index × S → Type} {val : ∀ t, V t → Part (A t)} {t₀ t₁ t' : Index × S}
+    (σ : ExtendedSignature Sig Index [t₀, t₁] t') {r : Term (ExtendedSignature Sig Index) V t₀}
+    {r' : Term (ExtendedSignature Sig Index) V t₁}
     {a : A t₀} {b : A t₁} (h : r.eval A val = Part.some a) (h' : r'.eval A val = Part.some b) :
     (app₂ σ r r').eval A val = A.op σ (arg₂ a b) := by
   rw [eval_app₂_of_eq_some _ _ _ h h']
