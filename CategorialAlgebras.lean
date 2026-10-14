@@ -5,6 +5,7 @@ import CategorialAlgebras.Signature
 import CategorialAlgebras.PartialAlgebra
 import CategorialAlgebras.Derivor
 import CategorialAlgebras.EpSignature
+import CategorialAlgebras.GenEpDerivor
 import CategorialAlgebras.Compact.Category
 import CategorialAlgebras.Compact.Functor
 import CategorialAlgebras.Compact.Product
