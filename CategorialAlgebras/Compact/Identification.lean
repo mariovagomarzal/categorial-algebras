@@ -1,5 +1,7 @@
 import Stemma
 import Mathlib.Data.Fin.VecNotation
+import Mathlib.CategoryTheory.Equivalence
+import Mathlib.CategoryTheory.EqToHom
 import CategorialAlgebras.Evaluation
 import CategorialAlgebras.Compact.Specification
 import CategorialAlgebras.Compact.OmegaAlgebra
@@ -15,7 +17,8 @@ $`k`-sources, $`k`-targets and $`k`-compositions of the compact $`n`-categories
 $`\mathsf{A}_s` interpret the symbols $`\mathrm{sc}^{k}_{s}`, $`\mathrm{tg}^{k}_{s}` and
 $`\circ^{k}_{s}`, and the functors $`F_\sigma` the operation symbols of $`\Sigma`. This
 document builds that partial algebra, shows that it is a model of the specification, and shows
-that every model of the specification arises in this way, from exactly one algebra. As the
+that every model of the specification arises in this way, from exactly one algebra. For
+$`I = n`, the homomorphisms correspond as well, and the two categories are isomorphic. As the
 specification, it is written once for every preordered set of dimensions $`I`, so that it covers
 $`n \in \mathbb{N}` and $`\omega` at once.
 
@@ -876,4 +879,124 @@ def catAlgebraEquivModel (n : ℕ) :
   left_inv A := modelCatAlgebra_cellModel A
   right_inv M := Subtype.ext (cellAlgebra_modelCatAlgebra M)
 ```
+:::
+
+# Homomorphisms and the isomorphism of categories
+
+A homomorphism of compact $`n`-categorial algebras is a family of compact $`n`-functors that
+commutes with the operations of $`\Sigma`. On the partial algebras of cells, this says exactly
+that the family is a homomorphism of partial algebras: preserving $`k`-sources and $`k`-targets is
+commuting with the total operations $`\mathrm{sc}^{k}_{s}` and $`\mathrm{tg}^{k}_{s}`, and
+preserving $`k`-composites is sending defined composites to defined composites, with the
+composite of the images as image. The homomorphisms of partial algebras of the library need not
+reflect definedness, as in the draft; this is what compact functors ask.
+
+:::construction (label := "compact.hom-cells") (central := false) (title := "Homomorphisms as homomorphisms of cells")
+Let $`\boldsymbol{\mathsf{A}}` and $`\boldsymbol{\mathsf{B}}` be compact $`n`-categorial
+$`\Sigma`-algebras. Every homomorphism $`H \colon \boldsymbol{\mathsf{A}} \to
+\boldsymbol{\mathsf{B}}` is, with the same mappings $`H_s`, a homomorphism between their
+partial algebras of cells; and every homomorphism $`h` between the partial algebras of cells is,
+with the same mappings $`h_s`, a homomorphism $`\boldsymbol{\mathsf{A}} \to
+\boldsymbol{\mathsf{B}}`: each $`h_s` is a compact $`n`-functor because $`h` commutes with
+$`\mathrm{sc}^{k}_{s}`, $`\mathrm{tg}^{k}_{s}` and $`\circ^{k}_{s}`, and the family commutes with
+the operations of $`\Sigma` because $`h` commutes with the symbols $`\sigma`.
+
+```lean
+namespace CatAlgebra
+
+variable {n : ℕ} {A B : CatAlgebra.{u, v, w} Sig n}
+
+/-- A homomorphism of compact `n`-categorial algebras is a homomorphism of their partial
+algebras of cells. -/
+def Hom.toCells (H : Hom A B) :
+    PartialAlgebra.Hom (cellAlgebra A.carrier A.op) (cellAlgebra B.carrier B.op) where
+  map s := H.map s
+  map_dom σ a h := by
+    cases σ with
+    | op σ => trivial
+    | sc k s => trivial
+    | tg k s => trivial
+    | comp k s => exact dom_of_sc_is_tg ((H.map _).comp_map (sc_is_tg_of_dom h))
+  map_op σ a h := by
+    cases σ with
+    | op σ => exact H.map_op σ a
+    | sc k s => exact (H.map _).map_sc_eq_sc_map k _
+    | tg k s => exact (H.map _).map_tg_eq_tg_map k _
+    | comp k s => exact (H.map _).map_comp_eq_comp_map (sc_is_tg_of_dom h)
+
+/-- A homomorphism of the partial algebras of cells is a homomorphism of compact `n`-categorial
+algebras. -/
+def Hom.ofCells (h : PartialAlgebra.Hom (cellAlgebra A.carrier A.op) (cellAlgebra B.carrier B.op)) :
+    Hom A B where
+  map s :=
+    { map := h.map s
+      map_sc_eq_sc_map := fun k f => h.map_op (.sc k s) (fun | ⟨0, _⟩ => f) trivial
+      map_tg_eq_tg_map := fun k f => h.map_op (.tg k s) (fun | ⟨0, _⟩ => f) trivial
+      map_comp_eq_comp_map := fun {k f g} hgf =>
+        h.map_op (.comp k s) (fun | ⟨0, _⟩ => g | ⟨1, _⟩ => f) (dom_of_sc_is_tg hgf) }
+  map_op σ a := h.map_op (.op σ) a trivial
+
+end CatAlgebra
+```
+:::
+
+:::construction (label := "compact.cells-functor") (central := false) (title := "The functor of cells")
+For $`n \in \mathbb{N}`, sending a compact $`n`-categorial $`\Sigma`-algebra to its partial
+algebra of cells, a model of $`\mathcal{C}^{\Sigma^{(n)}}` by Proposition
+`compact.cell-algebra-model`, and a homomorphism to itself as a homomorphism of partial algebras
+(Construction `compact.hom-cells`) is a functor
+$`\mathsf{nCatAlg}(\Sigma) \to \mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})`. The two constructions
+of Construction `compact.hom-cells` are inverse to each other, which makes it fully faithful.
+
+```lean
+open CatAlgebra in
+/-- The functor from `nCatAlg(Σ)` to `PAlg(C^{Σ^{(n)}})` that sends a compact `n`-categorial
+algebra to its partial algebra of cells. -/
+def cellsFunctor (n : ℕ) :
+    CategoryTheory.Functor (CatAlgebra.{u, v, w} Sig n) (CompactPAlg.{u, v, w} Sig (Fin n)) where
+  obj A := cellModel A.carrier A.op
+  map H := Hom.toCells H
+  map_id _ := rfl
+  map_comp _ _ := rfl
+
+open CatAlgebra in
+/-- The functor of cells is fully faithful. -/
+def cellsFunctor.fullyFaithful (n : ℕ) : (cellsFunctor.{u, v, w} (Sig := Sig) n).FullyFaithful where
+  preimage h := Hom.ofCells h
+  map_preimage _ := rfl
+  preimage_map _ := rfl
+```
+:::
+
+:::theorem (label := "compact.cat-alg-iso") (central := false) (title := "nCatAlg(Σ) = PAlg(C^Σ⁽ⁿ⁾)")
+For every many-sorted signature $`\Sigma` and every $`n \in \mathbb{N}`, the functor of cells
+$`\mathsf{nCatAlg}(\Sigma) \to \mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})` is full, faithful and
+bijective on objects: it is an isomorphism of categories. This is the first part of
+Proposition `PCompactIdent` of the draft, which writes it
+$`\mathsf{nCatAlg}(\Sigma) = \mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})`. In particular it is an
+equivalence of categories.
+
+```lean
+theorem cellsFunctor_obj_bijective (n : ℕ) :
+    Function.Bijective (cellsFunctor.{u, v, w} (Sig := Sig) n).obj :=
+  (catAlgebraEquivModel n).bijective
+
+theorem cellsFunctor_isIso (n : ℕ) :
+    (cellsFunctor.{u, v, w} (Sig := Sig) n).Full ∧ (cellsFunctor.{u, v, w} (Sig := Sig) n).Faithful ∧
+      Function.Bijective (cellsFunctor.{u, v, w} (Sig := Sig) n).obj :=
+  ⟨(cellsFunctor.fullyFaithful n).full, (cellsFunctor.fullyFaithful n).faithful,
+    (catAlgebraEquivModel n).bijective⟩
+
+instance (n : ℕ) : (cellsFunctor.{u, v, w} (Sig := Sig) n).IsEquivalence where
+  faithful := (cellsFunctor.fullyFaithful n).faithful
+  full := (cellsFunctor.fullyFaithful n).full
+  essSurj := ⟨fun M => ⟨modelCatAlgebra M,
+    ⟨CategoryTheory.eqToIso (Subtype.ext (cellAlgebra_modelCatAlgebra M))⟩⟩⟩
+```
+:::
+
+:::proof (of := "compact.cat-alg-iso")
+The functor is fully faithful by Construction `compact.cells-functor`, and bijective on objects by
+Construction `compact.cat-algebra-equiv-model`, whose bijection is its action on objects. A
+fully faithful functor that is surjective on objects is an equivalence.
 :::
