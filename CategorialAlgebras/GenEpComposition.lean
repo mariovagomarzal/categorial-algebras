@@ -76,6 +76,201 @@ end GenEpDerivor
 ```
 :::
 
+```lean
+section Agree
+
+variable {Sig : Signature.{u, v} S} {A A' : PartialAlgebra.{u, v, w} Sig} (f : ∀ s, A s → A' s)
+
+/-- Values of terms along a mapping that commutes with the operations of the symbols in `O`. -/
+lemma Term.eval_map_of_agree (O : Set (Op Sig))
+    (hO : ∀ τ ∈ O, ∀ a : Arity A τ.ws,
+      A'.op τ.σ (fun j => f _ (a j)) = (A.op τ.σ a).map (f τ.s))
+    {X : S → Type} (val : ∀ s, X s → Part (A s)) :
+    ∀ {t : S} (R : Term Sig X t), R.ops ⊆ O →
+      R.eval A' (fun s x => (val s x).map (f s)) = (R.eval A val).map (f t)
+  | _, .var x, _ => by simp
+  | _, .app σ ts, hR => by
+    have hσ : (⟨_, _, σ⟩ : Op Sig) ∈ O := hR (Or.inl rfl)
+    have ih : ∀ j, (ts j).eval A' (fun s x => (val s x).map (f s)) =
+        ((ts j).eval A val).map (f _) := fun j =>
+      Term.eval_map_of_agree O hO val (ts j)
+        fun τ hτ => hR (Or.inr (Set.mem_iUnion.mpr ⟨j, hτ⟩))
+    by_cases hall : ∀ j, ((ts j).eval A val).Dom
+    · let a : Arity A _ := fun j => ((ts j).eval A val).get (hall j)
+      have ha : ∀ j, (ts j).eval A val = Part.some (a j) := fun j => (Part.some_get _).symm
+      have ha' : ∀ j, (ts j).eval A' (fun s x => (val s x).map (f s)) = Part.some (f _ (a j)) :=
+        fun j => by rw [ih j, ha j, Part.map_some]
+      rw [Term.eval_app_of_eq_some A' _ σ ha', Term.eval_app_of_eq_some A val σ ha]
+      exact hO _ hσ a
+    · push_neg at hall
+      obtain ⟨j, hj⟩ := hall
+      have h1 : ¬ ((Term.app σ ts).eval A' (fun s x => (val s x).map (f s))).Dom := fun h => by
+        obtain ⟨c, hc, -⟩ := Term.eval_app_dom A' _ σ h
+        have : ((ts j).eval A' (fun s x => (val s x).map (f s))).Dom := by rw [hc j]; trivial
+        rw [ih j] at this
+        exact hj this
+      have h2 : ¬ ((Term.app σ ts).eval A val).Dom := fun h => by
+        obtain ⟨c, hc, -⟩ := Term.eval_app_dom A val σ h
+        exact hj (by rw [hc j]; trivial)
+      rw [Part.eq_none_iff'.mpr h1, Part.eq_none_iff'.mpr h2, Part.map_none]
+
+lemma EEq.holds_map_of_agree (hf : ∀ s, Function.Injective (f s)) (O : Set (Op Sig))
+    (hO : ∀ τ ∈ O, ∀ a : Arity A τ.ws,
+      A'.op τ.σ (fun j => f _ (a j)) = (A.op τ.σ a).map (f τ.s))
+    {X : S → Type} (val : ∀ s, X s → Part (A s)) (e : EEq Sig X) (he : e.ops ⊆ O) :
+    e.Holds A' (fun s x => (val s x).map (f s)) ↔ e.Holds A val := by
+  unfold EEq.Holds
+  rw [Term.eval_map_of_agree f O hO val e.lhs fun τ h => he (Or.inl h),
+    Term.eval_map_of_agree f O hO val e.rhs fun τ h => he (Or.inr h)]
+  constructor
+  · rintro ⟨h1, h2, heq⟩
+    exact ⟨h1, h2, hf _ heq⟩
+  · rintro ⟨h1, h2, heq⟩
+    exact ⟨h1, h2, congrArg (f _) heq⟩
+
+end Agree
+
+/-- Two partial algebras of an ep-signature, related by injective mappings, have the same
+operations if they do for every operation symbol whose domain conditions they satisfy alike. -/
+theorem EpSignature.op_agree (Sg : EpSignature.{u, v} S) {A A' : PartialAlgebra.{u, v, w} Sg.sig}
+    (f : ∀ s, A s → A' s) (hf : ∀ s, Function.Injective (f s))
+    (step : ∀ {ws : List S} {s : S} (σ : Sg.sig ws s) (a : Arity A ws),
+      (EEq.HoldsAll A' (famVal fun j => f _ (a j)) (Sg.defn σ) ↔
+        EEq.HoldsAll A (famVal a) (Sg.defn σ)) →
+      A'.op σ (fun j => f _ (a j)) = (A.op σ a).map (f s)) :
+    ∀ (σ : Op Sg.sig) (a : Arity A σ.ws),
+      A'.op σ.σ (fun j => f _ (a j)) = (A.op σ.σ a).map (f σ.s) := by
+  intro σ
+  induction σ using Sg.wf.induction with
+  | h σ ih =>
+    intro a
+    apply step
+    rw [← famVal_map]
+    exact ⟨fun h e he => (EEq.holds_map_of_agree f hf {τ | Sg.Prec τ σ} (fun τ hτ => ih τ hτ) _ e
+        fun τ hτ => ⟨e, he, hτ⟩).mp (h e he),
+      fun h e he => (EEq.holds_map_of_agree f hf {τ | Sg.Prec τ σ} (fun τ hτ => ih τ hτ) _ e
+        fun τ hτ => ⟨e, he, hτ⟩).mpr (h e he)⟩
+
+/-- A partial algebra isomorphic to a model is a model. -/
+theorem EpSpec.isModel_of_iso {V : S → Type} (Sp : EpSpec.{u, v} S V)
+    {A B : PartialAlgebra.{u, v, w} Sp.sg.sig} (H : PartialAlgebra.Hom A B)
+    (K : PartialAlgebra.Hom B A) (hHK : ∀ s x, H.map s (K.map s x) = x) (hA : Sp.IsModel A) :
+    Sp.IsModel B := by
+  have hval : ∀ {X : S → Type} (val : ∀ s, X s → Part (B s)),
+      (fun s x => ((val s x).map (K.map s)).map (H.map s)) = val := by
+    intro X val
+    funext s x
+    rw [Part.map_map]
+    exact Part.map_id' (fun y => hHK s y) _
+  refine ⟨fun σ b => ?_, fun q hq val hdom hprem => ?_⟩
+  · have hb : (fun j => H.map _ (K.map _ (b j))) = b := funext fun j => hHK _ _
+    constructor
+    · intro hd
+      have h := EEq.holdsAll_hom H _ ((hA.1 σ _).mp (K.map_dom σ b hd))
+      rwa [famVal_map, hb] at h
+    · intro hdef
+      have h1 := EEq.holdsAll_hom K _ hdef
+      rw [famVal_map] at h1
+      have hd := H.map_dom σ _ ((hA.1 σ _).mpr h1)
+      rwa [hb] at hd
+  · have h := hA.2 q hq (fun s x => (val s x).map (K.map s)) (fun x hx => hdom x hx)
+      fun e he => EEq.holdsAll_singleton.mp
+        (EEq.holdsAll_hom K val (EEq.holdsAll_singleton.mpr (hprem e he)))
+    have := EEq.holdsAll_singleton.mp (EEq.holdsAll_hom H _ (EEq.holdsAll_singleton.mpr h))
+    rwa [hval] at this
+
+namespace GenEpDerivor
+
+variable {Sg : EpSignature.{u, v} S} {Lg : EpSignature.{u, v} T} {Og : EpSignature.{u, v} U}
+  {ε : GenEpDerivor Lg Og} {δ : GenEpDerivor Sg Lg}
+
+/-- The cells of `(𝐞 ∘ 𝐝)*(𝐂)` are those of `𝐝*(𝐞*(𝐂))`. -/
+lemma comp_cells_iff {C : PartialAlgebra.{u, v, w} Og.sig} (hC : Og.IsAlgebra C) {s : S}
+    (x : C (ε.sortMap (δ.sortMap s))) :
+    EEq.HoldsAll C (val₁ x) ((ε.comp.{u, v, w} δ).sortDom s) ↔
+      ∃ hE : EEq.HoldsAll C (val₁ x) (ε.sortDom (δ.sortMap s)),
+        EEq.HoldsAll (ε.derived C) (val₁ (⟨x, hE⟩ : ε.cells C (δ.sortMap s))) (δ.sortDom s) := by
+  have hm : Og.toSpec.IsModel C := ⟨hC, fun _ hq => hq.elim⟩
+  refine (EpSpec.holdsAll_cn_iff (H := ε.sortDom (δ.sortMap s) ∪ ε.trSet (δ.sortDom s))
+    Og.toSpec (fun _ : Unit => ε.sortMap (δ.sortMap s)) hm (fun _ => x)).trans
+    (EEq.holdsAll_union.trans ?_)
+  constructor
+  · rintro ⟨hE, htr⟩
+    exact ⟨hE, (ε.holdsAll_derived_iff (B := C)
+      (fun _ : Unit => (⟨x, hE⟩ : ε.cells C (δ.sortMap s))) _).mpr htr⟩
+  · rintro ⟨hE, hD⟩
+    exact ⟨hE, (ε.holdsAll_derived_iff (B := C)
+      (fun _ : Unit => (⟨x, hE⟩ : ε.cells C (δ.sortMap s))) _).mp hD⟩
+
+/-- A cell of `𝐝*(𝐞*(𝐂))` as a cell of `(𝐞 ∘ 𝐝)*(𝐂)`. -/
+def toComp {C : PartialAlgebra.{u, v, w} Og.sig} (hC : Og.IsAlgebra C) (s : S)
+    (y : δ.derived (ε.derived C) s) : (ε.comp.{u, v, w} δ).derived C s :=
+  ⟨y.1.1, (comp_cells_iff hC y.1.1).mpr ⟨y.1.2, y.2⟩⟩
+
+/-- A cell of `(𝐞 ∘ 𝐝)*(𝐂)` as a cell of `𝐝*(𝐞*(𝐂))`. -/
+def ofComp {C : PartialAlgebra.{u, v, w} Og.sig} (hC : Og.IsAlgebra C) (s : S)
+    (x : (ε.comp.{u, v, w} δ).derived C s) : δ.derived (ε.derived C) s :=
+  ⟨⟨x.1, ((comp_cells_iff hC x.1).mp x.2).fst⟩, ((comp_cells_iff hC x.1).mp x.2).snd⟩
+
+lemma toComp_injective {C : PartialAlgebra.{u, v, w} Og.sig} (hC : Og.IsAlgebra C) (s : S) :
+    Function.Injective (toComp (ε := ε) (δ := δ) hC s) := by
+  intro y y' h
+  have h1 := congrArg (fun z : (ε.comp.{u, v, w} δ).derived C s => z.1) h
+  exact Subtype.ext (Subtype.ext h1)
+
+theorem comp_op_agree {C : PartialAlgebra.{u, v, w} Og.sig} (hC : Og.IsAlgebra C)
+    (hA : Sg.IsAlgebra (δ.derived (ε.derived C))) (σ : Op Sg.sig)
+    (a : Arity (δ.derived (ε.derived C)) σ.ws) :
+    ((ε.comp.{u, v, w} δ).derived C).op σ.σ (fun j => toComp hC _ (a j)) =
+      ((δ.derived (ε.derived C)).op σ.σ a).map (toComp hC σ.s) := by
+  refine Sg.op_agree (toComp hC) (toComp_injective hC) (fun {ws s} σ a hdef => ?_) σ a
+  have hev : ∀ hδd : ((δ.op σ).eval (ε.derived C) (famVal fun j => (a j).1)).Dom,
+      ((ε.comp.{u, v, w} δ).op σ).eval C (famVal fun j => (toComp hC _ (a j)).1) =
+        Part.some (((δ.op σ).eval (ε.derived C) (famVal fun j => (a j).1)).get hδd).1 :=
+    fun hδd => ε.eval_derived_get (B := C) (fun j => (a j).1) (δ.op σ) hδd
+  apply Part.ext'
+  · rw [(ε.comp.{u, v, w} δ).op_derived_dom_iff σ, hdef]
+    show _ ↔ ((δ.derived (ε.derived C)).op σ a).Dom
+    rw [hA σ a]
+    refine ⟨fun h => h.1, fun hd => ⟨hd, ?_⟩⟩
+    obtain ⟨hδd, hD⟩ := ((δ.op_derived_dom_iff σ a).mp ((hA σ a).mpr hd)).2
+    refine ⟨by rw [hev hδd]; trivial, ?_⟩
+    rw [Part.get_eq_of_mem (by rw [hev hδd]; exact Part.mem_some _)]
+    exact (comp_cells_iff hC _).mpr ⟨_, hD⟩
+  · intro h1 h2
+    apply Subtype.ext
+    exact Part.get_eq_of_mem (by rw [hev (δ.op_dom_of_holds h2)]; exact Part.mem_some _) _
+
+/-- The cells of `(id_𝚺)*(𝐀)` are all the elements of a `𝚺`-algebra `𝐀`. -/
+lemma id_cells {A : PartialAlgebra.{u, v, w} Sg.sig} (hA : Sg.IsAlgebra A) {s : S} (a : A s) :
+    EEq.HoldsAll A (val₁ a) ((GenEpDerivor.id.{u, v, w} Sg).sortDom s) := by
+  have hm : Sg.toSpec.IsModel A := ⟨hA, fun _ hq => hq.elim⟩
+  exact (EpSpec.holdsAll_cn_iff Sg.toSpec (fun _ : Unit => s) hm (fun _ => a)).mpr
+    EEq.holdsAll_empty
+
+theorem id_op_agree {A : PartialAlgebra.{u, v, w} Sg.sig} (hA : Sg.IsAlgebra A) (σ : Op Sg.sig)
+    (a : Arity ((GenEpDerivor.id.{u, v, w} Sg).derived A) σ.ws) :
+    A.op σ.σ (fun j => (a j).1) =
+      (((GenEpDerivor.id.{u, v, w} Sg).derived A).op σ.σ a).map fun x => x.1 := by
+  refine Sg.op_agree (A := (GenEpDerivor.id.{u, v, w} Sg).derived A) (fun _ x => x.1)
+    (fun _ _ _ h => Subtype.ext h) (fun {ws s} σ a hdef => ?_) σ a
+  have hev : ((GenEpDerivor.id.{u, v, w} Sg).op σ).eval A (famVal fun j => (a j).1) =
+      A.op σ fun j => (a j).1 :=
+    Term.eval_app_of_eq_some A _ σ fun j => rfl
+  apply Part.ext'
+  · show (A.op σ fun j => (a j).1).Dom ↔ (((GenEpDerivor.id.{u, v, w} Sg).derived A).op σ a).Dom
+    rw [GenEpDerivor.op_derived_dom_iff]
+    constructor
+    · intro hd
+      exact ⟨hdef.mp ((hA σ _).mp hd), by rw [hev]; exact hd, id_cells hA _⟩
+    · rintro ⟨h, -⟩
+      exact (hA σ _).mpr (hdef.mpr h)
+  · intro h1 h2
+    exact (Part.get_eq_get_of_eq _ _ hev.symm).symm.trans rfl
+
+end GenEpDerivor
+```
+
 :::Stemma.lemma (label := "gen-ep-comp-models") (central := false) (title := "The functor of a composite")
 Let $`\mathbf{d}` be a generalized ep-derivor from $`\mathbf{\Sigma}` to $`\mathbf{\Lambda}`,
 $`\mathbf{e}` one from $`\mathbf{\Lambda}` to $`\mathbf{\Omega}`, and $`(\mathbf{\Sigma}, \mathcal{E})`,
@@ -98,59 +293,96 @@ variable {Sg : EpSignature.{u, v} S} {Lg : EpSignature.{u, v} T} {Og : EpSignatu
   {E : Set (QEEq Sg.sig V)} {F : Set (QEEq Lg.sig V')} {G : Set (QEEq Og.sig V'')}
   {ε : GenEpDerivor Lg Og} {δ : GenEpDerivor Sg Lg}
 
-theorem comp_sendsModels (hε : ε.SendsModels.{u, v, u, v, w} F G)
-    (hδ : δ.SendsModels.{u, v, u, v, w} E F) :
-    (ε.comp.{u, v, w} δ).SendsModels.{u, v, u, v, w} E G := by
-  sorry
-
 /-- The homomorphism `(𝐞 ∘ 𝐝)*(𝐂) → 𝐝*(𝐞*(𝐂))` that sends every cell to itself. -/
-noncomputable def compHom (C : EpSpec.EpAlg.{u, v, w} (EpSpec.mk Og G)) :
+noncomputable def compHom (hε : ε.SendsModels.{u, v, u, v, w} F G)
+    (hδ : δ.SendsModels.{u, v, u, v, w} E F) (C : EpSpec.EpAlg.{u, v, w} (EpSpec.mk Og G)) :
     PartialAlgebra.Hom ((ε.comp.{u, v, w} δ).derived C.1) (δ.derived (ε.derived C.1)) where
-  map _ x := ⟨⟨x.1, by sorry⟩, by sorry⟩
-  map_dom := by sorry
-  map_op := by sorry
+  map := ofComp C.2.1
+  map_dom σ a' h := by
+    have := comp_op_agree C.2.1 (hδ _ (hε C.1 C.2)).1 ⟨_, _, σ⟩ fun j => ofComp C.2.1 _ (a' j)
+    have h' : (((ε.comp.{u, v, w} δ).derived C.1).op σ
+        fun j => toComp C.2.1 _ (ofComp C.2.1 _ (a' j))).Dom := h
+    rw [this] at h'
+    exact h'
+  map_op σ a' h := by
+    have := comp_op_agree C.2.1 (hδ _ (hε C.1 C.2)).1 ⟨_, _, σ⟩ fun j => ofComp C.2.1 _ (a' j)
+    exact congrArg (ofComp C.2.1 _) (Part.get_eq_get_of_eq _ h this)
 
 /-- The homomorphism `𝐝*(𝐞*(𝐂)) → (𝐞 ∘ 𝐝)*(𝐂)` that sends every cell to itself. -/
-noncomputable def compInv (C : EpSpec.EpAlg.{u, v, w} (EpSpec.mk Og G)) :
+noncomputable def compInv (hε : ε.SendsModels.{u, v, u, v, w} F G)
+    (hδ : δ.SendsModels.{u, v, u, v, w} E F) (C : EpSpec.EpAlg.{u, v, w} (EpSpec.mk Og G)) :
     PartialAlgebra.Hom (δ.derived (ε.derived C.1)) ((ε.comp.{u, v, w} δ).derived C.1) where
-  map _ x := ⟨x.1.1, by sorry⟩
-  map_dom := by sorry
-  map_op := by sorry
+  map := toComp C.2.1
+  map_dom σ a h := by
+    rw [comp_op_agree C.2.1 (hδ _ (hε C.1 C.2)).1 ⟨_, _, σ⟩ a]
+    exact h
+  map_op σ a h :=
+    (Part.get_eq_get_of_eq _ _ (comp_op_agree C.2.1 (hδ _ (hε C.1 C.2)).1 ⟨_, _, σ⟩ a)).symm
+
+theorem comp_sendsModels (hε : ε.SendsModels.{u, v, u, v, w} F G)
+    (hδ : δ.SendsModels.{u, v, u, v, w} E F) :
+    (ε.comp.{u, v, w} δ).SendsModels.{u, v, u, v, w} E G := fun C hC =>
+  EpSpec.isModel_of_iso _ (compInv hε hδ ⟨C, hC⟩) (compHom hε hδ ⟨C, hC⟩) (fun _ _ => rfl)
+    (hδ _ (hε C hC))
 
 /-- `(𝐞 ∘ 𝐝)*_𝔤𝔡 ≅ 𝐝*_𝔤𝔡 ∘ 𝐞*_𝔤𝔡` on the models. -/
 noncomputable def compIso (hε : ε.SendsModels.{u, v, u, v, w} F G)
     (hδ : δ.SendsModels.{u, v, u, v, w} E F) :
     (ε.comp.{u, v, w} δ).restrict (comp_sendsModels hε hδ) ≅ ε.restrict hε ⋙ δ.restrict hδ :=
   NatIso.ofComponents
-    (fun C => { hom := compHom C, inv := compInv C, hom_inv_id := by sorry, inv_hom_id := by sorry })
-    (by sorry)
+    (fun C =>
+      { hom := compHom hε hδ C
+        inv := compInv hε hδ C
+        hom_inv_id := PartialAlgebra.Hom.ext fun _ _ => rfl
+        inv_hom_id := PartialAlgebra.Hom.ext fun _ _ => rfl })
+    (fun _ => PartialAlgebra.Hom.ext fun _ _ => rfl)
 
 theorem compIso_hom_map (hε : ε.SendsModels.{u, v, u, v, w} F G)
     (hδ : δ.SendsModels.{u, v, u, v, w} E F) (C : EpSpec.EpAlg.{u, v, w} (EpSpec.mk Og G)) (s : S)
     (x : (ε.comp.{u, v, w} δ).derived C.1 s) :
-    (PartialAlgebra.Hom.map ((compIso hε hδ).hom.app C) s x).1.1 = x.1 := by
-  sorry
+    (PartialAlgebra.Hom.map ((compIso hε hδ).hom.app C) s x).1.1 = x.1 :=
+  rfl
 
-theorem id_sendsModels : (GenEpDerivor.id.{u, v, w} Sg).SendsModels.{u, v, u, v, w} E E := by
-  sorry
+/-- The homomorphism `(id_𝚺)*(𝐀) → 𝐀`. -/
+noncomputable def idHom (A : EpSpec.EpAlg.{u, v, w} (EpSpec.mk Sg E)) :
+    PartialAlgebra.Hom ((GenEpDerivor.id.{u, v, w} Sg).derived A.1) A.1 where
+  map _ x := x.1
+  map_dom σ a h := by
+    rw [id_op_agree A.2.1 ⟨_, _, σ⟩ a]
+    exact h
+  map_op σ a h := (Part.get_eq_get_of_eq _ _ (id_op_agree A.2.1 ⟨_, _, σ⟩ a)).symm
+
+/-- The homomorphism `𝐀 → (id_𝚺)*(𝐀)`. -/
+noncomputable def idInv (A : EpSpec.EpAlg.{u, v, w} (EpSpec.mk Sg E)) :
+    PartialAlgebra.Hom A.1 ((GenEpDerivor.id.{u, v, w} Sg).derived A.1) where
+  map _ a := ⟨a, id_cells A.2.1 a⟩
+  map_dom σ a h := by
+    have := id_op_agree A.2.1 ⟨_, _, σ⟩ fun j => ⟨a j, id_cells A.2.1 (a j)⟩
+    have h' : (A.1.op σ fun j => a j).Dom := h
+    rw [this] at h'
+    exact h'
+  map_op σ a h := by
+    have := id_op_agree A.2.1 ⟨_, _, σ⟩ fun j => ⟨a j, id_cells A.2.1 (a j)⟩
+    exact Subtype.ext (Part.get_eq_get_of_eq _ h this)
+
+theorem id_sendsModels : (GenEpDerivor.id.{u, v, w} Sg).SendsModels.{u, v, u, v, w} E E :=
+  fun A hA => EpSpec.isModel_of_iso _ (idInv ⟨A, hA⟩) (idHom ⟨A, hA⟩) (fun _ _ => rfl) hA
 
 /-- `(id_𝚺)*_𝔤𝔡 ≅ Id` on the models. -/
 noncomputable def idIso :
     (GenEpDerivor.id.{u, v, w} Sg).restrict (id_sendsModels (E := E)) ≅ 𝟭 _ :=
   NatIso.ofComponents
     (fun A =>
-      { hom := (⟨fun _ x => x.1, by sorry, by sorry⟩ :
-          PartialAlgebra.Hom ((GenEpDerivor.id.{u, v, w} Sg).derived A.1) A.1)
-        inv := (⟨fun _ a => ⟨a, by sorry⟩, by sorry, by sorry⟩ :
-          PartialAlgebra.Hom A.1 ((GenEpDerivor.id.{u, v, w} Sg).derived A.1))
-        hom_inv_id := by sorry
-        inv_hom_id := by sorry })
-    (by sorry)
+      { hom := idHom A
+        inv := idInv A
+        hom_inv_id := PartialAlgebra.Hom.ext fun _ _ => rfl
+        inv_hom_id := PartialAlgebra.Hom.ext fun _ _ => rfl })
+    (fun _ => PartialAlgebra.Hom.ext fun _ _ => rfl)
 
 theorem idIso_hom_map (A : EpSpec.EpAlg.{u, v, w} (EpSpec.mk Sg E)) (s : S)
     (x : (GenEpDerivor.id.{u, v, w} Sg).derived A.1 s) :
-    PartialAlgebra.Hom.map ((idIso (E := E)).hom.app A) s x = x.1 := by
-  sorry
+    PartialAlgebra.Hom.map ((idIso (E := E)).hom.app A) s x = x.1 :=
+  rfl
 
 end GenEpDerivor
 ```
