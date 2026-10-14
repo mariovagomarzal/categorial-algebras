@@ -503,8 +503,15 @@ $`\mathsf{PAlg}(\Sigma) \to \mathsf{Set}^{S}` is $`\Delta_{(\varphi, D)}`.
 noncomputable def derivedMap {B B' : PartialAlgebra.{u', v', w} Lg.sig} (f : B ⟶ B') :
     δ.derived B ⟶ δ.derived B' where
   map s b := ⟨f.map _ b.1, δ.cells_map f b⟩
-  map_dom := by sorry
-  map_op := by sorry
+  map_dom σ a h := by
+    have h' := EEq.holdsAll_hom f (famVal fun j => (a j).1) h
+    erw [famVal_map] at h'
+    exact h'
+  map_op σ a h := by
+    apply Subtype.ext
+    have := Term.eval_hom f (famVal fun j => (a j).1) (δ.op σ) (δ.op_dom_of_holds h)
+    erw [famVal_map] at this
+    exact (Part.get_eq_of_mem (Part.eq_some_iff.mp this) _).symm
 
 /-- The functor `𝐝*_𝔤𝔡`. -/
 noncomputable def derivedFunctor :
@@ -512,8 +519,8 @@ noncomputable def derivedFunctor :
   obj B := δ.derived B
   map f := δ.derivedMap f
 
-theorem derivedFunctor_comp_forget : δ.derivedFunctor ⋙ PartialAlgebra.forget = δ.delta := by
-  sorry
+theorem derivedFunctor_comp_forget : δ.derivedFunctor ⋙ PartialAlgebra.forget = δ.delta :=
+  rfl
 ```
 :::
 
@@ -547,6 +554,40 @@ def PartialAlgebra.IsCongruence {Sig : Signature.{u, v} S} (A : PartialAlgebra.{
     ∀ {ws : List S} {s : S} (σ : Sig ws s) (a b : Arity A ws) (ha : (A.op σ a).Dom)
       (hb : (A.op σ b).Dom), (∀ j, Φ _ (a j) (b j)) → Φ s ((A.op σ a).get ha) ((A.op σ b).get hb)
 
+/-- The defined values of a term under a valuation in a closed subset are in it. -/
+theorem Term.eval_mem_of_isClosedSubset {Sig : Signature.{u, v} S} {A : PartialAlgebra.{u, v, w} Sig}
+    {Y : ∀ s, Set (A s)} (hY : A.IsClosedSubset Y) {X : S → Type} {val : ∀ s, X s → Part (A s)}
+    (hv : ∀ s x (h : (val s x).Dom), (val s x).get h ∈ Y s) :
+    ∀ {t : S} (R : Term Sig X t) (h : (R.eval A val).Dom), (R.eval A val).get h ∈ Y t
+  | _, .var x, h => hv _ x h
+  | _, .app σ ts, h => by
+    obtain ⟨a, ha, hA⟩ := Term.eval_app_dom A val σ h
+    have hd : (A.op σ a).Dom := hA ▸ h
+    rw [Part.get_eq_get_of_eq _ _ hA]
+    refine hY σ a (fun j => ?_) hd
+    have hj := Term.eval_mem_of_isClosedSubset hY hv (ts j) (by rw [ha j]; trivial)
+    rwa [Part.get_eq_of_mem (Part.eq_some_iff.mp (ha j))] at hj
+
+/-- The defined values of a term under two related valuations are related by a congruence. -/
+theorem Term.eval_rel_of_isCongruence {Sig : Signature.{u, v} S} {A : PartialAlgebra.{u, v, w} Sig}
+    {Φ : ∀ s, A s → A s → Prop} (hΦ : A.IsCongruence Φ) {X : S → Type}
+    {val val' : ∀ s, X s → Part (A s)}
+    (hv : ∀ s x (h : (val s x).Dom) (h' : (val' s x).Dom), Φ s ((val s x).get h) ((val' s x).get h')) :
+    ∀ {t : S} (R : Term Sig X t) (h : (R.eval A val).Dom) (h' : (R.eval A val').Dom),
+      Φ t ((R.eval A val).get h) ((R.eval A val').get h')
+  | _, .var x, h, h' => hv _ x h h'
+  | _, .app σ ts, h, h' => by
+    obtain ⟨a, ha, hA⟩ := Term.eval_app_dom A val σ h
+    obtain ⟨b, hb, hB⟩ := Term.eval_app_dom A val' σ h'
+    have hd : (A.op σ a).Dom := hA ▸ h
+    have hd' : (A.op σ b).Dom := hB ▸ h'
+    rw [Part.get_eq_get_of_eq _ _ hA, Part.get_eq_get_of_eq _ _ hB]
+    refine hΦ.2 σ a b hd hd' fun j => ?_
+    have hj := Term.eval_rel_of_isCongruence hΦ hv (ts j) (by rw [ha j]; trivial)
+      (by rw [hb j]; trivial)
+    rwa [Part.get_eq_of_mem (Part.eq_some_iff.mp (ha j)),
+      Part.get_eq_of_mem (Part.eq_some_iff.mp (hb j))] at hj
+
 namespace GenEpDerivor
 
 variable {Sg : EpSignature.{u, v} S} {Lg : EpSignature.{u', v'} T} (δ : GenEpDerivor Sg Lg)
@@ -567,11 +608,17 @@ $`\mathbf{B}` a partial $`\Lambda`-algebra.
 ```lean
 theorem isClosedSubset_derived {Y : ∀ t, Set (B t)} (hY : B.IsClosedSubset Y) :
     (δ.derived B).IsClosedSubset fun s => {b | b.1 ∈ Y (δ.sortMap s)} := by
-  sorry
+  intro ws s σ a ha h
+  exact Term.eval_mem_of_isClosedSubset hY (fun t x hx => by obtain ⟨j, rfl⟩ := x; exact ha j)
+    (δ.op σ) _
 
 theorem isCongruence_derived {Φ : ∀ t, B t → B t → Prop} (hΦ : B.IsCongruence Φ) :
     (δ.derived B).IsCongruence fun s b b' => Φ (δ.sortMap s) b.1 b'.1 := by
-  sorry
+  refine ⟨fun s => ⟨fun x => (hΦ.1 _).refl x.1, fun h => (hΦ.1 _).symm h,
+    fun h h' => (hΦ.1 _).trans h h'⟩, ?_⟩
+  intro ws s σ a b _ _ hab
+  exact Term.eval_rel_of_isCongruence hΦ
+    (fun t x h h' => by obtain ⟨j, rfl⟩ := x; exact hab j) (δ.op σ) _ _
 ```
 :::
 
@@ -656,8 +703,8 @@ noncomputable def restrict {E : Set (QEEq Sg.sig V)} {F : Set (QEEq Lg.sig V')}
     EpSpec.EpAlg.{u', v', w} (EpSpec.mk Lg F) ⥤ EpSpec.EpAlg.{u, v, w} (EpSpec.mk Sg E) where
   obj B := ⟨δ.derived B.1, h B.1 B.2⟩
   map f := δ.derivedMap (B := _) (B' := _) f
-  map_id _ := by sorry
-  map_comp _ _ := by sorry
+  map_id _ := PartialAlgebra.Hom.ext fun _ _ => rfl
+  map_comp _ _ := PartialAlgebra.Hom.ext fun _ _ => rfl
 ```
 :::
 
