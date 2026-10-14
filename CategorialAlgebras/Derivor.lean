@@ -530,6 +530,8 @@ lemma comp_assoc {U : Type u''} {V : Type u} {Om : Signature.{u'', v''} U}
 
 end Derivor
 
+-- Derivors between signatures in `Type u` with symbols in `Type v` live in `Type (max u v)`.
+set_option linter.checkUnivs false in
 instance : CategoryTheory.Category.{max u v} ManySortedSignature.{u, v} where
   Hom A B := Derivor A.sig B.sig
   id A := Derivor.id A.sig
