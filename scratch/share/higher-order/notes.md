@@ -59,9 +59,10 @@ the library's own.
 
 ## Open: what the library could not do
 
-- **`SDiscretization`**. The subsection has only its title: there is no
-  definition of discretization to formalize, and nothing else in the draft
-  uses it.
+- **`SDiscretization`**. When this was written the subsection had only its
+  title. The draft now defines discretization through the derivor
+  `DDiscDerivor` (a generalized ep-derivor), so it can be formalized on top
+  of `SGenEpDerivors`.
 
 ## Decided: `PUnivPropCatAlg` as a pseudo-limit (2026-10-14)
 
@@ -81,6 +82,30 @@ with them. Fullness and faithfulness are the first part of `CLimitNat`; essentia
 surjectivity is the limit of a compatible family, built as the union of the
 chain of cells. The form with functors, and the second part of `CLimitNat`, follow
 formally and are stated only in prose.
+
+## Second scope: generalized ep-derivors (2026-10-14)
+
+The group chose to follow the draft: first `SGenEpDerivors`, then
+graduation, unification and discretization as instances of it. The section
+`SGenEpDerivors` is formalized and proved in the documents
+`Derivor`, `EpSignature`, `GenEpDerivor` and `GenEpComposition`. Decisions:
+
+- The variables of a word are its positions (`Vars κ`), as the draft's
+  identification `j ↦ v^s_j` suggests; a family is a valuation.
+- Valuations are partial, so `RSubst` needs no hypothesis.
+- (GEP2) is asked for every numbering of the variables of each QE-equation,
+  which is equivalent to the draft's "after renaming".
+- `Dom_d`, `dfd_d` and `tr_d` are defined by well-founded recursion along
+  the precedence of the ep-signature, as in the draft (general case kept).
+- `LGenEpComp` and the identity law hold up to isomorphisms that send every
+  cell to itself, as with `PUnivPropCatAlg`: `Alg_gd` is a pseudofunctor,
+  and `epAlg_gd` is Mathlib's `CoGrothendieck` of it.
+- The composite uses `Cn`, which ranges over the algebras of a fixed universe;
+  the objects of `epSig_gd` record that universe.
+
+Next, in the order of the draft: `SGraduation` (graduation and unification,
+the passage between the single-set and the globular presentations), then
+`SDiscretization` and the rest of `STruncation`, then dimension ω.
 
 ## Left out on 2026-10-08
 
