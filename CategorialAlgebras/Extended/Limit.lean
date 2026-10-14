@@ -6,7 +6,7 @@ open Verso.Genre Manual InlineLean Stemma
 
 #doc (Stemma) "Extended ω-categorial algebras as a projective limit" =>
 
-This document proves Proposition `PUnivPropExtCatAlg` of the draft: the category
+This document proves Proposition `PUnivPropGlCatAlg` of the draft: the category
 $`\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)`, with the truncation functors
 $`T^{\mathrm{ext}(n,\omega)}_{\Sigma}`, is the projective limit of the projective system of the
 categories $`\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)` and the truncation functors
@@ -632,7 +632,7 @@ $`\langle F_k \rangle_{k \in \mathbb{N}} \colon \mathsf{L} \to \omega\mathsf{Cat
 such that $`F_n = T^{\mathrm{ext}(n,\omega)}_{\Sigma} \circ \langle F_k \rangle_{k \in \mathbb{N}}`
 for every $`n \in \mathbb{N}`.
 
-Together with Remark `RTmnExtCatAlgProjSys`, this says that
+Together with Remark `RTmnGlCatAlgProjSys`, this says that
 $`(\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma), T^{\mathrm{ext}(\cdot,\omega)}_{\Sigma})`
 is the projective limit of the projective system
 $`((\cdot)\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma), T^{\mathrm{ext}(\cdot)}_{\Sigma})` in

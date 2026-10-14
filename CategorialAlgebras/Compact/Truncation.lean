@@ -212,7 +212,7 @@ $`T^{(m,n)}_{\Sigma} \circ T^{(n,p)}_{\Sigma} = T^{(m,p)}_{\Sigma}` on the nose:
 where the cells of a truncation are a subset of the cells, they hold; in the formalization, a
 cell of the truncation is a cell together with a proof that it has the right dimension, and the
 two sides only agree up to the canonical isomorphism. In the extended presentation the
-equations hold on the nose (Remark `RTmnExtCatAlgProjSys`).
+equations hold on the nose (Remark `RTmnGlCatAlgProjSys`).
 
 ```lean
 def truncation_comp_iso (Sig : Signature.{u, v} S) {m n p : ℕ} (hmn : m ≤ n) (hnp : n ≤ p) :

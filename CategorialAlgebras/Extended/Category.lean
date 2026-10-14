@@ -12,7 +12,7 @@ In the *extended* presentation of a higher-order category the cells of each dime
 separate set: $`C_k` is the set of $`k`-cells, and for $`j < k` there are mappings sending a
 $`k`-cell to its $`(j,k)`-source and $`(j,k)`-target, a mapping sending a $`j`-cell to its
 $`(k,j)`-identity, and a partial $`j`-composition of $`k`-cells. This is the presentation of
-Section `SExtended` of the draft (the extended $`\omega`-categories of Definition `DOmegaCatExt`). The formalization
+Section `SGlobular` of the draft (the extended $`\omega`-categories of Definition `DOmegaCatGl`). The formalization
 is ported from the group's repository
 [`higher_category_theory`](https://github.com/mariovagomarzal/higher_category_theory), where it
 is called *many-sorted*.
@@ -248,7 +248,7 @@ theorem PreCategory.injetive_idm {Index : Type} [Preorder Index] {C : TypeFamily
 ```
 
 The conditions that relate three dimensions $`i < j < k` are (MS1), (MS3), (MS4), (MS8) and
-(MS9) of Definition `DOmegaCatExt` of the draft; in this form they are those of the ported repository.
+(MS9) of Definition `DOmegaCatGl` of the draft; in this form they are those of the ported repository.
 
 :::definition (label := "extended.category") (central := false) (title := "Extended higher-order category")
 An *extended category with dimensions in* $`I` is an extended precategory such that, for all
@@ -432,7 +432,7 @@ attribute [simp] scji_sckj_eq_scki scji_tgkj_eq_scki tgji_tgkj_eq_tgki tgji_sckj
 :::definition (label := "extended.n-category") (central := false) (title := "Extended n-category and ω-category")
 An *extended* $`n`-*category* is an extended category with dimensions in
 $`n + 1 = \{0, \ldots, n\}`, and an *extended* $`\omega`-*category* one with dimensions in
-$`\mathbb{N}` (Definition `DOmegaCatExt` of the draft and the paragraph after it).
+$`\mathbb{N}` (Definition `DOmegaCatGl` of the draft and the paragraph after it).
 
 ```lean
 abbrev NCategory (n : ℕ) (C : NTypeFamily.{u} n) := Category (FinSucc n) C

@@ -151,7 +151,7 @@ $`n`-*categorial signature determined by* $`\Sigma`, $`\Sigma^{(n)}`, is the exp
 $`\Sigma` obtained by adding, for every $`k \in n` and every $`s \in S`, two operation symbols
 $`\mathrm{sc}^{k}_{s}` and $`\mathrm{tg}^{k}_{s}` of arity $`(s)` and coarity $`s`, the
 $`k`-source and the $`k`-target, and an operation symbol $`\circ^{k}_{s}` of arity $`(s, s)`
-and coarity $`s`, the $`k`-composition (Definition `DSigmaCatCompact` of the draft).
+and coarity $`s`, the $`k`-composition (Definition `DSigmaCatSingleSet` of the draft).
 
 ```lean
 inductive CompactSignature (Sig : Signature.{u, v} S) (n : ℕ) : List S → S → Type (max u v)

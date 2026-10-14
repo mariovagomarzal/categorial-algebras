@@ -7,7 +7,7 @@ open Verso.Genre Manual InlineLean Stemma
 
 #doc (Stemma) "Partial algebras and QE-equations" =>
 
-Definitions `DVarCompact` and `DVarExtended` of the draft present categorial algebras as a $`\mathrm{QE}`$-variety of
+Definitions `DVarSingleSet` and `DVarGlobular` of the draft present categorial algebras as a $`\mathrm{QE}`$-variety of
 partial algebras: models of a set of quasi-existence equations. The notions of partial
 algebra, term, existence equation and $`\mathrm{QE}`$-equation are those of the preliminaries
 of the draft (Definitions `DPartialAlg` and `DQEEq`), the usual ones for

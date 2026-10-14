@@ -7,7 +7,7 @@ open Verso.Genre Manual InlineLean Stemma
 #doc (Stemma) "Compact functors" =>
 
 A compact functor is a mapping between the sets of cells that preserves, at every dimension,
-sources, targets and composition (Definitions `DCompactCat`, `DCompact2Cat` and `DCompactnCat` of the draft). As for the categories,
+sources, targets and composition (Definitions `DSingleSetCat`, `DSingleSet2Cat` and `DSingleSetnCat` of the draft). As for the categories,
 the definition is given once for every preordered set of dimensions, and ported from the
 group's repository `higher_category_theory`.
 
@@ -152,7 +152,7 @@ attribute [coe] Cat.carrier
 Compact categories with dimensions in $`I` and compact functors form a category, with the
 composition and identities defined above. For $`I = n` this is
 the category $`\mathsf{nCat}` of compact $`n`-categories and compact $`n`-functors
-(Definition `DCompactnCat` of the draft).
+(Definition `DSingleSetnCat` of the draft).
 
 ```lean
 instance Cat.category {Index : Type} [Preorder Index] :
