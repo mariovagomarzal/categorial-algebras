@@ -16,6 +16,27 @@ namespace CategorialAlgebras
 
 open Signature Term
 
+/-- The argument of a unary operation symbol. -/
+def arityOne {S : Type u} {A : S → Type w} {t : S} (a : A t) : Arity A [t] := fun | ⟨0, _⟩ => a
+
+/-- The arguments of a binary operation symbol. -/
+def arityTwo {S : Type u} {A : S → Type w} {t t' : S} (a : A t) (b : A t') : Arity A [t, t'] :=
+  fun | ⟨0, _⟩ => a | ⟨1, _⟩ => b
+
+section
+variable {S : Type u} {Sig : Signature.{u, v} S} {A : PartialAlgebra.{u, v, w} Sig} {V : S → Type}
+  {val : ∀ s, V s → Part (A s)}
+
+lemma eval_app₁_arity {t t' : S} (σ : Sig [t] t') {r : Term Sig V t} {a : A t}
+    (h : r.eval A val = Part.some a) : (app₁ σ r).eval A val = A.op σ (arityOne a) := by
+  rw [eval_app₁_of_eq_some _ _ _ h]; rfl
+
+lemma eval_app₂_arity {t₀ t₁ t' : S} (σ : Sig [t₀, t₁] t') {r : Term Sig V t₀} {r' : Term Sig V t₁}
+    {a : A t₀} {b : A t₁} (h : r.eval A val = Part.some a) (h' : r'.eval A val = Part.some b) :
+    (app₂ σ r r').eval A val = A.op σ (arityTwo a b) := by
+  rw [eval_app₂_of_eq_some _ _ _ h h']; rfl
+end
+
 namespace GenEpDerivor
 
 variable {S T : Type u} {Sg : EpSignature.{u, v} S} {Lg : EpSignature.{u, v} T}
