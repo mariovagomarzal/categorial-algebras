@@ -431,16 +431,62 @@ variable {Sg : EpSignature.{u, v} S} {Lg : EpSignature.{u, v} T} (δ : GenEpDeri
 def withDom (D' : ∀ s, Set (EEq Lg.sig (Vars fun _ : Unit => δ.sortMap s))) : GenEpDerivor Sg Lg :=
   { δ with sortDom := D' }
 
+/-- A cell of `(φ, D, d)*(𝐁)` as a cell of `(φ, D', d)*(𝐁)`. -/
+def toWithDom {D' : ∀ s, Set (EEq Lg.sig (Vars fun _ : Unit => δ.sortMap s))}
+    {B : PartialAlgebra.{u, v, w} Lg.sig}
+    (h : ∀ s (b : B (δ.sortMap s)),
+      EEq.HoldsAll B (val₁ b) (δ.sortDom s) ↔ EEq.HoldsAll B (val₁ b) (D' s))
+    (s : S) (x : δ.derived B s) : (δ.withDom D').derived B s :=
+  ⟨x.1, (h s x.1).mp x.2⟩
+
+theorem withDom_op_agree {D' : ∀ s, Set (EEq Lg.sig (Vars fun _ : Unit => δ.sortMap s))}
+    {B : PartialAlgebra.{u, v, w} Lg.sig}
+    (h : ∀ s (b : B (δ.sortMap s)),
+      EEq.HoldsAll B (val₁ b) (δ.sortDom s) ↔ EEq.HoldsAll B (val₁ b) (D' s))
+    (σ : Op Sg.sig) (a : Arity (δ.derived B) σ.ws) :
+    ((δ.withDom D').derived B).op σ.σ (fun j => δ.toWithDom h _ (a j)) =
+      ((δ.derived B).op σ.σ a).map (δ.toWithDom h σ.s) := by
+  refine Sg.op_agree (δ.toWithDom h)
+    (fun s x y hxy => Subtype.ext (congrArg (fun z : (δ.withDom D').derived B s => z.1) hxy))
+    (fun {ws s} σ a hdef => ?_) σ a
+  apply Part.ext'
+  · show _ ↔ ((δ.derived B).op σ a).Dom
+    rw [op_derived_dom_iff, op_derived_dom_iff, hdef]
+    constructor
+    · rintro ⟨hdf, hd, hc⟩
+      exact ⟨hdf, hd, (h s _).mpr hc⟩
+    · rintro ⟨hdf, hd, hc⟩
+      exact ⟨hdf, hd, (h s _).mp hc⟩
+  · intro _ _
+    rfl
+
 /-- `(φ, D, d)*(𝐁) ≅ (φ, D', d)*(𝐁)` when `D` and `D'` hold for the same elements of `𝐁`. -/
 noncomputable def withDomIso (D' : ∀ s, Set (EEq Lg.sig (Vars fun _ : Unit => δ.sortMap s)))
     (B : PartialAlgebra.{u, v, w} Lg.sig)
     (h : ∀ s (b : B (δ.sortMap s)),
       EEq.HoldsAll B (val₁ b) (δ.sortDom s) ↔ EEq.HoldsAll B (val₁ b) (D' s)) :
     δ.derived B ≅ (δ.withDom D').derived B where
-  hom := ⟨fun s x => ⟨x.1, (h s x.1).mp x.2⟩, by sorry, by sorry⟩
-  inv := ⟨fun s x => ⟨x.1, (h s x.1).mpr x.2⟩, by sorry, by sorry⟩
-  hom_inv_id := by sorry
-  inv_hom_id := by sorry
+  hom :=
+    { map := δ.toWithDom h
+      map_dom := fun σ a hd => by
+        rw [δ.withDom_op_agree h ⟨_, _, σ⟩ a]
+        exact hd
+      map_op := fun σ a hd =>
+        (Part.get_eq_get_of_eq _ _ (δ.withDom_op_agree h ⟨_, _, σ⟩ a)).symm }
+  inv :=
+    { map := fun s x => ⟨x.1, (h s x.1).mpr x.2⟩
+      map_dom := fun σ a hd => by
+        have := δ.withDom_op_agree h ⟨_, _, σ⟩ fun j => ⟨(a j).1, (h _ (a j).1).mpr (a j).2⟩
+        have hd' : (((δ.withDom D').derived B).op σ
+            fun j => δ.toWithDom h _ ⟨(a j).1, (h _ (a j).1).mpr (a j).2⟩).Dom := hd
+        rw [this] at hd'
+        exact hd'
+      map_op := fun {_ s} σ a hd => by
+        have := δ.withDom_op_agree h ⟨_, _, σ⟩ fun j => ⟨(a j).1, (h _ (a j).1).mpr (a j).2⟩
+        exact Subtype.ext (congrArg (fun z : (δ.withDom D').derived B s => z.1)
+          (Part.get_eq_get_of_eq _ hd this)) }
+  hom_inv_id := PartialAlgebra.Hom.ext fun _ _ => rfl
+  inv_hom_id := PartialAlgebra.Hom.ext fun _ _ => rfl
 
 end GenEpDerivor
 ```
