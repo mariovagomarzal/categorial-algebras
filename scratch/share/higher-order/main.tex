@@ -1007,7 +1007,7 @@ Let $\mathsf{A}$ and $\mathsf{X}$ be categories. An \emph{adjunction from $\math
 
 The general derivors of~\cite{LG18} are morphisms between order-sorted signatures with predicates which send every sort to a formula that delimits, inside the interpretation of the image sort, the elements that interpret it, and every operation symbol to a formula. The equationally partial signatures of~\cite{Rei87} are signatures in which every operation symbol carries a set of existence equations that describes its domain of definition. In this section we combine both ideas in the notion of generalized hep-derivor. We need neither the order on the sorts nor the predicates of~\cite{LG18} and, instead of arbitrary formulas, we use existence equations: a generalized hep-derivor sends every sort to a set of existence equations in one variable, which delimits the elements that interpret the sort, and every operation symbol to a term, whose domain in the transformed algebras is determined by the domain conditions of the operation symbol.
 
-We begin by recalling the notions of ep-signature and of ep-algebra, and by introducing the hierarchical ep-signatures, or hep-signatures, together with their specifications, their ep-varieties, the categories canonically associated to them and the semantic consequence operators they determine. Next we define the generalized hep-derivors and we prove that every generalized hep-derivor induces a functor between the categories of partial algebras. Then we characterize when the restriction of such a functor to the category canonically associated to the ep-variety of a hep-specification corestricts to the category canonically associated to the ep-variety of another one. After that, we translate the existence equations along a generalized hep-derivor. We end this section by defining the composition of closed generalized hep-derivors, and by proving that the hep-specifications and the closed generalized hep-derivors form a category, $\mathsf{HepSpec}_{\mathfrak{gd}}$, and that the ep-algebras of the hep-specifications form, by means of the Grothendieck construction, a category $\mathsf{HEPAlg}_{\mathfrak{gd}}$. We use the notions on terms, substitutions and derivors recalled in Subsections~\ref{STermsEq} and~\ref{SPrelimDerivors}.
+We begin by recalling the notions of ep-signature and of ep-algebra, and by introducing the hierarchical ep-signatures, or hep-signatures, together with their specifications, their ep-varieties and the categories canonically associated to them. Next we define the generalized hep-derivors and we prove that every generalized hep-derivor induces a functor between the categories of partial algebras. Then we characterize when the restriction of such a functor to the category canonically associated to the ep-variety of a hep-specification corestricts to the category canonically associated to the ep-variety of another one. We end this section by proving that the hep-signatures and the generalized hep-derivors form a category, $\mathsf{hepSig}_{\mathfrak{gd}}$, by comparing the functor induced by a composition with the composite of the induced functors, and by assembling the ep-algebras of all the hep-signatures into a category $\mathsf{hepAlg}_{\mathfrak{gd}}$. We use the notions on terms, substitutions and derivors recalled in Subsections~\ref{STermsEq} and~\ref{SPrelimDerivors}.
 
 \subsection{ep-signatures, hep-signatures and their specifications}\label{SEpSignatures}
 
@@ -1083,43 +1083,6 @@ Let $(\mathbf{\Sigma},\mathcal{E})$ be an ep-specification. We will say that a $
 \end{definition}
 
 Let us note that $\mathcal{V}(\mathbf{\Sigma},\varnothing)$ is the class of all the $\mathbf{\Sigma}$-algebras, so that $\mathsf{EPAlg}(\mathbf{\Sigma},\varnothing)=\mathsf{EPAlg}(\mathbf{\Sigma})$.
-
-An ep-specification also determines which existence equations follow from others in its models. This is the content of the following definition.
-
-\begin{definition}\label{DCn}
-Let $(\mathbf{\Sigma},\mathcal{E})$ be an ep-specification, with $\mathbf{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$, and $X$ an $S$-sorted set. We let $\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}_{X}$ stand for the mapping that assigns to every set of $\mathrm{E}$-equations $\mathcal{H}\subseteq\mathrm{Eeqt}(\Sigma)_{X}$ the set of $\mathrm{E}$-equations $\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}_{X}(\mathcal{H})\subseteq\mathrm{Eeqt}(\Sigma)_{X}$ defined, for every $s\in S$, as
-$$
-\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}_{X}(\mathcal{H})_{s}=
-\left\lbrace(P,Q)\in\mathrm{Eeqt}(\Sigma)_{X,s}\,\middle|\,
-\begin{array}{l}
-\forall\mathbf{A}\in\mathcal{V}(\mathbf{\Sigma},\mathcal{E}),\
-\forall a\in A_{X}\\
-\left(\mathbf{A}\models\mathcal{H}[a]\ \Rightarrow\ \mathbf{A}\models(P,Q)[a]\right)
-\end{array}
-\right\rbrace.
-$$
-We will call $\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}_{X}(\mathcal{H})$ the set of the \emph{consequences} of $\mathcal{H}$ in $(\mathbf{\Sigma},\mathcal{E})$, and we will say that $\mathcal{H}$ is \emph{closed} in $(\mathbf{\Sigma},\mathcal{E})$ if $\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}_{X}(\mathcal{H})=\mathcal{H}$. We omit the subscript $X$ when this is unlikely to cause confusion.
-\end{definition}
-
-In the following lemma we collect the properties of the consequence operators that we need.
-
-\begin{lemma}\label{LCn}
-Let $(\mathbf{\Sigma},\mathcal{E})$ be an ep-specification, with $\mathbf{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$, $X$ an $S$-sorted set and $\mathcal{H}$, $\mathcal{H}'\subseteq\mathrm{Eeqt}(\Sigma)_{X}$. Then the following statements hold:
-\begin{enumerate}
-\item $\mathcal{H}\subseteq\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathcal{H})$ and $\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathcal{H}))=\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathcal{H})$; in particular, $\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathcal{H})$ is closed in $(\mathbf{\Sigma},\mathcal{E})$;
-\item for every $\mathbf{A}$ in $\mathcal{V}(\mathbf{\Sigma},\mathcal{E})$ and every $a\in A_{X}$, $\mathbf{A}\models\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathcal{H})[a]$ if, and only if, $\mathbf{A}\models\mathcal{H}[a]$; and
-\item if $\mathcal{H}$ and $\mathcal{H}'$ are closed in $(\mathbf{\Sigma},\mathcal{E})$, then $\mathcal{H}=\mathcal{H}'$ if, and only if, for every $\mathbf{A}$ in $\mathcal{V}(\mathbf{\Sigma},\mathcal{E})$ and every $a\in A_{X}$, $\mathbf{A}\models\mathcal{H}[a]$ if, and only if, $\mathbf{A}\models\mathcal{H}'[a]$.
-\end{enumerate}
-\end{lemma}
-\begin{proof}
-(1) Let $s\in S$ and $(P,Q)\in\mathcal{H}_{s}$. For every $\mathbf{A}$ in $\mathcal{V}(\mathbf{\Sigma},\mathcal{E})$ and every $a\in A_{X}$ such that $\mathbf{A}\models\mathcal{H}[a]$, in particular, $\mathbf{A}\models(P,Q)[a]$. Hence $(P,Q)\in\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathcal{H})_{s}$. This proves the inclusion, and, applied to $\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathcal{H})$, it proves that $\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathcal{H})\subseteq\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathcal{H}))$. Conversely, let $(P,Q)$ be an $\mathrm{E}$-equation of sort $s$ in $\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathcal{H}))$, $\mathbf{A}$ in $\mathcal{V}(\mathbf{\Sigma},\mathcal{E})$ and $a\in A_{X}$ such that $\mathbf{A}\models\mathcal{H}[a]$. By Definition~\ref{DCn}, $\mathbf{A}\models\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathcal{H})[a]$, hence $\mathbf{A}\models(P,Q)[a]$. Thus $(P,Q)\in\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathcal{H})_{s}$.
-
-(2) If $\mathbf{A}\models\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathcal{H})[a]$, then, by (1), $\mathbf{A}\models\mathcal{H}[a]$. Conversely, if $\mathbf{A}\models\mathcal{H}[a]$, then, by Definition~\ref{DCn}, every equation of $\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathcal{H})$ holds in $\mathbf{A}$ with respect to $a$.
-
-(3) If $\mathcal{H}=\mathcal{H}'$, there is nothing to prove. Conversely, let us assume that $\mathcal{H}$ and $\mathcal{H}'$ have the same models in $\mathcal{V}(\mathbf{\Sigma},\mathcal{E})$, in the stated sense. Then, by Definition~\ref{DCn}, every equation of $\mathcal{H}$ is in $\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\mathcal{H}')$, which, since $\mathcal{H}'$ is closed, is $\mathcal{H}'$. Thus $\mathcal{H}\subseteq\mathcal{H}'$ and, by the same argument, $\mathcal{H}'\subseteq\mathcal{H}$.
-
-This completes the proof.
-\end{proof}
 
 \subsection{Generalized hep-derivors}\label{SGenHepDerivorsDef}
 
@@ -1399,84 +1362,94 @@ Let us note that, by Proposition~\ref{PTransformedEpAlg}, condition (GHEP1) hold
 \end{enumerate}
 \end{remark}
 
-\subsection{Translation of existence equations}\label{STranslation}
+\subsection{The category \texorpdfstring{$\mathsf{hepSig}_{\mathfrak{gd}}$}{hepSiggd}}\label{SHepSigCat}
 
-In order to compose generalized hep-derivors, we have to express, in a partial $\Omega$-algebra $\mathbf{C}$, that an existence equation of $\Lambda$ holds in the transformed algebra of $\mathbf{C}$ along a generalized hep-derivor from $\mathbf{\Lambda}$ to $\mathbf{\Omega}$. In this subsection we translate the existence equations along a generalized hep-derivor to this end. Since the domain of an operation symbol in a transformed algebra is determined by its domain conditions, the translation is defined by well-founded recursion along $\lhd$. Throughout this subsection, $\mathbf{\Omega}=(U,\Omega,\mathrm{def}^{(U,\Omega)})$ is a hep-signature and $\mathbf{e}=(\psi,e,\mathrm{Dom}^{(\psi,e)})$ is a generalized hep-derivor from $\mathbf{\Lambda}$ to $\mathbf{\Omega}$. For every $t\in T$, we regard $\mathrm{Dom}^{(\psi,e)}_{t}$ as a set of $\mathrm{E}$-equations with variables in $\vs{\psi(t)}=\vs{\psi^{\star}((t))}$, and, for every $\mathbf{t}\in T^{\star}$, we let $e^{\sharp}$ stand for the mapping from $\mathrm{T}_{\Lambda}(\vs{\mathbf{t}})$ to $\mathrm{T}_{\Omega}(\vs{\psi^{\star}(\mathbf{t})})$ determined by $(\psi,e)$, see~(H1) and~(H2).
+In this subsection we prove that the hep-signatures and the generalized hep-derivors form a category. Throughout this subsection, $\mathbf{\Omega}=(U,\Omega,\mathrm{def}^{(U,\Omega)})$ and $\mathbf{\Xi}=(W,\Xi,\mathrm{def}^{(W,\Xi)})$ are hep-signatures. For a derivor $(\psi,e)$ from $(T,\Lambda)$ to $(U,\Omega)$, a word $\mathbf{t}\in T^{\star}$ and a set of $\mathrm{E}$-equations $\mathcal{H}\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\mathbf{t}}}$, we let $e^{\sharp}[\mathcal{H}]\subseteq\mathrm{Eeqt}(\Omega)_{\vs{\psi^{\star}(\mathbf{t})}}$ stand for the set of $\mathrm{E}$-equations $\{(e^{\sharp}(P),e^{\sharp}(Q))\mid(P,Q)\in\mathcal{H}\}$, see~(H1) and~(H2).
 
-\begin{definition}\label{DTranslation}
-We define, by well-founded recursion along $\lhd$, for every $(\mathbf{r},t)\in T^{\star}\times T$ and every $\lambda\in\Lambda_{\mathbf{r},t}$, a set of $\mathrm{E}$-equations
+\begin{definition}\label{DHepComp}
+Let $\mathbf{d}=(\varphi,d,\mathrm{Dom}^{(\varphi,d)})$ be a generalized hep-derivor from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ and $\mathbf{e}=(\psi,e,\mathrm{Dom}^{(\psi,e)})$ a generalized hep-derivor from $\mathbf{\Lambda}$ to $\mathbf{\Omega}$. The \emph{composition} of $\mathbf{d}$ and $\mathbf{e}$ is the generalized hep-derivor
 $$
-\mathrm{D}_{\mathbf{e}}(\lambda)\subseteq\mathrm{Eeqt}(\Omega)_{\vs{\psi^{\star}(\mathbf{r})}},
+\mathbf{e}\circ\mathbf{d}=\left(\psi\circ\varphi,e^{\sharp}\circ d,\mathrm{Dom}^{\mathbf{e}\circ\mathbf{d}}\right)
 $$
-the \emph{translated domain} of $\lambda$ along $\mathbf{e}$, together with the following translations of the terms and of the $\mathrm{E}$-equations whose operation symbols have already been considered.
-\begin{enumerate}
-\item[(T1)] For every $\mathbf{t}\in T^{\star}$, every $t'\in T$ and every term $P\in\mathrm{T}_{\Lambda}(\vs{\mathbf{t}})_{t'}$, the set $\mathrm{def}_{\mathbf{e}}(P)\subseteq\mathrm{Eeqt}(\Omega)_{\vs{\psi^{\star}(\mathbf{t})}}$ of the \emph{definedness conditions} of $P$ along $\mathbf{e}$ is defined by recursion on $P$ as follows:
-\begin{enumerate}
-\item if $P$ is a variable, then $\mathrm{def}_{\mathbf{e}}(P)=\varnothing$; and
-\item if $P=\tau((P_{j})_{j\in\bb{\mathbf{r}'}})$, with $\tau\in\Lambda_{\mathbf{r}',t'}$, then
+from $\mathbf{\Sigma}$ to $\mathbf{\Omega}$, where $(\psi\circ\varphi,e^{\sharp}\circ d)$ is the composition of the derivors $(\varphi,d)$ and $(\psi,e)$, see~(H3), and, for every $s\in S$,
 $$
-\mathrm{def}_{\mathbf{e}}(P)=\textstyle\bigcup_{j\in\bb{\mathbf{r}'}}\mathrm{def}_{\mathbf{e}}(P_{j})\cup\left(e^{\sharp}(P_{j})\right)^{\sharp}_{j\in\bb{\mathbf{r}'}}\left[\mathrm{D}_{\mathbf{e}}(\tau)\right].
+\mathrm{Dom}^{\mathbf{e}\circ\mathbf{d}}_{s}=\mathrm{Dom}^{(\psi,e)}_{\varphi(s)}\cup e^{\sharp}\left[\mathrm{Dom}^{(\varphi,d)}_{s}\right].
 $$
-\end{enumerate}
-\item[(T2)] For every $\mathbf{t}\in T^{\star}$, every $t'\in T$ and every $\mathrm{E}$-equation $(P,Q)\in\mathrm{Eeqt}(\Lambda)_{\vs{\mathbf{t}},t'}$, the \emph{translation} of $(P,Q)$ along $\mathbf{e}$ is the set of $\mathrm{E}$-equations
-$$
-\mathrm{tr}_{\mathbf{e}}(P,Q)=\mathrm{def}_{\mathbf{e}}(P)\cup\mathrm{def}_{\mathbf{e}}(Q)\cup\left\lbrace\left(e^{\sharp}(P),e^{\sharp}(Q)\right)\right\rbrace\subseteq\mathrm{Eeqt}(\Omega)_{\vs{\psi^{\star}(\mathbf{t})}},
-$$
-and, for every $\mathcal{H}\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\mathbf{t}}}$, $\mathrm{tr}_{\mathbf{e}}[\mathcal{H}]$ stands for $\bigcup_{t'\in T}\bigcup_{(P,Q)\in\mathcal{H}_{t'}}\mathrm{tr}_{\mathbf{e}}(P,Q)$.
-\item[(T3)] For every $(\mathbf{r},t)\in T^{\star}\times T$ and every $\lambda\in\Lambda_{\mathbf{r},t}$,
-$$
-\mathrm{D}_{\mathbf{e}}(\lambda)=
-\mathrm{tr}_{\mathbf{e}}\left[\mathrm{def}^{(T,\Lambda)}(\lambda)\right]
-\cup\left\lbrace\left(e(\lambda),e(\lambda)\right)\right\rbrace
-\cup\left(e(\lambda)\right)^{\sharp}\left[\mathrm{Dom}^{(\psi,e)}_{t}\right],
-$$
-where $(e(\lambda))^{\sharp}$ is the substitution that sends $v^{\psi(t)}_{0}$ to $e(\lambda)$.
-\end{enumerate}
+The \emph{identity} at $\mathbf{\Sigma}$ is the generalized hep-derivor $\mathrm{id}_{\mathbf{\Sigma}}=(\mathrm{id}_{S},\eta^{\Sigma},\varnothing)$ from $\mathbf{\Sigma}$ to $\mathbf{\Sigma}$, where $(\mathrm{id}_{S},\eta^{\Sigma})$ is the identity derivor at $(S,\Sigma)$, see~(H3), and every domain is empty.
 \end{definition}
 
-Let us note that the above definition is correct. In fact, let $\lambda\in\Lambda_{\mathbf{r},t}$ and assume that $\mathrm{D}_{\mathbf{e}}(\tau)$ has been defined for every $\tau\lhd\lambda$. By Definition~\ref{DHepSignature}, every operation symbol that occurs in an equation of $\mathrm{def}^{(T,\Lambda)}(\lambda)$ satisfies $\tau\lhd\lambda$. Therefore the clauses (T1) and (T2), which, for a term $P$, only use the sets $\mathrm{D}_{\mathbf{e}}(\tau)$ for $\tau\in\mathrm{Op}(P)$, see Definition~\ref{DOpSymbols}, define $\mathrm{tr}_{\mathbf{e}}[\mathrm{def}^{(T,\Lambda)}(\lambda)]$, so that the clause (T3) defines $\mathrm{D}_{\mathbf{e}}(\lambda)$. Since $\lhd$ is well-founded, $\mathrm{D}_{\mathbf{e}}(\lambda)$ is defined for every operation symbol $\lambda$ of $\Lambda$ and, after that, the clauses (T1) and (T2) define $\mathrm{def}_{\mathbf{e}}(P)$ and $\mathrm{tr}_{\mathbf{e}}(P,Q)$ for every term $P$ and every $\mathrm{E}$-equation $(P,Q)$ of $\Lambda$.
+Let us note that $\mathrm{Dom}^{(\psi,e)}_{\varphi(s)}$ and $e^{\sharp}[\mathrm{Dom}^{(\varphi,d)}_{s}]$ are sets of $\mathrm{E}$-equations with variables in $\vs{\psi(\varphi(s))}$, since $\psi^{\star}((\varphi(s)))=(\psi(\varphi(s)))$, so that the above definition is correct.
 
-In the following lemma we prove that the translation along $\mathbf{e}$ expresses in $\mathbf{C}$ what happens in $\mathbf{e}^{\ast}_{\mathfrak{gd}}(\mathbf{C})$.
+\begin{proposition}\label{PHepSigCat}
+The hep-signatures, together with the generalized hep-derivors, the composition and the identities of Definition~\ref{DHepComp}, form a category, which we denote by $\mathsf{hepSig}_{\mathfrak{gd}}$.
+\end{proposition}
+\begin{proof}
+Let $\mathbf{d}=(\varphi,d,\mathrm{Dom}^{(\varphi,d)})$, $\mathbf{e}=(\psi,e,\mathrm{Dom}^{(\psi,e)})$ and $\mathbf{g}=(\chi,g,\mathrm{Dom}^{(\chi,g)})$ be generalized hep-derivors from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$, from $\mathbf{\Lambda}$ to $\mathbf{\Omega}$ and from $\mathbf{\Omega}$ to $\mathbf{\Xi}$, respectively. By~(H4), the underlying derivors of $\mathbf{g}\circ(\mathbf{e}\circ\mathbf{d})$ and of $(\mathbf{g}\circ\mathbf{e})\circ\mathbf{d}$ are equal, and the underlying derivors of $\mathrm{id}_{\mathbf{\Lambda}}\circ\mathbf{d}$ and of $\mathbf{d}\circ\mathrm{id}_{\mathbf{\Sigma}}$ are $(\varphi,d)$. It remains to compare the domains. Let $s\in S$.
 
-\begin{lemma}\label{LTranslation}
-Let $\mathbf{C}$ be a partial $\Omega$-algebra and $\mathbf{B}=\mathbf{e}^{\ast}_{\mathfrak{gd}}(\mathbf{C})$. Then, for every $\mathbf{t}\in T^{\star}$ and every family of cells $\mathbf{c}\in(C_{\mathrm{Dom}^{(\psi,e)}})_{\mathbf{t}}$, the following statements hold:
-\begin{enumerate}
-\item for every $t'\in T$ and every term $P\in\mathrm{T}_{\Lambda}(\vs{\mathbf{t}})_{t'}$, $\mathbf{c}\in\mathrm{Dom}(P^{\mathbf{B}})$ if, and only if, $\mathbf{C}\models\mathrm{def}_{\mathbf{e}}(P)[\mathbf{c}]$, and, in this case, $\mathbf{c}\in\mathrm{Dom}(e^{\sharp}(P)^{\mathbf{C}})$ and
+\textsf{(Associativity)} The following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{Dom}^{\mathbf{g}\circ(\mathbf{e}\circ\mathbf{d})}_{s}
+&=
+\mathrm{Dom}^{(\chi,g)}_{\psi(\varphi(s))}\cup g^{\sharp}\left[\mathrm{Dom}^{(\psi,e)}_{\varphi(s)}\cup e^{\sharp}\left[\mathrm{Dom}^{(\varphi,d)}_{s}\right]\right]
+\tag{1}
+\\&=
+\mathrm{Dom}^{(\chi,g)}_{\psi(\varphi(s))}\cup g^{\sharp}\left[\mathrm{Dom}^{(\psi,e)}_{\varphi(s)}\right]\cup g^{\sharp}\left[e^{\sharp}\left[\mathrm{Dom}^{(\varphi,d)}_{s}\right]\right]
+\tag{2}
+\\&=
+\mathrm{Dom}^{\mathbf{g}\circ\mathbf{e}}_{\varphi(s)}\cup\left(g^{\sharp}\circ e\right)^{\sharp}\left[\mathrm{Dom}^{(\varphi,d)}_{s}\right]
+\tag{3}
+\\&=
+\mathrm{Dom}^{(\mathbf{g}\circ\mathbf{e})\circ\mathbf{d}}_{s}.
+\tag{4}
+\end{align*}
+
+The first equality unravels Definition~\ref{DHepComp}; the second equality follows from the fact that $g^{\sharp}[\,\cdot\,]$ preserves unions; the third equality follows from Definition~\ref{DHepComp} and the equality $(g^{\sharp}\circ e)^{\sharp}=g^{\sharp}\circ e^{\sharp}$, see~(H4); finally, the last equality unravels Definition~\ref{DHepComp}.
+
+\textsf{(Identities)} By Definition~\ref{DHepComp} and~(H3), the following equalities hold
+\begin{align*}
+\mathrm{Dom}^{\mathrm{id}_{\mathbf{\Lambda}}\circ\mathbf{d}}_{s}
+&=\varnothing\cup(\eta^{\Lambda})^{\sharp}\left[\mathrm{Dom}^{(\varphi,d)}_{s}\right]=\mathrm{Dom}^{(\varphi,d)}_{s},
+\\
+\mathrm{Dom}^{\mathbf{d}\circ\mathrm{id}_{\mathbf{\Sigma}}}_{s}
+&=\mathrm{Dom}^{(\varphi,d)}_{s}\cup d^{\sharp}[\varnothing]=\mathrm{Dom}^{(\varphi,d)}_{s},
+\end{align*}
+since $(\eta^{\Lambda})^{\sharp}$ is the identity.
+
+This completes the proof.
+\end{proof}
+
+\subsection{Composition and induced functors}\label{SHepCompFunctors}
+
+In this subsection we compare the functor induced by the composition of two generalized hep-derivors with the composite of the induced functors. The composition of Definition~\ref{DHepComp} translates the domains of $\mathbf{d}$ by means of the terms of $\mathbf{e}$, but these terms may be defined in a partial $\Omega$-algebra $\mathbf{C}$ on more families than the corresponding operations of $\mathbf{e}^{\ast}_{\mathfrak{gd}}(\mathbf{C})$. Therefore both functors need not coincide; we prove that the first one always contains the second one, and that they coincide under a condition that we will check in Sections~\ref{SGraduation} and~\ref{STruncation}. We begin by relating the partial term operations of $\mathbf{e}^{\ast}_{\mathfrak{gd}}(\mathbf{C})$ with those of $\mathbf{C}$.
+
+\begin{lemma}\label{LTermComp}
+Let $\mathbf{e}=(\psi,e,\mathrm{Dom}^{(\psi,e)})$ be a generalized hep-derivor from $\mathbf{\Lambda}$ to $\mathbf{\Omega}$, $\mathbf{C}$ a partial $\Omega$-algebra and $\mathbf{B}=\mathbf{e}^{\ast}_{\mathfrak{gd}}(\mathbf{C})$. Let $\mathbf{t}\in T^{\star}$, $t\in T$, $P\in\mathrm{T}_{\Lambda}(\vs{\mathbf{t}})_{t}$ and $\mathbf{c}\in(C_{\mathrm{Dom}^{(\psi,e)}})_{\mathbf{t}}$. If $\mathbf{c}\in\mathrm{Dom}(P^{\mathbf{B}})$, then $\mathbf{c}\in\mathrm{Dom}(e^{\sharp}(P)^{\mathbf{C}})$ and
 $$
-e^{\sharp}(P)^{\mathbf{C}}(\mathbf{c})=P^{\mathbf{B}}(\mathbf{c});
+e^{\sharp}(P)^{\mathbf{C}}(\mathbf{c})=P^{\mathbf{B}}(\mathbf{c}).
 $$
-\item for every $t'\in T$ and every $\mathrm{E}$-equation $(P,Q)\in\mathrm{Eeqt}(\Lambda)_{\vs{\mathbf{t}},t'}$, $\mathbf{B}\models(P,Q)[\mathbf{c}]$ if, and only if, $\mathbf{C}\models\mathrm{tr}_{\mathbf{e}}(P,Q)[\mathbf{c}]$; consequently, for every $\mathcal{H}\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\mathbf{t}}}$, $\mathbf{B}\models\mathcal{H}[\mathbf{c}]$ if, and only if, $\mathbf{C}\models\mathrm{tr}_{\mathbf{e}}[\mathcal{H}][\mathbf{c}]$; and
-\item for every $t'\in T$ and every $\lambda\in\Lambda_{\mathbf{t},t'}$, $\mathbf{c}\in\mathrm{Dom}(\lambda^{\mathbf{B}})$ if, and only if, $\mathbf{C}\models\mathrm{D}_{\mathbf{e}}(\lambda)[\mathbf{c}]$.
-\end{enumerate}
+Consequently, for every $\mathcal{H}\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\mathbf{t}}}$, if $\mathbf{B}\models\mathcal{H}[\mathbf{c}]$, then $\mathbf{C}\models e^{\sharp}[\mathcal{H}][\mathbf{c}]$.
 \end{lemma}
 \begin{proof}
-Let us note that $\mathbf{c}$ is a valuation of $\vs{\mathbf{t}}$ in the cells of $\mathbf{B}$ and, by~(H1), also a valuation of $\vs{\psi^{\star}(\mathbf{t})}$ in $C$. For a set $\Gamma$ of operation symbols of $\Lambda$, we will say that a term $P$ is a \emph{$\Gamma$-term} if $\mathrm{Op}(P)\subseteq\Gamma$, and that an $\mathrm{E}$-equation $(P,Q)$ is a \emph{$\Gamma$-equation} if $P$ and $Q$ are $\Gamma$-terms. We prove the following claims.
+We proceed by induction on the term $P$.
 
-\begin{claim}\label{CTranslationA}
-Let $\Gamma$ be a set of operation symbols of $\Lambda$ such that statement~(3) holds for every $\lambda\in\Gamma$. Then statement~(1) holds for every $\Gamma$-term and statement~(2) holds for every $\Gamma$-equation.
-\end{claim}
+\textsf{(Variables)} If $P=v^{\mathbf{t}}_{j}$, for some $j\in\bb{\mathbf{t}}$, then, by~(H1), $e^{\sharp}(P)=v^{\psi^{\star}(\mathbf{t})}_{j}$, so that $e^{\sharp}(P)^{\mathbf{C}}(\mathbf{c})=c_{j}=P^{\mathbf{B}}(\mathbf{c})$.
 
-We prove statement~(1) by induction on the $\Gamma$-term $P$.
-
-\textsf{(Variables)} If $P=v^{\mathbf{t}}_{j}$, for some $j\in\bb{\mathbf{t}}$, then $P^{\mathbf{B}}$ is total and $\mathrm{def}_{\mathbf{e}}(P)=\varnothing$. Moreover, by~(H1), $e^{\sharp}(P)=v^{\psi^{\star}(\mathbf{t})}_{j}$, so that $e^{\sharp}(P)^{\mathbf{C}}(\mathbf{c})=c_{j}=P^{\mathbf{B}}(\mathbf{c})$.
-
-\textsf{(Operation symbols)} Let $P=\tau((P_{j})_{j\in\bb{\mathbf{r}'}})$, with $\tau\in\Lambda_{\mathbf{r}',t'}$ in $\Gamma$, and assume that statement~(1) holds for every $P_{j}$. Let us first assume that $\mathbf{c}\in\mathrm{Dom}(P^{\mathbf{B}})$ and let $\mathbf{y}$ stand for the family $(P_{j}^{\mathbf{B}}(\mathbf{c}))_{j\in\bb{\mathbf{r}'}}$. By Definition~\ref{DTermOp}, $\mathbf{c}\in\mathrm{Dom}(P_{j}^{\mathbf{B}})$, for every $j\in\bb{\mathbf{r}'}$, and $\mathbf{y}\in\mathrm{Dom}(\tau^{\mathbf{B}})$. By the induction hypothesis, $\mathbf{C}\models\mathrm{def}_{\mathbf{e}}(P_{j})[\mathbf{c}]$ and $e^{\sharp}(P_{j})^{\mathbf{C}}(\mathbf{c})=P_{j}^{\mathbf{B}}(\mathbf{c})$, for every $j\in\bb{\mathbf{r}'}$. Since $\tau\in\Gamma$, by statement~(3), $\mathbf{C}\models\mathrm{D}_{\mathbf{e}}(\tau)[\mathbf{y}]$, hence, by Remark~\ref{RSubst}, $\mathbf{C}\models(e^{\sharp}(P_{j}))^{\sharp}_{j\in\bb{\mathbf{r}'}}[\mathrm{D}_{\mathbf{e}}(\tau)][\mathbf{c}]$. Thus, by~(T1), $\mathbf{C}\models\mathrm{def}_{\mathbf{e}}(P)[\mathbf{c}]$. Conversely, let us assume that $\mathbf{C}\models\mathrm{def}_{\mathbf{e}}(P)[\mathbf{c}]$. Then, by~(T1), $\mathbf{C}\models\mathrm{def}_{\mathbf{e}}(P_{j})[\mathbf{c}]$, for every $j\in\bb{\mathbf{r}'}$, so that, by the induction hypothesis, $\mathbf{c}\in\mathrm{Dom}(P_{j}^{\mathbf{B}})$ and $e^{\sharp}(P_{j})^{\mathbf{C}}(\mathbf{c})=P_{j}^{\mathbf{B}}(\mathbf{c})$. Moreover, $\mathbf{C}\models(e^{\sharp}(P_{j}))^{\sharp}_{j\in\bb{\mathbf{r}'}}[\mathrm{D}_{\mathbf{e}}(\tau)][\mathbf{c}]$, so that, by Remark~\ref{RSubst}, $\mathbf{C}\models\mathrm{D}_{\mathbf{e}}(\tau)[\mathbf{y}]$ and, by statement~(3), $\mathbf{y}\in\mathrm{Dom}(\tau^{\mathbf{B}})$. Thus, by Definition~\ref{DTermOp}, $\mathbf{c}\in\mathrm{Dom}(P^{\mathbf{B}})$.
-
-In this case, by Proposition~\ref{PTransformedAlg}, $\mathbf{y}\in\mathrm{Dom}(e(\tau)^{\mathbf{C}})$ and $\tau^{\mathbf{B}}(\mathbf{y})=e(\tau)^{\mathbf{C}}(\mathbf{y})$. By~(H2) and Remark~\ref{RSubst}, $\mathbf{c}\in\mathrm{Dom}(e^{\sharp}(P)^{\mathbf{C}})$, and the following chain of equalities holds
+\textsf{(Operation symbols)} Let us assume that $P=\lambda((P_{j})_{j\in\bb{\mathbf{r}}})$, with $\lambda\in\Lambda_{\mathbf{r},t}$, and that the statement holds for every $P_{j}$. Let $\mathbf{c}\in\mathrm{Dom}(P^{\mathbf{B}})$ and let $\mathbf{y}$ stand for the family $(P_{j}^{\mathbf{B}}(\mathbf{c}))_{j\in\bb{\mathbf{r}}}$, which, by Definition~\ref{DTermOp}, is in $\mathrm{Dom}(\lambda^{\mathbf{B}})$. By Proposition~\ref{PTransformedAlg}, $\mathbf{y}\in\mathrm{Dom}(e(\lambda)^{\mathbf{C}})$ and $\lambda^{\mathbf{B}}(\mathbf{y})=e(\lambda)^{\mathbf{C}}(\mathbf{y})$. By~(H2), $e^{\sharp}(P)=(e^{\sharp}(P_{j}))^{\sharp}_{j\in\bb{\mathbf{r}}}(e(\lambda))$. Therefore, by the induction hypothesis and Remark~\ref{RSubst}, $\mathbf{c}\in\mathrm{Dom}(e^{\sharp}(P)^{\mathbf{C}})$, and the following chain of equalities holds
 \allowdisplaybreaks
 \begin{align*}
 e^{\sharp}(P)^{\mathbf{C}}\left(\mathbf{c}\right)
 &=
-\left(\left(e^{\sharp}(P_{j})\right)^{\sharp}_{j\in\bb{\mathbf{r}'}}\left(e(\tau)\right)\right)^{\mathbf{C}}\left(\mathbf{c}\right)
+\left(\left(e^{\sharp}(P_{j})\right)^{\sharp}_{j\in\bb{\mathbf{r}}}\left(e(\lambda)\right)\right)^{\mathbf{C}}\left(\mathbf{c}\right)
 \tag{1}
 \\&=
-e(\tau)^{\mathbf{C}}\left(\left(e^{\sharp}(P_{j})^{\mathbf{C}}(\mathbf{c})\right)_{j\in\bb{\mathbf{r}'}}\right)
+e(\lambda)^{\mathbf{C}}\left(\left(e^{\sharp}(P_{j})^{\mathbf{C}}(\mathbf{c})\right)_{j\in\bb{\mathbf{r}}}\right)
 \tag{2}
 \\&=
-e(\tau)^{\mathbf{C}}\left(\mathbf{y}\right)
+e(\lambda)^{\mathbf{C}}\left(\mathbf{y}\right)
 \tag{3}
 \\&=
-\tau^{\mathbf{B}}\left(\mathbf{y}\right)
+\lambda^{\mathbf{B}}\left(\mathbf{y}\right)
 \tag{4}
 \\&=
 P^{\mathbf{B}}\left(\mathbf{c}\right).
@@ -1485,179 +1458,29 @@ P^{\mathbf{B}}\left(\mathbf{c}\right).
 
 The first equality follows from~(H2); the second equality follows from Remark~\ref{RSubst}; the third equality follows from the induction hypothesis; the fourth equality follows from Proposition~\ref{PTransformedAlg}; finally, the last equality unravels the definition of the partial term operation $P^{\mathbf{B}}$, see Definition~\ref{DTermOp}.
 
-We next prove statement~(2) for a $\Gamma$-equation $(P,Q)$. By Definition~\ref{DEEq}, $\mathbf{B}\models(P,Q)[\mathbf{c}]$ if, and only if, $\mathbf{c}\in\mathrm{Dom}(P^{\mathbf{B}})\cap\mathrm{Dom}(Q^{\mathbf{B}})$ and $P^{\mathbf{B}}(\mathbf{c})=Q^{\mathbf{B}}(\mathbf{c})$. By statement~(1) for $P$ and $Q$, this happens if, and only if, $\mathbf{C}\models\mathrm{def}_{\mathbf{e}}(P)[\mathbf{c}]$, $\mathbf{C}\models\mathrm{def}_{\mathbf{e}}(Q)[\mathbf{c}]$ and $e^{\sharp}(P)^{\mathbf{C}}(\mathbf{c})=e^{\sharp}(Q)^{\mathbf{C}}(\mathbf{c})$, both sides being defined, i.e., by~(T2), if, and only if, $\mathbf{C}\models\mathrm{tr}_{\mathbf{e}}(P,Q)[\mathbf{c}]$. The statement for a set of $\Gamma$-equations follows.
-
-Claim~\ref{CTranslationA} follows.
-
-\begin{claim}\label{CTranslationB}
-Statement~(3) holds for every operation symbol $\lambda$ of $\Lambda$.
-\end{claim}
-
-We proceed by well-founded induction along $\lhd$. Let $\lambda\in\Lambda_{\mathbf{r},t}$ and assume that statement~(3) holds for every $\tau\lhd\lambda$. Let $\mathbf{c}\in(C_{\mathrm{Dom}^{(\psi,e)}})_{\mathbf{r}}$. By Proposition~\ref{PTransformedAlg}, $\mathbf{c}\in\mathrm{Dom}(\lambda^{\mathbf{B}})$ if, and only if, the following conditions hold:
-\begin{enumerate}
-\item[(D1)] $\mathbf{B}\models\mathrm{def}^{(T,\Lambda)}(\lambda)[\mathbf{c}]$;
-\item[(D2)] $\mathbf{c}\in\mathrm{Dom}(e(\lambda)^{\mathbf{C}})$; and
-\item[(D3)] $e(\lambda)^{\mathbf{C}}(\mathbf{c})\in(C_{\mathrm{Dom}^{(\psi,e)}})_{t}$, i.e., $\mathbf{C}\models\mathrm{Dom}^{(\psi,e)}_{t}[e(\lambda)^{\mathbf{C}}(\mathbf{c})]$.
-\end{enumerate}
-By Definition~\ref{DHepSignature}, the equations of $\mathrm{def}^{(T,\Lambda)}(\lambda)$ are $\Gamma$-equations for $\Gamma=\{\tau\mid\tau\lhd\lambda\}$. Hence, by the induction hypothesis and Claim~\ref{CTranslationA}, condition (D1) holds if, and only if, $\mathbf{C}\models\mathrm{tr}_{\mathbf{e}}[\mathrm{def}^{(T,\Lambda)}(\lambda)][\mathbf{c}]$. By Definition~\ref{DEEq}, condition (D2) holds if, and only if, $\mathbf{C}\models(e(\lambda),e(\lambda))[\mathbf{c}]$. Finally, under condition (D2), by Remark~\ref{RSubst}, condition (D3) holds if, and only if, $\mathbf{C}\models(e(\lambda))^{\sharp}[\mathrm{Dom}^{(\psi,e)}_{t}][\mathbf{c}]$. Therefore, by~(T3), $\mathbf{c}\in\mathrm{Dom}(\lambda^{\mathbf{B}})$ if, and only if, $\mathbf{C}\models\mathrm{D}_{\mathbf{e}}(\lambda)[\mathbf{c}]$.
-
-Claim~\ref{CTranslationB} follows.
-
-All in all, by Claim~\ref{CTranslationB}, statement~(3) holds and, by Claim~\ref{CTranslationA} applied to the set $\Gamma$ of all the operation symbols of $\Lambda$, statements~(1) and~(2) hold.
+\textsf{(Equations)} Let $(P,Q)\in\mathcal{H}$ be such that $\mathbf{B}\models(P,Q)[\mathbf{c}]$. Then $P^{\mathbf{B}}(\mathbf{c})$ and $Q^{\mathbf{B}}(\mathbf{c})$ are defined and equal, so that, by the above, $e^{\sharp}(P)^{\mathbf{C}}(\mathbf{c})$ and $e^{\sharp}(Q)^{\mathbf{C}}(\mathbf{c})$ are defined and equal, i.e., $\mathbf{C}\models(e^{\sharp}(P),e^{\sharp}(Q))[\mathbf{c}]$.
 
 This completes the proof.
 \end{proof}
 
-\subsection{The category \texorpdfstring{$\mathsf{HepSpec}_{\mathfrak{gd}}$}{HepSpecgd}}\label{SHepSpecCat}
+In the following lemma we prove that the transformed algebra only depends on the domains through the cells they determine.
 
-In this subsection we prove that the hep-specifications, together with a suitable class of generalized hep-derivors, form a category. The functor induced by a generalized hep-derivor only depends on its domains through the cells they determine, and, in the models of a hep-specification, different sets of existence equations may determine the same cells. Thus, in order to obtain a unique composition, we take as domains the closed sets of existence equations, see Definition~\ref{DCn}. Moreover, we require the induced functors to send models to models, so that composition is compatible with the induced functors.
-
-\begin{definition}\label{DClosedHepDerivor}
-Let $(\mathbf{\Sigma},\mathcal{E})$ and $(\mathbf{\Lambda},\mathcal{F})$ be hep-specifications. A \emph{closed generalized hep-derivor} from $(\mathbf{\Sigma},\mathcal{E})$ to $(\mathbf{\Lambda},\mathcal{F})$ is a generalized hep-derivor $\mathbf{d}=(\varphi,d,\mathrm{Dom}^{(\varphi,d)})$ from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ such that
-\begin{enumerate}
-\item[(CL1)] for every $s\in S$, $\mathrm{Dom}^{(\varphi,d)}_{s}$ is closed in $(\mathbf{\Lambda},\mathcal{F})$, i.e., $\mathrm{Cn}^{(\mathbf{\Lambda},\mathcal{F})}_{\vs{\varphi(s)}}(\mathrm{Dom}^{(\varphi,d)}_{s})=\mathrm{Dom}^{(\varphi,d)}_{s}$, see Definition~\ref{DCn}; and
-\item[(CL2)] the restriction of $\mathbf{d}^{\ast}_{\mathfrak{gd}}$ to $\mathsf{EPAlg}(\mathbf{\Lambda},\mathcal{F})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$, see Definition~\ref{DCorestriction}.
-\end{enumerate}
-We will write $\mathbf{d}\colon(\mathbf{\Sigma},\mathcal{E})\mor(\mathbf{\Lambda},\mathcal{F})$ to indicate that $\mathbf{d}$ is a closed generalized hep-derivor from $(\mathbf{\Sigma},\mathcal{E})$ to $(\mathbf{\Lambda},\mathcal{F})$.
-\end{definition}
-
-Let us note that, by Lemma~\ref{LCn}, every set of $\mathrm{E}$-equations of the form $\mathrm{Cn}^{(\mathbf{\Lambda},\mathcal{F})}(\mathcal{H})$ is closed in $(\mathbf{\Lambda},\mathcal{F})$, and that, in the models of $(\mathbf{\Lambda},\mathcal{F})$, it determines the same cells as $\mathcal{H}$. This is how we will define the domains of the closed generalized hep-derivors of Sections~\ref{SGraduation} and~\ref{STruncation}.
-
-In the following lemma we prove that a closed generalized hep-derivor is determined by its underlying derivor and by the cells it determines in the models of its codomain.
-
-\begin{lemma}\label{LClosedEq}
-Let $(\mathbf{\Sigma},\mathcal{E})$ and $(\mathbf{\Lambda},\mathcal{F})$ be hep-specifications and $\mathbf{d}=(\varphi,d,\mathrm{Dom}^{(\varphi,d)})$ and $\mathbf{d}'=(\varphi',d',\mathrm{Dom}^{(\varphi',d')})$ closed generalized hep-derivors from $(\mathbf{\Sigma},\mathcal{E})$ to $(\mathbf{\Lambda},\mathcal{F})$. Then $\mathbf{d}=\mathbf{d}'$ if, and only if, the following conditions hold:
-\begin{enumerate}
-\item $(\varphi,d)=(\varphi',d')$; and
-\item for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\mathbf{\Lambda},\mathcal{F})$, $B_{\mathrm{Dom}^{(\varphi,d)}}=B_{\mathrm{Dom}^{(\varphi',d')}}$, i.e., $\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ and $\mathbf{d}'^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ have the same underlying $S$-sorted set.
-\end{enumerate}
+\begin{lemma}\label{LSameCells}
+Let $\mathbf{d}=(\varphi,d,\mathrm{Dom})$ and $\mathbf{d}'=(\varphi,d,\mathrm{Dom}')$ be generalized hep-derivors from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ with the same underlying derivor, and $\mathbf{B}$ a partial $\Lambda$-algebra such that $B_{\mathrm{Dom}}=B_{\mathrm{Dom}'}$. Then $\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{B})=\mathbf{d}'^{\ast}_{\mathfrak{gd}}(\mathbf{B})$. Moreover, for every homomorphism $f\colon\mathbf{B}\mor\mathbf{B}'$ of partial $\Lambda$-algebras such that $B'_{\mathrm{Dom}}=B'_{\mathrm{Dom}'}$, $\mathbf{d}^{\ast}_{\mathfrak{gd}}(f)=\mathbf{d}'^{\ast}_{\mathfrak{gd}}(f)$.
 \end{lemma}
 \begin{proof}
-If $\mathbf{d}=\mathbf{d}'$, there is nothing to prove. Conversely, let us assume that conditions~(1) and~(2) hold and let $s\in S$. By condition~(2) and Definition~\ref{DCells}, for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\mathbf{\Lambda},\mathcal{F})$ and every $b\in B_{\varphi(s)}$, $\mathbf{B}\models\mathrm{Dom}^{(\varphi,d)}_{s}[b]$ if, and only if, $\mathbf{B}\models\mathrm{Dom}^{(\varphi',d')}_{s}[b]$. Since, by condition (CL1) of Definition~\ref{DClosedHepDerivor}, both sets of $\mathrm{E}$-equations are closed in $(\mathbf{\Lambda},\mathcal{F})$, by Lemma~\ref{LCn}~(3), $\mathrm{Dom}^{(\varphi,d)}_{s}=\mathrm{Dom}^{(\varphi',d')}_{s}$. Together with condition~(1), it follows that $\mathbf{d}=\mathbf{d}'$.
+Both partial $\Sigma$-algebras have the same underlying $S$-sorted set. We prove, by well-founded induction along $\lhd$, that every $\sigma\in\Sigma_{\mathbf{s},s}$ has the same interpretation in both. Let us assume that every $\tau\lhd\sigma$ does. Then, by Definition~\ref{DHepSignature}, a family of cells satisfies condition (D1) of Proposition~\ref{PTransformedAlg} for $\mathbf{d}$ if, and only if, it satisfies it for $\mathbf{d}'$. Conditions (D2) and (D3) only depend on $d(\sigma)$, on $\mathbf{B}$ and on the common cells. Hence $\sigma$ has the same domain in both algebras and, on it, both interpretations send $\mathbf{b}$ to $d(\sigma)^{\mathbf{B}}(\mathbf{b})$. Finally, by Proposition~\ref{PGenHepDerivorFunctor}, $\mathbf{d}^{\ast}_{\mathfrak{gd}}(f)$ and $\mathbf{d}'^{\ast}_{\mathfrak{gd}}(f)$ are the birestrictions of $f_{\varphi}$ to the same cells.
 
 This completes the proof.
 \end{proof}
 
-In what follows, $\mathbf{\Omega}=(U,\Omega,\mathrm{def}^{(U,\Omega)})$ is a hep-signature and $(\mathbf{\Sigma},\mathcal{E})$, $(\mathbf{\Lambda},\mathcal{F})$ and $(\mathbf{\Omega},\mathcal{G})$ are hep-specifications. We next define the composition of closed generalized hep-derivors and the identities.
-
-\begin{definition}\label{DHepComp}
-Let $\mathbf{d}=(\varphi,d,\mathrm{Dom}^{(\varphi,d)})\colon(\mathbf{\Sigma},\mathcal{E})\mor(\mathbf{\Lambda},\mathcal{F})$ and $\mathbf{e}=(\psi,e,\mathrm{Dom}^{(\psi,e)})\colon(\mathbf{\Lambda},\mathcal{F})\mor(\mathbf{\Omega},\mathcal{G})$ be closed generalized hep-derivors. The \emph{composition} of $\mathbf{d}$ and $\mathbf{e}$ is the generalized hep-derivor
-$$
-\mathbf{e}\circ\mathbf{d}=\left(\psi\circ\varphi,e^{\sharp}\circ d,\mathrm{Dom}^{\mathbf{e}\circ\mathbf{d}}\right)
-$$
-from $\mathbf{\Sigma}$ to $\mathbf{\Omega}$, where $(\psi\circ\varphi,e^{\sharp}\circ d)$ is the composition of the derivors $(\varphi,d)$ and $(\psi,e)$, see~(H3), and, for every $s\in S$,
-$$
-\mathrm{Dom}^{\mathbf{e}\circ\mathbf{d}}_{s}=\mathrm{Cn}^{(\mathbf{\Omega},\mathcal{G})}_{\vs{\psi(\varphi(s))}}\left(\mathrm{Dom}^{(\psi,e)}_{\varphi(s)}\cup\mathrm{tr}_{\mathbf{e}}\left[\mathrm{Dom}^{(\varphi,d)}_{s}\right]\right),
-$$
-see Definitions~\ref{DCn} and~\ref{DTranslation}.
-
-The \emph{identity} at $(\mathbf{\Sigma},\mathcal{E})$ is the generalized hep-derivor
-$$
-\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})}=\left(\mathrm{id}_{S},\eta^{\Sigma},\mathrm{Dom}^{\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})}}\right)
-$$
-from $\mathbf{\Sigma}$ to $\mathbf{\Sigma}$, where $(\mathrm{id}_{S},\eta^{\Sigma})$ is the identity derivor at $(S,\Sigma)$, see~(H3), and, for every $s\in S$, $\mathrm{Dom}^{\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})}}_{s}=\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}_{\vs{s}}(\varnothing)$.
-\end{definition}
-
-Let us note that $\mathrm{Dom}^{(\psi,e)}_{\varphi(s)}$ and $\mathrm{tr}_{\mathbf{e}}[\mathrm{Dom}^{(\varphi,d)}_{s}]$ are sets of $\mathrm{E}$-equations with variables in $\vs{\psi(\varphi(s))}$, since $\psi^{\star}((\varphi(s)))=(\psi(\varphi(s)))$. In the following lemma we prove that the composition has the expected cells.
-
-\begin{lemma}\label{LHepCompCells}
-Let $\mathbf{d}\colon(\mathbf{\Sigma},\mathcal{E})\mor(\mathbf{\Lambda},\mathcal{F})$ and $\mathbf{e}\colon(\mathbf{\Lambda},\mathcal{F})\mor(\mathbf{\Omega},\mathcal{G})$ be closed generalized hep-derivors and $\mathbf{C}$ an object in $\mathsf{EPAlg}(\mathbf{\Omega},\mathcal{G})$. Then $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}(\mathbf{C})$ and $\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{e}^{\ast}_{\mathfrak{gd}}(\mathbf{C}))$ have the same underlying $S$-sorted set.
-\end{lemma}
-\begin{proof}
-Let $\mathbf{B}=\mathbf{e}^{\ast}_{\mathfrak{gd}}(\mathbf{C})$, $s\in S$ and $c\in C_{\psi(\varphi(s))}$. Then the following chain of equivalences holds
-\allowdisplaybreaks
-\begin{align*}
-c\in\left(C_{\mathrm{Dom}^{\mathbf{e}\circ\mathbf{d}}}\right)_{s}
-&\iff
-\mathbf{C}\models\mathrm{Dom}^{\mathbf{e}\circ\mathbf{d}}_{s}[c]
-\tag{1}
-\\&\iff
-\mathbf{C}\models\mathrm{Dom}^{(\psi,e)}_{\varphi(s)}[c]
-\text{ and }
-\mathbf{C}\models\mathrm{tr}_{\mathbf{e}}\left[\mathrm{Dom}^{(\varphi,d)}_{s}\right][c]
-\tag{2}
-\\&\iff
-c\in\left(C_{\mathrm{Dom}^{(\psi,e)}}\right)_{\varphi(s)}
-\text{ and }
-\mathbf{B}\models\mathrm{Dom}^{(\varphi,d)}_{s}[c]
-\tag{3}
-\\&\iff
-c\in\left(B_{\mathrm{Dom}^{(\varphi,d)}}\right)_{s}.
-\tag{4}
-\end{align*}
-
-The first equivalence unravels Definition~\ref{DCells}; the second equivalence follows from Definition~\ref{DHepComp} and Lemma~\ref{LCn}~(2), since $\mathbf{C}$ is a model of $(\mathbf{\Omega},\mathcal{G})$; the third equivalence follows from Definition~\ref{DCells} and Lemma~\ref{LTranslation}~(2), applied to the cell $c$ of sort $\varphi(s)$ of $\mathbf{C}$ relative to $\mathbf{e}$; finally, the last equivalence unravels Definition~\ref{DCells}, since the underlying $T$-sorted set of $\mathbf{B}$ is $C_{\mathrm{Dom}^{(\psi,e)}}$.
-
-This completes the proof.
-\end{proof}
-
-We are now in position to prove that the composition of two closed generalized hep-derivors is a closed generalized hep-derivor which induces the composite of the induced functors.
-
-\begin{proposition}\label{PHepComp}
-Let $\mathbf{d}=(\varphi,d,\mathrm{Dom}^{(\varphi,d)})\colon(\mathbf{\Sigma},\mathcal{E})\mor(\mathbf{\Lambda},\mathcal{F})$ and $\mathbf{e}=(\psi,e,\mathrm{Dom}^{(\psi,e)})\colon(\mathbf{\Lambda},\mathcal{F})\mor(\mathbf{\Omega},\mathcal{G})$ be closed generalized hep-derivors. Then the following statements hold:
-\begin{enumerate}
-\item for every object $\mathbf{C}$ in $\mathsf{EPAlg}(\mathbf{\Omega},\mathcal{G})$ and every morphism $f$ in $\mathsf{EPAlg}(\mathbf{\Omega},\mathcal{G})$,
-$$
-(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}(\mathbf{C})=\mathbf{d}^{\ast}_{\mathfrak{gd}}\left(\mathbf{e}^{\ast}_{\mathfrak{gd}}(\mathbf{C})\right)
-\qquad\text{and}\qquad
-(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}(f)=\mathbf{d}^{\ast}_{\mathfrak{gd}}\left(\mathbf{e}^{\ast}_{\mathfrak{gd}}(f)\right);
-$$
-\item $\mathbf{e}\circ\mathbf{d}$ is a closed generalized hep-derivor from $(\mathbf{\Sigma},\mathcal{E})$ to $(\mathbf{\Omega},\mathcal{G})$, and, as functors from $\mathsf{EPAlg}(\mathbf{\Omega},\mathcal{G})$ to $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$,
-$$
-(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}=\mathbf{d}^{\ast}_{\mathfrak{gd}}\circ\mathbf{e}^{\ast}_{\mathfrak{gd}}.
-$$
-\end{enumerate}
-\end{proposition}
-\begin{proof}
-(1) Let $\mathbf{C}$ be an object in $\mathsf{EPAlg}(\mathbf{\Omega},\mathcal{G})$ and let us denote by $\mathbf{B}$, $\mathbf{A}$ and $\mathbf{A}'$ the partial algebras $\mathbf{e}^{\ast}_{\mathfrak{gd}}(\mathbf{C})$, $\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ and $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}(\mathbf{C})$, respectively. Since $\mathbf{e}$ satisfies (CL2), $\mathbf{B}$ is an object in $\mathsf{EPAlg}(\mathbf{\Lambda},\mathcal{F})$ and, since $\mathbf{d}$ satisfies (CL2), $\mathbf{A}$ is an object in $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$; in particular, $\mathbf{A}$ is a $\mathbf{\Sigma}$-algebra. By Lemma~\ref{LHepCompCells}, $\mathbf{A}$ and $\mathbf{A}'$ have the same underlying $S$-sorted set. We prove, by well-founded induction along $\lhd$, that every $\sigma\in\Sigma_{\mathbf{s},s}$ has the same interpretation in $\mathbf{A}$ and in $\mathbf{A}'$.
-
-Let $\sigma\in\Sigma_{\mathbf{s},s}$ and assume that every $\tau\lhd\sigma$ has the same interpretation in $\mathbf{A}$ and in $\mathbf{A}'$. Then, by Definition~\ref{DHepSignature}, for every family $\mathbf{a}$ of the common underlying $S$-sorted set, we have that
-\begin{align*}
-\mathbf{A}&\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]
-&\mbox{if, and only if,}&&
-\mathbf{A}'&\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}].
-\end{align*}
-
-\textsf{(Inclusion of $\mathrm{Dom}(\sigma^{\mathbf{A}})$ in $\mathrm{Dom}(\sigma^{\mathbf{A}'})$)} Let $\mathbf{a}\in\mathrm{Dom}(\sigma^{\mathbf{A}})$. By Proposition~\ref{PTransformedAlg}, $\mathbf{A}\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$, $\mathbf{a}\in\mathrm{Dom}(d(\sigma)^{\mathbf{B}})$ and $d(\sigma)^{\mathbf{B}}(\mathbf{a})$ is a cell of sort $s$ of $\mathbf{A}$. By Lemma~\ref{LTranslation}~(1), $\mathbf{a}\in\mathrm{Dom}(e^{\sharp}(d(\sigma))^{\mathbf{C}})$ and $e^{\sharp}(d(\sigma))^{\mathbf{C}}(\mathbf{a})=d(\sigma)^{\mathbf{B}}(\mathbf{a})$, which, by Lemma~\ref{LHepCompCells}, is a cell of sort $s$ of $\mathbf{A}'$. Moreover, by the above equivalence, $\mathbf{A}'\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$. Therefore, by Proposition~\ref{PTransformedAlg}, $\mathbf{a}\in\mathrm{Dom}(\sigma^{\mathbf{A}'})$.
-
-\textsf{(Equality of the values)} For every $\mathbf{a}\in\mathrm{Dom}(\sigma^{\mathbf{A}})$, the following chain of equalities holds
-\allowdisplaybreaks
-\begin{align*}
-\sigma^{\mathbf{A}'}\left(\mathbf{a}\right)
-&=
-e^{\sharp}(d(\sigma))^{\mathbf{C}}\left(\mathbf{a}\right)
-\tag{1}
-\\&=
-d(\sigma)^{\mathbf{B}}\left(\mathbf{a}\right)
-\tag{2}
-\\&=
-\sigma^{\mathbf{A}}\left(\mathbf{a}\right).
-\tag{3}
-\end{align*}
-
-The first equality follows from Proposition~\ref{PTransformedAlg} applied to $\mathbf{e}\circ\mathbf{d}$, taking into account the above inclusion; the second equality follows from Lemma~\ref{LTranslation}~(1); finally, the last equality follows from Proposition~\ref{PTransformedAlg} applied to $\mathbf{d}$.
-
-\textsf{(Inclusion of $\mathrm{Dom}(\sigma^{\mathbf{A}'})$ in $\mathrm{Dom}(\sigma^{\mathbf{A}})$)} Let $\mathbf{a}\in\mathrm{Dom}(\sigma^{\mathbf{A}'})$. Then, by Proposition~\ref{PTransformedAlg}, $\mathbf{A}'\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$, hence $\mathbf{A}\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$. Since $\mathbf{A}$ is a $\mathbf{\Sigma}$-algebra, by Definition~\ref{DEpAlgebra}, it follows that $\mathbf{a}\in\mathrm{Dom}(\sigma^{\mathbf{A}})$.
-
-Therefore, since $\lhd$ is well-founded, $\mathbf{A}'=\mathbf{A}$. Regarding morphisms, let $f\colon\mathbf{C}\mor\mathbf{C}'$ be a morphism in $\mathsf{EPAlg}(\mathbf{\Omega},\mathcal{G})$. By Proposition~\ref{PGenHepDerivorFunctor} and Lemma~\ref{LHepCompCells}, both $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}(f)$ and $\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{e}^{\ast}_{\mathfrak{gd}}(f))$ are the family of the birestrictions of the mappings $f_{\psi(\varphi(s))}$, for $s\in S$, to the same cells, so that they are equal.
-
-(2) By Lemma~\ref{LCn}~(1), every $\mathrm{Dom}^{\mathbf{e}\circ\mathbf{d}}_{s}$ is closed in $(\mathbf{\Omega},\mathcal{G})$, so that $\mathbf{e}\circ\mathbf{d}$ satisfies (CL1). By statement~(1), for every object $\mathbf{C}$ in $\mathsf{EPAlg}(\mathbf{\Omega},\mathcal{G})$, $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}(\mathbf{C})=\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{e}^{\ast}_{\mathfrak{gd}}(\mathbf{C}))$, which, as shown in the proof of statement~(1), is an object in $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$. Thus $\mathbf{e}\circ\mathbf{d}$ satisfies (CL2). Finally, the equality of functors is statement~(1).
-
-This completes the proof.
-\end{proof}
-
-In the following proposition we prove the analogous result for the identities.
+In the following proposition we prove that the identity generalized hep-derivor induces, on the $\mathbf{\Sigma}$-algebras, the identity functor.
 
 \begin{proposition}\label{PHepId}
-The identity $\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})}$ is a closed generalized hep-derivor from $(\mathbf{\Sigma},\mathcal{E})$ to $(\mathbf{\Sigma},\mathcal{E})$, and, as functors from $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$ to $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$,
-$$
-\left(\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})}\right)^{\ast}_{\mathfrak{gd}}=\mathrm{Id}_{\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})}.
-$$
+For every $\mathbf{\Sigma}$-algebra $\mathbf{A}$ and every homomorphism $f$ between $\mathbf{\Sigma}$-algebras, $(\mathrm{id}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\mathbf{A})=\mathbf{A}$ and $(\mathrm{id}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(f)=f$. Thus the restriction of $(\mathrm{id}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma})$ is $\mathrm{Id}_{\mathsf{EPAlg}(\mathbf{\Sigma})}$.
 \end{proposition}
 \begin{proof}
-By Lemma~\ref{LCn}~(1), every $\mathrm{Dom}^{\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})}}_{s}=\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\varnothing)$ is closed in $(\mathbf{\Sigma},\mathcal{E})$, so that $\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})}$ satisfies (CL1).
-
-Let $\mathbf{A}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$ and $\mathbf{A}'=(\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})})^{\ast}_{\mathfrak{gd}}(\mathbf{A})$. By Lemma~\ref{LCn}~(2), every element of $A$ satisfies $\mathrm{Cn}^{(\mathbf{\Sigma},\mathcal{E})}(\varnothing)$, since every element satisfies the empty set of $\mathrm{E}$-equations. Hence, by Definition~\ref{DCells}, the underlying $S$-sorted set of $\mathbf{A}'$ is $A$. We prove, by well-founded induction along $\lhd$, that every $\sigma\in\Sigma_{\mathbf{s},s}$ has the same interpretation in $\mathbf{A}$ and in $\mathbf{A}'$.
+Let $\mathbf{A}$ be a $\mathbf{\Sigma}$-algebra and $\mathbf{A}'=(\mathrm{id}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\mathbf{A})$. Since the domains of $\mathrm{id}_{\mathbf{\Sigma}}$ are empty, by Remark~\ref{RCellsFunctorEmpty}, the underlying $S$-sorted set of $\mathbf{A}'$ is $A$, and $(\mathrm{id}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(f)=f$. We prove, by well-founded induction along $\lhd$, that every $\sigma\in\Sigma_{\mathbf{s},s}$ has the same interpretation in $\mathbf{A}$ and in $\mathbf{A}'$.
 
 Let $\sigma\in\Sigma_{\mathbf{s},s}$ and assume that every $\tau\lhd\sigma$ has the same interpretation in both algebras. Then, by Definition~\ref{DHepSignature}, a family $\mathbf{a}\in A_{\mathbf{s}}$ satisfies $\mathrm{def}^{(S,\Sigma)}(\sigma)$ in $\mathbf{A}$ if, and only if, it satisfies it in $\mathbf{A}'$. Moreover, by~(H3), $\eta^{\Sigma}(\sigma)^{\mathbf{A}}=\sigma^{\mathbf{A}}$. Therefore, the following chain of equalities holds
 \allowdisplaybreaks
@@ -1677,143 +1500,96 @@ and, on this domain, $\sigma^{\mathbf{A}'}$ acts as $\eta^{\Sigma}(\sigma)^{\mat
 
 The first equality follows from Proposition~\ref{PTransformedAlg}, taking into account the induction hypothesis and the fact that all the elements of $A$ are cells, so that condition (D3) always holds; the second equality follows from the fact that $\eta^{\Sigma}(\sigma)^{\mathbf{A}}=\sigma^{\mathbf{A}}$; finally, the last equality follows from the fact that $\mathbf{A}$ is a $\mathbf{\Sigma}$-algebra, so that $\mathrm{Dom}(\sigma^{\mathbf{A}})=A_{\mathrm{def}^{(S,\Sigma)}(\sigma)}$, see Definition~\ref{DEpAlgebra}.
 
-Thus $\mathbf{A}'=\mathbf{A}$, which is an object in $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$, so that $\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})}$ satisfies (CL2). Finally, by Proposition~\ref{PGenHepDerivorFunctor}, for every morphism $f$ in $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$, $(\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})})^{\ast}_{\mathfrak{gd}}(f)$ is the birestriction of $f$ to all the elements, i.e., $f$.
-
 This completes the proof.
 \end{proof}
 
-We are now in position to prove that the hep-specifications and the closed generalized hep-derivors form a category.
+We are now in position to compare the functor induced by a composition with the composite of the induced functors.
 
-\begin{proposition}\label{PHepSpecCat}
-The hep-specifications, together with the closed generalized hep-derivors, the composition and the identities of Definition~\ref{DHepComp}, form a category, which we denote by $\mathsf{HepSpec}_{\mathfrak{gd}}$.
-\end{proposition}
-\begin{proof}
-By Propositions~\ref{PHepComp} and~\ref{PHepId}, the composition of two closed generalized hep-derivors is a closed generalized hep-derivor and the identities are closed generalized hep-derivors. It remains to prove that the composition is associative and that the identities are neutral for it. Let $\mathbf{\Xi}=(W,\Xi,\mathrm{def}^{(W,\Xi)})$ be a hep-signature, $(\mathbf{\Xi},\mathcal{K})$ a hep-specification, and let
-$$
-\mathbf{d}\colon(\mathbf{\Sigma},\mathcal{E})\mor(\mathbf{\Lambda},\mathcal{F}),\qquad
-\mathbf{e}\colon(\mathbf{\Lambda},\mathcal{F})\mor(\mathbf{\Omega},\mathcal{G})\qquad\text{and}\qquad
-\mathbf{g}\colon(\mathbf{\Omega},\mathcal{G})\mor(\mathbf{\Xi},\mathcal{K})
-$$
-be closed generalized hep-derivors, with $\mathbf{d}=(\varphi,d,\mathrm{Dom}^{(\varphi,d)})$, $\mathbf{e}=(\psi,e,\mathrm{Dom}^{(\psi,e)})$ and $\mathbf{g}=(\chi,g,\mathrm{Dom}^{(\chi,g)})$.
-
-\textsf{(Associativity)} By~(H4), the underlying derivors of $\mathbf{g}\circ(\mathbf{e}\circ\mathbf{d})$ and of $(\mathbf{g}\circ\mathbf{e})\circ\mathbf{d}$ are equal. Let $s\in S$. By Definition~\ref{DHepComp}, $\mathrm{Dom}^{\mathbf{g}\circ(\mathbf{e}\circ\mathbf{d})}_{s}$ and $\mathrm{Dom}^{(\mathbf{g}\circ\mathbf{e})\circ\mathbf{d}}_{s}$ are closed in $(\mathbf{\Xi},\mathcal{K})$. Let $\mathbf{D}$ be an object in $\mathsf{EPAlg}(\mathbf{\Xi},\mathcal{K})$ and $x\in D_{\chi(\psi(\varphi(s)))}$. Then the following chain of equivalences holds
-\allowdisplaybreaks
-\begin{align*}
-\mathbf{D}\models\mathrm{Dom}^{\mathbf{g}\circ(\mathbf{e}\circ\mathbf{d})}_{s}[x]
-&\iff
-x\in\left(\G_{\mathbf{e}\circ\mathbf{d}}\left(\mathbf{g}^{\ast}_{\mathfrak{gd}}(\mathbf{D})\right)\right)_{s}
-\tag{1}
-\\&\iff
-x\in\left(\G_{\mathbf{d}}\left(\mathbf{e}^{\ast}_{\mathfrak{gd}}\left(\mathbf{g}^{\ast}_{\mathfrak{gd}}(\mathbf{D})\right)\right)\right)_{s}
-\tag{2}
-\\&\iff
-x\in\left(\G_{\mathbf{d}}\left((\mathbf{g}\circ\mathbf{e})^{\ast}_{\mathfrak{gd}}(\mathbf{D})\right)\right)_{s}
-\tag{3}
-\\&\iff
-\mathbf{D}\models\mathrm{Dom}^{(\mathbf{g}\circ\mathbf{e})\circ\mathbf{d}}_{s}[x].
-\tag{4}
-\end{align*}
-
-The first equivalence follows from Lemma~\ref{LHepCompCells}, applied to $\mathbf{e}\circ\mathbf{d}$ and $\mathbf{g}$, and Corollary~\ref{CGenHepDerivorDiagram}; the second equivalence follows from Proposition~\ref{PHepComp}, applied to $\mathbf{d}$, $\mathbf{e}$ and the object $\mathbf{g}^{\ast}_{\mathfrak{gd}}(\mathbf{D})$ in $\mathsf{EPAlg}(\mathbf{\Omega},\mathcal{G})$; the third equivalence follows from Proposition~\ref{PHepComp}, applied to $\mathbf{e}$ and $\mathbf{g}$; finally, the last equivalence follows from Lemma~\ref{LHepCompCells}, applied to $\mathbf{d}$ and $\mathbf{g}\circ\mathbf{e}$, and Corollary~\ref{CGenHepDerivorDiagram}. Therefore, by Lemma~\ref{LCn}~(3), $\mathrm{Dom}^{\mathbf{g}\circ(\mathbf{e}\circ\mathbf{d})}_{s}=\mathrm{Dom}^{(\mathbf{g}\circ\mathbf{e})\circ\mathbf{d}}_{s}$. Hence $\mathbf{g}\circ(\mathbf{e}\circ\mathbf{d})=(\mathbf{g}\circ\mathbf{e})\circ\mathbf{d}$.
-
-\textsf{(Left identity)} By~(H4), the underlying derivor of $\mathrm{id}_{(\mathbf{\Lambda},\mathcal{F})}\circ\mathbf{d}$ is $(\varphi,d)$. Let $s\in S$. Both $\mathrm{Dom}^{\mathrm{id}_{(\mathbf{\Lambda},\mathcal{F})}\circ\mathbf{d}}_{s}$ and $\mathrm{Dom}^{(\varphi,d)}_{s}$ are closed in $(\mathbf{\Lambda},\mathcal{F})$. Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\mathbf{\Lambda},\mathcal{F})$ and $b\in B_{\varphi(s)}$. Then, by Lemma~\ref{LHepCompCells} and Proposition~\ref{PHepId}, $\mathbf{B}\models\mathrm{Dom}^{\mathrm{id}_{(\mathbf{\Lambda},\mathcal{F})}\circ\mathbf{d}}_{s}[b]$ if, and only if, $b$ is a cell of sort $s$ of $\mathbf{d}^{\ast}_{\mathfrak{gd}}((\mathrm{id}_{(\mathbf{\Lambda},\mathcal{F})})^{\ast}_{\mathfrak{gd}}(\mathbf{B}))=\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{B})$, i.e., if, and only if, $\mathbf{B}\models\mathrm{Dom}^{(\varphi,d)}_{s}[b]$. Therefore, by Lemma~\ref{LCn}~(3), $\mathrm{id}_{(\mathbf{\Lambda},\mathcal{F})}\circ\mathbf{d}=\mathbf{d}$.
-
-\textsf{(Right identity)} By~(H4), the underlying derivor of $\mathbf{d}\circ\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})}$ is $(\varphi,d)$. Let $s\in S$, $\mathbf{B}$ an object in $\mathsf{EPAlg}(\mathbf{\Lambda},\mathcal{F})$ and $b\in B_{\varphi(s)}$. Then, by Lemma~\ref{LHepCompCells} and Proposition~\ref{PHepId}, $\mathbf{B}\models\mathrm{Dom}^{\mathbf{d}\circ\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})}}_{s}[b]$ if, and only if, $b$ is a cell of sort $s$ of $(\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})})^{\ast}_{\mathfrak{gd}}(\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{B}))=\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{B})$, since $\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ is an object in $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$. Therefore, by Lemma~\ref{LCn}~(3), $\mathbf{d}\circ\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})}=\mathbf{d}$.
-
-This completes the proof.
-\end{proof}
-
-We let $\mathsf{HepSig}_{\mathfrak{gd}}$ stand for the full subcategory of $\mathsf{HepSpec}_{\mathfrak{gd}}$ whose objects are the hep-signatures, i.e., the hep-specifications of the form $(\mathbf{\Sigma},\varnothing)$, see Definition~\ref{DEpSpec}. Its morphisms from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ are the generalized hep-derivors whose domains are closed in $(\mathbf{\Lambda},\varnothing)$ and whose induced functors send $\mathbf{\Lambda}$-algebras to $\mathbf{\Sigma}$-algebras.
-
-\subsection{The category \texorpdfstring{$\mathsf{HEPAlg}_{\mathfrak{gd}}$}{HEPAlggd}}\label{SHepAlgCat}
-
-Following the case of the derivors, see~\cite{CVST10b}, we next assemble the categories $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$ into a contravariant functor on $\mathsf{HepSpec}_{\mathfrak{gd}}$ and, by means of the Grothendieck construction, into a single category.
-
-\begin{proposition}\label{PHepAlgFunctor}
-There exists a contravariant functor $\mathrm{HEPAlg}_{\mathfrak{gd}}$ from $\mathsf{HepSpec}_{\mathfrak{gd}}$ to $\mathsf{Cat}$ defined as follows:
+\begin{proposition}\label{PHepComp}
+Let $\mathbf{d}=(\varphi,d,\mathrm{Dom}^{(\varphi,d)})$ be a generalized hep-derivor from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$, $\mathbf{e}=(\psi,e,\mathrm{Dom}^{(\psi,e)})$ a generalized hep-derivor from $\mathbf{\Lambda}$ to $\mathbf{\Omega}$ and $\mathbf{C}$ a partial $\Omega$-algebra. Let us denote by $\mathbf{A}$ and $\mathbf{A}'$ the partial $\Sigma$-algebras $\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{e}^{\ast}_{\mathfrak{gd}}(\mathbf{C}))$ and $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}(\mathbf{C})$, respectively. Then the following statements hold:
 \begin{enumerate}
-\item for every hep-specification $(\mathbf{\Sigma},\mathcal{E})$, $\mathrm{HEPAlg}_{\mathfrak{gd}}(\mathbf{\Sigma},\mathcal{E})=\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$; and
-\item for every closed generalized hep-derivor $\mathbf{d}\colon(\mathbf{\Sigma},\mathcal{E})\mor(\mathbf{\Lambda},\mathcal{F})$, $\mathrm{HEPAlg}_{\mathfrak{gd}}(\mathbf{d})$ is the functor
+\item the underlying $S$-sorted set of $\mathbf{A}$ is an $S$-sorted subset of that of $\mathbf{A}'$, and the inclusion $\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}$ of the former into the latter is a homomorphism of partial $\Sigma$-algebras from $\mathbf{A}$ to $\mathbf{A}'$; moreover, for every homomorphism $f\colon\mathbf{C}\mor\mathbf{C}'$ of partial $\Omega$-algebras,
 $$
-\mathbf{d}^{\ast}_{\mathfrak{gd}}\colon\mathsf{EPAlg}(\mathbf{\Lambda},\mathcal{F})\mor\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E}),
+(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}(f)\circ\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}=\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}'}\circ\mathbf{d}^{\ast}_{\mathfrak{gd}}\left(\mathbf{e}^{\ast}_{\mathfrak{gd}}(f)\right);
 $$
-see Definitions~\ref{DCorestriction} and~\ref{DClosedHepDerivor}.
+\item if $\mathbf{A}$ and $\mathbf{A}'$ have the same underlying $S$-sorted set and $\mathbf{A}$ is a $\mathbf{\Sigma}$-algebra, then $\mathbf{A}'=\mathbf{A}$; and, if, moreover, $f\colon\mathbf{C}\mor\mathbf{C}'$ is a homomorphism of partial $\Omega$-algebras and $\mathbf{C}'$ satisfies the same hypotheses, then $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}(f)=\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{e}^{\ast}_{\mathfrak{gd}}(f))$.
 \end{enumerate}
 \end{proposition}
 \begin{proof}
-By condition (CL2) of Definition~\ref{DClosedHepDerivor} and Proposition~\ref{PGenHepDerivorFunctor}, $\mathrm{HEPAlg}_{\mathfrak{gd}}(\mathbf{d})$ is a functor from $\mathsf{EPAlg}(\mathbf{\Lambda},\mathcal{F})$ to $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$. By Proposition~\ref{PHepId}, $\mathrm{HEPAlg}_{\mathfrak{gd}}$ preserves identities and, by Proposition~\ref{PHepComp}, for every pair of closed generalized hep-derivors $\mathbf{d}\colon(\mathbf{\Sigma},\mathcal{E})\mor(\mathbf{\Lambda},\mathcal{F})$ and $\mathbf{e}\colon(\mathbf{\Lambda},\mathcal{F})\mor(\mathbf{\Omega},\mathcal{G})$,
-$$
-\mathrm{HEPAlg}_{\mathfrak{gd}}(\mathbf{e}\circ\mathbf{d})=\mathrm{HEPAlg}_{\mathfrak{gd}}(\mathbf{d})\circ\mathrm{HEPAlg}_{\mathfrak{gd}}(\mathbf{e}).
-$$
+Let $\mathbf{B}=\mathbf{e}^{\ast}_{\mathfrak{gd}}(\mathbf{C})$, so that $\mathbf{A}=\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{B})$.
+
+\textsf{(Inclusion of the cells)} Let $s\in S$ and $c$ a cell of sort $s$ of $\mathbf{A}$, i.e., $c\in(C_{\mathrm{Dom}^{(\psi,e)}})_{\varphi(s)}$ and $\mathbf{B}\models\mathrm{Dom}^{(\varphi,d)}_{s}[c]$. By Lemma~\ref{LTermComp}, $\mathbf{C}\models e^{\sharp}[\mathrm{Dom}^{(\varphi,d)}_{s}][c]$. Hence, by Definition~\ref{DHepComp}, $\mathbf{C}\models\mathrm{Dom}^{\mathbf{e}\circ\mathbf{d}}_{s}[c]$, i.e., $c$ is a cell of sort $s$ of $\mathbf{A}'$.
+
+\textsf{(The inclusion is a homomorphism)} We prove, by well-founded induction along $\lhd$, that, for every $\sigma\in\Sigma_{\mathbf{s},s}$ and every $\mathbf{a}\in\mathrm{Dom}(\sigma^{\mathbf{A}})$, $\mathbf{a}\in\mathrm{Dom}(\sigma^{\mathbf{A}'})$ and $\sigma^{\mathbf{A}'}(\mathbf{a})=\sigma^{\mathbf{A}}(\mathbf{a})$. Let us assume that this holds for every $\tau\lhd\sigma$ and let $\mathbf{a}\in\mathrm{Dom}(\sigma^{\mathbf{A}})$. We check the conditions (D1), (D2) and (D3) of Proposition~\ref{PTransformedAlg} for $\mathbf{e}\circ\mathbf{d}$.
+
+\textsf{(D1)} By the induction hypothesis, the inclusion is a homomorphism between the reducts of $\mathbf{A}$ and $\mathbf{A}'$ to the operation symbols that occur in $\mathrm{def}^{(S,\Sigma)}(\sigma)$. Since $\mathbf{A}\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$, by Remark~\ref{RHomTerm}, $\mathbf{A}'\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$.
+
+\textsf{(D2)} By Proposition~\ref{PTransformedAlg}, $\mathbf{a}\in\mathrm{Dom}(d(\sigma)^{\mathbf{B}})$. By Lemma~\ref{LTermComp}, $\mathbf{a}\in\mathrm{Dom}(e^{\sharp}(d(\sigma))^{\mathbf{C}})$ and $e^{\sharp}(d(\sigma))^{\mathbf{C}}(\mathbf{a})=d(\sigma)^{\mathbf{B}}(\mathbf{a})$.
+
+\textsf{(D3)} By Proposition~\ref{PTransformedAlg}, $d(\sigma)^{\mathbf{B}}(\mathbf{a})=\sigma^{\mathbf{A}}(\mathbf{a})$ is a cell of $\mathbf{A}$, hence, by the inclusion of the cells, a cell of $\mathbf{A}'$.
+
+Therefore, by Proposition~\ref{PTransformedAlg}, $\mathbf{a}\in\mathrm{Dom}(\sigma^{\mathbf{A}'})$ and the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\sigma^{\mathbf{A}'}\left(\mathbf{a}\right)
+&=
+e^{\sharp}(d(\sigma))^{\mathbf{C}}\left(\mathbf{a}\right)
+\tag{1}
+\\&=
+d(\sigma)^{\mathbf{B}}\left(\mathbf{a}\right)
+\tag{2}
+\\&=
+\sigma^{\mathbf{A}}\left(\mathbf{a}\right).
+\tag{3}
+\end{align*}
+
+The first equality follows from Proposition~\ref{PTransformedAlg} applied to $\mathbf{e}\circ\mathbf{d}$; the second equality follows from Lemma~\ref{LTermComp}; finally, the last equality follows from Proposition~\ref{PTransformedAlg} applied to $\mathbf{d}$.
+
+\textsf{(Naturality)} By Proposition~\ref{PGenHepDerivorFunctor}, for every $s\in S$, both $((\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}(f)\circ\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}})_{s}$ and $(\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}'}\circ\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{e}^{\ast}_{\mathfrak{gd}}(f)))_{s}$ send a cell $c$ of sort $s$ of $\mathbf{A}$ to $f_{\psi(\varphi(s))}(c)$. This proves statement~(1).
+
+\textsf{(Statement (2))} Let us assume that $\mathbf{A}$ and $\mathbf{A}'$ have the same underlying $S$-sorted set and that $\mathbf{A}$ is a $\mathbf{\Sigma}$-algebra. By statement~(1), for every $\sigma\in\Sigma_{\mathbf{s},s}$, $\mathrm{Dom}(\sigma^{\mathbf{A}})\subseteq\mathrm{Dom}(\sigma^{\mathbf{A}'})$ and both operations agree on $\mathrm{Dom}(\sigma^{\mathbf{A}})$. We prove, by well-founded induction along $\lhd$, the reverse inclusion. Let us assume that every $\tau\lhd\sigma$ has the same interpretation in $\mathbf{A}$ and in $\mathbf{A}'$ and let $\mathbf{a}\in\mathrm{Dom}(\sigma^{\mathbf{A}'})$. Then, by Proposition~\ref{PTransformedAlg}, $\mathbf{A}'\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$, hence, by the induction hypothesis and Definition~\ref{DHepSignature}, $\mathbf{A}\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$. Since $\mathbf{A}$ is a $\mathbf{\Sigma}$-algebra, by Definition~\ref{DEpAlgebra}, $\mathbf{a}\in\mathrm{Dom}(\sigma^{\mathbf{A}})$. Therefore $\mathbf{A}'=\mathbf{A}$, i.e., $\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}$ is the identity. If $\mathbf{C}'$ satisfies the same hypotheses, then $\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}'}$ is also the identity and, by statement~(1), $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}(f)=\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{e}^{\ast}_{\mathfrak{gd}}(f))$.
 
 This completes the proof.
 \end{proof}
 
-We next introduce the category obtained by means of the Grothendieck construction applied to $\mathrm{HEPAlg}_{\mathfrak{gd}}$.
+By Lemma~\ref{LTermComp}, the hypothesis on the cells in Proposition~\ref{PHepComp}~(2) amounts to the following condition: for every $s\in S$ and every cell $c$ of sort $\varphi(s)$ of $\mathbf{C}$ relative to $\mathbf{e}$, if $\mathbf{C}\models e^{\sharp}[\mathrm{Dom}^{(\varphi,d)}_{s}][c]$, then $\mathbf{e}^{\ast}_{\mathfrak{gd}}(\mathbf{C})\models\mathrm{Dom}^{(\varphi,d)}_{s}[c]$. It trivially holds when the domains of $\mathbf{d}$ are empty.
+
+\subsection{The category \texorpdfstring{$\mathsf{hepAlg}_{\mathfrak{gd}}$}{hepAlggd}}\label{SHepAlgCat}
+
+Following the case of the derivors, see~\cite{CVST10b}, we next assemble the ep-algebras of all the hep-signatures into a single category. Since, by Proposition~\ref{PHepComp}, the composite $\mathbf{d}^{\ast}_{\mathfrak{gd}}\circ\mathbf{e}^{\ast}_{\mathfrak{gd}}$ is only contained in $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}$, the composition of morphisms uses the inclusions $\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}$.
 
 \begin{definition}\label{DHepAlgCat}
-We let $\mathsf{HEPAlg}_{\mathfrak{gd}}$ stand for the category $\int^{\mathsf{HepSpec}_{\mathfrak{gd}}}\mathrm{HEPAlg}_{\mathfrak{gd}}$ obtained by means of the Grothendieck construction applied to the contravariant functor $\mathrm{HEPAlg}_{\mathfrak{gd}}$, i.e., the category defined as follows:
+We let $\mathsf{hepAlg}_{\mathfrak{gd}}$ stand for the category defined as follows:
 \begin{enumerate}
-\item its objects are the ordered pairs $((\mathbf{\Sigma},\mathcal{E}),\mathbf{A})$, where $(\mathbf{\Sigma},\mathcal{E})$ is a hep-specification and $\mathbf{A}$ an object in $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$;
-\item its morphisms from $((\mathbf{\Sigma},\mathcal{E}),\mathbf{A})$ to $((\mathbf{\Lambda},\mathcal{F}),\mathbf{B})$ are the ordered pairs $(\mathbf{d},f)$, where $\mathbf{d}\colon(\mathbf{\Sigma},\mathcal{E})\mor(\mathbf{\Lambda},\mathcal{F})$ is a closed generalized hep-derivor and $f\colon\mathbf{A}\mor\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ a morphism in $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$;
-\item the composite of $(\mathbf{d},f)\colon((\mathbf{\Sigma},\mathcal{E}),\mathbf{A})\mor((\mathbf{\Lambda},\mathcal{F}),\mathbf{B})$ and $(\mathbf{e},g)\colon((\mathbf{\Lambda},\mathcal{F}),\mathbf{B})\mor((\mathbf{\Omega},\mathcal{G}),\mathbf{C})$ is
+\item its objects are the ordered pairs $(\mathbf{\Sigma},\mathbf{A})$, where $\mathbf{\Sigma}$ is a hep-signature and $\mathbf{A}$ a $\mathbf{\Sigma}$-algebra;
+\item its morphisms from $(\mathbf{\Sigma},\mathbf{A})$ to $(\mathbf{\Lambda},\mathbf{B})$ are the ordered pairs $(\mathbf{d},f)$, where $\mathbf{d}$ is a generalized hep-derivor from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ and $f\colon\mathbf{A}\mor\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ a homomorphism of partial $\Sigma$-algebras;
+\item the composite of $(\mathbf{d},f)\colon(\mathbf{\Sigma},\mathbf{A})\mor(\mathbf{\Lambda},\mathbf{B})$ and $(\mathbf{e},g)\colon(\mathbf{\Lambda},\mathbf{B})\mor(\mathbf{\Omega},\mathbf{C})$ is
 $$
-(\mathbf{e},g)\circ(\mathbf{d},f)=\left(\mathbf{e}\circ\mathbf{d},\mathbf{d}^{\ast}_{\mathfrak{gd}}(g)\circ f\right);\text{ and}
+(\mathbf{e},g)\circ(\mathbf{d},f)=\left(\mathbf{e}\circ\mathbf{d},\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}\circ\mathbf{d}^{\ast}_{\mathfrak{gd}}(g)\circ f\right),
 $$
-\item the identity at $((\mathbf{\Sigma},\mathcal{E}),\mathbf{A})$ is $(\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})},\mathrm{id}_{\mathbf{A}})$.
+see Definition~\ref{DHepComp} and Proposition~\ref{PHepComp}; and
+\item the identity at $(\mathbf{\Sigma},\mathbf{A})$ is $(\mathrm{id}_{\mathbf{\Sigma}},\mathrm{id}_{\mathbf{A}})$.
 \end{enumerate}
 \end{definition}
 
 In the following proposition we prove that the above definition is correct.
 
 \begin{proposition}\label{PHepAlgCat}
-$\mathsf{HEPAlg}_{\mathfrak{gd}}$ is a category. Moreover, the assignment $\pi_{\mathfrak{gd}}$ that sends every object $((\mathbf{\Sigma},\mathcal{E}),\mathbf{A})$ to $(\mathbf{\Sigma},\mathcal{E})$ and every morphism $(\mathbf{d},f)$ to $\mathbf{d}$ is a functor from $\mathsf{HEPAlg}_{\mathfrak{gd}}$ to $\mathsf{HepSpec}_{\mathfrak{gd}}$.
+$\mathsf{hepAlg}_{\mathfrak{gd}}$ is a category. Moreover, the assignment that sends every object $(\mathbf{\Sigma},\mathbf{A})$ to $\mathbf{\Sigma}$ and every morphism $(\mathbf{d},f)$ to $\mathbf{d}$ is a functor from $\mathsf{hepAlg}_{\mathfrak{gd}}$ to $\mathsf{hepSig}_{\mathfrak{gd}}$.
 \end{proposition}
 \begin{proof}
-\textsf{(Composites are morphisms)} Let $(\mathbf{d},f)$ and $(\mathbf{e},g)$ be as in Definition~\ref{DHepAlgCat}. By Proposition~\ref{PHepComp}, $\mathbf{e}\circ\mathbf{d}\colon(\mathbf{\Sigma},\mathcal{E})\mor(\mathbf{\Omega},\mathcal{G})$ is a closed generalized hep-derivor and $\mathbf{d}^{\ast}_{\mathfrak{gd}}(g)$ is a morphism from $\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ to $\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{e}^{\ast}_{\mathfrak{gd}}(\mathbf{C}))=(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}(\mathbf{C})$. Hence $\mathbf{d}^{\ast}_{\mathfrak{gd}}(g)\circ f$ is a morphism from $\mathbf{A}$ to $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}(\mathbf{C})$. Similarly, by Proposition~\ref{PHepId}, $\mathrm{id}_{\mathbf{A}}$ is a morphism from $\mathbf{A}$ to $(\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})})^{\ast}_{\mathfrak{gd}}(\mathbf{A})=\mathbf{A}$.
+\textsf{(Composites and identities are morphisms)} Let $(\mathbf{d},f)$ and $(\mathbf{e},g)$ be as in Definition~\ref{DHepAlgCat}. By Propositions~\ref{PGenHepDerivorHom} and~\ref{PHepComp}, $\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}\circ\mathbf{d}^{\ast}_{\mathfrak{gd}}(g)\circ f$ is a homomorphism from $\mathbf{A}$ to $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}(\mathbf{C})$. By Proposition~\ref{PHepId}, $\mathrm{id}_{\mathbf{A}}$ is a homomorphism from $\mathbf{A}$ to $(\mathrm{id}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\mathbf{A})=\mathbf{A}$.
 
-\textsf{(Associativity)} Let, moreover, $(\mathbf{g},h)\colon((\mathbf{\Omega},\mathcal{G}),\mathbf{C})\mor((\mathbf{\Xi},\mathcal{K}),\mathbf{D})$ be a morphism in $\mathsf{HEPAlg}_{\mathfrak{gd}}$. Then the following chain of equalities holds
-\allowdisplaybreaks
-\begin{align*}
-(\mathbf{g},h)\circ\left((\mathbf{e},g)\circ(\mathbf{d},f)\right)
-&=
-\left(\mathbf{g}\circ(\mathbf{e}\circ\mathbf{d}),(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}(h)\circ\mathbf{d}^{\ast}_{\mathfrak{gd}}(g)\circ f\right)
-\tag{1}
-\\&=
-\left((\mathbf{g}\circ\mathbf{e})\circ\mathbf{d},\mathbf{d}^{\ast}_{\mathfrak{gd}}\left(\mathbf{e}^{\ast}_{\mathfrak{gd}}(h)\right)\circ\mathbf{d}^{\ast}_{\mathfrak{gd}}(g)\circ f\right)
-\tag{2}
-\\&=
-\left((\mathbf{g}\circ\mathbf{e})\circ\mathbf{d},\mathbf{d}^{\ast}_{\mathfrak{gd}}\left(\mathbf{e}^{\ast}_{\mathfrak{gd}}(h)\circ g\right)\circ f\right)
-\tag{3}
-\\&=
-\left((\mathbf{g},h)\circ(\mathbf{e},g)\right)\circ(\mathbf{d},f).
-\tag{4}
-\end{align*}
+\textsf{(Underlying mappings)} For a morphism $(\mathbf{d},f)$ from $(\mathbf{\Sigma},\mathbf{A})$ to $(\mathbf{\Lambda},\mathbf{B})$ and $s\in S$, we regard $f_{s}$ as a mapping from $A_{s}$ to $B_{\varphi(s)}$. Since a homomorphism is determined by its underlying $S$-sorted mapping and its codomain, two morphisms from $(\mathbf{\Sigma},\mathbf{A})$ to $(\mathbf{\Lambda},\mathbf{B})$ with the same generalized hep-derivor are equal if, and only if, they have the same underlying mappings. By Propositions~\ref{PGenHepDerivorFunctor} and~\ref{PHepComp}, $\mathbf{d}^{\ast}_{\mathfrak{gd}}(g)$ and $\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}$ act as birestrictions of $g_{\varphi}$ and as inclusions, respectively. Hence, for every $s\in S$, the underlying mapping at $s$ of $(\mathbf{e},g)\circ(\mathbf{d},f)$ is $g_{\varphi(s)}\circ f_{s}$.
 
-The first equality unravels the definition of the composition in $\mathsf{HEPAlg}_{\mathfrak{gd}}$; the second equality follows from Propositions~\ref{PHepSpecCat} and~\ref{PHepComp}; the third equality follows from the fact that $\mathbf{d}^{\ast}_{\mathfrak{gd}}$ is a functor; finally, the last equality unravels the definition of the composition in $\mathsf{HEPAlg}_{\mathfrak{gd}}$.
+\textsf{(Associativity)} Let, moreover, $(\mathbf{g},h)\colon(\mathbf{\Omega},\mathbf{C})\mor(\mathbf{\Xi},\mathbf{D})$ be a morphism. By Proposition~\ref{PHepSigCat}, $\mathbf{g}\circ(\mathbf{e}\circ\mathbf{d})=(\mathbf{g}\circ\mathbf{e})\circ\mathbf{d}$, so that $(\mathbf{g},h)\circ((\mathbf{e},g)\circ(\mathbf{d},f))$ and $((\mathbf{g},h)\circ(\mathbf{e},g))\circ(\mathbf{d},f)$ have the same generalized hep-derivor and the same codomain. By the above, the underlying mappings of both at $s\in S$ are $h_{\psi(\varphi(s))}\circ g_{\varphi(s)}\circ f_{s}$. Hence both morphisms are equal.
 
-\textsf{(Identities)} By Propositions~\ref{PHepSpecCat} and~\ref{PHepId}, the following chains of equalities hold
-\allowdisplaybreaks
-\begin{align*}
-(\mathbf{d},f)\circ\left(\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})},\mathrm{id}_{\mathbf{A}}\right)
-&=
-\left(\mathbf{d}\circ\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})},\left(\mathrm{id}_{(\mathbf{\Sigma},\mathcal{E})}\right)^{\ast}_{\mathfrak{gd}}(f)\circ\mathrm{id}_{\mathbf{A}}\right)
-=
-(\mathbf{d},f),
-\\
-\left(\mathrm{id}_{(\mathbf{\Lambda},\mathcal{F})},\mathrm{id}_{\mathbf{B}}\right)\circ(\mathbf{d},f)
-&=
-\left(\mathrm{id}_{(\mathbf{\Lambda},\mathcal{F})}\circ\mathbf{d},\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathrm{id}_{\mathbf{B}})\circ f\right)
-=
-(\mathbf{d},f).
-\end{align*}
+\textsf{(Identities)} By Proposition~\ref{PHepSigCat}, $\mathbf{d}\circ\mathrm{id}_{\mathbf{\Sigma}}=\mathbf{d}=\mathrm{id}_{\mathbf{\Lambda}}\circ\mathbf{d}$. By the above, the underlying mappings at $s\in S$ of $(\mathbf{d},f)\circ(\mathrm{id}_{\mathbf{\Sigma}},\mathrm{id}_{\mathbf{A}})$ and of $(\mathrm{id}_{\mathbf{\Lambda}},\mathrm{id}_{\mathbf{B}})\circ(\mathbf{d},f)$ are $f_{s}\circ\mathrm{id}_{A_{s}}$ and $\mathrm{id}_{B_{\varphi(s)}}\circ f_{s}$, i.e., $f_{s}$. Hence both morphisms are equal to $(\mathbf{d},f)$.
 
-\textsf{(The functor $\pi_{\mathfrak{gd}}$)} By Definition~\ref{DHepAlgCat}, $\pi_{\mathfrak{gd}}$ sends composites to composites and identities to identities.
+\textsf{(The projection)} By Definition~\ref{DHepAlgCat}, the assignment preserves composites and identities.
 
 This completes the proof.
 \end{proof}
-
-Let us note that, as in~\cite{CVST10b}, $\pi_{\mathfrak{gd}}$ is the canonical split fibration associated to the Grothendieck construction. In Sections~\ref{SGraduation} and~\ref{STruncation} we will obtain the graduation, unification, discretization and truncation functors as the functors $\mathrm{HEPAlg}_{\mathfrak{gd}}(\mathbf{d})$ for suitable morphisms $\mathbf{d}$ of $\mathsf{HepSpec}_{\mathfrak{gd}}$, and we will compute their composites by composing the corresponding closed generalized hep-derivors.
 
 \section{Single-set presentation of higher-order categorial algebras}\label{SSingleSet}
 
@@ -2741,7 +2517,7 @@ $$
 \qquad\text{and}\qquad
 \mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})=\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)}).
 $$
-Thus, the categories of higher-order categorial algebras are the categories canonically associated to the ep-varieties $\mathcal{V}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ and $\mathcal{V}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ of hep-specifications. The functors of this section are induced by closed generalized hep-derivors between the corresponding hep-specifications, see Definition~\ref{DClosedHepDerivor}, i.e., they are the images of morphisms of $\mathsf{HepSpec}_{\mathfrak{gd}}$ under the functor $\mathrm{HEPAlg}_{\mathfrak{gd}}$, see Proposition~\ref{PHepAlgFunctor}. They are defined on all the partial algebras, and we prove that their restrictions to the categories of higher-order categorial algebras corestrict to categories of higher-order categorial algebras, see Definition~\ref{DCorestriction}. By abuse of notation, we denote these corestrictions as the functors themselves.
+Thus, the categories of higher-order categorial algebras are the categories canonically associated to the ep-varieties $\mathcal{V}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ and $\mathcal{V}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ of hep-specifications. The functors of this section are induced by generalized hep-derivors between the corresponding hep-signatures, i.e., by morphisms of $\mathsf{hepSig}_{\mathfrak{gd}}$, see Proposition~\ref{PHepSigCat}. They are defined on all the partial algebras, and we prove that their restrictions to the categories of higher-order categorial algebras corestrict to categories of higher-order categorial algebras, see Definition~\ref{DCorestriction}. By abuse of notation, we denote these corestrictions as the functors themselves.
 
 For the generalized hep-derivors of this work we use the following notation, which we explain for the graduation. The graduation functor $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ is induced by the generalized hep-derivor
 $$
@@ -2771,15 +2547,14 @@ from $\mathbf{\Sigma}^{\mathrm{gl}(n)}$ to $\mathbf{\Sigma}^{(n)}$ defined as fo
 \end{align*}
 \item for every $s\in S$ and every $k\in n$,
 $$
-\mathrm{Dom}^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}}_{(k,s)}=\mathrm{Cn}^{(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})}\left(\left\lbrace\left(v^{s}_{0},\mathrm{sc}^{k}_{s}(v^{s}_{0})\right)\right\rbrace\right)
+\mathrm{Dom}^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}}_{(k,s)}=\left\lbrace\left(v^{s}_{0},\mathrm{sc}^{k}_{s}(v^{s}_{0})\right)\right\rbrace
 \qquad\text{and}\qquad
-\mathrm{Dom}^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}}_{(n,s)}=\mathrm{Cn}^{(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})}(\varnothing),
+\mathrm{Dom}^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}}_{(n,s)}=\varnothing,
 $$
-see Definition~\ref{DCn}.
 \end{enumerate}
 \end{definition}
 
-Let us note that $(\varphi^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}})^{\star}((k,\mathbf{s}))=\mathbf{s}$, so that $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\sigma_{k})$ is a term with variables in $\vs{\mathbf{s}}$, and that $j\in n$ whenever $j<k$, so that $\mathrm{sc}^{j}_{s}$, $\mathrm{tg}^{j}_{s}$ and $\circ^{j}_{s}$ are operation symbols of $\Sigma^{(n)}$. Moreover, by Lemma~\ref{LCn}~(2), for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, every $s\in S$ and every cell $x$ of sort $s$ of $\mathbf{B}$, $\mathbf{B}\models\mathrm{Dom}^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}}_{(k,s)}[x]$ if, and only if, $x=\mathrm{sc}^{k}_{s}(x)$, i.e., $x$ is a $k$-cell, for $k\in n$, and every cell satisfies $\mathrm{Dom}^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}}_{(n,s)}$.
+Let us note that $(\varphi^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}})^{\star}((k,\mathbf{s}))=\mathbf{s}$, so that $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\sigma_{k})$ is a term with variables in $\vs{\mathbf{s}}$, and that $j\in n$ whenever $j<k$, so that $\mathrm{sc}^{j}_{s}$, $\mathrm{tg}^{j}_{s}$ and $\circ^{j}_{s}$ are operation symbols of $\Sigma^{(n)}$. Moreover, by Definition~\ref{DEEq}, for every partial $\Sigma^{(n)}$-algebra $\mathbf{B}$, every $s\in S$ and every $x\in B_{s}$, $\mathbf{B}\models\mathrm{Dom}^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}}_{(k,s)}[x]$ if, and only if, $x=\mathrm{sc}^{k}_{s}(x)$, i.e., $x$ is a $k$-cell, for $k\in n$, and every element satisfies $\mathrm{Dom}^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}}_{(n,s)}$.
 
 \begin{definition}\label{DGraduation}
 Let $n\in\mathbb{N}$. The \emph{graduation functor} $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ is the functor $(\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}$ induced by the generalized hep-derivor $\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}$ from $\mathsf{PAlg}(\Sigma^{(n)})$ to $\mathsf{PAlg}(\Sigma^{\mathrm{gl}(n)})$, see Proposition~\ref{PGenHepDerivorFunctor}.
@@ -2888,10 +2663,10 @@ This completes the proof.
 We next prove that the graduation of a single-set $n$-categorial $\mathbf{\Sigma}$-algebra is a globular $n$-categorial $\mathbf{\Sigma}$-algebra.
 
 \begin{proposition}\label{PGradDerivor}
-Let $n\in\mathbb{N}$. Then $\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}$ is a closed generalized hep-derivor from $(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ to $(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, see Definition~\ref{DClosedHepDerivor}. In particular, the restriction of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$.
+Let $n\in\mathbb{N}$. Then the restriction of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$.
 \end{proposition}
 \begin{proof}
-By Definition~\ref{DGradDerivor} and Lemma~\ref{LCn}~(1), the domains of $\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}$ are closed in $(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, so that condition (CL1) holds. It remains to prove condition (CL2). Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ and $\mathbf{A}=\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathbf{B})$. By Proposition~\ref{PGenHepDerivorAlg}, we must check the conditions (GHEP1) and (GHEP2).
+Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ and $\mathbf{A}=\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathbf{B})$. By Proposition~\ref{PGenHepDerivorAlg}, we must check the conditions (GHEP1) and (GHEP2).
 
 \textsf{(GHEP1)} By Proposition~\ref{PTransformedEpAlg}, it is equivalent to the fact that $\mathbf{A}$ is a $\mathbf{\Sigma}^{\mathrm{gl}(n)}$-algebra, which follows from Lemma~\ref{LGradDescription}.
 
@@ -2991,7 +2766,7 @@ Let $n\in\mathbb{N}$. The \emph{unification derivor} is the generalized hep-deri
 $$
 \mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}=\left(\varphi^{\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}},\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}},\mathrm{Dom}^{\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}}\right)
 $$
-from $\mathbf{\Sigma}^{(n)}$ to $\mathbf{\Sigma}^{\mathrm{gl}(n)}$ defined as follows: $\varphi^{\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}}(s)=(n,s)$ and $\mathrm{Dom}^{\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}}_{s}=\mathrm{Cn}^{(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})}(\varnothing)$, for every $s\in S$, and, for every $\sigma\in\Sigma_{\mathbf{s},s}$, every $k\in n$ and every $s\in S$,
+from $\mathbf{\Sigma}^{(n)}$ to $\mathbf{\Sigma}^{\mathrm{gl}(n)}$ defined as follows: $\varphi^{\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}}(s)=(n,s)$ and $\mathrm{Dom}^{\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}}_{s}=\varnothing$, for every $s\in S$, and, for every $\sigma\in\Sigma_{\mathbf{s},s}$, every $k\in n$ and every $s\in S$,
 \begin{align*}
 \mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\sigma)&=\sigma_{n}((v^{(n,\mathbf{s})}_{p})_{p\in\bb{\mathbf{s}}}), &
 \mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\circ^{k}_{s})&=v^{(n,s)}_{0}\circ^{(k,n)}_{s}v^{(n,s)}_{1},\\
@@ -3027,7 +2802,7 @@ Let $n\in\mathbb{N}$, $\mathbf{A}$ an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^
 \end{enumerate}
 \end{lemma}
 \begin{proof}
-By Definition~\ref{DUnifDerivor} and Lemma~\ref{LCn}~(2), every $n$-cell of $\mathbf{A}$ satisfies the domains of $\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}$, since every element satisfies the empty set of $\mathrm{E}$-equations. Hence the cells of sort $s$ of $\mathbf{B}$ are the $n$-cells of sort $s$ of $\mathbf{A}$. By Proposition~\ref{PTransformedEpAlg}, we check that, for every operation symbol of $\Sigma^{(n)}$, the corresponding partial term operation is defined on the families that satisfy its domain conditions in $\mathbf{B}$.
+Since the domains of $\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}$ are empty, the cells of sort $s$ of $\mathbf{B}$ are the $n$-cells of sort $s$ of $\mathbf{A}$. By Proposition~\ref{PTransformedEpAlg}, we check that, for every operation symbol of $\Sigma^{(n)}$, the corresponding partial term operation is defined on the families that satisfy its domain conditions in $\mathbf{B}$.
 
 \textsf{(Operation symbols of $\Sigma$, sources and targets)} Their sets of domain conditions are empty, and the terms $\sigma_{n}((v^{(n,\mathbf{s})}_{p})_{p\in\bb{\mathbf{s}}})$, $\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(v^{(n,s)}_{0}))$ and $\mathrm{i}^{(n,k)}_{s}(\mathrm{tg}^{(k,n)}_{s}(v^{(n,s)}_{0}))$ are defined everywhere in $\mathbf{A}$, by~(EA0) and~(EA$^{k,n}$1). Moreover, all the $n$-cells are cells of $\mathbf{B}$.
 
@@ -3045,10 +2820,10 @@ This completes the proof.
 We next prove that the unification of a globular $n$-categorial $\mathbf{\Sigma}$-algebra is a single-set $n$-categorial $\mathbf{\Sigma}$-algebra.
 
 \begin{proposition}\label{PUnifDerivor}
-Let $n\in\mathbb{N}$. Then $\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}$ is a closed generalized hep-derivor from $(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ to $(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$, see Definition~\ref{DClosedHepDerivor}. In particular, the restriction of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$.
+Let $n\in\mathbb{N}$. Then the restriction of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$.
 \end{proposition}
 \begin{proof}
-By Definition~\ref{DUnifDerivor} and Lemma~\ref{LCn}~(1), the domains of $\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}$ are closed in $(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$, so that condition (CL1) holds. It remains to prove condition (CL2). Let $\mathbf{A}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ and $\mathbf{B}=\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathbf{A})$. By Proposition~\ref{PGenHepDerivorAlg}, we must check the conditions (GHEP1) and (GHEP2).
+Let $\mathbf{A}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ and $\mathbf{B}=\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathbf{A})$. By Proposition~\ref{PGenHepDerivorAlg}, we must check the conditions (GHEP1) and (GHEP2).
 
 \textsf{(GHEP1)} By Proposition~\ref{PTransformedEpAlg}, it is equivalent to the fact that $\mathbf{B}$ is a $\mathbf{\Sigma}^{(n)}$-algebra, which follows from Lemma~\ref{LUnifDescription}.
 
@@ -3180,23 +2955,17 @@ In this subsection, we investigate the relation between the functors $\mathrm{Gd
 	\end{tikzpicture}
 \end{center}
 
-Both functors are induced by closed generalized hep-derivors, see Propositions~\ref{PGradDerivor} and~\ref{PUnifDerivor}. Therefore, by Proposition~\ref{PHepComp}, their composites are induced by the compositions of the corresponding closed generalized hep-derivors, see Definition~\ref{DHepComp}. More precisely, the following equalities hold
-$$
-\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}=\left(\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}\right)^{\ast}_{\mathfrak{gd}}
-\qquad\text{and}\qquad
-\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}=\left(\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}\right)^{\ast}_{\mathfrak{gd}},
-$$
-as functors on $\mathsf{nCatAlg}(\mathbf{\Sigma})$ and on $\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})$, respectively. We start by proving that the process of graduation followed by that of unification does not provide anything new.
+Both functors are induced by generalized hep-derivors. Therefore we compute their composites by means of the compositions $\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}$ and $\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}$, see Definition~\ref{DHepComp}, and Proposition~\ref{PHepComp}. We start by proving that the process of graduation followed by that of unification does not provide anything new.
 
 \begin{proposition}\label{PUnifGrad}
-The following equality holds in $\mathsf{HepSpec}_{\mathfrak{gd}}$
+The following equality holds in $\mathsf{hepSig}_{\mathfrak{gd}}$
 $$
-\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}=\mathrm{id}_{(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})}.
+\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}=\mathrm{id}_{\mathbf{\Sigma}^{(n)}}.
 $$
 Consequently, $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}=\mathrm{Id}_{\mathsf{nCatAlg}(\mathbf{\Sigma})}$.
 \end{proposition}
 \begin{proof}
-By Lemma~\ref{LClosedEq}, it suffices to prove the following two claims.
+We prove the following two claims.
 
 \begin{claim}\label{CUnifGradA}
 The underlying derivor of $\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}$ is the identity derivor $(\mathrm{id}_{S},\eta^{\Sigma^{(n)}})$.
@@ -3223,29 +2992,46 @@ The first equality unravels Definition~\ref{DUnifDerivor}; finally, the last equ
 Claim~\ref{CUnifGradA} follows.
 
 \begin{claim}\label{CUnifGradB}
-For every object $\boldsymbol{\mathsf{A}}$ in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, $(\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})$ and $(\mathrm{id}_{(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})$ have the same underlying $S$-sorted set.
+The domains of $\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}$ are empty.
 \end{claim}
 
-Let $\boldsymbol{\mathsf{A}}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$. By Proposition~\ref{PHepComp}, $(\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})=\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$. By Lemmas~\ref{LGradDescription} and~\ref{LUnifDescription}, its cells of sort $s$ are the cells of sort $(n,s)$ of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$, i.e., all the cells of sort $s$ of $\boldsymbol{\mathsf{A}}$. By Proposition~\ref{PHepId}, these are the cells of $(\mathrm{id}_{(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})=\boldsymbol{\mathsf{A}}$.
-
-Claim~\ref{CUnifGradB} follows.
-
-All in all, by Claims~\ref{CUnifGradA} and~\ref{CUnifGradB} and Lemma~\ref{LClosedEq}, $\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}=\mathrm{id}_{(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})}$. Therefore, by Propositions~\ref{PHepComp} and~\ref{PHepId}, the following chain of equalities holds
+Let $s\in S$. By Definitions~\ref{DHepComp}, \ref{DGradDerivor} and~\ref{DUnifDerivor}, the following chain of equalities holds
 \allowdisplaybreaks
 \begin{align*}
-\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}
+\mathrm{Dom}^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}}_{s}
 &=
-\left(\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}\right)^{\ast}_{\mathfrak{gd}}
+\mathrm{Dom}^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}}_{(n,s)}\cup\left(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\right)^{\sharp}\left[\mathrm{Dom}^{\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}}_{s}\right]
 \tag{1}
 \\&=
-\left(\mathrm{id}_{(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})}\right)^{\ast}_{\mathfrak{gd}}
+\varnothing\cup\left(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\right)^{\sharp}[\varnothing]
 \tag{2}
 \\&=
-\mathrm{Id}_{\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})}.
+\varnothing.
 \tag{3}
 \end{align*}
 
-The first equality follows from Proposition~\ref{PHepComp}; the second equality follows from the above; finally, the last equality follows from Proposition~\ref{PHepId}. Since $\mathsf{nCatAlg}(\mathbf{\Sigma})=\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, the stated equality of functors follows.
+The first equality unravels Definition~\ref{DHepComp}; the second equality follows from Definitions~\ref{DGradDerivor} and~\ref{DUnifDerivor}; finally, the last equality is clear.
+
+Claim~\ref{CUnifGradB} follows.
+
+By Claims~\ref{CUnifGradA} and~\ref{CUnifGradB} and Definition~\ref{DHepComp}, $\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}=\mathrm{id}_{\mathbf{\Sigma}^{(n)}}$.
+
+Let $\boldsymbol{\mathsf{A}}$ be an $n$-categorial $\mathbf{\Sigma}$-algebra. By Lemmas~\ref{LGradDescription} and~\ref{LUnifDescription}, the cells of sort $s$ of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ are the cells of sort $(n,s)$ of $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$, i.e., all the cells of sort $s$ of $\boldsymbol{\mathsf{A}}$, which, since the domains of $\mathrm{id}_{\mathbf{\Sigma}^{(n)}}$ are empty, are the cells of $(\mathrm{id}_{\mathbf{\Sigma}^{(n)}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})$. Moreover, by Propositions~\ref{PGradDerivor} and~\ref{PUnifDerivor}, $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ is a $\mathbf{\Sigma}^{(n)}$-algebra. Therefore, the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}\left(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})\right)
+&=
+\left(\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}\right)^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})
+\tag{1}
+\\&=
+\left(\mathrm{id}_{\mathbf{\Sigma}^{(n)}}\right)^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})
+\tag{2}
+\\&=
+\boldsymbol{\mathsf{A}}.
+\tag{3}
+\end{align*}
+
+The first equality follows from Proposition~\ref{PHepComp}~(2); the second equality follows from the above; finally, the last equality follows from Proposition~\ref{PHepId}. By the same propositions, the equality also holds for the $n$-categorial $\mathbf{\Sigma}$-homomorphisms. Since $\mathsf{nCatAlg}(\mathbf{\Sigma})=\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, the stated equality of functors follows.
 
 This completes the proof.
 \end{proof}
@@ -3256,7 +3042,7 @@ In contrast to the previous result, the process of unification followed by that 
 $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}\cong \mathrm{Id}_{\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})}$.
 \end{proposition}
 \begin{proof}
-Throughout this proof, for every $s\in S$, we let $\mathrm{i}^{(n,n)}_{s}$ and $\mathrm{sc}^{(n,n)}_{s}$ stand for the identity mapping on the $n$-cells of sort $s$. By Proposition~\ref{PHepComp}, for every globular $n$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$,
+Throughout this proof, for every $s\in S$, we let $\mathrm{i}^{(n,n)}_{s}$ and $\mathrm{sc}^{(n,n)}_{s}$ stand for the identity mapping on the $n$-cells of sort $s$. Let $\boldsymbol{\mathsf{A}}$ be a globular $n$-categorial $\mathbf{\Sigma}$-algebra. By Lemma~\ref{LUnifDescription}, $\mathrm{sc}^{k}_{s}$ acts in $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ as $\mathrm{i}^{(n,k)}_{s}\circ\mathrm{sc}^{(k,n)}_{s}$. Hence, by Definitions~\ref{DGradDerivor} and~\ref{DUnifDerivor}, an $n$-cell $x$ of sort $s$ satisfies $\mathrm{Dom}^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}}_{(k,s)}$ in $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ if, and only if, it satisfies $(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}})^{\sharp}[\mathrm{Dom}^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}}_{(k,s)}]=\{(v^{(n,s)}_{0},\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(v^{(n,s)}_{0})))\}$ in $\boldsymbol{\mathsf{A}}$. Thus, by the note after Proposition~\ref{PHepComp}, $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ and $(\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})$ have the same cells and, by Propositions~\ref{PGradDerivor} and~\ref{PUnifDerivor}, the former is a $\mathbf{\Sigma}^{\mathrm{gl}(n)}$-algebra. Therefore, by Proposition~\ref{PHepComp}~(2),
 $$
 \mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\left(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})\right)=\left(\mathbf{Uf}^{(n)}_{\mathbf{\Sigma}}\circ\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}\right)^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}}).
 $$
@@ -3469,7 +3255,7 @@ Let $m,n\in\mathbb{N}$ with $m<n$. The \emph{single-set discretization derivor} 
 $$
 \mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}=\left(\varphi^{\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}},\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}},\mathrm{Dom}^{\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}}\right)
 $$
-from $\mathbf{\Sigma}^{(n)}$ to $\mathbf{\Sigma}^{(m)}$ defined as follows: $\varphi^{\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}}=\mathrm{id}_{S}$; $\mathrm{Dom}^{\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}}_{s}=\mathrm{Cn}^{(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})}(\varnothing)$, for every $s\in S$; for every $\sigma\in\Sigma_{\mathbf{s},s}$, $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\sigma)=\sigma((v^{\mathbf{s}}_{p})_{p\in\bb{\mathbf{s}}})$; for every $k\in m$ and every $s\in S$,
+from $\mathbf{\Sigma}^{(n)}$ to $\mathbf{\Sigma}^{(m)}$ defined as follows: $\varphi^{\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}}=\mathrm{id}_{S}$; $\mathrm{Dom}^{\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}}_{s}=\varnothing$, for every $s\in S$; for every $\sigma\in\Sigma_{\mathbf{s},s}$, $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\sigma)=\sigma((v^{\mathbf{s}}_{p})_{p\in\bb{\mathbf{s}}})$; for every $k\in m$ and every $s\in S$,
 $$
 \mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\mathrm{sc}^{k}_{s})=\mathrm{sc}^{k}_{s}(v^{s}_{0}),\quad
 \mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\mathrm{tg}^{k}_{s})=\mathrm{tg}^{k}_{s}(v^{s}_{0}),\quad
@@ -3497,7 +3283,7 @@ Let $m,n\in\mathbb{N}$ with $m<n$, $\mathbf{B}$ an object in $\mathsf{EPAlg}(\ma
 \end{enumerate}
 \end{lemma}
 \begin{proof}
-By Definition~\ref{DDiscDerivor} and Lemma~\ref{LCn}~(2), every cell of $\mathbf{B}$ satisfies the domains of $\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}$, since every element satisfies the empty set of $\mathrm{E}$-equations. Hence the cells of $\mathbf{A}$ are all the cells of $\mathbf{B}$. By Proposition~\ref{PTransformedEpAlg}, we check that, for every operation symbol of $\Sigma^{(n)}$, the corresponding partial term operation is defined on the families that satisfy its domain conditions in $\mathbf{A}$.
+Since the domains of $\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}$ are empty, the cells of $\mathbf{A}$ are all the cells of $\mathbf{B}$. By Proposition~\ref{PTransformedEpAlg}, we check that, for every operation symbol of $\Sigma^{(n)}$, the corresponding partial term operation is defined on the families that satisfy its domain conditions in $\mathbf{A}$.
 
 \textsf{(Operation symbols with empty domain conditions)} They are sent to total derived operations, which act as $\sigma$, $\mathrm{sc}^{k}_{s}$ and $\mathrm{tg}^{k}_{s}$, for $k<m$, by~(A0) and~(A$^{k}$1), and as identities, for $k\geq m$.
 
@@ -3513,10 +3299,10 @@ This completes the proof.
 We next prove that the discretization of a single-set $m$-categorial $\mathbf{\Sigma}$-algebra is a single-set $n$-categorial $\mathbf{\Sigma}$-algebra.
 
 \begin{proposition}\label{PDiscDerivor}
-Let $m,n\in\mathbb{N}$ with $m\leq n$. Then $\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}$ is a closed generalized hep-derivor from $(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ to $(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})$, see Definition~\ref{DClosedHepDerivor}. In particular, the restriction of $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$.
+Let $m,n\in\mathbb{N}$ with $m\leq n$. Then the restriction of $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$.
 \end{proposition}
 \begin{proof}
-For $m=n$ this follows from Proposition~\ref{PHepId}. Let $m<n$. By Definition~\ref{DDiscDerivor} and Lemma~\ref{LCn}~(1), the domains of $\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}$ are closed in $(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})$, so that condition (CL1) holds. It remains to prove condition (CL2). Let $\mathbf{B}$ an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})$ and $\mathbf{A}=\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\mathbf{B})$. By Proposition~\ref{PGenHepDerivorAlg}, we must check the conditions (GHEP1) and (GHEP2).
+For $m=n$ this follows from Proposition~\ref{PHepId}. Let $m<n$. Let $\mathbf{B}$ an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})$ and $\mathbf{A}=\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\mathbf{B})$. By Proposition~\ref{PGenHepDerivorAlg}, we must check the conditions (GHEP1) and (GHEP2).
 
 \textsf{(GHEP1)} By Proposition~\ref{PTransformedEpAlg}, it is equivalent to the fact that $\mathbf{A}$ is a $\mathbf{\Sigma}^{(n)}$-algebra, which follows from Lemma~\ref{LDiscDescription}.
 
@@ -3560,12 +3346,12 @@ Let $m,n\in\mathbb{N}$ with $m<n$. The \emph{globular discretization derivor} is
 $$
 \mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}=\left(\varphi^{\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}},\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}},\mathrm{Dom}^{\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}}\right)
 $$
-from $\mathbf{\Sigma}^{\mathrm{gl}(n)}$ to $\mathbf{\Sigma}^{\mathrm{gl}(m)}$ defined as follows: $\varphi^{\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}}(k,s)=(\underline{k},s)$ and $\mathrm{Dom}^{\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}}_{(k,s)}=\mathrm{Cn}^{(\mathbf{\Sigma}^{\mathrm{gl}(m)},\mathcal{C}^{\mathrm{gl}(m)})}(\varnothing)$, for every dimension $k\in n+1$ and every $s\in S$; $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\sigma_{k})=\sigma_{\underline{k}}((v^{(\underline{k},\mathbf{s})}_{p})_{p\in\bb{\mathbf{s}}})$, for every $\sigma\in\Sigma_{\mathbf{s},s}$ and every $k\in n+1$; and, for every pair of dimensions $j<k$ in $n+1$ and every $s\in S$, writing $v_{0}$ and $v_{1}$ for the variables $v^{(\underline{k},s)}_{0}$ and $v^{(\underline{k},s)}_{1}$ of sort $(\underline{k},s)$,
+from $\mathbf{\Sigma}^{\mathrm{gl}(n)}$ to $\mathbf{\Sigma}^{\mathrm{gl}(m)}$ defined as follows: $\varphi^{\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}}(k,s)=(\underline{k},s)$ and $\mathrm{Dom}^{\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}}_{(k,s)}=\varnothing$, for every dimension $k\in n+1$ and every $s\in S$; $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\sigma_{k})=\sigma_{\underline{k}}((v^{(\underline{k},\mathbf{s})}_{p})_{p\in\bb{\mathbf{s}}})$, for every $\sigma\in\Sigma_{\mathbf{s},s}$ and every $k\in n+1$; and, for every pair of dimensions $j<k$ in $n+1$ and every $s\in S$, writing $v_{0}$ and $v_{1}$ for the variables $v^{(\underline{k},s)}_{0}$ and $v^{(\underline{k},s)}_{1}$ of sort $(\underline{k},s)$,
 \begin{enumerate}
 \item if $j<m$, so that $\underline{j}=j<\underline{k}$, then $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\mathrm{sc}^{(j,k)}_{s})=\mathrm{sc}^{(j,\underline{k})}_{s}(v_{0})$, $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\mathrm{tg}^{(j,k)}_{s})=\mathrm{tg}^{(j,\underline{k})}_{s}(v_{0})$, $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\mathrm{i}^{(k,j)}_{s})=\mathrm{i}^{(\underline{k},j)}_{s}(v^{(j,s)}_{0})$ and $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\circ^{(j,k)}_{s})=v_{0}\circ^{(j,\underline{k})}_{s}v_{1}$;
 \item if $j\geq m$, so that $\underline{j}=\underline{k}=m$, then $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\mathrm{sc}^{(j,k)}_{s})=\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\mathrm{tg}^{(j,k)}_{s})=v_{0}$, $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\mathrm{i}^{(k,j)}_{s})=v^{(m,s)}_{0}$, and $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\circ^{(j,k)}_{s})=v_{0}$.
 \end{enumerate}
-For $m=n$, we let $\mathbf{Ds}^{(n,n)}_{\mathbf{\Sigma}}$ and $\mathbf{Ds}^{\mathrm{gl}(n,n)}_{\mathbf{\Sigma}}$ be the identities $\mathrm{id}_{(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})}$ and $\mathrm{id}_{(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})}$, see Definition~\ref{DHepComp}.
+For $m=n$, we let $\mathbf{Ds}^{(n,n)}_{\mathbf{\Sigma}}$ and $\mathbf{Ds}^{\mathrm{gl}(n,n)}_{\mathbf{\Sigma}}$ be the identities $\mathrm{id}_{\mathbf{\Sigma}^{(n)}}$ and $\mathrm{id}_{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$, see Definition~\ref{DHepComp}.
 \end{definition}
 
 Let us note that, on the dimensions $k\leq m$, $\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$ is the identity, and that every operation symbol that involves a dimension $j\geq m$ is sent to a variable of sort $(m,s)$.
@@ -3585,7 +3371,7 @@ Let $m,n\in\mathbb{N}$ with $m<n$, $\mathbf{B}$ an object in $\mathsf{EPAlg}(\ma
 \end{enumerate}
 \end{lemma}
 \begin{proof}
-By Definition~\ref{DDiscGlDerivor} and Lemma~\ref{LCn}~(2), every cell of $\mathbf{B}$ satisfies the domains of $\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$. Hence the cells of sort $(k,s)$ of $\mathbf{A}$ are the $\underline{k}$-cells of sort $s$ of $\mathbf{B}$. As in the proof of Lemma~\ref{LDiscDescription}, the operation symbols with empty domain conditions act through total derived operations. Let $j<k$ be dimensions, $s\in S$ and $x$, $y$ cells of sort $(k,s)$ of $\mathbf{A}$.
+Since the domains of $\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$ are empty, the cells of sort $(k,s)$ of $\mathbf{A}$ are the $\underline{k}$-cells of sort $s$ of $\mathbf{B}$. As in the proof of Lemma~\ref{LDiscDescription}, the operation symbols with empty domain conditions act through total derived operations. Let $j<k$ be dimensions, $s\in S$ and $x$, $y$ cells of sort $(k,s)$ of $\mathbf{A}$.
 
 \textsf{(Case $j<m$)} The cells $x$, $y$ satisfy the domain condition of $\circ^{(j,k)}_{s}$ in $\mathbf{A}$ if, and only if, $\mathrm{sc}^{(j,\underline{k})}_{s}(x)=\mathrm{tg}^{(j,\underline{k})}_{s}(y)$, in which case, by~(EA$^{j,\underline{k}}$3), $x\circ^{(j,\underline{k})}_{s}y$ is defined.
 
@@ -3599,10 +3385,10 @@ This completes the proof.
 We next prove that the globular discretization of a globular $m$-categorial $\mathbf{\Sigma}$-algebra is a globular $n$-categorial $\mathbf{\Sigma}$-algebra.
 
 \begin{proposition}\label{PDiscGlDerivor}
-Let $m,n\in\mathbb{N}$ with $m\leq n$. Then $\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$ is a closed generalized hep-derivor from $(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ to $(\mathbf{\Sigma}^{\mathrm{gl}(m)},\mathcal{C}^{\mathrm{gl}(m)})$, see Definition~\ref{DClosedHepDerivor}. In particular, the restriction of $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(m)},\mathcal{C}^{\mathrm{gl}(m)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$.
+Let $m,n\in\mathbb{N}$ with $m\leq n$. Then the restriction of $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(m)},\mathcal{C}^{\mathrm{gl}(m)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$.
 \end{proposition}
 \begin{proof}
-For $m=n$ this follows from Proposition~\ref{PHepId}. Let $m<n$. By Definition~\ref{DDiscGlDerivor} and Lemma~\ref{LCn}~(1), the domains of $\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$ are closed in $(\mathbf{\Sigma}^{\mathrm{gl}(m)},\mathcal{C}^{\mathrm{gl}(m)})$, so that condition (CL1) holds. It remains to prove condition (CL2). Let $\mathbf{B}$ an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(m)},\mathcal{C}^{\mathrm{gl}(m)})$ and $\mathbf{A}=\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\mathbf{B})$. By Proposition~\ref{PGenHepDerivorAlg}, we must check the conditions (GHEP1) and (GHEP2).
+For $m=n$ this follows from Proposition~\ref{PHepId}. Let $m<n$. Let $\mathbf{B}$ an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(m)},\mathcal{C}^{\mathrm{gl}(m)})$ and $\mathbf{A}=\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\mathbf{B})$. By Proposition~\ref{PGenHepDerivorAlg}, we must check the conditions (GHEP1) and (GHEP2).
 
 \textsf{(GHEP1)} By Proposition~\ref{PTransformedEpAlg}, it is equivalent to the fact that $\mathbf{A}$ is a $\mathbf{\Sigma}^{\mathrm{gl}(n)}$-algebra, which follows from Lemma~\ref{LDiscGlDescription}.
 
@@ -3638,18 +3424,18 @@ $$
 $$
 from $\mathbf{\Sigma}^{(m)}$ to $\mathbf{\Sigma}^{(n)}$ whose mapping on sorts is $\varphi^{\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}}=\mathrm{id}_{S}$, whose assignment of terms is the inclusion, i.e., $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(\tau)=\tau((v^{\mathbf{s}}_{p})_{p\in\bb{\mathbf{s}}})$ for every operation symbol $\tau$ of $\Sigma^{(m)}$ of arity $\mathbf{s}$, and whose domains are, for every $s\in S$,
 $$
-\mathrm{Dom}^{\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}}_{s}=\mathrm{Cn}^{(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})}\left(\left\lbrace\left(v^{s}_{0},\mathrm{sc}^{m}_{s}(v^{s}_{0})\right)\right\rbrace\right).
+\mathrm{Dom}^{\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}}_{s}=\left\lbrace\left(v^{s}_{0},\mathrm{sc}^{m}_{s}(v^{s}_{0})\right)\right\rbrace.
 $$
 \item The \emph{globular truncation derivor} is the generalized hep-derivor
 $$
 \mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}=\left(\varphi^{\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}},\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}},\mathrm{Dom}^{\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}}\right)
 $$
-from $\mathbf{\Sigma}^{\mathrm{gl}(m)}$ to $\mathbf{\Sigma}^{\mathrm{gl}(n)}$ determined by the canonical embedding of $\Sigma^{\mathrm{gl}(m)}$ into $\Sigma^{\mathrm{gl}(n)}$, see the note after Definition~\ref{DSigmaCatGlobular}, i.e., $\varphi^{\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}}(k,s)=(k,s)$, $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}(\tau)=\tau((v^{\mathbf{w}}_{p})_{p\in\bb{\mathbf{w}}})$ for every operation symbol $\tau$ of $\Sigma^{\mathrm{gl}(m)}$ of arity $\mathbf{w}$, and $\mathrm{Dom}^{\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}}_{(k,s)}=\mathrm{Cn}^{(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})}(\varnothing)$, for every $(k,s)\in(m+1)\times S$.
+from $\mathbf{\Sigma}^{\mathrm{gl}(m)}$ to $\mathbf{\Sigma}^{\mathrm{gl}(n)}$ determined by the canonical embedding of $\Sigma^{\mathrm{gl}(m)}$ into $\Sigma^{\mathrm{gl}(n)}$, see the note after Definition~\ref{DSigmaCatGlobular}, i.e., $\varphi^{\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}}(k,s)=(k,s)$, $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}(\tau)=\tau((v^{\mathbf{w}}_{p})_{p\in\bb{\mathbf{w}}})$ for every operation symbol $\tau$ of $\Sigma^{\mathrm{gl}(m)}$ of arity $\mathbf{w}$, and $\mathrm{Dom}^{\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}}_{(k,s)}=\varnothing$, for every $(k,s)\in(m+1)\times S$.
 \end{enumerate}
-For $m=n$, we let $\mathbf{Tr}^{(n,n)}_{\mathbf{\Sigma}}$ and $\mathbf{Tr}^{\mathrm{gl}(n,n)}_{\mathbf{\Sigma}}$ be the identities $\mathrm{id}_{(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})}$ and $\mathrm{id}_{(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})}$, see Definition~\ref{DHepComp}.
+For $m=n$, we let $\mathbf{Tr}^{(n,n)}_{\mathbf{\Sigma}}$ and $\mathbf{Tr}^{\mathrm{gl}(n,n)}_{\mathbf{\Sigma}}$ be the identities $\mathrm{id}_{\mathbf{\Sigma}^{(n)}}$ and $\mathrm{id}_{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$, see Definition~\ref{DHepComp}.
 \end{definition}
 
-Let us note that, by Lemma~\ref{LCn}~(2), for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, the cells of sort $s$ of $\mathbf{B}$ relative to $\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ are its $m$-cells, i.e., the elements $x$ of $B_{s}$ such that $x=\mathrm{sc}^{m}_{s}(x)$, and that, for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$, the cells of sort $(k,s)$ of $\mathbf{B}$ relative to $\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ are all the elements of $B_{(k,s)}$.
+Let us note that, by Definition~\ref{DCells}, for every partial $\Sigma^{(n)}$-algebra $\mathbf{B}$, the cells of sort $s$ of $\mathbf{B}$ relative to $\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ are its $m$-cells, i.e., the elements $x$ of $B_{s}$ such that $x=\mathrm{sc}^{m}_{s}(x)$, and that, for every partial $\Sigma^{\mathrm{gl}(n)}$-algebra $\mathbf{B}$, the cells of sort $(k,s)$ of $\mathbf{B}$ relative to $\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ are all the elements of $B_{(k,s)}$.
 
 \begin{definition}\label{DTruncation}
 Let $m,n\in\mathbb{N}$ with $m\leq n$. The \emph{truncation functor} $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ is the functor $(\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}$ induced by the generalized hep-derivor $\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ from $\mathsf{PAlg}(\Sigma^{(n)})$ to $\mathsf{PAlg}(\Sigma^{(m)})$, see Proposition~\ref{PGenHepDerivorFunctor}.
@@ -3680,10 +3466,10 @@ Let $m,n\in\mathbb{N}$ with $m<n$, $\mathbf{B}$ an object in $\mathsf{EPAlg}(\ma
 We next prove that the truncation of a single-set $n$-categorial $\mathbf{\Sigma}$-algebra is a single-set $m$-categorial $\mathbf{\Sigma}$-algebra.
 
 \begin{proposition}\label{PTruncDerivor}
-Let $m,n\in\mathbb{N}$ with $m\leq n$. Then $\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ is a closed generalized hep-derivor from $(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})$ to $(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, see Definition~\ref{DClosedHepDerivor}. In particular, the restriction of $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})$.
+Let $m,n\in\mathbb{N}$ with $m\leq n$. Then the restriction of $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})$.
 \end{proposition}
 \begin{proof}
-For $m=n$ this follows from Proposition~\ref{PHepId}. Let $m<n$. By Definition~\ref{DTruncDerivor} and Lemma~\ref{LCn}~(1), the domains of $\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ are closed in $(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, so that condition (CL1) holds. It remains to prove condition (CL2). Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ and $\mathbf{A}=\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(\mathbf{B})$. By Definition~\ref{DTruncDerivor}, the note after it and Proposition~\ref{PTransformedAlg}, the cells of $\mathbf{A}$ are the $m$-cells of $\mathbf{B}$, and its operations are restrictions of those of $\mathbf{B}$. By Proposition~\ref{PGenHepDerivorAlg}, we must check the conditions (GHEP1) and (GHEP2).
+For $m=n$ this follows from Proposition~\ref{PHepId}. Let $m<n$. Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ and $\mathbf{A}=\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(\mathbf{B})$. By Definition~\ref{DTruncDerivor}, the note after it and Proposition~\ref{PTransformedAlg}, the cells of $\mathbf{A}$ are the $m$-cells of $\mathbf{B}$, and its operations are restrictions of those of $\mathbf{B}$. By Proposition~\ref{PGenHepDerivorAlg}, we must check the conditions (GHEP1) and (GHEP2).
 
 \textsf{(GHEP1)} By Lemma~\ref{LTruncCells}, the $m$-cells are closed under the operations of $\Sigma^{(m)}$, which are defined on the families of $m$-cells that satisfy their domain conditions, by~(A0), (A$^{k}$1) and~(A$^{k}$3).
 
@@ -3695,10 +3481,10 @@ This completes the proof.
 We next prove the analogous result for the globular presentation.
 
 \begin{proposition}\label{PTruncGlDerivor}
-Let $m,n\in\mathbb{N}$ with $m\leq n$. Then $\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ is a closed generalized hep-derivor from $(\mathbf{\Sigma}^{\mathrm{gl}(m)},\mathcal{C}^{\mathrm{gl}(m)})$ to $(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$, see Definition~\ref{DClosedHepDerivor}. In particular, the restriction of $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(m)},\mathcal{C}^{\mathrm{gl}(m)})$.
+Let $m,n\in\mathbb{N}$ with $m\leq n$. Then the restriction of $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(m)},\mathcal{C}^{\mathrm{gl}(m)})$.
 \end{proposition}
 \begin{proof}
-For $m=n$ this follows from Proposition~\ref{PHepId}. Let $m<n$. By Definition~\ref{DTruncDerivor} and Lemma~\ref{LCn}~(1), the domains of $\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ are closed in $(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$, so that condition (CL1) holds. It remains to prove condition (CL2). Let $\mathbf{B}$ an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$. By Proposition~\ref{PGenHepDerivorAlg}, we must check the conditions (GHEP1) and (GHEP2).
+For $m=n$ this follows from Proposition~\ref{PHepId}. Let $m<n$. Let $\mathbf{B}$ an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$. By Proposition~\ref{PGenHepDerivorAlg}, we must check the conditions (GHEP1) and (GHEP2).
 
 \textsf{(GHEP1)} By the note after Definition~\ref{DTruncDerivor}, all the cells of dimension at most $m$ of $\mathbf{B}$ are cells of the transformed algebra, and every operation symbol of $\Sigma^{\mathrm{gl}(m)}$ is sent to itself.
 
@@ -3721,17 +3507,16 @@ It sends a globular $n$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\maths
 
 \subsection{On the relationship between discretization and truncation}\label{SDiscTrunc}
 
-In this subsection we prove that discretization is left adjoint to truncation and that these functors compose as expected. As in Subsection~\ref{SGradUnif}, by Proposition~\ref{PHepComp}, we compute the composites of these functors by composing the corresponding closed generalized hep-derivors, which we compare by means of Lemma~\ref{LClosedEq}. We first consider the single-set presentation.
+In this subsection we prove that discretization is left adjoint to truncation and that these functors compose as expected. As in Subsection~\ref{SGradUnif}, we compute the composites of these functors by composing the corresponding generalized hep-derivors, by means of Proposition~\ref{PHepComp} and Lemma~\ref{LSameCells}. We first consider the single-set presentation.
 
 \begin{proposition}\label{PTruncDisc}
-Let $m,n\in\mathbb{N}$ with $m\leq n$. Then the following equality holds in $\mathsf{HepSpec}_{\mathfrak{gd}}$
+Let $m,n\in\mathbb{N}$ with $m\leq n$. Then the following equality holds
 $$
-\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}=\mathrm{id}_{(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})}.
+\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}=\mathrm{Id}_{\mathsf{mCatAlg}(\mathbf{\Sigma})}.
 $$
-Consequently, $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}=\mathrm{Id}_{\mathsf{mCatAlg}(\mathbf{\Sigma})}$.
 \end{proposition}
 \begin{proof}
-For $m=n$ both closed generalized hep-derivors are identities. Let $m<n$. By Lemma~\ref{LClosedEq}, it suffices to prove the following two claims.
+For $m=n$, both functors are identities, by Proposition~\ref{PHepId}. Let $m<n$. We prove the following two claims.
 
 \begin{claim}\label{CTruncDiscA}
 The underlying derivor of $\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ is the identity derivor $(\mathrm{id}_{S},\eta^{\Sigma^{(m)}})$.
@@ -3746,17 +3531,33 @@ see~(H3).
 Claim~\ref{CTruncDiscA} follows.
 
 \begin{claim}\label{CTruncDiscB}
-For every object $\boldsymbol{\mathsf{A}}$ in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})$, the cells of $(\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})$ are all the cells of $\boldsymbol{\mathsf{A}}$.
+For every $m$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$, $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))=(\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})$, and the cells of this partial $\Sigma^{(m)}$-algebra are all the cells of $\boldsymbol{\mathsf{A}}$.
 \end{claim}
 
-Let $\boldsymbol{\mathsf{A}}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})$. By Proposition~\ref{PHepComp}, $(\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})=\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$. By Lemma~\ref{LDiscDescription}, $\mathrm{sc}^{m}_{s}$ acts as the identity in $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$, so that, by the note after Definition~\ref{DTruncDerivor}, every cell of $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$, i.e., every cell of $\boldsymbol{\mathsf{A}}$, is a cell of $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$.
+Let $\boldsymbol{\mathsf{A}}$ be an $m$-categorial $\mathbf{\Sigma}$-algebra. By Lemma~\ref{LDiscDescription}, $\mathrm{sc}^{m}_{s}$ acts as the identity in $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$, so that, by the note after Definition~\ref{DTruncDerivor}, every cell of $\boldsymbol{\mathsf{A}}$ is a cell of $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$. On the other hand, by Definitions~\ref{DHepComp}, \ref{DDiscDerivor} and~\ref{DTruncDerivor}, for every $s\in S$,
+$$
+\mathrm{Dom}^{\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}}_{s}=\varnothing\cup\left(\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}\right)^{\sharp}\left[\left\lbrace\left(v^{s}_{0},\mathrm{sc}^{m}_{s}(v^{s}_{0})\right)\right\rbrace\right]=\left\lbrace\left(v^{s}_{0},v^{s}_{0}\right)\right\rbrace,
+$$
+which is satisfied by every cell. Hence both partial algebras have the same cells. Moreover, by Propositions~\ref{PDiscDerivor} and~\ref{PTruncDerivor}, $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ is a $\mathbf{\Sigma}^{(m)}$-algebra. Therefore, by Proposition~\ref{PHepComp}~(2), both partial algebras are equal.
 
 Claim~\ref{CTruncDiscB} follows.
 
-By Proposition~\ref{PHepId}, the cells of $(\mathrm{id}_{(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})=\boldsymbol{\mathsf{A}}$ are also all the cells of $\boldsymbol{\mathsf{A}}$. All in all, by Claims~\ref{CTruncDiscA} and~\ref{CTruncDiscB} and Lemma~\ref{LClosedEq}, the stated equality holds. Finally, by Propositions~\ref{PHepComp} and~\ref{PHepId},
-$$
-\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}=\left(\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}\right)^{\ast}_{\mathfrak{gd}}=\left(\mathrm{id}_{(\mathbf{\Sigma}^{(m)},\mathcal{C}^{(m)})}\right)^{\ast}_{\mathfrak{gd}}=\mathrm{Id}_{\mathsf{mCatAlg}(\mathbf{\Sigma})}.
-$$
+Let $\boldsymbol{\mathsf{A}}$ be an $m$-categorial $\mathbf{\Sigma}$-algebra. By Claim~\ref{CTruncDiscA}, $\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ and $\mathrm{id}_{\mathbf{\Sigma}^{(m)}}$ have the same underlying derivor and, by Claim~\ref{CTruncDiscB}, they determine the same cells of $\boldsymbol{\mathsf{A}}$, since the domains of $\mathrm{id}_{\mathbf{\Sigma}^{(m)}}$ are empty. Therefore the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}\left(\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})\right)
+&=
+\left(\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}\right)^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})
+\tag{1}
+\\&=
+\left(\mathrm{id}_{\mathbf{\Sigma}^{(m)}}\right)^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})
+\tag{2}
+\\&=
+\boldsymbol{\mathsf{A}}.
+\tag{3}
+\end{align*}
+
+The first equality follows from Claim~\ref{CTruncDiscB}; the second equality follows from Lemma~\ref{LSameCells}; finally, the last equality follows from Proposition~\ref{PHepId}. By the same results, the equality also holds for the $m$-categorial $\mathbf{\Sigma}$-homomorphisms.
 
 This completes the proof.
 \end{proof}
@@ -3814,14 +3615,14 @@ This completes the proof.
 We next consider the globular presentation.
 
 \begin{proposition}\label{PTruncDiscGl}
-Let $m,n\in\mathbb{N}$ with $m\leq n$. Then the following equality holds in $\mathsf{HepSpec}_{\mathfrak{gd}}$
+Let $m,n\in\mathbb{N}$ with $m\leq n$. Then the following equality holds in $\mathsf{hepSig}_{\mathfrak{gd}}$
 $$
-\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}=\mathrm{id}_{(\mathbf{\Sigma}^{\mathrm{gl}(m)},\mathcal{C}^{\mathrm{gl}(m)})}.
+\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}=\mathrm{id}_{\mathbf{\Sigma}^{\mathrm{gl}(m)}}.
 $$
 Consequently, $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}=\mathrm{Id}_{\mathsf{mCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})}$.
 \end{proposition}
 \begin{proof}
-For $m=n$ both closed generalized hep-derivors are identities. Let $m<n$. By Lemma~\ref{LClosedEq}, it suffices to compare the underlying derivors and the cells.
+For $m=n$ both generalized hep-derivors are identities. Let $m<n$. We compare the underlying derivors and the domains.
 
 \textsf{(Underlying derivors)} By Definitions~\ref{DDiscGlDerivor} and~\ref{DTruncDerivor}, for every $(k,s)\in(m+1)\times S$, the following chain of equalities holds
 \allowdisplaybreaks
@@ -3840,9 +3641,13 @@ For $m=n$ both closed generalized hep-derivors are identities. Let $m<n$. By Lem
 
 The first equality unravels Definition~\ref{DTruncDerivor}; the second equality unravels Definition~\ref{DDiscGlDerivor}; finally, the last equality follows from the fact that $k\leq m$. Moreover, $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ sends every operation symbol $\tau$ of $\Sigma^{\mathrm{gl}(m)}$ to itself, applied to variables, and, by Definition~\ref{DDiscGlDerivor}, since all the dimensions of $\tau$ are at most $m$, $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$ sends $\tau$ to itself, applied to variables. Hence, by~(H1) and~(H2), $(\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}})^{\sharp}\circ\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}=\eta^{\Sigma^{\mathrm{gl}(m)}}$, i.e., the underlying derivor of $\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ is the identity derivor at $\Sigma^{\mathrm{gl}(m)}$, see~(H3).
 
-\textsf{(Cells)} Let $\boldsymbol{\mathsf{A}}$ be a globular $m$-categorial $\mathbf{\Sigma}$-algebra and $k\leq m$. By Proposition~\ref{PHepComp}, the note after Definition~\ref{DTruncDerivor} and Lemma~\ref{LDiscGlDescription}, the cells of sort $(k,s)$ of $(\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})=\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ are the cells of sort $(k,s)$ of $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$, i.e., the $k$-cells of $\boldsymbol{\mathsf{A}}$. By Proposition~\ref{PHepId}, these are the cells of sort $(k,s)$ of $(\mathrm{id}_{(\mathbf{\Sigma}^{\mathrm{gl}(m)},\mathcal{C}^{\mathrm{gl}(m)})})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})=\boldsymbol{\mathsf{A}}$.
+\textsf{(Domains)} By Definitions~\ref{DHepComp}, \ref{DDiscGlDerivor} and~\ref{DTruncDerivor}, for every $(k,s)\in(m+1)\times S$,
+$$
+\mathrm{Dom}^{\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}}_{(k,s)}=\varnothing\cup\left(\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}\right)^{\sharp}[\varnothing]=\varnothing.
+$$
+Hence the stated equality holds.
 
-All in all, by Lemma~\ref{LClosedEq}, the stated equality holds, and, as in the proof of Proposition~\ref{PTruncDisc}, by Propositions~\ref{PHepComp} and~\ref{PHepId}, $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$ is the identity functor.
+\textsf{(Functors)} Let $\boldsymbol{\mathsf{A}}$ be a globular $m$-categorial $\mathbf{\Sigma}$-algebra. Since the domains of $\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ are empty, by the note after Proposition~\ref{PHepComp}, $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ and $(\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})$ have the same cells and, by Propositions~\ref{PDiscGlDerivor} and~\ref{PTruncGlDerivor}, the former is a $\mathbf{\Sigma}^{\mathrm{gl}(m)}$-algebra. Therefore, by Proposition~\ref{PHepComp}~(2), the stated equality and Proposition~\ref{PHepId}, $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))=(\mathrm{id}_{\mathbf{\Sigma}^{\mathrm{gl}(m)}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})=\boldsymbol{\mathsf{A}}$, and similarly for the homomorphisms.
 
 This completes the proof.
 \end{proof}
@@ -3910,13 +3715,11 @@ This completes the proof.
 Finally, the truncation functors compose as expected, and so do the discretization functors; this is the fact used in Sections~\ref{SLimitSingleSet} and~\ref{SLimitGlobular} to form the projective systems of categorial algebras.
 
 \begin{proposition}\label{PTruncComp}
-Let $m,n,p\in\mathbb{N}$ with $m\leq n\leq p$. Then the following equalities hold in $\mathsf{HepSpec}_{\mathfrak{gd}}$
+Let $m,n,p\in\mathbb{N}$ with $m\leq n\leq p$. Then the following equality holds in $\mathsf{hepSig}_{\mathfrak{gd}}$
 $$
-\mathbf{Tr}^{(n,p)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}=\mathbf{Tr}^{(m,p)}_{\mathbf{\Sigma}}
-\qquad\text{and}\qquad
-\mathbf{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}=\mathbf{Tr}^{\mathrm{gl}(m,p)}_{\mathbf{\Sigma}}.
+\mathbf{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}=\mathbf{Tr}^{\mathrm{gl}(m,p)}_{\mathbf{\Sigma}},
 $$
-Consequently, the following equalities of functors hold
+and the following equalities of functors hold
 $$
 \mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}=\mathrm{Tr}^{(m,p)}_{\mathbf{\Sigma}}
 \qquad\text{and}\qquad
@@ -3924,7 +3727,7 @@ $$
 $$
 \end{proposition}
 \begin{proof}
-If two of the dimensions are equal, the statement follows from Definition~\ref{DTruncDerivor} and Proposition~\ref{PHepSpecCat}, since $\mathbf{Tr}^{(n,n)}_{\mathbf{\Sigma}}$ and $\mathbf{Tr}^{\mathrm{gl}(n,n)}_{\mathbf{\Sigma}}$ are identities. Let $m<n<p$. By Lemma~\ref{LClosedEq}, it suffices to compare the underlying derivors and the cells. We consider first the single-set case and then the globular case.
+If two of the dimensions are equal, the statement follows from Definition~\ref{DTruncDerivor} and Propositions~\ref{PHepSigCat} and~\ref{PHepId}, since $\mathbf{Tr}^{(n,n)}_{\mathbf{\Sigma}}$ and $\mathbf{Tr}^{\mathrm{gl}(n,n)}_{\mathbf{\Sigma}}$ are identities. Let $m<n<p$. We consider first the single-set case and then the globular case.
 
 \textsf{(Single-set case: underlying derivors)} The mappings on sorts of $\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}$, $\mathbf{Tr}^{(n,p)}_{\mathbf{\Sigma}}$ and $\mathbf{Tr}^{(m,p)}_{\mathbf{\Sigma}}$ are $\mathrm{id}_{S}$. Moreover, for every operation symbol $\tau$ of $\Sigma^{(m)}$ of arity $\mathbf{s}$, the following chain of equalities holds
 \allowdisplaybreaks
@@ -3943,9 +3746,21 @@ If two of the dimensions are equal, the statement follows from Definition~\ref{D
 
 The first equality unravels Definition~\ref{DTruncDerivor}; the second equality follows from~(H1) and~(H2), taking into account that $\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}(\tau)=\tau((v^{\mathbf{s}}_{q})_{q\in\bb{\mathbf{s}}})$; finally, the last equality unravels Definition~\ref{DTruncDerivor}. Thus the underlying derivor of $\mathbf{Tr}^{(n,p)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ is that of $\mathbf{Tr}^{(m,p)}_{\mathbf{\Sigma}}$.
 
-\textsf{(Single-set case: cells)} Let $\boldsymbol{\mathsf{B}}$ be a $p$-categorial $\mathbf{\Sigma}$-algebra. By Proposition~\ref{PHepComp} and the note after Definition~\ref{DTruncDerivor}, the cells of $(\mathbf{Tr}^{(n,p)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{B}})=\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$ are the $m$-cells among the $n$-cells of $\boldsymbol{\mathsf{B}}$, i.e., by Lemma~\ref{LGradCells}~(3), its $m$-cells, which are the cells of $\mathrm{Tr}^{(m,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$.
+\textsf{(Single-set case: cells)} Let $\boldsymbol{\mathsf{B}}$ be a $p$-categorial $\mathbf{\Sigma}$-algebra. By Definitions~\ref{DHepComp} and~\ref{DTruncDerivor}, for every $s\in S$,
+$$
+\mathrm{Dom}^{\mathbf{Tr}^{(n,p)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}}_{s}=\left\lbrace\left(v^{s}_{0},\mathrm{sc}^{n}_{s}(v^{s}_{0})\right),\left(v^{s}_{0},\mathrm{sc}^{m}_{s}(v^{s}_{0})\right)\right\rbrace,
+$$
+since $\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}$ sends $\mathrm{sc}^{m}_{s}$ to itself. Hence the cells of $(\mathbf{Tr}^{(n,p)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{B}})$ are the cells of $\boldsymbol{\mathsf{B}}$ that are $m$-cells and $n$-cells. By the note after Definition~\ref{DTruncDerivor}, the cells of $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$ are the $m$-cells among the $n$-cells of $\boldsymbol{\mathsf{B}}$, since $\mathrm{sc}^{m}_{s}$ acts in $\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ as in $\boldsymbol{\mathsf{B}}$. By Lemma~\ref{LGradCells}~(3), in both cases these are the $m$-cells of $\boldsymbol{\mathsf{B}}$, which are the cells of $\mathrm{Tr}^{(m,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$. Moreover, by Proposition~\ref{PTruncDerivor}, $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$ is a $\mathbf{\Sigma}^{(m)}$-algebra.
 
-Hence, by Lemma~\ref{LClosedEq}, $\mathbf{Tr}^{(n,p)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}=\mathbf{Tr}^{(m,p)}_{\mathbf{\Sigma}}$.
+Hence, by Proposition~\ref{PHepComp}~(2), Lemma~\ref{LSameCells} and the comparison of the underlying derivors, the following chain of equalities holds
+$$
+\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}\left(\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})\right)
+=
+\left(\mathbf{Tr}^{(n,p)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}\right)^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{B}})
+=
+\mathrm{Tr}^{(m,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}),
+$$
+and, by the same results, the equality also holds for the $p$-categorial $\mathbf{\Sigma}$-homomorphisms.
 
 \textsf{(Globular case: underlying derivors)} By Definition~\ref{DTruncDerivor}, the underlying derivors of $\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$, $\mathbf{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}$ and $\mathbf{Tr}^{\mathrm{gl}(m,p)}_{\mathbf{\Sigma}}$ are determined by the canonical embeddings of $\Sigma^{\mathrm{gl}(m)}$ into $\Sigma^{\mathrm{gl}(n)}$, of $\Sigma^{\mathrm{gl}(n)}$ into $\Sigma^{\mathrm{gl}(p)}$, and of $\Sigma^{\mathrm{gl}(m)}$ into $\Sigma^{\mathrm{gl}(p)}$, respectively. Their mappings on sorts send $(k,s)$ to $(k,s)$. Moreover, for every operation symbol $\tau$ of $\Sigma^{\mathrm{gl}(m)}$ of arity $\mathbf{w}$, the following chain of equalities holds
 \allowdisplaybreaks
@@ -3964,17 +3779,15 @@ Hence, by Lemma~\ref{LClosedEq}, $\mathbf{Tr}^{(n,p)}_{\mathbf{\Sigma}}\circ\mat
 
 The first equality unravels Definition~\ref{DTruncDerivor}; the second equality follows from~(H1) and~(H2), taking into account that $\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}(\tau)=\tau((v^{\mathbf{w}}_{q})_{q\in\bb{\mathbf{w}}})$; finally, the last equality unravels Definition~\ref{DTruncDerivor}. Thus the underlying derivor of $\mathbf{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ is that of $\mathbf{Tr}^{\mathrm{gl}(m,p)}_{\mathbf{\Sigma}}$.
 
-\textsf{(Globular case: cells)} Let $\boldsymbol{\mathsf{B}}$ be a globular $p$-categorial $\mathbf{\Sigma}$-algebra and $k\leq m$. By Proposition~\ref{PHepComp} and the note after Definition~\ref{DTruncDerivor}, the cells of sort $(k,s)$ of $(\mathbf{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{B}})=\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$ are all the elements of $B_{(k,s)}$, which are the cells of sort $(k,s)$ of $\mathrm{Tr}^{\mathrm{gl}(m,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$.
+\textsf{(Globular case: domains)} By Definitions~\ref{DHepComp} and~\ref{DTruncDerivor}, the domains of $\mathbf{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ are $\varnothing\cup(\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}})^{\sharp}[\varnothing]=\varnothing$, which are the domains of $\mathbf{Tr}^{\mathrm{gl}(m,p)}_{\mathbf{\Sigma}}$. Hence $\mathbf{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}=\mathbf{Tr}^{\mathrm{gl}(m,p)}_{\mathbf{\Sigma}}$.
 
-Hence, by Lemma~\ref{LClosedEq}, $\mathbf{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}=\mathbf{Tr}^{\mathrm{gl}(m,p)}_{\mathbf{\Sigma}}$.
-
-All in all, the stated equalities of closed generalized hep-derivors hold, and the equalities of functors follow from Proposition~\ref{PHepComp}.
+\textsf{(Globular case: functors)} Since the domains of $\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ are empty, by the note after Proposition~\ref{PHepComp}, Proposition~\ref{PTruncGlDerivor} and Proposition~\ref{PHepComp}~(2), for every globular $p$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{B}}$, $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))=(\mathbf{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{B}})=\mathrm{Tr}^{\mathrm{gl}(m,p)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$, and similarly for the homomorphisms.
 
 This completes the proof.
 \end{proof}
 
 \begin{proposition}\label{PDiscComp}
-Let $m,n,p\in\mathbb{N}$ with $m\leq n\leq p$. Then the following equalities hold in $\mathsf{HepSpec}_{\mathfrak{gd}}$
+Let $m,n,p\in\mathbb{N}$ with $m\leq n\leq p$. Then the following equalities hold in $\mathsf{hepSig}_{\mathfrak{gd}}$
 $$
 \mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Ds}^{(p,n)}_{\mathbf{\Sigma}}=\mathbf{Ds}^{(p,m)}_{\mathbf{\Sigma}}
 \qquad\text{and}\qquad
@@ -3988,13 +3801,11 @@ $$
 $$
 \end{proposition}
 \begin{proof}
-If two of the dimensions are equal, the statement follows from Definition~\ref{DDiscGlDerivor} and Proposition~\ref{PHepSpecCat}. Let $m<n<p$. By Lemma~\ref{LClosedEq}, it suffices to compare the underlying derivors and the cells. We consider first the single-set case and then the globular case.
+If two of the dimensions are equal, the statement follows from Definition~\ref{DDiscGlDerivor} and Propositions~\ref{PHepSigCat} and~\ref{PHepId}. Let $m<n<p$. We compare the underlying derivors and the domains. We consider first the single-set case and then the globular case.
 
 \textsf{(Single-set case: underlying derivors)} The mappings on sorts are $\mathrm{id}_{S}$. By~(H1) and~(H2) and Definition~\ref{DDiscDerivor}, $(\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}})^{\sharp}\circ\mathrm{Ds}^{(p,n)}_{\mathbf{\Sigma}}$ is $\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}$: the operation symbols of $\Sigma$ and those of dimension $k<m$ are sent to themselves, applied to variables, since both $\mathrm{Ds}^{(p,n)}_{\mathbf{\Sigma}}$ and $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}$ do so; those of dimension $m\leq k<n$ are sent by $\mathrm{Ds}^{(p,n)}_{\mathbf{\Sigma}}$ to themselves, applied to variables, and then by $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}$ to $v^{s}_{0}$; and those of dimension $k\geq n$ are sent by $\mathrm{Ds}^{(p,n)}_{\mathbf{\Sigma}}$ to $v^{s}_{0}$, which, by~(H1), $(\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}})^{\sharp}$ sends to $v^{s}_{0}$.
 
-\textsf{(Single-set case: cells)} For an $m$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{A}}$, by Proposition~\ref{PHepComp} and Lemma~\ref{LDiscDescription}, the cells of $(\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Ds}^{(p,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})=\mathrm{Ds}^{(p,n)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ and of $\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ are all the cells of $\boldsymbol{\mathsf{A}}$.
-
-Hence, by Lemma~\ref{LClosedEq}, $\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Ds}^{(p,n)}_{\mathbf{\Sigma}}=\mathbf{Ds}^{(p,m)}_{\mathbf{\Sigma}}$.
+\textsf{(Single-set case: domains)} By Definitions~\ref{DHepComp} and~\ref{DDiscDerivor}, the domains of $\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Ds}^{(p,n)}_{\mathbf{\Sigma}}$ are $\varnothing\cup(\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}})^{\sharp}[\varnothing]=\varnothing$, which are the domains of $\mathbf{Ds}^{(p,m)}_{\mathbf{\Sigma}}$. Hence $\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Ds}^{(p,n)}_{\mathbf{\Sigma}}=\mathbf{Ds}^{(p,m)}_{\mathbf{\Sigma}}$.
 
 \textsf{(Globular case: mappings on sorts)} The mappings on sorts of $\mathbf{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}$ and $\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$ send $(k,s)$ to $(\min\{k,n\},s)$ and to $(\min\{k,m\},s)$, respectively. Since $m<n$, their composite sends $(k,s)$ to $(\min\{\min\{k,n\},m\},s)=(\min\{k,m\},s)$, i.e., it is the mapping on sorts of $\mathbf{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}$.
 
@@ -4021,11 +3832,9 @@ The first equality unravels Definition~\ref{DDiscGlDerivor} for $\mathbf{Ds}^{\m
 \end{enumerate}
 Thus the underlying derivor of $\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}$ is that of $\mathbf{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}$.
 
-\textsf{(Globular case: cells)} Let $\boldsymbol{\mathsf{A}}$ be a globular $m$-categorial $\mathbf{\Sigma}$-algebra. By Proposition~\ref{PHepComp} and Lemma~\ref{LDiscGlDescription}, the cells of sort $(k,s)$ of $(\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})=\mathrm{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ are the $\min\{\min\{k,n\},m\}$-cells of sort $s$ of $\boldsymbol{\mathsf{A}}$, i.e., its $\min\{k,m\}$-cells, which are the cells of sort $(k,s)$ of $\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$.
+\textsf{(Globular case: domains)} By Definitions~\ref{DHepComp} and~\ref{DDiscGlDerivor}, the domains of $\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}$ are $\varnothing\cup(\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}})^{\sharp}[\varnothing]=\varnothing$, which are the domains of $\mathbf{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}$. Hence $\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}=\mathbf{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}$.
 
-Hence, by Lemma~\ref{LClosedEq}, $\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}\circ\mathbf{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}=\mathbf{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}$.
-
-All in all, the stated equalities of closed generalized hep-derivors hold, and the equalities of functors follow from Proposition~\ref{PHepComp}.
+\textsf{(Functors)} Since the domains of the discretization derivors are empty, by the note after Proposition~\ref{PHepComp}, Propositions~\ref{PDiscDerivor} and~\ref{PDiscGlDerivor} and Proposition~\ref{PHepComp}~(2), the functors induced by the above compositions are, on categorial algebras, the composites of the induced functors. Hence the stated equalities of functors follow from the equalities of generalized hep-derivors.
 
 This completes the proof.
 \end{proof}
@@ -4033,15 +3842,7 @@ This completes the proof.
 The composite of a discretization followed by a truncation depends on the relative position of the dimensions.
 
 \begin{proposition}\label{PTruncDiscComp}
-Let $m,n,p\in\mathbb{N}$ with $m\leq p$ and $n\leq p$. Then the following equality holds in $\mathsf{HepSpec}_{\mathfrak{gd}}$
-$$
-\mathbf{Ds}^{(p,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(n,p)}_{\mathbf{\Sigma}}=
-\begin{cases}
-\mathbf{Ds}^{(n,m)}_{\mathbf{\Sigma}}, & \text{if $m\leq n$;}\\
-\mathbf{Tr}^{(n,m)}_{\mathbf{\Sigma}}, & \text{if $n\leq m$,}
-\end{cases}
-$$
-and the same holds for the globular truncation and discretization derivors. Consequently,
+Let $m,n,p\in\mathbb{N}$ with $m\leq p$ and $n\leq p$. Then the following equality holds
 $$
 \mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}=
 \begin{cases}
@@ -4052,19 +3853,17 @@ $$
 and the same holds for the globular truncation and discretization functors.
 \end{proposition}
 \begin{proof}
-If $n=p$, the truncation derivor is an identity, and if $m=p$, so is the discretization derivor; in both cases the statement follows from Proposition~\ref{PHepSpecCat}. Let $m<p$ and $n<p$. By Lemma~\ref{LClosedEq}, it suffices to compare the underlying derivors and the cells. We consider first the single-set case and then the globular case.
+If $n=p$, the truncation derivor is an identity, and if $m=p$, so is the discretization derivor; in both cases the statement follows from Proposition~\ref{PHepId}. Let $m<p$ and $n<p$. We compare the underlying derivors and the cells, and we conclude by Proposition~\ref{PHepComp}~(2) and Lemma~\ref{LSameCells}. We consider first the single-set case and then the globular case.
 
 \textsf{(Single-set case: underlying derivors)} The mappings on sorts are $\mathrm{id}_{S}$. Since $\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}$ sends every operation symbol $\tau$ of $\Sigma^{(n)}$ to itself, applied to variables, by~(H1) and~(H2), $(\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}})^{\sharp}(\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}(\tau))=\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}(\tau)$. By Definition~\ref{DDiscDerivor}, this term is $\tau$, applied to variables, if $\tau$ is an operation symbol of $\Sigma$ or of dimension $k<m$, and $v^{s}_{0}$, if $\tau$ is of dimension $k\geq m$. If $m\leq n$, this is $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\tau)$; if $n\leq m$, then all the dimensions of $\Sigma^{(n)}$ are smaller than $m$, and this is $\mathrm{Tr}^{(n,m)}_{\mathbf{\Sigma}}(\tau)$.
 
-\textsf{(Single-set case: cells)} Let $\boldsymbol{\mathsf{A}}$ be an $m$-categorial $\mathbf{\Sigma}$-algebra. By Proposition~\ref{PHepComp} and the note after Definition~\ref{DTruncDerivor}, the cells of $(\mathbf{Ds}^{(p,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(n,p)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})=\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ are the cells $x$ of $\boldsymbol{\mathsf{A}}$ such that $\mathrm{sc}^{n}_{s}(x)=x$ in $\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. If $m\leq n$, then, by Lemma~\ref{LDiscDescription}, $\mathrm{sc}^{n}_{s}$ acts as the identity, so that they are all the cells of $\boldsymbol{\mathsf{A}}$, which are the cells of $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. If $n<m$, then $\mathrm{sc}^{n}_{s}$ acts as in $\boldsymbol{\mathsf{A}}$, so that they are the $n$-cells of $\boldsymbol{\mathsf{A}}$, which are the cells of $\mathrm{Tr}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. Thus, by Lemma~\ref{LClosedEq}, the single-set equality holds.
+\textsf{(Single-set case: cells)} Let $\boldsymbol{\mathsf{A}}$ be an $m$-categorial $\mathbf{\Sigma}$-algebra. By the note after Definition~\ref{DTruncDerivor}, the cells of $\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ are the cells $x$ of $\boldsymbol{\mathsf{A}}$ such that $\mathrm{sc}^{n}_{s}(x)=x$ in $\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. If $m\leq n$, then, by Lemma~\ref{LDiscDescription}, $\mathrm{sc}^{n}_{s}$ acts as the identity, so that they are all the cells of $\boldsymbol{\mathsf{A}}$, which are the cells of $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. If $n<m$, then $\mathrm{sc}^{n}_{s}$ acts as in $\boldsymbol{\mathsf{A}}$, so that they are the $n$-cells of $\boldsymbol{\mathsf{A}}$, which are the cells of $\mathrm{Tr}^{(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. On the other hand, by Definitions~\ref{DHepComp}, \ref{DDiscDerivor} and~\ref{DTruncDerivor}, the domain of sort $s$ of $\mathbf{Ds}^{(p,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(n,p)}_{\mathbf{\Sigma}}$ is $(\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}})^{\sharp}[\{(v^{s}_{0},\mathrm{sc}^{n}_{s}(v^{s}_{0}))\}]$, i.e., $\{(v^{s}_{0},v^{s}_{0})\}$, if $m\leq n$, and $\{(v^{s}_{0},\mathrm{sc}^{n}_{s}(v^{s}_{0}))\}$, if $n<m$, so that the cells of $(\mathbf{Ds}^{(p,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{(n,p)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})$ are the same. Moreover, by Propositions~\ref{PDiscDerivor} and~\ref{PTruncDerivor}, $\mathrm{Tr}^{(n,p)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ is a $\mathbf{\Sigma}^{(n)}$-algebra. Thus, by Proposition~\ref{PHepComp}~(2), Lemma~\ref{LSameCells} and the comparison of the underlying derivors, the single-set equality holds, on objects and, by the same results, on morphisms.
 
 \textsf{(Globular case: mappings on sorts)} The composite of the mappings on sorts of $\mathbf{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}$ and $\mathbf{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}$ sends $(k,s)$, for $k\leq n$, to $(\min\{k,m\},s)$. If $m\leq n$, it is the mapping on sorts of $\mathbf{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$; if $n\leq m$, then $\min\{k,m\}=k$, and it is the mapping on sorts of $\mathbf{Tr}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}$.
 
 \textsf{(Globular case: terms)} Since $\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}$ sends every operation symbol $\tau$ of $\Sigma^{\mathrm{gl}(n)}$ to itself, applied to variables, by~(H1) and~(H2), $(\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}})^{\sharp}(\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}(\tau))=\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}(\tau)$. If $m\leq n$, then, by Definition~\ref{DDiscGlDerivor}, the clauses that define $\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}(\tau)$, for the operation symbols of $\Sigma^{\mathrm{gl}(n)}$, are those that define $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\tau)$, since both only depend on the dimensions involved and on $m$. If $n\leq m$, then all the dimensions of $\Sigma^{\mathrm{gl}(n)}$ are at most $m$, so that, by Definition~\ref{DDiscGlDerivor}, $\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}(\tau)$ is $\tau$, applied to variables, i.e., $\mathrm{Tr}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\tau)$.
 
-\textsf{(Globular case: cells)} Let $\boldsymbol{\mathsf{A}}$ be a globular $m$-categorial $\mathbf{\Sigma}$-algebra. By Proposition~\ref{PHepComp}, the note after Definition~\ref{DTruncDerivor} and Lemma~\ref{LDiscGlDescription}, the cells of sort $(k,s)$ of $(\mathbf{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})=\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$, for $k\leq n$, are the $\min\{k,m\}$-cells of sort $s$ of $\boldsymbol{\mathsf{A}}$. If $m\leq n$, they are the cells of sort $(k,s)$ of $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$; if $n\leq m$, they are the $k$-cells of $\boldsymbol{\mathsf{A}}$, i.e., the cells of sort $(k,s)$ of $\mathrm{Tr}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. Thus, by Lemma~\ref{LClosedEq}, the globular equality holds.
-
-All in all, the stated equalities of closed generalized hep-derivors hold, and the equalities of functors follow from Proposition~\ref{PHepComp}.
+\textsf{(Globular case: cells)} Let $\boldsymbol{\mathsf{A}}$ be a globular $m$-categorial $\mathbf{\Sigma}$-algebra. Since the domains of the globular truncation and discretization derivors are empty, by the note after Proposition~\ref{PHepComp} and Propositions~\ref{PDiscGlDerivor}, \ref{PTruncGlDerivor} and~\ref{PHepComp}~(2), $\mathrm{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))=(\mathbf{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}\circ\mathbf{Tr}^{\mathrm{gl}(n,p)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})$. By the note after Definition~\ref{DTruncDerivor} and Lemma~\ref{LDiscGlDescription}, its cells of sort $(k,s)$, for $k\leq n$, are the $\min\{k,m\}$-cells of sort $s$ of $\boldsymbol{\mathsf{A}}$. If $m\leq n$, they are the cells of sort $(k,s)$ of $\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$; if $n\leq m$, they are the $k$-cells of $\boldsymbol{\mathsf{A}}$, i.e., the cells of sort $(k,s)$ of $\mathrm{Tr}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. Thus, by Lemma~\ref{LSameCells} and the comparison of the underlying derivors, the globular equality holds, on objects and on morphisms.
 
 This completes the proof.
 \end{proof}
@@ -4176,7 +3975,7 @@ This completes the proof.
 
 \subsection{Truncation and discretization in dimension \texorpdfstring{$\omega$}{omega}}\label{SDTOmega}
 
-In this subsection we define the truncation functors from the categories of $\omega$-categorial algebras to the categories of $n$-categorial algebras, and the discretization functors in the opposite direction, in the single-set and in the globular presentations. As in the finite-dimensional case, they are induced by closed generalized hep-derivors, which are defined by the same clauses as in Definitions~\ref{DDiscDerivor}, \ref{DDiscGlDerivor} and~\ref{DTruncDerivor}, with $\omega$ in place of the greatest dimension. In Sections~\ref{SLimitSingleSet} and~\ref{SLimitGlobular} we prove that the truncation functors are the projections of projective limits.
+In this subsection we define the truncation functors from the categories of $\omega$-categorial algebras to the categories of $n$-categorial algebras, and the discretization functors in the opposite direction, in the single-set and in the globular presentations. As in the finite-dimensional case, they are induced by generalized hep-derivors, which are defined by the same clauses as in Definitions~\ref{DDiscDerivor}, \ref{DDiscGlDerivor} and~\ref{DTruncDerivor}, with $\omega$ in place of the greatest dimension. In Sections~\ref{SLimitSingleSet} and~\ref{SLimitGlobular} we prove that the truncation functors are the projections of projective limits.
 
 Throughout this subsection, $n\in\mathbb{N}$, we write $\mathcal{C}^{(\omega)}$ for $\mathcal{C}^{\mathbf{\Sigma}^{(\omega)}}$ and $\mathcal{C}^{\mathrm{gl}(\omega)}$ for $\mathcal{C}^{\mathbf{\Sigma}^{\mathrm{gl}(\omega)}}$ and, for every dimension $k\in\omega$, we let $\underline{k}=\min\{k,n\}$. By Corollaries~\ref{CSingleSetEp} and~\ref{CGlobularEp} and Propositions~\ref{PSingleSetIdentOmega} and~\ref{PGlobularIdent}, $\omega\mathsf{CatAlg}(\mathbf{\Sigma})$ is the full subcategory of $\mathsf{EPAlg}(\mathbf{\Sigma}^{(\omega)},\mathcal{C}^{(\omega)})$ whose objects are the $\mathbf{\Sigma}^{(\omega)}$-algebras in which every cell is a $k$-cell for some $k\in\omega$, and $\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})=\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(\omega)},\mathcal{C}^{\mathrm{gl}(\omega)})$.
 
@@ -4190,25 +3989,25 @@ $$
 $$
 from $\mathbf{\Sigma}^{(n)}$ to $\mathbf{\Sigma}^{(\omega)}$ whose mapping on sorts is $\mathrm{id}_{S}$, whose assignment of terms is the inclusion, i.e., $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\tau)=\tau((v^{\mathbf{s}}_{p})_{p\in\bb{\mathbf{s}}})$ for every operation symbol $\tau$ of $\Sigma^{(n)}$ of arity $\mathbf{s}$, and whose domains are, for every $s\in S$,
 $$
-\mathrm{Dom}^{\mathbf{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}}_{s}=\mathrm{Cn}^{(\mathbf{\Sigma}^{(\omega)},\mathcal{C}^{(\omega)})}\left(\left\lbrace\left(v^{s}_{0},\mathrm{sc}^{n}_{s}(v^{s}_{0})\right)\right\rbrace\right).
+\mathrm{Dom}^{\mathbf{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}}_{s}=\left\lbrace\left(v^{s}_{0},\mathrm{sc}^{n}_{s}(v^{s}_{0})\right)\right\rbrace.
 $$
 \item The \emph{globular truncation derivor} in dimension $\omega$ is the generalized hep-derivor
 $$
 \mathbf{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}=\left(\varphi^{\mathbf{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}},\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}},\mathrm{Dom}^{\mathbf{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}}\right)
 $$
-from $\mathbf{\Sigma}^{\mathrm{gl}(n)}$ to $\mathbf{\Sigma}^{\mathrm{gl}(\omega)}$ determined by the canonical embedding of $\Sigma^{\mathrm{gl}(n)}$ into $\Sigma^{\mathrm{gl}(\omega)}$, see the note after Definition~\ref{DSigmaCatGlobular}, i.e., $\varphi^{\mathbf{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}}(k,s)=(k,s)$, $\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}(\tau)=\tau((v^{\mathbf{w}}_{p})_{p\in\bb{\mathbf{w}}})$ for every operation symbol $\tau$ of $\Sigma^{\mathrm{gl}(n)}$ of arity $\mathbf{w}$, and $\mathrm{Dom}^{\mathbf{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}}_{(k,s)}=\mathrm{Cn}^{(\mathbf{\Sigma}^{\mathrm{gl}(\omega)},\mathcal{C}^{\mathrm{gl}(\omega)})}(\varnothing)$, for every $(k,s)\in(n+1)\times S$.
+from $\mathbf{\Sigma}^{\mathrm{gl}(n)}$ to $\mathbf{\Sigma}^{\mathrm{gl}(\omega)}$ determined by the canonical embedding of $\Sigma^{\mathrm{gl}(n)}$ into $\Sigma^{\mathrm{gl}(\omega)}$, see the note after Definition~\ref{DSigmaCatGlobular}, i.e., $\varphi^{\mathbf{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}}(k,s)=(k,s)$, $\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}(\tau)=\tau((v^{\mathbf{w}}_{p})_{p\in\bb{\mathbf{w}}})$ for every operation symbol $\tau$ of $\Sigma^{\mathrm{gl}(n)}$ of arity $\mathbf{w}$, and $\mathrm{Dom}^{\mathbf{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}}_{(k,s)}=\varnothing$, for every $(k,s)\in(n+1)\times S$.
 \end{enumerate}
 \end{definition}
 
-As in the note after Definition~\ref{DTruncDerivor}, by Lemma~\ref{LCn}~(2), the cells of an object $\mathbf{B}$ in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(\omega)},\mathcal{C}^{(\omega)})$ relative to $\mathbf{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}$ are its $n$-cells, and the cells of sort $(k,s)$ of an object $\mathbf{B}$ in $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(\omega)},\mathcal{C}^{\mathrm{gl}(\omega)})$ relative to $\mathbf{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}$ are all the elements of $B_{(k,s)}$.
+As in the note after Definition~\ref{DTruncDerivor}, the cells of a partial $\Sigma^{(\omega)}$-algebra $\mathbf{B}$ relative to $\mathbf{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}$ are its $n$-cells, and the cells of sort $(k,s)$ of a partial $\Sigma^{\mathrm{gl}(\omega)}$-algebra $\mathbf{B}$ relative to $\mathbf{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}$ are all the elements of $B_{(k,s)}$.
 
-In the following proposition we prove that the truncation derivors in dimension $\omega$ are closed.
+In the following proposition we prove that the truncation derivors in dimension $\omega$ send categorial algebras to categorial algebras.
 
 \begin{proposition}\label{PTruncOmegaDerivor}
-The generalized hep-derivor $\mathbf{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}$ is a closed generalized hep-derivor from $(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ to $(\mathbf{\Sigma}^{(\omega)},\mathcal{C}^{(\omega)})$, and $\mathbf{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}$ is a closed generalized hep-derivor from $(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ to $(\mathbf{\Sigma}^{\mathrm{gl}(\omega)},\mathcal{C}^{\mathrm{gl}(\omega)})$, see Definition~\ref{DClosedHepDerivor}.
+The restriction of $(\mathbf{Tr}^{(n,\omega)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(\omega)},\mathcal{C}^{(\omega)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, and the restriction of $(\mathbf{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(\omega)},\mathcal{C}^{\mathrm{gl}(\omega)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$, see Definition~\ref{DCorestriction}.
 \end{proposition}
 \begin{proof}
-By Definition~\ref{DTruncOmegaDerivor} and Lemma~\ref{LCn}~(1), the domains of both generalized hep-derivors are closed, so that condition (CL1) holds. It remains to prove condition (CL2), for which we check, by Proposition~\ref{PGenHepDerivorAlg}, the conditions (GHEP1) and (GHEP2).
+By Proposition~\ref{PGenHepDerivorAlg}, we must check the conditions (GHEP1) and (GHEP2).
 
 \textsf{(Single-set case: (GHEP1))} Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(\omega)},\mathcal{C}^{(\omega)})$ and $\mathbf{A}=(\mathbf{Tr}^{(n,\omega)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\mathbf{B})$. By the above note and Proposition~\ref{PTransformedAlg}, the cells of $\mathbf{A}$ are the $n$-cells of $\mathbf{B}$, and its operations are restrictions of those of $\mathbf{B}$. The proof of Lemma~\ref{LGradCells} only uses, for dimensions $j<k$, the axioms (A$^{k}$7), (A$^{j}$2), (A$^{j}$3), (AB$^{j,k}$1) and (AB$^{j,k}$2), which are axioms of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}}$ for every $j<k$ in $\omega$. Hence, as in the proof of Lemma~\ref{LTruncCells}, the following statements hold, for every $s\in S$ and every $k<n$:
 \begin{enumerate}
@@ -4257,7 +4056,7 @@ We next define the discretization derivors in dimension $\omega$.
 $$
 \mathbf{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}=\left(\varphi^{\mathbf{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}},\mathrm{Ds}^{(\omega,n)}_{\mathbf{\Sigma}},\mathrm{Dom}^{\mathbf{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}}\right)
 $$
-from $\mathbf{\Sigma}^{(\omega)}$ to $\mathbf{\Sigma}^{(n)}$ defined as follows: $\varphi^{\mathbf{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}}=\mathrm{id}_{S}$; $\mathrm{Dom}^{\mathbf{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}}_{s}=\mathrm{Cn}^{(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})}(\varnothing)$, for every $s\in S$; for every $\sigma\in\Sigma_{\mathbf{s},s}$, $\mathrm{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}(\sigma)=\sigma((v^{\mathbf{s}}_{p})_{p\in\bb{\mathbf{s}}})$; for every $k\in n$ and every $s\in S$,
+from $\mathbf{\Sigma}^{(\omega)}$ to $\mathbf{\Sigma}^{(n)}$ defined as follows: $\varphi^{\mathbf{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}}=\mathrm{id}_{S}$; $\mathrm{Dom}^{\mathbf{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}}_{s}=\varnothing$, for every $s\in S$; for every $\sigma\in\Sigma_{\mathbf{s},s}$, $\mathrm{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}(\sigma)=\sigma((v^{\mathbf{s}}_{p})_{p\in\bb{\mathbf{s}}})$; for every $k\in n$ and every $s\in S$,
 $$
 \mathrm{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}(\mathrm{sc}^{k}_{s})=\mathrm{sc}^{k}_{s}(v^{s}_{0}),\quad
 \mathrm{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}(\mathrm{tg}^{k}_{s})=\mathrm{tg}^{k}_{s}(v^{s}_{0}),\quad
@@ -4271,7 +4070,7 @@ $$
 $$
 \mathbf{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}=\left(\varphi^{\mathbf{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}},\mathrm{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}},\mathrm{Dom}^{\mathbf{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}}\right)
 $$
-from $\mathbf{\Sigma}^{\mathrm{gl}(\omega)}$ to $\mathbf{\Sigma}^{\mathrm{gl}(n)}$ defined by the clauses of Definition~\ref{DDiscGlDerivor}, with $\omega$ in place of $n+1$ and $n$ in place of $m$, i.e.: $\varphi^{\mathbf{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}}(k,s)=(\underline{k},s)$ and $\mathrm{Dom}^{\mathbf{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}}_{(k,s)}=\mathrm{Cn}^{(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})}(\varnothing)$, for every $k\in\omega$ and every $s\in S$; $\mathrm{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}(\sigma_{k})=\sigma_{\underline{k}}((v^{(\underline{k},\mathbf{s})}_{p})_{p\in\bb{\mathbf{s}}})$, for every $\sigma\in\Sigma_{\mathbf{s},s}$ and every $k\in\omega$; and, for every pair of dimensions $j<k$ in $\omega$ and every $s\in S$, writing $v_{0}$ and $v_{1}$ for the variables $v^{(\underline{k},s)}_{0}$ and $v^{(\underline{k},s)}_{1}$,
+from $\mathbf{\Sigma}^{\mathrm{gl}(\omega)}$ to $\mathbf{\Sigma}^{\mathrm{gl}(n)}$ defined by the clauses of Definition~\ref{DDiscGlDerivor}, with $\omega$ in place of $n+1$ and $n$ in place of $m$, i.e.: $\varphi^{\mathbf{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}}(k,s)=(\underline{k},s)$ and $\mathrm{Dom}^{\mathbf{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}}_{(k,s)}=\varnothing$, for every $k\in\omega$ and every $s\in S$; $\mathrm{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}(\sigma_{k})=\sigma_{\underline{k}}((v^{(\underline{k},\mathbf{s})}_{p})_{p\in\bb{\mathbf{s}}})$, for every $\sigma\in\Sigma_{\mathbf{s},s}$ and every $k\in\omega$; and, for every pair of dimensions $j<k$ in $\omega$ and every $s\in S$, writing $v_{0}$ and $v_{1}$ for the variables $v^{(\underline{k},s)}_{0}$ and $v^{(\underline{k},s)}_{1}$,
 \begin{enumerate}
 \item if $j<n$, then $\mathrm{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}(\mathrm{sc}^{(j,k)}_{s})=\mathrm{sc}^{(j,\underline{k})}_{s}(v_{0})$, $\mathrm{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}(\mathrm{tg}^{(j,k)}_{s})=\mathrm{tg}^{(j,\underline{k})}_{s}(v_{0})$, $\mathrm{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}(\mathrm{i}^{(k,j)}_{s})=\mathrm{i}^{(\underline{k},j)}_{s}(v^{(j,s)}_{0})$ and $\mathrm{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}(\circ^{(j,k)}_{s})=v_{0}\circ^{(j,\underline{k})}_{s}v_{1}$;
 \item if $j\geq n$, then $\mathrm{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}(\mathrm{sc}^{(j,k)}_{s})=\mathrm{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}(\mathrm{tg}^{(j,k)}_{s})=v_{0}$, $\mathrm{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}(\mathrm{i}^{(k,j)}_{s})=v^{(n,s)}_{0}$, and $\mathrm{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}(\circ^{(j,k)}_{s})=v_{0}$.
@@ -4281,13 +4080,13 @@ from $\mathbf{\Sigma}^{\mathrm{gl}(\omega)}$ to $\mathbf{\Sigma}^{\mathrm{gl}(n)
 
 Let us note that, for every $p\in\mathbb{N}$ with $n<p$, the restriction of the underlying derivor of $\mathbf{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}$ to $\Sigma^{(p)}\subseteq\Sigma^{(\omega)}$ is the underlying derivor of $\mathbf{Ds}^{(p,n)}_{\mathbf{\Sigma}}$, and that the restriction of the underlying derivor of $\mathbf{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}$ to the image of $\Sigma^{\mathrm{gl}(p)}$ in $\Sigma^{\mathrm{gl}(\omega)}$ is the underlying derivor of $\mathbf{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}$, since, in both cases, the defining clauses coincide, see Definitions~\ref{DDiscDerivor} and~\ref{DDiscGlDerivor}. Moreover, all of them have the same domains. Therefore, by Proposition~\ref{PTransformedAlg}, for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, the reduct of $(\mathbf{Ds}^{(\omega,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ to $\Sigma^{(p)}$ is $\mathrm{Ds}^{(p,n)}_{\mathbf{\Sigma}}(\mathbf{B})$, and, for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$, the reduct of $(\mathbf{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ to the sorts of dimension at most $p$ and to the operation symbols of $\Sigma^{\mathrm{gl}(p)}$ is $\mathrm{Ds}^{\mathrm{gl}(p,n)}_{\mathbf{\Sigma}}(\mathbf{B})$. In fact, by Proposition~\ref{PTransformedAlg}, in both algebras the cells are the same and every operation symbol is interpreted by means of the same term and the same domain conditions.
 
-In the following proposition we prove that the discretization derivors in dimension $\omega$ are closed.
+In the following proposition we prove that the discretization derivors in dimension $\omega$ send categorial algebras to categorial algebras.
 
 \begin{proposition}\label{PDiscOmegaDerivor}
-The generalized hep-derivor $\mathbf{Ds}^{(\omega,n)}_{\mathbf{\Sigma}}$ is a closed generalized hep-derivor from $(\mathbf{\Sigma}^{(\omega)},\mathcal{C}^{(\omega)})$ to $(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, and $\mathbf{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}}$ is a closed generalized hep-derivor from $(\mathbf{\Sigma}^{\mathrm{gl}(\omega)},\mathcal{C}^{\mathrm{gl}(\omega)})$ to $(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$, see Definition~\ref{DClosedHepDerivor}. Moreover, for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, every cell of $(\mathbf{Ds}^{(\omega,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ is an $n$-cell, so that $(\mathbf{Ds}^{(\omega,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ is an object in $\omega\mathsf{CatAlg}(\mathbf{\Sigma})$.
+The restriction of $(\mathbf{Ds}^{(\omega,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{(\omega)},\mathcal{C}^{(\omega)})$, and the restriction of $(\mathbf{Ds}^{\mathrm{gl}(\omega,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}$ to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(\omega)},\mathcal{C}^{\mathrm{gl}(\omega)})$, see Definition~\ref{DCorestriction}. Moreover, for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$, every cell of $(\mathbf{Ds}^{(\omega,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ is an $n$-cell, so that $(\mathbf{Ds}^{(\omega,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ is an object in $\omega\mathsf{CatAlg}(\mathbf{\Sigma})$.
 \end{proposition}
 \begin{proof}
-By Definition~\ref{DDiscOmegaDerivor} and Lemma~\ref{LCn}~(1), the domains of both generalized hep-derivors are closed, so that condition (CL1) holds. It remains to prove condition (CL2), for which we check, by Proposition~\ref{PGenHepDerivorAlg}, the conditions (GHEP1) and (GHEP2).
+By Proposition~\ref{PGenHepDerivorAlg}, we must check the conditions (GHEP1) and (GHEP2).
 
 \textsf{(Single-set case: (GHEP1))} Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ and $\mathbf{A}=(\mathbf{Ds}^{(\omega,n)}_{\mathbf{\Sigma}})^{\ast}_{\mathfrak{gd}}(\mathbf{B})$. Let $\tau$ be an operation symbol of $\Sigma^{(\omega)}$ and $p\in\mathbb{N}$ with $n<p$ such that $\tau$ is an operation symbol of $\Sigma^{(p)}$. By the above note, the interpretation of $\tau$ in $\mathbf{A}$ is its interpretation in $\mathrm{Ds}^{(p,n)}_{\mathbf{\Sigma}}(\mathbf{B})$, which, by Lemma~\ref{LDiscDescription}, is a $\mathbf{\Sigma}^{(p)}$-algebra. Since the domain conditions of $\tau$ are the same in $\mathbf{\Sigma}^{(p)}$ and in $\mathbf{\Sigma}^{(\omega)}$, $\mathrm{Dom}(\tau^{\mathbf{A}})=A_{\mathrm{def}^{(S,\Sigma^{(\omega)})}(\tau)}$. Thus $\mathbf{A}$ is a $\mathbf{\Sigma}^{(\omega)}$-algebra and, by Proposition~\ref{PTransformedEpAlg}, condition (GHEP1) holds.
 
