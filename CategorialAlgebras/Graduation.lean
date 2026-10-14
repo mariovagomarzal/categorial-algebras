@@ -1466,6 +1466,28 @@ $`\mathrm{Gd}^{(n)}(\mathbf{B})`, the image of $`x` under $`\mathrm{Gd}^{(n)}` o
 seen as an $`n`-cell, and $`\theta^{-1}` sends it to its $`(k,n)`-source $`\mathrm{sc}^{k}(x) = x`.
 :::
 
+:::corollary (label := "cat-alg-extended-equiv") (central := false) (title := "nCatAlg(Σ) ≃ PAlg(C^Σᵉˣᵗ⁽ⁿ⁾)")
+The category $`\mathsf{nCatAlg}(\Sigma)` of compact $`n`-categorial $`\Sigma`-algebras is
+equivalent to the category of models of the extended specification
+$`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}`.
+
+```lean
+/-- `nCatAlg(Σ) ≌ PAlg(𝒞^{Σ^{ext(n)}})`. -/
+noncomputable def catAlgebraEquivExtended :
+    Compact.CatAlgebra.{u, v, w} Sig n ≌ Extended.ExtendedPAlg.{u, v, w} Sig (Fin (n + 1)) :=
+  (Compact.cellsFunctor n).asEquivalence.trans
+    ((compactEpAlgEquiv Sig (Fin n)).trans
+      ((gradEquivalence Sig n).trans (extendedEpAlgEquiv Sig (Fin (n + 1)))))
+```
+:::
+
+:::proof (of := "cat-alg-extended-equiv")
+Compose the isomorphism of Theorem `compact.cat-alg-iso`, the identifications of the categories of
+models of the specifications with those of the ep-specifications (Constructions
+`compact.ep-alg-equiv` and `extended.ep-alg-equiv`), and the equivalence of Theorem
+`graduation-equivalence`.
+:::
+
 ```lean
 end CategorialAlgebras
 ```

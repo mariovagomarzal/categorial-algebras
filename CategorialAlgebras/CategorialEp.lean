@@ -161,6 +161,25 @@ of $`\mathcal{C}^{\Sigma^{(n)}}` the operations without domain conditions are to
 $`\mathrm{sc}^{k}_{s}(x) = \mathrm{tg}^{k}_{s}(y)`, by (A$`^{k}`3), which is its domain condition.
 :::
 
+:::construction (label := "compact.ep-alg-equiv") (central := false) (title := "PAlg(C^Σ⁽ⁿ⁾) = epAlg(Σ⁽ⁿ⁾, C^Σ⁽ⁿ⁾)")
+By Proposition `compact.ep-models`, the category of models of $`\mathcal{C}^{\Sigma^{(n)}}` and the
+category of models of the compact ep-specification have the same objects and the same morphisms;
+the identity is an equivalence between them.
+
+```lean
+open CategoryTheory in
+/-- `PAlg(𝒞^{Σ⁽ⁿ⁾}) ≌ epAlg(𝚺⁽ⁿ⁾, 𝒞^{Σ⁽ⁿ⁾})`. -/
+def compactEpAlgEquiv :
+    Compact.CompactPAlg.{u, v, w} Sig Index ≌ EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig Index) :=
+  CategoryTheory.Equivalence.mk
+    { obj M := ⟨M.1, (compactEpSpec_isModel_iff Sig Index M.1).mpr M.2⟩, map f := f
+      map_id _ := rfl, map_comp _ _ := rfl }
+    { obj A := ⟨A.1, A.2.2⟩, map f := f, map_id _ := rfl, map_comp _ _ := rfl }
+    (NatIso.ofComponents (fun _ => Iso.refl _))
+    (NatIso.ofComponents (fun _ => Iso.refl _))
+```
+:::
+
 # The extended ep-signature
 
 :::definition (label := "extended.ep-signature") (central := false) (title := "The extended ep-signature")
@@ -278,6 +297,25 @@ theorem extendedEpSpec_isModel_iff
 :::proof (of := "extended.ep-models")
 As for the compact ep-specification: the operations without domain conditions are total by (EA0)
 and (EA$`^{j,k}`1), and the domain condition of $`\circ^{(j,k)}_{s}` is (EA$`^{j,k}`3).
+:::
+
+:::construction (label := "extended.ep-alg-equiv") (central := false) (title := "PAlg(C^Σᵉˣᵗ⁽ⁿ⁾) = epAlg(Σᵉˣᵗ⁽ⁿ⁾, C^Σᵉˣᵗ⁽ⁿ⁾)")
+By Proposition `extended.ep-models`, the identity is an equivalence between the category of models
+of $`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}` and that of the extended ep-specification.
+
+```lean
+open CategoryTheory in
+/-- `epAlg(𝚺^{ext(n)}, 𝒞^{Σ^{ext(n)}}) ≌ PAlg(𝒞^{Σ^{ext(n)}})`. -/
+def extendedEpAlgEquiv :
+    EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig Index) ≌
+      Extended.ExtendedPAlg.{u, v, w} Sig Index :=
+  CategoryTheory.Equivalence.mk
+    { obj A := ⟨A.1, A.2.2⟩, map f := f, map_id _ := rfl, map_comp _ _ := rfl }
+    { obj M := ⟨M.1, (extendedEpSpec_isModel_iff Sig Index M.1).mpr M.2⟩, map f := f
+      map_id _ := rfl, map_comp _ _ := rfl }
+    (NatIso.ofComponents (fun _ => Iso.refl _))
+    (NatIso.ofComponents (fun _ => Iso.refl _))
+```
 :::
 
 ```lean
