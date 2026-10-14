@@ -3,6 +3,7 @@ import Mathlib.CategoryTheory.Pi.Basic
 import Mathlib.CategoryTheory.Types.Basic
 import Mathlib.Data.Set.Finite.Basic
 import Mathlib.Data.Set.Finite.Lattice
+import Mathlib.Data.Fintype.EquivFin
 import CategorialAlgebras.EpSignature
 
 open Verso.Genre Manual InlineLean Stemma
@@ -822,19 +823,96 @@ def GEP2 (E : Set (QEEq Sg.sig V)) (F : Set (QEEq Lg.sig V')) : Prop :=
       EpSpec.Cn.{u', v', w} (EpSpec.mk Lg F) (δ.sortMap ∘ q.wordSort e)
         (δ.famDom (q.wordSort e) ∪ δ.trSet (q.wordPremises e))
 
+lemma trSet_singleton {I : Type} {κ : I → S} (e : EEq Sg.sig (Vars κ)) : δ.trSet {e} = δ.tr e := by
+  simp [trSet, trSetWith, tr]
+
+/-- (GEP2) for one numbering of the variables of one equation. -/
+lemma gep2_word_iff {F : Set (QEEq Lg.sig V')} (q : QEEq Sg.sig V) {n : ℕ} (e : Fin n ≃ q.vars) :
+    δ.tr (q.wordConclusion e) ⊆
+      EpSpec.Cn.{u', v', w} (EpSpec.mk Lg F) (δ.sortMap ∘ q.wordSort e)
+        (δ.famDom (q.wordSort e) ∪ δ.trSet (q.wordPremises e)) ↔
+    ∀ B : PartialAlgebra.{u', v', w} Lg.sig, (EpSpec.mk Lg F).IsModel B →
+      ∀ b : ∀ i, δ.derived B (q.wordSort e i),
+        EEq.HoldsAll (δ.derived B) (famVal b) (q.wordPremises e) →
+          (q.wordConclusion e).Holds (δ.derived B) (famVal b) := by
+  constructor
+  · intro h B hB b hb
+    have hfam : EEq.HoldsAll B (famVal fun i => (b i).1) (δ.famDom (q.wordSort e)) :=
+      (δ.holdsAll_famDom_iff _).mpr fun i => (b i).2
+    have htr := (δ.holdsAll_derived_iff b _).mp hb
+    have hconc : EEq.HoldsAll B (famVal fun i => (b i).1) (δ.trSet {q.wordConclusion e}) := by
+      rw [trSet_singleton]
+      exact fun c hc => (EpSpec.mem_cn_iff _ _).mp (h hc) B hB _ (EEq.holdsAll_union.mpr ⟨hfam, htr⟩)
+    exact EEq.holdsAll_singleton.mp ((δ.holdsAll_derived_iff b _).mpr hconc)
+  · intro h c hc
+    refine (EpSpec.mem_cn_iff _ _).mpr fun B hB a ha => ?_
+    obtain ⟨hfam, htr⟩ := EEq.holdsAll_union.mp ha
+    have hcells := (δ.holdsAll_famDom_iff a).mp hfam
+    let b : ∀ i, δ.derived B (q.wordSort e i) := fun i => ⟨a i, hcells i⟩
+    have hb : EEq.HoldsAll (δ.derived B) (famVal b) (q.wordPremises e) :=
+      (δ.holdsAll_derived_iff b _).mpr htr
+    have hconc := (δ.holdsAll_derived_iff b {q.wordConclusion e}).mp
+      (EEq.holdsAll_singleton.mpr (h B hB b hb))
+    rw [trSet_singleton] at hconc
+    exact hconc c hc
+
 theorem gep1_iff {F : Set (QEEq Lg.sig V')} :
     δ.GEP1.{u, v, u', v', w} F ↔ ∀ B : PartialAlgebra.{u', v', w} Lg.sig,
       (EpSpec.mk Lg F).IsModel B → Sg.IsAlgebra (δ.derived B) := by
-  sorry
+  constructor
+  · intro h B hB
+    rw [derived_isAlgebra_iff]
+    intro ws s σ a hdef
+    have hfam : EEq.HoldsAll B (famVal fun j => (a j).1) (δ.famDom ws.get) :=
+      (δ.holdsAll_famDom_iff _).mpr fun j => (a j).2
+    have htr := (δ.holdsAll_derived_iff a _).mp hdef
+    have hall : EEq.HoldsAll B (famVal fun j => (a j).1)
+        (insert ⟨_, δ.op σ, δ.op σ⟩ (EEq.substSet (δ.resultSubst ⟨ws, s, σ⟩) (δ.sortDom s))) :=
+      fun c hc => (EpSpec.mem_cn_iff _ _).mp (h σ hc) B hB _ (EEq.holdsAll_union.mpr ⟨hfam, htr⟩)
+    obtain ⟨⟨hd, -, -⟩, hD⟩ := EEq.holdsAll_insert.mp hall
+    refine ⟨hd, ?_⟩
+    have hv : (fun t x => (δ.resultSubst ⟨ws, s, σ⟩ t x).eval B (famVal fun j => (a j).1)) =
+        val₁ (((δ.op σ).eval B (famVal fun j => (a j).1)).get hd) :=
+      eq_val₁ (Part.some_get hd).symm
+    erw [EEq.holdsAll_substSet, hv] at hD
+    exact hD
+  · intro h ws s σ c hc
+    refine (EpSpec.mem_cn_iff _ _).mpr fun B hB a ha => ?_
+    obtain ⟨hfam, htr⟩ := EEq.holdsAll_union.mp ha
+    have hcells := (δ.holdsAll_famDom_iff a).mp hfam
+    let b : Arity (δ.derived B) ws := fun j => ⟨a j, hcells j⟩
+    have hdef : EEq.HoldsAll (δ.derived B) (famVal b) (Sg.defn σ) :=
+      (δ.holdsAll_derived_iff b _).mpr htr
+    obtain ⟨hd, hD⟩ := (δ.derived_isAlgebra_iff.mp (h B hB)) σ b hdef
+    have hv : (fun t x => (δ.resultSubst ⟨ws, s, σ⟩ t x).eval B (famVal a)) =
+        val₁ (((δ.op σ).eval B (famVal a)).get hd) :=
+      eq_val₁ (Part.some_get hd).symm
+    rcases hc with rfl | hc
+    · exact ⟨hd, hd, rfl⟩
+    · have hsub : EEq.HoldsAll B (famVal a)
+          (EEq.substSet (δ.resultSubst ⟨ws, s, σ⟩) (δ.sortDom s)) := by
+        erw [EEq.holdsAll_substSet, hv]
+        exact hD
+      exact hsub c hc
 
 theorem gep2_iff {E : Set (QEEq Sg.sig V)} {F : Set (QEEq Lg.sig V')} :
     δ.GEP2.{u, v, u', v', w} E F ↔ ∀ B : PartialAlgebra.{u', v', w} Lg.sig,
       (EpSpec.mk Lg F).IsModel B → ∀ q ∈ E, q.Holds (δ.derived B) := by
-  sorry
+  constructor
+  · intro h B hB q hq
+    letI := q.vars_finite.fintype
+    let e := (Fintype.equivFin q.vars).symm
+    exact (q.holds_iff_word e _).mpr ((δ.gep2_word_iff q e).mp (h q hq _ e) B hB)
+  · intro h q hq n e
+    exact (δ.gep2_word_iff q e).mpr fun B hB => (q.holds_iff_word e _).mp (h B hB q hq)
 
 theorem sendsModels_iff {E : Set (QEEq Sg.sig V)} {F : Set (QEEq Lg.sig V')} :
     δ.SendsModels.{u, v, u', v', w} E F ↔ δ.GEP1.{u, v, u', v', w} F ∧ δ.GEP2.{u, v, u', v', w} E F := by
-  sorry
+  constructor
+  · intro h
+    exact ⟨δ.gep1_iff.mpr fun B hB => (h B hB).1, δ.gep2_iff.mpr fun B hB => (h B hB).2⟩
+  · rintro ⟨h1, h2⟩ B hB
+    exact ⟨δ.gep1_iff.mp h1 B hB, δ.gep2_iff.mp h2 B hB⟩
 
 end GenEpDerivor
 ```
