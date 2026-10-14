@@ -1434,6 +1434,819 @@ noncomputable def truncExtFunctor {m n : ℕ} (hmn : m ≤ n) :
 ```
 :::
 
+# Extended discretization
+
+:::definition (label := "discretization-ext-derivor") (central := false) (title := "The extended discretization derivor")
+Write $`\underline{k} = \min\{k, m\}`. The *extended discretization derivor*
+$`\boldsymbol{\delta}^{\mathrm{ext}(n,m)} = (\varphi, D, d)` is the generalized ep-derivor from
+$`\mathbf{\Sigma}^{\mathrm{ext}(n)}` to $`\mathbf{\Sigma}^{\mathrm{ext}(m)}` with
+$`\varphi(k, s) = (\underline{k}, s)`, $`D_{(k,s)} = \varnothing`,
+$`d(\sigma_k) = \sigma_{\underline{k}}((v_p)_p)`, and, for $`j < k`: if $`j < m`,
+$`d(\mathrm{sc}^{(j,k)}_{s}) = \mathrm{sc}^{(j,\underline{k})}_{s}(v_0)`,
+$`d(\mathrm{tg}^{(j,k)}_{s}) = \mathrm{tg}^{(j,\underline{k})}_{s}(v_0)`,
+$`d(\mathrm{i}^{(k,j)}_{s}) = \mathrm{i}^{(\underline{k},j)}_{s}(v_0)` and
+$`d(\circ^{(j,k)}_{s}) = v_0 \circ^{(j,\underline{k})}_{s} v_1`; if $`j \geq m`, all four are $`v_0`.
+
+If $`j \geq m`, then $`\underline{j} = \underline{k} = m`, so that $`v_0` has the right sort; in the
+Lean these two sorts are equal but not definitionally, and the variable carries the equality.
+
+```lean
+/-- The dimension `min(k, m)`. -/
+def lowE {n : ℕ} (m : ℕ) (k : Fin (n + 1)) : Fin (m + 1) := ⟨min k.val m, by omega⟩
+
+lemma lowE_lt {n m : ℕ} {j k : Fin (n + 1)} (h : j < k) (hj : j.val < m) : lowE m j < lowE m k := by
+  have := Fin.lt_def.mp h
+  simp only [lowE, Fin.lt_def]; omega
+
+lemma lowE_eq {n m : ℕ} {j k : Fin (n + 1)} (h : j < k) (hj : ¬ j.val < m) : lowE m k = lowE m j := by
+  have := Fin.lt_def.mp h
+  simp only [lowE, Fin.ext_iff]; omega
+
+/-- The terms of the extended discretization derivor. -/
+def discExtOp (n m : ℕ) : ∀ {ws : List (Fin (n + 1) × S)} {t : Fin (n + 1) × S},
+    Extended.ExtendedSignature Sig (Fin (n + 1)) ws t →
+    Term (Extended.ExtendedSignature Sig (Fin (m + 1)))
+      (Vars ((fun t => (lowE m t.1, t.2)) ∘ ws.get)) (lowE m t.1, t.2)
+  | _, _, .op k σ => .app (.op (lowE m k) σ) fun q => .var ⟨Fin.cast (by simp) q, by simp⟩
+  | _, _, @Extended.ExtendedSignature.sc _ _ _ _ j _ h s => if hj : j.val < m then app₁ (.sc (lowE_lt h hj) s) (.var ⟨⟨0, by simp⟩, rfl⟩)
+      else .var ⟨⟨0, by simp⟩, by simp [lowE_eq h hj]⟩
+  | _, _, @Extended.ExtendedSignature.tg _ _ _ _ j _ h s => if hj : j.val < m then app₁ (.tg (lowE_lt h hj) s) (.var ⟨⟨0, by simp⟩, rfl⟩)
+      else .var ⟨⟨0, by simp⟩, by simp [lowE_eq h hj]⟩
+  | _, _, @Extended.ExtendedSignature.idm _ _ _ _ j _ h s => if hj : j.val < m then app₁ (.idm (lowE_lt h hj) s) (.var ⟨⟨0, by simp⟩, rfl⟩)
+      else .var ⟨⟨0, by simp⟩, by simp [lowE_eq h hj]⟩
+  | _, _, @Extended.ExtendedSignature.comp _ _ _ _ j _ h s => if hj : j.val < m then
+      app₂ (.comp (lowE_lt h hj) s) (.var ⟨⟨0, by simp⟩, rfl⟩) (.var ⟨⟨1, by simp⟩, rfl⟩)
+      else .var ⟨⟨0, by simp⟩, rfl⟩
+
+/-- The extended discretization derivor `𝛅^{ext(n,m)}`. -/
+def discExt (n m : ℕ) : GenEpDerivor (extendedEpSig Sig (Fin (n + 1))) (extendedEpSig Sig (Fin (m + 1))) where
+  sortMap t := (lowE m t.1, t.2)
+  sortDom _ := ∅
+  op := discExtOp Sig n m
+```
+:::
+
+The discretized algebra $`(\boldsymbol{\delta}^{\mathrm{ext}(n,m)})^{\ast}_{\mathfrak{gd}}(\mathbf{B})`
+has as cells of sort $`(k, s)` the $`\underline{k}`-cells of sort $`s` of $`\mathbf{B}`. Its structure in
+the dimensions $`j < m` is that of $`\mathbf{B}`; for $`j \geq m` its $`(j,k)`-sources, targets and
+identities are transports between two equal sorts, and $`x \circ^{(j,k)} y` is defined exactly when
+$`x = y`, and then it is $`x`.
+
+```lean
+namespace DiscExt
+
+open Extended.Model
+
+variable {Sig n m}
+
+/-- The discretized algebra of an extended model. -/
+noncomputable abbrev DE (n : ℕ) (M : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (m + 1))) :=
+  (discExt Sig n m).derived M.1
+
+variable {M : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (m + 1))}
+
+variable (M) in
+/-- Transport along an equality of sorts. -/
+def tp {t t' : Fin (m + 1) × S} (e : t = t') (y : M.1 t) : M.1 t' := e ▸ y
+
+lemma tp_self {t : Fin (m + 1) × S} (e : t = t) (y : M.1 t) : tp M e y = y := rfl
+
+lemma tp_tp {t t' t'' : Fin (m + 1) × S} (e : t = t') (e' : t' = t'') (y : M.1 t) :
+    tp M e' (tp M e y) = tp M (e.trans e') y := by
+  subst e e'; rfl
+
+lemma tp_inj {t t' : Fin (m + 1) × S} (e : t = t') {y y' : M.1 t} (h : tp M e y = tp M e y') :
+    y = y' := by
+  subst e; exact h
+
+lemma low_eq_s {j k : Fin (n + 1)} (h : j < k) (hj : ¬ j.val < m) (s : S) :
+    (lowE m k, s) = (lowE m j, s) := by rw [lowE_eq h hj]
+
+variable (M) in
+noncomputable def esc {j k : Fin (n + 1)} (h : j < k) {s : S} (x : DE n M (k, s)) : DE n M (j, s) :=
+  ⟨if hj : j.val < m then sc M (lowE_lt h hj) x.1 else tp M (low_eq_s h hj s) x.1,
+    EEq.holdsAll_empty⟩
+
+variable (M) in
+noncomputable def etg {j k : Fin (n + 1)} (h : j < k) {s : S} (x : DE n M (k, s)) : DE n M (j, s) :=
+  ⟨if hj : j.val < m then tg M (lowE_lt h hj) x.1 else tp M (low_eq_s h hj s) x.1,
+    EEq.holdsAll_empty⟩
+
+variable (M) in
+noncomputable def eidm {j k : Fin (n + 1)} (h : j < k) {s : S} (u : DE n M (j, s)) : DE n M (k, s) :=
+  ⟨if hj : j.val < m then idm M (lowE_lt h hj) u.1 else tp M (low_eq_s h hj s).symm u.1,
+    EEq.holdsAll_empty⟩
+
+lemma esc_pos {j k : Fin (n + 1)} {h : j < k} (hj : j.val < m) {s : S} (x : DE n M (k, s)) :
+    (esc M h x).1 = sc M (lowE_lt h hj) x.1 := dif_pos hj
+
+lemma esc_neg {j k : Fin (n + 1)} {h : j < k} (hj : ¬ j.val < m) {s : S} (x : DE n M (k, s)) :
+    (esc M h x).1 = tp M (low_eq_s h hj s) x.1 := dif_neg hj
+
+lemma etg_pos {j k : Fin (n + 1)} {h : j < k} (hj : j.val < m) {s : S} (x : DE n M (k, s)) :
+    (etg M h x).1 = tg M (lowE_lt h hj) x.1 := dif_pos hj
+
+lemma etg_neg {j k : Fin (n + 1)} {h : j < k} (hj : ¬ j.val < m) {s : S} (x : DE n M (k, s)) :
+    (etg M h x).1 = tp M (low_eq_s h hj s) x.1 := dif_neg hj
+
+lemma eidm_pos {j k : Fin (n + 1)} {h : j < k} (hj : j.val < m) {s : S} (u : DE n M (j, s)) :
+    (eidm M h u).1 = idm M (lowE_lt h hj) u.1 := dif_pos hj
+
+lemma eidm_neg {j k : Fin (n + 1)} {h : j < k} (hj : ¬ j.val < m) {s : S} (u : DE n M (j, s)) :
+    (eidm M h u).1 = tp M (low_eq_s h hj s).symm u.1 := dif_neg hj
+
+lemma cond_pos {j k : Fin (n + 1)} {h : j < k} (hj : j.val < m) {s : S} {x y : DE n M (k, s)} :
+    esc M h x = etg M h y ↔ sc M (lowE_lt h hj) x.1 = tg M (lowE_lt h hj) y.1 :=
+  ⟨fun e => (esc_pos hj x).symm.trans ((congrArg Subtype.val e).trans (etg_pos hj y)),
+    fun e => Subtype.ext ((esc_pos hj x).trans (e.trans (etg_pos hj y).symm))⟩
+
+lemma cond_neg {j k : Fin (n + 1)} {h : j < k} (hj : ¬ j.val < m) {s : S} {x y : DE n M (k, s)} :
+    esc M h x = etg M h y ↔ x = y :=
+  ⟨fun e => Subtype.ext (tp_inj (low_eq_s h hj s)
+      ((esc_neg hj x).symm.trans ((congrArg Subtype.val e).trans (etg_neg hj y)))),
+    fun e => e ▸ Subtype.ext ((esc_neg hj x).trans (etg_neg hj x).symm)⟩
+
+variable (M) in
+noncomputable def ecomp {j k : Fin (n + 1)} (h : j < k) {s : S} (x y : DE n M (k, s))
+    (hxy : esc M h x = etg M h y) : DE n M (k, s) :=
+  ⟨if hj : j.val < m then comp M (lowE_lt h hj) x.1 y.1 ((cond_pos hj).mp hxy) else x.1,
+    EEq.holdsAll_empty⟩
+
+lemma ecomp_pos {j k : Fin (n + 1)} {h : j < k} (hj : j.val < m) {s : S} (x y : DE n M (k, s))
+    (hxy : esc M h x = etg M h y) :
+    (ecomp M h x y hxy).1 = comp M (lowE_lt h hj) x.1 y.1 ((cond_pos hj).mp hxy) := dif_pos hj
+
+lemma ecomp_neg {j k : Fin (n + 1)} {h : j < k} (hj : ¬ j.val < m) {s : S} (x y : DE n M (k, s))
+    (hxy : esc M h x = etg M h y) : ecomp M h x y hxy = x := Subtype.ext (dif_neg hj)
+
+variable (M) in
+noncomputable def eop (k : Fin (n + 1)) {ws : List S} {s : S} (σ : Sig ws s)
+    (b : ∀ p, DE n M (k, ws.get p)) : DE n M (k, s) :=
+  ⟨op M (lowE m k) σ fun p => (b p).1, EEq.holdsAll_empty⟩
+
+lemma op_sc {j k : Fin (n + 1)} (h : j < k) {s : S} (x : DE n M (k, s)) :
+    (DE n M).op (.sc h s) (Extended.arg₁ x) = Part.some (esc M h x) := by
+  refine (discExt Sig n m).derived_op_eq_some EEq.holdsAll_empty ?_ _
+  by_cases hj : j.val < m
+  · have e : (discExt Sig n m).op (.sc h s) =
+        app₁ (.sc (lowE_lt h hj) s) (.var ⟨⟨0, by simp⟩, rfl⟩) := dif_pos hj
+    rw [e]
+    exact (Unif.meval_sc _ rfl).trans (congrArg Part.some (esc_pos (h := h) hj x).symm)
+  · have e : (discExt Sig n m).op (.sc h s) = .var ⟨⟨0, by simp⟩, low_eq_s h hj s⟩ := dif_neg hj
+    rw [e]
+    exact congrArg Part.some (esc_neg (h := h) hj x).symm
+
+lemma op_tg {j k : Fin (n + 1)} (h : j < k) {s : S} (x : DE n M (k, s)) :
+    (DE n M).op (.tg h s) (Extended.arg₁ x) = Part.some (etg M h x) := by
+  refine (discExt Sig n m).derived_op_eq_some EEq.holdsAll_empty ?_ _
+  by_cases hj : j.val < m
+  · have e : (discExt Sig n m).op (.tg h s) =
+        app₁ (.tg (lowE_lt h hj) s) (.var ⟨⟨0, by simp⟩, rfl⟩) := dif_pos hj
+    rw [e]
+    exact (Unif.meval_tg _ rfl).trans (congrArg Part.some (etg_pos (h := h) hj x).symm)
+  · have e : (discExt Sig n m).op (.tg h s) = .var ⟨⟨0, by simp⟩, low_eq_s h hj s⟩ := dif_neg hj
+    rw [e]
+    exact congrArg Part.some (etg_neg (h := h) hj x).symm
+
+lemma op_idm {j k : Fin (n + 1)} (h : j < k) {s : S} (u : DE n M (j, s)) :
+    (DE n M).op (.idm h s) (Extended.arg₁ u) = Part.some (eidm M h u) := by
+  refine (discExt Sig n m).derived_op_eq_some EEq.holdsAll_empty ?_ _
+  by_cases hj : j.val < m
+  · have e : (discExt Sig n m).op (.idm h s) =
+        app₁ (.idm (lowE_lt h hj) s) (.var ⟨⟨0, by simp⟩, rfl⟩) := dif_pos hj
+    rw [e]
+    exact (Unif.meval_idm _ rfl).trans (congrArg Part.some (eidm_pos (h := h) hj u).symm)
+  · have e : (discExt Sig n m).op (.idm h s) =
+        .var ⟨⟨0, by simp⟩, (low_eq_s h hj s).symm⟩ := dif_neg hj
+    rw [e]
+    exact congrArg Part.some (eidm_neg (h := h) hj u).symm
+
+lemma eval_var_lift (k : Fin (n + 1)) {ws : List S} (b : ∀ p, DE n M (k, ws.get p))
+    (q : Fin (ws.map fun t => (lowE m k, t)).length) (hq) :
+    (Term.var ⟨Fin.cast (by simp) q, hq⟩ :
+        Term (Extended.ExtendedSignature Sig (Fin (m + 1)))
+          (Vars ((fun t => (lowE m t.1, t.2)) ∘ (ws.map fun t => (k, t)).get))
+          ((ws.map fun t => (lowE m k, t)).get q)).eval M.1
+      (famVal fun i => (Extended.liftFam k b i).1) =
+      Part.some (Extended.liftFam (lowE m k) (fun p => (b p).1) q) := by
+  have key : ∀ {t' : Fin (n + 1) × S} (e : (k, ws.get (Fin.cast (by simp) q)) = t')
+      {u' : Fin (m + 1) × S} (hq : (lowE m t'.1, t'.2) = u')
+      (e' : (lowE m k, ws.get (Fin.cast (by simp) q)) = u'),
+      hq ▸ (cast (congrArg (DE n M) e) (b (Fin.cast (by simp) q))).1 =
+        cast (congrArg M.1 e') (b (Fin.cast (by simp) q)).1 := by
+    intro t' e; subst e; intro u' hq; subst hq; intro e'; rfl
+  exact congrArg Part.some (key (by simp) hq (by simp))
+
+lemma op_op (k : Fin (n + 1)) {ws : List S} {s : S} (σ : Sig ws s)
+    (b : ∀ p, DE n M (k, ws.get p)) :
+    (DE n M).op (.op k σ) (Extended.liftFam k b) = Part.some (eop M k σ b) :=
+  (discExt Sig n m).derived_op_eq_some EEq.holdsAll_empty
+    ((eval_app_of_eq_some _ _ _ fun q => eval_var_lift k b q _).trans (Part.some_get _).symm) _
+
+lemma comp_defn_iff {j k : Fin (n + 1)} (h : j < k) {s : S} (x y : DE n M (k, s)) :
+    EEq.HoldsAll (DE n M) (famVal (Extended.arg₂ x y))
+      ((extendedEpSig Sig (Fin (n + 1))).defn (.comp h s)) ↔ esc M h x = etg M h y :=
+  EEq.holdsAll_singleton.trans (EEq.holds_mk'_iff ((Extended.eval_app₁ _ rfl).trans (op_sc h x))
+    ((Extended.eval_app₁ _ rfl).trans (op_tg h y)))
+
+lemma op_comp {j k : Fin (n + 1)} (h : j < k) {s : S} (x y : DE n M (k, s))
+    (hxy : esc M h x = etg M h y) :
+    (DE n M).op (.comp h s) (Extended.arg₂ x y) = Part.some (ecomp M h x y hxy) := by
+  refine (discExt Sig n m).derived_op_eq_some ((comp_defn_iff h x y).mpr hxy) ?_ _
+  by_cases hj : j.val < m
+  · have e : (discExt Sig n m).op (.comp h s) = app₂ (.comp (lowE_lt h hj) s)
+        (.var ⟨⟨0, by simp⟩, rfl⟩) (.var ⟨⟨1, by simp⟩, rfl⟩) := dif_pos hj
+    rw [e]
+    exact (Unif.meval_comp _ rfl rfl ((cond_pos (h := h) hj).mp hxy)).trans
+      (congrArg Part.some (ecomp_pos (h := h) hj x y hxy).symm)
+  · have e : (discExt Sig n m).op (.comp h s) = .var ⟨⟨0, by simp⟩, rfl⟩ := dif_neg hj
+    rw [e]
+    exact congrArg Part.some (congrArg Subtype.val (ecomp_neg (h := h) hj x y hxy)).symm
+
+lemma op_comp_dom {j k : Fin (n + 1)} (h : j < k) {s : S} (x y : DE n M (k, s)) :
+    ((DE n M).op (.comp h s) (Extended.arg₂ x y)).Dom ↔ esc M h x = etg M h y :=
+  ⟨fun hd => (comp_defn_iff h x y).mp (((discExt Sig n m).op_derived_dom_iff _ _).mp hd).1,
+    fun hxy => (Part.eq_some_iff.mp (op_comp h x y hxy)).1⟩
+
+theorem isAlgebra : (extendedEpSig Sig (Fin (n + 1))).IsAlgebra (DE n M) := by
+  intro ws t σ a
+  cases σ with
+  | op k σ =>
+    obtain ⟨b, rfl⟩ : ∃ b, Extended.liftFam k b = a := ⟨_, Extended.liftFam_unlift k a⟩
+    exact ⟨fun _ => EEq.holdsAll_empty, fun _ => (Part.eq_some_iff.mp (op_op k σ b)).1⟩
+  | sc h s =>
+    have ha : Extended.arg₁ (a ⟨0, by simp⟩) = a := by funext i; match i with | ⟨0, _⟩ => rfl
+    exact ⟨fun _ => EEq.holdsAll_empty, fun _ => ha ▸ (Part.eq_some_iff.mp (op_sc h _)).1⟩
+  | tg h s =>
+    have ha : Extended.arg₁ (a ⟨0, by simp⟩) = a := by funext i; match i with | ⟨0, _⟩ => rfl
+    exact ⟨fun _ => EEq.holdsAll_empty, fun _ => ha ▸ (Part.eq_some_iff.mp (op_tg h _)).1⟩
+  | idm h s =>
+    have ha : Extended.arg₁ (a ⟨0, by simp⟩) = a := by funext i; match i with | ⟨0, _⟩ => rfl
+    exact ⟨fun _ => EEq.holdsAll_empty, fun _ => ha ▸ (Part.eq_some_iff.mp (op_idm h _)).1⟩
+  | comp h s =>
+    have ha : Extended.arg₂ (a ⟨0, by simp⟩) (a ⟨1, by simp⟩) = a := by
+      funext i; match i with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl
+    exact ha ▸ (op_comp_dom h _ _).trans (comp_defn_iff h _ _).symm
+
+/-! ### Transports commute with the operations of the model -/
+
+section Transport
+
+variable {s : S}
+
+lemma tp_sc {a b b' : Fin (m + 1)} (e : (b, s) = (b', s)) (h : a < b) (h' : a < b')
+    (x : M.1 (b, s)) : sc M h' (tp M e x) = sc M h x := by
+  have hb : b = b' := congrArg Prod.fst e
+  subst hb; rfl
+
+lemma tp_tg {a b b' : Fin (m + 1)} (e : (b, s) = (b', s)) (h : a < b) (h' : a < b')
+    (x : M.1 (b, s)) : tg M h' (tp M e x) = tg M h x := by
+  have hb : b = b' := congrArg Prod.fst e
+  subst hb; rfl
+
+lemma tp_idm {a b b' : Fin (m + 1)} (e : (b, s) = (b', s)) (h : a < b) (h' : a < b')
+    (u : M.1 (a, s)) : tp M e (idm M h u) = idm M h' u := by
+  have hb : b = b' := congrArg Prod.fst e
+  subst hb; rfl
+
+lemma tp_comp {a b b' : Fin (m + 1)} (e : (b, s) = (b', s)) (h : a < b) (h' : a < b')
+    (x y : M.1 (b, s)) (hxy : sc M h x = tg M h y) :
+    tp M e (comp M h x y hxy) = comp M h' (tp M e x) (tp M e y)
+      ((tp_sc e h h' x).trans (hxy.trans (tp_tg e h h' y).symm)) := by
+  have hb : b = b' := congrArg Prod.fst e
+  subst hb; rfl
+
+lemma tp_op {a a' : Fin (m + 1)} (ha : a = a') {ws : List S} (σ : Sig ws s)
+    (e : (a, s) = (a', s)) (b : ∀ p, M.1 (a, ws.get p)) :
+    tp M e (op M a σ b) = op M a' σ (fun p => tp M (congrArg (·, ws.get p) ha) (b p)) := by
+  subst ha; rfl
+
+lemma tp_trans {t t' : Fin (m + 1) × S} (e e' : t = t') (y : M.1 t) : tp M e y = tp M e' y := rfl
+
+end Transport
+
+/-! ### The laws of the extended discretized algebra -/
+
+section Laws
+
+variable {j k : Fin (n + 1)} {h : j < k} {s : S}
+
+lemma esc_eidm (u : DE n M (j, s)) : esc M h (eidm M h u) = u := by
+  apply Subtype.ext
+  by_cases hj : j.val < m
+  · rw [esc_pos (h := h) hj, eidm_pos (h := h) hj]; exact sc_idm _
+  · rw [esc_neg (h := h) hj, eidm_neg (h := h) hj]; exact tp_tp _ _ _
+
+lemma etg_eidm (u : DE n M (j, s)) : etg M h (eidm M h u) = u := by
+  apply Subtype.ext
+  by_cases hj : j.val < m
+  · rw [etg_pos (h := h) hj, eidm_pos (h := h) hj]; exact tg_idm _
+  · rw [etg_neg (h := h) hj, eidm_neg (h := h) hj]; exact tp_tp _ _ _
+
+lemma esc_ecomp {x y : DE n M (k, s)} (hxy : esc M h x = etg M h y) :
+    esc M h (ecomp M h x y hxy) = esc M h y := by
+  by_cases hj : j.val < m
+  · apply Subtype.ext; rw [esc_pos (h := h) hj, ecomp_pos (h := h) hj, esc_pos (h := h) hj]; exact sc_comp _
+  · rw [ecomp_neg (h := h) hj]; rw [(cond_neg (h := h) hj).mp hxy]
+
+lemma etg_ecomp {x y : DE n M (k, s)} (hxy : esc M h x = etg M h y) :
+    etg M h (ecomp M h x y hxy) = etg M h x := by
+  by_cases hj : j.val < m
+  · apply Subtype.ext; rw [etg_pos (h := h) hj, ecomp_pos (h := h) hj, etg_pos (h := h) hj]; exact tg_comp _
+  · rw [ecomp_neg (h := h) hj]
+
+lemma ecomp_eidm_esc (x : DE n M (k, s)) :
+    ecomp M h x (eidm M h (esc M h x)) (etg_eidm _).symm = x := by
+  by_cases hj : j.val < m
+  · exact Subtype.ext ((ecomp_pos (h := h) hj _ _ _).trans ((comp_congr rfl
+      ((eidm_pos (h := h) hj _).trans (congrArg _ (esc_pos (h := h) hj x))) _
+      (tg_idm _).symm).trans (comp_idm_sc x.1)))
+  · exact ecomp_neg (h := h) hj _ _ _
+
+lemma ecomp_eidm_etg (x : DE n M (k, s)) :
+    ecomp M h (eidm M h (etg M h x)) x (esc_eidm _) = x := by
+  by_cases hj : j.val < m
+  · exact Subtype.ext ((ecomp_pos (h := h) hj _ _ _).trans ((comp_congr
+      ((eidm_pos (h := h) hj _).trans (congrArg _ (etg_pos (h := h) hj x))) rfl _
+      (sc_idm _)).trans (idm_tg_comp x.1)))
+  · exact (ecomp_neg (h := h) hj _ _ _).trans (Subtype.ext ((eidm_neg (h := h) hj _).trans
+      ((congrArg _ (etg_neg (h := h) hj x)).trans (tp_tp _ _ _))))
+
+lemma ecomp_assoc {a b c : DE n M (k, s)} (hab : esc M h a = etg M h b)
+    (hbc : esc M h b = etg M h c) :
+    ecomp M h (ecomp M h a b hab) c ((esc_ecomp hab).trans hbc) =
+      ecomp M h a (ecomp M h b c hbc) (hab.trans (etg_ecomp hbc).symm) := by
+  by_cases hj : j.val < m
+  · have ha' := (cond_pos (h := h) hj).mp hab
+    have hb' := (cond_pos (h := h) hj).mp hbc
+    exact Subtype.ext ((ecomp_pos (h := h) hj _ _ _).trans
+      ((comp_congr (ecomp_pos (h := h) hj a b hab) rfl _ ((sc_comp ha').trans hb')).trans
+        ((comp_assoc ha' hb').trans
+          ((comp_congr rfl (ecomp_pos (h := h) hj b c hbc).symm (ha'.trans (tg_comp hb').symm)
+            _).trans (ecomp_pos (h := h) hj _ _ _).symm))))
+  · simp only [ecomp_neg (h := h) hj]
+
+lemma ecomp_congr {x x' y y' : DE n M (k, s)} (hx : x = x') (hy : y = y')
+    (hxy : esc M h x = etg M h y) (hxy' : esc M h x' = etg M h y') :
+    ecomp M h x y hxy = ecomp M h x' y' hxy' := by
+  subst hx hy; rfl
+
+lemma esc_eop {ws : List S} (σ : Sig ws s) (b : ∀ p, DE n M (k, ws.get p)) :
+    esc M h (eop M k σ b) = eop M j σ (fun p => esc M h (b p)) := by
+  apply Subtype.ext
+  by_cases hj : j.val < m
+  · rw [esc_pos (h := h) hj]
+    exact (sc_op _ σ _).trans (congrArg (op M _ σ) (funext fun p => (esc_pos (h := h) hj (b p)).symm))
+  · rw [esc_neg (h := h) hj]
+    exact (tp_op (lowE_eq h hj) σ _ _).trans
+      (congrArg (op M _ σ) (funext fun p => (esc_neg (h := h) hj (b p)).symm))
+
+lemma etg_eop {ws : List S} (σ : Sig ws s) (b : ∀ p, DE n M (k, ws.get p)) :
+    etg M h (eop M k σ b) = eop M j σ (fun p => etg M h (b p)) := by
+  apply Subtype.ext
+  by_cases hj : j.val < m
+  · rw [etg_pos (h := h) hj]
+    exact (tg_op _ σ _).trans (congrArg (op M _ σ) (funext fun p => (etg_pos (h := h) hj (b p)).symm))
+  · rw [etg_neg (h := h) hj]
+    exact (tp_op (lowE_eq h hj) σ _ _).trans
+      (congrArg (op M _ σ) (funext fun p => (etg_neg (h := h) hj (b p)).symm))
+
+lemma eidm_eop {ws : List S} (σ : Sig ws s) (u : ∀ p, DE n M (j, ws.get p)) :
+    eidm M h (eop M j σ u) = eop M k σ (fun p => eidm M h (u p)) := by
+  apply Subtype.ext
+  by_cases hj : j.val < m
+  · rw [eidm_pos (h := h) hj]
+    exact (idm_op _ σ _).trans (congrArg (op M _ σ) (funext fun p => (eidm_pos (h := h) hj (u p)).symm))
+  · rw [eidm_neg (h := h) hj]
+    exact (tp_op (lowE_eq h hj).symm σ _ _).trans
+      (congrArg (op M _ σ) (funext fun p => (eidm_neg (h := h) hj (u p)).symm))
+
+lemma eop_ecomp {ws : List S} (σ : Sig ws s) (a b : ∀ p, DE n M (k, ws.get p))
+    (hab : ∀ p, esc M h (a p) = etg M h (b p)) :
+    eop M k σ (fun p => ecomp M h (a p) (b p) (hab p)) =
+      ecomp M h (eop M k σ a) (eop M k σ b)
+        ((esc_eop σ a).trans ((congrArg (eop M j σ) (funext hab)).trans (etg_eop σ b).symm)) := by
+  by_cases hj : j.val < m
+  · refine Subtype.ext (Eq.trans ?_ (ecomp_pos (h := h) hj _ _ _).symm)
+    refine (congrArg (op M _ σ) (funext fun p => ecomp_pos (h := h) hj (a p) (b p) (hab p))).trans ?_
+    exact Extended.Model.op_comp _ σ _ _ _
+  · simp only [ecomp_neg (h := h) hj]
+
+end Laws
+
+section Laws₃
+
+variable {a b c : Fin (n + 1)} (h₁ : a < b) (h₂ : b < c) {s : S}
+
+include h₁ in
+lemma lt_a (hb : b.val < m) : a.val < m := lt_trans (Fin.lt_def.mp h₁) hb
+
+lemma esc_esc (x : DE n M (c, s)) : esc M h₁ (esc M h₂ x) = esc M (h₁.trans h₂) x := by
+  apply Subtype.ext
+  by_cases hb : b.val < m
+  · have ha := lt_a h₁ hb
+    rw [esc_pos (h := h₁) ha, esc_pos (h := h₂) hb, esc_pos (h := h₁.trans h₂) ha]
+    exact sc_sc (h₁ := lowE_lt h₁ ha) (h₂ := lowE_lt h₂ hb) _
+  · by_cases ha : a.val < m
+    · rw [esc_pos (h := h₁) ha, esc_neg (h := h₂) hb, esc_pos (h := h₁.trans h₂) ha]
+      exact tp_sc _ _ _ _
+    · rw [esc_neg (h := h₁) ha, esc_neg (h := h₂) hb, esc_neg (h := h₁.trans h₂) ha]
+      exact tp_tp _ _ _
+
+lemma etg_etg (x : DE n M (c, s)) : etg M h₁ (etg M h₂ x) = etg M (h₁.trans h₂) x := by
+  apply Subtype.ext
+  by_cases hb : b.val < m
+  · have ha := lt_a h₁ hb
+    rw [etg_pos (h := h₁) ha, etg_pos (h := h₂) hb, etg_pos (h := h₁.trans h₂) ha]
+    exact tg_tg (h₁ := lowE_lt h₁ ha) (h₂ := lowE_lt h₂ hb) _
+  · by_cases ha : a.val < m
+    · rw [etg_pos (h := h₁) ha, etg_neg (h := h₂) hb, etg_pos (h := h₁.trans h₂) ha]
+      exact tp_tg _ _ _ _
+    · rw [etg_neg (h := h₁) ha, etg_neg (h := h₂) hb, etg_neg (h := h₁.trans h₂) ha]
+      exact tp_tp _ _ _
+
+lemma esc_etg (x : DE n M (c, s)) : esc M h₁ (etg M h₂ x) = esc M (h₁.trans h₂) x := by
+  apply Subtype.ext
+  by_cases hb : b.val < m
+  · have ha := lt_a h₁ hb
+    rw [esc_pos (h := h₁) ha, etg_pos (h := h₂) hb, esc_pos (h := h₁.trans h₂) ha]
+    exact sc_tg (h₁ := lowE_lt h₁ ha) (h₂ := lowE_lt h₂ hb) _
+  · by_cases ha : a.val < m
+    · rw [esc_pos (h := h₁) ha, etg_neg (h := h₂) hb, esc_pos (h := h₁.trans h₂) ha]
+      exact tp_sc _ _ _ _
+    · rw [esc_neg (h := h₁) ha, etg_neg (h := h₂) hb, esc_neg (h := h₁.trans h₂) ha]
+      exact tp_tp _ _ _
+
+lemma etg_esc (x : DE n M (c, s)) : etg M h₁ (esc M h₂ x) = etg M (h₁.trans h₂) x := by
+  apply Subtype.ext
+  by_cases hb : b.val < m
+  · have ha := lt_a h₁ hb
+    rw [etg_pos (h := h₁) ha, esc_pos (h := h₂) hb, etg_pos (h := h₁.trans h₂) ha]
+    exact tg_sc (h₁ := lowE_lt h₁ ha) (h₂ := lowE_lt h₂ hb) _
+  · by_cases ha : a.val < m
+    · rw [etg_pos (h := h₁) ha, esc_neg (h := h₂) hb, etg_pos (h := h₁.trans h₂) ha]
+      exact tp_tg _ _ _ _
+    · rw [etg_neg (h := h₁) ha, esc_neg (h := h₂) hb, etg_neg (h := h₁.trans h₂) ha]
+      exact tp_tp _ _ _
+
+lemma eidm_eidm (u : DE n M (a, s)) : eidm M h₂ (eidm M h₁ u) = eidm M (h₁.trans h₂) u := by
+  apply Subtype.ext
+  by_cases hb : b.val < m
+  · have ha := lt_a h₁ hb
+    rw [eidm_pos (h := h₂) hb, eidm_pos (h := h₁) ha, eidm_pos (h := h₁.trans h₂) ha]
+    exact idm_idm (h₁ := lowE_lt h₁ ha) (h₂ := lowE_lt h₂ hb) _
+  · by_cases ha : a.val < m
+    · rw [eidm_neg (h := h₂) hb, eidm_pos (h := h₁) ha, eidm_pos (h := h₁.trans h₂) ha]
+      exact tp_idm _ _ _ _
+    · rw [eidm_neg (h := h₂) hb, eidm_neg (h := h₁) ha, eidm_neg (h := h₁.trans h₂) ha]
+      exact tp_tp _ _ _
+
+lemma esc_ecomp' {x y : DE n M (c, s)} (hxy : esc M (h₁.trans h₂) x = etg M (h₁.trans h₂) y) :
+    esc M h₂ (ecomp M (h₁.trans h₂) x y hxy) =
+      ecomp M h₁ (esc M h₂ x) (esc M h₂ y)
+        ((esc_esc h₁ h₂ x).trans (hxy.trans (etg_esc h₁ h₂ y).symm)) := by
+  by_cases hb : b.val < m
+  · have ha := lt_a h₁ hb
+    have hxy' := (cond_pos (h := h₁.trans h₂) ha).mp hxy
+    exact Subtype.ext ((esc_pos (h := h₂) hb _).trans
+      ((congrArg _ (ecomp_pos (h := h₁.trans h₂) ha x y hxy)).trans
+        ((sc_comp' (h₁ := lowE_lt h₁ ha) (h₂ := lowE_lt h₂ hb) hxy').trans
+          ((comp_congr (esc_pos (h := h₂) hb x).symm (esc_pos (h := h₂) hb y).symm _ _).trans
+            (ecomp_pos (h := h₁) ha _ _ _).symm))))
+  · by_cases ha : a.val < m
+    · have hxy' := (cond_pos (h := h₁.trans h₂) ha).mp hxy
+      exact Subtype.ext ((esc_neg (h := h₂) hb _).trans
+        ((congrArg _ (ecomp_pos (h := h₁.trans h₂) ha x y hxy)).trans
+          ((tp_comp _ _ (lowE_lt h₁ ha) _ _ hxy').trans
+            ((comp_congr (esc_neg (h := h₂) hb x).symm (esc_neg (h := h₂) hb y).symm _ _).trans
+              (ecomp_pos (h := h₁) ha _ _ _).symm))))
+    · simp only [ecomp_neg (h := h₁.trans h₂) ha, ecomp_neg (h := h₁) ha]
+
+lemma etg_ecomp' {x y : DE n M (c, s)} (hxy : esc M (h₁.trans h₂) x = etg M (h₁.trans h₂) y) :
+    etg M h₂ (ecomp M (h₁.trans h₂) x y hxy) =
+      ecomp M h₁ (etg M h₂ x) (etg M h₂ y)
+        ((esc_etg h₁ h₂ x).trans (hxy.trans (etg_etg h₁ h₂ y).symm)) := by
+  by_cases hb : b.val < m
+  · have ha := lt_a h₁ hb
+    have hxy' := (cond_pos (h := h₁.trans h₂) ha).mp hxy
+    exact Subtype.ext ((etg_pos (h := h₂) hb _).trans
+      ((congrArg _ (ecomp_pos (h := h₁.trans h₂) ha x y hxy)).trans
+        ((tg_comp' (h₁ := lowE_lt h₁ ha) (h₂ := lowE_lt h₂ hb) hxy').trans
+          ((comp_congr (etg_pos (h := h₂) hb x).symm (etg_pos (h := h₂) hb y).symm _ _).trans
+            (ecomp_pos (h := h₁) ha _ _ _).symm))))
+  · by_cases ha : a.val < m
+    · have hxy' := (cond_pos (h := h₁.trans h₂) ha).mp hxy
+      exact Subtype.ext ((etg_neg (h := h₂) hb _).trans
+        ((congrArg _ (ecomp_pos (h := h₁.trans h₂) ha x y hxy)).trans
+          ((tp_comp _ _ (lowE_lt h₁ ha) _ _ hxy').trans
+            ((comp_congr (etg_neg (h := h₂) hb x).symm (etg_neg (h := h₂) hb y).symm _ _).trans
+              (ecomp_pos (h := h₁) ha _ _ _).symm))))
+    · simp only [ecomp_neg (h := h₁.trans h₂) ha, ecomp_neg (h := h₁) ha]
+
+lemma esc_low_ecomp {x y : DE n M (c, s)} (hxy : esc M h₂ x = etg M h₂ y) :
+    esc M (h₁.trans h₂) (ecomp M h₂ x y hxy) = esc M (h₁.trans h₂) y :=
+  (esc_esc h₁ h₂ _).symm.trans ((congrArg _ (esc_ecomp hxy)).trans (esc_esc h₁ h₂ y))
+
+lemma etg_low_ecomp {x y : DE n M (c, s)} (hxy : esc M h₂ x = etg M h₂ y) :
+    etg M (h₁.trans h₂) (ecomp M h₂ x y hxy) = etg M (h₁.trans h₂) x :=
+  (etg_etg h₁ h₂ _).symm.trans ((congrArg _ (etg_ecomp hxy)).trans (etg_etg h₁ h₂ x))
+
+lemma esc_eq_of {x y : DE n M (c, s)} (hxy : esc M h₂ x = etg M h₂ y) :
+    esc M (h₁.trans h₂) x = esc M (h₁.trans h₂) y :=
+  (esc_esc h₁ h₂ x).symm.trans ((congrArg _ hxy).trans (esc_etg h₁ h₂ y))
+
+lemma einterchange {x y z t : DE n M (c, s)} (hxy : esc M h₂ x = etg M h₂ y)
+    (hzt : esc M h₂ z = etg M h₂ t) (hxz : esc M (h₁.trans h₂) x = etg M (h₁.trans h₂) z)
+    (hyt : esc M (h₁.trans h₂) y = etg M (h₁.trans h₂) t) :
+    ecomp M (h₁.trans h₂) (ecomp M h₂ x y hxy) (ecomp M h₂ z t hzt)
+        ((esc_low_ecomp h₁ h₂ hxy).trans ((esc_eq_of h₁ h₂ hxy).symm.trans
+          (hxz.trans (etg_low_ecomp h₁ h₂ hzt).symm))) =
+      ecomp M h₂ (ecomp M (h₁.trans h₂) x z hxz) (ecomp M (h₁.trans h₂) y t hyt)
+        ((esc_ecomp' h₁ h₂ hxz).trans ((ecomp_congr hxy hzt _ _).trans
+          (etg_ecomp' h₁ h₂ hyt).symm)) := by
+  by_cases hb : b.val < m
+  · have ha := lt_a h₁ hb
+    have hxy' := (cond_pos (h := h₂) hb).mp hxy
+    have hzt' := (cond_pos (h := h₂) hb).mp hzt
+    have hxz' := (cond_pos (h := h₁.trans h₂) ha).mp hxz
+    have hyt' := (cond_pos (h := h₁.trans h₂) ha).mp hyt
+    exact Subtype.ext ((ecomp_pos (h := h₁.trans h₂) ha _ _ _).trans
+      ((comp_congr (ecomp_pos (h := h₂) hb x y hxy) (ecomp_pos (h := h₂) hb z t hzt) _ _).trans
+        ((interchange (h₁ := lowE_lt h₁ ha) (h₂ := lowE_lt h₂ hb) hxy' hzt' hxz' hyt').trans
+          ((comp_congr (ecomp_pos (h := h₁.trans h₂) ha x z hxz).symm
+            (ecomp_pos (h := h₁.trans h₂) ha y t hyt).symm _ _).trans
+            (ecomp_pos (h := h₂) hb _ _ _).symm))))
+  · obtain rfl := (cond_neg (h := h₂) hb).mp hxy
+    obtain rfl := (cond_neg (h := h₂) hb).mp hzt
+    simp only [ecomp_neg (h := h₂) hb]
+
+lemma esc_low_eidm (u : DE n M (b, s)) :
+    esc M (h₁.trans h₂) (eidm M h₂ u) = esc M h₁ u :=
+  (esc_esc h₁ h₂ _).symm.trans (congrArg _ (esc_eidm u))
+
+lemma etg_low_eidm (u : DE n M (b, s)) :
+    etg M (h₁.trans h₂) (eidm M h₂ u) = etg M h₁ u :=
+  (etg_etg h₁ h₂ _).symm.trans (congrArg _ (etg_eidm u))
+
+lemma eidm_ecomp {u v : DE n M (b, s)} (huv : esc M h₁ u = etg M h₁ v) :
+    eidm M h₂ (ecomp M h₁ u v huv) =
+      ecomp M (h₁.trans h₂) (eidm M h₂ u) (eidm M h₂ v)
+        ((esc_low_eidm h₁ h₂ u).trans (huv.trans (etg_low_eidm h₁ h₂ v).symm)) := by
+  by_cases hb : b.val < m
+  · have ha := lt_a h₁ hb
+    have huv' := (cond_pos (h := h₁) ha).mp huv
+    exact Subtype.ext ((eidm_pos (h := h₂) hb _).trans
+      ((congrArg _ (ecomp_pos (h := h₁) ha u v huv)).trans
+        ((idm_comp (h₁ := lowE_lt h₁ ha) (h₂ := lowE_lt h₂ hb) huv').trans
+          ((comp_congr (eidm_pos (h := h₂) hb u).symm (eidm_pos (h := h₂) hb v).symm _ _).trans
+            (ecomp_pos (h := h₁.trans h₂) ha _ _ _).symm))))
+  · by_cases ha : a.val < m
+    · have huv' := (cond_pos (h := h₁) ha).mp huv
+      exact Subtype.ext ((eidm_neg (h := h₂) hb _).trans
+        ((congrArg _ (ecomp_pos (h := h₁) ha u v huv)).trans
+          ((tp_comp _ _ (lowE_lt (h₁.trans h₂) ha) _ _ huv').trans
+            ((comp_congr (eidm_neg (h := h₂) hb u).symm (eidm_neg (h := h₂) hb v).symm _ _).trans
+              (ecomp_pos (h := h₁.trans h₂) ha _ _ _).symm))))
+    · obtain rfl := (cond_neg (h := h₁) ha).mp huv
+      simp only [ecomp_neg (h := h₁) ha, ecomp_neg (h := h₁.trans h₂) ha]
+
+end Laws₃
+
+section Eval
+
+variable {val : ∀ t, Extended.EVar S (Fin (n + 1)) t → Part ((DE n M) t)}
+
+lemma ev_scT {j k : Fin (n + 1)} (h : j < k) {s : S} {t : Extended.ETerm Sig (Fin (n + 1)) (k, s)}
+    {x : DE n M (k, s)} (ht : t.eval (DE n M) val = Part.some x) :
+    (Extended.ETerm.scT h t).eval (DE n M) val = Part.some (esc M h x) :=
+  (Extended.eval_app₁ _ ht).trans (op_sc h x)
+
+lemma ev_tgT {j k : Fin (n + 1)} (h : j < k) {s : S} {t : Extended.ETerm Sig (Fin (n + 1)) (k, s)}
+    {x : DE n M (k, s)} (ht : t.eval (DE n M) val = Part.some x) :
+    (Extended.ETerm.tgT h t).eval (DE n M) val = Part.some (etg M h x) :=
+  (Extended.eval_app₁ _ ht).trans (op_tg h x)
+
+lemma ev_idmT {j k : Fin (n + 1)} (h : j < k) {s : S}
+    {t : Extended.ETerm Sig (Fin (n + 1)) (j, s)} {u : DE n M (j, s)}
+    (ht : t.eval (DE n M) val = Part.some u) :
+    (Extended.ETerm.idmT h t).eval (DE n M) val = Part.some (eidm M h u) :=
+  (Extended.eval_app₁ _ ht).trans (op_idm h u)
+
+lemma ev_compT {j k : Fin (n + 1)} (h : j < k) {s : S}
+    {t t' : Extended.ETerm Sig (Fin (n + 1)) (k, s)} {x y : DE n M (k, s)}
+    (ht : t.eval (DE n M) val = Part.some x) (ht' : t'.eval (DE n M) val = Part.some y)
+    (hxy : esc M h x = etg M h y) :
+    (Extended.ETerm.compT h t t').eval (DE n M) val = Part.some (ecomp M h x y hxy) :=
+  (Extended.eval_app₂ _ ht ht').trans (op_comp h x y hxy)
+
+lemma ev_compT_dom {j k : Fin (n + 1)} (h : j < k) {s : S}
+    {t t' : Extended.ETerm Sig (Fin (n + 1)) (k, s)} {x y : DE n M (k, s)}
+    (ht : t.eval (DE n M) val = Part.some x) (ht' : t'.eval (DE n M) val = Part.some y)
+    (hd : ((Extended.ETerm.compT h t t').eval (DE n M) val).Dom) : esc M h x = etg M h y :=
+  (op_comp_dom h x y).mp ((Extended.eval_app₂ _ ht ht') ▸ hd)
+
+lemma ev_opT (k : Fin (n + 1)) {ws : List S} {s : S} (σ : Sig ws s)
+    {ts : (p : Fin ws.length) → Extended.ETerm Sig (Fin (n + 1)) (k, ws.get p)}
+    {b : ∀ p, DE n M (k, ws.get p)} (h : ∀ p, (ts p).eval (DE n M) val = Part.some (b p)) :
+    (Extended.ETerm.opT k σ ts).eval (DE n M) val = Part.some (eop M k σ b) :=
+  (Extended.eval_opT k σ h).trans (op_op k σ b)
+
+end Eval
+
+/-- The variables of an axiom. -/
+local macro "vm" : tactic => `(tactic| (
+  simp [QEEq.vars, EEq.vars, EEq.mk', EEq.defined, Extended.ETerm.scT, Extended.ETerm.tgT,
+    Extended.ETerm.idmT, Extended.ETerm.compT, Extended.ETerm.x, Extended.vars_opT]))
+
+/-- A premise of an axiom. -/
+local macro "pm" : tactic => `(tactic| (
+  first
+    | exact List.Mem.head _
+    | exact List.Mem.tail _ (List.Mem.head _)
+    | exact List.Mem.tail _ (List.Mem.tail _ (List.Mem.head _))
+    | exact List.Mem.tail _ (List.Mem.tail _ (List.Mem.tail _ (List.Mem.head _)))))
+
+open Extended.ETerm in
+theorem holds : ∀ q ∈ Extended.extendedSpec Sig (Fin (n + 1)), q.Holds (DE n M) := by
+  intro q hq val hvars hprem
+  have var : ∀ {t : Fin (n + 1) × S} (i : ℕ),
+      (⟨t, i⟩ : Σ t, Extended.EVar S (Fin (n + 1)) t) ∈ q.vars →
+      ∃ x, (Extended.ETerm.x (Sig := Sig) (t := t) i).eval (DE n M) val = Part.some x :=
+    fun i hi => ⟨_, (Part.some_get (hvars _ hi)).symm⟩
+  have prem : ∀ e ∈ q.premises, e.Holds (DE n M) val := hprem
+  cases hq with
+  | @EA0 k ws s σ xs =>
+    choose b hb using fun p => var (t := (k, ws.get p)) (xs p) (by vm; exact ⟨p, rfl, rfl⟩)
+    exact EEq.holds_defined_iff.mpr (Part.eq_some_iff.mp (ev_opT k σ hb)).1
+  | @EA1_sc j k h s i =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    exact EEq.holds_defined_iff.mpr (Part.eq_some_iff.mp (ev_scT h ha)).1
+  | @EA1_tg j k h s i =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    exact EEq.holds_defined_iff.mpr (Part.eq_some_iff.mp (ev_tgT h ha)).1
+  | @EA1_idm j k h s i =>
+    obtain ⟨a, ha⟩ := var (t := (j, s)) i (by vm)
+    exact EEq.holds_defined_iff.mpr (Part.eq_some_iff.mp (ev_idmT h ha)).1
+  | @EA2_sc j k h s i =>
+    obtain ⟨u, hu⟩ := var (t := (j, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_scT h (ev_idmT h hu)) hu).mpr (esc_eidm u)
+  | @EA2_tg j k h s i =>
+    obtain ⟨u, hu⟩ := var (t := (j, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_tgT h (ev_idmT h hu)) hu).mpr (etg_eidm u)
+  | @EA3_dom j k h s i i' =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    obtain ⟨b, hb⟩ := var (t := (k, s)) i' (by vm)
+    exact (EEq.holds_mk'_iff (ev_scT h ha) (ev_tgT h hb)).mpr
+      (ev_compT_dom h ha hb (EEq.holds_defined_iff.mp (prem _ (by pm))))
+  | @EA3_def j k h s i i' =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    obtain ⟨b, hb⟩ := var (t := (k, s)) i' (by vm)
+    have hab := (EEq.holds_mk'_iff (ev_scT h ha) (ev_tgT h hb)).mp (prem _ (by pm))
+    exact EEq.holds_defined_iff.mpr (Part.eq_some_iff.mp (ev_compT h ha hb hab)).1
+  | @EA4_sc j k h s i i' =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    obtain ⟨b, hb⟩ := var (t := (k, s)) i' (by vm)
+    have hab := ev_compT_dom h ha hb (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_scT h (ev_compT h ha hb hab)) (ev_scT h hb)).mpr (esc_ecomp hab)
+  | @EA4_tg j k h s i i' =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    obtain ⟨b, hb⟩ := var (t := (k, s)) i' (by vm)
+    have hab := ev_compT_dom h ha hb (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_tgT h (ev_compT h ha hb hab)) (ev_tgT h ha)).mpr (etg_ecomp hab)
+  | @EA5_sc j k h s i =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_compT h ha (ev_idmT h (ev_scT h ha)) (etg_eidm _).symm) ha).mpr
+      (ecomp_eidm_esc a)
+  | @EA5_tg j k h s i =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_compT h (ev_idmT h (ev_tgT h ha)) ha (esc_eidm _)) ha).mpr
+      (ecomp_eidm_etg a)
+  | @EA6 j k h s i i' i'' =>
+    obtain ⟨a, ha⟩ := var (t := (k, s)) i (by vm)
+    obtain ⟨b, hb⟩ := var (t := (k, s)) i' (by vm)
+    obtain ⟨c, hc⟩ := var (t := (k, s)) i'' (by vm)
+    have hab := ev_compT_dom h ha hb (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    have hbc := ev_compT_dom h hb hc (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_compT h (ev_compT h ha hb hab) hc ((esc_ecomp hab).trans hbc))
+      (ev_compT h ha (ev_compT h hb hc hbc) (hab.trans (etg_ecomp hbc).symm))).mpr
+      (ecomp_assoc hab hbc)
+  | @EA7_sc j k h ws s σ xs =>
+    choose b hb using fun p => var (t := (k, ws.get p)) (xs p) (by vm; exact ⟨p, rfl, rfl⟩)
+    exact (EEq.holds_mk'_iff (ev_scT h (ev_opT k σ hb)) (ev_opT j σ fun p => ev_scT h (hb p))).mpr
+      (esc_eop σ b)
+  | @EA7_tg j k h ws s σ xs =>
+    choose b hb using fun p => var (t := (k, ws.get p)) (xs p) (by vm; exact ⟨p, rfl, rfl⟩)
+    exact (EEq.holds_mk'_iff (ev_tgT h (ev_opT k σ hb)) (ev_opT j σ fun p => ev_tgT h (hb p))).mpr
+      (etg_eop σ b)
+  | @EA7_idm j k h ws s σ us =>
+    choose b hb using fun p => var (t := (j, ws.get p)) (us p) (by vm; exact ⟨p, rfl, rfl⟩)
+    exact (EEq.holds_mk'_iff (ev_idmT h (ev_opT j σ hb)) (ev_opT k σ fun p => ev_idmT h (hb p))).mpr
+      (eidm_eop σ b)
+  | @EA8 j k h ws s σ xs ys =>
+    choose a ha using fun p => var (t := (k, ws.get p)) (xs p)
+      (by vm; exact Or.inl (Or.inr (Or.inl ⟨p, rfl, rfl⟩)))
+    choose b hb using fun p => var (t := (k, ws.get p)) (ys p)
+      (by vm; exact Or.inl (Or.inr (Or.inr ⟨p, rfl, rfl⟩)))
+    have hab : ∀ p, esc M h (a p) = etg M h (b p) := fun p =>
+      ev_compT_dom h (ha p) (hb p) (EEq.holds_defined_iff.mp (prem _ (List.mem_ofFn.mpr ⟨p, rfl⟩)))
+    exact (EEq.holds_mk'_iff (ev_opT k σ fun p => ev_compT h (ha p) (hb p) (hab p))
+      (ev_compT h (ev_opT k σ ha) (ev_opT k σ hb)
+        ((esc_eop σ a).trans ((congrArg (eop M j σ) (funext hab)).trans (etg_eop σ b).symm)))).mpr
+      (eop_ecomp σ a b hab)
+  | @EA1'_sc_sc a b c h₁ h₂ s i =>
+    obtain ⟨x, hx⟩ := var (t := (c, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_scT h₁ (ev_scT h₂ hx)) (ev_scT (h₁.trans h₂) hx)).mpr
+      (esc_esc h₁ h₂ x)
+  | @EA1'_tg_tg a b c h₁ h₂ s i =>
+    obtain ⟨x, hx⟩ := var (t := (c, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_tgT h₁ (ev_tgT h₂ hx)) (ev_tgT (h₁.trans h₂) hx)).mpr
+      (etg_etg h₁ h₂ x)
+  | @EA1'_sc_tg a b c h₁ h₂ s i =>
+    obtain ⟨x, hx⟩ := var (t := (c, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_scT h₁ (ev_tgT h₂ hx)) (ev_scT (h₁.trans h₂) hx)).mpr
+      (esc_etg h₁ h₂ x)
+  | @EA1'_tg_sc a b c h₁ h₂ s i =>
+    obtain ⟨x, hx⟩ := var (t := (c, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_tgT h₁ (ev_scT h₂ hx)) (ev_tgT (h₁.trans h₂) hx)).mpr
+      (etg_esc h₁ h₂ x)
+  | @EA2' a b c h₁ h₂ s i =>
+    obtain ⟨u, hu⟩ := var (t := (a, s)) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_idmT h₂ (ev_idmT h₁ hu)) (ev_idmT (h₁.trans h₂) hu)).mpr
+      (eidm_eidm h₁ h₂ u)
+  | @EA3'_sc a b c h₁ h₂ s i i' =>
+    obtain ⟨x, hx⟩ := var (t := (c, s)) i (by vm)
+    obtain ⟨y, hy⟩ := var (t := (c, s)) i' (by vm)
+    have hxy := ev_compT_dom (h₁.trans h₂) hx hy (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_scT h₂ (ev_compT (h₁.trans h₂) hx hy hxy))
+      (ev_compT h₁ (ev_scT h₂ hx) (ev_scT h₂ hy) _)).mpr (esc_ecomp' h₁ h₂ hxy)
+  | @EA3'_tg a b c h₁ h₂ s i i' =>
+    obtain ⟨x, hx⟩ := var (t := (c, s)) i (by vm)
+    obtain ⟨y, hy⟩ := var (t := (c, s)) i' (by vm)
+    have hxy := ev_compT_dom (h₁.trans h₂) hx hy (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_tgT h₂ (ev_compT (h₁.trans h₂) hx hy hxy))
+      (ev_compT h₁ (ev_tgT h₂ hx) (ev_tgT h₂ hy) _)).mpr (etg_ecomp' h₁ h₂ hxy)
+  | @EA4' a b c h₁ h₂ s i i' p q =>
+    obtain ⟨x, hx⟩ := var (t := (c, s)) i (by vm)
+    obtain ⟨y, hy⟩ := var (t := (c, s)) i' (by vm)
+    obtain ⟨z, hz⟩ := var (t := (c, s)) p (by vm)
+    obtain ⟨t, ht⟩ := var (t := (c, s)) q (by vm)
+    have hxy := ev_compT_dom h₂ hx hy (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    have hzt := ev_compT_dom h₂ hz ht (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    have hxz := ev_compT_dom (h₁.trans h₂) hx hz (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    have hyt := ev_compT_dom (h₁.trans h₂) hy ht (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff
+      (ev_compT (h₁.trans h₂) (ev_compT h₂ hx hy hxy) (ev_compT h₂ hz ht hzt) _)
+      (ev_compT h₂ (ev_compT (h₁.trans h₂) hx hz hxz) (ev_compT (h₁.trans h₂) hy ht hyt) _)).mpr
+      (einterchange h₁ h₂ hxy hzt hxz hyt)
+  | @EA5' a b c h₁ h₂ s i i' =>
+    obtain ⟨u, hu⟩ := var (t := (b, s)) i (by vm)
+    obtain ⟨v, hv⟩ := var (t := (b, s)) i' (by vm)
+    have huv := ev_compT_dom h₁ hu hv (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_idmT h₂ (ev_compT h₁ hu hv huv))
+      (ev_compT (h₁.trans h₂) (ev_idmT h₂ hu) (ev_idmT h₂ hv) _)).mpr (eidm_ecomp h₁ h₂ huv)
+
+end DiscExt
+```
+
+:::proposition (label := "discretization-ext-models") (central := false) (title := "Extended discretization sends models to models")
+$`(\boldsymbol{\delta}^{\mathrm{ext}(n,m)})^{\ast}_{\mathfrak{gd}}` sends the models of
+$`(\mathbf{\Sigma}^{\mathrm{ext}(m)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(m)}})` to models of
+$`(\mathbf{\Sigma}^{\mathrm{ext}(n)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})`.
+
+```lean
+theorem discExt_sendsModels :
+    (discExt Sig n m).SendsModels.{u, max u v, u, max u v, w}
+      (Extended.extendedSpec Sig (Fin (n + 1))) (Extended.extendedSpec Sig (Fin (m + 1))) :=
+  fun B hB => ⟨DiscExt.isAlgebra (M := ⟨B, hB.2⟩), DiscExt.holds (M := ⟨B, hB.2⟩)⟩
+```
+:::
+
+:::proof (of := "discretization-ext-models")
+The operations without domain conditions are total, and two $`k`-cells satisfy the domain
+condition of $`\circ^{(j,k)}_{s}` if and only if
+$`\mathrm{sc}^{(j,\underline{k})}_{s}(x) = \mathrm{tg}^{(j,\underline{k})}_{s}(y)`, for $`j < m`, and if
+and only if $`x = y`, for $`j \geq m`. The axioms in which all the dimensions are at most $`m` become
+axioms of $`\mathcal{C}^{\Sigma^{\mathrm{ext}(m)}}`. For $`j < m < k`, (EA$`^{j,k}`1)–(EA$`^{j,k}`8)
+become (EA$`^{j,m}`1)–(EA$`^{j,m}`8), and for $`m \leq j` they become trivial. For $`h < j < k`, the
+axioms (EA$`^{h,j,k}`1)–(EA$`^{h,j,k}`5) become those of $`\mathcal{C}^{\Sigma^{\mathrm{ext}(m)}}` with
+dimensions $`(h, \underline{j}, \underline{k})` when $`j < m`; when $`h < m \leq j` the operations with
+lower dimension $`j` are transports and the axioms become the compatibility of the operations of
+$`\mathbf{B}` with transports; and when $`m \leq h` they become trivial.
+:::
+
+:::definition (label := "discretization-ext-functor") (central := false) (title := "The extended discretization functor")
+The *extended discretization functor* $`\mathrm{D}^{\mathrm{ext}(n,m)}` is the birestriction of
+$`(\boldsymbol{\delta}^{\mathrm{ext}(n,m)})^{\ast}_{\mathfrak{gd}}` to the categories of models.
+
+```lean
+/-- The extended discretization functor `D^{ext(n,m)}`. -/
+noncomputable def discExtFunctor :
+    EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (m + 1))) ⥤
+      EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (n + 1))) :=
+  (discExt Sig n m).restrict (discExt_sendsModels Sig n m)
+```
+:::
+
 ```lean
 end CategorialAlgebras
 ```
