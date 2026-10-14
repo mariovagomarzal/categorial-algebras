@@ -1,4 +1,5 @@
 import Stemma
+import Mathlib.CategoryTheory.Adjunction.Basic
 import CategorialAlgebras.Graduation
 
 open Verso.Genre Manual InlineLean Stemma
@@ -2245,6 +2246,328 @@ noncomputable def discExtFunctor :
       EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (n + 1))) :=
   (discExt Sig n m).restrict (discExt_sendsModels Sig n m)
 ```
+:::
+
+# Discretization and truncation
+
+The operations of the discretized and truncated algebras of models are those computed above.
+
+```lean
+namespace Disc
+
+variable {Sig n m} {M : Compact.CompactPAlg.{u, v, w} Sig (Fin m)}
+
+variable (n M) in
+/-- The discretized algebra of a model, as a model of the compact specification. -/
+noncomputable abbrev model : Compact.CompactPAlg.{u, v, w} Sig (Fin n) := ⟨D n M, holds⟩
+
+lemma sc_eq (k : Fin n) {s : S} (x : D n M s) : Compact.msc (model n M) k x = dsc M k x :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_sc k x)) _
+
+lemma tg_eq (k : Fin n) {s : S} (x : D n M s) : Compact.mtg (model n M) k x = dtg M k x :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_tg k x)) _
+
+lemma op_eq {ws : List S} {s : S} (σ : Sig ws s) (a : Arity (D n M) ws) :
+    Compact.mop (model n M) σ a = dop M σ a :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_op σ a)) _
+
+lemma pcomp_eq (k : Fin n) {s : S} (x y : D n M s) :
+    @Compact.CategoryStruct.pcomp _ _ (Compact.modelStruct (M := model n M) s) k x y =
+      (D n M).op (.comp k s) (arityTwo x y) := by
+  show (D n M).op _ _ = _
+  congr 1; funext j; match j with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl
+
+lemma comp_eq (k : Fin n) {s : S} (x y : D n M s) (hxy) (hxy') :
+    @Compact.CategoryStruct.comp _ _ (Compact.modelStruct (M := model n M) s) k x y hxy =
+      dcomp M k x y hxy' := by
+  unfold Compact.CategoryStruct.comp
+  exact Part.get_eq_of_mem (pcomp_eq k x y ▸ Part.eq_some_iff.mp (op_comp k x y hxy')) _
+
+end Disc
+
+namespace Trunc
+
+variable {Sig n m} {hmn : m ≤ n} {M : Compact.CompactPAlg.{u, v, w} Sig (Fin n)}
+
+variable (hmn M) in
+noncomputable abbrev model : Compact.CompactPAlg.{u, v, w} Sig (Fin m) := ⟨T hmn M, holds⟩
+
+lemma sc_eq (k : Fin m) {s : S} (x : T hmn M s) : Compact.msc (model hmn M) k x = tsc hmn M k x :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_sc k x)) _
+
+lemma tg_eq (k : Fin m) {s : S} (x : T hmn M s) : Compact.mtg (model hmn M) k x = ttg hmn M k x :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_tg k x)) _
+
+lemma op_eq {ws : List S} {s : S} (σ : Sig ws s) (a : Arity (T hmn M) ws) :
+    Compact.mop (model hmn M) σ a = top hmn M σ a :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp (op_op σ a)) _
+
+lemma pcomp_eq (k : Fin m) {s : S} (x y : T hmn M s) :
+    @Compact.CategoryStruct.pcomp _ _ (Compact.modelStruct (M := model hmn M) s) k x y =
+      (T hmn M).op (.comp k s) (arityTwo x y) := by
+  show (T hmn M).op _ _ = _
+  congr 1; funext j; match j with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl
+
+lemma comp_eq (k : Fin m) {s : S} (x y : T hmn M s) (hxy) (hxy') :
+    @Compact.CategoryStruct.comp _ _ (Compact.modelStruct (M := model hmn M) s) k x y hxy =
+      tcomp hmn M k x y hxy' := by
+  unfold Compact.CategoryStruct.comp
+  exact Part.get_eq_of_mem (pcomp_eq k x y ▸ Part.eq_some_iff.mp (op_comp k x y hxy')) _
+
+end Trunc
+
+section TruncDisc
+
+variable {Sig n m} (hmn : m ≤ n)
+
+/-- The cells of `T(D(𝐀))` are those of `𝐀`. -/
+noncomputable def tdEquiv (A : EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin m))) (s : S) :
+    A.1 s ≃ ((discFunctor Sig n m ⋙ truncFunctor Sig hmn).obj A).1 s where
+  toFun a := ⟨⟨a, EEq.holdsAll_empty⟩, Trunc.mem_of (M := Disc.model n ⟨A.1, A.2.2⟩) _
+    (fun hm => disc_isCell Sig n m hm _)⟩
+  invFun y := y.1.1
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+theorem tdEquiv_op (A : EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin m)))
+    {ws : List S} {s : S} (σ : (compactEpSpec Sig (Fin m)).sg.sig ws s) (a : Arity A.1 ws) :
+    ((discFunctor Sig n m ⋙ truncFunctor Sig hmn).obj A).1.op σ (fun j => tdEquiv hmn A _ (a j)) =
+      (A.1.op σ a).map (tdEquiv hmn A s) := by
+  let Am : Compact.CompactPAlg.{u, v, w} Sig (Fin m) := ⟨A.1, A.2.2⟩
+  cases σ with
+  | op σ =>
+    have h1 : A.1.op (.op σ) a = Part.some (Compact.mop Am σ a) := (Part.some_get _).symm
+    refine Eq.trans ?_ ((congrArg (Part.map (tdEquiv hmn A s)) h1).trans (Part.map_some _ _)).symm
+    exact (Trunc.op_op (M := Disc.model n Am) σ _).trans (congrArg Part.some (Subtype.ext
+      ((Disc.op_eq (M := Am) σ _).trans (Subtype.ext rfl))))
+  | sc k s =>
+    have hk : (Fin.castLE hmn k).val < m := k.isLt
+    have h1 : A.1.op (.sc k s) a = Part.some (Compact.msc Am k (a ⟨0, by simp⟩)) :=
+      Compact.op_get_eq (M := Am) (by funext j; match j with | ⟨0, _⟩ => rfl) _
+    refine Eq.trans ?_ ((congrArg (Part.map (tdEquiv hmn A s)) h1).trans (Part.map_some _ _)).symm
+    refine ((congrArg _ (by funext j; match j with | ⟨0, _⟩ => rfl)).trans
+      (Trunc.op_sc (M := Disc.model n Am) k (tdEquiv hmn A s (a ⟨0, by simp⟩)))).trans ?_
+    exact congrArg Part.some (Subtype.ext ((Disc.sc_eq (M := Am) _ _).trans
+      (Subtype.ext (Disc.dsc_lt hk _))))
+  | tg k s =>
+    have hk : (Fin.castLE hmn k).val < m := k.isLt
+    have h1 : A.1.op (.tg k s) a = Part.some (Compact.mtg Am k (a ⟨0, by simp⟩)) :=
+      Compact.op_get_eq (M := Am) (by funext j; match j with | ⟨0, _⟩ => rfl) _
+    refine Eq.trans ?_ ((congrArg (Part.map (tdEquiv hmn A s)) h1).trans (Part.map_some _ _)).symm
+    refine ((congrArg _ (by funext j; match j with | ⟨0, _⟩ => rfl)).trans
+      (Trunc.op_tg (M := Disc.model n Am) k (tdEquiv hmn A s (a ⟨0, by simp⟩)))).trans ?_
+    exact congrArg Part.some (Subtype.ext ((Disc.tg_eq (M := Am) _ _).trans
+      (Subtype.ext (Disc.dtg_lt hk _))))
+  | comp k s =>
+    have hk : (Fin.castLE hmn k).val < m := k.isLt
+    have ha : (fun j => tdEquiv hmn A _ (a j)) = arityTwo (tdEquiv hmn A s (a ⟨0, by simp⟩))
+        (tdEquiv hmn A s (a ⟨1, by simp⟩)) := by
+      funext j; match j with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl
+    refine (congrArg _ ha).trans ?_
+    by_cases hxy : Compact.msc Am k (a ⟨0, by simp⟩) = Compact.mtg Am k (a ⟨1, by simp⟩)
+    · have hd : Disc.dsc Am (Fin.castLE hmn k) (tdEquiv hmn A s (a ⟨0, by simp⟩)).1 =
+          Disc.dtg Am (Fin.castLE hmn k) (tdEquiv hmn A s (a ⟨1, by simp⟩)).1 :=
+        (Disc.cond_lt hk).mpr hxy
+      have hc : Compact.msc (Disc.model n Am) (Fin.castLE hmn k)
+          (tdEquiv hmn A s (a ⟨0, by simp⟩)).1 =
+          Compact.mtg (Disc.model n Am) (Fin.castLE hmn k) (tdEquiv hmn A s (a ⟨1, by simp⟩)).1 :=
+        (Disc.sc_eq (M := Am) _ _).trans (hd.trans (Disc.tg_eq (M := Am) _ _).symm)
+      have h1 : A.1.op (.comp k s) a =
+          Part.some (Compact.CategoryStruct.comp (C := Am.1 s) k _ _ hxy) :=
+        Compact.op_get_eq (M := Am) (by funext j; match j with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl) _
+      rw [h1, Part.map_some]
+      refine (Trunc.op_comp (M := Disc.model n Am) k _ _ hc).trans ?_
+      exact congrArg Part.some (Subtype.ext ((Disc.comp_eq (M := Am) _ _ _ hc hd).trans
+        (Subtype.ext (Disc.dcomp_lt hk _ _ hd))))
+    · have h1 : A.1.op (.comp k s) a = Part.none := by
+        refine Part.eq_none_iff'.mpr fun hd => hxy ?_
+        have hd' : (@Compact.CategoryStruct.pcomp _ _ (Compact.modelStruct (M := Am) s) k
+            (a ⟨0, by simp⟩) (a ⟨1, by simp⟩)).Dom := by
+          show (Am.1.op _ _).Dom
+          exact (op_dom_congr (by funext j; match j with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl)).mp hd
+        exact Compact.CategoryStruct.pcomp_dom.mp hd'
+      rw [h1, Part.map_none]
+      refine Part.eq_none_iff'.mpr fun hd => hxy ?_
+      have hc := (Trunc.op_comp_dom (M := Disc.model n Am) k _ _).mp hd
+      exact (Disc.cond_lt hk).mp
+        ((Disc.sc_eq (M := Am) _ _).symm.trans (hc.trans (Disc.tg_eq (M := Am) _ _)))
+
+end TruncDisc
+```
+
+:::proposition (label := "truncation-discretization") (central := false) (title := "Truncation after discretization")
+Let $`m \leq n`. $`T^{(m,n)} \circ \mathrm{D}^{(n,m)} \cong \mathrm{Id}`, by isomorphisms that send
+every cell to itself. In the draft (Proposition `PTruncDisc`) this is an equality of functors, which
+follows from $`\boldsymbol{\delta}^{(n,m)} \circ \boldsymbol{\tau}^{(m,n)} = \mathrm{id}`; here the
+cells of $`T^{(m,n)}(\mathrm{D}^{(n,m)}(\mathbf{A}))` are those of $`\mathbf{A}` seen as elements of a
+subset.
+
+```lean
+section TruncDisc
+
+variable {Sig n m} (hmn : m ≤ n)
+
+/-- `T ∘ D ≅ Id`, by isomorphisms that send every cell to itself. -/
+noncomputable def tdIso :
+    𝟭 (EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin m))) ≅
+      discFunctor Sig n m ⋙ truncFunctor Sig hmn :=
+  NatIso.ofComponents (fun A => EpSpec.isoOfEquiv (tdEquiv hmn A) (tdEquiv_op hmn A))
+    (fun _ => PartialAlgebra.Hom.ext fun _ _ => rfl)
+
+end TruncDisc
+```
+:::
+
+:::proof (of := "truncation-discretization")
+Every cell of a discretized algebra is an $`m`-cell, so the cells of
+$`T^{(m,n)}(\mathrm{D}^{(n,m)}(\mathbf{A}))` are those of $`\mathbf{A}`, and in the dimensions $`k < m`
+the operations are those of $`\mathbf{A}`.
+:::
+
+```lean
+section TruncDisc
+
+variable {Sig n m} (hmn : m ≤ n)
+
+lemma get_of_eq {α : Type*} {o : Part α} {c : α} (e : o = Part.some c) (h : o.Dom) : o.get h = c :=
+  Part.get_eq_of_mem (Part.eq_some_iff.mp e) h
+
+variable {hmn}
+
+/-- An `m`-cell is a `k`-cell for every `k ≥ m`. -/
+lemma cell_sc_ge {M : Compact.CompactPAlg.{u, v, w} Sig (Fin n)} {k : Fin n} (hk : ¬ k.val < m)
+    {s : S} (x : Trunc.T hmn M s) : Compact.msc M k x.1 = x.1 := by
+  have hm : m < n := lt_of_le_of_lt (not_lt.mp hk) k.isLt
+  rcases (not_lt.mp hk).eq_or_lt with e | e
+  · obtain rfl : k = ⟨m, hm⟩ := Fin.ext e.symm
+    exact Trunc.isCell x hm
+  · calc Compact.msc M k x.1 = Compact.msc M k (Compact.msc M ⟨m, hm⟩ x.1) :=
+          congrArg _ (Trunc.isCell x hm).symm
+      _ = Compact.msc M ⟨m, hm⟩ x.1 := Compact.model_sc_k_sc_l _ (Fin.lt_def.mpr e)
+      _ = x.1 := Trunc.isCell x hm
+
+lemma cell_tg_ge {M : Compact.CompactPAlg.{u, v, w} Sig (Fin n)} {k : Fin n} (hk : ¬ k.val < m)
+    {s : S} (x : Trunc.T hmn M s) : Compact.mtg M k x.1 = x.1 :=
+  (congrArg _ (cell_sc_ge hk x).symm).trans ((Compact.model_tg_sc _).trans (cell_sc_ge hk x))
+
+variable (hmn) in
+/-- The counit `D(T(𝐁)) → 𝐁`: the inclusion of the `m`-cells. -/
+noncomputable def tdCounit (B : EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin n))) :
+    (truncFunctor Sig hmn ⋙ discFunctor Sig n m).obj B ⟶ B where
+  map _ y := y.1.1
+  map_dom σ a h := by
+    let Bm : Compact.CompactPAlg.{u, v, w} Sig (Fin n) := ⟨B.1, B.2.2⟩
+    cases σ with
+    | op σ => exact Compact.op_dom (M := Bm) σ _
+    | sc k s =>
+      exact (op_dom_congr (by funext j; match j with | ⟨0, _⟩ => rfl)).mp
+        (Compact.sc_dom (M := Bm) k (a ⟨0, by simp⟩).1.1)
+    | tg k s =>
+      exact (op_dom_congr (by funext j; match j with | ⟨0, _⟩ => rfl)).mp
+        (Compact.tg_dom (M := Bm) k (a ⟨0, by simp⟩).1.1)
+    | comp k s =>
+      obtain ⟨x, y, rfl⟩ : ∃ x y : Disc.D n (Trunc.model hmn Bm) _, arityTwo x y = a :=
+        ⟨a ⟨0, by simp⟩, a ⟨1, by simp⟩, by funext j; match j with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl⟩
+      have hxy := (Disc.op_comp_dom (M := Trunc.model hmn Bm) k x y).mp h
+      have e : Compact.msc Bm k x.1.1 = Compact.mtg Bm k y.1.1 := by
+        by_cases hk : k.val < m
+        · exact congrArg Subtype.val ((Trunc.sc_eq (M := Bm) _ _).symm.trans
+            (((Disc.cond_lt hk).mp hxy).trans (Trunc.tg_eq (M := Bm) _ _)))
+        · obtain rfl := Disc.eq_of_cond_ge hk hxy
+          exact (cell_sc_ge (M := Bm) hk x.1).trans (cell_tg_ge (M := Bm) hk x.1).symm
+      have hd' : (@Compact.CategoryStruct.pcomp _ _ (Compact.modelStruct (M := Bm) _) k
+          x.1.1 y.1.1).Dom := Compact.CategoryStruct.pcomp_dom.mpr e
+      exact (op_dom_congr (by funext j; match j with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl)).mp hd'
+  map_op σ a h := by
+    let Bm : Compact.CompactPAlg.{u, v, w} Sig (Fin n) := ⟨B.1, B.2.2⟩
+    cases σ with
+    | op σ =>
+      exact (congrArg (fun y => y.1.1) (get_of_eq (Disc.op_op (M := Trunc.model hmn Bm) σ a) h)).trans
+        (congrArg Subtype.val (Trunc.op_eq (M := Bm) σ _))
+    | sc k s =>
+      obtain ⟨x, rfl⟩ : ∃ x : Disc.D n (Trunc.model hmn Bm) _, arityOne x = a :=
+        ⟨a ⟨0, by simp⟩, by funext j; match j with | ⟨0, _⟩ => rfl⟩
+      refine (congrArg (fun y => y.1.1) (get_of_eq (Disc.op_sc (M := Trunc.model hmn Bm) k x) h)).trans ?_
+      refine Eq.trans ?_ (Part.get_eq_get_of_eq _ (Compact.sc_dom (M := Bm) k x.1.1)
+        (congrArg _ (by funext j; match j with | ⟨0, _⟩ => rfl)))
+      by_cases hk : k.val < m
+      · exact congrArg Subtype.val ((Disc.dsc_lt hk x).trans (Trunc.sc_eq (M := Bm) _ _))
+      · exact (congrArg (fun y => y.1.1) (Disc.dsc_ge hk x)).trans (cell_sc_ge (M := Bm) hk x.1).symm
+    | tg k s =>
+      obtain ⟨x, rfl⟩ : ∃ x : Disc.D n (Trunc.model hmn Bm) _, arityOne x = a :=
+        ⟨a ⟨0, by simp⟩, by funext j; match j with | ⟨0, _⟩ => rfl⟩
+      refine (congrArg (fun y => y.1.1) (get_of_eq (Disc.op_tg (M := Trunc.model hmn Bm) k x) h)).trans ?_
+      refine Eq.trans ?_ (Part.get_eq_get_of_eq _ (Compact.tg_dom (M := Bm) k x.1.1)
+        (congrArg _ (by funext j; match j with | ⟨0, _⟩ => rfl)))
+      by_cases hk : k.val < m
+      · exact congrArg Subtype.val ((Disc.dtg_lt hk x).trans (Trunc.tg_eq (M := Bm) _ _))
+      · exact (congrArg (fun y => y.1.1) (Disc.dtg_ge hk x)).trans (cell_tg_ge (M := Bm) hk x.1).symm
+    | comp k s =>
+      obtain ⟨x, y, rfl⟩ : ∃ x y : Disc.D n (Trunc.model hmn Bm) _, arityTwo x y = a :=
+        ⟨a ⟨0, by simp⟩, a ⟨1, by simp⟩, by funext j; match j with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl⟩
+      have hxy := (Disc.op_comp_dom (M := Trunc.model hmn Bm) k x y).mp h
+      have e : Compact.msc Bm k x.1.1 = Compact.mtg Bm k y.1.1 := by
+        by_cases hk : k.val < m
+        · exact congrArg Subtype.val ((Trunc.sc_eq (M := Bm) _ _).symm.trans
+            (((Disc.cond_lt hk).mp hxy).trans (Trunc.tg_eq (M := Bm) _ _)))
+        · obtain rfl := Disc.eq_of_cond_ge hk hxy
+          exact (cell_sc_ge (M := Bm) hk x.1).trans (cell_tg_ge (M := Bm) hk x.1).symm
+      refine (congrArg (fun z => z.1.1)
+        (get_of_eq (Disc.op_comp (M := Trunc.model hmn Bm) k x y hxy) h)).trans ?_
+      have hpe : @Compact.CategoryStruct.pcomp _ _ (Compact.modelStruct (M := Bm) _) k x.1.1 y.1.1 =
+          B.1.op (.comp k _) (fun j => (arityTwo x y j).1.1) := by
+        show B.1.op _ _ = _
+        congr 1; funext j; match j with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl
+      refine Eq.trans ?_ (Part.get_eq_get_of_eq _
+        (@Compact.CategoryStruct.dom_of_sc_is_tg _ _ (Compact.modelStruct (M := Bm) _) k
+          y.1.1 x.1.1 e) hpe)
+      by_cases hk : k.val < m
+      · exact congrArg Subtype.val ((Disc.dcomp_lt hk x y hxy).trans
+          (Trunc.comp_eq (M := Bm) (hmn := hmn) ⟨k.val, hk⟩ x.1 y.1 ((Disc.cond_lt hk).mp hxy) e))
+      · obtain rfl := Disc.eq_of_cond_ge hk hxy
+        refine (congrArg (fun z => z.1.1) (Disc.dcomp_ge hk x x hxy)).trans ?_
+        exact ((@Compact.congr_comp₁ _ _ (Compact.modelStruct (M := Bm) _) k _ _ _ _
+          (cell_sc_ge (M := Bm) hk x.1).symm rfl e).trans (Compact.model_comp_sc x.1.1)).symm
+
+lemma tdCounit_map (B : EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin n))) (s : S) (y) :
+    PartialAlgebra.Hom.map (tdCounit hmn B) s y = y.1.1 := rfl
+
+end TruncDisc
+```
+
+:::proposition (label := "discretization-truncation-adjunction") (central := false) (title := "Discretization is left adjoint to truncation")
+Let $`m \leq n`. $`\mathrm{D}^{(n,m)} \dashv T^{(m,n)}`, with unit the isomorphism of Proposition
+`truncation-discretization` and counit $`\varepsilon_{\mathbf{B}} \colon
+\mathrm{D}^{(n,m)}(T^{(m,n)}(\mathbf{B})) \to \mathbf{B}` the inclusion of the $`m`-cells.
+
+```lean
+section TruncDisc
+
+variable {Sig n m}
+
+variable (hmn) in
+/-- Discretization is left adjoint to truncation, with unit the isomorphism `T ∘ D ≅ Id` and
+counit the inclusion of the `m`-cells. -/
+noncomputable def discTruncAdj : Adjunction (discFunctor Sig n m) (truncFunctor Sig hmn) :=
+  Adjunction.mkOfUnitCounit
+    { unit := (tdIso hmn).hom
+      counit :=
+        { app := tdCounit hmn
+          naturality := fun _ _ _ => PartialAlgebra.Hom.ext fun _ _ => rfl }
+      left_triangle := by ext; rfl
+      right_triangle := by ext; rfl }
+
+end TruncDisc
+```
+:::
+
+:::proof (of := "discretization-truncation-adjunction")
+The inclusion $`\varepsilon_{\mathbf{B}}` commutes with the operations of $`\Sigma` and with those of
+dimension $`k < m`, which are restrictions. For $`k \geq m` and an $`m`-cell $`x`,
+$`\mathrm{sc}^{k}_{s}(x) = x = \mathrm{tg}^{k}_{s}(x)` in $`\mathbf{B}`, by (AB$`^{m,k}`1), and
+$`x \circ^{k}_{s} x = x \circ^{k}_{s} \mathrm{sc}^{k}_{s}(x) = x`, by (A$`^{k}`5); hence
+$`\varepsilon_{\mathbf{B}}` is a homomorphism, natural in $`\mathbf{B}`. Both triangle identities hold
+on the cells, since unit and counit send every cell to itself.
 :::
 
 ```lean
