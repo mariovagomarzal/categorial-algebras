@@ -9,8 +9,10 @@ open Verso.Genre Manual InlineLean Stemma
 Definition `DVarExtended` of the draft presents the extended $`n`-categorial $`\Sigma`-algebras as a
 $`\mathrm{QE}`$-variety of partial $`\Sigma^{\mathrm{ext}(n)}`-algebras, where
 $`\Sigma^{\mathrm{ext}(n)}` is the extended $`n`-categorial signature of Definition `DSigmaCatExtended`, with
-sorts $`(n+1) \times S`. This document writes down the specification
-$`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}` and the category of its models.
+sorts $`(n+1) \times S`, and the draft defines the same specification for $`n = \omega`, with
+sorts $`\omega \times S`. This document writes down the specification
+$`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}` and the category of its models, once for every
+preordered set of dimensions $`I`: $`n + 1` is `FinSucc n` in the Lean, and $`\omega` is `ℕ`.
 
 ```lean
 universe u v w
@@ -32,38 +34,39 @@ of sorts $`(k, s_p)`.
 
 ```lean
 /-- The variables: countably many of each sort. -/
-abbrev EVar (S : Type u) (n : ℕ) : FinSucc n × S → Type := fun _ => ℕ
+abbrev EVar (S : Type u) (Index : Type) : Index × S → Type := fun _ => ℕ
 
 /-- Terms of the extended `n`-categorial signature. -/
-abbrev ETerm (Sig : Signature.{u, v} S) (n : ℕ) := Term (ExtendedSignature Sig n) (EVar S n)
+abbrev ETerm (Sig : Signature.{u, v} S) (Index : Type) [Preorder Index] :=
+  Term (ExtendedSignature Sig Index) (EVar S Index)
 
 namespace ETerm
 
-variable {Sig : Signature.{u, v} S} {n : ℕ}
+variable {Sig : Signature.{u, v} S} {Index : Type} [Preorder Index]
 
 /-- A family of terms of sorts `(k, s_p)`, seen as the arguments of the copy `σ_k`. -/
-def liftArgs (k : FinSucc n) (ws : List S)
-    (ts : (p : Fin ws.length) → ETerm Sig n (k, ws.get p)) :
-    (p : Fin (ws.map fun t => (k, t)).length) → ETerm Sig n ((ws.map fun t => (k, t)).get p) :=
-  fun p => cast (congrArg (ETerm Sig n) (by simp)) (ts (Fin.cast (by simp) p))
+def liftArgs (k : Index) (ws : List S)
+    (ts : (p : Fin ws.length) → ETerm Sig Index (k, ws.get p)) :
+    (p : Fin (ws.map fun t => (k, t)).length) → ETerm Sig Index ((ws.map fun t => (k, t)).get p) :=
+  fun p => cast (congrArg (ETerm Sig Index) (by simp)) (ts (Fin.cast (by simp) p))
 
-def x {t : FinSucc n × S} (i : ℕ) : ETerm Sig n t := .var (s := t) i
+def x {t : Index × S} (i : ℕ) : ETerm Sig Index t := .var (s := t) i
 
-def scT {j k : FinSucc n} (h : j < k) {s : S} (t : ETerm Sig n (k, s)) : ETerm Sig n (j, s) :=
+def scT {j k : Index} (h : j < k) {s : S} (t : ETerm Sig Index (k, s)) : ETerm Sig Index (j, s) :=
   app₁ (ExtendedSignature.sc h s) t
 
-def tgT {j k : FinSucc n} (h : j < k) {s : S} (t : ETerm Sig n (k, s)) : ETerm Sig n (j, s) :=
+def tgT {j k : Index} (h : j < k) {s : S} (t : ETerm Sig Index (k, s)) : ETerm Sig Index (j, s) :=
   app₁ (ExtendedSignature.tg h s) t
 
-def idmT {j k : FinSucc n} (h : j < k) {s : S} (t : ETerm Sig n (j, s)) : ETerm Sig n (k, s) :=
+def idmT {j k : Index} (h : j < k) {s : S} (t : ETerm Sig Index (j, s)) : ETerm Sig Index (k, s) :=
   app₁ (ExtendedSignature.idm h s) t
 
-def compT {j k : FinSucc n} (h : j < k) {s : S} (t t' : ETerm Sig n (k, s)) :
-    ETerm Sig n (k, s) :=
+def compT {j k : Index} (h : j < k) {s : S} (t t' : ETerm Sig Index (k, s)) :
+    ETerm Sig Index (k, s) :=
   app₂ (ExtendedSignature.comp h s) t t'
 
-def opT (k : FinSucc n) {ws : List S} {s : S} (σ : Sig ws s)
-    (ts : (p : Fin ws.length) → ETerm Sig n (k, ws.get p)) : ETerm Sig n (k, s) :=
+def opT (k : Index) {ws : List S} {s : S} (σ : Sig ws s)
+    (ts : (p : Fin ws.length) → ETerm Sig Index (k, ws.get p)) : ETerm Sig Index (k, s) :=
   .app (ExtendedSignature.op k σ) (liftArgs k ws ts)
 
 end ETerm
@@ -72,12 +75,15 @@ end ETerm
 # The specification
 
 :::definition (label := "extended.qe-specification") (central := false) (title := "The specification C^Σᵉˣᵗ⁽ⁿ⁾")
-Let $`\Sigma` be an $`S`-sorted signature and $`n \in \mathbb{N}`. The specification
-$`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}` is the set of the following $`\mathrm{QE}`$-equations,
-for all sorts, operation symbols, dimensions and variables (Definition `DVarExtended` of the draft):
+Let $`\Sigma` be an $`S`-sorted signature and $`I` a preordered set of dimensions. The
+specification with dimensions in $`I` is the set of the following $`\mathrm{QE}`$-equations of
+the extended categorial signature with dimensions in $`I`, for all sorts, operation symbols,
+dimensions and variables. For $`I = n + 1` it is the specification
+$`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}` of Definition `DVarExtended` of the draft, and for
+$`I = \omega` the specification $`\mathcal{C}^{\Sigma^{\mathrm{ext}(\omega)}}`:
 
-1. (EA0) $`\sigma_k((x_p)_p)` is defined, for every $`k \in n + 1`;
-2. for all $`j < k` in $`n + 1`:
+1. (EA0) $`\sigma_k((x_p)_p)` is defined, for every $`k \in I`;
+2. for all $`j < k` in $`I`:
    (EA$`^{j,k}`1) $`\mathrm{sc}^{(j,k)}(x)`, $`\mathrm{tg}^{(j,k)}(x)` and $`\mathrm{i}^{(k,j)}(u)`
    are defined;
    (EA$`^{j,k}`2) $`\mathrm{sc}^{(j,k)}\mathrm{i}^{(k,j)}(u) \overset{\mathrm{e}}{=} u` and
@@ -94,7 +100,7 @@ for all sorts, operation symbols, dimensions and variables (Definition `DVarExte
    $`\mathrm{i}^{(k,j)}(\sigma_j((u_p)_p)) \overset{\mathrm{e}}{=} \sigma_k((\mathrm{i}^{(k,j)}(u_p))_p)`;
    (EA$`^{j,k}`8) if every $`x_p \circ^{(j,k)} y_p` is defined, then
    $`\sigma_k((x_p \circ^{(j,k)} y_p)_p) \overset{\mathrm{e}}{=} \sigma_k((x_p)_p) \circ^{(j,k)} \sigma_k((y_p)_p)`;
-3. for all $`h < j < k` in $`n + 1`:
+3. for all $`h < j < k` in $`I`:
    (EA$`^{h,j,k}`1) $`\mathrm{sc}^{(h,j)}\mathrm{sc}^{(j,k)}(x)` and
    $`\mathrm{sc}^{(h,j)}\mathrm{tg}^{(j,k)}(x)` are equal to $`\mathrm{sc}^{(h,k)}(x)`, and
    $`\mathrm{tg}^{(h,j)}\mathrm{tg}^{(j,k)}(x)` and $`\mathrm{tg}^{(h,j)}\mathrm{sc}^{(j,k)}(x)`
@@ -111,92 +117,92 @@ for all sorts, operation symbols, dimensions and variables (Definition `DVarExte
 
 The axioms (EA$`^{h,j,k}`1)–(EA$`^{h,j,k}`5) are the counterparts of the conditions (MS1),
 (MS4), (MS3), (MS9) and (MS8) of Definition `DOmegaCatExt`, so that the models of the specification are,
-as the draft says, the extended $`n`-categories with operations that are extended
-$`n`-functors.
+as the draft says, the extended categories with dimensions in $`I` with operations that are
+extended functors.
 
 ```lean
 open ETerm in
-inductive ExtendedAxiom (Sig : Signature.{u, v} S) (n : ℕ) :
-    QEEq (ExtendedSignature Sig n) (EVar S n) → Prop
-  | EA0 (k : FinSucc n) {ws : List S} {s : S} (σ : Sig ws s) (xs : Fin ws.length → ℕ) :
-      ExtendedAxiom Sig n ⟨[], .defined (opT k σ fun p => x (xs p))⟩
-  | EA1_sc {j k : FinSucc n} (h : j < k) (s : S) (i : ℕ) :
-      ExtendedAxiom Sig n ⟨[], .defined (scT h (x (t := (k, s)) i))⟩
-  | EA1_tg {j k : FinSucc n} (h : j < k) (s : S) (i : ℕ) :
-      ExtendedAxiom Sig n ⟨[], .defined (tgT h (x (t := (k, s)) i))⟩
-  | EA1_idm {j k : FinSucc n} (h : j < k) (s : S) (i : ℕ) :
-      ExtendedAxiom Sig n ⟨[], .defined (idmT h (x (t := (j, s)) i))⟩
-  | EA2_sc {j k : FinSucc n} (h : j < k) (s : S) (i : ℕ) :
-      ExtendedAxiom Sig n ⟨[], .mk' (scT h (idmT h (x (t := (j, s)) i))) (x i)⟩
-  | EA2_tg {j k : FinSucc n} (h : j < k) (s : S) (i : ℕ) :
-      ExtendedAxiom Sig n ⟨[], .mk' (tgT h (idmT h (x (t := (j, s)) i))) (x i)⟩
-  | EA3_dom {j k : FinSucc n} (h : j < k) (s : S) (i i' : ℕ) :
-      ExtendedAxiom Sig n ⟨[.defined (compT h (x (t := (k, s)) i) (x i'))],
+inductive ExtendedAxiom (Sig : Signature.{u, v} S) (Index : Type) [Preorder Index] :
+    QEEq (ExtendedSignature Sig Index) (EVar S Index) → Prop
+  | EA0 (k : Index) {ws : List S} {s : S} (σ : Sig ws s) (xs : Fin ws.length → ℕ) :
+      ExtendedAxiom Sig Index ⟨[], .defined (opT k σ fun p => x (xs p))⟩
+  | EA1_sc {j k : Index} (h : j < k) (s : S) (i : ℕ) :
+      ExtendedAxiom Sig Index ⟨[], .defined (scT h (x (t := (k, s)) i))⟩
+  | EA1_tg {j k : Index} (h : j < k) (s : S) (i : ℕ) :
+      ExtendedAxiom Sig Index ⟨[], .defined (tgT h (x (t := (k, s)) i))⟩
+  | EA1_idm {j k : Index} (h : j < k) (s : S) (i : ℕ) :
+      ExtendedAxiom Sig Index ⟨[], .defined (idmT h (x (t := (j, s)) i))⟩
+  | EA2_sc {j k : Index} (h : j < k) (s : S) (i : ℕ) :
+      ExtendedAxiom Sig Index ⟨[], .mk' (scT h (idmT h (x (t := (j, s)) i))) (x i)⟩
+  | EA2_tg {j k : Index} (h : j < k) (s : S) (i : ℕ) :
+      ExtendedAxiom Sig Index ⟨[], .mk' (tgT h (idmT h (x (t := (j, s)) i))) (x i)⟩
+  | EA3_dom {j k : Index} (h : j < k) (s : S) (i i' : ℕ) :
+      ExtendedAxiom Sig Index ⟨[.defined (compT h (x (t := (k, s)) i) (x i'))],
         .mk' (scT h (x (t := (k, s)) i)) (tgT h (x i'))⟩
-  | EA3_def {j k : FinSucc n} (h : j < k) (s : S) (i i' : ℕ) :
-      ExtendedAxiom Sig n ⟨[.mk' (scT h (x (t := (k, s)) i)) (tgT h (x i'))],
+  | EA3_def {j k : Index} (h : j < k) (s : S) (i i' : ℕ) :
+      ExtendedAxiom Sig Index ⟨[.mk' (scT h (x (t := (k, s)) i)) (tgT h (x i'))],
         .defined (compT h (x (t := (k, s)) i) (x i'))⟩
-  | EA4_sc {j k : FinSucc n} (h : j < k) (s : S) (i i' : ℕ) :
-      ExtendedAxiom Sig n ⟨[.defined (compT h (x (t := (k, s)) i) (x i'))],
+  | EA4_sc {j k : Index} (h : j < k) (s : S) (i i' : ℕ) :
+      ExtendedAxiom Sig Index ⟨[.defined (compT h (x (t := (k, s)) i) (x i'))],
         .mk' (scT h (compT h (x (t := (k, s)) i) (x i'))) (scT h (x i'))⟩
-  | EA4_tg {j k : FinSucc n} (h : j < k) (s : S) (i i' : ℕ) :
-      ExtendedAxiom Sig n ⟨[.defined (compT h (x (t := (k, s)) i) (x i'))],
+  | EA4_tg {j k : Index} (h : j < k) (s : S) (i i' : ℕ) :
+      ExtendedAxiom Sig Index ⟨[.defined (compT h (x (t := (k, s)) i) (x i'))],
         .mk' (tgT h (compT h (x (t := (k, s)) i) (x i'))) (tgT h (x i))⟩
-  | EA5_sc {j k : FinSucc n} (h : j < k) (s : S) (i : ℕ) :
-      ExtendedAxiom Sig n
+  | EA5_sc {j k : Index} (h : j < k) (s : S) (i : ℕ) :
+      ExtendedAxiom Sig Index
         ⟨[], .mk' (compT h (x (t := (k, s)) i) (idmT h (scT h (x i)))) (x i)⟩
-  | EA5_tg {j k : FinSucc n} (h : j < k) (s : S) (i : ℕ) :
-      ExtendedAxiom Sig n
+  | EA5_tg {j k : Index} (h : j < k) (s : S) (i : ℕ) :
+      ExtendedAxiom Sig Index
         ⟨[], .mk' (compT h (idmT h (tgT h (x (t := (k, s)) i))) (x i)) (x i)⟩
-  | EA6 {j k : FinSucc n} (h : j < k) (s : S) (i i' i'' : ℕ) :
-      ExtendedAxiom Sig n
+  | EA6 {j k : Index} (h : j < k) (s : S) (i i' i'' : ℕ) :
+      ExtendedAxiom Sig Index
         ⟨[.defined (compT h (x (t := (k, s)) i) (x i')),
             .defined (compT h (x (t := (k, s)) i') (x i''))],
           .mk' (compT h (compT h (x (t := (k, s)) i) (x i')) (x i''))
             (compT h (x i) (compT h (x i') (x i'')))⟩
-  | EA7_sc {j k : FinSucc n} (h : j < k) {ws : List S} {s : S} (σ : Sig ws s)
+  | EA7_sc {j k : Index} (h : j < k) {ws : List S} {s : S} (σ : Sig ws s)
       (xs : Fin ws.length → ℕ) :
-      ExtendedAxiom Sig n
+      ExtendedAxiom Sig Index
         ⟨[], .mk' (scT h (opT k σ fun p => x (xs p))) (opT j σ fun p => scT h (x (xs p)))⟩
-  | EA7_tg {j k : FinSucc n} (h : j < k) {ws : List S} {s : S} (σ : Sig ws s)
+  | EA7_tg {j k : Index} (h : j < k) {ws : List S} {s : S} (σ : Sig ws s)
       (xs : Fin ws.length → ℕ) :
-      ExtendedAxiom Sig n
+      ExtendedAxiom Sig Index
         ⟨[], .mk' (tgT h (opT k σ fun p => x (xs p))) (opT j σ fun p => tgT h (x (xs p)))⟩
-  | EA7_idm {j k : FinSucc n} (h : j < k) {ws : List S} {s : S} (σ : Sig ws s)
+  | EA7_idm {j k : Index} (h : j < k) {ws : List S} {s : S} (σ : Sig ws s)
       (us : Fin ws.length → ℕ) :
-      ExtendedAxiom Sig n
+      ExtendedAxiom Sig Index
         ⟨[], .mk' (idmT h (opT j σ fun p => x (us p))) (opT k σ fun p => idmT h (x (us p)))⟩
-  | EA8 {j k : FinSucc n} (h : j < k) {ws : List S} {s : S} (σ : Sig ws s)
+  | EA8 {j k : Index} (h : j < k) {ws : List S} {s : S} (σ : Sig ws s)
       (xs ys : Fin ws.length → ℕ) :
-      ExtendedAxiom Sig n
+      ExtendedAxiom Sig Index
         ⟨List.ofFn fun p => .defined (compT h (x (t := (k, ws.get p)) (xs p)) (x (ys p))),
           .mk' (opT k σ fun p => compT h (x (xs p)) (x (ys p)))
             (compT h (opT k σ fun p => x (xs p)) (opT k σ fun p => x (ys p)))⟩
-  | EA1'_sc_sc {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i : ℕ) :
-      ExtendedAxiom Sig n
+  | EA1'_sc_sc {a b c : Index} (h₁ : a < b) (h₂ : b < c) (s : S) (i : ℕ) :
+      ExtendedAxiom Sig Index
         ⟨[], .mk' (scT h₁ (scT h₂ (x (t := (c, s)) i))) (scT (h₁.trans h₂) (x i))⟩
-  | EA1'_tg_tg {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i : ℕ) :
-      ExtendedAxiom Sig n
+  | EA1'_tg_tg {a b c : Index} (h₁ : a < b) (h₂ : b < c) (s : S) (i : ℕ) :
+      ExtendedAxiom Sig Index
         ⟨[], .mk' (tgT h₁ (tgT h₂ (x (t := (c, s)) i))) (tgT (h₁.trans h₂) (x i))⟩
-  | EA1'_sc_tg {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i : ℕ) :
-      ExtendedAxiom Sig n
+  | EA1'_sc_tg {a b c : Index} (h₁ : a < b) (h₂ : b < c) (s : S) (i : ℕ) :
+      ExtendedAxiom Sig Index
         ⟨[], .mk' (scT h₁ (tgT h₂ (x (t := (c, s)) i))) (scT (h₁.trans h₂) (x i))⟩
-  | EA1'_tg_sc {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i : ℕ) :
-      ExtendedAxiom Sig n
+  | EA1'_tg_sc {a b c : Index} (h₁ : a < b) (h₂ : b < c) (s : S) (i : ℕ) :
+      ExtendedAxiom Sig Index
         ⟨[], .mk' (tgT h₁ (scT h₂ (x (t := (c, s)) i))) (tgT (h₁.trans h₂) (x i))⟩
-  | EA2' {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i : ℕ) :
-      ExtendedAxiom Sig n
+  | EA2' {a b c : Index} (h₁ : a < b) (h₂ : b < c) (s : S) (i : ℕ) :
+      ExtendedAxiom Sig Index
         ⟨[], .mk' (idmT h₂ (idmT h₁ (x (t := (a, s)) i))) (idmT (h₁.trans h₂) (x i))⟩
-  | EA3'_sc {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i i' : ℕ) :
-      ExtendedAxiom Sig n ⟨[.defined (compT (h₁.trans h₂) (x (t := (c, s)) i) (x i'))],
+  | EA3'_sc {a b c : Index} (h₁ : a < b) (h₂ : b < c) (s : S) (i i' : ℕ) :
+      ExtendedAxiom Sig Index ⟨[.defined (compT (h₁.trans h₂) (x (t := (c, s)) i) (x i'))],
         .mk' (scT h₂ (compT (h₁.trans h₂) (x (t := (c, s)) i) (x i')))
           (compT h₁ (scT h₂ (x i)) (scT h₂ (x i')))⟩
-  | EA3'_tg {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i i' : ℕ) :
-      ExtendedAxiom Sig n ⟨[.defined (compT (h₁.trans h₂) (x (t := (c, s)) i) (x i'))],
+  | EA3'_tg {a b c : Index} (h₁ : a < b) (h₂ : b < c) (s : S) (i i' : ℕ) :
+      ExtendedAxiom Sig Index ⟨[.defined (compT (h₁.trans h₂) (x (t := (c, s)) i) (x i'))],
         .mk' (tgT h₂ (compT (h₁.trans h₂) (x (t := (c, s)) i) (x i')))
           (compT h₁ (tgT h₂ (x i)) (tgT h₂ (x i')))⟩
-  | EA4' {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i i' p q : ℕ) :
-      ExtendedAxiom Sig n
+  | EA4' {a b c : Index} (h₁ : a < b) (h₂ : b < c) (s : S) (i i' p q : ℕ) :
+      ExtendedAxiom Sig Index
         ⟨[.defined (compT h₂ (x (t := (c, s)) i) (x i')),
             .defined (compT h₂ (x (t := (c, s)) p) (x q)),
             .defined (compT (h₁.trans h₂) (x (t := (c, s)) i) (x p)),
@@ -204,19 +210,19 @@ inductive ExtendedAxiom (Sig : Signature.{u, v} S) (n : ℕ) :
           .mk' (compT (h₁.trans h₂) (compT h₂ (x (t := (c, s)) i) (x i'))
               (compT h₂ (x p) (x q)))
             (compT h₂ (compT (h₁.trans h₂) (x i) (x p)) (compT (h₁.trans h₂) (x i') (x q)))⟩
-  | EA5' {a b c : FinSucc n} (h₁ : a < b) (h₂ : b < c) (s : S) (i i' : ℕ) :
-      ExtendedAxiom Sig n ⟨[.defined (compT h₁ (x (t := (b, s)) i) (x i'))],
+  | EA5' {a b c : Index} (h₁ : a < b) (h₂ : b < c) (s : S) (i i' : ℕ) :
+      ExtendedAxiom Sig Index ⟨[.defined (compT h₁ (x (t := (b, s)) i) (x i'))],
         .mk' (idmT h₂ (compT h₁ (x (t := (b, s)) i) (x i')))
           (compT (h₁.trans h₂) (idmT h₂ (x i)) (idmT h₂ (x i')))⟩
 
 /-- The specification `C^{Σ^{ext(n)}}`. -/
-def extendedSpec (Sig : Signature.{u, v} S) (n : ℕ) :
-    Set (QEEq (ExtendedSignature Sig n) (EVar S n)) :=
-  {q | ExtendedAxiom Sig n q}
+def extendedSpec (Sig : Signature.{u, v} S) (Index : Type) [Preorder Index] :
+    Set (QEEq (ExtendedSignature Sig Index) (EVar S Index)) :=
+  {q | ExtendedAxiom Sig Index q}
 
 /-- The category `PAlg(C^{Σ^{ext(n)}})` of models of the extended specification. -/
-abbrev ExtendedPAlg (Sig : Signature.{u, v} S) (n : ℕ) :=
-  PAlg.{u, max u v, w} (extendedSpec Sig n)
+abbrev ExtendedPAlg (Sig : Signature.{u, v} S) (Index : Type) [Preorder Index] :=
+  PAlg.{u, max u v, w} (extendedSpec Sig Index)
 ```
 :::
 

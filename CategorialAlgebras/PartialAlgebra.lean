@@ -120,20 +120,38 @@ end PartialAlgebra
 # Evaluation of terms
 
 :::definition (label := "term-eval") (central := false) (title := "Evaluation of terms")
-Let $`\mathbf{A}` be a partial $`\Sigma`-algebra and $`v \colon V \to A` an $`S`-sorted mapping,
-a *valuation*. The value $`t^{\mathbf{A}}[v]` of a term $`t` is partial: $`x^{\mathbf{A}}[v] = v(x)`
-for a variable, and $`\sigma((t_j)_j)^{\mathbf{A}}[v]` is defined exactly when every
-$`t_j^{\mathbf{A}}[v]` is defined and $`F_\sigma` is defined on their family, and then is
+Let $`\mathbf{A}` be a partial $`\Sigma`-algebra and $`v \colon V \rightharpoonup A` an
+$`S`-sorted partial mapping, a *valuation*. The value $`t^{\mathbf{A}}[v]` of a term $`t` is
+partial: $`x^{\mathbf{A}}[v] = v(x)` for a variable, defined when $`v` is defined at $`x`, and
+$`\sigma((t_j)_j)^{\mathbf{A}}[v]` is defined exactly when every $`t_j^{\mathbf{A}}[v]` is
+defined and $`F_\sigma` is defined on their family, and then is
 $`F_\sigma((t_j^{\mathbf{A}}[v])_j)`.
+
+The draft takes total valuations $`v \colon V \to A`. Valuations are partial here so that an
+equation can be evaluated with values for its own variables only; see the definition of
+$`\mathrm{QE}`-equations below.
 
 ```lean
 def Term.eval {Sig : Signature.{u, v} S} {V : S → Type} (A : PartialAlgebra.{u, v, w} Sig)
-    (val : ∀ s, V s → A s) : {s : S} → Term Sig V s → Part (A s)
-  | _, .var x => Part.some (val _ x)
+    (val : ∀ s, V s → Part (A s)) : {s : S} → Term Sig V s → Part (A s)
+  | _, .var x => val _ x
   | _, .app σ ts =>
     ⟨∃ h : ∀ j, (Term.eval A val (ts j)).Dom,
         (A.op σ fun j => (Term.eval A val (ts j)).get (h j)).Dom,
       fun h => (A.op σ fun j => (Term.eval A val (ts j)).get (h.1 j)).get h.2⟩
+```
+:::
+
+:::definition (label := "term-vars") (central := false) (title := "Variables of a term")
+The set $`\mathrm{Var}(t)` of the variables that occur in a term $`t`, as pairs of a sort and a
+variable of that sort: $`\mathrm{Var}(x) = \{x\}` and
+$`\mathrm{Var}(\sigma((t_j)_j)) = \bigcup_j \mathrm{Var}(t_j)`.
+
+```lean
+def Term.vars {Sig : Signature.{u, v} S} {V : S → Type} :
+    {s : S} → Term Sig V s → Set (Σ t, V t)
+  | _, .var x => {⟨_, x⟩}
+  | _, .app _ ts => ⋃ j, (ts j).vars
 ```
 :::
 
@@ -146,9 +164,18 @@ $`t'^{\mathbf{A}}[v]` are both defined and are equal. In particular
 $`t \overset{\mathrm{e}}{=} t` says that $`t` is defined. A $`\mathrm{QE}`$-*equation*
 $`\bigwedge_{i} (t_i \overset{\mathrm{e}}{=} t'_i) \longrightarrow t \overset{\mathrm{e}}{=} t'`
 is a finite list of existence equations, its *premises*, and an existence equation, its
-*conclusion*. It *holds* in $`\mathbf{A}` when, for every valuation under which all the
+*conclusion*; its *variables* are those that occur in its premises or in its conclusion. It
+*holds* in $`\mathbf{A}` when, for every valuation defined at its variables under which all the
 premises hold, the conclusion holds. A $`\mathrm{QE}`$-equation without premises is an
 existence equation.
+
+Definition `DQEEq` of the draft asks the conclusion for every total valuation
+$`v \colon V \to A`. When $`A` has an empty sort there are no such valuations, and every
+equation holds in $`\mathbf{A}`, whatever the other sorts are: for $`S = \{a, b\}`, a partial
+algebra with $`A_a = \varnothing` would be a model of every specification. Asking it only for the
+valuations of the variables of the equation, as is usual in many-sorted equational logic, makes
+the satisfaction of an equation depend only on the sorts of its variables. The two notions agree
+on partial algebras whose sorts are all nonempty.
 
 ```lean
 structure EEq (Sig : Signature.{u, v} S) (V : S → Type) where
@@ -167,13 +194,19 @@ structure QEEq (Sig : Signature.{u, v} S) (V : S → Type) where
 
 variable {Sig : Signature.{u, v} S} {V : S → Type}
 
-def EEq.Holds (A : PartialAlgebra.{u, v, w} Sig) (val : ∀ s, V s → A s) (e : EEq Sig V) :
+def EEq.vars (e : EEq Sig V) : Set (Σ t, V t) := e.lhs.vars ∪ e.rhs.vars
+
+def QEEq.vars (q : QEEq Sig V) : Set (Σ t, V t) :=
+  q.conclusion.vars ∪ ⋃ e ∈ q.premises, e.vars
+
+def EEq.Holds (A : PartialAlgebra.{u, v, w} Sig) (val : ∀ s, V s → Part (A s)) (e : EEq Sig V) :
     Prop :=
   ∃ (h₁ : (e.lhs.eval A val).Dom) (h₂ : (e.rhs.eval A val).Dom),
     (e.lhs.eval A val).get h₁ = (e.rhs.eval A val).get h₂
 
 def QEEq.Holds (A : PartialAlgebra.{u, v, w} Sig) (q : QEEq Sig V) : Prop :=
-  ∀ val : ∀ s, V s → A s, (∀ e ∈ q.premises, e.Holds A val) → q.conclusion.Holds A val
+  ∀ val : ∀ s, V s → Part (A s), (∀ x ∈ q.vars, (val x.1 x.2).Dom) →
+    (∀ e ∈ q.premises, e.Holds A val) → q.conclusion.Holds A val
 ```
 :::
 
