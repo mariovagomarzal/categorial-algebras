@@ -931,6 +931,58 @@ noncomputable def unifFunctor :
 ```
 :::
 
+# Graduation and unification
+
+Graduation followed by unification gives nothing new: the composite of the two derivors is the
+identity.
+
+:::proposition (label := "unification-graduation-derivor") (central := false) (title := "Unification after graduation")
+$`\mathbf{g}^{(n)} \circ \mathbf{u}^{(n)} = \mathrm{id}_{\mathbf{\Sigma}^{(n)}}`.
+
+```lean
+theorem grad_comp_unif :
+    (grad Sig n).comp.{u, max u v, w} (unif Sig n) =
+      GenEpDerivor.id.{u, max u v, w} (compactEpSig Sig (Fin n)) := by
+  unfold GenEpDerivor.comp GenEpDerivor.id
+  congr 1
+  · funext s
+    have h1 : (grad Sig n).sortDom ((unif Sig n).sortMap s) = ∅ := dif_neg (lt_irrefl n)
+    have h2 : (grad Sig n).trSet ((unif Sig n).sortDom s) = ∅ := Set.biUnion_empty _
+    rw [h1, h2, Set.empty_union]
+    rfl
+  · funext ws s σ
+    cases σ with
+    | op σ =>
+      show Term.app _ _ = Term.app _ _
+      congr 1; funext p
+      have key : ∀ {I : Type} {κ : I → S} {t t' : S} (e : t = t') (i : I) (h : κ i = t),
+          (e ▸ (Term.var ⟨i, h⟩ : Term (Compact.CompactSignature Sig (Fin n)) (Vars κ) t)) =
+            Term.var ⟨i, h.trans e⟩ := by
+        intro I κ t t' e; subst e; intro i h; rfl
+      simp only [Term.subst, famSubst, Derivor.lift]
+      exact key _ _ _
+    | sc k s =>
+      show Term.app _ _ = Term.app _ _
+      congr 1; funext j; match j with | ⟨0, _⟩ => rfl
+    | tg k s =>
+      show Term.app _ _ = Term.app _ _
+      congr 1; funext j; match j with | ⟨0, _⟩ => rfl
+    | comp k s =>
+      show Term.app _ _ = Term.app _ _
+      congr 1; funext j; match j with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl
+```
+:::
+
+:::proof (of := "unification-graduation-derivor")
+The composite has the mapping of sorts $`s \mapsto s`. Its domains are
+$`\mathrm{Cn}(D_{(n,s)} \cup \mathrm{tr}_{\mathbf{g}}[\varnothing]) = \mathrm{Cn}(\varnothing)`,
+since $`D_{(n,s)}` and the domains of $`\mathbf{u}^{(n)}` are empty, and its terms are
+$`d_{\mathbf{g}}^{\sharp}(\sigma_n((v_p)_p)) = \sigma((v_p)_p)`,
+$`d_{\mathbf{g}}^{\sharp}(\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(v_0))) = \mathrm{sc}^{k}_{s}(v_0)`,
+likewise for the targets, and $`d_{\mathbf{g}}^{\sharp}(v_0 \circ^{(k,n)}_{s} v_1) = v_0 \circ^{k}_{s} v_1`:
+those of the identity.
+:::
+
 ```lean
 end CategorialAlgebras
 ```
