@@ -41,7 +41,7 @@ lemma eq_val₁ {A : T → Type w} {t₀ : T} {f : ∀ t, Vars (fun _ : Unit => 
 
 # Generalized ep-derivors
 
-:::definition (label := "gen-ep-derivor") (central := false) (title := "Generalized ep-derivors")
+:::definition (label := "gen-ep-derivor") (central := true) (title := "Generalized ep-derivors")
 Let $`\mathbf{\Sigma} = (S, \Sigma, \mathrm{def}^{\mathbf{\Sigma}})` and
 $`\mathbf{\Lambda} = (T, \Lambda, \mathrm{def}^{\mathbf{\Lambda}})` be ep-signatures. A
 *generalized ep-derivor* from $`\mathbf{\Sigma}` to $`\mathbf{\Lambda}` is a triple
@@ -294,7 +294,7 @@ lemma holdsAll_opDom_iff {B : PartialAlgebra.{u', v', w} Lg.sig} {ws : List S} {
 
 # The derived algebra
 
-:::definition (label := "gen-ep-derived") (central := false) (title := "The derived partial algebra")
+:::definition (label := "gen-ep-derived") (central := true) (title := "The derived partial algebra")
 Let $`\mathbf{d} = (\varphi, D, d)` be a generalized ep-derivor from $`\mathbf{\Sigma}` to
 $`\mathbf{\Lambda}` and $`\mathbf{B} = (B, G)` a partial $`\Lambda`-algebra.
 $`\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{B})` is the partial $`\Sigma`-algebra
@@ -784,7 +784,7 @@ noncomputable def restrict {E : Set (QEEq Sg.sig V)} {F : Set (QEEq Lg.sig V')}
 ```
 :::
 
-:::proposition (label := "gen-ep-sends-models-iff") (central := false) (title := "When a generalized ep-derivor sends models to models")
+:::proposition (label := "gen-ep-sends-models-iff") (central := true) (title := "When a generalized ep-derivor sends models to models")
 Let $`\mathbf{d} = (\varphi, D, d)` be a generalized ep-derivor from $`\mathbf{\Sigma}` to
 $`\mathbf{\Lambda}`, and $`(\mathbf{\Sigma}, \mathcal{E})` and $`(\mathbf{\Lambda}, \mathcal{F})`
 ep-specifications. Then $`\mathbf{d}^{\ast}_{\mathfrak{gd}}` sends models of

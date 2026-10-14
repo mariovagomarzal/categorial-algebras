@@ -282,7 +282,7 @@ theorem id_op_agree {A : PartialAlgebra.{u, v, w} Sg.sig} (hA : Sg.IsAlgebra A) 
 end GenEpDerivor
 ```
 
-:::Stemma.lemma (label := "gen-ep-comp-models") (central := false) (title := "The functor of a composite")
+:::Stemma.lemma (label := "gen-ep-comp-models") (central := true) (title := "The functor of a composite")
 Let $`\mathbf{d}` be a generalized ep-derivor from $`\mathbf{\Sigma}` to $`\mathbf{\Lambda}`,
 $`\mathbf{e}` one from $`\mathbf{\Lambda}` to $`\mathbf{\Omega}`, and $`(\mathbf{\Sigma}, \mathcal{E})`,
 $`(\mathbf{\Lambda}, \mathcal{F})` and $`(\mathbf{\Omega}, \mathcal{G})` ep-specifications such that

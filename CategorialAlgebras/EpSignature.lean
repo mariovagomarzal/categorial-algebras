@@ -74,7 +74,7 @@ def EEq.ops {X : S → Type} (e : EEq Sig X) : Set (Op Sig) := e.lhs.ops ∪ e.r
 
 # ep-signatures
 
-:::definition (label := "ep-signature") (central := false) (title := "ep-signatures and their algebras")
+:::definition (label := "ep-signature") (central := true) (title := "ep-signatures and their algebras")
 An *ep-signature* $`\mathbf{\Sigma} = (S, \Sigma, \mathrm{def}^{\mathbf{\Sigma}})` is a many-sorted
 signature $`(S, \Sigma)` together with, for every $`\sigma \in \Sigma_{\mathbf{s}, s}`, a set
 $`\mathrm{def}^{\mathbf{\Sigma}}(\sigma)` of existence equations with variables in
