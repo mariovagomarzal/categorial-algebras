@@ -3927,7 +3927,18 @@ We let $\varprojlim_{n}H_{n}$ be the family that acts on $k$-cells as $H_{k}$. I
 
 Claim~\ref{CUnivPropGlCatAlgB} follows.
 
-For an object $X$ of $\mathsf{L}$, the family $(F_{n}(X))_{n\in\omega}$ is compatible, and, for a morphism $f$ of $\mathsf{L}$, so is $(F_{n}(f))_{n\in\omega}$. We let $\langle F_{k}\rangle_{k\in\omega}(X)=\varprojlim_{n}F_{n}(X)$ and $\langle F_{k}\rangle_{k\in\omega}(f)=\varprojlim_{n}F_{n}(f)$. As in the proof of Proposition~\ref{PUnivPropCatAlg}, by Claims~\ref{CUnivPropGlCatAlgA} and~\ref{CUnivPropGlCatAlgB}, this is a functor, $\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}\circ\langle F_{k}\rangle_{k\in\omega}=F_{n}$ for every $n$, and it is the unique functor with this property.
+For an object $X$ of $\mathsf{L}$, the family $(F_{n}(X))_{n\in\omega}$ is compatible, and, for a morphism $f$ of $\mathsf{L}$, so is $(F_{n}(f))_{n\in\omega}$. We let
+$$
+\langle F_{k}\rangle_{k\in\omega}(X)=\varprojlim_{n}F_{n}(X)
+\qquad\text{and}\qquad
+\langle F_{k}\rangle_{k\in\omega}(f)=\varprojlim_{n}F_{n}(f).
+$$
+
+\textsf{(Functoriality)} By the uniqueness in Claim~\ref{CUnivPropGlCatAlgB}, $\langle F_{k}\rangle_{k\in\omega}$ preserves identities and composites, since every $F_{n}$ does.
+
+\textsf{(Factorization)} By Claims~\ref{CUnivPropGlCatAlgA} and~\ref{CUnivPropGlCatAlgB}, $\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}\circ\langle F_{k}\rangle_{k\in\omega}=F_{n}$, for every $n\in\omega$.
+
+\textsf{(Uniqueness)} If $G\colon\mathsf{L}\mor\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})$ also satisfies $\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}\circ G=F_{n}$ for every $n$, then, by the uniqueness in Claims~\ref{CUnivPropGlCatAlgA} and~\ref{CUnivPropGlCatAlgB}, $G(X)=\varprojlim_{n}F_{n}(X)$ and $G(f)=\varprojlim_{n}F_{n}(f)$, so that $G=\langle F_{k}\rangle_{k\in\omega}$.
 
 This completes the proof.
 \end{proof}
