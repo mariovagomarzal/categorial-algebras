@@ -3,10 +3,10 @@ import CategorialAlgebras.Extended.Functor
 
 open Verso.Genre Manual InlineLean Stemma
 
-#doc (Stemma) "Products of extended categories" =>
+#doc (Stemma) "Products of globular categories" =>
 
-The operations of an extended categorial algebra are extended functors out of finite products
-of extended categories (Definition `DGlCatAlg` of the draft). The product of a family of extended
+The operations of a globular categorial algebra are globular functors out of finite products
+of globular categories (Definition `DGlCatAlg` of the draft). The product of a family of globular
 categories has, in each dimension, the product of the sets of cells of that dimension, with
 every operation computed componentwise.
 
@@ -21,7 +21,7 @@ variable {Index : Type} [Preorder Index] {J : Type v} {C : J → TypeFamily.{u} 
 ```
 
 :::construction (label := "extended.pi-category-struct") (central := false) (title := "Componentwise structure")
-Let $`(C^{j})_{j \in J}` be a family of extended categorial structures with dimensions in
+Let $`(C^{j})_{j \in J}` be a family of globular categorial structures with dimensions in
 $`I`. Their product has, as $`k`-cells, the families $`(f_j)_{j \in J}` with $`f_j \in C^{j}_k`;
 sources, targets and identities are taken componentwise, and $`g \circ^{(i)} f` is defined
 exactly when every $`g_j \circ^{(i)} f_j` is, and then is their family.
@@ -51,10 +51,10 @@ lemma pi_sc_is_tg {k i : Index} {h : i < k} {g f : (j : J) → C j k} :
 end Pi
 ```
 
-:::construction (label := "extended.pi-category") (central := false) (title := "Product of extended categories")
-If every $`C^{j}` is an extended category with dimensions in $`I`, so is their product, since
-every axiom holds componentwise. In particular, finite products of extended $`n`-categories are
-extended $`n`-categories, and the empty product is the final one, with a single cell in each
+:::construction (label := "extended.pi-category") (central := false) (title := "Product of globular categories")
+If every $`C^{j}` is a globular category with dimensions in $`I`, so is their product, since
+every axiom holds componentwise. In particular, finite products of globular $`n`-categories are
+globular $`n`-categories, and the empty product is the final one, with a single cell in each
 dimension.
 
 ```lean

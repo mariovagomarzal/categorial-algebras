@@ -4,10 +4,10 @@ import CategorialAlgebras.Compact.Product
 
 open Verso.Genre Manual InlineLean Stemma
 
-#doc (Stemma) "Compact n-categorial algebras" =>
+#doc (Stemma) "Single-set n-categorial algebras" =>
 
 A many-sorted $`n`-categorial algebra is a many-sorted algebra whose carrier of every sort is a
-compact $`n`-category and whose operations are compact $`n`-functors (Definition `DManySortedCatAlg` of the
+single-set $`n`-category and whose operations are single-set $`n`-functors (Definition `DManySortedCatAlg` of the
 draft).
 
 ```lean
@@ -20,14 +20,14 @@ open Signature
 variable {S : Type u}
 ```
 
-# Many-sorted compact n-categories
+# Many-sorted single-set n-categories
 
-An $`S`-*sorted compact* $`n`-*category* is a family $`\mathsf{A} = (\mathsf{A}_s)_{s \in S}` of
-compact $`n`-categories, and an $`S`-*sorted compact* $`n`-*functor* is a family of compact
+An $`S`-*sorted single-set* $`n`-*category* is a family $`\mathsf{A} = (\mathsf{A}_s)_{s \in S}` of
+single-set $`n`-categories, and an $`S`-*sorted single-set* $`n`-*functor* is a family of single-set
 $`n`-functors, one for each sort. For a word $`\mathbf{s} \in S^{\star}`,
-$`\mathsf{A}_{\mathbf{s}} = \prod_{j \in |\mathbf{s}|} \mathsf{A}_{s_j}` is a compact
+$`\mathsf{A}_{\mathbf{s}} = \prod_{j \in |\mathbf{s}|} \mathsf{A}_{s_j}` is a single-set
 $`n`-category with the componentwise structure; for $`\mathbf{s} = \lambda` it is the final
-compact $`n`-category.
+single-set $`n`-category.
 
 ```lean
 example (n : ℕ) (A : S → Type w) [∀ s, NCategory n (A s)] (s : List S) :
@@ -36,24 +36,24 @@ example (n : ℕ) (A : S → Type w) [∀ s, NCategory n (A s)] (s : List S) :
 
 # Algebras
 
-:::definition (label := "compact.cat-algebra") (central := true) (title := "Compact n-categorial algebra")
-Let $`(S, \Sigma)` be a many-sorted signature and $`n \in \mathbb{N}`. A *compact*
+:::definition (label := "compact.cat-algebra") (central := true) (title := "Single-set n-categorial algebra")
+Let $`(S, \Sigma)` be a many-sorted signature and $`n \in \mathbb{N}`. A *single-set*
 $`n`-*categorial* $`\Sigma`-*algebra* is a pair $`(\mathsf{A}, F)` where $`\mathsf{A}` is an
-$`S`-sorted compact $`n`-category and $`F` assigns to every operation symbol
-$`\sigma \in \Sigma_{\mathbf{s}, s}` a compact $`n`-functor
+$`S`-sorted single-set $`n`-category and $`F` assigns to every operation symbol
+$`\sigma \in \Sigma_{\mathbf{s}, s}` a single-set $`n`-functor
 $`F_\sigma = \sigma^{\mathsf{A}} \colon \mathsf{A}_{\mathbf{s}} \to \mathsf{A}_s`.
 
-A constant $`\sigma \in \Sigma_{\lambda, s}` is a functor from the final compact $`n`-category,
+A constant $`\sigma \in \Sigma_{\lambda, s}` is a functor from the final single-set $`n`-category,
 so it picks out a cell of $`\mathsf{A}_s` that is a $`k`-cell for every $`k \in n`, as the draft
 says.
 
 ```lean
 structure CatAlgebra (Sig : Signature.{u, v} S) (n : ℕ) where
-  /-- The carrier: an `S`-sorted compact `n`-category. -/
+  /-- The carrier: an `S`-sorted single-set `n`-category. -/
   carrier : S → Type w
-  /-- The compact `n`-category of each sort. -/
+  /-- The single-set `n`-category of each sort. -/
   [str : ∀ s, NCategory n (carrier s)]
-  /-- The interpretation of each operation symbol, as a compact `n`-functor. -/
+  /-- The interpretation of each operation symbol, as a single-set `n`-functor. -/
   op : ∀ {w : List S} {s : S}, Sig w s → NFunctor n (Arity carrier w) (carrier s)
 ```
 :::
@@ -70,10 +70,10 @@ instance : CoeFun (CatAlgebra.{u, v, w} Sig n) fun _ ↦ S → Type w := ⟨CatA
 attribute [coe] CatAlgebra.carrier
 ```
 
-:::definition (label := "compact.cat-algebra-hom") (central := false) (title := "Homomorphism of compact n-categorial algebras")
+:::definition (label := "compact.cat-algebra-hom") (central := false) (title := "Homomorphism of single-set n-categorial algebras")
 Let $`\boldsymbol{\mathsf{A}} = (\mathsf{A}, F)` and $`\boldsymbol{\mathsf{B}} = (\mathsf{B}, G)`
-be compact $`n`-categorial $`\Sigma`-algebras. A *homomorphism* from $`\boldsymbol{\mathsf{A}}`
-to $`\boldsymbol{\mathsf{B}}` is an $`S`-sorted compact $`n`-functor
+be single-set $`n`-categorial $`\Sigma`-algebras. A *homomorphism* from $`\boldsymbol{\mathsf{A}}`
+to $`\boldsymbol{\mathsf{B}}` is an $`S`-sorted single-set $`n`-functor
 $`H = (H_s)_{s \in S}` from $`\mathsf{A}` to $`\mathsf{B}` such that, for every
 $`\sigma \in \Sigma_{\mathbf{s}, s}` and every family of cells
 $`(a_j)_{j \in |\mathbf{s}|} \in \mathsf{A}_{\mathbf{s}}`,
@@ -85,7 +85,7 @@ below $`n`: otherwise a homomorphism would say nothing about the cells of top di
 
 ```lean
 structure Hom (A B : CatAlgebra.{u, v, w} Sig n) where
-  /-- The compact `n`-functor at each sort. -/
+  /-- The single-set `n`-functor at each sort. -/
   map : ∀ s, NFunctor n (A s) (B s)
   /-- The functors commute with the operations. -/
   map_op : ∀ {w : List S} {s : S} (σ : Sig w s) (a : Arity A w),
@@ -120,8 +120,8 @@ end Hom
 ```
 
 :::definition (label := "compact.cat-alg") (central := false) (title := "The category nCatAlg(Σ)")
-Compact $`n`-categorial $`\Sigma`-algebras and their homomorphisms form a category
-$`\mathsf{nCatAlg}(\Sigma)`, with the sortwise composition and identities of compact
+Single-set $`n`-categorial $`\Sigma`-algebras and their homomorphisms form a category
+$`\mathsf{nCatAlg}(\Sigma)`, with the sortwise composition and identities of single-set
 $`n`-functors.
 
 ```lean
@@ -139,14 +139,14 @@ instance category : CategoryTheory.Category.{max u w} (CatAlgebra.{u, v, w} Sig 
 end CatAlgebra
 ```
 
-# The compact n-categorial signature
+# The single-set n-categorial signature
 
-In the compact presentation an $`n`-categorial algebra is also a partial algebra on its cells,
+In the single-set presentation an $`n`-categorial algebra is also a partial algebra on its cells,
 for a signature that adds to $`\Sigma` sources, targets and compositions of every dimension
 below $`n`.
 
-:::definition (label := "compact.signature") (central := false) (title := "The compact n-categorial signature")
-Let $`\Sigma` be an $`S`-sorted signature and $`n \in \mathbb{N}`. The *compact*
+:::definition (label := "compact.signature") (central := false) (title := "The single-set n-categorial signature")
+Let $`\Sigma` be an $`S`-sorted signature and $`n \in \mathbb{N}`. The *single-set*
 $`n`-*categorial signature determined by* $`\Sigma`, $`\Sigma^{(n)}`, is the expansion of
 $`\Sigma` obtained by adding, for every $`k \in n` and every $`s \in S`, two operation symbols
 $`\mathrm{sc}^{k}_{s}` and $`\mathrm{tg}^{k}_{s}` of arity $`(s)` and coarity $`s`, the

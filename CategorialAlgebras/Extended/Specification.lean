@@ -4,13 +4,13 @@ import CategorialAlgebras.Extended.Algebra
 
 open Verso.Genre Manual InlineLean Stemma
 
-#doc (Stemma) "The extended QE-specification" =>
+#doc (Stemma) "The globular QE-specification" =>
 
-Definition `DVarGlobular` of the draft presents the extended $`n`-categorial $`\Sigma`-algebras as a
-$`\mathrm{QE}`$-variety of partial $`\Sigma^{\mathrm{ext}(n)}`-algebras, where
-$`\Sigma^{\mathrm{ext}(n)}` is the extended $`n`-categorial signature of Definition `DSigmaCatGlobular`, with
+Definition `DVarGlobular` of the draft presents the globular $`n`-categorial $`\Sigma`-algebras as a
+$`\mathrm{QE}`$-variety of partial $`\Sigma^{\mathrm{gl}(n)}`-algebras, where
+$`\Sigma^{\mathrm{gl}(n)}` is the globular $`n`-categorial signature of Definition `DSigmaCatGlobular`, with
 sorts $`(n+1) \times S`. This document writes down the specification
-$`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}` and the category of its models.
+$`\mathcal{C}^{\Sigma^{\mathrm{gl}(n)}}` and the category of its models.
 
 ```lean
 universe u v w
@@ -22,7 +22,7 @@ open Term
 variable {S : Type u}
 ```
 
-# Terms of the extended signature
+# Terms of the globular signature
 
 The variables are countably many of each sort $`(k, s)`. In the Lean, `x i` is the variable
 number `i`, and `scT h`, `tgT h`, `idmT h` and `compT h`, for `h : j < k`, build the terms
@@ -34,7 +34,7 @@ of sorts $`(k, s_p)`.
 /-- The variables: countably many of each sort. -/
 abbrev EVar (S : Type u) (n : ℕ) : FinSucc n × S → Type := fun _ => ℕ
 
-/-- Terms of the extended `n`-categorial signature. -/
+/-- Terms of the globular `n`-categorial signature. -/
 abbrev ETerm (Sig : Signature.{u, v} S) (n : ℕ) := Term (ExtendedSignature Sig n) (EVar S n)
 
 namespace ETerm
@@ -73,7 +73,7 @@ end ETerm
 
 :::definition (label := "extended.qe-specification") (central := false) (title := "The specification C^Σᵉˣᵗ⁽ⁿ⁾")
 Let $`\Sigma` be an $`S`-sorted signature and $`n \in \mathbb{N}`. The specification
-$`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}` is the set of the following $`\mathrm{QE}`$-equations,
+$`\mathcal{C}^{\Sigma^{\mathrm{gl}(n)}}` is the set of the following $`\mathrm{QE}`$-equations,
 for all sorts, operation symbols, dimensions and variables (Definition `DVarGlobular` of the draft):
 
 1. (EA0) $`\sigma_k((x_p)_p)` is defined, for every $`k \in n + 1`;
@@ -111,7 +111,7 @@ for all sorts, operation symbols, dimensions and variables (Definition `DVarGlob
 
 The axioms (EA$`^{h,j,k}`1)–(EA$`^{h,j,k}`5) are the counterparts of the conditions (MS1),
 (MS4), (MS3), (MS9) and (MS8) of Definition `DOmegaCatGl`, so that the models of the specification are,
-as the draft says, the extended $`n`-categories with operations that are extended
+as the draft says, the globular $`n`-categories with operations that are globular
 $`n`-functors.
 
 ```lean
@@ -214,7 +214,7 @@ def extendedSpec (Sig : Signature.{u, v} S) (n : ℕ) :
     Set (QEEq (ExtendedSignature Sig n) (EVar S n)) :=
   {q | ExtendedAxiom Sig n q}
 
-/-- The category `PAlg(C^{Σ^{ext(n)}})` of models of the extended specification. -/
+/-- The category `PAlg(C^{Σ^{ext(n)}})` of models of the globular specification. -/
 abbrev ExtendedPAlg (Sig : Signature.{u, v} S) (n : ℕ) :=
   PAlg.{u, max u v, w} (extendedSpec Sig n)
 ```

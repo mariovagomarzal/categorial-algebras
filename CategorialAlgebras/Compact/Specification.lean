@@ -4,11 +4,11 @@ import CategorialAlgebras.Compact.Algebra
 
 open Verso.Genre Manual InlineLean Stemma
 
-#doc (Stemma) "The compact QE-specification" =>
+#doc (Stemma) "The single-set QE-specification" =>
 
-Definition `DVarSingleSet` of the draft presents the compact $`n`-categorial $`\Sigma`-algebras as a
+Definition `DVarSingleSet` of the draft presents the single-set $`n`-categorial $`\Sigma`-algebras as a
 $`\mathrm{QE}`$-variety of partial $`\Sigma^{(n)}`-algebras, where $`\Sigma^{(n)}` is the
-compact $`n`-categorial signature of Definition `DSigmaCatSingleSet`. This document writes down the
+single-set $`n`-categorial signature of Definition `DSigmaCatSingleSet`. This document writes down the
 specification $`\mathcal{C}^{\Sigma^{(n)}}` and the category
 $`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})` of its models.
 
@@ -22,7 +22,7 @@ open Term
 variable {S : Type u}
 ```
 
-# Terms of the compact signature
+# Terms of the single-set signature
 
 The variables $`V^{S}` are a fixed $`S`-sorted set with countably many variables of each sort;
 we take $`V^{S}_s = \mathbb{N}`. We write $`\mathrm{sc}^{k}(t)`, $`\mathrm{tg}^{k}(t)` and
@@ -34,7 +34,7 @@ $`\sigma((t_j)_j)` for an operation symbol of $`\Sigma`; in the Lean they are `s
 /-- The variables: countably many of each sort. -/
 abbrev Var (S : Type u) : S → Type := fun _ => ℕ
 
-/-- Terms of the compact `n`-categorial signature, with variables in `Var S`. -/
+/-- Terms of the single-set `n`-categorial signature, with variables in `Var S`. -/
 abbrev CTerm (Sig : Signature.{u, v} S) (n : ℕ) := Term (CompactSignature Sig n) (Var S)
 
 namespace CTerm
@@ -181,7 +181,7 @@ def compactSpec (Sig : Signature.{u, v} S) (n : ℕ) :
     Set (QEEq (CompactSignature Sig n) (Var S)) :=
   {q | CompactAxiom Sig n q}
 
-/-- The category `PAlg(C^{Σ^{(n)}})` of models of the compact specification. -/
+/-- The category `PAlg(C^{Σ^{(n)}})` of models of the single-set specification. -/
 abbrev CompactPAlg (Sig : Signature.{u, v} S) (n : ℕ) := PAlg.{u, max u v, w} (compactSpec Sig n)
 ```
 :::

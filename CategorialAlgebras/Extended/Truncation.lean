@@ -5,13 +5,13 @@ import CategorialAlgebras.Extended.OmegaAlgebra
 
 open Verso.Genre Manual InlineLean Stemma
 
-#doc (Stemma) "Truncation of extended categorial algebras" =>
+#doc (Stemma) "Truncation of globular categorial algebras" =>
 
 Definition `DTmnGlCatAlg` of the draft defines the truncation functors
-$`T^{\mathrm{ext}(m,n)}_{\Sigma} \colon \mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma) \to \mathsf{mCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)`,
+$`\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\Sigma} \colon \mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma) \to \mathsf{mCat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)`,
 for $`m \leq n`, and
-$`T^{\mathrm{ext}(n,\omega)}_{\Sigma} \colon \omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma) \to \mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)`.
-In the extended presentation, truncating at level $`m` keeps the cells of dimension at most
+$`\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\Sigma} \colon \omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma) \to \mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)`.
+In the globular presentation, truncating at level $`m` keeps the cells of dimension at most
 $`m` and forgets the others: it is the restriction of every sort along the inclusion of the
 dimensions $`\{0, \ldots, m\}`. This document defines these functors and proves that they
 form a projective system (Remark `RTmnGlCatAlgProjSys` of the draft).
@@ -28,12 +28,12 @@ variable {S : Type u} {Sig : Signature.{u, v} S}
 
 # The inclusions of dimensions
 
-For $`m \leq n` the dimensions $`\{0, \ldots, m\}` of an extended $`m`-category are included
-in the dimensions $`\{0, \ldots, n\}` of an extended $`n`-category, and both in the dimensions
-$`\mathbb{N}` of an extended $`\omega`-category. These inclusions are strictly monotone.
+For $`m \leq n` the dimensions $`\{0, \ldots, m\}` of a globular $`m`-category are included
+in the dimensions $`\{0, \ldots, n\}` of a globular $`n`-category, and both in the dimensions
+$`\mathbb{N}` of a globular $`\omega`-category. These inclusions are strictly monotone.
 
 ```lean
-/-- The inclusion of the dimensions of an extended `m`-category into those of an extended
+/-- The inclusion of the dimensions of a globular `m`-category into those of a globular
 `n`-category, for `m ≤ n`. -/
 abbrev dimIncl {m n : ℕ} (h : m ≤ n) : FinSucc m → FinSucc n :=
   Fin.castLE (Nat.succ_le_succ h)
@@ -41,19 +41,19 @@ abbrev dimIncl {m n : ℕ} (h : m ≤ n) : FinSucc m → FinSucc n :=
 lemma dimIncl_strictMono {m n : ℕ} (h : m ≤ n) : StrictMono (dimIncl h) :=
   fun _ _ hab => hab
 
-/-- The inclusion of the dimensions of an extended `n`-category into `ℕ`. -/
+/-- The inclusion of the dimensions of a globular `n`-category into `ℕ`. -/
 abbrev dimInclω (n : ℕ) : FinSucc n → ℕ := Fin.val
 
 lemma dimInclω_strictMono (n : ℕ) : StrictMono (dimInclω n) :=
   Fin.val_strictMono
 ```
 
-# Truncation of extended n-categorial algebras
+# Truncation of globular n-categorial algebras
 
-:::definition (label := "extended.truncate") (central := false) (title := "Truncation of an extended n-categorial algebra")
-Let $`m \leq n` and let $`\boldsymbol{\mathsf{A}} = (\mathsf{A}, F)` be an extended
-$`n`-categorial $`\Sigma`-algebra. Its $`m`-*truncation* $`T^{\mathrm{ext}(m,n)}_{\Sigma}(\boldsymbol{\mathsf{A}})`
-is the extended $`m`-categorial $`\Sigma`-algebra whose carrier of sort $`s` is the extended
+:::definition (label := "extended.truncate") (central := false) (title := "Truncation of a globular n-categorial algebra")
+Let $`m \leq n` and let $`\boldsymbol{\mathsf{A}} = (\mathsf{A}, F)` be a globular
+$`n`-categorial $`\Sigma`-algebra. Its $`m`-*truncation* $`\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\Sigma}(\boldsymbol{\mathsf{A}})`
+is the globular $`m`-categorial $`\Sigma`-algebra whose carrier of sort $`s` is the globular
 $`m`-category formed by the cells of $`\mathsf{A}_s` of dimension at most $`m`, with the same
 sources, targets, identities and compositions, and in which every operation symbol $`\sigma`
 acts on $`k`-cells, for $`k \leq m`, as $`\sigma^{\boldsymbol{\mathsf{A}}}` does.
@@ -77,7 +77,7 @@ def CatAlgebra.Hom.truncate {m n : ℕ} (h : m ≤ n) {A B : CatAlgebra.{u, v, w
 
 :::definition (label := "extended.truncation-functor") (central := false) (title := "The truncation functor T^ext(m,n)")
 For $`m \leq n`, truncation is a functor
-$`T^{\mathrm{ext}(m,n)}_{\Sigma} \colon \mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma) \to \mathsf{mCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)`:
+$`\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\Sigma} \colon \mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma) \to \mathsf{mCat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)`:
 it preserves identities and composition of homomorphisms, since these are computed
 dimensionwise.
 
@@ -91,12 +91,12 @@ def truncation (Sig : Signature.{u, v} S) {m n : ℕ} (h : m ≤ n) :
 ```
 :::
 
-# Truncation of extended ω-categorial algebras
+# Truncation of globular ω-categorial algebras
 
-:::definition (label := "extended.truncate-omega") (central := false) (title := "Truncation of an extended ω-categorial algebra")
-Let $`n \in \mathbb{N}` and let $`\boldsymbol{\mathsf{A}}` be an extended $`\omega`-categorial
-$`\Sigma`-algebra. Its $`n`-*truncation* $`T^{\mathrm{ext}(n,\omega)}_{\Sigma}(\boldsymbol{\mathsf{A}})`
-is the extended $`n`-categorial $`\Sigma`-algebra formed by the cells of dimension at most $`n`,
+:::definition (label := "extended.truncate-omega") (central := false) (title := "Truncation of a globular ω-categorial algebra")
+Let $`n \in \mathbb{N}` and let $`\boldsymbol{\mathsf{A}}` be a globular $`\omega`-categorial
+$`\Sigma`-algebra. Its $`n`-*truncation* $`\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\Sigma}(\boldsymbol{\mathsf{A}})`
+is the globular $`n`-categorial $`\Sigma`-algebra formed by the cells of dimension at most $`n`,
 with the same structure and operations; homomorphisms are truncated likewise.
 
 ```lean
@@ -115,7 +115,7 @@ def OmegaCatAlgebra.Hom.truncate (n : ℕ) {A B : OmegaCatAlgebra.{u, v, w} Sig}
 
 :::definition (label := "extended.truncation-functor-omega") (central := false) (title := "The truncation functor T^ext(n,ω)")
 For $`n \in \mathbb{N}`, truncation is a functor
-$`T^{\mathrm{ext}(n,\omega)}_{\Sigma} \colon \omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma) \to \mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)`.
+$`\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\Sigma} \colon \omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma) \to \mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)`.
 
 ```lean
 def truncationω (Sig : Signature.{u, v} S) (n : ℕ) :
@@ -129,11 +129,11 @@ def truncationω (Sig : Signature.{u, v} S) (n : ℕ) :
 
 # The projective system
 
-:::proposition (label := "extended.truncation-proj-system") (central := false) (title := "The extended truncations form a projective system")
+:::proposition (label := "extended.truncation-proj-system") (central := false) (title := "The globular truncations form a projective system")
 For all $`m \leq n \leq p`,
-$`T^{\mathrm{ext}(m,n)}_{\Sigma} \circ T^{\mathrm{ext}(n,p)}_{\Sigma} = T^{\mathrm{ext}(m,p)}_{\Sigma}`,
-and $`T^{\mathrm{ext}(n,n)}_{\Sigma}` is the identity functor. Hence the categories
-$`\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)` and the truncation functors form a
+$`\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\Sigma} \circ \mathrm{Tr}^{\mathrm{gl}(n,p)}_{\Sigma} = \mathrm{Tr}^{\mathrm{gl}(m,p)}_{\Sigma}`,
+and $`\mathrm{Tr}^{\mathrm{gl}(n,n)}_{\Sigma}` is the identity functor. Hence the categories
+$`\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)` and the truncation functors form a
 projective system of categories.
 
 ```lean
@@ -155,8 +155,8 @@ equal by definition.
 
 :::proposition (label := "extended.truncation-omega-comp") (central := false) (title := "Truncations of ω-algebras are compatible")
 For all $`m \leq n`,
-$`T^{\mathrm{ext}(m,n)}_{\Sigma} \circ T^{\mathrm{ext}(n,\omega)}_{\Sigma} = T^{\mathrm{ext}(m,\omega)}_{\Sigma}`,
-so that $`(\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma), T^{\mathrm{ext}(\cdot,\omega)}_{\Sigma})`
+$`\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\Sigma} \circ \mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\Sigma} = \mathrm{Tr}^{\mathrm{gl}(m,\omega)}_{\Sigma}`,
+so that $`(\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma), \mathrm{Tr}^{\mathrm{gl}(\cdot,\omega)}_{\Sigma})`
 is a cone over the projective system (the paragraph after Remark `RTmnGlCatAlgProjSys` of the draft).
 
 ```lean

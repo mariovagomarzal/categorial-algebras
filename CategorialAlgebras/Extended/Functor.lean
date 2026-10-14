@@ -4,10 +4,10 @@ import CategorialAlgebras.Extended.Category
 
 open Verso.Genre Manual InlineLean Stemma
 
-#doc (Stemma) "Extended functors" =>
+#doc (Stemma) "Globular functors" =>
 
-An extended functor is a family of mappings, one for each dimension, that preserves sources,
-targets, identities and compositions (the extended $`n`-functors after Definition `DOmegaCatGl` of the
+A globular functor is a family of mappings, one for each dimension, that preserves sources,
+targets, identities and compositions (the globular $`n`-functors after Definition `DOmegaCatGl` of the
 draft). Ported from the group's repository `higher_category_theory`.
 
 ```lean
@@ -16,8 +16,8 @@ universe u u₁ u₂ u₃
 namespace CategorialAlgebras.Extended
 ```
 
-:::definition (label := "extended.functor") (central := false) (title := "Extended functor")
-Let $`C` and $`D` be extended categories with dimensions in $`I`. An *extended functor* from
+:::definition (label := "extended.functor") (central := false) (title := "Globular functor")
+Let $`C` and $`D` be globular categories with dimensions in $`I`. A *globular functor* from
 $`C` to $`D` is a family $`F = (F_k \colon C_k \to D_k)_{k \in I}` such that, for all
 $`j < k`,
 $`F_j \circ \mathrm{sc}^{(j,k)} = \mathrm{sc}^{(j,k)} \circ F_k`,
@@ -75,14 +75,14 @@ instance : CoeFun (Functor Index C D) fun _ ↦ (k : Index) → C k → D k := �
 
 attribute [coe] Functor.map
 
-/-- Two extended functors with the same mappings are equal. -/
+/-- Two globular functors with the same mappings are equal. -/
 @[ext]
 lemma ext {F G : Functor Index C D} (h : ∀ k f, F k f = G k f) : F = G := by
   cases F; cases G; congr; funext k f; exact h k f
 ```
 
 :::definition (label := "extended.functor-comp") (central := false) (title := "Composition and identities")
-Extended functors compose dimensionwise, and the identity mappings form an extended functor.
+Globular functors compose dimensionwise, and the identity mappings form a globular functor.
 
 ```lean
 @[simp]
@@ -131,9 +131,9 @@ def id (C : TypeFamily.{u₁} Index) [Category Index C] : Functor Index C C wher
 end Functor
 ```
 
-:::definition (label := "extended.n-functor") (central := false) (title := "Extended n-functors")
-An *extended* $`n`-*functor* is an extended functor between extended $`n`-categories, and an
-*extended* $`\omega`-*functor* one between extended $`\omega`-categories.
+:::definition (label := "extended.n-functor") (central := false) (title := "Globular n-functors")
+A *globular* $`n`-*functor* is a globular functor between globular $`n`-categories, and a
+*globular* $`\omega`-*functor* one between globular $`\omega`-categories.
 
 ```lean
 abbrev NFunctor (n : ℕ)
@@ -149,7 +149,7 @@ abbrev OmegaFunctor
 ```
 :::
 
-# The categories of extended categories
+# The categories of globular categories
 
 ```lean
 structure Cat (Index : Type) [Preorder Index] where
@@ -157,7 +157,7 @@ structure Cat (Index : Type) [Preorder Index] where
   of ::
   /-- The underlying family of sets of cells. -/
   carrier : TypeFamily.{u} Index
-  /-- The extended categorial structure on the family. -/
+  /-- The globular categorial structure on the family. -/
   [str : Category Index carrier]
 
 attribute [instance] Cat.str
@@ -168,10 +168,10 @@ instance {Index : Type} [Preorder Index] : CoeFun (Cat Index) fun _ ↦ Index �
 attribute [coe] Cat.carrier
 ```
 
-:::definition (label := "extended.cat") (central := false) (title := "The category of extended categories")
-Extended categories with dimensions in $`I` and extended functors form a category. For
-$`I = n + 1` this is the category $`\mathsf{nCat}^{\mathrm{ext}}` of extended $`n`-categories
-and extended $`n`-functors.
+:::definition (label := "extended.cat") (central := false) (title := "The category of globular categories")
+Globular categories with dimensions in $`I` and globular functors form a category. For
+$`I = n + 1` this is the category $`\mathsf{nCat}^{\mathrm{gl}}` of globular $`n`-categories
+and globular $`n`-functors.
 
 ```lean
 instance Cat.category {Index : Type} [Preorder Index] :

@@ -4,10 +4,10 @@ import CategorialAlgebras.Extended.Product
 
 open Verso.Genre Manual InlineLean Stemma
 
-#doc (Stemma) "Extended n-categorial algebras" =>
+#doc (Stemma) "Globular n-categorial algebras" =>
 
-An extended $`n`-categorial algebra is a many-sorted algebra whose carrier of every sort is an
-extended $`n`-category and whose operations are extended $`n`-functors (Definitions `DSortednCatGl` and `DGlCatAlg`
+A globular $`n`-categorial algebra is a many-sorted algebra whose carrier of every sort is a
+globular $`n`-category and whose operations are globular $`n`-functors (Definitions `DSortednCatGl` and `DGlCatAlg`
 of the draft).
 
 ```lean
@@ -18,16 +18,16 @@ namespace CategorialAlgebras.Extended
 variable {S : Type u}
 ```
 
-# Many-sorted extended n-categories
+# Many-sorted globular n-categories
 
-An $`S`-*sorted extended* $`n`-*category* is a family $`\mathsf{A} = (\mathsf{A}_s)_{s \in S}`
-of extended $`n`-categories, and an $`S`-*sorted extended* $`n`-*functor* a family of extended
+An $`S`-*sorted globular* $`n`-*category* is a family $`\mathsf{A} = (\mathsf{A}_s)_{s \in S}`
+of globular $`n`-categories, and an $`S`-*sorted globular* $`n`-*functor* a family of globular
 $`n`-functors, one for each sort (Definition `DSortednCatGl` of the draft). For a word
 $`\mathbf{s} \in S^{\star}`, $`\mathsf{A}_{\mathbf{s}} = \prod_{j \in |\mathbf{s}|} \mathsf{A}_{s_j}`
-is an extended $`n`-category, whose $`k`-cells are the families of $`k`-cells.
+is a globular $`n`-category, whose $`k`-cells are the families of $`k`-cells.
 
 :::definition (label := "extended.arity-product") (central := false) (title := "Products along a word")
-For an $`S`-sorted family $`\mathsf{A}` of extended categories and a word
+For an $`S`-sorted family $`\mathsf{A}` of globular categories and a word
 $`\mathbf{s} \in S^{\star}`, $`\mathsf{A}_{\mathbf{s}}` is the product of the
 $`\mathsf{A}_{s_j}`: its $`k`-cells are the families $`(a_j)_{j \in |\mathbf{s}|}` of $`k`-cells
 $`a_j \in (\mathsf{A}_{s_j})_k`.
@@ -46,20 +46,20 @@ example (n : ℕ) (A : S → NTypeFamily.{w} n) [∀ s, NCategory n (A s)] (s : 
 
 # Algebras
 
-:::definition (label := "extended.cat-algebra") (central := true) (title := "Extended n-categorial algebra")
-Let $`(S, \Sigma)` be a many-sorted signature and $`n \in \mathbb{N}`. An *extended*
+:::definition (label := "extended.cat-algebra") (central := true) (title := "Globular n-categorial algebra")
+Let $`(S, \Sigma)` be a many-sorted signature and $`n \in \mathbb{N}`. A *globular*
 $`n`-*categorial* $`\Sigma`-*algebra* is a pair $`(\mathsf{A}, F)` where $`\mathsf{A}` is an
-$`S`-sorted extended $`n`-category and $`F` assigns to every operation symbol
-$`\sigma \in \Sigma_{\mathbf{s}, s}` an extended $`n`-functor
+$`S`-sorted globular $`n`-category and $`F` assigns to every operation symbol
+$`\sigma \in \Sigma_{\mathbf{s}, s}` a globular $`n`-functor
 $`F_\sigma = \sigma^{\mathsf{A}} \colon \mathsf{A}_{\mathbf{s}} \to \mathsf{A}_s`.
 
 ```lean
 structure CatAlgebra (Sig : Signature.{u, v} S) (n : ℕ) where
-  /-- The carrier: an `S`-sorted extended `n`-category. -/
+  /-- The carrier: an `S`-sorted globular `n`-category. -/
   carrier : S → NTypeFamily.{w} n
-  /-- The extended `n`-category of each sort. -/
+  /-- The globular `n`-category of each sort. -/
   [str : ∀ s, NCategory n (carrier s)]
-  /-- The interpretation of each operation symbol, as an extended `n`-functor. -/
+  /-- The interpretation of each operation symbol, as a globular `n`-functor. -/
   op : ∀ {w : List S} {s : S}, Sig w s → NFunctor n (ExtArity carrier w) (carrier s)
 ```
 :::
@@ -77,19 +77,19 @@ instance : CoeFun (CatAlgebra.{u, v, w} Sig n) fun _ ↦ S → NTypeFamily.{w} n
 attribute [coe] CatAlgebra.carrier
 ```
 
-:::definition (label := "extended.cat-algebra-hom") (central := false) (title := "Homomorphism of extended n-categorial algebras")
+:::definition (label := "extended.cat-algebra-hom") (central := false) (title := "Homomorphism of globular n-categorial algebras")
 A *homomorphism* from $`\boldsymbol{\mathsf{A}}` to $`\boldsymbol{\mathsf{B}}` is an $`S`-sorted
-extended $`n`-functor $`H = (H_s)_{s \in S}` from $`\mathsf{A}` to $`\mathsf{B}` such that, for
+globular $`n`-functor $`H = (H_s)_{s \in S}` from $`\mathsf{A}` to $`\mathsf{B}` such that, for
 every $`\sigma \in \Sigma_{\mathbf{s}, s}`, every dimension $`k \in n + 1` and every family of
 $`k`-cells $`(a_j)_{j \in |\mathbf{s}|} \in \mathsf{A}_{\mathbf{s}}`,
 $$`H_s\big(\sigma^{\boldsymbol{\mathsf{A}}}((a_j)_{j})\big) = \sigma^{\boldsymbol{\mathsf{B}}}\big((H_{s_j}(a_j))_{j}\big).`
 
 As Definition `DGlCatAlg` of the draft says, the equation is asked for every $`k \in n + 1`, including
-the $`n`-cells, the top dimension of an extended $`n`-category.
+the $`n`-cells, the top dimension of a globular $`n`-category.
 
 ```lean
 structure Hom (A B : CatAlgebra.{u, v, w} Sig n) where
-  /-- The extended `n`-functor at each sort. -/
+  /-- The globular `n`-functor at each sort. -/
   map : ∀ s, NFunctor n (A s) (B s)
   /-- The functors commute with the operations, in every dimension. -/
   map_op : ∀ {w : List S} {s : S} (σ : Sig w s) (k : FinSucc n) (a : ExtArity A w k),
@@ -124,8 +124,8 @@ end Hom
 ```
 
 :::definition (label := "extended.cat-alg") (central := false) (title := "The category nCatᵉˣᵗAlg(Σ)")
-Extended $`n`-categorial $`\Sigma`-algebras and their homomorphisms form a category
-$`\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)`.
+Globular $`n`-categorial $`\Sigma`-algebras and their homomorphisms form a category
+$`\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)`.
 
 ```lean
 instance category : CategoryTheory.Category.{max u w} (CatAlgebra.{u, v, w} Sig n) where
@@ -142,11 +142,11 @@ instance category : CategoryTheory.Category.{max u w} (CatAlgebra.{u, v, w} Sig 
 end CatAlgebra
 ```
 
-# The extended n-categorial signature
+# The globular n-categorial signature
 
-:::definition (label := "extended.signature") (central := false) (title := "The extended n-categorial signature")
-Let $`\Sigma` be an $`S`-sorted signature and $`n \in \mathbb{N}`. The *extended*
-$`n`-*categorial signature determined by* $`\Sigma`, $`\Sigma^{\mathrm{ext}(n)}`, has sorts
+:::definition (label := "extended.signature") (central := false) (title := "The globular n-categorial signature")
+Let $`\Sigma` be an $`S`-sorted signature and $`n \in \mathbb{N}`. The *globular*
+$`n`-*categorial signature determined by* $`\Sigma`, $`\Sigma^{\mathrm{gl}(n)}`, has sorts
 $`(n + 1) \times S`, the sort $`(k, s)` standing for the $`k`-cells of sort $`s`, and the
 following operation symbols (Definition `DSigmaCatGlobular` of the draft):
 

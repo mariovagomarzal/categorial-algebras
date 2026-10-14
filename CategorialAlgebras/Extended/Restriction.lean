@@ -3,13 +3,13 @@ import CategorialAlgebras.Extended.Product
 
 open Verso.Genre Manual InlineLean Stemma
 
-#doc (Stemma) "Restriction of extended categories" =>
+#doc (Stemma) "Restriction of globular categories" =>
 
-An extended category has a set of cells for each dimension, and its structure only relates
-dimensions $`j < k`. Keeping only some of the dimensions therefore gives again an extended
-category. This is how truncation works in the extended presentation: the extended
-$`m`-category underlying an extended $`n`-category, for $`m \leq n`, keeps the dimensions
-$`0, \ldots, m`, and the extended $`n`-category underlying an extended $`\omega`-category keeps
+A globular category has a set of cells for each dimension, and its structure only relates
+dimensions $`j < k`. Keeping only some of the dimensions therefore gives again a globular
+category. This is how truncation works in the globular presentation: the globular
+$`m`-category underlying a globular $`n`-category, for $`m \leq n`, keeps the dimensions
+$`0, \ldots, m`, and the globular $`n`-category underlying a globular $`\omega`-category keeps
 the dimensions $`0, \ldots, n`.
 
 The construction is done once, for any strictly monotone mapping $`e \colon J \to I` between
@@ -25,9 +25,9 @@ variable {I J : Type} [Preorder I] [Preorder J] {e : J → I}
 ```
 
 :::construction (label := "extended.restrict-category") (central := false) (title := "Restriction along a mapping of dimensions")
-Let $`e \colon J \to I` be a strictly monotone mapping and $`\mathsf{C} = (C_i)_{i \in I}` an
-extended category with dimensions in $`I`. The *restriction* $`e^{*}\mathsf{C}` of
-$`\mathsf{C}` along $`e` is the extended category with dimensions in $`J` whose $`j`-cells are
+Let $`e \colon J \to I` be a strictly monotone mapping and $`\mathsf{C} = (C_i)_{i \in I}` a
+globular category with dimensions in $`I`. The *restriction* $`e^{*}\mathsf{C}` of
+$`\mathsf{C}` along $`e` is the globular category with dimensions in $`J` whose $`j`-cells are
 the $`e(j)`-cells of $`\mathsf{C}`, and whose sources, targets, identities and compositions are
 those of $`\mathsf{C}`: for $`j < k` in $`J`, $`\mathrm{sc}^{(j,k)}` of $`e^{*}\mathsf{C}` is
 $`\mathrm{sc}^{(e(j),e(k))}` of $`\mathsf{C}`, and so on. Every axiom of $`e^{*}\mathsf{C}` for
@@ -73,10 +73,10 @@ def Category.restrict (he : StrictMono e) (C : TypeFamily.{u} I) [Category I C] 
 ```
 :::
 
-:::construction (label := "extended.restrict-functor") (central := false) (title := "Restriction of extended functors")
-An extended functor $`F = (F_i)_{i \in I}` from $`\mathsf{C}` to $`\mathsf{D}` restricts to the
-extended functor $`e^{*}F = (F_{e(j)})_{j \in J}` from $`e^{*}\mathsf{C}` to $`e^{*}\mathsf{D}`.
-Restriction preserves identities and composition of extended functors, both on the nose.
+:::construction (label := "extended.restrict-functor") (central := false) (title := "Restriction of globular functors")
+A globular functor $`F = (F_i)_{i \in I}` from $`\mathsf{C}` to $`\mathsf{D}` restricts to the
+globular functor $`e^{*}F = (F_{e(j)})_{j \in J}` from $`e^{*}\mathsf{C}` to $`e^{*}\mathsf{D}`.
+Restriction preserves identities and composition of globular functors, both on the nose.
 
 ```lean
 def Functor.restrict (he : StrictMono e)
@@ -94,7 +94,7 @@ def Functor.restrict (he : StrictMono e)
 ```
 :::
 
-The product of a family of extended categories is computed dimensionwise, so restricting it
+The product of a family of globular categories is computed dimensionwise, so restricting it
 is the same as taking the product of the restrictions: the two structures on
 $`\prod_{j} C^{j}_{e(k)}` coincide.
 
