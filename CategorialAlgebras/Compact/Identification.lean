@@ -2,6 +2,9 @@ import Stemma
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.CategoryTheory.Equivalence
 import Mathlib.CategoryTheory.EqToHom
+import Mathlib.CategoryTheory.ObjectProperty.FullSubcategory
+import Mathlib.Data.ENat.Basic
+import Mathlib.Order.ULift
 import CategorialAlgebras.Evaluation
 import CategorialAlgebras.Compact.Specification
 import CategorialAlgebras.Compact.OmegaAlgebra
@@ -18,7 +21,9 @@ $`\mathsf{A}_s` interpret the symbols $`\mathrm{sc}^{k}_{s}`, $`\mathrm{tg}^{k}_
 $`\circ^{k}_{s}`, and the functors $`F_\sigma` the operation symbols of $`\Sigma`. This
 document builds that partial algebra, shows that it is a model of the specification, and shows
 that every model of the specification arises in this way, from exactly one algebra. For
-$`I = n`, the homomorphisms correspond as well, and the two categories are isomorphic. As the
+$`I = n`, the homomorphisms correspond as well, and the two categories are isomorphic; for
+$`I = \omega`, the compact $`\omega`-categorial algebras are the models in which every cell has a
+dimension. As the
 specification, it is written once for every preordered set of dimensions $`I`, so that it covers
 $`n \in \mathbb{N}` and $`\omega` at once.
 
@@ -968,7 +973,7 @@ def cellsFunctor.fullyFaithful (n : ℕ) : (cellsFunctor.{u, v, w} (Sig := Sig) 
 ```
 :::
 
-:::theorem (label := "compact.cat-alg-iso") (central := false) (title := "nCatAlg(Σ) = PAlg(C^Σ⁽ⁿ⁾)")
+:::theorem (label := "compact.cat-alg-iso") (central := true) (title := "nCatAlg(Σ) = PAlg(C^Σ⁽ⁿ⁾)")
 For every many-sorted signature $`\Sigma` and every $`n \in \mathbb{N}`, the functor of cells
 $`\mathsf{nCatAlg}(\Sigma) \to \mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})` is full, faithful and
 bijective on objects: it is an isomorphism of categories. This is the first part of
@@ -999,4 +1004,272 @@ instance (n : ℕ) : (cellsFunctor.{u, v, w} (Sig := Sig) n).IsEquivalence where
 The functor is fully faithful by Construction `compact.cells-functor`, and bijective on objects by
 Construction `compact.cat-algebra-equiv-model`, whose bijection is its action on objects. A
 fully faithful functor that is surjective on objects is an equivalence.
+:::
+
+# The ω case
+
+For $`I = \omega`, the partial algebra of cells of a compact $`\omega`-categorial algebra is a
+model of $`\mathcal{C}^{\Sigma^{(\omega)}}` in which every cell is a $`k`-cell for some
+$`k \in \mathbb{N}`, and the constructions above restrict to these models. This is the second part
+of Proposition `PCompactIdent` of the draft.
+
+:::definition (label := "compact.omega-model") (central := false) (title := "Models whose cells have a dimension")
+A model $`\mathbf{M}` of $`\mathcal{C}^{\Sigma^{(\omega)}}` *has dimensions* if every cell is a
+$`k`-cell for some $`k \in \mathbb{N}`: for every sort $`s` and every $`x \in M_s` there is
+$`k` with $`\mathrm{sc}^{k}_{s}(x) = x`. These models form a full subcategory of
+$`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(\omega)}})`.
+
+```lean
+/-- The models of `C^{Σ^{(ω)}}` in which every cell is a `k`-cell for some `k`. -/
+def IsOmegaModel : CategoryTheory.ObjectProperty (CompactPAlg.{u, v, w} Sig ℕ) :=
+  fun M => ∀ s (a : M.1 s), ∃ k : ℕ, cell k a
+```
+:::
+
+:::construction (label := "compact.omega-hom-cells") (central := false) (title := "Homomorphisms of ω-categorial algebras as homomorphisms of cells")
+As for $`n \in \mathbb{N}` (Construction `compact.hom-cells`), the homomorphisms of compact
+$`\omega`-categorial $`\Sigma`-algebras are, with the same mappings, the homomorphisms between their
+partial algebras of cells.
+
+```lean
+namespace OmegaCatAlgebra
+
+variable {A B : OmegaCatAlgebra.{u, v, w} Sig}
+
+/-- A homomorphism of compact ω-categorial algebras as a homomorphism of cells. -/
+def Hom.toCells (H : Hom A B) :
+    PartialAlgebra.Hom (cellAlgebra A.carrier A.op) (cellAlgebra B.carrier B.op) where
+  map s := H.map s
+  map_dom σ a h := by
+    cases σ with
+    | op σ => trivial
+    | sc k s => trivial
+    | tg k s => trivial
+    | comp k s => exact dom_of_sc_is_tg ((H.map _).comp_map (sc_is_tg_of_dom h))
+  map_op σ a h := by
+    cases σ with
+    | op σ => exact H.map_op σ a
+    | sc k s => exact (H.map _).map_sc_eq_sc_map k _
+    | tg k s => exact (H.map _).map_tg_eq_tg_map k _
+    | comp k s => exact (H.map _).map_comp_eq_comp_map (sc_is_tg_of_dom h)
+
+/-- A homomorphism of cells as a homomorphism of compact ω-categorial algebras. -/
+def Hom.ofCells
+    (h : PartialAlgebra.Hom (cellAlgebra A.carrier A.op) (cellAlgebra B.carrier B.op)) :
+    Hom A B where
+  map s :=
+    { map := h.map s
+      map_sc_eq_sc_map := fun k f => h.map_op (.sc k s) (fun | ⟨0, _⟩ => f) trivial
+      map_tg_eq_tg_map := fun k f => h.map_op (.tg k s) (fun | ⟨0, _⟩ => f) trivial
+      map_comp_eq_comp_map := fun {k f g} hgf =>
+        h.map_op (.comp k s) (fun | ⟨0, _⟩ => g | ⟨1, _⟩ => f) (dom_of_sc_is_tg hgf) }
+  map_op σ a := h.map_op (.op σ) a trivial
+
+end OmegaCatAlgebra
+```
+:::
+
+:::construction (label := "compact.omega-cells-functor") (central := false) (title := "The functor of cells on ωCatAlg(Σ)")
+Sending a compact $`\omega`-categorial $`\Sigma`-algebra to its partial algebra of cells, and a
+homomorphism to itself as a homomorphism of cells, is a fully faithful functor
+$`\omega\mathsf{CatAlg}(\Sigma) \to \mathsf{PAlg}(\mathcal{C}^{\Sigma^{(\omega)}})` whose images
+have dimensions, since every cell of a compact $`\omega`-category is a $`k`-cell for some $`k`.
+It thus factors through the full subcategory of the models that have dimensions.
+
+```lean
+open OmegaCatAlgebra in
+/-- The functor of cells on `ωCatAlg(Σ)`. -/
+def omegaCellsFunctor :
+    CategoryTheory.Functor (OmegaCatAlgebra.{u, v, w} Sig) (CompactPAlg.{u, v, w} Sig ℕ) where
+  obj A := cellModel A.carrier A.op
+  map H := Hom.toCells H
+  map_id _ := rfl
+  map_comp _ _ := rfl
+
+open OmegaCatAlgebra in
+def omegaCellsFunctor.fullyFaithful :
+    (omegaCellsFunctor.{u, v, w} (Sig := Sig)).FullyFaithful where
+  preimage h := Hom.ofCells h
+  map_preimage _ := rfl
+  preimage_map _ := rfl
+
+/-- The functor of cells, into the full subcategory of the models whose cells have a dimension. -/
+def omegaCellsLift :
+    CategoryTheory.Functor (OmegaCatAlgebra.{u, v, w} Sig)
+      (IsOmegaModel.{u, v, w} (Sig := Sig)).FullSubcategory :=
+  IsOmegaModel.lift omegaCellsFunctor fun A s a => (A.str s).is_cell a
+
+open OmegaCatAlgebra in
+def omegaCellsLift.fullyFaithful : (omegaCellsLift.{u, v, w} (Sig := Sig)).FullyFaithful where
+  preimage h := Hom.ofCells h.hom
+  map_preimage _ := rfl
+  preimage_map _ := rfl
+```
+:::
+
+:::construction (label := "compact.omega-model-algebra") (central := false) (title := "The compact ω-categorial algebra of a model with dimensions")
+If a model $`\mathbf{M}` of $`\mathcal{C}^{\Sigma^{(\omega)}}` has dimensions, its compact categories
+with dimensions in $`\mathbb{N}` (Construction `compact.model-category`) are compact
+$`\omega`-categories, and with the functors of Construction `compact.model-algebra` it is a compact
+$`\omega`-categorial $`\Sigma`-algebra.
+
+```lean
+/-- The compact ω-categorial algebra of a model in which every cell is a `k`-cell. -/
+def omegaModelAlgebra (M : CompactPAlg.{u, v, w} Sig ℕ) (hM : IsOmegaModel M) :
+    OmegaCatAlgebra.{u, v, w} Sig where
+  carrier := M.1.carrier
+  str s := { modelCategory (M := M) s with is_cell := hM s }
+  op σ := modelOp M σ
+```
+:::
+
+The two constructions are inverse to each other on objects, by Propositions
+`compact.model-cell-algebra` and `compact.model-of-cell-algebra`: a compact $`\omega`-category is
+determined by its compact category with dimensions in $`\mathbb{N}`, the condition on cells being
+a property.
+
+```lean
+namespace OmegaCatAlgebra
+
+variable {A B : OmegaCatAlgebra.{u, v, w} Sig}
+
+lemma mk_eq_mk {C : S → Type w} {str str' : ∀ s, OmegaCategory (C s)}
+    {F : ∀ {ws : List S} {s : S}, Sig ws s → letI := str; OmegaFunctor (Arity C ws) (C s)}
+    {F' : ∀ {ws : List S} {s : S}, Sig ws s → letI := str'; OmegaFunctor (Arity C ws) (C s)}
+    (h : str = str') (hF : ∀ {ws : List S} {s : S} (σ : Sig ws s) a,
+      (letI := str; (F σ).map a) = (letI := str'; (F' σ).map a)) :
+    @OmegaCatAlgebra.mk S Sig C str F = @OmegaCatAlgebra.mk S Sig C str' F' := by
+  subst h; congr; funext ws s σ; exact Functor.ext (hF σ)
+
+end OmegaCatAlgebra
+
+lemma OmegaCategory.ext' {C : Type w} {i j : OmegaCategory C}
+    (h : i.toCategory = j.toCategory) : i = j := by
+  cases i; cases j; cases h; rfl
+
+theorem omegaModelAlgebra_cellModel (A : OmegaCatAlgebra.{u, v, w} Sig) (h) :
+    omegaModelAlgebra (cellModel A.carrier A.op) h = A := by
+  cases A with | @mk C str F =>
+  exact OmegaCatAlgebra.mk_eq_mk
+    (funext fun s => OmegaCategory.ext' (modelCategory_cellModel C (fun σ => F σ) s))
+    fun _ _ => rfl
+
+theorem cellModel_omegaModelAlgebra (M : CompactPAlg.{u, v, w} Sig ℕ) (hM : IsOmegaModel M) :
+    cellModel (omegaModelAlgebra M hM).carrier (omegaModelAlgebra M hM).op = M :=
+  Subtype.ext (cellAlgebra_model M)
+```
+
+:::theorem (label := "compact.omega-cat-alg-iso") (central := false) (title := "ωCatAlg(Σ) as a full subcategory of PAlg(C^Σ⁽ω⁾)")
+For every many-sorted signature $`\Sigma`, the functor of cells from
+$`\omega\mathsf{CatAlg}(\Sigma)` to the full subcategory of
+$`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(\omega)}})` of the models that have dimensions is full,
+faithful and bijective on objects: an isomorphism of categories. This is the identification in
+the second part of Proposition `PCompactIdent` of the draft.
+
+```lean
+theorem omegaCellsLift_isIso :
+    (omegaCellsLift.{u, v, w} (Sig := Sig)).Full ∧
+      (omegaCellsLift.{u, v, w} (Sig := Sig)).Faithful ∧
+      Function.Bijective (omegaCellsLift.{u, v, w} (Sig := Sig)).obj := by
+  refine ⟨omegaCellsLift.fullyFaithful.full, omegaCellsLift.fullyFaithful.faithful,
+    Function.bijective_iff_has_inverse.mpr ⟨fun X => omegaModelAlgebra X.obj X.property, ?_, ?_⟩⟩
+  · intro A; exact omegaModelAlgebra_cellModel A _
+  · intro X
+    exact CategoryTheory.ObjectProperty.FullSubcategory.ext (cellModel_omegaModelAlgebra _ _)
+```
+:::
+
+:::proof (of := "compact.omega-cat-alg-iso")
+The functor is fully faithful by Construction `compact.omega-hom-cells`, the two constructions
+there being inverse to each other; it is bijective on objects with inverse Construction
+`compact.omega-model-algebra`, by the two equations above.
+:::
+
+# The subcategory is proper
+
+The draft also says that the full subcategory is proper: not every model of
+$`\mathcal{C}^{\Sigma^{(\omega)}}` has dimensions. This needs a sort: when $`S` is empty, every
+model has dimensions, vacuously, and the two categories are the same. For $`S` nonempty the draft
+argues with products; here an explicit model is given instead.
+
+:::construction (label := "compact.dim-category") (central := false) (title := "A compact category of dimensions")
+Let $`D` be a linear order and $`e \colon \mathbb{N} \to D` a monotone mapping. Then $`D` is a
+compact category with dimensions in $`\mathbb{N}` with $`\mathrm{sc}^{k}(x) = \mathrm{tg}^{k}(x) =
+\min(x, e(k))` and with $`g \#^{k} f = \max(g, f)`, defined when
+$`\min(g, e(k)) = \min(f, e(k))`. Every axiom is a law of lattices: (C3) and (2C2) are the
+distributivity of $`\min` over $`\max`, (C5) and (2C3) the associativity and commutativity of
+$`\max`, and (2C1) uses that $`e(j) \leq e(k)` for $`j < k`.
+
+```lean
+section Dim
+
+variable {D : Type w} [LinearOrder D] (e : ℕ → D) (he : Monotone e)
+
+/-- Cells in a linear order `D`, with `sc^k x = tg^k x = min x (e k)` and `g ♯^k f = max g f`. -/
+@[instance_reducible]
+def dimCategory : Category ℕ D where
+  sc k x := min x (e k)
+  tg k x := min x (e k)
+  pcomp k g f := ⟨min g (e k) = min f (e k), fun _ => max g f⟩
+  pcomp_dom := Iff.rfl
+  sck_sck_eq_sck k x := by simp
+  tgk_sck_eq_sck k x := by simp
+  sck_tgk_eq_tgk k x := by simp
+  tgk_tgk_eq_tgk k x := by simp
+  sck_compk_eq_sck {k f g} h := by
+    change min (max g f) (e k) = min f (e k)
+    rw [min_max_distrib_right, show min g (e k) = min f (e k) from h, max_self]
+  tgk_compk_eq_tgk {k f g} h := by
+    change min (max g f) (e k) = min g (e k)
+    rw [min_max_distrib_right, show min g (e k) = min f (e k) from h, max_self]
+  compk_sck_eq_id k f := max_eq_left (min_le_left _ _)
+  compk_tgk_eq_id k f := max_eq_right (min_le_left _ _)
+  assoc _ _ := max_assoc _ _ _
+  sck_scj_eq_scj f h := min_eq_left ((min_le_right _ _).trans (he h.le))
+  scj_sck_eq_scj f h := by rw [min_assoc, min_eq_right (he h.le)]
+  scj_tgk_eq_scj f h := by rw [min_assoc, min_eq_right (he h.le)]
+  tgk_tgj_eq_tgj f h := min_eq_left ((min_le_right _ _).trans (he h.le))
+  tgj_tgk_eq_tgj f h := by rw [min_assoc, min_eq_right (he h.le)]
+  tgj_sck_eq_tgj f h := by rw [min_assoc, min_eq_right (he h.le)]
+  sck_compj_eq_compj_sck _ _ := min_max_distrib_right _ _ _
+  tgk_compj_eq_compj_tgk _ _ := min_max_distrib_right _ _ _
+  interchange _ _ _ _ _ := max_max_max_comm _ _ _ _
+
+end Dim
+```
+:::
+
+:::proposition (label := "compact.omega-proper") (central := false) (title := "Models without dimensions")
+If the set of sorts $`S` is nonempty, there is a model of $`\mathcal{C}^{\Sigma^{(\omega)}}` that
+does not have dimensions. Hence, for $`S` nonempty, $`\omega\mathsf{CatAlg}(\Sigma)` is isomorphic to
+a proper full subcategory of $`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(\omega)}})`.
+
+```lean
+/-- A model of `C^{Σ^{(ω)}}` with a cell that is not a `k`-cell for any `k`. -/
+theorem exists_not_isOmegaModel [Nonempty S] :
+    ∃ M : CompactPAlg.{u, v, w} Sig ℕ, ¬ IsOmegaModel M := by
+  let e : ℕ → ULift.{w} ℕ∞ := fun k => ULift.up k
+  have he : Monotone e := fun i j h => ULift.up_le.mpr (by exact_mod_cast h)
+  let _ : Category ℕ (ULift.{w} ℕ∞) := dimCategory e he
+  let F : ∀ {ws : List S} {s : S}, Sig ws s →
+      Functor ℕ (Arity (fun _ => ULift.{w} ℕ∞) ws) ((fun _ => ULift.{w} ℕ∞) s) := fun _ =>
+    { map := fun _ => e 0
+      map_sc_eq_sc_map := fun k _ => (min_eq_left (he (Nat.zero_le k))).symm
+      map_tg_eq_tg_map := fun k _ => (min_eq_left (he (Nat.zero_le k))).symm
+      map_comp_eq_comp_map := fun _ => (max_self _).symm }
+  refine ⟨cellModel (fun _ => ULift.{w} ℕ∞) F, fun hM => ?_⟩
+  obtain ⟨k, hk⟩ := hM (Classical.arbitrary S) (ULift.up ⊤)
+  change min (ULift.up ⊤) (e k) = ULift.up ⊤ at hk
+  rw [min_eq_right (ULift.up_le.mpr le_top : e k ≤ ULift.up ⊤)] at hk
+  exact ENat.natCast_ne_top k (congrArg ULift.down hk)
+```
+:::
+
+:::proof (of := "compact.omega-proper")
+Take $`D = \mathbb{N} \cup \{\infty\}` and $`e(k) = k` in Construction `compact.dim-category`,
+the same compact category for every sort, and interpret every operation symbol of $`\Sigma` as
+the constant functor with value $`0`, which preserves sources, targets and composites since
+$`\min(0, k) = 0 = \max(0, 0)`. By Proposition `compact.cell-algebra-model`, its partial algebra
+of cells is a model; the cell $`\infty` is not a $`k`-cell for any $`k`, since
+$`\mathrm{sc}^{k}(\infty) = k`.
 :::
