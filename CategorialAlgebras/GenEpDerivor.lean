@@ -327,6 +327,54 @@ noncomputable def derived (B : PartialAlgebra.{u', v', w} Lg.sig) : PartialAlgeb
 ```
 :::
 
+```lean
+theorem eval_derived {I : Type} {κ : I → S} (b : ∀ i, δ.derived B (κ i)) :
+    ∀ {t : S} (R : Term Sg.sig (Vars κ) t),
+      ((R.eval (δ.derived B) (famVal b)).Dom ↔
+        EEq.HoldsAll B (famVal fun i => (b i).1) (δ.dfd R)) ∧
+      ∀ c, R.eval (δ.derived B) (famVal b) = Part.some c →
+        (δ.toDerivor.lift R).eval B (famVal fun i => (b i).1) = Part.some c.1
+  | _, .var x => by
+    obtain ⟨i, rfl⟩ := x
+    refine ⟨⟨fun _ => EEq.holdsAll_empty, fun _ => trivial⟩, fun c hc => ?_⟩
+    have : b i = c := Part.some_inj.mp hc
+    subst this
+    rfl
+  | _, .app τ ts => by
+    have ih := fun j => eval_derived b (ts j)
+    have hdfd : δ.dfd (Term.app τ ts) = (⋃ j, δ.dfd (ts j)) ∪
+        EEq.substSet (famSubst fun j => δ.toDerivor.lift (ts j)) (δ.opDom ⟨_, _, τ⟩) := rfl
+    have hlift : δ.toDerivor.lift (Term.app τ ts) =
+        (δ.op τ).subst (famSubst fun j => δ.toDerivor.lift (ts j)) := rfl
+    have hval : ∀ a : Arity (δ.derived B) _,
+        (∀ j, (ts j).eval (δ.derived B) (famVal b) = Part.some (a j)) →
+        (fun s x => (famSubst (fun j => δ.toDerivor.lift (ts j)) s x).eval B
+          (famVal fun i => (b i).1)) = famVal fun j => (a j).1 :=
+      fun a ha => famSubst_eval fun j => (ih j).2 (a j) (ha j)
+    refine ⟨⟨fun hD => ?_, fun hH => ?_⟩, fun c hc => ?_⟩
+    · obtain ⟨a, ha, hA⟩ := Term.eval_app_dom _ _ τ hD
+      have hop : ((δ.derived B).op τ a).Dom := hA ▸ hD
+      rw [hdfd, EEq.holdsAll_union, EEq.holdsAll_iUnion]
+      erw [EEq.holdsAll_substSet, hval a ha]
+      exact ⟨fun j => (ih j).1.mp (by rw [ha j]; trivial), hop⟩
+    · rw [hdfd, EEq.holdsAll_union, EEq.holdsAll_iUnion] at hH
+      obtain ⟨hj, hsub⟩ := hH
+      have hd : ∀ j, ((ts j).eval (δ.derived B) (famVal b)).Dom := fun j => (ih j).1.mpr (hj j)
+      let a : Arity (δ.derived B) _ := fun j => ((ts j).eval (δ.derived B) (famVal b)).get (hd j)
+      have ha : ∀ j, (ts j).eval (δ.derived B) (famVal b) = Part.some (a j) :=
+        fun j => (Part.some_get _).symm
+      erw [EEq.holdsAll_substSet, hval a ha] at hsub
+      rw [Term.eval_app_of_eq_some _ _ τ ha]
+      exact hsub
+    · have hD : ((Term.app τ ts).eval (δ.derived B) (famVal b)).Dom := by rw [hc]; trivial
+      obtain ⟨a, ha, hA⟩ := Term.eval_app_dom _ _ τ hD
+      rw [hlift]
+      erw [Term.eval_subst, hval a ha]
+      rw [hA] at hc
+      obtain ⟨hop, rfl⟩ := Part.eq_some_iff.mp hc
+      exact (Part.some_get _).symm
+```
+
 :::Stemma.lemma (label := "gen-ep-translation") (central := false) (title := "Values in the derived algebra")
 Let $`\mathbf{d}` be a generalized ep-derivor from $`\mathbf{\Sigma}` to $`\mathbf{\Lambda}`,
 $`\mathbf{B}` a partial $`\Lambda`-algebra and $`\mathbf{b}` a family in
@@ -340,19 +388,46 @@ if and only if $`\mathbf{B} \models \mathrm{tr}_{\mathbf{d}}[\mathcal{H}][\mathb
 ```lean
 theorem eval_derived_dom_iff {I : Type} {κ : I → S} (b : ∀ i, δ.derived B (κ i)) {t : S}
     (R : Term Sg.sig (Vars κ) t) :
-    (R.eval (δ.derived B) (famVal b)).Dom ↔ EEq.HoldsAll B (famVal fun i => (b i).1) (δ.dfd R) := by
-  sorry
+    (R.eval (δ.derived B) (famVal b)).Dom ↔ EEq.HoldsAll B (famVal fun i => (b i).1) (δ.dfd R) :=
+  (δ.eval_derived b R).1
 
 theorem eval_derived_get {I : Type} {κ : I → S} (b : ∀ i, δ.derived B (κ i)) {t : S}
     (R : Term Sg.sig (Vars κ) t) (h : (R.eval (δ.derived B) (famVal b)).Dom) :
     (δ.toDerivor.lift R).eval B (famVal fun i => (b i).1) =
-      Part.some ((R.eval (δ.derived B) (famVal b)).get h).1 := by
-  sorry
+      Part.some ((R.eval (δ.derived B) (famVal b)).get h).1 :=
+  (δ.eval_derived b R).2 _ (Part.some_get h).symm
 
 theorem holdsAll_derived_iff {I : Type} {κ : I → S} (b : ∀ i, δ.derived B (κ i))
     (H : Set (EEq Sg.sig (Vars κ))) :
     EEq.HoldsAll (δ.derived B) (famVal b) H ↔ EEq.HoldsAll B (famVal fun i => (b i).1) (δ.trSet H) := by
-  sorry
+  have hg : ∀ {t : S} (R : Term Sg.sig (Vars κ) t) (h : (R.eval (δ.derived B) (famVal b)).Dom)
+      (g : ((δ.toDerivor.lift R).eval B (famVal fun i => (b i).1)).Dom),
+      ((δ.toDerivor.lift R).eval B (famVal fun i => (b i).1)).get g =
+        ((R.eval (δ.derived B) (famVal b)).get h).1 :=
+    fun R h g => Part.get_eq_of_mem (by rw [δ.eval_derived_get b R h]; exact Part.mem_some _) g
+  unfold trSet trSetWith
+  rw [EEq.holdsAll_biUnion]
+  refine forall₂_congr fun e _ => ?_
+  rw [trWith, EEq.holdsAll_insert, EEq.holdsAll_union]
+  constructor
+  · rintro ⟨h1, h2, heq⟩
+    have e1 := δ.eval_derived_get b e.lhs h1
+    have e2 := δ.eval_derived_get b e.rhs h2
+    refine ⟨⟨?_, ?_, ?_⟩,
+      (δ.eval_derived_dom_iff b e.lhs).mp h1, (δ.eval_derived_dom_iff b e.rhs).mp h2⟩
+    · show ((δ.toDerivor.lift e.lhs).eval B (famVal fun i => (b i).1)).Dom
+      rw [e1]; trivial
+    · show ((δ.toDerivor.lift e.rhs).eval B (famVal fun i => (b i).1)).Dom
+      rw [e2]; trivial
+    · show ((δ.toDerivor.lift e.lhs).eval B (famVal fun i => (b i).1)).get _ =
+        ((δ.toDerivor.lift e.rhs).eval B (famVal fun i => (b i).1)).get _
+      exact (hg e.lhs h1 _).trans ((congrArg Subtype.val heq).trans (hg e.rhs h2 _).symm)
+  · rintro ⟨⟨g1, g2, heq⟩, d1, d2⟩
+    have h1 := (δ.eval_derived_dom_iff b e.lhs).mpr d1
+    have h2 := (δ.eval_derived_dom_iff b e.rhs).mpr d2
+    have heq' : ((δ.toDerivor.lift e.lhs).eval B (famVal fun i => (b i).1)).get g1 =
+        ((δ.toDerivor.lift e.rhs).eval B (famVal fun i => (b i).1)).get g2 := heq
+    exact ⟨h1, h2, Subtype.ext ((hg e.lhs h1 g1).symm.trans (heq'.trans (hg e.rhs h2 g2)))⟩
 ```
 :::
 
@@ -385,7 +460,11 @@ theorem op_derived_dom_iff {ws : List S} {s : S} (σ : Sg.sig ws s) (a : Arity (
     ((δ.derived B).op σ a).Dom ↔ EEq.HoldsAll (δ.derived B) (famVal a) (Sg.defn σ) ∧
       ∃ h : ((δ.op σ).eval B (famVal fun j => (a j).1)).Dom,
         EEq.HoldsAll B (val₁ (((δ.op σ).eval B (famVal fun j => (a j).1)).get h)) (δ.sortDom s) := by
-  sorry
+  change EEq.HoldsAll B (famVal fun j => (a j).1) (δ.opDom ⟨ws, s, σ⟩) ↔ _
+  rw [δ.holdsAll_opDom_iff σ, ← δ.holdsAll_derived_iff a]
+  have hfam : EEq.HoldsAll B (famVal fun j => (a j).1) (δ.famDom ws.get) :=
+    (δ.holdsAll_famDom_iff _).mpr fun j => (a j).2
+  exact ⟨fun ⟨_, h2, h3⟩ => ⟨h2, h3⟩, fun ⟨h2, h3⟩ => ⟨hfam, h2, h3⟩⟩
 
 theorem derived_isAlgebra_iff : Sg.IsAlgebra (δ.derived B) ↔
     ∀ {ws : List S} {s : S} (σ : Sg.sig ws s) (a : Arity (δ.derived B) ws),
@@ -393,7 +472,12 @@ theorem derived_isAlgebra_iff : Sg.IsAlgebra (δ.derived B) ↔
         ∃ h : ((δ.op σ).eval B (famVal fun j => (a j).1)).Dom,
           EEq.HoldsAll B (val₁ (((δ.op σ).eval B (famVal fun j => (a j).1)).get h))
             (δ.sortDom s) := by
-  sorry
+  constructor
+  · intro h ws s σ a hdef
+    exact ((δ.op_derived_dom_iff σ a).mp ((h σ a).mpr hdef)).2
+  · intro h ws s σ a
+    rw [δ.op_derived_dom_iff σ a]
+    exact ⟨fun h' => h'.1, fun hdef => ⟨hdef, h σ a hdef⟩⟩
 ```
 :::
 
