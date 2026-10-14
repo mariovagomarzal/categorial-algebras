@@ -450,7 +450,7 @@ theorem holds : ∀ q ∈ Extended.extendedSpec Sig (Fin (n + 1)), q.Holds (D M)
 end Grad
 ```
 
-:::proposition (label := "graduation-models") (central := false) (title := "Graduation sends models to models")
+:::proposition (label := "graduation-models") (central := true) (title := "Graduation sends models to models")
 $`(\mathbf{g}^{(n)})^{\ast}_{\mathfrak{gd}}` sends the models of
 $`(\mathbf{\Sigma}^{(n)}, \mathcal{C}^{\Sigma^{(n)}})` to models of
 $`(\mathbf{\Sigma}^{\mathrm{ext}(n)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})`.
@@ -886,7 +886,7 @@ theorem holds : ∀ q ∈ Compact.compactSpec Sig (Fin n), q.Holds (U M) := by
 end Unif
 ```
 
-:::proposition (label := "unification-models") (central := false) (title := "Unification sends models to models")
+:::proposition (label := "unification-models") (central := true) (title := "Unification sends models to models")
 $`(\mathbf{u}^{(n)})^{\ast}_{\mathfrak{gd}}` sends the models of
 $`(\mathbf{\Sigma}^{\mathrm{ext}(n)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})` to models of
 $`(\mathbf{\Sigma}^{(n)}, \mathcal{C}^{\Sigma^{(n)}})`.
@@ -1427,7 +1427,7 @@ because homomorphisms commute with the identities.
 
 # The equivalence
 
-:::theorem (label := "graduation-equivalence") (central := false) (title := "Graduation and unification are equivalences")
+:::theorem (label := "graduation-equivalence") (central := true) (title := "Graduation and unification are equivalences")
 $`\mathrm{Gd}^{(n)}` and $`\mathrm{Uf}^{(n)}` are mutually quasi-inverse equivalences between
 $`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})` and $`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})`.
 More precisely (Proposition `PGdUfAdj` of the draft), they form an adjoint equivalence whose unit is
@@ -1466,7 +1466,7 @@ $`\mathrm{Gd}^{(n)}(\mathbf{B})`, the image of $`x` under $`\mathrm{Gd}^{(n)}` o
 seen as an $`n`-cell, and $`\theta^{-1}` sends it to its $`(k,n)`-source $`\mathrm{sc}^{k}(x) = x`.
 :::
 
-:::corollary (label := "cat-alg-extended-equiv") (central := false) (title := "nCatAlg(Σ) ≃ PAlg(C^Σᵉˣᵗ⁽ⁿ⁾)")
+:::corollary (label := "cat-alg-extended-equiv") (central := true) (title := "nCatAlg(Σ) ≃ PAlg(C^Σᵉˣᵗ⁽ⁿ⁾)")
 The category $`\mathsf{nCatAlg}(\Sigma)` of compact $`n`-categorial $`\Sigma`-algebras is
 equivalent to the category of models of the extended specification
 $`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}`.
