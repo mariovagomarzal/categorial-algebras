@@ -629,6 +629,400 @@ noncomputable def discFunctor :
 ```
 :::
 
+# Compact truncation
+
+:::definition (label := "truncation-derivor") (central := false) (title := "The compact truncation derivor")
+Let $`m \leq n`. The *compact truncation derivor* $`\boldsymbol{\tau}^{(m,n)} = (\mathrm{id}_S, D, d)` is
+the generalized ep-derivor from $`\mathbf{\Sigma}^{(m)}` to $`\mathbf{\Sigma}^{(n)}` in which $`d` sends
+every operation symbol to itself, applied to variables, and
+$`D_s = \{\mathrm{sc}^{m}_{s}(v) \overset{\mathrm{e}}{=} v\}` if $`m < n`, $`D_s = \varnothing` if $`m = n`.
+
+```lean
+section CompactTrunc
+
+variable {n m} (hmn : m ≤ n)
+
+/-- The domains of the compact truncation derivor. -/
+def truncDom (m n : ℕ) (s : S) :
+    Set (EEq (Compact.CompactSignature Sig (Fin n)) (Vars fun _ : Unit => s)) :=
+  if hm : m < n then {EEq.mk' (app₁ (.sc ⟨m, hm⟩ s) (.var ⟨(), rfl⟩)) (.var ⟨(), rfl⟩)} else ∅
+
+/-- The terms of the compact truncation derivor: every symbol is sent to itself. -/
+def truncOp : ∀ {ws : List S} {s : S}, Compact.CompactSignature Sig (Fin m) ws s →
+    Term (Compact.CompactSignature Sig (Fin n)) (Vars (id ∘ ws.get)) s
+  | _, _, .op σ => .app (.op σ) fun j => .var (Vars.mk j)
+  | _, _, .sc k s => app₁ (.sc (Fin.castLE hmn k) s) (.var ⟨⟨0, by simp⟩, rfl⟩)
+  | _, _, .tg k s => app₁ (.tg (Fin.castLE hmn k) s) (.var ⟨⟨0, by simp⟩, rfl⟩)
+  | _, _, .comp k s =>
+      app₂ (.comp (Fin.castLE hmn k) s) (.var ⟨⟨0, by simp⟩, rfl⟩) (.var ⟨⟨1, by simp⟩, rfl⟩)
+
+/-- The compact truncation derivor `𝛕^{(m,n)}`. -/
+def trunc : GenEpDerivor (compactEpSig Sig (Fin m)) (compactEpSig Sig (Fin n)) where
+  sortMap := id
+  sortDom := truncDom Sig m n
+  op := truncOp Sig hmn
+
+end CompactTrunc
+```
+:::
+
+The truncated algebra $`(\boldsymbol{\tau}^{(m,n)})^{\ast}_{\mathfrak{gd}}(\mathbf{B})` of a model
+$`\mathbf{B}` is the relative subalgebra of $`\mathbf{B}` on its $`m`-cells.
+
+```lean
+section CompactTrunc
+
+variable {n m} (hmn : m ≤ n)
+
+namespace Trunc
+
+open Compact.CategoryStruct
+
+variable {Sig hmn}
+
+/-- The truncated algebra. -/
+noncomputable abbrev T (hmn : m ≤ n) (M : Compact.CompactPAlg.{u, v, w} Sig (Fin n)) :=
+  (trunc Sig hmn).derived M.1
+
+variable {M : Compact.CompactPAlg.{u, v, w} Sig (Fin n)}
+
+lemma dom_iff (hm : m < n) {s : S} (b : M.1 s) :
+    EEq.HoldsAll M.1 (val₁ b) (truncDom Sig m n s) ↔ Compact.msc M ⟨m, hm⟩ b = b := by
+  simp only [truncDom, dif_pos hm]
+  exact EEq.holdsAll_singleton.trans (EEq.holds_mk'_iff (Compact.eval_sc rfl) rfl)
+
+lemma dom_top (hm : ¬ m < n) {s : S} (b : M.1 s) : EEq.HoldsAll M.1 (val₁ b) (truncDom Sig m n s) := by
+  simp only [truncDom, dif_neg hm]; exact EEq.holdsAll_empty
+
+/-- The cell condition: membership in the domain of a sort. -/
+lemma mem_of {s : S} (b : M.1 s) (h : ∀ hm : m < n, Compact.msc M ⟨m, hm⟩ b = b) :
+    EEq.HoldsAll M.1 (val₁ b) (truncDom Sig m n s) := by
+  by_cases hm : m < n
+  · exact (dom_iff hm b).mpr (h hm)
+  · exact dom_top hm b
+
+lemma isCell {s : S} (x : T hmn M s) (hm : m < n) : Compact.msc M ⟨m, hm⟩ x.1 = x.1 :=
+  (dom_iff hm x.1).mp x.2
+
+omit hmn in
+lemma castLE_lt (hmn : m ≤ n) (k : Fin m) (hm : m < n) : Fin.castLE hmn k < (⟨m, hm⟩ : Fin n) :=
+  Fin.lt_def.mpr k.isLt
+
+variable (hmn M) in
+noncomputable def tsc (k : Fin m) {s : S} (x : T hmn M s) : T hmn M s :=
+  ⟨Compact.msc M (Fin.castLE hmn k) x.1, mem_of _ fun hm =>
+    Compact.model_sc_k_sc_l _ (castLE_lt hmn k hm)⟩
+
+variable (hmn M) in
+noncomputable def ttg (k : Fin m) {s : S} (x : T hmn M s) : T hmn M s :=
+  ⟨Compact.mtg M (Fin.castLE hmn k) x.1, mem_of _ fun hm => by
+    calc Compact.msc M ⟨m, hm⟩ (Compact.mtg M (Fin.castLE hmn k) x.1)
+        = Compact.msc M ⟨m, hm⟩ (Compact.msc M (Fin.castLE hmn k)
+            (Compact.mtg M (Fin.castLE hmn k) x.1)) :=
+          congrArg _ (Compact.model_sc_tg _).symm
+      _ = Compact.msc M (Fin.castLE hmn k) (Compact.mtg M (Fin.castLE hmn k) x.1) :=
+          Compact.model_sc_k_sc_l _ (castLE_lt hmn k hm)
+      _ = _ := Compact.model_sc_tg _⟩
+
+variable (hmn M) in
+noncomputable def tcomp (k : Fin m) {s : S} (x y : T hmn M s)
+    (hxy : sc_is_tg (Fin.castLE hmn k) x.1 y.1) : T hmn M s :=
+  ⟨comp (Fin.castLE hmn k) x.1 y.1 hxy, mem_of _ fun hm => by
+    have hd : (pcomp (Fin.castLE hmn k) (Compact.msc M ⟨m, hm⟩ x.1)
+        (Compact.msc M ⟨m, hm⟩ y.1)).Dom :=
+      dom_of_sc_is_tg (Compact.Category.sc_tg_j_sc (castLE_lt hmn k hm) hxy)
+    refine (Compact.model_sc_comp_l (castLE_lt hmn k hm) hxy hd).trans ?_
+    exact Part.get_eq_get_of_eq _ _ (congrArg₂ (pcomp _) (isCell x hm) (isCell y hm))⟩
+
+variable (hmn M) in
+noncomputable def top {ws : List S} {s : S} (σ : Sig ws s) (a : Arity (T hmn M) ws) : T hmn M s :=
+  ⟨Compact.mop M σ fun j => (a j).1, mem_of _ fun hm =>
+    ((Compact.modelOp M σ).map_sc_eq_sc_map ⟨m, hm⟩ _).symm.trans
+      (congrArg (Compact.mop M σ) (funext fun j => isCell (a j) hm))⟩
+
+lemma op_sc (k : Fin m) {s : S} (x : T hmn M s) :
+    (T hmn M).op (.sc k s) (arityOne x) = Part.some (tsc hmn M k x) :=
+  (trunc Sig hmn).derived_op_eq_some EEq.holdsAll_empty (Compact.eval_sc rfl) _
+
+lemma op_tg (k : Fin m) {s : S} (x : T hmn M s) :
+    (T hmn M).op (.tg k s) (arityOne x) = Part.some (ttg hmn M k x) :=
+  (trunc Sig hmn).derived_op_eq_some EEq.holdsAll_empty (Compact.eval_tg rfl) _
+
+lemma op_op {ws : List S} {s : S} (σ : Sig ws s) (a : Arity (T hmn M) ws) :
+    (T hmn M).op (.op σ) a = Part.some (top hmn M σ a) :=
+  (trunc Sig hmn).derived_op_eq_some EEq.holdsAll_empty (Compact.eval_op σ fun _ => rfl) _
+
+lemma comp_defn_iff (k : Fin m) {s : S} (x y : T hmn M s) :
+    EEq.HoldsAll (T hmn M) (famVal (arityTwo x y)) ((compactEpSig Sig (Fin m)).defn (.comp k s)) ↔
+      sc_is_tg (Fin.castLE hmn k) x.1 y.1 := by
+  refine EEq.holdsAll_singleton.trans ?_
+  refine (EEq.holds_mk'_iff ((eval_app₁_arity _ rfl).trans (op_sc k x))
+    ((eval_app₁_arity _ rfl).trans (op_tg k y))).trans ?_
+  exact ⟨fun e => congrArg Subtype.val e, fun e => Subtype.ext e⟩
+
+lemma op_comp (k : Fin m) {s : S} (x y : T hmn M s) (hxy : sc_is_tg (Fin.castLE hmn k) x.1 y.1) :
+    (T hmn M).op (.comp k s) (arityTwo x y) = Part.some (tcomp hmn M k x y hxy) :=
+  (trunc Sig hmn).derived_op_eq_some ((comp_defn_iff k x y).mpr hxy)
+    (Compact.eval_comp rfl rfl hxy) _
+
+lemma op_comp_dom (k : Fin m) {s : S} (x y : T hmn M s) :
+    ((T hmn M).op (.comp k s) (arityTwo x y)).Dom ↔ sc_is_tg (Fin.castLE hmn k) x.1 y.1 :=
+  ⟨fun hd => (comp_defn_iff k x y).mp (((trunc Sig hmn).op_derived_dom_iff _ _).mp hd).1,
+    fun hxy => (Part.eq_some_iff.mp (op_comp k x y hxy)).1⟩
+
+theorem isAlgebra : (compactEpSig Sig (Fin m)).IsAlgebra (T hmn M) := by
+  intro ws s σ a
+  cases σ with
+  | op σ => exact ⟨fun _ => EEq.holdsAll_empty, fun _ => (Part.eq_some_iff.mp (op_op σ a)).1⟩
+  | sc k s =>
+    have ha : arityOne (a ⟨0, by simp⟩) = a := by funext i; match i with | ⟨0, _⟩ => rfl
+    exact ⟨fun _ => EEq.holdsAll_empty, fun _ => ha ▸ (Part.eq_some_iff.mp (op_sc k _)).1⟩
+  | tg k s =>
+    have ha : arityOne (a ⟨0, by simp⟩) = a := by funext i; match i with | ⟨0, _⟩ => rfl
+    exact ⟨fun _ => EEq.holdsAll_empty, fun _ => ha ▸ (Part.eq_some_iff.mp (op_tg k _)).1⟩
+  | comp k s =>
+    have ha : arityTwo (a ⟨0, by simp⟩) (a ⟨1, by simp⟩) = a := by
+      funext i; match i with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl
+    exact ha ▸ (op_comp_dom k _ _).trans (comp_defn_iff k _ _).symm
+
+section Eval
+
+variable {val : ∀ s, Compact.Var S s → Part ((T hmn M) s)}
+
+lemma ev_scT (k : Fin m) {s : S} {t : Compact.CTerm Sig (Fin m) s} {x : T hmn M s}
+    (ht : t.eval (T hmn M) val = Part.some x) :
+    (Compact.CTerm.scT k t).eval (T hmn M) val = Part.some (tsc hmn M k x) :=
+  (eval_app₁_arity _ ht).trans (op_sc k x)
+
+lemma ev_tgT (k : Fin m) {s : S} {t : Compact.CTerm Sig (Fin m) s} {x : T hmn M s}
+    (ht : t.eval (T hmn M) val = Part.some x) :
+    (Compact.CTerm.tgT k t).eval (T hmn M) val = Part.some (ttg hmn M k x) :=
+  (eval_app₁_arity _ ht).trans (op_tg k x)
+
+lemma ev_compT (k : Fin m) {s : S} {t t' : Compact.CTerm Sig (Fin m) s} {x y : T hmn M s}
+    (ht : t.eval (T hmn M) val = Part.some x) (ht' : t'.eval (T hmn M) val = Part.some y)
+    (hxy : sc_is_tg (Fin.castLE hmn k) x.1 y.1) :
+    (Compact.CTerm.compT k t t').eval (T hmn M) val = Part.some (tcomp hmn M k x y hxy) :=
+  (eval_app₂_arity _ ht ht').trans (op_comp k x y hxy)
+
+lemma ev_compT_dom (k : Fin m) {s : S} {t t' : Compact.CTerm Sig (Fin m) s} {x y : T hmn M s}
+    (ht : t.eval (T hmn M) val = Part.some x) (ht' : t'.eval (T hmn M) val = Part.some y)
+    (hd : ((Compact.CTerm.compT k t t').eval (T hmn M) val).Dom) :
+    sc_is_tg (Fin.castLE hmn k) x.1 y.1 :=
+  (op_comp_dom k x y).mp ((eval_app₂_arity _ ht ht') ▸ hd)
+
+lemma ev_opT {ws : List S} {s : S} (σ : Sig ws s)
+    {ts : (j : Fin ws.length) → Compact.CTerm Sig (Fin m) (ws.get j)} {a : Arity (T hmn M) ws}
+    (h : ∀ j, (ts j).eval (T hmn M) val = Part.some (a j)) :
+    (Compact.CTerm.opT σ ts).eval (T hmn M) val = Part.some (top hmn M σ a) :=
+  (eval_app_of_eq_some _ _ _ h).trans (op_op σ a)
+
+end Eval
+
+/-- The variables of an axiom. -/
+local macro "vm" : tactic => `(tactic| (
+  simp [QEEq.vars, EEq.vars, EEq.mk', EEq.defined, Compact.CTerm.scT, Compact.CTerm.tgT,
+    Compact.CTerm.compT, Compact.CTerm.opT, Compact.CTerm.x]))
+
+/-- A premise of an axiom. -/
+local macro "pm" : tactic => `(tactic| (
+  first
+    | exact List.Mem.head _
+    | exact List.Mem.tail _ (List.Mem.head _)
+    | exact List.Mem.tail _ (List.Mem.tail _ (List.Mem.head _))
+    | exact List.Mem.tail _ (List.Mem.tail _ (List.Mem.tail _ (List.Mem.head _)))))
+
+open Compact.CTerm in
+theorem holds : ∀ q ∈ Compact.compactSpec Sig (Fin m), q.Holds (T hmn M) := by
+  intro q hq val hvars hprem
+  have var : ∀ {s : S} (i : ℕ), (⟨s, i⟩ : Σ t, Compact.Var S t) ∈ q.vars →
+      ∃ x, (Compact.CTerm.x (Sig := Sig) (Index := Fin m) (s := s) i).eval (T hmn M) val =
+        Part.some x :=
+    fun i hi => ⟨_, (Part.some_get (hvars _ hi)).symm⟩
+  have prem : ∀ e ∈ q.premises, e.Holds (T hmn M) val := hprem
+  have ll : ∀ {l k : Fin m}, l < k → Fin.castLE hmn l < Fin.castLE hmn k :=
+    fun h => Fin.lt_def.mpr (Fin.lt_def.mp h)
+  cases hq with
+  | @A0 ws s σ xs =>
+    choose a ha using fun j => var (s := ws.get j) (xs j) (by vm; try exact ⟨j, rfl, rfl⟩)
+    exact EEq.holds_defined_iff.mpr (Part.eq_some_iff.mp (ev_opT σ ha)).1
+  | A1_sc k s i =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    exact EEq.holds_defined_iff.mpr (Part.eq_some_iff.mp (ev_scT k ha)).1
+  | A1_tg k s i =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    exact EEq.holds_defined_iff.mpr (Part.eq_some_iff.mp (ev_tgT k ha)).1
+  | A2_sc_sc k s i =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_scT k (ev_scT k ha)) (ev_scT k ha)).mpr
+      (Subtype.ext (Compact.model_sc_sc _))
+  | A2_sc_tg k s i =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_scT k (ev_tgT k ha)) (ev_tgT k ha)).mpr
+      (Subtype.ext (Compact.model_sc_tg _))
+  | A2_tg_sc k s i =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_tgT k (ev_scT k ha)) (ev_scT k ha)).mpr
+      (Subtype.ext (Compact.model_tg_sc _))
+  | A2_tg_tg k s i =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_tgT k (ev_tgT k ha)) (ev_tgT k ha)).mpr
+      (Subtype.ext (Compact.model_tg_tg _))
+  | A3_dom k s i j =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    obtain ⟨b, hb⟩ := var (s := s) j (by vm)
+    exact (EEq.holds_mk'_iff (ev_scT k ha) (ev_tgT k hb)).mpr
+      (Subtype.ext (ev_compT_dom k ha hb (EEq.holds_defined_iff.mp (prem _ (by pm)))))
+  | A3_def k s i j =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    obtain ⟨b, hb⟩ := var (s := s) j (by vm)
+    have hab : sc_is_tg (Fin.castLE hmn k) a.1 b.1 := congrArg Subtype.val
+      ((EEq.holds_mk'_iff (ev_scT k ha) (ev_tgT k hb)).mp (prem _ (by pm)))
+    exact EEq.holds_defined_iff.mpr (Part.eq_some_iff.mp (ev_compT k ha hb hab)).1
+  | A4_sc k s i j =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    obtain ⟨b, hb⟩ := var (s := s) j (by vm)
+    have hab := ev_compT_dom k ha hb (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_scT k (ev_compT k ha hb hab)) (ev_scT k hb)).mpr
+      (Subtype.ext (Compact.model_sc_comp hab))
+  | A4_tg k s i j =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    obtain ⟨b, hb⟩ := var (s := s) j (by vm)
+    have hab := ev_compT_dom k ha hb (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_tgT k (ev_compT k ha hb hab)) (ev_tgT k ha)).mpr
+      (Subtype.ext (Compact.model_tg_comp hab))
+  | A5_sc k s i =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_compT k ha (ev_scT k ha) (Compact.model_tg_sc a.1).symm) ha).mpr
+      (Subtype.ext (Compact.model_comp_sc a.1))
+  | A5_tg k s i =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_compT k (ev_tgT k ha) ha (Compact.model_sc_tg a.1)) ha).mpr
+      (Subtype.ext (Compact.model_tg_comp_self a.1))
+  | A6 k s i j l =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    obtain ⟨b, hb⟩ := var (s := s) j (by vm)
+    obtain ⟨c, hc⟩ := var (s := s) l (by vm)
+    have hab := ev_compT_dom k ha hb (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    have hbc := ev_compT_dom k hb hc (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff
+      (ev_compT k (ev_compT k ha hb hab) hc ((Compact.model_sc_comp hab).trans hbc))
+      (ev_compT k ha (ev_compT k hb hc hbc) (hab.trans (Compact.model_tg_comp hbc).symm))).mpr
+      (Subtype.ext (Compact.model_assoc hbc hab))
+  | @A7_sc k ws s σ xs =>
+    choose a ha using fun j => var (s := ws.get j) (xs j) (by vm; try exact ⟨j, rfl, rfl⟩)
+    exact (EEq.holds_mk'_iff (ev_scT k (ev_opT σ ha)) (ev_opT σ fun j => ev_scT k (ha j))).mpr
+      (Subtype.ext ((Compact.modelOp M σ).map_sc_eq_sc_map _ _).symm)
+  | @A7_tg k ws s σ xs =>
+    choose a ha using fun j => var (s := ws.get j) (xs j) (by vm; try exact ⟨j, rfl, rfl⟩)
+    exact (EEq.holds_mk'_iff (ev_tgT k (ev_opT σ ha)) (ev_opT σ fun j => ev_tgT k (ha j))).mpr
+      (Subtype.ext ((Compact.modelOp M σ).map_tg_eq_tg_map _ _).symm)
+  | @A8 k ws s σ xs ys =>
+    choose a ha using fun j => var (s := ws.get j) (xs j)
+      (by vm; exact Or.inl (Or.inr (Or.inl ⟨j, rfl, rfl⟩)))
+    choose b hb using fun j => var (s := ws.get j) (ys j)
+      (by vm; exact Or.inl (Or.inr (Or.inr ⟨j, rfl, rfl⟩)))
+    have hab : ∀ j, sc_is_tg (Fin.castLE hmn k) (a j).1 (b j).1 := fun j =>
+      ev_compT_dom k (ha j) (hb j) (EEq.holds_defined_iff.mp (prem _ (List.mem_ofFn.mpr ⟨j, rfl⟩)))
+    exact (EEq.holds_mk'_iff (ev_opT σ fun j => ev_compT k (ha j) (hb j) (hab j))
+      (ev_compT k (ev_opT σ ha) (ev_opT σ hb)
+        ((Compact.modelOp M σ).comp_map (Compact.pi_sc_is_tg.mpr hab)))).mpr
+      (Subtype.ext ((Compact.modelOp M σ).map_comp_eq_comp_map (Compact.pi_sc_is_tg.mpr hab)))
+  | AB1_sc_sc l k h s i =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_scT k (ev_scT l ha)) (ev_scT l ha)).mpr
+      (Subtype.ext (Compact.model_sc_k_sc_l _ (ll h)))
+  | AB1_tg_tg l k h s i =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_tgT k (ev_tgT l ha)) (ev_tgT l ha)).mpr
+      (Subtype.ext (Compact.model_tg_k_tg_l _ (ll h)))
+  | AB1_sc_sck l k h s i =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_scT l (ev_scT k ha)) (ev_scT l ha)).mpr
+      (Subtype.ext (Compact.model_sc_l_sc_k _ (ll h)))
+  | AB1_tg_tgk l k h s i =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_tgT l (ev_tgT k ha)) (ev_tgT l ha)).mpr
+      (Subtype.ext (Compact.model_tg_l_tg_k _ (ll h)))
+  | AB1_sc_tgk l k h s i =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_scT l (ev_tgT k ha)) (ev_scT l ha)).mpr
+      (Subtype.ext (Compact.model_sc_l_tg_k _ (ll h)))
+  | AB1_tg_sck l k h s i =>
+    obtain ⟨a, ha⟩ := var (s := s) i (by vm)
+    exact (EEq.holds_mk'_iff (ev_tgT l (ev_scT k ha)) (ev_tgT l ha)).mpr
+      (Subtype.ext (Compact.model_tg_l_sc_k _ (ll h)))
+  | AB2_sc l k h s i j =>
+    obtain ⟨x, hx⟩ := var (s := s) i (by vm)
+    obtain ⟨y, hy⟩ := var (s := s) j (by vm)
+    have hxy := ev_compT_dom l hx hy (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_scT k (ev_compT l hx hy hxy))
+      (ev_compT l (ev_scT k hx) (ev_scT k hy) (Compact.Category.sc_tg_j_sc (ll h) hxy))).mpr
+      (Subtype.ext (Compact.Category.sck_compj_eq_compj_sck (ll h) hxy))
+  | AB2_tg l k h s i j =>
+    obtain ⟨x, hx⟩ := var (s := s) i (by vm)
+    obtain ⟨y, hy⟩ := var (s := s) j (by vm)
+    have hxy := ev_compT_dom l hx hy (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff (ev_tgT k (ev_compT l hx hy hxy))
+      (ev_compT l (ev_tgT k hx) (ev_tgT k hy) (Compact.Category.sc_tg_j_tg (ll h) hxy))).mpr
+      (Subtype.ext (Compact.Category.tgk_compj_eq_compj_tgk (ll h) hxy))
+  | AB3 l k h s i j p q =>
+    obtain ⟨x, hx⟩ := var (s := s) i (by vm)
+    obtain ⟨y, hy⟩ := var (s := s) j (by vm)
+    obtain ⟨z, hz⟩ := var (s := s) p (by vm)
+    obtain ⟨t, ht⟩ := var (s := s) q (by vm)
+    have hxy := ev_compT_dom l hx hy (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    have hzt := ev_compT_dom l hz ht (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    have hxz := ev_compT_dom k hx hz (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    have hyt := ev_compT_dom k hy ht (EEq.holds_defined_iff.mp (prem _ (by pm)))
+    exact (EEq.holds_mk'_iff
+      (ev_compT k (ev_compT l hx hy hxy) (ev_compT l hz ht hzt)
+        (Compact.Category.sc_tg_k_interchange (ll h) hxz hyt hxy hzt))
+      (ev_compT l (ev_compT k hx hz hxz) (ev_compT k hy ht hyt)
+        (Compact.Category.sc_tg_j_interchange (ll h) hxz hyt hxy))).mpr
+      (Subtype.ext (Compact.Category.interchange (ll h) hxz hyt hxy hzt))
+
+end Trunc
+
+end CompactTrunc
+```
+
+:::proposition (label := "truncation-models") (central := false) (title := "Compact truncation sends models to models")
+Let $`m \leq n`. $`(\boldsymbol{\tau}^{(m,n)})^{\ast}_{\mathfrak{gd}}` sends the models of
+$`(\mathbf{\Sigma}^{(n)}, \mathcal{C}^{\Sigma^{(n)}})` to models of
+$`(\mathbf{\Sigma}^{(m)}, \mathcal{C}^{\Sigma^{(m)}})`.
+
+```lean
+theorem trunc_sendsModels {m n : ℕ} (hmn : m ≤ n) :
+    (trunc Sig hmn).SendsModels.{u, max u v, u, max u v, w}
+      (Compact.compactSpec Sig (Fin m)) (Compact.compactSpec Sig (Fin n)) :=
+  fun B hB => ⟨Trunc.isAlgebra (M := ⟨B, hB.2⟩), Trunc.holds (M := ⟨B, hB.2⟩)⟩
+```
+:::
+
+:::proof (of := "truncation-models")
+The $`m`-cells are closed under the operations of $`\Sigma^{(m)}`: if every $`x_p` is an $`m`-cell,
+so is $`\sigma((x_p)_p)`, by (A$`^{m}`7); for $`k < m`, $`\mathrm{sc}^{k}_{s}(x)` and
+$`\mathrm{tg}^{k}_{s}(x)` are $`m`-cells, by (A$`^{k}`2) and (AB$`^{k,m}`1); and the $`k`-composite of two
+$`m`-cells is an $`m`-cell, by (AB$`^{k,m}`2). Hence the truncated algebra is the relative subalgebra
+on the $`m`-cells, an ep-algebra in which the values of terms are their values in $`\mathbf{B}`, and
+every axiom of $`\mathcal{C}^{\Sigma^{(m)}}`, which is an axiom of $`\mathcal{C}^{\Sigma^{(n)}}`, holds
+in it.
+:::
+
+:::definition (label := "truncation-functor") (central := false) (title := "The compact truncation functor")
+Let $`m \leq n`. The *truncation functor* $`T^{(m,n)}` is the birestriction of
+$`(\boldsymbol{\tau}^{(m,n)})^{\ast}_{\mathfrak{gd}}` to the categories of models.
+
+```lean
+/-- The truncation functor `T⁽ᵐ'ⁿ⁾`. -/
+noncomputable def truncFunctor {m n : ℕ} (hmn : m ≤ n) :
+    EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin n)) ⥤
+      EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin m)) :=
+  (trunc Sig hmn).restrict (trunc_sendsModels Sig hmn)
+```
+:::
+
 ```lean
 end CategorialAlgebras
 ```
