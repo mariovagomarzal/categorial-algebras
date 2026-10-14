@@ -3,6 +3,7 @@ import CategorialAlgebras.Init
 import CategorialAlgebras.Tactic
 import CategorialAlgebras.Signature
 import CategorialAlgebras.PartialAlgebra
+import CategorialAlgebras.Evaluation
 import CategorialAlgebras.Compact.Category
 import CategorialAlgebras.Compact.Functor
 import CategorialAlgebras.Compact.Product
@@ -10,6 +11,7 @@ import CategorialAlgebras.Compact.Algebra
 import CategorialAlgebras.Compact.Specification
 import CategorialAlgebras.Compact.Restriction
 import CategorialAlgebras.Compact.OmegaAlgebra
+import CategorialAlgebras.Compact.Identification
 import CategorialAlgebras.Compact.Truncation
 import CategorialAlgebras.Extended.Category
 import CategorialAlgebras.Extended.Functor
