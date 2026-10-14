@@ -1,6 +1,6 @@
 import Stemma
 import Mathlib.Order.Closure
-import Mathlib.Data.Set.Lattice
+import Mathlib.Data.Set.Lattice.Indexed
 import CategorialAlgebras.Derivor
 
 open Verso.Genre Manual InlineLean Stemma
