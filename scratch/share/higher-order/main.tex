@@ -3857,9 +3857,35 @@ As for Corollary~\ref{CLimitNat}, using Claim~\ref{CUnivPropGlCatAlgB} in the pr
 
 \section{Graduation, unification, discretization and truncation in dimension \texorpdfstring{$\omega$}{omega}}\label{SOmegaFunctors}
 
-In this section we obtain the $\omega$-dimensional versions of the functors of Sections~\ref{SGraduation} and~\ref{STruncation} from the projective limits of Sections~\ref{SLimitSingleSet} and~\ref{SLimitGlobular}. The truncation and discretization functors in dimension $\omega$ have been defined in Subsection~\ref{SDTOmega}, and the truncation functors are the projections of the limits. The graduation functor is obtained, by the universal property of Proposition~\ref{PUnivPropGlCatAlg}, from a compatible family of the finite-dimensional ones, and the unification functor as an inductive limit. Throughout this section, $\mathbf{\Sigma}=(S,\Sigma)$ is a many-sorted signature.
+In this section we obtain the $\omega$-dimensional versions of the functors of Sections~\ref{SGraduation} and~\ref{STruncation}. The truncation and discretization functors in dimension $\omega$ have been defined in Subsection~\ref{SDTOmega}, and, by Sections~\ref{SLimitSingleSet} and~\ref{SLimitGlobular}, the truncation functors are the projections of projective limits. We begin by obtaining the graduation functor, by the universal property of Proposition~\ref{PUnivPropGlCatAlg}, from a compatible family of the finite-dimensional ones. Next we obtain the unification functor as an inductive limit. We end this section by proving that graduation and unification are mutually quasi-inverse equivalences and that discretization is left adjoint to truncation also in dimension $\omega$. Throughout this section, $\mathbf{\Sigma}=(S,\Sigma)$ is a many-sorted signature.
 
 \subsection{Graduation and unification}\label{SGdUfOmega}
+
+In the following lemma we prove that the finite-dimensional graduation functors give rise to a compatible family.
+
+\begin{lemma}\label{LGdOmegaCompatible}
+For every $m,n\in\mathbb{N}$ with $m\leq n$, the following equality holds
+$$
+\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}=\mathrm{Gd}^{(m)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}.
+$$
+\end{lemma}
+\begin{proof}
+The following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}
+&=
+\mathrm{Gd}^{(m)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}
+\tag{1}
+\\&=
+\mathrm{Gd}^{(m)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}.
+\tag{2}
+\end{align*}
+
+The first equality follows from Proposition~\ref{PCompatGdUf}; finally, the last equality follows from Remark~\ref{RDiscOmegaTrunc}.
+\end{proof}
+
+We are now in position to define the graduation functor in dimension $\omega$.
 
 \begin{definition}\label{DGdOmega}
 The \emph{graduation functor} $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}\colon\omega\mathsf{CatAlg}(\mathbf{\Sigma})\mor\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})$ is the unique functor such that, for every $n\in\mathbb{N}$,
@@ -3868,11 +3894,17 @@ $$
 $$
 \end{definition}
 
-The functor exists and is unique by Proposition~\ref{PUnivPropGlCatAlg}, since the family $(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}})_{n\in\omega}$ is compatible: for $m\leq n$, by Proposition~\ref{PCompatGdUf}, $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}=\mathrm{Gd}^{(m)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}=\mathrm{Gd}^{(m)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}$. Explicitly, by the proof of Proposition~\ref{PUnivPropGlCatAlg}, the cells of sort $(k,s)$ of $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ are the $k$-cells of sort $s$ of $\boldsymbol{\mathsf{A}}$, the $(j,k)$-sources, $(j,k)$-targets and $j$-compositions of $k$-cells are the $j$-sources, $j$-targets and $j$-compositions of $\boldsymbol{\mathsf{A}}$, the $(k,j)$-identities are inclusions, and $\sigma_{k}$ acts on $k$-cells as $\sigma$.
+Let us note that the functor exists and is unique by Proposition~\ref{PUnivPropGlCatAlg}, since, by Lemma~\ref{LGdOmegaCompatible}, the family $(\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}})_{n\in\omega}$ is compatible. Explicitly, by Claim~\ref{CUnivPropGlCatAlgA} in the proof of Proposition~\ref{PUnivPropGlCatAlg}, the cells of sort $(k,s)$ of $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$ are the $k$-cells of sort $s$ of $\boldsymbol{\mathsf{A}}$, the $(j,k)$-sources, $(j,k)$-targets and $j$-compositions of $k$-cells are the $j$-sources, $j$-targets and $j$-compositions of $\boldsymbol{\mathsf{A}}$, the $(k,j)$-identities are inclusions, and $\sigma_{k}$ acts on $k$-cells as $\sigma$.
 
+We next consider unification. In contrast with graduation, it cannot be obtained in the same way.
+
+\begin{remark}\label{RUfOmegaNotDerivor}
 The unification functor cannot be obtained as the functor induced by a generalized hep-derivor. In fact, for every generalized hep-derivor $\mathbf{d}=(\varphi,d,\mathrm{Dom}^{(\varphi,d)})$ from $\mathbf{\Sigma}^{(\omega)}$ to $\mathbf{\Sigma}^{\mathrm{gl}(\omega)}$, the cells of sort $s$ of $\mathbf{d}^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})$ are cells of a single sort $\varphi(s)=(k,s')$ of $\boldsymbol{\mathsf{A}}$. For $S=\{s\}$, $\Sigma=\varnothing$ and $\varphi(s)=(k,s)$, let $\boldsymbol{\mathsf{A}}$ be the globular $\omega$-category with exactly one cell in every dimension up to $k$, whose $(k+1)$-cells form the two-element monoid $\{e,f\}$, with $f\circ f=f$, for all the compositions, and whose cells of dimension greater than $k+1$ are the identities of the $(k+1)$-cells. Then $\mathbf{d}^{\ast}_{\mathfrak{gd}}(\boldsymbol{\mathsf{A}})$ has at most one cell, whereas its unification must have two distinct cells, which correspond to $e$ and $f$.
 
 Nor can we apply directly the universal property of Proposition~\ref{PUnivPropCatAlg} to the family $(\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}})_{n\in\omega}$, since, by Proposition~\ref{PCompatUfTr}, it is only compatible up to the natural isomorphisms $\beta^{(m,n)}$: the $m$-cells of $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ are not the $m$-cells of $\boldsymbol{\mathsf{B}}$, but their $(n,m)$-identities. These isomorphisms, however, are the inclusions of an inductive system, and the unification of a globular $\omega$-categorial $\mathbf{\Sigma}$-algebra is its inductive limit, as for $\omega$-categories.
+\end{remark}
+
+We begin by defining the $\omega$-cells of a globular $\omega$-categorial $\mathbf{\Sigma}$-algebra.
 
 \begin{definition}\label{DUfOmegaCells}
 Let $\boldsymbol{\mathsf{B}}$ be a globular $\omega$-categorial $\mathbf{\Sigma}$-algebra and $s\in S$. The set of \emph{$\omega$-cells} of sort $s$ of $\boldsymbol{\mathsf{B}}$ is $\coprod_{k\in\omega}B_{(k,s)}$, whose elements are the pairs $(x,k)$ with $k\in\omega$ and $x\in B_{(k,s)}$. We let $\Theta_{s}$ be the binary relation on $\coprod_{k\in\omega}B_{(k,s)}$ defined by $((x,j),(y,k))\in\Theta_{s}$ if
@@ -3884,51 +3916,193 @@ Let $\boldsymbol{\mathsf{B}}$ be a globular $\omega$-categorial $\mathbf{\Sigma}
 By~(EA$^{h,j,k}$2), $\Theta_{s}$ is an equivalence relation. We let $[B]_{s}$ stand for the quotient set $\coprod_{k\in\omega}B_{(k,s)}/\Theta_{s}$, $[x]_{k}$ for the class of $(x,k)$, and $\mathrm{in}^{[k]}_{s}$ for the mapping from $B_{(k,s)}$ to $[B]_{s}$ that sends $x$ to $[x]_{k}$.
 \end{definition}
 
-Thus $[B]_{s}$, together with the mappings $\mathrm{in}^{[k]}_{s}$, is the inductive limit of the inductive system of sets $(B_{(k,s)},\mathrm{i}^{(k+1,k)}_{s})_{k\in\omega}$: for every set $L$ and every family of mappings $f_{k}\colon B_{(k,s)}\mor L$ such that $f_{j}=f_{k}\circ\mathrm{i}^{(k,j)}_{s}$ for every $j<k$, there exists a unique mapping $[f_{k}]_{k\in\omega}\colon[B]_{s}\mor L$ such that $[f_{k}]_{k\in\omega}\circ\mathrm{in}^{[j]}_{s}=f_{j}$ for every $j\in\omega$. Moreover, since, by~(EA$^{j,k}$2), every $\mathrm{i}^{(k,j)}_{s}$ is injective, so is every $\mathrm{in}^{[k]}_{s}$, and $[B]_{s}$ is the increasing union of the images of the $\mathrm{in}^{[k]}_{s}$; in particular, every finite family of $\omega$-cell classes has representatives in a common $B_{(p,s)}$. For $n\in\omega$, let $\boldsymbol{\mathsf{U}}_{n}=\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$, an $n$-categorial $\mathbf{\Sigma}$-algebra whose cells of sort $s$ are the elements of $B_{(n,s)}$. By Proposition~\ref{PCompatUfTr}, for $n\leq n'$, $\mathrm{i}^{(n',n)}=(\mathrm{i}^{(n',n)}_{s})_{s\in S}$ is an isomorphism from $\boldsymbol{\mathsf{U}}_{n}$ onto $\mathrm{Tr}^{(n,n')}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{U}}_{n'})$; that is, $\boldsymbol{\mathsf{U}}_{n}$ is, up to $\mathrm{i}^{(n',n)}$, the algebra of the $n$-cells of $\boldsymbol{\mathsf{U}}_{n'}$.
+In the following lemma we collect the properties of the $\omega$-cells that we need.
+
+\begin{lemma}\label{LUfOmegaCells}
+Let $\boldsymbol{\mathsf{B}}$ be a globular $\omega$-categorial $\mathbf{\Sigma}$-algebra and $s\in S$. Then the following statements hold:
+\begin{enumerate}
+\item $[B]_{s}$, together with the mappings $\mathrm{in}^{[k]}_{s}$, is the inductive limit of the inductive system of sets $(B_{(k,s)},\mathrm{i}^{(k+1,k)}_{s})_{k\in\omega}$, i.e., for every set $L$ and every family of mappings $f_{k}\colon B_{(k,s)}\mor L$ such that $f_{j}=f_{k}\circ\mathrm{i}^{(k,j)}_{s}$ for every $j<k$, there exists a unique mapping $[f_{k}]_{k\in\omega}\colon[B]_{s}\mor L$ such that $[f_{k}]_{k\in\omega}\circ\mathrm{in}^{[j]}_{s}=f_{j}$ for every $j\in\omega$;
+\item every $\mathrm{in}^{[k]}_{s}$ is injective; and
+\item $[B]_{s}$ is the increasing union of the images of the $\mathrm{in}^{[k]}_{s}$; in particular, every finite family of $\omega$-cell classes has representatives in a common $B_{(p,s)}$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+(1) It is the usual construction of the inductive limit of an inductive system of sets.
+
+(2) By Lemma~\ref{LUnifInj}, every $\mathrm{i}^{(k,j)}_{s}$ is injective, so that two elements of $B_{(k,s)}$ are $\Theta_{s}$-related if, and only if, they are equal.
+
+(3) By Definition~\ref{DUfOmegaCells}, $[x]_{j}=[\mathrm{i}^{(k,j)}_{s}(x)]_{k}$ for every $j<k$, so that the image of $\mathrm{in}^{[j]}_{s}$ is contained in that of $\mathrm{in}^{[k]}_{s}$.
+\end{proof}
+
+For $n\in\omega$, we let $\boldsymbol{\mathsf{U}}_{n}$ stand for $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$, an $n$-categorial $\mathbf{\Sigma}$-algebra whose cells of sort $s$ are the elements of $B_{(n,s)}$. By Proposition~\ref{PCompatUfTr}, for $n\leq n'$, $\mathrm{i}^{(n',n)}=(\mathrm{i}^{(n',n)}_{s})_{s\in S}$ is an isomorphism from $\boldsymbol{\mathsf{U}}_{n}$ onto $\mathrm{Tr}^{(n,n')}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{U}}_{n'})$; that is, $\boldsymbol{\mathsf{U}}_{n}$ is, up to $\mathrm{i}^{(n',n)}$, the algebra of the $n$-cells of $\boldsymbol{\mathsf{U}}_{n'}$. We next define the unification of $\boldsymbol{\mathsf{B}}$.
 
 \begin{definition}\label{DUfOmega}
-Let $\boldsymbol{\mathsf{B}}$ be a globular $\omega$-categorial $\mathbf{\Sigma}$-algebra. The \emph{unification} of $\boldsymbol{\mathsf{B}}$ is the partial $\Sigma^{(\omega)}$-algebra $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ with underlying $S$-sorted set $[B]=([B]_{s})_{s\in S}$ in which, for every operation symbol $\tau$ of $\Sigma^{(\omega)}$, of arity $\mathbf{s}$ and coarity $s$, and every family $([x_{j}]_{p})_{j\in\bb{\mathbf{s}}}$ of $\omega$-cell classes represented in a common level $p$ such that $\tau$ is an operation symbol of $\Sigma^{(p)}$, $([x_{j}]_{p})_{j\in\bb{\mathbf{s}}}\in\mathrm{Dom}(\tau^{\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})})$ if and only if $(x_{j})_{j\in\bb{\mathbf{s}}}\in\mathrm{Dom}(\tau^{\boldsymbol{\mathsf{U}}_{p}})$, and then
+Let $\boldsymbol{\mathsf{B}}$ be a globular $\omega$-categorial $\mathbf{\Sigma}$-algebra. The \emph{unification} of $\boldsymbol{\mathsf{B}}$ is the partial $\Sigma^{(\omega)}$-algebra $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ with underlying $S$-sorted set $[B]=([B]_{s})_{s\in S}$ in which, for every operation symbol $\tau$ of $\Sigma^{(\omega)}$, of arity $\mathbf{s}$ and coarity $s$, and every family $([x_{j}]_{p})_{j\in\bb{\mathbf{s}}}$ of $\omega$-cell classes represented in a common level $p$ such that $\tau$ is an operation symbol of $\Sigma^{(p)}$, $([x_{j}]_{p})_{j\in\bb{\mathbf{s}}}\in\mathrm{Dom}(\tau^{\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})})$ if, and only if, $(x_{j})_{j\in\bb{\mathbf{s}}}\in\mathrm{Dom}(\tau^{\boldsymbol{\mathsf{U}}_{p}})$, and then
 $$
 \tau^{\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})}(([x_{j}]_{p})_{j\in\bb{\mathbf{s}}})=[\tau^{\boldsymbol{\mathsf{U}}_{p}}((x_{j})_{j\in\bb{\mathbf{s}}})]_{p}.
 $$
 For a globular $\omega$-categorial $\mathbf{\Sigma}$-homomorphism $F\colon\boldsymbol{\mathsf{B}}\mor\boldsymbol{\mathsf{B}}'$, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(F)$ is the $S$-sorted mapping from $[B]$ to $[B']$ that sends $[x]_{k}$ to $[F_{(k,s)}(x)]_{k}$.
 \end{definition}
 
-The definition does not depend on the choice of $p$: if $p\leq p'$, then $\mathrm{in}^{[p]}_{s}=\mathrm{in}^{[p']}_{s}\circ\mathrm{i}^{(p',p)}_{s}$, and, since $\mathrm{i}^{(p',p)}$ is an isomorphism from $\boldsymbol{\mathsf{U}}_{p}$ onto the algebra of the $p$-cells of $\boldsymbol{\mathsf{U}}_{p'}$, whose operations are the restrictions of those of $\boldsymbol{\mathsf{U}}_{p'}$, computing at the level $p$ or at the level $p'$ gives the same domain and the same values. Likewise, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(F)$ is well defined, by the universal property of the inductive limit, since $F$ commutes with the identities. In other words, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ is the inductive limit of the inductive system of categorial algebras $(\boldsymbol{\mathsf{U}}_{n},\mathrm{i}^{(n+1,n)})_{n\in\omega}$.
+In the following lemma we prove that the above definition is correct.
+
+\begin{lemma}\label{LUfOmegaWellDef}
+Let $\boldsymbol{\mathsf{B}}$ be a globular $\omega$-categorial $\mathbf{\Sigma}$-algebra and $F$ a globular $\omega$-categorial $\mathbf{\Sigma}$-homomorphism. Then $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ and $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(F)$ are well defined.
+\end{lemma}
+\begin{proof}
+\textsf{(Independence of the level)} Let $p\leq p'$. Then $\mathrm{in}^{[p]}_{s}=\mathrm{in}^{[p']}_{s}\circ\mathrm{i}^{(p',p)}_{s}$, and, by Proposition~\ref{PCompatUfTr}, $\mathrm{i}^{(p',p)}$ is an isomorphism from $\boldsymbol{\mathsf{U}}_{p}$ onto the algebra of the $p$-cells of $\boldsymbol{\mathsf{U}}_{p'}$, whose operations are the restrictions of those of $\boldsymbol{\mathsf{U}}_{p'}$. Hence computing at the level $p$ or at the level $p'$ gives the same domain and the same values.
+
+\textsf{(Homomorphisms)} Since $F$ commutes with the identities, the family of mappings $(\mathrm{in}^{[k]}_{s}\circ F_{(k,s)})_{k\in\omega}$ satisfies the compatibility condition of Lemma~\ref{LUfOmegaCells}~(1), so that $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(F)$ is well defined.
+
+This completes the proof.
+\end{proof}
+
+In other words, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ is the inductive limit of the inductive system of categorial algebras $(\boldsymbol{\mathsf{U}}_{n},\mathrm{i}^{(n+1,n)})_{n\in\omega}$. In the following proposition we prove that it is an $\omega$-categorial $\mathbf{\Sigma}$-algebra.
 
 \begin{proposition}\label{PUfOmega}
 Let $\boldsymbol{\mathsf{B}}$ be a globular $\omega$-categorial $\mathbf{\Sigma}$-algebra. Then $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ is an $\omega$-categorial $\mathbf{\Sigma}$-algebra whose $k$-cells of sort $s$ are the classes $[x]_{k}$, with $x\in B_{(k,s)}$, and, for every $n\in\omega$, $\mathrm{in}^{[n]}=(\mathrm{in}^{[n]}_{s})_{s\in S}$ is an isomorphism, natural in $\boldsymbol{\mathsf{B}}$, from $\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$ onto $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$. Moreover, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$ is a functor from $\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})$ to $\omega\mathsf{CatAlg}(\mathbf{\Sigma})$, the \emph{unification functor}.
 \end{proposition}
 \begin{proof}
-Every axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}}$ involves finitely many dimensions and finitely many variables. Given a valuation of its variables in $[B]$, we choose a level $p$ greater than all these dimensions at which all the values of the variables are represented. Since $\mathrm{in}^{[p]}$ is injective and, by Definition~\ref{DUfOmega}, it preserves and reflects the definedness and the values of the operations of $\Sigma^{(p)}$, the axiom holds in $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ under the given valuation because it is an axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(p)}}$, which holds in the $p$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{U}}_{p}$. Let $x\in B_{(k,s)}$ and $p>k$. In $\boldsymbol{\mathsf{U}}_{p}$, $\mathrm{sc}^{k}_{s}(\mathrm{i}^{(p,k)}_{s}(x))=\mathrm{i}^{(p,k)}_{s}(\mathrm{sc}^{(k,p)}_{s}(\mathrm{i}^{(p,k)}_{s}(x)))=\mathrm{i}^{(p,k)}_{s}(x)$, by~(EA$^{k,p}$2), so that $[x]_{k}=[\mathrm{i}^{(p,k)}_{s}(x)]_{p}$ is a $k$-cell. Conversely, if $[y]_{p}$, with $p>k$, is a $k$-cell, then $y=\mathrm{i}^{(p,k)}_{s}(\mathrm{sc}^{(k,p)}_{s}(y))$, so that $[y]_{p}=[\mathrm{sc}^{(k,p)}_{s}(y)]_{k}$. Hence every $\omega$-cell class is a $k$-cell for some $k$, and, by Proposition~\ref{PSingleSetIdentOmega}, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ is an $\omega$-categorial $\mathbf{\Sigma}$-algebra. In particular, $\mathrm{in}^{[n]}$ is a bijection from the cells of $\boldsymbol{\mathsf{U}}_{n}$ onto the $n$-cells of $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$, i.e., onto the cells of $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$, which, by Definition~\ref{DUfOmega}, preserves and reflects the definedness and the values of the operations of $\Sigma^{(n)}$, i.e., an isomorphism; it is natural in $\boldsymbol{\mathsf{B}}$ by the definition of $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(F)$. Finally, let $F\colon\boldsymbol{\mathsf{B}}\mor\boldsymbol{\mathsf{B}}'$ be a homomorphism. For every level $p$, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(F)\circ\mathrm{in}^{[p]}=\mathrm{in}^{[p]}\circ\mathrm{Uf}^{(p)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{\mathrm{gl}(p,\omega)}_{\mathbf{\Sigma}}(F))$, so that, since $\mathrm{Uf}^{(p)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{\mathrm{gl}(p,\omega)}_{\mathbf{\Sigma}}(F))$ is a homomorphism, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(F)$ commutes with the operations of $\Sigma^{(p)}$. Thus it is a homomorphism, and $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$ preserves identities and composites, since it acts componentwise on representatives.
+We prove the following claims.
+
+\begin{claim}\label{CUfOmegaA}
+Every axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}}$ holds in $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$.
+\end{claim}
+
+Every axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}}$ involves finitely many dimensions and finitely many variables. Given a valuation of its variables in $[B]$, by Lemma~\ref{LUfOmegaCells}~(3), we choose a level $p$ greater than all these dimensions at which all the values of the variables are represented. Since $\mathrm{in}^{[p]}$ is injective and, by Definition~\ref{DUfOmega}, it preserves and reflects the definedness and the values of the operations of $\Sigma^{(p)}$, the axiom holds in $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ under the given valuation, because it is an axiom of $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(p)}}$, which holds in the $p$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{U}}_{p}$.
+
+Claim~\ref{CUfOmegaA} follows.
+
+\begin{claim}\label{CUfOmegaB}
+The $k$-cells of sort $s$ of $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ are the classes $[x]_{k}$, with $x\in B_{(k,s)}$. In particular, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ is an $\omega$-categorial $\mathbf{\Sigma}$-algebra.
+\end{claim}
+
+Let $x\in B_{(k,s)}$ and $p>k$. In $\boldsymbol{\mathsf{U}}_{p}$, the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{sc}^{k}_{s}\left(\mathrm{i}^{(p,k)}_{s}(x)\right)
+&=
+\mathrm{i}^{(p,k)}_{s}\left(\mathrm{sc}^{(k,p)}_{s}\left(\mathrm{i}^{(p,k)}_{s}(x)\right)\right)
+\tag{1}
+\\&=
+\mathrm{i}^{(p,k)}_{s}(x).
+\tag{2}
+\end{align*}
+
+The first equality follows from Lemma~\ref{LUnifDescription}; finally, the last equality follows from Lemma~\ref{LUnifInj}. Thus $[x]_{k}=[\mathrm{i}^{(p,k)}_{s}(x)]_{p}$ is a $k$-cell. Conversely, if $[y]_{p}$, with $p>k$, is a $k$-cell, then $y=\mathrm{i}^{(p,k)}_{s}(\mathrm{sc}^{(k,p)}_{s}(y))$, so that $[y]_{p}=[\mathrm{sc}^{(k,p)}_{s}(y)]_{k}$. Hence every $\omega$-cell class is a $k$-cell for some $k$, and, by Claim~\ref{CUfOmegaA} and Proposition~\ref{PSingleSetIdentOmega}, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$ is an $\omega$-categorial $\mathbf{\Sigma}$-algebra.
+
+Claim~\ref{CUfOmegaB} follows.
+
+\begin{claim}\label{CUfOmegaC}
+For every $n\in\omega$, $\mathrm{in}^{[n]}$ is an isomorphism from $\boldsymbol{\mathsf{U}}_{n}$ onto $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$, natural in $\boldsymbol{\mathsf{B}}$.
+\end{claim}
+
+By Claim~\ref{CUfOmegaB} and Lemma~\ref{LUfOmegaCells}~(2), $\mathrm{in}^{[n]}$ is a bijection from the cells of $\boldsymbol{\mathsf{U}}_{n}$ onto the $n$-cells of $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$, i.e., onto the cells of $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$. By Definition~\ref{DUfOmega}, it preserves and reflects the definedness and the values of the operations of $\Sigma^{(n)}$, so that it is an isomorphism. It is natural in $\boldsymbol{\mathsf{B}}$ by the definition of $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(F)$.
+
+Claim~\ref{CUfOmegaC} follows.
+
+\begin{claim}\label{CUfOmegaD}
+$\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$ is a functor.
+\end{claim}
+
+Let $F\colon\boldsymbol{\mathsf{B}}\mor\boldsymbol{\mathsf{B}}'$ be a globular $\omega$-categorial $\mathbf{\Sigma}$-homomorphism. For every level $p$, the following equality holds
+$$
+\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(F)\circ\mathrm{in}^{[p]}=\mathrm{in}^{[p]}\circ\mathrm{Uf}^{(p)}_{\mathbf{\Sigma}}\left(\mathrm{Tr}^{\mathrm{gl}(p,\omega)}_{\mathbf{\Sigma}}(F)\right),
+$$
+so that, since $\mathrm{Uf}^{(p)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{\mathrm{gl}(p,\omega)}_{\mathbf{\Sigma}}(F))$ is a homomorphism, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(F)$ commutes with the operations of $\Sigma^{(p)}$. Thus it is a homomorphism. Moreover, $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$ preserves identities and composites, since it acts componentwise on representatives.
+
+Claim~\ref{CUfOmegaD} follows.
+
+This completes the proof.
 \end{proof}
 
-Explicitly, the $k$-source of a $p$-cell class $[y]_{p}$, with $k<p$, is $[\mathrm{sc}^{(k,p)}_{s}(y)]_{k}$; the $k$-composition of $[x]_{p}$ and $[y]_{p}$ is $[x\circ^{(k,p)}_{s}y]_{p}$, defined if and only if $\mathrm{sc}^{(k,p)}_{s}(x)=\mathrm{tg}^{(k,p)}_{s}(y)$; for $k\geq p$, $[y]_{p}$ is a $k$-cell, so that its $k$-source and $k$-target are $[y]_{p}$ itself; and $\sigma$ acts on classes represented at the level $p$ as $\sigma_{p}$.
-
-
+Explicitly, the $k$-source of a $p$-cell class $[y]_{p}$, with $k<p$, is $[\mathrm{sc}^{(k,p)}_{s}(y)]_{k}$; the $k$-composition of $[x]_{p}$ and $[y]_{p}$ is $[x\circ^{(k,p)}_{s}y]_{p}$, defined if, and only if, $\mathrm{sc}^{(k,p)}_{s}(x)=\mathrm{tg}^{(k,p)}_{s}(y)$; for $k\geq p$, $[y]_{p}$ is a $k$-cell, so that its $k$-source and $k$-target are $[y]_{p}$ itself; and $\sigma$ acts on classes represented at the level $p$ as $\sigma_{p}$.
 
 \subsection{Relationships}\label{SRelOmega}
 
+In this subsection we prove that the $\omega$-dimensional functors are related as the finite-dimensional ones. We begin with graduation and unification.
+
 \begin{proposition}\label{POmegaGdUf}
-$\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}\cong\mathrm{Id}_{\omega\mathsf{CatAlg}(\mathbf{\Sigma})}$ and $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}\cong\mathrm{Id}_{\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})}$. Hence $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}$ and $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$ are mutually quasi-inverse equivalences of categories, and there exists an adjoint equivalence in which $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}$ is left adjoint to $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$.
+The following natural isomorphisms hold
+$$
+\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}\cong\mathrm{Id}_{\omega\mathsf{CatAlg}(\mathbf{\Sigma})}
+\qquad\text{and}\qquad
+\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}\cong\mathrm{Id}_{\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})}.
+$$
+Hence $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}$ and $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$ are mutually quasi-inverse equivalences of categories, and there exists an adjoint equivalence in which $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}$ is left adjoint to $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$.
 \end{proposition}
 \begin{proof}
-Let $\boldsymbol{\mathsf{A}}$ be an $\omega$-categorial $\mathbf{\Sigma}$-algebra and $\boldsymbol{\mathsf{B}}=\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. Since the identities of $\boldsymbol{\mathsf{B}}$ are inclusions, two $\omega$-cells $(x,j)$ and $(y,k)$ of $\boldsymbol{\mathsf{B}}$ are $\Theta_{s}$-related if and only if $x=y$, so that the mapping that sends $[x]_{k}$ to $x$ is a bijection from $[B]_{s}$ onto the set of the cells of sort $s$ of $\boldsymbol{\mathsf{A}}$, all of which are $k$-cells for some $k$. For every level $p$, by Propositions~\ref{PCompatGdUf} and~\ref{PUnifGrad}, $\mathrm{Uf}^{(p)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{\mathrm{gl}(p,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))=\mathrm{Uf}^{(p)}_{\mathbf{\Sigma}}(\mathrm{Gd}^{(p)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{(p,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})))=\mathrm{Tr}^{(p,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$, so that, by Definition~\ref{DUfOmega}, this bijection preserves and reflects the definedness and the values of the operations of $\Sigma^{(p)}$. Hence it is an isomorphism from $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ onto $\boldsymbol{\mathsf{A}}$, which is natural in $\boldsymbol{\mathsf{A}}$, since $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}$ and $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$ act on homomorphisms by restriction and on representatives, respectively.
+We prove the following claims.
 
-Let $\boldsymbol{\mathsf{B}}$ be a globular $\omega$-categorial $\mathbf{\Sigma}$-algebra. By Proposition~\ref{PUfOmega}, the cells of sort $(k,s)$ of $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$ are the classes $[x]_{k}$, with $x\in B_{(k,s)}$, so that the family $\theta_{\boldsymbol{\mathsf{B}}}=(\mathrm{in}^{[k]}_{s})_{(k,s)\in\omega\times S}$ is a bijection from the cells of $\boldsymbol{\mathsf{B}}$ onto those of $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$. It is a homomorphism that reflects definedness: for $j<k$, the $(j,k)$-source of $[x]_{k}$ is its $j$-source, which, by the explicit description after Proposition~\ref{PUfOmega}, is $[\mathrm{sc}^{(j,k)}_{s}(x)]_{j}$, and similarly for the targets; the $(k,j)$-identity of $[u]_{j}$ is $[u]_{j}=[\mathrm{i}^{(k,j)}_{s}(u)]_{k}$; the $j$-composition of $[x]_{k}$ and $[y]_{k}$ is $[x\circ^{(j,k)}_{s}y]_{k}$, defined if and only if $x\circ^{(j,k)}_{s}y$ is defined; and $\sigma_{k}$ acts on $k$-cells as $\sigma$, i.e., as $\sigma_{k}$ on representatives. Hence $\theta_{\boldsymbol{\mathsf{B}}}$ is an isomorphism from $\boldsymbol{\mathsf{B}}$ onto $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$, natural in $\boldsymbol{\mathsf{B}}$ by Definition~\ref{DUfOmega}. Finally, every equivalence of categories can be completed to an adjoint equivalence, see~\cite{sM98}, Theorem~IV.4.1.
+\begin{claim}\label{COmegaGdUfA}
+$\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}\cong\mathrm{Id}_{\omega\mathsf{CatAlg}(\mathbf{\Sigma})}$.
+\end{claim}
+
+Let $\boldsymbol{\mathsf{A}}$ be an $\omega$-categorial $\mathbf{\Sigma}$-algebra and $\boldsymbol{\mathsf{B}}=\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})$. Since the identities of $\boldsymbol{\mathsf{B}}$ are inclusions, two $\omega$-cells $(x,j)$ and $(y,k)$ of $\boldsymbol{\mathsf{B}}$ are $\Theta_{s}$-related if, and only if, $x=y$. Hence the mapping that sends $[x]_{k}$ to $x$ is a bijection from $[B]_{s}$ onto the set of the cells of sort $s$ of $\boldsymbol{\mathsf{A}}$, all of which are $k$-cells for some $k$. For every level $p$, the following chain of equalities holds
+\allowdisplaybreaks
+\begin{align*}
+\mathrm{Uf}^{(p)}_{\mathbf{\Sigma}}\left(\mathrm{Tr}^{\mathrm{gl}(p,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})\right)
+&=
+\mathrm{Uf}^{(p)}_{\mathbf{\Sigma}}\left(\mathrm{Gd}^{(p)}_{\mathbf{\Sigma}}\left(\mathrm{Tr}^{(p,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}})\right)\right)
+\tag{1}
+\\&=
+\mathrm{Tr}^{(p,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}).
+\tag{2}
+\end{align*}
+
+The first equality follows from Definition~\ref{DGdOmega}; finally, the last equality follows from Proposition~\ref{PUnifGrad}. Therefore, by Definition~\ref{DUfOmega}, the above bijection preserves and reflects the definedness and the values of the operations of $\Sigma^{(p)}$. Hence it is an isomorphism from $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{A}}))$ onto $\boldsymbol{\mathsf{A}}$, which is natural in $\boldsymbol{\mathsf{A}}$, since $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}$ and $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$ act on homomorphisms by restriction and on representatives, respectively.
+
+Claim~\ref{COmegaGdUfA} follows.
+
+\begin{claim}\label{COmegaGdUfB}
+$\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}\cong\mathrm{Id}_{\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})}$.
+\end{claim}
+
+Let $\boldsymbol{\mathsf{B}}$ be a globular $\omega$-categorial $\mathbf{\Sigma}$-algebra. By Proposition~\ref{PUfOmega}, the cells of sort $(k,s)$ of $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$ are the classes $[x]_{k}$, with $x\in B_{(k,s)}$, so that the family $\theta_{\boldsymbol{\mathsf{B}}}=(\mathrm{in}^{[k]}_{s})_{(k,s)\in\omega\times S}$ is a bijection from the cells of $\boldsymbol{\mathsf{B}}$ onto those of $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$. It is a homomorphism that reflects definedness. In fact, for $j<k$,
+\begin{enumerate}
+\item the $(j,k)$-source of $[x]_{k}$ is its $j$-source, which, by the explicit description after Proposition~\ref{PUfOmega}, is $[\mathrm{sc}^{(j,k)}_{s}(x)]_{j}$, and similarly for the targets;
+\item the $(k,j)$-identity of $[u]_{j}$ is $[u]_{j}=[\mathrm{i}^{(k,j)}_{s}(u)]_{k}$;
+\item the $j$-composition of $[x]_{k}$ and $[y]_{k}$ is $[x\circ^{(j,k)}_{s}y]_{k}$, defined if, and only if, $x\circ^{(j,k)}_{s}y$ is defined; and
+\item $\sigma_{k}$ acts on $k$-cells as $\sigma$, i.e., as $\sigma_{k}$ on representatives.
+\end{enumerate}
+Hence $\theta_{\boldsymbol{\mathsf{B}}}$ is an isomorphism from $\boldsymbol{\mathsf{B}}$ onto $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}(\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}))$, natural in $\boldsymbol{\mathsf{B}}$ by Definition~\ref{DUfOmega}.
+
+Claim~\ref{COmegaGdUfB} follows.
+
+All in all, by Claims~\ref{COmegaGdUfA} and~\ref{COmegaGdUfB}, $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}$ and $\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$ are mutually quasi-inverse equivalences of categories. Finally, every equivalence of categories can be completed to an adjoint equivalence, see~\cite{sM98}, Theorem~IV.4.1.
+
+This completes the proof.
 \end{proof}
+
+We next consider discretization and truncation.
 
 \begin{proposition}\label{POmegaDiscTrunc}
 Let $m\in\mathbb{N}$. Then $\mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{(\omega,m)}_{\mathbf{\Sigma}}=\mathrm{Id}_{\mathsf{mCatAlg}(\mathbf{\Sigma})}$ and $\mathrm{Ds}^{(\omega,m)}_{\mathbf{\Sigma}}$ is left adjoint to $\mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}$, with the identity as unit and, as counit, the natural transformation $\varepsilon$ whose component at an $\omega$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{B}}$ is the inclusion of the $m$-cells. The same holds for $\mathrm{Ds}^{\mathrm{gl}(\omega,m)}_{\mathbf{\Sigma}}$ and $\mathrm{Tr}^{\mathrm{gl}(m,\omega)}_{\mathbf{\Sigma}}$, the component of the counit at the sort $(k,s)$ being the identity, if $k\leq m$, and $\mathrm{i}^{(k,m)}_{s}$, if $k>m$.
 \end{proposition}
 \begin{proof}
-The first equation is Remark~\ref{RDiscOmegaTrunc} for $n=m$. For an $\omega$-categorial $\mathbf{\Sigma}$-algebra $\boldsymbol{\mathsf{B}}$ and $n\in\mathbb{N}$, $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\mathrm{Ds}^{(\omega,m)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})))$ is, by Remark~\ref{RDiscOmegaTrunc}, $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}(\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})))$, if $m\leq n$, and $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$, if $n<m$. Let $\varepsilon^{n}$ be the counit of Proposition~\ref{PDiscTruncAdj} at $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$, if $m\leq n$, and the identity, if $n<m$. All of them are inclusions of $m$-cells, or identities, so that they satisfy the compatibility condition of Corollary~\ref{CLimitNat}, and they induce a natural transformation $\varepsilon$, whose component at $\boldsymbol{\mathsf{B}}$ is the inclusion of the $m$-cells. The triangular identities hold because they hold after applying every $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}$, by Proposition~\ref{PDiscTruncAdj}, and, by Corollary~\ref{CLimitNat}, a homomorphism is determined by its truncations. The globular case is proved in the same way, with Proposition~\ref{PDiscTruncAdjGl} and Corollary~\ref{CLimitNatGl}.
-\end{proof}
+We consider the single-set case; the globular case is proved in the same way, with Proposition~\ref{PDiscTruncAdjGl} and Corollary~\ref{CLimitNatGl}.
 
+\textsf{(Unit)} The equation $\mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{(\omega,m)}_{\mathbf{\Sigma}}=\mathrm{Id}_{\mathsf{mCatAlg}(\mathbf{\Sigma})}$ is Remark~\ref{RDiscOmegaTrunc}~(2) for $n=m$.
+
+\textsf{(Counit)} Let $\boldsymbol{\mathsf{B}}$ be an $\omega$-categorial $\mathbf{\Sigma}$-algebra and $n\in\mathbb{N}$. By Remark~\ref{RDiscOmegaTrunc}, the following equality holds
+$$
+\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}\left(\mathrm{Ds}^{(\omega,m)}_{\mathbf{\Sigma}}\left(\mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})\right)\right)
+=
+\begin{cases}
+\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}\left(\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}\left(\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})\right)\right), & \text{if $m\leq n$;}\\
+\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}}), & \text{if $n<m$.}
+\end{cases}
+$$
+Let $\varepsilon^{n}$ be the counit of Proposition~\ref{PDiscTruncAdj} at $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}(\boldsymbol{\mathsf{B}})$, if $m\leq n$, and the identity, if $n<m$. All of them are inclusions of $m$-cells, or identities, so that they satisfy the compatibility condition of Corollary~\ref{CLimitNat}, and they induce a natural transformation $\varepsilon$, whose component at $\boldsymbol{\mathsf{B}}$ is the inclusion of the $m$-cells.
+
+\textsf{(Triangular identities)} They hold because they hold after applying every $\mathrm{Tr}^{(n,\omega)}_{\mathbf{\Sigma}}$, by Proposition~\ref{PDiscTruncAdj}, and, by Corollary~\ref{CLimitNat}, a homomorphism is determined by its truncations.
+
+This completes the proof.
+\end{proof}
 
 \section{An algebraic square}\label{SAlgSquare}
 
-We say that four adjunctions form an \emph{algebraic square} when there exist natural isomorphisms between the appropriate composites, as described in the following definition (taken from the Curry-Howard documents).
+In this section, we show that graduation, unification, discretization and truncation fit together in algebraic squares, both between two finite dimensions and between a finite dimension and $\omega$. We begin by recalling that four adjunctions form an \emph{algebraic square} when there exist natural isomorphisms between the appropriate composites, as described in the following definition (taken from the Curry-Howard documents).
 
 \begin{definition}\label{DefAlgSquare}
 Let $\mathsf{C}$, $\mathsf{C}'$, $\mathsf{D}$ and $\mathsf{D}'$ be four categories. Moreover let
@@ -4029,8 +4203,22 @@ form an algebraic square, with $F=\mathrm{Gd}^{(m)}_{\mathbf{\Sigma}}$, $G=\math
 \end{center}
 \end{proposition}
 \begin{proof}
-The four adjunctions are those of Propositions~\ref{PGdUfAdj}, \ref{PDiscTruncAdj} and~\ref{PDiscTruncAdjGl}. By Propositions~\ref{PCompatGdDs} and~\ref{PCompatUfTr}, $F'\circ J=\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}$ is equal to $H\circ F=\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(m)}_{\mathbf{\Sigma}}$, so that we can take $\alpha$ to be the identity, and $\beta^{(m,n)}$ is a natural isomorphism from $G\circ I=\mathrm{Uf}^{(m)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ to $K\circ G'=\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}\circ\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$.
+By Definition~\ref{DefAlgSquare}, we must check that the four pairs of functors involved are adjunctions and that there exist the natural isomorphisms $\alpha$ and $\beta$.
+
+\textsf{(Adjunctions)} The four adjunctions are those of Propositions~\ref{PGdUfAdj}, \ref{PDiscTruncAdj} and~\ref{PDiscTruncAdjGl}.
+
+\textsf{(The natural isomorphism $\alpha$)} By Proposition~\ref{PCompatGdDs}, the following equality holds
+$$
+F'\circ J=\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}=\mathrm{Ds}^{\mathrm{gl}(n,m)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(m)}_{\mathbf{\Sigma}}=H\circ F,
+$$
+so that we can take $\alpha$ to be the identity.
+
+\textsf{(The natural isomorphism $\beta$)} By Proposition~\ref{PCompatUfTr}, $\beta^{(m,n)}$ is a natural isomorphism from $G\circ I=\mathrm{Uf}^{(m)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ to $K\circ G'=\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}\circ\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$.
+
+This completes the proof.
 \end{proof}
+
+We next consider the algebraic square between a finite dimension and $\omega$.
 
 \begin{proposition}\label{PAlgSquareOmega}
 Let $m\in\mathbb{N}$, and let
@@ -4048,12 +4236,20 @@ Then the adjunctions
 form an algebraic square, with $F=\mathrm{Gd}^{(m)}_{\mathbf{\Sigma}}$, $G=\mathrm{Uf}^{(m)}_{\mathbf{\Sigma}}$, $F'=\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}$, $G'=\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$, $J=\mathrm{Ds}^{(\omega,m)}_{\mathbf{\Sigma}}$, $K=\mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}$, $H=\mathrm{Ds}^{\mathrm{gl}(\omega,m)}_{\mathbf{\Sigma}}$ and $I=\mathrm{Tr}^{\mathrm{gl}(m,\omega)}_{\mathbf{\Sigma}}$, in which $\alpha$ is the identity of $\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{(\omega,m)}_{\mathbf{\Sigma}}=\mathrm{Ds}^{\mathrm{gl}(\omega,m)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(m)}_{\mathbf{\Sigma}}$ and $\beta$ is the natural isomorphism $\mathrm{in}^{[m]}$ of Proposition~\ref{PUfOmega}, from $\mathrm{Uf}^{(m)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{\mathrm{gl}(m,\omega)}_{\mathbf{\Sigma}}$ to $\mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$, which sends every $m$-cell $x$ to its class $[x]_{m}$.
 \end{proposition}
 \begin{proof}
-The four adjunctions are those of Propositions~\ref{PGdUfAdj}, \ref{POmegaGdUf} and~\ref{POmegaDiscTrunc}. For every $p\in\mathbb{N}$, by the definitions of the functors involved,
+By Definition~\ref{DefAlgSquare}, we must check that the four pairs of functors involved are adjunctions and that there exist the natural isomorphisms $\alpha$ and $\beta$.
+
+\textsf{(Adjunctions)} The four adjunctions are those of Propositions~\ref{PGdUfAdj}, \ref{POmegaGdUf} and~\ref{POmegaDiscTrunc}.
+
+\textsf{(The natural isomorphism $\alpha$)} For every $p\in\mathbb{N}$, by the definitions of the functors involved,
 \begin{gather*}
 \mathrm{Tr}^{\mathrm{gl}(p,\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{(\omega,m)}_{\mathbf{\Sigma}}=\mathrm{Gd}^{(p)}_{\mathbf{\Sigma}}\circ F_{p},\\
 \mathrm{Tr}^{\mathrm{gl}(p,\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{\mathrm{gl}(\omega,m)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(m)}_{\mathbf{\Sigma}}=F^{\mathrm{gl}}_{p}\circ\mathrm{Gd}^{(m)}_{\mathbf{\Sigma}},
 \end{gather*}
-with $F_{p}$ and $F^{\mathrm{gl}}_{p}$ as in Remark~\ref{RDiscOmegaTrunc}. If $m\leq p$, $\mathrm{Gd}^{(p)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}=\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(m)}_{\mathbf{\Sigma}}$, and, if $p\leq m$, $\mathrm{Gd}^{(p)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{(p,m)}_{\mathbf{\Sigma}}=\mathrm{Tr}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(m)}_{\mathbf{\Sigma}}$, by Propositions~\ref{PCompatGdDs} and~\ref{PCompatGdUf}. Hence both functors have the same truncations and, by the uniqueness in Proposition~\ref{PUnivPropGlCatAlg}, they are equal, so that we can take $\alpha$ to be the identity. Finally, by Proposition~\ref{PUfOmega}, $\mathrm{in}^{[m]}$ is a natural isomorphism from $\mathrm{Uf}^{(m)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{\mathrm{gl}(m,\omega)}_{\mathbf{\Sigma}}$ to $\mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$.
+with $F_{p}$ and $F^{\mathrm{gl}}_{p}$ as in Remark~\ref{RDiscOmegaTrunc}. If $m\leq p$, $\mathrm{Gd}^{(p)}_{\mathbf{\Sigma}}\circ\mathrm{Ds}^{(p,m)}_{\mathbf{\Sigma}}=\mathrm{Ds}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(m)}_{\mathbf{\Sigma}}$, and, if $p\leq m$, $\mathrm{Gd}^{(p)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{(p,m)}_{\mathbf{\Sigma}}=\mathrm{Tr}^{\mathrm{gl}(p,m)}_{\mathbf{\Sigma}}\circ\mathrm{Gd}^{(m)}_{\mathbf{\Sigma}}$, by Propositions~\ref{PCompatGdDs} and~\ref{PCompatGdUf}. Hence both functors have the same truncations and, by the uniqueness in Proposition~\ref{PUnivPropGlCatAlg}, they are equal, so that we can take $\alpha$ to be the identity.
+
+\textsf{(The natural isomorphism $\beta$)} By Proposition~\ref{PUfOmega}, $\mathrm{in}^{[m]}$ is a natural isomorphism from $\mathrm{Uf}^{(m)}_{\mathbf{\Sigma}}\circ \mathrm{Tr}^{\mathrm{gl}(m,\omega)}_{\mathbf{\Sigma}}$ to $\mathrm{Tr}^{(m,\omega)}_{\mathbf{\Sigma}}\circ\mathrm{Uf}^{(\omega)}_{\mathbf{\Sigma}}$.
+
+This completes the proof.
 \end{proof}
 
 % \appendix
