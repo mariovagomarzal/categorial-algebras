@@ -1,6 +1,7 @@
 import Stemma
 import Mathlib.CategoryTheory.Equivalence
 import CategorialAlgebras.Compact.Truncation
+import CategorialAlgebras.Compact.Tower
 
 open Verso.Genre Manual InlineLean Stemma
 
@@ -268,6 +269,355 @@ some truncation. A morphism of families is the family of truncations of the homo
 Construction `compact.hom-of-family`.
 :::
 
+# The limit of a compatible family
+
+Let $`(\boldsymbol{\mathsf{A}}_n, \varphi_n)_n` be a compatible family. For every sort $`s`, the
+inverse of $`\varphi_n` sends the cells of $`\boldsymbol{\mathsf{A}}_n` to cells of
+$`\boldsymbol{\mathsf{A}}_{n+1}`, bijectively onto its $`n`-cells and preserving the structure of
+the dimensions below $`n`. The cells of sort $`s` thus form a chain
+$`A_{0,s} \hookrightarrow A_{1,s} \hookrightarrow \cdots`, a *tower* of compact categories, whose
+limit is a compact $`\omega`-category (the Lean module `CategorialAlgebras.Compact.Tower`): its cells
+are those of all the levels, each identified with its images, and the sources, targets and
+compositions of dimension $`k` are computed at any level above $`k` that contains the cells
+involved. This is the union of the draft, where the $`\boldsymbol{\mathsf{A}}_m` are subsets of the
+$`\boldsymbol{\mathsf{A}}_n`.
+
+```lean
+open CategoryStruct
+
+namespace CompatibleFamily
+
+variable (F : CompatibleFamily.{u, v, w} Sig)
+
+/-- The embedding of level `n` into level `n + 1`, at sort `s`. -/
+def emb (s : S) (n : ℕ) (a : F.alg n s) : F.alg (n + 1) s :=
+  (((F.iso n).inv.map s).map a).1
+
+lemma hom_emb (s : S) (n : ℕ) (a : F.alg n s) :
+    ((F.iso n).hom.map s).map (((F.iso n).inv.map s).map a) = a :=
+  congrArg (fun H : F.alg n ⟶ F.alg n => (H.map s).map a) (F.iso n).inv_hom_id
+
+lemma inv_hom (s : S) (n : ℕ) (x : (truncation Sig (Nat.le_succ n)).obj (F.alg (n + 1)) s) :
+    ((F.iso n).inv.map s).map (((F.iso n).hom.map s).map x) = x :=
+  congrArg (fun H : (truncation Sig (Nat.le_succ n)).obj (F.alg (n + 1)) ⟶ _ => (H.map s).map x)
+    (F.iso n).hom_inv_id
+```
+
+:::construction (label := "compact.family-tower") (central := false) (title := "The tower of a compatible family")
+For every sort $`s`, the cells of sort $`s` of the levels of a compatible family, with the
+embeddings $`A_{n,s} \to A_{n+1,s}` given by the inverses of the isomorphisms $`\varphi_n`, are a
+tower of compact categories: each embedding is injective, preserves the $`k`-sources, $`k`-targets
+and $`k`-compositions for $`k < n`, and its image is the set of $`n`-cells, since the cells of
+$`T^{(n,n+1)}_{\Sigma}(\boldsymbol{\mathsf{A}}_{n+1})` are the $`n`-cells of
+$`\boldsymbol{\mathsf{A}}_{n+1}`.
+
+```lean
+/-- The tower of the cells of sort `s` of a compatible family. -/
+@[reducible]
+def tower (s : S) : Tower.{w} where
+  X n := F.alg n s
+  str n := (F.alg n).str s
+  e := F.emb s
+  e_injective n a b h := by
+    rw [← F.hom_emb s n a, ← F.hom_emb s n b]
+    exact congrArg _ (Subtype.ext h)
+  e_sc n k a := congrArg Subtype.val (((F.iso n).inv.map s).map_sc_eq_sc_map k a)
+  e_tg n k a := congrArg Subtype.val (((F.iso n).inv.map s).map_tg_eq_tg_map k a)
+  e_comp n k g f h := congrArg Subtype.val (((F.iso n).inv.map s).map_comp_eq_comp_map h)
+  e_cell n a := (((F.iso n).inv.map s).map a).2 (Fin.last n) (by simp [upper])
+  e_surj n x hx := by
+    have hx' : ∀ u ∈ upper n (n + 1), sc u x = x := fun u hu => by
+      have : u = Fin.last n := Fin.ext (by
+        have := u.isLt
+        simp only [upper, Set.mem_ofPred_eq] at hu
+        rw [Fin.val_last]; omega)
+      rw [this]; exact hx
+    exact ⟨((F.iso n).hom.map s).map ⟨x, hx'⟩, congrArg Subtype.val (F.inv_hom s n ⟨x, hx'⟩)⟩
+```
+:::
+
+The operations of $`\Sigma` commute with the embeddings, since the $`\varphi_n^{-1}` are
+homomorphisms. An operation is therefore computed on finitely many cells of the limit at any level
+that contains them all.
+
+```lean
+open Signature
+
+lemma emb_op {ws : List S} {s : S} (σ : Sig ws s) (n : ℕ) (b : Arity (F.alg n) ws) :
+    F.emb s n ((F.alg n).op σ b) = (F.alg (n + 1)).op σ (fun j => F.emb (ws.get j) n (b j)) :=
+  congrArg Subtype.val ((F.iso n).inv.map_op σ b)
+
+lemma up_op {ws : List S} {s : S} (σ : Sig ws s) {n m : ℕ} (h : n ≤ m) (b : Arity (F.alg n) ws) :
+    (F.tower s).up h ((F.alg n).op σ b) =
+      (F.alg m).op σ (fun j => (F.tower (ws.get j)).up h (b j)) := by
+  induction m, h using Nat.le_induction with
+  | base => simp only [Tower.up_self]
+  | succ m hm ih =>
+    rw [Tower.up_succ _ hm, ih]
+    change F.emb s m _ = _
+    rw [F.emb_op]
+    congr 1
+    funext j
+    exact ((F.tower (ws.get j)).up_succ hm (b j)).symm
+
+/-- The cells of sort `s` of the limit. -/
+abbrev L (s : S) := (F.tower s).Lim
+
+/-- A family of cells of the limit comes from a common level above any bound. -/
+lemma exists_cls_arity {ws : List S} (z : Arity F.L ws) (bd : ℕ) :
+    ∃ N, bd < N ∧ ∃ b : Arity (F.alg N) ws, ∀ j, (F.tower (ws.get j)).cls N (b j) = z j := by
+  classical
+  let N := max (Finset.univ.sup fun j => (F.tower (ws.get j)).lvl (z j)) bd + 1
+  refine ⟨N, by omega, fun j => (F.tower (ws.get j)).rep (z j) N ?_,
+    fun j => (F.tower (ws.get j)).cls_rep _ _ _⟩
+  exact le_trans (Finset.le_sup (f := fun j => (F.tower (ws.get j)).lvl (z j))
+    (Finset.mem_univ j)) (by omega)
+
+/-- The level used to compute an operation on a family of cells of the limit. -/
+noncomputable def opLevel {ws : List S} (z : Arity F.L ws) : ℕ :=
+  Classical.choose (F.exists_cls_arity z 0)
+
+/-- The operation of `σ` on the limit, computed at a level that contains the arguments. -/
+noncomputable def opL {ws : List S} {s : S} (σ : Sig ws s) (z : Arity F.L ws) : F.L s :=
+  (F.tower s).cls (F.opLevel z)
+    ((F.alg _).op σ (Classical.choose (Classical.choose_spec (F.exists_cls_arity z 0)).2))
+
+lemma op_cls_eq {ws : List S} {s : S} (σ : Sig ws s) {N n : ℕ} {c : Arity (F.alg N) ws}
+    {b : Arity (F.alg n) ws}
+    (hc : ∀ j, (F.tower (ws.get j)).cls N (c j) = (F.tower (ws.get j)).cls n (b j)) :
+    (F.tower s).cls N ((F.alg N).op σ c) = (F.tower s).cls n ((F.alg n).op σ b) := by
+  have hc' : ∀ j, (F.tower (ws.get j)).up (le_max_left N n) (c j) =
+      (F.tower (ws.get j)).up (le_max_right N n) (b j) := fun j =>
+    ((F.tower (ws.get j)).cls_eq_iff (le_max_left N n) (le_max_right N n)).mp (hc j)
+  rw [(F.tower s).cls_eq_iff (le_max_left N n) (le_max_right N n), F.up_op, F.up_op]
+  exact congrArg _ (funext hc')
+
+lemma opL_cls {ws : List S} {s : S} (σ : Sig ws s) {n : ℕ} (b : Arity (F.alg n) ws) :
+    F.opL σ (fun j => (F.tower (ws.get j)).cls n (b j)) = (F.tower s).cls n ((F.alg n).op σ b) :=
+  F.op_cls_eq σ (Classical.choose_spec (Classical.choose_spec (F.exists_cls_arity _ 0)).2)
+
+lemma exists_cls_arity_ge {ws : List S} (z : Arity F.L ws) :
+    ∃ N₀, ∀ N, N₀ ≤ N → ∃ b : Arity (F.alg N) ws, ∀ j, (F.tower (ws.get j)).cls N (b j) = z j := by
+  classical
+  refine ⟨Finset.univ.sup fun j => (F.tower (ws.get j)).lvl (z j), fun N hN =>
+    ⟨fun j => (F.tower (ws.get j)).rep (z j) N ?_, fun j => (F.tower (ws.get j)).cls_rep _ _ _⟩⟩
+  exact le_trans (Finset.le_sup (f := fun j => (F.tower (ws.get j)).lvl (z j))
+    (Finset.mem_univ j)) hN
+```
+
+:::construction (label := "compact.limit-algebra") (central := false) (title := "The limit of a compatible family")
+The *limit* of a compatible family is the compact $`\omega`-categorial $`\Sigma`-algebra whose cells
+of sort $`s` are those of the limit of the tower of sort $`s`, and in which every
+$`\sigma \in \Sigma_{\mathbf{s}, s}` acts on a family of cells by acting at a common level. This
+is a compact $`\omega`-functor because, at every level, $`\sigma` is a compact functor. This is the
+limit $`\varprojlim_n \boldsymbol{\mathsf{A}}_n` of the proof of Proposition `PUnivPropCatAlg` of
+the draft.
+
+```lean
+/-- The compact `ω`-functor of an operation symbol on the limit. -/
+noncomputable def opFunctor {ws : List S} {s : S} (σ : Sig ws s) :
+    OmegaFunctor (Arity F.L ws) (F.L s) where
+  map := F.opL σ
+  map_sc_eq_sc_map k a := by
+    obtain ⟨N, hN, b, hb⟩ := F.exists_cls_arity a k
+    obtain rfl : (fun j => (F.tower (ws.get j)).cls N (b j)) = a := funext hb
+    calc F.opL σ (sc k fun j => (F.tower (ws.get j)).cls N (b j))
+      _ = F.opL σ (fun j => (F.tower (ws.get j)).cls N (sc (⟨k, hN⟩ : Fin N) (b j))) :=
+          congrArg _ (funext fun j => Tower.sc_cls _ hN _)
+      _ = (F.tower s).cls N ((F.alg N).op σ (sc (⟨k, hN⟩ : Fin N) b)) := F.opL_cls σ _
+      _ = (F.tower s).cls N (sc (⟨k, hN⟩ : Fin N) ((F.alg N).op σ b)) :=
+          congrArg _ (((F.alg N).op σ).map_sc_eq_sc_map _ b)
+      _ = sc k (F.opL σ fun j => (F.tower (ws.get j)).cls N (b j)) := by
+          rw [F.opL_cls, Tower.sc_cls _ hN]
+  map_tg_eq_tg_map k a := by
+    obtain ⟨N, hN, b, hb⟩ := F.exists_cls_arity a k
+    obtain rfl : (fun j => (F.tower (ws.get j)).cls N (b j)) = a := funext hb
+    calc F.opL σ (tg k fun j => (F.tower (ws.get j)).cls N (b j))
+      _ = F.opL σ (fun j => (F.tower (ws.get j)).cls N (tg (⟨k, hN⟩ : Fin N) (b j))) :=
+          congrArg _ (funext fun j => Tower.tg_cls _ hN _)
+      _ = (F.tower s).cls N ((F.alg N).op σ (tg (⟨k, hN⟩ : Fin N) b)) := F.opL_cls σ _
+      _ = (F.tower s).cls N (tg (⟨k, hN⟩ : Fin N) ((F.alg N).op σ b)) :=
+          congrArg _ (((F.alg N).op σ).map_tg_eq_tg_map _ b)
+      _ = tg k (F.opL σ fun j => (F.tower (ws.get j)).cls N (b j)) := by
+          rw [F.opL_cls, Tower.tg_cls _ hN]
+  map_comp_eq_comp_map {k f g} h := by
+    obtain ⟨N₁, h₁⟩ := F.exists_cls_arity_ge g
+    obtain ⟨N₂, h₂⟩ := F.exists_cls_arity_ge f
+    let N := max (max N₁ N₂) (k + 1)
+    have hN : k < N := by omega
+    obtain ⟨gb, hg⟩ := h₁ N (by omega)
+    obtain ⟨fb, hf⟩ := h₂ N (by omega)
+    obtain rfl : (fun j => (F.tower (ws.get j)).cls N (gb j)) = g := funext hg
+    obtain rfl : (fun j => (F.tower (ws.get j)).cls N (fb j)) = f := funext hf
+    have hb : sc_is_tg (⟨k, hN⟩ : Fin N) gb fb :=
+      pi_sc_is_tg.mpr fun j => (Tower.sc_is_tg_cls _ hN).mp (pi_sc_is_tg.mp h j)
+    calc F.opL σ (_ ♯[k] _ ← h)
+      _ = F.opL σ (fun j => (F.tower (ws.get j)).cls N
+            (gb j ♯[(⟨k, hN⟩ : Fin N)] fb j ← pi_sc_is_tg.mp hb j)) :=
+          congrArg _ (funext fun j => Tower.comp_eq _ hN rfl rfl (pi_sc_is_tg.mp h j))
+      _ = (F.tower s).cls N ((F.alg N).op σ (gb ♯[(⟨k, hN⟩ : Fin N)] fb ← hb)) := F.opL_cls σ _
+      _ = (F.tower s).cls N ((F.alg N).op σ gb ♯[(⟨k, hN⟩ : Fin N)] (F.alg N).op σ fb ←
+            ((F.alg N).op σ).comp_map hb) :=
+          congrArg _ (((F.alg N).op σ).map_comp_eq_comp_map hb)
+      _ = _ := (Tower.comp_eq _ hN (F.opL_cls σ gb) (F.opL_cls σ fb) _).symm
+
+/-- The limit of a compatible family: a compact `ω`-categorial algebra. -/
+noncomputable def limAlgebra : OmegaCatAlgebra.{u, v, w} Sig where
+  carrier := F.L
+  str s := Tower.limOmegaCategory _
+  op σ := F.opFunctor σ
+```
+:::
+
+# The family of truncations of the limit
+
+The cells of $`\boldsymbol{\mathsf{A}}_n` are exactly the cells of the limit that are $`u`-cells for
+every $`u \geq n`: they are $`n`-cells, being $`n`-cells of $`\boldsymbol{\mathsf{A}}_{n+1}`, and a
+cell of a higher level that is a $`u`-cell for $`n \leq u` comes down to level $`n`. Sending a cell
+of $`\boldsymbol{\mathsf{A}}_n` to itself in the limit is thus a homomorphism from
+$`\boldsymbol{\mathsf{A}}_n` to the $`n`-truncation of the limit, bijective at every sort; and a
+homomorphism of compact $`n`-categorial algebras that is bijective at every sort is an isomorphism,
+its inverse preserving the structure because the homomorphism does and is injective.
+
+```lean
+end CompatibleFamily
+
+namespace CatAlgebra
+
+variable {n : ℕ} {A B : CatAlgebra.{u, v, w} Sig n}
+
+open Signature in
+/-- The inverse of a homomorphism that is bijective at every sort. -/
+noncomputable def Hom.inverse (H : Hom A B) (hb : ∀ s, Function.Bijective (H.map s)) :
+    Hom B A where
+  map s :=
+    have e : ∀ y, (H.map s) (Function.surjInv (hb s).2 y) = y := Function.surjInv_eq (hb s).2
+    { map := Function.surjInv (hb s).2
+      map_sc_eq_sc_map := fun k y => (hb s).1 (by
+        rw [e, (H.map s).map_sc_eq_sc_map, e])
+      map_tg_eq_tg_map := fun k y => (hb s).1 (by
+        rw [e, (H.map s).map_tg_eq_tg_map, e])
+      map_comp_eq_comp_map := fun {k f g} h => (hb s).1 (by
+        rw [e]
+        exact (((H.map s).map_comp_eq_comp_map _).trans (congr_comp₂ (e f) (e g) h)).symm) }
+  map_op {ws s} σ b := (hb s).1 (by
+    change H.map s (Function.surjInv (hb s).2 _) = H.map s (A.op σ _)
+    rw [Function.surjInv_eq (f := ⇑(H.map s)) (hb s).2, H.map_op]
+    exact congrArg _ (funext fun j =>
+      (Function.surjInv_eq (f := ⇑(H.map (ws.get j))) (hb _).2 (b j)).symm))
+
+lemma Hom.isIso_of_bijective (H : Hom A B) (hb : ∀ s, Function.Bijective (H.map s)) :
+    IsIso (show A ⟶ B from H) :=
+  ⟨⟨H.inverse hb,
+    Hom.ext fun s => Functor.ext fun x => Function.leftInverse_surjInv (hb s) x,
+    Hom.ext fun s => Functor.ext fun y => Function.rightInverse_surjInv (hb s).2 y⟩⟩
+
+end CatAlgebra
+
+namespace CompatibleFamily
+
+variable (F : CompatibleFamily.{u, v, w} Sig)
+
+lemma cls_mem (s : S) (n : ℕ) (a : F.alg n s) :
+    ∀ u ∈ upperω n, sc u ((F.tower s).cls n a) = (F.tower s).cls n a := by
+  intro u hu
+  have hnu : n ≤ u + 1 := Nat.le_succ_of_le hu
+  rw [← (F.tower s).cls_up hnu a, Tower.sc_cls _ (Nat.lt_succ_self u)]
+  exact congrArg _ ((F.tower s).up_cell hnu a u hu (Nat.lt_succ_self u))
+
+lemma exists_cls_of_mem (s : S) (n : ℕ) (z : F.L s) (hz : ∀ u ∈ upperω n, sc u z = z) :
+    ∃ a, (F.tower s).cls n a = z := by
+  obtain ⟨m, hm, b, rfl⟩ := (F.tower s).exists_cls₁ z n
+  obtain ⟨a, rfl⟩ := (F.tower s).up_surj hm.le b fun u hu hum => by
+    have := hz u hu
+    rwa [Tower.sc_cls _ hum, Tower.cls_inj] at this
+  exact ⟨a, ((F.tower s).cls_up hm.le a).symm⟩
+
+open Signature in
+/-- Level `n` of a compatible family in the `n`-truncation of its limit. -/
+noncomputable def toLim (n : ℕ) : F.alg n ⟶ (truncationω Sig n).obj F.limAlgebra where
+  map s :=
+    { map := fun a => ⟨(F.tower s).cls n a, F.cls_mem s n a⟩
+      map_sc_eq_sc_map := fun k a => Subtype.ext ((Tower.sc_cls (F.tower s) k.isLt a).symm)
+      map_tg_eq_tg_map := fun k a => Subtype.ext ((Tower.tg_cls (F.tower s) k.isLt a).symm)
+      map_comp_eq_comp_map := fun {k f g} h =>
+        Subtype.ext ((Tower.comp_eq (F.tower s) k.isLt rfl rfl
+        ((Tower.sc_is_tg_cls (F.tower s) k.isLt).mpr h)).symm) }
+  map_op σ a := Subtype.ext (F.opL_cls σ a).symm
+
+lemma toLim_bijective (n : ℕ) (s : S) : Function.Bijective ((F.toLim n).map s) :=
+  ⟨fun a b h => by
+    have h' : (F.tower s).cls n a = (F.tower s).cls n b := congrArg Subtype.val h
+    exact (Tower.cls_inj _).mp h', fun z => by
+    obtain ⟨a, ha⟩ := F.exists_cls_of_mem s n z.1 z.2
+    exact ⟨a, Subtype.ext (show (F.tower s).cls n a = z.1 from ha)⟩⟩
+
+instance (n : ℕ) : IsIso (F.toLim n) := CatAlgebra.Hom.isIso_of_bijective _ (F.toLim_bijective n)
+```
+
+:::construction (label := "compact.limit-iso") (central := false) (title := "A compatible family is the family of truncations of its limit")
+The isomorphisms $`\boldsymbol{\mathsf{A}}_n \cong T^{(n,\omega)}_{\Sigma}(\varprojlim_m \boldsymbol{\mathsf{A}}_m)`
+that send a cell to itself are compatible with the isomorphisms $`\varphi_n` of the family and with
+the canonical isomorphisms of the family of truncations: they form an isomorphism of compatible
+families from $`(\boldsymbol{\mathsf{A}}_n, \varphi_n)_n` to the family of truncations of its limit.
+Compatibility holds because a cell $`x` of $`T^{(n,n+1)}_{\Sigma}(\boldsymbol{\mathsf{A}}_{n+1})` and its
+image $`\varphi_n(x)` in $`\boldsymbol{\mathsf{A}}_n` are the same cell of the limit, the embedding
+being $`\varphi_n^{-1}`.
+
+```lean
+/-- A compatible family is isomorphic to the family of truncations of its limit. -/
+noncomputable def toLimFamily : F ⟶ (truncFamilies Sig).obj F.limAlgebra where
+  map := F.toLim
+  comm n := by
+    apply CatAlgebra.Hom.ext
+    intro s
+    apply Functor.ext
+    intro y
+    apply Subtype.ext
+    show (F.tower s).cls (n + 1) y.1 = (F.tower s).cls n (((F.iso n).hom.map s).map y)
+    rw [← (F.tower s).cls_up (Nat.le_succ n), Tower.up_succ _ le_rfl, Tower.up_self]
+    exact congrArg _ (congrArg Subtype.val (F.inv_hom s n y)).symm
+
+end CompatibleFamily
+
+namespace CompatibleFamily
+
+variable {A B : CompatibleFamily.{u, v, w} Sig}
+
+/-- A morphism of compatible families whose components are isomorphisms is an isomorphism. -/
+lemma isIso_of_components (Ψ : A ⟶ B) [∀ n, IsIso (Ψ.map n)] : IsIso Ψ := by
+  refine ⟨⟨⟨fun n => inv (Ψ.map n), fun n => ?_⟩, ?_, ?_⟩⟩
+  · rw [← cancel_epi ((truncation Sig (Nat.le_succ n)).map (Ψ.map (n + 1))),
+      ← CategoryTheory.Functor.map_comp_assoc, IsIso.hom_inv_id, CategoryTheory.Functor.map_id,
+      CategoryTheory.Category.id_comp, ← CategoryTheory.Category.assoc, Ψ.comm,
+      CategoryTheory.Category.assoc, IsIso.hom_inv_id, CategoryTheory.Category.comp_id]
+  · exact Hom.ext (funext fun n => IsIso.hom_inv_id (Ψ.map n))
+  · exact Hom.ext (funext fun n => IsIso.inv_hom_id (Ψ.map n))
+
+end CompatibleFamily
+
+instance (F : CompatibleFamily.{u, v, w} Sig) : IsIso F.toLimFamily :=
+  haveI : ∀ n, IsIso (F.toLimFamily.map n) := fun n => inferInstanceAs (IsIso (F.toLim n))
+  CompatibleFamily.isIso_of_components _
+```
+:::
+
+:::proposition (label := "compact.trunc-families-ess-surj") (central := false) (title := "Every compatible family comes from an ω-categorial algebra")
+Every compatible family is isomorphic to the family of truncations of a compact
+$`\omega`-categorial $`\Sigma`-algebra, its limit: the functor of truncations is essentially
+surjective.
+
+```lean
+instance truncFamilies_essSurj : (truncFamilies.{u, v, w} Sig).EssSurj where
+  mem_essImage F := ⟨F.limAlgebra, ⟨(asIso F.toLimFamily).symm⟩⟩
+```
+:::
+
+:::proof (of := "compact.trunc-families-ess-surj")
+By Construction `compact.limit-iso`, a compatible family is isomorphic to the family of truncations
+of its limit (Construction `compact.limit-algebra`).
+:::
+
 # The universal property
 
 :::theorem (label := "compact.omega-cat-alg-pseudo-limit") (central := true) (title := "ωCatAlg(Σ) is the pseudo-limit of the nCatAlg(Σ)")
@@ -282,16 +632,30 @@ categories. That is:
 2. it is essentially surjective: every compatible family is isomorphic to the family of
    truncations of a compact $`\omega`-categorial $`\Sigma`-algebra, its limit.
 
-This is Proposition `PUnivPropCatAlg` of the draft, up to isomorphism: a family of functors
-$`F_n \colon \mathsf{L} \to \mathsf{nCatAlg}(\Sigma)` with natural isomorphisms
-$`T^{(n,n+1)}_{\Sigma} \circ F_{n+1} \cong F_n` is a functor from $`\mathsf{L}` to the category of
-compatible families, and thus factors through $`\omega\mathsf{CatAlg}(\Sigma)`, uniquely up to a
-unique natural isomorphism.
+This is Proposition `PUnivPropCatAlg` of the draft, with the projective limit replaced by the
+pseudo-limit.
 
 ```lean
-theorem truncFamilies_isEquivalence : (truncFamilies.{u, v, w} Sig).IsEquivalence := by
-  sorry
+theorem truncFamilies_isEquivalence : (truncFamilies.{u, v, w} Sig).IsEquivalence :=
+  { faithful := inferInstance, full := inferInstance, essSurj := inferInstance }
 ```
+:::
+
+:::proof (of := "compact.omega-cat-alg-pseudo-limit")
+The functor of truncations is faithful and full by Proposition
+`compact.trunc-families-fully-faithful`, and essentially surjective by Proposition
+`compact.trunc-families-ess-surj`; a functor with these three properties is an equivalence.
+:::
+
+:::remark (title := "The universal property for functors")
+The form of Proposition `PUnivPropCatAlg` of the draft with functors follows: a family of functors
+$`F_n \colon \mathsf{L} \to \mathsf{nCatAlg}(\Sigma)` with natural isomorphisms
+$`T^{(n,n+1)}_{\Sigma} \circ F_{n+1} \cong F_n` is the same as a functor from $`\mathsf{L}` to the
+category of compatible families, and composing it with an inverse of the equivalence gives a functor
+$`\mathsf{L} \to \omega\mathsf{CatAlg}(\Sigma)` whose truncations are the $`F_n`, up to compatible
+natural isomorphisms, unique up to a unique natural isomorphism. Likewise, the second part of
+Corollary `CLimitNat` of the draft, on natural transformations, is the full faithfulness of
+composing with an equivalence. These consequences are not formalized here.
 :::
 
 ```lean
