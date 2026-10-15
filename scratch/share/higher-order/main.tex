@@ -1,4 +1,5 @@
-\documentclass[a4paper]{amsart}
+\documentclass[a4paper, reqno
+]{amsart}
 
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -128,6 +129,8 @@
 
 \subsection{Prerequisites, notation and terminology}
 
+\textcolor{red}{Neteja tota aquesta subsecció. Fes que siga llegible.}
+
 The only prerequisites for reading this work are familiarity with category theory, universal algebra, in particular many-sorted partial algebras, the theory of ordered sets and set theory. This can be achieved by reading, for category theory, e.g., \cite{hs73,sM98}, for universal algebra, e.g., \cite{gb15,pb82,pb86,pb02,bs81,gtw85,gG08,agk67,sch66,sch70,w92}, for the theory of ordered sets, e.g., \cite{bl05,DP02,R08}, and, for set theory, e.g., \cite{nB70,end77}.
 
 Our underlying set theory is $\mathbf{ZFSk}$, Zermelo-Fraenkel-Skolem set theory (also known as $\mathbf{ZFC}$, i.e.,  Zermelo-Fraenkel set theory with the axiom of choice) plus the existence of a Grothendieck universe $\boldsymbol{\mathcal{U}}$, fixed once and for all (see~\cite{sM98}, pp.~21--24). We recall that the elements of $\boldsymbol{\mathcal{U}}$ are called $\boldsymbol{\mathcal{U}}$-small sets and the subsets of $\boldsymbol{\mathcal{U}}$ are called $\boldsymbol{\mathcal{U}}$-large sets or classes. Moreover, from now on $\mathsf{Set}$ stands for the category of sets, i.e., the category whose set of objects is $\boldsymbol{\mathcal{U}}$ and whose set of morphisms is the set of all mappings between $\boldsymbol{\mathcal{U}}$-small sets.
@@ -170,6 +173,8 @@ Conselleria d’Educaci\'{o}, Universitats i Ocupaci\'{o}, Generalitat Valencian
 \section{Preliminaries}\label{SPreliminaries}
 
 In this section we fix the notions on sorted sets, partial algebras, terms, equations, derivors and adjunctions that we use in the rest of this work. Sections~\ref{SSingleSet} and~\ref{SGlobular} present higher-order categorial algebras as models of sets of $\mathrm{QE}$-equations between partial algebras, and Section~\ref{SGenHepDerivors} relates such models through derivors. We follow~\cite{pb86, pb02} for partial algebras and $\mathrm{QE}$-equations.
+
+\textcolor{red}{Tota aquesta secció necessita ser reescrita. Agafa les definicions tal qual del document Curry-Howard. No tractes de simplificar-les. Copia del document les definicions necessàries per a que aquesta secció siga tot lo completa possible. Sense acurtar ni simplificar les definicions.}
 
 \subsection{Sorted sets and partial algebras}\label{SSortedPartial}
 
@@ -235,6 +240,8 @@ A \emph{$\mathrm{QE}$-specification} is a quadruple $(S,\Sigma,X,\mathcal{E})$ w
 \end{definition}
 
 We next fix the variables that we use throughout this work and the notation for substitutions.
+
+\textcolor{red}{No m'agraden aquestes dues parts de Variables i Substitutions... De nou, copia el que consideres del document Curry-Howard sense cambiar ni simplificar les definicions.}
 
 \textbf{Variables.} We let $V^{S}=(V^{S}_{s})_{s\in S}$, with $V^{S}_{s}=\{v^{s}_{n}\mid n\in\mathbb{N}\}$, be a fixed $S$-sorted set of variables. For a word $\mathbf{s}\in S^{\star}$, we let $\vs{\mathbf{s}}$ stand for the finite $S$-sorted set of variables defined, for every $s\in S$, as $(\vs{\mathbf{s}})_{s}=\{v^{s}_{i}\mid i\in\bb{\mathbf{s}}_{s}\}$, where $\bb{\mathbf{s}}_{s}$ is the number of occurrences of $s$ in $\mathbf{s}$. For $j\in\bb{\mathbf{s}}$, we let $v^{\mathbf{s}}_{j}$ stand for the variable that corresponds to the $j$-th letter of $\mathbf{s}$, i.e., $v^{\mathbf{s}}_{j}=v^{s_{j}}_{i}$ if the $j$-th letter of $\mathbf{s}$ is the $i$-th occurrence, counting from $0$, of the sort $s_{j}$ in $\mathbf{s}$; thus $j\mapsto v^{\mathbf{s}}_{j}$ is a bijection from $\bb{\mathbf{s}}$ onto the variables of $\vs{\mathbf{s}}$. Accordingly, for an $S$-sorted set $A$, we identify a family $\mathbf{a}=(a_{j})_{j\in\bb{\mathbf{s}}}\in A_{\mathbf{s}}$ with the valuation of $\vs{\mathbf{s}}$ in $A$ that sends $v^{\mathbf{s}}_{j}$ to $a_{j}$, for every $j\in\bb{\mathbf{s}}$. For instance, $\vs{s}=\{v^{s}_{0}\}$, and the variables of $\vs{(s,s)}$ are $v^{(s,s)}_{0}=v^{s}_{0}$ and $v^{(s,s)}_{1}=v^{s}_{1}$.
 
@@ -1100,6 +1107,8 @@ of $\mathrm{E}$-equations in the single variable $v^{\varphi(s)}_{0}$, the \emph
 \end{enumerate}
 \end{definition}
 
+\textcolor{red}{No faces la següent assumpció. Sempre que necessites qualsevol d'aquestes coses nombra-les.}
+
 In the rest of this section, $\mathbf{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\mathbf{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ are hep-signatures. For a partial $\Lambda$-algebra $\mathbf{B}$ and $s\in S$, an element $b\in B_{\varphi(s)}$ is identified with the valuation of $\vs{\varphi(s)}$ in $B$ that sends $v^{\varphi(s)}_{0}$ to $b$.
 
 We next associate to every partial $\Lambda$-algebra the $S$-sorted set of the elements that satisfy the domains of a generalized hep-derivor. Since it is obtained from the $S$-sorted set $B_{\varphi}=(B_{\varphi(s)})_{s\in S}$ by restricting every $B_{\varphi(s)}$ to the elements that satisfy $\mathrm{Dom}^{(\varphi,d)}_{s}$, we denote it, as the sets $A_{\mathrm{def}^{(S,\Sigma)}(\sigma)}$ of Definition~\ref{DEpAlgebra}, by subscripting the domains.
@@ -1187,6 +1196,8 @@ where $\G_{\Lambda}$ is the forgetful functor from $\mathsf{PAlg}(\Lambda)$ to $
 \end{remark}
 
 We next show that the $S$-sorted set of cells is equipped with a structure of partial $\Sigma$-algebra, which we call the transformed algebra.
+
+\textcolor{red}{A al següent proposició elimina des de que diu "and in which, for every..." . Tots els detalls de la construcció de l'àlgebra vull que estiguen a la demostració. L'enunciat que quede de la proposició hauría de ser: "Let $\mathbf{d}=(\varphi,d,\mathrm{Dom}^{(\varphi,d)})$ be a generalized hep-derivor from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra. Then there exists a unique partial $\Sigma$-algebra $\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{B})$, the \emph{transformed algebra} of $\mathbf{B}$ along $\mathbf{d}$, whose underlying $S$-sorted set is $B_{\mathrm{Dom}^{(\varphi,d)}}$."}
 
 \begin{proposition}\label{PTransformedAlg}
 Let $\mathbf{d}=(\varphi,d,\mathrm{Dom}^{(\varphi,d)})$ be a generalized hep-derivor from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra. Then there exists a unique partial $\Sigma$-algebra $\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{B})$, the \emph{transformed algebra} of $\mathbf{B}$ along $\mathbf{d}$, whose underlying $S$-sorted set is $B_{\mathrm{Dom}^{(\varphi,d)}}$ and in which, for every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$, the operation symbol $\sigma$ is interpreted as the partial mapping
@@ -1296,6 +1307,8 @@ This completes the proof.
 
 We are now in position to prove that every generalized hep-derivor induces a functor between the categories of partial algebras.
 
+\textcolor{red}{En la següent proposició no sería millor obtindre directament un functor de $\mathsf{EPAlg}(\mathbf{\Lambda})$ en $\mathsf{EPAlg}(\mathbf{\Sigma})$? No vull parlar de PAlg mai al document si és possible. Una volta definim ep-àlgebres per a una ep-signatura (o hep-signatura) com a una subclase de les àlgebres parcials, no vull tornar a parlar de PAlg... ja que la noció que ens interessa es EPAlg.}
+
 \begin{proposition}\label{PGenHepDerivorFunctor}
 Let $\mathbf{d}=(\varphi,d,\mathrm{Dom}^{(\varphi,d)})$ be a generalized hep-derivor from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$. Then $\mathbf{d}^{\ast}_{\mathfrak{gd}}$, the assignment from $\mathsf{PAlg}(\Lambda)$ to $\mathsf{PAlg}(\Sigma)$ defined as follows:
 \begin{enumerate}
@@ -1329,6 +1342,8 @@ It follows from Propositions~\ref{PCellsFunctor}, \ref{PTransformedAlg} and~\ref
 
 In this subsection we characterize when the restriction of the functor induced by a generalized hep-derivor to the category canonically associated to an ep-variety corestricts to the category canonically associated to another one. We begin by fixing the terminology.
 
+\textcolor{red}{No vull que introduisques la noció de correstricció com a una cosa nova. Si vols, pots introduir-la en els preliminars... pero no es una noció nova o que hi haja que introduir concretament per a les varietats que ens interessa.}
+
 \begin{definition}\label{DCorestriction}
 Let $\mathbf{d}$ be a generalized hep-derivor from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$, and let $(\mathbf{\Sigma},\mathcal{E})$ and $(\mathbf{\Lambda},\mathcal{F})$ be hep-specifications. We will say that the restriction of $\mathbf{d}^{\ast}_{\mathfrak{gd}}$ to $\mathsf{EPAlg}(\mathbf{\Lambda},\mathcal{F})$ \emph{corestricts} to $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$ if, for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\mathbf{\Lambda},\mathcal{F})$, $\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ is an object in $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$, i.e., if $\mathbf{d}^{\ast}_{\mathfrak{gd}}$ sends the ep-variety $\mathcal{V}(\mathbf{\Lambda},\mathcal{F})$ into the ep-variety $\mathcal{V}(\mathbf{\Sigma},\mathcal{E})$.
 \end{definition}
@@ -1339,6 +1354,8 @@ $$
 $$
 
 By Proposition~\ref{PTransformedEpAlg}, that such a restriction corestricts amounts to the following two conditions, which we check, in this order, for each of the generalized hep-derivors of Sections~\ref{SGraduation} and~\ref{STruncation}.
+
+\textcolor{red}{No introduisques la següent proposició... sempre que vullgues veure que un functor correstringueix a una varietat, referència la proposició \ref{PTransformedEpAlg} i després demostra que cumpleix els axiomes de la varietat... Aquesta proposició no és necessaria i fa el text més complexe.}
 
 \begin{proposition}\label{PGenHepDerivorAlg}
 Let $\mathbf{d}=(\varphi,d,\mathrm{Dom}^{(\varphi,d)})$ be a generalized hep-derivor from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$, and let $(\mathbf{\Sigma},\mathcal{E})$ and $(\mathbf{\Lambda},\mathcal{F})$ be hep-specifications. Then the restriction of $\mathbf{d}^{\ast}_{\mathfrak{gd}}$ to $\mathsf{EPAlg}(\mathbf{\Lambda},\mathcal{F})$ corestricts to $\mathsf{EPAlg}(\mathbf{\Sigma},\mathcal{E})$ if, and only if, for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\mathbf{\Lambda},\mathcal{F})$, the following conditions hold:
@@ -1364,7 +1381,17 @@ Let us note that, by Proposition~\ref{PTransformedEpAlg}, condition (GHEP1) hold
 
 \subsection{The category \texorpdfstring{$\mathsf{hepSig}_{\mathfrak{gd}}$}{hepSiggd}}\label{SHepSigCat}
 
-In this subsection we prove that the hep-signatures and the generalized hep-derivors form a category. Throughout this subsection, $\mathbf{\Omega}=(U,\Omega,\mathrm{def}^{(U,\Omega)})$ and $\mathbf{\Xi}=(W,\Xi,\mathrm{def}^{(W,\Xi)})$ are hep-signatures. For a derivor $(\psi,e)$ from $(T,\Lambda)$ to $(U,\Omega)$, a word $\mathbf{t}\in T^{\star}$ and a set of $\mathrm{E}$-equations $\mathcal{H}\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\mathbf{t}}}$, we let $e^{\sharp}[\mathcal{H}]\subseteq\mathrm{Eeqt}(\Omega)_{\vs{\psi^{\star}(\mathbf{t})}}$ stand for the set of $\mathrm{E}$-equations $\{(e^{\sharp}(P),e^{\sharp}(Q))\mid(P,Q)\in\mathcal{H}\}$, see~(H1) and~(H2).
+In this subsection we prove that the hep-signatures and the generalized hep-derivors form a category.
+
+\textcolor{red}{No faces la següent assumpció sobre les hep-signatures... sempre que necessites una hep-signatura, escriu-la i diu que és una hep-signatura. Aquest comentari aplica a tot el document.}
+
+Throughout this subsection, $\mathbf{\Omega}=(U,\Omega,\mathrm{def}^{(U,\Omega)})$ and $\mathbf{\Xi}=(W,\Xi,\mathrm{def}^{(W,\Xi)})$ are hep-signatures. 
+
+For a derivor $(\varphi,d)$ from $(S,\Sigma)$ to $(T,\Lambda)$, a word $\mathbf{s}\in S^{\star}$ and a set of $\mathrm{E}$-equations 
+$\mathcal{H}\subseteq\mathrm{Eeqt}(\Sigma)_{\vs{\mathbf{s}}}$, we let $e^{\sharp}[\mathcal{H}]\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\psi^{\star}(\mathbf{s})}}$ stand for the set of $\mathrm{E}$-equations 
+$$
+e^{\sharp}[\mathcal{H}] = \left\{ \left( e^{\sharp}(P),e^{\sharp}(Q) \right) \in\mathrm{Eeqt}(\Lambda)_{\vs{\psi^{\star}(\mathbf{s})}}\mid(P,Q)\in\mathcal{H} \right\}.
+$$
 
 \begin{definition}\label{DHepComp}
 Let $\mathbf{d}=(\varphi,d,\mathrm{Dom}^{(\varphi,d)})$ be a generalized hep-derivor from $\mathbf{\Sigma}$ to $\mathbf{\Lambda}$ and $\mathbf{e}=(\psi,e,\mathrm{Dom}^{(\psi,e)})$ a generalized hep-derivor from $\mathbf{\Lambda}$ to $\mathbf{\Omega}$. The \emph{composition} of $\mathbf{d}$ and $\mathbf{e}$ is the generalized hep-derivor
@@ -1556,6 +1583,8 @@ By Lemma~\ref{LTermComp}, the hypothesis on the cells in Proposition~\ref{PHepCo
 
 \subsection{The category \texorpdfstring{$\mathsf{hepAlg}_{\mathfrak{gd}}$}{hepAlggd}}\label{SHepAlgCat}
 
+\textcolor{red}{Comentari per a tota la subsecció. Entenc perquè has definit la categoria $\mathsf{hepAlg}_{\mathfrak{gd}}$ tal qual sense fer la construcció de Grothendieck... però no se podría aconseguir la cosntrucció amb un pseudofunctor o alguna cosa pareguda.... si no me equivoque \cite{CVST10b} fan alguna cosa pareguga en algún paper.}
+
 Following the case of the derivors, see~\cite{CVST10b}, we next assemble the ep-algebras of all the hep-signatures into a single category. Since, by Proposition~\ref{PHepComp}, the composite $\mathbf{d}^{\ast}_{\mathfrak{gd}}\circ\mathbf{e}^{\ast}_{\mathfrak{gd}}$ is only contained in $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\mathfrak{gd}}$, the composition of morphisms uses the inclusions $\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}$.
 
 \begin{definition}\label{DHepAlgCat}
@@ -1596,6 +1625,8 @@ This completes the proof.
 In this section, we recall the definitions of single-set category, single-set $2$-category, single-set $n$-category, and many-sorted categorial algebra, together with their $\omega$-dimensional counterparts. These are the single-set presentations of the corresponding categorical structures, in which all the cells, whatever their dimension, form a single set and the dimension of a cell is read off from its sources and targets, as in~\cite{Str87}. Next we introduce the single-set $n$-categorial signature determined by a many-sorted signature and the $\mathrm{QE}$-variety of its models. We end this section by showing that the many-sorted $n$-categorial algebras are exactly the models of this $\mathrm{QE}$-variety, which is an ep-variety.
 
 We begin by recalling the notion of single-set category.
+
+\textcolor{red}{Fes un canvi de notació des d'ací fins al final de la secció. La composició de la estructura d'una single-set category es denotarà per $\circ$ no per $\#$.}
 
 \begin{definition}\label{DSingleSetCat}
 A \emph{single-set category} is an ordered pair $\mathsf{C} = (C,\xi)$ where $C$ is a set and $\xi = (\#,\mathrm{sc},\mathrm{tg})$ a structure of category on $C$, i.e., $\#\colon C\times C\dmor C$ is a partial operation of \emph{composition}, and $\mathrm{sc}$, $\mathrm{tg}$ are unary operations on $C$ which assign, to every morphism in $C$, its \emph{source} and its \emph{target}, respectively, subject to satisfy the following conditions:
@@ -1944,6 +1975,8 @@ For $n\in\mathbb{N}$, a model of the axioms (A$^{k}$1)--(A$^{k}$6), for $k\in n$
 We will let $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ stand for the category canonically associated to the $\mathrm{QE}$-variety $\mathcal{V}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ determined by the specification $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$.
 \end{definition}
 
+\textcolor{red}{Comentari general que ja t'he fet abans... no vull tornar a parlar de PAlg si podem parlar de EPAlg... crec que això deuria eliminar alguns dels resultats següents i simplificar la presentació d'alguns resultats en aquesta secció. A més, la igualtat $\mathsf{nCatAlg}(\mathbf{\Sigma})=\mathsf{EPAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$ pots deixar-la escrita en una remark sense explicar en tant detall que els axiomes i la definició de n-categorial algebra són iguals... Crec que al document del projecte investigador hi ha una remark de l'estil.}
+
 In the following proposition we characterize the ep-algebras of type $\mathbf{\Sigma}^{(n)}$ in terms of the axioms of Definition~\ref{DVarSingleSet}.
 
 \begin{proposition}\label{PSingleSetEp}
@@ -2041,6 +2074,8 @@ By Proposition~\ref{PSingleSetIdentObj}, both categories have the same objects a
 \end{proof}
 
 In dimension $\omega$ the situation is slightly different, since the condition that every cell has a finite dimension is not expressed by the axioms.
+
+\textcolor{red}{Entenc que "the condition that every cell has a finite dimension is not expressed by the axioms" però se podría expressar en algún axioma i unificar la presentació de les $\omega$-categories amb la de les $n$-categories?}
 
 \begin{proposition}\label{PSingleSetIdentOmega}
 Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature. Then, under the above identification, $\omega\mathsf{CatAlg}(\mathbf{\Sigma})$ is the full subcategory of $\mathsf{PAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}})$ whose objects are the partial $\Sigma^{(\omega)}$-algebras in which every cell is a $k$-cell, i.e., satisfies $\mathrm{sc}^{k}_{s}(x)=x$, for some $k\in\omega$.
@@ -2435,6 +2470,8 @@ By Definition~\ref{DEpAlgebra}, $\mathbf{A}$ is a $\mathbf{\Sigma}^{\mathrm{gl}(
 This completes the proof.
 \end{proof}
 
+\textcolor{red}{Mateix comentari que abans... sobren totes les referència a PAlg (sempre que siga possible)... vull treballar només en EPAlg. No te faré este comentari més voltes però aplica a tot el document.}
+
 \begin{corollary}\label{CGlobularEp}
 Let $\mathbf{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $n\in\mathbb{N}\cup\{\omega\}$. Then the following equalities hold
 $$
@@ -2524,6 +2561,8 @@ $$
 \mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}=\left(\varphi^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}},\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}},\mathrm{Dom}^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}}\right),
 $$
 whose mapping on sorts is $\varphi^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}}$, whose assignment of terms to operation symbols is denoted, as the functor, by $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}$, and whose domains are $\mathrm{Dom}^{\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}}$. Since the assignment of terms is applied to operation symbols and the functor to algebras and homomorphisms, this will not cause confusion. The same convention applies to the unification, discretization and truncation derivors $\mathbf{Uf}$, $\mathbf{Ds}$ and $\mathbf{Tr}$. The dimensions of $\Sigma^{\mathrm{gl}(n)}$ are the elements of $n+1$. In this section and in Section~\ref{STruncation} we only consider finite dimensions; the $\omega$-dimensional functors are considered in Subsection~\ref{SDTOmega} and in Section~\ref{SOmegaFunctors}.
+
+\textcolor{red}{Correcció en la notació del derivor (aplica als quatre). Es denotarà $\mathbf{Gd}^{(n)}_{\mathbf{\Sigma}}=\left(\varphi^{\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}},\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}},\mathrm{Dom}^{\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}}\right)$.}
 
 \subsection{Graduation of higher-order categorial algebras}\label{SGraduationSub}
 
@@ -2634,6 +2673,8 @@ This completes the proof.
 \end{proof}
 
 In the following lemma we describe the transformed algebra along the graduation derivor.
+
+\textcolor{red}{Comentari sobre la següent proposició que aplica a tot el document... No vull que faces notacions del tipus $\mathbf{A}=\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathbf{B})$... vull que les elimines de tot el document... encara que açò faça que la notació de la demostració siga més farragosa, crec que és més entendible. Destaca les equacions que consideres que queden massa llargues o grans si cal.}
 
 \begin{lemma}\label{LGradDescription}
 Let $n\in\mathbb{N}$, $\mathbf{B}$ an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{(n)})$ and $\mathbf{A}=\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}(\mathbf{B})$. Then $\mathbf{A}$ is a $\mathbf{\Sigma}^{\mathrm{gl}(n)}$-algebra whose cells of sort $(k,s)$ are the $k$-cells of sort $s$ of $\mathbf{B}$, for $k\in n$, and all the cells of sort $s$ of $\mathbf{B}$, for $k=n$. Moreover, for every pair of dimensions $j<k$ and every $s\in S$,
@@ -2793,6 +2834,8 @@ The equalities are the axiom (EA$^{j,k}$2). Hence $\mathrm{i}^{(k,j)}_{s}$ has a
 \end{proof}
 
 In the following lemma we describe the transformed algebra along the unification derivor.
+
+\textcolor{red}{Mateix comentari que abans... no vull notacions del tipus $\mathbf{B}=\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathbf{A})$... Aquest comentari aplica a tot el document on hi ha notacions similars.}
 
 \begin{lemma}\label{LUnifDescription}
 Let $n\in\mathbb{N}$, $\mathbf{A}$ an object in $\mathsf{EPAlg}(\mathbf{\Sigma}^{\mathrm{gl}(n)},\mathcal{C}^{\mathrm{gl}(n)})$ and $\mathbf{B}=\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}(\mathbf{A})$. Then $\mathbf{B}$ is a $\mathbf{\Sigma}^{(n)}$-algebra whose cells of sort $s$ are the $n$-cells of sort $s$ of $\mathbf{A}$. Moreover, for every $k\in n$ and every $s\in S$,
@@ -3193,6 +3236,8 @@ Therefore, $\theta_{\boldsymbol{\mathsf{A}}}$ is a homomorphism that reflects de
 
 Claim~\ref{CGradUnifD} follows.
 
+\textcolor{red}{Comentari per a la següent claim: Sempre que escrigues una transformació natural la notació és (per a aquest cas) $\theta = ( \theta_{\boldsymbol{\mathsf{A}}} )_{ \boldsymbol{\mathsf{A}} \in \mathrm{Ob} ( \mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma}) ) }$. Aquest comentari també aplica a altres part del document.}
+
 \begin{claim}\label{CGradUnifE}
 The family $\theta=(\theta_{\boldsymbol{\mathsf{A}}})_{\boldsymbol{\mathsf{A}}}$ is a natural transformation from $\mathrm{Id}_{\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\mathbf{\Sigma})}$ to $\mathrm{Gd}^{(n)}_{\mathbf{\Sigma}}\circ\mathrm{Uf}^{(n)}_{\mathbf{\Sigma}}$.
 \end{claim}
@@ -3241,6 +3286,8 @@ By Proposition~\ref{PUnifGrad}, the identity is a natural transformation from $\
 
 This completes the proof.
 \end{proof}
+
+\textcolor{red}{Pots fer demostracions formals de les desigualtats triangulars? Aquest comentari també aplica a tot el document on hi haja demostracions com aquestes... vull demostracions formals no esquemas de demostració...}
 
 \section{Discretization and Truncation of Higher-Order Categorial Algebras}\label{STruncation}
 
@@ -3341,6 +3388,8 @@ By Lemma~\ref{LDiscDescription}, it sends an $m$-categorial $\mathbf{\Sigma}$-al
 
 In the globular presentation, a cell of dimension $k$ of the discretization is a cell of dimension $k$ of the given algebra if $k\leq m$, and a cell of dimension $m$ if $k>m$. Accordingly, for every dimension $k\in n+1$, we let $\underline{k}=\min\{k,m\}\in m+1$ stand for the dimension of $\Sigma^{\mathrm{gl}(m)}$ to which the dimension $k$ of $\Sigma^{\mathrm{gl}(n)}$ is sent, i.e., $\underline{k}=k$, if $k\leq m$, and $\underline{k}=m$, if $k>m$. We next define the globular discretization derivor.
 
+\textcolor{red}{No m'agrada la notació $\underline{k}=\min\{k,m\}$ gens. Evitala a tot el document. Sempre que siga possible, encara que faça més farragosa la demostració, escriu $\min\{k,m\}$.}
+
 \begin{definition}\label{DDiscGlDerivor}
 Let $m,n\in\mathbb{N}$ with $m<n$. The \emph{globular discretization derivor} is the generalized hep-derivor
 $$
@@ -3414,6 +3463,8 @@ By Lemma~\ref{LDiscGlDescription}, it sends a globular $m$-categorial $\mathbf{\
 \subsection{Truncation of higher-order categorial algebras}\label{STruncationAlg}
 
 We next define the truncation derivors, in the single-set and in the globular presentations.
+
+\textcolor{red}{Escriu els elements del derivor $\mathbf{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ en un entorn enumerate per a que siga més simple de llegir. Aquest comentari aplica també als derivor $\mathbf{Tr}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$, $\mathbf{Ds}^{(m,n)}_{\mathbf{\Sigma}}$ i $\mathbf{Ds}^{\mathrm{gl}(m,n)}_{\mathbf{\Sigma}}$ i els corresponents de dimensió $\omega$.}
 
 \begin{definition}\label{DTruncDerivor}
 Let $m,n\in\mathbb{N}$ with $m<n$.
@@ -3852,6 +3903,9 @@ $$
 $$
 and the same holds for the globular truncation and discretization functors.
 \end{proposition}
+
+\textcolor{red}{Fes un comentari sobre el cas $m=n$.}
+
 \begin{proof}
 If $n=p$, the truncation derivor is an identity, and if $m=p$, so is the discretization derivor; in both cases the statement follows from Proposition~\ref{PHepId}. Let $m<p$ and $n<p$. We compare the underlying derivors and the cells, and we conclude by Proposition~\ref{PHepComp}~(2) and Lemma~\ref{LSameCells}. We consider first the single-set case and then the globular case.
 
@@ -4726,6 +4780,16 @@ with $F_{p}$ and $F^{\mathrm{gl}}_{p}$ as in Remark~\ref{RDiscOmegaTrunc}. If $m
 
 This completes the proof.
 \end{proof}
+
+\textcolor{red}{Elimina totes les línies del latex que estan comentades. No fan falta al document.}
+
+\textcolor{red}{Fes una reescritura del codi fent-lo lo més llegible possible. Per exemple, si denotem una signatura com $\mathbf{\Sigma}$ podríem fer un nou comando \texttt{$\backslash$sig} per a escriure \texttt{$\backslash$sig$\{\backslash$Sigma$\}$} fent aquestos comandos el text deuría ser més llegible. Crea els comandos que consideres i actualitza el codi. Després neteja el codi abans del begin document... hi ha molts comandos que no s'utilitzen.}
+
+\textcolor{red}{Escriu una introducció per a l'article. Pots llegir al document Curry-Howard o al projecte invstigador le nostre estil per a escriure introduccions.}
+
+\textcolor{red}{Escriu un abstract per a l'article.}
+
+\textcolor{red}{Revisa totes les etiquetes del codi. Revisa que tenen sentit en la informació a la qual fan referència.}
 
 % \appendix
 %
