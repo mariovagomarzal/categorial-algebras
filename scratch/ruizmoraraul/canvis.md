@@ -715,9 +715,8 @@ corresponents envien models d'una especificació a models de l'altra.
 
 Data: 2026-10-15. Fitxer: `scratch/share/higher-order/main.tex`.
 
-Hi havia 27 comentaris en roig. Tots s'han resolt i eliminat, excepte una
-part de «Elimina totes les línies comentades», que has d'executar tu (vegeu
-l'apartat 21). El document compila sense errors ni referències indefinides
+Hi havia 27 comentaris en roig. Tots s'han resolt i eliminat; l'eliminació
+de les línies comentades l'has executada tu (vegeu l'apartat 21). El document compila sense errors ni referències indefinides
 (pdflatex + bibtex). Commits: `4f39b94`, `9422ccc`, `6c2deef`, `b93ccbb`,
 `f421c97`.
 
@@ -1043,7 +1042,8 @@ amb els casos dins de cada component.
 
 **Comentari.** «Elimina totes les línies del latex que estan comentades.»
 
-**Estat: pendent que ho executes tu.** Són 7507 línies (de 12495): l'apèndix
+**Estat: fet** (commit `d4d5a60`). Ho vas executar tu amb l'ordre de baix;
+el text del PDF no ha canviat. Eren 7507 línies (de 12495): l'apèndix
 antic, les seccions antigues de derivors i les línies soltes. L'entorn no
 em deixa fer aquesta eliminació massiva. Des de l'arrel del repositori,
 executa:
