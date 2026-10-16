@@ -107,6 +107,58 @@ Next, in the order of the draft: `SGraduation` (graduation and unification,
 the passage between the single-set and the globular presentations), then
 `SDiscretization` and the rest of `STruncation`, then dimension ω.
 
+## Third scope: graduation and unification (2026-10-14)
+
+`SGraduation` is formalized in `CategorialEp` and `Graduation`, all proved.
+Decisions:
+
+- The compact and extended signatures are ep-signatures whose only domain
+  conditions are those of the compositions; their ep-specifications keep the
+  whole QE-specification (A0, A1, A3 become redundant), so that
+  `PAlg(C) = epAlg(Σ, C)` is immediate (`RCompactEp`, `PExtendedIdent`(1)).
+- `PExtendedIdent`(2) (extended categorial algebras are the models of
+  `C^ext(n)`) is not formalized: graduation and unification are stated between
+  the categories of models, which is what the draft's proofs use. Composing
+  with `compact.cat-alg-iso` gives `nCatAlg(Σ) ≃ PAlg(C^ext(n))`.
+- `g ∘ u = id` holds as an equality of derivors (`PUnifGrad`), but
+  `Uf ∘ Gd ≅ Id` only by isomorphisms that send every cell to itself, as with
+  `LGenEpComp`.
+- `CGdUfEquiv` and `PGdUfAdj` are one Mathlib adjoint equivalence: unit the
+  isomorphism above, counit `θ⁻¹`.
+
+Next: `SDiscretization` and the rest of `STruncation`, then dimension ω.
+
+## Fourth scope: discretization and truncation (2026-10-14)
+
+`SDiscretization`, `STruncationAlg` and the first two results of
+`SDiscTrunc` are formalized in `Discretization`, all proved. Decisions:
+
+- The four derivors (`DDiscDerivor`, `DDiscExtDerivor`, `DTruncDerivor` and
+  the extended truncation derivor) and their functors are as in the draft.
+  The compact and extended discretization derivors are defined, and send
+  models to models, for all `m` and `n`, not only `m ≤ n`; for `m ≥ n` they
+  keep every dimension of `n`. Truncation needs `m ≤ n`.
+- In the extended discretization, for `j ≥ m` the term `v_0` has sort
+  `(min(j, m), s)`, equal to `(min(k, m), s)` but not by definition: the
+  variable carries that equality, and the proofs transport along it.
+- `PTruncDisc` is an equality of functors in the draft. Here
+  `T ∘ D ≅ Id` (compact and extended) holds by isomorphisms that send every
+  cell to itself, because the cells of the truncation are elements of a
+  subset. The draft's argument through `δ ∘ τ = id` is not used.
+- `PDiscTruncAdj` is two Mathlib adjunctions, `D ⊣ T` and
+  `D^ext ⊣ T^ext`. Their units are the isomorphisms above, not identities.
+  Their counits are the draft's: the inclusion of the `m`-cells, and
+  `i^(k,m)` at the sorts `(k, s)` with `k > m`.
+- The new truncation functors (between categories of models) and the earlier
+  ones of `Compact.Truncation` and `Extended.Truncation` (between
+  `nCatAlg(Σ)`, used for the limits) are not yet related.
+
+Next:
+- `PTruncComp`: truncations and discretizations compose.
+- `PCompatGdUf`: they commute with graduation and unification.
+- Relating the two truncations.
+- Then dimension ω (`SOmegaFunctors`).
+
 ## Left out on 2026-10-08
 
 Why each part of the derivors line was left out at that date. The draft has
