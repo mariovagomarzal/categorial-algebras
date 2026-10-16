@@ -708,3 +708,457 @@ corresponents envien models d'una especificació a models de l'altra.
 - **Eliminat.** La categoria $\mathsf{epSpec}_{\mathfrak{gd}}$.
 - **Resultat.** El document compila sense errors i sense referències
   indefinides.
+
+---
+
+# Canvis a `scratch/share/higher-order/main.tex`: segona ronda de comentaris en roig
+
+Data: 2026-10-15. Fitxer: `scratch/share/higher-order/main.tex`.
+
+Hi havia 27 comentaris en roig. Tots s'han resolt i eliminat; l'eliminació
+de les línies comentades l'has executada tu (vegeu l'apartat 21). El document compila sense errors ni referències indefinides
+(pdflatex + bibtex). Commits: `4f39b94`, `9422ccc`, `6c2deef`, `b93ccbb`,
+`f421c97`.
+
+Les teues respostes a les preguntes inicials:
+
+- Functor $\mathbf{d}^{\ast}_{\mathfrak{gd}}$: **es manté definit sobre
+  $\mathsf{PAlg}$**, i a partir d'ací es treballa en $\mathsf{EPAlg}$.
+- $\mathsf{hepAlg}_{\mathfrak{gd}}$: **reescrit via Grothendieck**, amb una
+  categoria intermèdia d'ep-àlgebres febles.
+- Aquest registre: **secció nova al final**, sense tocar el que ja hi havia.
+- Dimensió finita en $\omega$: **remarca amb la prova** que no és expressable.
+
+Al final hi ha la llista de **decisions que has de revisar** i la de les
+**equacions massa llargues**.
+
+---
+
+## 1. Introducció i prerequisits (`SIntroduction`)
+
+**Comentaris.** «Neteja tota aquesta subsecció. Fes que siga llegible.»
+«Escriu una introducció per a l'article», amb l'estil de Curry-Howard o del
+projecte investigador.
+
+**Què he fet.**
+
+- **Introducció nova**, amb l'estructura de la del document Curry-Howard:
+  - Tres paràgrafs de motivació: què són les àlgebres categorials d'ordre
+    superior; les presentacions single-set i globular; la idea dels
+    derivors hep generalitzats, a partir de [CVST10b] i [LG18].
+  - Una subsecció «Our work» que resumeix secció per secció el que es fa,
+    amb referències a les seccions.
+- **Prerequisits** reescrits en paràgrafs curts amb títol: *Set theory*,
+  *Ordinals*, *Functions and mappings*, *Subsets and images*, *Categories*.
+  - He eliminat les línies comentades de dins i les nocions que el text no
+    usa (refinaments de relacions, $0_{A,B}$, parells de Kuratowski).
+  - He simplificat la fórmula del domini del compost de dues aplicacions
+    parcials: ara és $\mathrm{Dom}(g\circ f)=f^{-1}[\mathrm{Dom}(g)]$, que
+    és equivalent a l'anterior.
+  - $\mathsf{Cat}$ es defineix com la categoria de les
+    $\mathcal{U}$-categories. He tret la citació a `GW23`, perquè no és a
+    `Biblio.bib`.
+
+## 2. Abstract
+
+**Comentari.** «Escriu un abstract per a l'article.»
+
+**Què he fet.** Un abstract (entorn `abstract` d'amsart, abans de
+`\maketitle`) que resumeix els dos blocs del treball: els derivors hep
+generalitzats amb la construcció de Grothendieck, i l'aplicació a les
+àlgebres categorials (presentacions, functors, límits projectius i quadrats
+algebraics).
+
+## 3. Preliminars (`SPreliminaries`)
+
+**Comentaris.** Reescriure tota la secció copiant les definicions del
+document Curry-Howard tal qual, sense simplificar-les, perquè la secció siga
+tan completa com siga possible. Substituir «Variables» i «Substitutions» pel
+que diu Curry-Howard.
+
+**Què he fet.** He reescrit la secció a partir de l'apèndix de Curry-Howard,
+amb les definicions copiades sense simplificar. Subseccions, en aquest
+ordre:
+
+1. **Many-sorted sets** (`SManySortedSets`): conjunts i aplicacions
+   $S$-sortals, $\Delta_\varphi$, productes, la propietat universal, les
+   parts, la birestricció.
+2. **Free monoids** (`SFreeMonoids`): paraules, longitud, subparaules,
+   ocurrències.
+3. **Many-sorted algebras** (`SManySortedAlg`): signatures, àlgebres,
+   subàlgebres, $\mathrm{Sg}$, principi de prova per inducció algebraica.
+4. **The free algebra** (`SFreeAlg`): files, l'àlgebra lliure, la
+   caracterització dels termes, la propietat universal i l'adjunció.
+5. **Variables and substitutions** (`SVariables`): substitueix les dues
+   parts antigues; és la de Curry-Howard.
+6. **Derivors** (`SPrelimDerivors`): àlgebres de Hall, derivors, la
+   categoria $\mathsf{Sig}_{\mathfrak{d}}$.
+7. **Many-sorted partial algebras** (`SPartialAlg`): àlgebres parcials,
+   isomorfismes, productes.
+8. **Terms and equations** (`STermsEq`): operacions terme, E-equacions,
+   QE-equacions, satisfacció.
+9. **Adjunctions, corestrictions and the Grothendieck construction**
+   (`SAdjunctions`): adjuncions; restricció i correstricció d'un functor
+   (vegeu l'apartat 7); construcció de Grothendieck per a categories
+   indexades escindides i per a **categories indexades laxes normals**
+   (nova, `DLaxIndexed`, `DLaxGConst`, `PLaxGConst`, amb la prova que és una
+   categoria).
+
+## 4. Sense assumpcions generals
+
+**Comentaris.** «No faces la següent assumpció. Sempre que necessites
+qualsevol d'aquestes coses nombra-les.» El mateix per a les hep-signatures:
+«Aquest comentari aplica a tot el document.»
+
+**Què he fet.** He eliminat totes les assumpcions generals («Throughout this
+section…»). Ara cada definició, lema i proposició diu explícitament les
+dades que usa. Per exemple: «Let $\mathbf\Sigma=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$
+and $\mathbf\Lambda=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be
+hep-signatures, $\mathbf d=(\varphi,d,\mathrm{Dom}^{(\varphi,d)})$ a
+generalized hep-derivor…». Això s'aplica a tot el document, també a les
+seccions 4–10.
+
+## 5. Proposició `PTransformedAlg`
+
+**Comentari.** Eliminar de l'enunciat la construcció («and in which, for
+every…») i dur-la a la demostració, amb l'enunciat curt que proposaves.
+
+**Què he fet.** L'enunciat és ara el curt. Tota la construcció
+(recursió bé fundada sobre la jerarquia de la signatura) és a la
+demostració.
+
+**A revisar.** L'enunciat que proposaves deia «there exists a **unique**
+partial $\Sigma$-algebra … whose underlying set is $B_{\mathrm{Dom}}$». Així
+no és cert: sobre un mateix conjunt hi ha moltes àlgebres parcials. He tret
+«unique». Si vols unicitat, l'enunciat ha de dir també com actuen les
+operacions.
+
+## 6. $\mathsf{EPAlg}$ en lloc de $\mathsf{PAlg}$
+
+**Comentaris** (tres, aplicables a tot el document). No parlar de
+$\mathsf{PAlg}$ sempre que es puga treballar en $\mathsf{EPAlg}$.
+
+**Què he fet.**
+
+- El functor $\mathbf d^\ast_{\mathfrak{gd}}$ continua definit de
+  $\mathsf{PAlg}(\Lambda)$ en $\mathsf{PAlg}(\Sigma)$ (la teua resposta):
+  - El transformat d'una ep-àlgebra no sempre és una ep-àlgebra; ho
+    caracteritza `PTransformedEpAlg`.
+  - El compost només es compara bé fora de les ep-àlgebres.
+- A les seccions 4–10, totes les categories són $\mathsf{EPAlg}(\cdot,\cdot)$
+  de les especificacions corresponents. Cada functor es construeix així:
+  1. Es restringeix $\mathbf d^\ast_{\mathfrak{gd}}$ a la ep-varietat.
+  2. Es demostra, amb `PTransformedEpAlg`, que el transformat és una
+     ep-àlgebra.
+  3. Es comprova que satisfà els axiomes.
+- Han desaparegut els resultats que només servien per passar de
+  $\mathsf{PAlg}$ a $\mathsf{EPAlg}$: `CSingleSetEp`, `CGlobularEp`,
+  `PSingleSetIdentObj/Hom/Omega` i `PGlobularIdentObj/Hom`.
+
+## 7. Correstricció com a noció preliminar
+
+**Comentari.** No introduir la correstricció com una noció nova; si de cas,
+als preliminars.
+
+**Què he fet.** La restricció i la correstricció d'un functor a
+subcategories plenes són ara la Definició `DCorestriction` dels
+preliminars, en general. La subsecció «Restriction to ep-varieties»
+(`SEpRestriction`) només l'aplica.
+
+## 8. Eliminada `PGenHepDerivorAlg`
+
+**Comentari.** No introduir-la; per veure que un functor correstringeix a
+una varietat, referenciar `PTransformedEpAlg` i demostrar els axiomes.
+
+**Què he fet.** L'he eliminada. Cada prova de correstricció (graduació,
+unificació, discretització, truncació, i les versions en $\omega$) segueix
+ara aquest esquema: `PTransformedEpAlg` + comprovació dels axiomes de la
+varietat.
+
+## 9. $\mathsf{hepAlg}_{\mathfrak{gd}}$ via Grothendieck
+
+**Comentari.** Si es podria obtenir $\mathsf{hepAlg}_{\mathfrak{gd}}$ amb un
+pseudofunctor o una construcció de Grothendieck.
+
+**Resposta.** Sí, però amb un functor **lax normal**, no amb un
+pseudofunctor:
+
+- En general, $\mathbf d^\ast_{\mathfrak{gd}}\circ\mathbf e^\ast_{\mathfrak{gd}}$
+  només està **contingut** en $(\mathbf e\circ\mathbf d)^\ast_{\mathfrak{gd}}$,
+  no és igual ni isomorf.
+- A més, $\mathbf d^\ast_{\mathfrak{gd}}$ no envia ep-àlgebres a
+  ep-àlgebres.
+
+**Què he fet.**
+
+- **Ep-àlgebres febles** (`DWeakEpAlgebra`): àlgebres parcials amb
+  $\mathrm{Dom}(\sigma^{\mathbf A})\subseteq A_{\mathrm{def}(\sigma)}$.
+  Formen la categoria $\mathsf{wEPAlg}(\mathbf\Sigma)$. Sobre elles:
+  - El derivor identitat actua com la identitat.
+  - Els transformats continuen sent febles (`LHepWeak`).
+- Les inclusions $\kappa^{\mathbf d,\mathbf e}$ fan de $(\mathrm{wEPAlg},\kappa)$
+  una **categoria indexada laxa normal** sobre $\mathsf{hepSig}_{\mathfrak{gd}}$
+  (`PHepLax`). La coherència és immediata perquè totes les $\kappa$ són
+  inclusions.
+- $\mathsf{hepAlg}_{\mathfrak{gd}}$ (`DHepAlgCat`) és la subcategoria plena
+  de la construcció de Grothendieck formada pels parells
+  $(\mathbf\Sigma,\mathbf A)$ amb $\mathbf A$ una ep-àlgebra.
+- La remarca `RHepAlgCat` explica que es recupera $\mathsf{Alg}_{\mathfrak d}$
+  de [CVST10b].
+
+## 10. Composició $\circ$ en lloc de $\#$
+
+**Comentari.** Des d'aquell punt fins al final de la secció, la composició
+de les categories single-set es denota $\circ$.
+
+**Què he fet.** He substituït $\#$ per $\circ$ a tota la secció single-set.
+
+## 11. $\mathsf{nCatAlg}=\mathsf{EPAlg}$ com a remarca
+
+**Comentari.** Presentar la igualtat com una remarca, com al projecte
+investigador.
+
+**Què he fet.**
+
+- Remarques `RSingleSetIdent` i `RSingleSetIdentOmega` (single-set) i
+  `RGlobularIdent` (globular). Diuen que, amb la identificació evident,
+  $\mathsf{nCatAlg}(\mathbf\Sigma)=\mathsf{EPAlg}(\mathbf\Sigma^{(n)},\mathcal C^{\mathbf\Sigma^{(n)}})$,
+  i igualment en el cas globular.
+- La prova que són ep-varietats és a `PSingleSetEp` i `PGlobularEp`.
+
+## 12. Dimensió finita en $\omega$
+
+**Comentari.** Si la condició que cada cel·la té dimensió finita es podria
+expressar amb algun axioma, per unificar la presentació de les
+$\omega$-categories amb la de les $n$-categories.
+
+**Resposta.** No es pot amb QE-equacions. Proposició nova
+`PFiniteDimNotQE`:
+
+- Les classes definides per QE-equacions són tancades per productes.
+- El producte de les $n$-categories discretitzades, per a tots els $n$,
+  té una cel·la de dimensió infinita.
+- Per tant, $\omega\mathsf{CatAlg}(\mathbf\Sigma)$ és una subcategoria plena
+  pròpia de la ep-varietat.
+
+En la presentació globular el problema no apareix, perquè cada dimensió és
+un sort. Així, $\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}$ sí que és una
+ep-varietat.
+
+## 13. Notació dels derivors
+
+**Comentari.** Escriure
+$\mathbf{Gd}^{(n)}_{\mathbf\Sigma}=(\varphi^{\mathrm{Gd}^{(n)}_{\mathbf\Sigma}},\mathrm{Gd}^{(n)}_{\mathbf\Sigma},\mathrm{Dom}^{\mathrm{Gd}^{(n)}_{\mathbf\Sigma}})$,
+amb `\mathrm`; s'aplica als quatre derivors.
+
+**Què he fet.** He canviat la notació dels quatre derivors
+($\mathbf{Gd}$, $\mathbf{Uf}$, $\mathbf{Ds}$, $\mathbf{Tr}$), en les
+versions single-set i globular i en $\omega$, i a totes les referències.
+
+## 14. Sense abreviatures del tipus $\mathbf A=\mathrm{Gd}(\mathbf B)$
+
+**Comentaris** (dos, aplicables a tot el document). Escriure sempre
+l'expressió sencera, encara que les equacions s'allarguen.
+
+**Què he fet.** He eliminat totes les abreviatures d'aquest tipus. Les
+equacions que han quedat massa llargues són a la llista del final.
+
+## 15. Notació de les transformacions naturals
+
+**Comentari.** Escriure
+$\theta=(\theta_{\mathsf A})_{\mathsf A\in\mathrm{Ob}(\ldots)}$.
+
+**Què he fet.** He aplicat aquesta notació a totes les transformacions
+naturals del document: unitats, counitats, $\beta^{(m,n)}$, $\theta$, i els
+isomorfismes de compatibilitat.
+
+## 16. Demostracions formals de les identitats triangulars
+
+**Comentari.** Demostracions formals, no esquemes, a tot el document.
+
+**Què he fet.**
+
+- Cada identitat triangular és ara una cadena d'igualtats, avaluada en cada
+  objecte, amb la justificació de cada pas: definició de la composició
+  horitzontal, naturalitat, lema concret.
+- On apareix, hi ha la prova de la naturalitat de les transformacions.
+- Llocs: `PGdUfAdj`, `PDiscTruncAdj`, `PDiscTruncAdjGl`, `POmegaGdUf`,
+  `POmegaDiscTrunc`.
+
+## 17. Sense $\underline{k}$
+
+**Comentari.** Escriure $\min\{k,m\}$ a tot arreu.
+
+**Què he fet.** He substituït totes les aparicions de $\underline{k}$ per
+$\min\{k,m\}$.
+
+## 18. Elements dels derivors en `enumerate`
+
+**Comentari.** Per a $\mathbf{Tr}$, $\mathbf{Tr}^{\mathrm{gl}}$,
+$\mathbf{Ds}$, $\mathbf{Ds}^{\mathrm{gl}}$ i les versions en $\omega$.
+
+**Què he fet.** A cada definició, els tres components del derivor (la
+aplicació de sorts, la d'operacions i els dominis) estan en un `enumerate`,
+amb els casos dins de cada component.
+
+## 19. El cas $m=n$
+
+**Comentari.** «Fes un comentari sobre el cas $m=n$.»
+
+**Què he fet.**
+
+- Remarca nova `RTruncDiscCompEqual`: a `PTruncDiscComp` els dos casos se
+  solapen quan $m=n$. Hi coincideixen perquè
+  $\mathrm{Ds}^{(n,n)}=\mathrm{Tr}^{(n,n)}=\mathrm{Id}$. També diu què
+  afirma la proposició en aquest cas.
+- Les definicions de $\mathbf{Ds}$ i $\mathbf{Tr}$ fixen explícitament que,
+  per a $m=n$, el derivor és la identitat.
+
+## 20. Macros i preàmbul
+
+**Comentari.** Reescriure el codi perquè siga llegible, amb macros com
+`\sig{\Sigma}`, i netejar els comandos no usats del preàmbul.
+
+**Què he fet.**
+
+- **Macros noves** (definides al preàmbul, amb comentaris):
+  - `\sig{\Sigma}`: signatura en negreta.
+  - `\calg{A}`: àlgebra categorial, $\boldsymbol{\mathsf A}$.
+  - `\eeq`: igualtat existencial $\overset{\mathrm e}{=}$.
+  - `\QE`, `\Dom`, `\id`, `\Id`, `\gd`, `\gl`.
+  - `\src`, `\tgt`: font i destí. No es diuen `\sc` i `\tg` perquè `\sc` ja
+    és un comando de LaTeX.
+  - `\Gd`, `\Uf`, `\Ds`, `\Tr` (functors) i `\bGd`, `\bUf`, `\bDs`, `\bTr`
+    (derivors).
+- He aplicat les macros a tot el cos del document. **Comprovació:** el text
+  del PDF (`pdftotext`) és idèntic abans i després.
+- **Comandos eliminats** (no s'usaven): `\comp`, `\bprod`, `\iso`, `\nin`,
+  `\uadj`, `\Sub`, `\Sg`, `\Ker`, `\ext`, `\mon`, `\epi` (amb les seues
+  caixes) i l'entorn `assumption`. També el comentari `%南通大学`.
+- **Mantinc** `showkeys`, que mostra les etiquetes al PDF i és útil mentre
+  és un esborrany. Lleva'l quan vulgues.
+
+## 21. Línies comentades
+
+**Comentari.** «Elimina totes les línies del latex que estan comentades.»
+
+**Estat: fet** (commit `d4d5a60`). Ho vas executar tu amb l'ordre de baix;
+el text del PDF no ha canviat. Eren 7507 línies (de 12495): l'apèndix
+antic, les seccions antigues de derivors i les línies soltes. L'entorn no
+em deixa fer aquesta eliminació massiva. Des de l'arrel del repositori,
+executa:
+
+```
+sed -i '/^[[:space:]]*%/d' scratch/share/higher-order/main.tex
+```
+
+Esborra només les línies que comencen per `%`. Les del preàmbul que tenen
+un comentari al final (`% signature: \sig{\Sigma}`, …) es conserven. El
+fitxer està en git, de manera que és reversible. Després pots compilar per
+comprovar-ho.
+
+## 22. Etiquetes
+
+**Comentari.** Revisar que totes les etiquetes tenen sentit.
+
+**Què he fet.**
+
+- **Comprovacions:** no hi ha etiquetes duplicades ni referències
+  penjades. Cada prefix correspon a l'entorn: `S` secció, `D` definició,
+  `P` proposició, `L` lema, `C` corol·lari o claim, `R` remarca, `F`
+  figura, `A` axioma.
+- **Canvis de nom:**
+
+  | Abans | Ara | Per què |
+  |---|---|---|
+  | `SSortedPartial` | `SManySortedSets` | la subsecció és de conjunts multisortals |
+  | `DCells`, `PCellsFunctor`, `RCellsFunctorEmpty` | `DDomainSet`, `PDomainSetFunctor`, `RDomainSetEmpty` | defineixen $B_{\mathrm{Dom}^{(\varphi,d)}}$, no cel·les |
+  | `SCorestriction` | `SEpRestriction` | la subsecció és la restricció a ep-varietats |
+  | `DVarSingleSet`, `DVarGlobular` | `DSpecSingleSet`, `DSpecGlobular` | defineixen especificacions |
+  | `RGenHepDerivor` | `RGenHepDerivorCases` | la remarca tracta casos particulars |
+  | `DVarSingleSet…`, `DVarGlobularE…` (axiomes) | `ASingleSet…`, `AGlobular…` | són axiomes, no definicions |
+
+- **Etiquetes eliminades:** `C1`–`C5`, `Ci`, `Cii`, `2C1`–`2C3`, a les
+  condicions de les categories single-set. No es referenciaven i, posades
+  després d'un `\item[...]`, apuntaven al comptador de la secció.
+
+---
+
+## Decisions que has de revisar
+
+1. **`PTransformedAlg`:** he tret «unique» de l'enunciat que proposaves,
+   perquè així no és cert (apartat 5).
+2. **Ep-àlgebres febles:** són una noció nova, necessària per a la
+   construcció de Grothendieck (apartat 9). Mira si t'agrada el nom
+   «weak ep-algebra».
+3. **Àlgebres de Hall:** les he incloses als preliminars perquè els
+   derivors de Curry-Howard s'hi defineixen.
+4. **Satisfacció de les E-equacions:** s'expressa amb les operacions terme
+   $P^{\mathbf A}$, no amb la presentació de Schmidt de l'esborrany antic.
+5. **Functorialitat de $\downarrow\mathbf s$:** l'he omesa, perquè el
+   document no la usa.
+6. **Bibliografia `CVCLRM26`:** l'entrada nova no té número d'arXiv.
+   Completa-la.
+7. **«A note from the authors» i els agraïments:** encara parlen del
+   document Curry-Howard. No els he tocat.
+8. **Proves esquemàtiques:** algunes proves que certs axiomes «esdevenen
+   trivials» en la discretització continuen sent esquemàtiques. No són
+   identitats triangulars, però potser les vols més formals.
+9. **El paràgraf sobre $e^\sharp[H]$:** l'havies editat tu. L'he mogut al
+   lloc on s'usa i n'he corregit la notació. Comprova que diu el que volies.
+10. **Unificació en $\omega$:** la introducció diu que no l'indueix cap
+    derivor hep generalitzat i que s'obté com a límit inductiu, tal com
+    explica `RUfOmegaNotDerivor`.
+11. **Introducció i abstract:** són una proposta. Revisa'n sobretot la
+    motivació (els sistemes de reescriptura i Curry-Howard d'ordre
+    superior) i les referències que hi cite: [Str87], [abgmmm23], [Rei87],
+    [pb86], [pb02], [CVST10b], [LG18], [CVCL16], [CVCL18], [CVCL23],
+    [CVCLRM26].
+
+## Equacions massa llargues
+
+Caixes que sobresurten del marge més de 20pt, amb la línia de `main.tex` (abans
+d'esborrar els comentaris) i l'entorn més proper:
+
+| Sobresurt | Línia | Entorn |
+|---|---|---|
+| 99pt | 4495 | `PDiscTruncAdjGl` |
+| 81pt | 3115 | `RGlobularIdent` |
+| 80pt | 5530 | `POmegaDiscTrunc` |
+| 59pt | 4914 | `DTruncationOmegaGl` |
+| 59pt | 5022 | `DDiscretizationOmegaGl` |
+| 58pt | 4326 | `LDiscTruncCounit` |
+| 57pt | 3684 | `CGradUnifA` |
+| 53pt | 915 | `PLaxGConst` |
+| 51pt | 2505 | `DSigmaCatSingleSet` |
+| 51pt | 5469 | `POmegaDiscTrunc` |
+| 50pt | 4988 | `PDiscOmegaDerivor` |
+| 49pt | 4346 | `PDiscTruncAdj` |
+| 49pt | 4876 | `PTruncOmegaDerivor` |
+| 45pt | 3866 | `PGdUfAdj` |
+| 40pt | 4086 | `LDiscGlDescription` |
+| 39pt | 836 | `DGConst` |
+| 38pt | 5366 | `CUfOmegaC` |
+| 37pt | 4516 | `PDiscTruncAdjGl` |
+| 35pt | 3540 | `PUnifDerivor` |
+| 34pt | 1797 | `DDomainSet` |
+| 33pt | 432 | `PTermChar` |
+| 32pt | 3526 | `PUnifDerivor` |
+| 31pt | 4514 | `PDiscTruncAdjGl` |
+| 30pt | 1790 | `DDomainSet` |
+| 30pt | 5122 | `CLimitNat` |
+| 29pt | 5302 | `LUfOmegaCells` |
+| 28pt | 2172 | `PHepComp` |
+| 27pt | 5522 | `POmegaDiscTrunc` |
+| 26pt | 3003 | `DSpecGlobular` |
+| 25pt | 2843 | `DOmegaCatGl` |
+| 25pt | 4093 | `LDiscGlDescription` |
+| 24pt | 3863 | `PGdUfAdj` |
+| 24pt | 4087 | `LDiscGlDescription` |
+| 23pt | 2200 | `PHepComp` |
+| 23pt | 3849 | `CGdUfEquiv` |
+| 21pt | 4308 | `LDiscTruncCounit` |
+| 20pt | 3738 | `CGradUnifD` |
+
+Moltes es deuen a l'eliminació de les abreviatures (apartat 14). Es poden
+partir amb `multline` o `align` quan decidisques el format final.
