@@ -1237,6 +1237,6 @@ Data: 2026-10-19. Commit `2072b78`.
   $\lhd$-minimals (sense símbols d'operació a les condicions de domini) la
   hipòtesi és buida; i el mateix per a la recursió bem fundada.
 - **Referències:** les sis demostracions per inducció o recursió al llarg de
-  $\lhd$ (`PTransformedAlg`, `PGenHepDerivorHom`, `PHepId`, la
-  proposició que la segueix i les dues parts de `PHepComp`) remeten a
+  $\lhd$ (`PTransformedAlg`, `PGenHepDerivorHom`, `LSameCells`, `PHepId`
+  i les dues parts de `PHepComp`) remeten a
   `PPWFI`.
