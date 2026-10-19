@@ -171,7 +171,7 @@ In Section~\ref{STruncation} we define, in both presentations, the discretizatio
 We prove that discretization is left adjoint to truncation, that these functors compose as expected and that they are compatible with graduation and unification.
 We end this section by defining the truncation and discretization functors in dimension $\omega$.
 
-In Sections~\ref{SLimitSingleSet} and~\ref{SLimitGlobular} we prove that the categories of single-set and of globular $\omega$-categorial algebras are the projective limits of the projective systems formed by the categories of $n$-categorial algebras and the truncation functors.
+In Section~\ref{SLimitSingleSet} we prove that the categories of single-set and of globular $\omega$-categorial algebras are the projective limits of the projective systems formed by the categories of $n$-categorial algebras and the truncation functors.
 In Section~\ref{SOmegaFunctors} we obtain the graduation functor in dimension $\omega$ by the universal property of the projective limit and the unification functor in dimension $\omega$ as an inductive limit, since, as we show, it cannot be induced by a generalized hep-derivor; and we prove that, also in dimension $\omega$, graduation and unification are mutually quasi-inverse equivalences and discretization is left adjoint to truncation.
 In Section~\ref{SAlgSquare} we show that graduation, unification, discretization and truncation fit together in algebraic squares, both between two finite dimensions and between a finite dimension and $\omega$.
 Finally, in Section~\ref{SChangeSig} we show that every derivor $\mathbf{c}$ between many-sorted signatures determines generalized hep-derivors $\mathbf{c}^{(n)}$ and $\mathbf{c}^{\gl(n)}$ between the corresponding single-set and globular $n$-categorial signatures, that the induced functors send categorial algebras to categorial algebras, and that they commute with graduation, unification, discretization and truncation, both in finite dimension and in dimension $\omega$.
@@ -2519,7 +2519,7 @@ This completes the proof.
 \end{proof}
 
 Let us note that the same argument shows that the condition that every cell has a finite dimension cannot be expressed by any set of axioms whose class of models is closed under products.
-Therefore, the presentation of the $\omega$-categorial $\sig{\Sigma}$-algebras cannot be unified with that of the $n$-categorial $\sig{\Sigma}$-algebras, and in Sections~\ref{SLimitSingleSet} and~\ref{SLimitGlobular} we present them, instead, by means of the projective limits of the finite-dimensional ones.
+Therefore, the presentation of the $\omega$-categorial $\sig{\Sigma}$-algebras cannot be unified with that of the $n$-categorial $\sig{\Sigma}$-algebras, and in Section~\ref{SLimitSingleSet} we present them, instead, by means of the projective limits of the finite-dimensional ones.
 
 \section{Globular presentation of higher-order categorial algebras}\label{SGlobular}
 
@@ -4104,7 +4104,7 @@ This completes the proof.
 \end{proof}
 
 
-Finally, the truncation functors compose as expected, and so do the discretization functors; this is the fact used in Sections~\ref{SLimitSingleSet} and~\ref{SLimitGlobular} to form the projective systems of categorial algebras.
+Finally, the truncation functors compose as expected, and so do the discretization functors; this is the fact used in Section~\ref{SLimitSingleSet} to form the projective systems of categorial algebras.
 
 \begin{proposition}\label{PTruncComp}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n,p\in\mathbb{N}$ with $m\leq n\leq p$.
@@ -4457,7 +4457,7 @@ This completes the proof.
 
 In this subsection we define the truncation functors from the categories of $\omega$-categorial algebras to the categories of $n$-categorial algebras, and the discretization functors in the opposite direction, in the single-set and in the globular presentations.
 As in the finite-dimensional case, they are induced by generalized hep-derivors, which are defined by the same clauses as in Definitions~\ref{DDiscDerivor}, \ref{DDiscGlDerivor} and~\ref{DTruncDerivor}, with $\omega$ in place of the greatest dimension.
-In Sections~\ref{SLimitSingleSet} and~\ref{SLimitGlobular} we prove that the truncation functors are the projections of projective limits.
+In Section~\ref{SLimitSingleSet} we prove that the truncation functors are the projections of projective limits.
 
 Let us recall that, by Remarks~\ref{RSingleSetIdentOmega} and~\ref{RGlobularIdent}, for every many-sorted signature $\sig{\Sigma}=(S,\Sigma)$, $\omega\mathsf{CatAlg}(\sig{\Sigma})$ is the full subcategory of $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(\omega)}})$ whose objects are the $\sig{\Sigma}^{(\omega)}$-algebras in which every cell is a $k$-cell for some $k\in\omega$, and $\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})=\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(\omega)}})$.
 
@@ -4702,46 +4702,30 @@ Then the following statements hold:
 In fact, (1) follows from the fact that, by~(AB$^{m,n}$1), the $m$-cells are $n$-cells; and (2) follows from the explicit descriptions of the functors involved: if $m\leq n$, then the $n$-cells of $\Ds^{(\omega,m)}_{\sig{\Sigma}}(\calg{A})$ are all the cells of $\calg{A}$, and, if $n<m$, then they are the $n$-cells of $\calg{A}$.
 \end{remark}
 
-\section{$\omega\mathsf{CatAlg}(\sig{\Sigma})$ as a projective limit}\label{SLimitSingleSet}
+\section{The $\omega$-categorial algebras as projective limits}\label{SLimitSingleSet}\label{SLimitGlobular}
 
-In this section we prove that the category $\omega\mathsf{CatAlg}(\sig{\Sigma})$ of $S$-sorted $\omega$-categorial $\Sigma$-algebras and $\omega$-categorial $\Sigma$-homomorphisms is the projective limit of the projective system $(\mathsf{nCatAlg}(\sig{\Sigma}),\Tr^{(\bigcdot)}_{\sig{\Sigma}})$, where the functors $\Tr^{(m,n)}_{\sig{\Sigma}}$ are the truncation functors defined in Definition~\ref{DTruncation}, and the projections of the limit are the truncation functors $\Tr^{(n,\omega)}_{\sig{\Sigma}}$ from $\omega\mathsf{CatAlg}(\sig{\Sigma})$ to $\mathsf{nCatAlg}(\sig{\Sigma})$ of Definition~\ref{DTruncationOmega}.
-We begin by introducing the projective system.
+In this section we prove that the categories $\omega\mathsf{CatAlg}(\sig{\Sigma})$ and $\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ are the projective limits of the categories of $n$-categorial algebras, with the truncation functors of Definitions~\ref{DTruncation}, \ref{DTruncationOmega} and~\ref{DTruncationOmegaGl}.
+We begin by introducing the projective systems.
 
 \begin{remark}\label{RTruncProjSys}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature.
-We let $(\bigcdot)\mathsf{CatAlg}(\sig{\Sigma})$ stand for the family of categories $(\mathsf{nCatAlg}(\sig{\Sigma}))_{n\in\omega}$ and we let $\Tr^{(\bigcdot)}_{\sig{\Sigma}}$ stand for the family of functors $(\Tr^{(m,n)}_{\sig{\Sigma}})_{(m,n)\in\leq}$.
-Let us note that $\Tr^{(n,n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$ and that, for every $m\leq n\leq p$, by Proposition~\ref{PTruncComp},
-\[
-\Tr^{(m,n)}_{\sig{\Sigma}}\circ \Tr^{(n,p)}_{\sig{\Sigma}}=\Tr^{(m,p)}_{\sig{\Sigma}}.
-\]
-Therefore, we obtain the projective system $((\bigcdot)\mathsf{CatAlg}(\sig{\Sigma}),\Tr^{(\bigcdot)}_{\sig{\Sigma}})$ in $\mathsf{Cat}$ and its projective limit $\varprojlim ((\bigcdot)\mathsf{CatAlg}(\sig{\Sigma}),\Tr^{(\bigcdot)}_{\sig{\Sigma}})$.
+By Definition~\ref{DTruncDerivor} and Proposition~\ref{PTruncComp}, $\Tr^{(n,n)}_{\sig{\Sigma}}$ and $\Tr^{\gl(n,n)}_{\sig{\Sigma}}$ are identities and, for every $m\leq n\leq p$, $\Tr^{(m,n)}_{\sig{\Sigma}}\circ \Tr^{(n,p)}_{\sig{\Sigma}}=\Tr^{(m,p)}_{\sig{\Sigma}}$ and $\Tr^{\gl(m,n)}_{\sig{\Sigma}}\circ \Tr^{\gl(n,p)}_{\sig{\Sigma}}=\Tr^{\gl(m,p)}_{\sig{\Sigma}}$.
+Therefore we obtain two projective systems of categories, $((\mathsf{nCatAlg}(\sig{\Sigma}))_{n\in\omega},(\Tr^{(m,n)}_{\sig{\Sigma}})_{m\leq n})$ and $((\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}))_{n\in\omega},(\Tr^{\gl(m,n)}_{\sig{\Sigma}})_{m\leq n})$.
+By Remark~\ref{RDiscOmegaTrunc}, the truncation functors from dimension $\omega$ form cones over them.
 \end{remark}
 
-Our next goal is to prove that such limit is isomorphic to $(\omega\mathsf{CatAlg}(\sig{\Sigma}),\Tr^{(\bigcdot,\omega)}_{\sig{\Sigma}})$ with $\Tr^{(\bigcdot,\omega)}_{\sig{\Sigma}}$ being the family of functors $(\Tr^{(n,\omega)}_{\sig{\Sigma}})_{n\in\omega}$.
-That the composition of functors $\Tr^{(m,n)}_{\sig{\Sigma}}\circ \Tr^{(n,\omega)}_{\sig{\Sigma}}$ is equal to the functor $\Tr^{(m,\omega)}_{\sig{\Sigma}}$ has been noted in Remark~\ref{RDiscOmegaTrunc}.
-Thus, all that remains to be proven is that $(\omega\mathsf{CatAlg}(\sig{\Sigma}),\Tr^{(\bigcdot,\omega)}_{\sig{\Sigma}})$ satisfies the universal property.
+It remains to prove that these cones satisfy the universal property.
 
 \begin{proposition}\label{PUnivPropCatAlg}
-Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature, $\mathsf{L}$ a category and, for every $n\in\omega$, let $F_{n}$ be a functor from $\mathsf{L}$ to $\mathsf{nCatAlg}(\sig{\Sigma})$.
-If, for every $m,n\in\omega$ with $m\leq n$, $F_{m} = \Tr^{(m,n)}_{\sig{\Sigma}} \circ F_{n}$, then there exists a unique functor $\langle F_{k}\rangle_{k\in\omega}$ from $\mathsf{L}$ to the category $\omega\mathsf{CatAlg}(\sig{\Sigma})$ such that, for every $n\in\omega$, $F_{n} = \Tr^{(n,\omega)}_{\sig{\Sigma}} \circ \langle F_{k}\rangle_{k\in\omega}$.
-The diagram in Figure~\ref{FUnivPropCatAlg} depicts this situation.
-\begin{figure}
-\[
-\xymatrix{
-& \mathsf{L}\ar@{-->}[d]^{\exists!\langle F_{k}\rangle_{k\in\omega}}\ar@/_30pt/[ddl]_{F_{m}}\ar@/^30pt/[ddr]^{F_{n}} &
-\\
-& \omega\mathsf{CatAlg}(\sig{\Sigma})\ar[dr]^{\Tr^{(n,\omega)}_{\sig{\Sigma}}}\ar[dl]_{\Tr^{(m,\omega)}_{\sig{\Sigma}}} &
-\\
-\mathsf{mCatAlg}(\sig{\Sigma}) && \mathsf{nCatAlg}(\sig{\Sigma})\ar[ll]^{\Tr^{(m,n)}_{\sig{\Sigma}}}
-}
-\]
-\caption{Universal Property of $\omega\mathsf{CatAlg}(\sig{\Sigma})$.}
-\label{FUnivPropCatAlg}
-\end{figure}
+Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $\mathsf{L}$ a category.
+Then the following statements hold:
+\begin{enumerate}
+\item for every family $(F_{n}\colon\mathsf{L}\mor\mathsf{nCatAlg}(\sig{\Sigma}))_{n\in\omega}$ of functors such that $F_{m}=\Tr^{(m,n)}_{\sig{\Sigma}}\circ F_{n}$ for $m\leq n$, there exists a unique functor $\langle F_{k}\rangle_{k\in\omega}\colon\mathsf{L}\mor\omega\mathsf{CatAlg}(\sig{\Sigma})$ such that $F_{n}=\Tr^{(n,\omega)}_{\sig{\Sigma}}\circ\langle F_{k}\rangle_{k\in\omega}$ for every $n\in\omega$; and
+\item for every family $(F_{n}\colon\mathsf{L}\mor\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}))_{n\in\omega}$ of functors such that $F_{m}=\Tr^{\gl(m,n)}_{\sig{\Sigma}}\circ F_{n}$ for $m\leq n$, there exists a unique functor $\langle F_{k}\rangle_{k\in\omega}\colon\mathsf{L}\mor\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ such that $F_{n}=\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}\circ\langle F_{k}\rangle_{k\in\omega}$ for every $n\in\omega$.
+\end{enumerate}
 \end{proposition}
-
 \begin{proof}
-Before proceeding any further let us fix some terminology.
+(1) Before proceeding any further let us fix some terminology.
 We will say that a family $(\calg{A}_{n})_{n\in\omega}$, with $\calg{A}_{n}$ an $n$-categorial $\sig{\Sigma}$-algebra, is \emph{compatible} if $\Tr^{(m,n)}_{\sig{\Sigma}}(\calg{A}_{n})=\calg{A}_{m}$ for all $m\leq n$, i.e., if, for $m\leq n$, the cells of $\calg{A}_{m}$ are the $m$-cells of $\calg{A}_{n}$ and its operations are the restrictions of those of $\calg{A}_{n}$.
 Similarly, a family of homomorphisms $(H_{n}\colon\calg{A}_{n}\mor\calg{A}'_{n})_{n\in\omega}$ between compatible families is \emph{compatible} if $\Tr^{(m,n)}_{\sig{\Sigma}}(H_{n})=H_{m}$ for $m\leq n$, i.e., if $H_{m}$ is the restriction of $H_{n}$.
 
@@ -4797,6 +4781,31 @@ We let
 
 \textsf{(Uniqueness)} If $G\colon\mathsf{L}\mor\omega\mathsf{CatAlg}(\sig{\Sigma})$ also satisfies $\Tr^{(n,\omega)}_{\sig{\Sigma}}\circ G=F_{n}$ for every $n$, then, by the uniqueness in Claims~\ref{CUnivPropCatAlgA} and~\ref{CUnivPropCatAlgB}, $G(X)=\varprojlim_{n}F_{n}(X)$ and $G(f)=\varprojlim_{n}F_{n}(f)$, so that $G=\langle F_{k}\rangle_{k\in\omega}$.
 
+(2) We say that a family $(\calg{A}_{n})_{n\in\omega}$, with $\calg{A}_{n}$ a globular $n$-categorial $\sig{\Sigma}$-algebra, is \emph{compatible} if $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\calg{A}_{n})=\calg{A}_{m}$ for all $m\leq n$, and similarly for families of homomorphisms.
+We prove the following two claims.
+
+\begin{claim}\label{CUnivPropGlCatAlgA}
+For every compatible family $(\calg{A}_{n})_{n\in\omega}$ there exists a unique globular $\omega$-categorial $\sig{\Sigma}$-algebra $\varprojlim_{n}\calg{A}_{n}$ such that, for every $n\in\omega$, $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\varprojlim_{m}\calg{A}_{m})=\calg{A}_{n}$.
+\end{claim}
+
+We let $\varprojlim_{n}\calg{A}_{n}$ be the globular $\omega$-categorial $\sig{\Sigma}$-algebra whose $k$-cells of sort $s$ are the $k$-cells of sort $s$ of $\calg{A}_{k}$, its cells of top dimension.
+For $j<k$, the $(j,k)$-source of a $k$-cell $x$ is its $(j,k)$-source in $\calg{A}_{k}$, which is a $j$-cell of $\calg{A}_{k}$ and hence, by compatibility, a $j$-cell of $\calg{A}_{j}$; the targets, identities and compositions are defined in the same way, and every $\sigma\in\Sigma_{\mathbf{s},s}$ acts on $k$-cells as $\sigma^{\calg{A}_{k}}$ does.
+Each of the conditions of Definition~\ref{DOmegaCatGl} involves finitely many dimensions $i<j<k$, and holds because it holds in $\calg{A}_{k}$.
+By construction, $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\varprojlim_{m}\calg{A}_{m})=\calg{A}_{n}$, and every globular $\omega$-categorial $\sig{\Sigma}$-algebra $\calg{B}$ is the limit of its truncations, i.e., $\calg{B}=\varprojlim_{n}\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\calg{B})$, which gives the uniqueness.
+
+Claim~\ref{CUnivPropGlCatAlgA} follows.
+
+\begin{claim}\label{CUnivPropGlCatAlgB}
+For every compatible family of homomorphisms $(H_{n}\colon\calg{A}_{n}\mor\calg{A}'_{n})_{n\in\omega}$ there exists a unique globular $\omega$-categorial $\sig{\Sigma}$-homomorphism $\varprojlim_{n}H_{n}$ such that, for every $n\in\omega$, $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\varprojlim_{m}H_{m})=H_{n}$.
+\end{claim}
+
+We let $\varprojlim_{n}H_{n}$ be the family that acts on $k$-cells as $H_{k}$.
+It is a homomorphism, because every condition involves finitely many dimensions, and it is clearly the unique one with the stated truncations.
+
+Claim~\ref{CUnivPropGlCatAlgB} follows.
+
+Then the functor $\langle F_{k}\rangle_{k\in\omega}$ is defined, and it is the unique one, as in~(1).
+
 This completes the proof.
 \end{proof}
 
@@ -4823,93 +4832,13 @@ Then there exists a unique natural transformation $\varphi$ from $F$ to $G$ such
 This completes the proof.
 \end{proof}
 
-\section{$\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ as a projective limit}\label{SLimitGlobular}
-
-In this section we prove that the category $\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ of $S$-sorted globular $\omega$-categorial $\Sigma$-algebras and globular $\omega$-categorial $\Sigma$-homomorphisms is the projective limit of the projective system $(\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}),\Tr^{\gl(\bigcdot)}_{\sig{\Sigma}})$, where the functors $\Tr^{\gl(m,n)}_{\sig{\Sigma}}$ are the truncation functors defined in Definition~\ref{DTruncation}, and the projections of the limit are the truncation functors $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}$ of Definition~\ref{DTruncationOmegaGl}.
-We follow the same pattern as in Section~\ref{SLimitSingleSet}.
-
-\begin{remark}\label{RTruncGlProjSys}
-	Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature.
-We let $(\bigcdot)\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ stand for the family of categories $(\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}))_{n\in\omega}$ and we let $\Tr^{\gl(\bigcdot)}_{\sig{\Sigma}}$ stand for the family of functors $(\Tr^{\gl(m,n)}_{\sig{\Sigma}})_{(m,n)\in\leq}$.
-Let us note that $\Tr^{\gl(n,n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$ and that, for every $m\leq n\leq p$, by Proposition~\ref{PTruncComp},
-	\[
-	\Tr^{\gl(m,n)}_{\sig{\Sigma}}\circ \Tr^{\gl(n,p)}_{\sig{\Sigma}}=\Tr^{\gl(m,p)}_{\sig{\Sigma}}.
-	\]
-	Therefore, we obtain the projective system $((\bigcdot)\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma}),\Tr^{\gl(\bigcdot)}_{\sig{\Sigma}})$ in $\mathsf{Cat}$ and its projective limit $\varprojlim ((\bigcdot)\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma}),\Tr^{\gl(\bigcdot)}_{\sig{\Sigma}})$.
-\end{remark}
-
-Our next goal is to prove that such limit is isomorphic to $(\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma}),\Tr^{\gl(\bigcdot,\omega)}_{\sig{\Sigma}})$ with $\Tr^{\gl(\bigcdot,\omega)}_{\sig{\Sigma}}$ being the family of functors $(\Tr^{\gl(n,\omega)}_{\sig{\Sigma}})_{n\in\omega}$.
-That the composition of functors $\Tr^{\gl(m,n)}_{\sig{\Sigma}}\circ \Tr^{\gl(n,\omega)}_{\sig{\Sigma}}$ is equal to the functor $\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}$ has been noted in Remark~\ref{RDiscOmegaTrunc}.
-Thus, all that remains to be proven is that $(\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma}),\Tr^{\gl(\bigcdot,\omega)}_{\sig{\Sigma}})$ satisfies the universal property.
-
-\begin{proposition}\label{PUnivPropGlCatAlg}
-	Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature, $\mathsf{L}$ a category and, for every $n\in\omega$, let $F_{n}$ be a functor from $\mathsf{L}$ to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$.
-If, for every $m,n\in\omega$ with $m\leq n$, $F_{m} = \Tr^{\gl(m,n)}_{\sig{\Sigma}} \circ F_{n}$, then there exists a unique functor $\langle F_{k}\rangle_{k\in\omega}$ from $\mathsf{L}$ to the category $\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ such that, for every $n\in\omega$, $F_{n} = \Tr^{\gl(n,\omega)}_{\sig{\Sigma}} \circ \langle F_{k}\rangle_{k\in\omega}$.
-The diagram in Figure~\ref{FUnivPropGlCatAlg} depicts this situation.
-	\begin{figure}
-		\[
-		\xymatrix{
-			& \mathsf{L}\ar@{-->}[d]^{\exists!\langle F_{k}\rangle_{k\in\omega}}\ar@/_30pt/[ddl]_{F_{m}}\ar@/^30pt/[ddr]^{F_{n}} &
-			\\
-			& \omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})\ar[dr]^{\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}}\ar[dl]_{\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}} &
-			\\
-			\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}) && \mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})\ar[ll]^{\Tr^{\gl(m,n)}_{\sig{\Sigma}}}
-		}
-		\]
-		\caption{Universal Property of $\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$.}
-		\label{FUnivPropGlCatAlg}
-	\end{figure}
-\end{proposition}
-
-\begin{proof}
-As in the proof of Proposition~\ref{PUnivPropCatAlg}, we will say that a family $(\calg{A}_{n})_{n\in\omega}$, with $\calg{A}_{n}$ a globular $n$-categorial $\sig{\Sigma}$-algebra, is \emph{compatible} if $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\calg{A}_{n})=\calg{A}_{m}$ for all $m\leq n$, and similarly for families of homomorphisms.
-We prove the following two claims.
-
-\begin{claim}\label{CUnivPropGlCatAlgA}
-For every compatible family $(\calg{A}_{n})_{n\in\omega}$ there exists a unique globular $\omega$-categorial $\sig{\Sigma}$-algebra $\varprojlim_{n}\calg{A}_{n}$ such that, for every $n\in\omega$, $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\varprojlim_{m}\calg{A}_{m})=\calg{A}_{n}$.
-\end{claim}
-
-We let $\varprojlim_{n}\calg{A}_{n}$ be the globular $\omega$-categorial $\sig{\Sigma}$-algebra whose $k$-cells of sort $s$ are the $k$-cells of sort $s$ of $\calg{A}_{k}$, its cells of top dimension.
-For $j<k$, the $(j,k)$-source of a $k$-cell $x$ is its $(j,k)$-source in $\calg{A}_{k}$, which is a $j$-cell of $\calg{A}_{k}$ and hence, by compatibility, a $j$-cell of $\calg{A}_{j}$; the targets, identities and compositions are defined in the same way, and every $\sigma\in\Sigma_{\mathbf{s},s}$ acts on $k$-cells as $\sigma^{\calg{A}_{k}}$ does.
-Each of the conditions of Definition~\ref{DOmegaCatGl} involves finitely many dimensions $i<j<k$, and holds because it holds in $\calg{A}_{k}$.
-By construction, $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\varprojlim_{m}\calg{A}_{m})=\calg{A}_{n}$, and every globular $\omega$-categorial $\sig{\Sigma}$-algebra $\calg{B}$ is the limit of its truncations, i.e., $\calg{B}=\varprojlim_{n}\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\calg{B})$, which gives the uniqueness.
-
-Claim~\ref{CUnivPropGlCatAlgA} follows.
-
-\begin{claim}\label{CUnivPropGlCatAlgB}
-For every compatible family of homomorphisms $(H_{n}\colon\calg{A}_{n}\mor\calg{A}'_{n})_{n\in\omega}$ there exists a unique globular $\omega$-categorial $\sig{\Sigma}$-homomorphism $\varprojlim_{n}H_{n}$ such that, for every $n\in\omega$, $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\varprojlim_{m}H_{m})=H_{n}$.
-\end{claim}
-
-We let $\varprojlim_{n}H_{n}$ be the family that acts on $k$-cells as $H_{k}$.
-It is a homomorphism, because every condition involves finitely many dimensions, and it is clearly the unique one with the stated truncations.
-
-Claim~\ref{CUnivPropGlCatAlgB} follows.
-
-For an object $X$ of $\mathsf{L}$, the family $(F_{n}(X))_{n\in\omega}$ is compatible, and, for a morphism $f$ of $\mathsf{L}$, so is $(F_{n}(f))_{n\in\omega}$.
-We let
-\begin{enumerate}
-	\item
-	$\langle F_{k}\rangle_{k\in\omega}(X)=\varprojlim_{n}F_{n}(X)$; and
-
-	\item
-	$\langle F_{k}\rangle_{k\in\omega}(f)=\varprojlim_{n}F_{n}(f)$.
-\end{enumerate}
-
-\textsf{(Functoriality)} By the uniqueness in Claim~\ref{CUnivPropGlCatAlgB}, $\langle F_{k}\rangle_{k\in\omega}$ preserves identities and composites, since every $F_{n}$ does.
-
-\textsf{(Factorization)} By Claims~\ref{CUnivPropGlCatAlgA} and~\ref{CUnivPropGlCatAlgB}, $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}\circ\langle F_{k}\rangle_{k\in\omega}=F_{n}$, for every $n\in\omega$.
-
-\textsf{(Uniqueness)} If $G\colon\mathsf{L}\mor\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ also satisfies $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}\circ G=F_{n}$ for every $n$, then, by the uniqueness in Claims~\ref{CUnivPropGlCatAlgA} and~\ref{CUnivPropGlCatAlgB}, $G(X)=\varprojlim_{n}F_{n}(X)$ and $G(f)=\varprojlim_{n}F_{n}(f)$, so that $G=\langle F_{k}\rangle_{k\in\omega}$.
-
-This completes the proof.
-\end{proof}
 
 \begin{corollary}\label{CLimitNatGl}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature.
 Then the statements of Corollary~\ref{CLimitNat} hold for $\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ and the truncation functors $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}$ and $\Tr^{\gl(m,n)}_{\sig{\Sigma}}$.
 \end{corollary}
 \begin{proof}
-(1) It follows from Claim~\ref{CUnivPropGlCatAlgB} in the proof of Proposition~\ref{PUnivPropGlCatAlg}.
+(1) It follows from Claim~\ref{CUnivPropGlCatAlgB} in the proof of Proposition~\ref{PUnivPropCatAlg}~(2).
 
 (2) Let $F,G\colon\mathsf{L}\mor\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ be functors and, for every $n\in\omega$, $\varphi^{n}$ a natural transformation from $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}\circ F$ to $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}\circ G$ such that $\Tr^{\gl(m,n)}_{\sig{\Sigma}}\ast\varphi^{n}=\varphi^{m}$ for $m\leq n$.
 By~(1), for every object $X$ of $\mathsf{L}$ there exists a unique homomorphism $\varphi_{X}$ with $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\varphi_{X})=\varphi^{n}_{X}$ for every $n$.
@@ -4924,8 +4853,8 @@ This completes the proof.
 \section{Graduation, unification, discretization and truncation in dimension \texorpdfstring{$\omega$}{omega}}\label{SOmegaFunctors}
 
 In this section we obtain the $\omega$-dimensional versions of the functors of Sections~\ref{SGraduation} and~\ref{STruncation}.
-The truncation and discretization functors in dimension $\omega$ have been defined in Subsection~\ref{SDTOmega}, and, by Sections~\ref{SLimitSingleSet} and~\ref{SLimitGlobular}, the truncation functors are the projections of projective limits.
-We begin by obtaining the graduation functor, by the universal property of Proposition~\ref{PUnivPropGlCatAlg}, from a compatible family of the finite-dimensional ones.
+The truncation and discretization functors in dimension $\omega$ have been defined in Subsection~\ref{SDTOmega}, and, by Section~\ref{SLimitSingleSet}, the truncation functors are the projections of projective limits.
+We begin by obtaining the graduation functor, by the universal property of Proposition~\ref{PUnivPropCatAlg}~(2), from a compatible family of the finite-dimensional ones.
 Next we obtain the unification functor as an inductive limit.
 We end this section by proving that graduation and unification are mutually quasi-inverse equivalences and that discretization is left adjoint to truncation also in dimension $\omega$.
 
@@ -4965,8 +4894,8 @@ $$
 $$
 \end{definition}
 
-Let us note that the functor exists and is unique by Proposition~\ref{PUnivPropGlCatAlg}, since, by Lemma~\ref{LGdOmegaCompatible}, the family $(\Gd^{(n)}_{\sig{\Sigma}}\circ \Tr^{(n,\omega)}_{\sig{\Sigma}})_{n\in\omega}$ is compatible.
-Explicitly, by Claim~\ref{CUnivPropGlCatAlgA} in the proof of Proposition~\ref{PUnivPropGlCatAlg}, the cells of sort $(k,s)$ of $\Gd^{(\omega)}_{\sig{\Sigma}}(\calg{A})$ are the $k$-cells of sort $s$ of $\calg{A}$, the $(j,k)$-sources, $(j,k)$-targets and $j$-compositions of $k$-cells are the $j$-sources, $j$-targets and $j$-compositions of $\calg{A}$, the $(k,j)$-identities are inclusions, and $\sigma_{k}$ acts on $k$-cells as $\sigma$.
+Let us note that the functor exists and is unique by Proposition~\ref{PUnivPropCatAlg}~(2), since, by Lemma~\ref{LGdOmegaCompatible}, the family $(\Gd^{(n)}_{\sig{\Sigma}}\circ \Tr^{(n,\omega)}_{\sig{\Sigma}})_{n\in\omega}$ is compatible.
+Explicitly, by Claim~\ref{CUnivPropGlCatAlgA} in the proof of Proposition~\ref{PUnivPropCatAlg}~(2), the cells of sort $(k,s)$ of $\Gd^{(\omega)}_{\sig{\Sigma}}(\calg{A})$ are the $k$-cells of sort $s$ of $\calg{A}$, the $(j,k)$-sources, $(j,k)$-targets and $j$-compositions of $k$-cells are the $j$-sources, $j$-targets and $j$-compositions of $\calg{A}$, the $(k,j)$-identities are inclusions, and $\sigma_{k}$ acts on $k$-cells as $\sigma$.
 
 We next consider unification.
 In contrast with graduation, it cannot be obtained in the same way.
@@ -5372,7 +5301,7 @@ By Definition~\ref{DAlgSquare}, we must check that the four pairs of functors in
 \end{gather*}
 with $F_{p}$ and $F^{\gl}_{p}$ as in Remark~\ref{RDiscOmegaTrunc}.
 If $m\leq p$, $\Gd^{(p)}_{\sig{\Sigma}}\circ\Ds^{(p,m)}_{\sig{\Sigma}}=\Ds^{\gl(p,m)}_{\sig{\Sigma}}\circ\Gd^{(m)}_{\sig{\Sigma}}$, and, if $p\leq m$, $\Gd^{(p)}_{\sig{\Sigma}}\circ \Tr^{(p,m)}_{\sig{\Sigma}}=\Tr^{\gl(p,m)}_{\sig{\Sigma}}\circ\Gd^{(m)}_{\sig{\Sigma}}$, by Propositions~\ref{PCompatGdDs} and~\ref{PCompatGdTr}.
-Hence both functors have the same truncations and, by the uniqueness in Proposition~\ref{PUnivPropGlCatAlg}, they are equal, so that we can take $\alpha$ to be the identity.
+Hence both functors have the same truncations and, by the uniqueness in Proposition~\ref{PUnivPropCatAlg}~(2), they are equal, so that we can take $\alpha$ to be the identity.
 
 \textsf{(The natural isomorphism $\beta$)} By Proposition~\ref{PUfOmega}, $\mathrm{in}^{[m]}$ is a natural isomorphism from $\Uf^{(m)}_{\sig{\Sigma}}\circ \Tr^{\gl(m,\omega)}_{\sig{\Sigma}}$ to $\Tr^{(m,\omega)}_{\sig{\Sigma}}\circ\Uf^{(\omega)}_{\sig{\Sigma}}$.
 
@@ -6008,7 +5937,7 @@ As for the transformed algebras, the cells are computed as in Claim~\ref{CChange
 Therefore the equalities follow from Lemma~\ref{LCommSquare}.
 \end{proof}
 
-By Proposition~\ref{PChangeSigOmegaDsTr} and Proposition~\ref{PUnivPropCatAlg}, $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}$ is the functor induced, by the universal property of the projective limit $\omega\mathsf{CatAlg}(\sig{\Sigma})$, by the compatible family $((\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}})_{n\in\omega}$, and, similarly, $(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}$ is the functor induced by $((\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\circ\Tr^{\gl(n,\omega)}_{\sig{\Lambda}})_{n\in\omega}$, see Proposition~\ref{PUnivPropGlCatAlg}.
+By Proposition~\ref{PChangeSigOmegaDsTr} and Proposition~\ref{PUnivPropCatAlg}, $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}$ is the functor induced, by the universal property of the projective limit $\omega\mathsf{CatAlg}(\sig{\Sigma})$, by the compatible family $((\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}})_{n\in\omega}$, and, similarly, $(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}$ is the functor induced by $((\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\circ\Tr^{\gl(n,\omega)}_{\sig{\Lambda}})_{n\in\omega}$, see Proposition~\ref{PUnivPropCatAlg}~(2).
 We end this section with graduation and unification in dimension $\omega$, which are not induced by generalized hep-derivors, see Section~\ref{SOmegaFunctors}.
 
 \begin{proposition}\label{PChangeSigOmegaGdUf}
@@ -6042,7 +5971,7 @@ Then the following equalities hold
 \end{align*}
 
 The first equality follows from Definition~\ref{DGdOmega}; the second equality follows from Proposition~\ref{PChangeSigOmegaDsTr}; the third equality follows from Proposition~\ref{PChangeSigGdUf}; the fourth equality follows from Definition~\ref{DGdOmega}; finally, the last equality follows from Proposition~\ref{PChangeSigOmegaDsTr}.
-Therefore, by the uniqueness in Proposition~\ref{PUnivPropGlCatAlg}, applied to the category $\omega\mathsf{CatAlg}(\sig{\Lambda})$ and to the compatible family $(\Gd^{(n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}})_{n\in\omega}$, both functors are equal.
+Therefore, by the uniqueness in Proposition~\ref{PUnivPropCatAlg}~(2), applied to the category $\omega\mathsf{CatAlg}(\sig{\Lambda})$ and to the compatible family $(\Gd^{(n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}})_{n\in\omega}$, both functors are equal.
 
 \textsf{(Unification)} Let $\calg{B}$ be a globular $\omega$-categorial $\sig{\Lambda}$-algebra and $\calg{A}=(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}(\calg{B})$.
 By Proposition~\ref{PChangeSigOmega}, $A_{(k,s)}=B_{(k,\varphi(s))}$ and the $(k,j)$-identities of sort $s$ of $\calg{A}$ are those of sort $\varphi(s)$ of $\calg{B}$.
