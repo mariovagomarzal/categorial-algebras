@@ -1319,3 +1319,8 @@ Decisions que has de revisar:
 3. `RChangeSigNat` i la nota sobre Grothendieck estan justificades de forma
    breu, no amb una demostració completa. Si vols, es poden convertir en
    proposicions amb prova.
+
+**Respostes (2026-10-19):** (1) una signatura heterogènia és la
+hep-signatura amb dominis buits, i no cal la generalització a hep-signatures
+amb condicions de domini; (2) es manté $\mathbf c$; (3) `RChangeSigNat` i la
+nota sobre Grothendieck queden com estan.
