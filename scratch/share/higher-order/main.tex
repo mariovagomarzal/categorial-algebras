@@ -5874,137 +5874,170 @@ For instance, graduation extends to the functor from $\int^{\mathsf{Sig}_{\mathf
 
 \subsection{Change of signature in dimension \texorpdfstring{$\omega$}{omega}}\label{SChangeSigOmega}
 
-In this subsection we extend the above results to the dimension $\omega$.
+We end this section by indicating how the above results extend to the dimension $\omega$.
 
-\begin{definition}\label{DChangeSigDerivorOmega}
+\begin{remark}\label{RChangeSigOmega}
 Let $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ be many-sorted signatures and $\mathbf{c}=(\varphi,c)$ a derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$.
-We let $\mathbf{c}^{(\omega)}=(\varphi,c^{(\omega)},\varnothing)$ stand for the generalized hep-derivor from $\sig{\Sigma}^{(\omega)}$ to $\sig{\Lambda}^{(\omega)}$, and $\mathbf{c}^{\gl(\omega)}=(\varphi^{\gl(\omega)},c^{\gl(\omega)},\varnothing)$ for the generalized hep-derivor from $\sig{\Sigma}^{\gl(\omega)}$ to $\sig{\Lambda}^{\gl(\omega)}$, defined by the same clauses as in Definition~\ref{DChangeSigDerivor}, for every $k\in\omega$ and every pair of dimensions $j<k$ in $\omega$, respectively.
-\end{definition}
-
-Let us note that, for every $n\in\mathbb{N}$, the restriction of $c^{(\omega)}$ to $\Sigma^{(n)}\subseteq\Sigma^{(\omega)}$ is $c^{(n)}$ and the restriction of $c^{\gl(\omega)}$ to the image of $\Sigma^{\gl(n)}$ in $\Sigma^{\gl(\omega)}$ is $c^{\gl(n)}$, up to the canonical embeddings.
-
-\begin{proposition}\label{PChangeSigOmega}
-Let $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ be many-sorted signatures and $\mathbf{c}=(\varphi,c)$ a derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$.
-Then the following statements hold:
-\begin{enumerate}
-\item the restriction of $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Lambda}^{(\omega)}})$ corestricts to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(\omega)}})$, and its restriction to $\omega\mathsf{CatAlg}(\sig{\Lambda})$ corestricts to $\omega\mathsf{CatAlg}(\sig{\Sigma})$;
-\item the restriction of $(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Lambda}^{\gl(\omega)}})=\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Lambda})$ corestricts to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(\omega)}})=\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$; and
-\item the equalities of Proposition~\ref{PChangeSigCat} hold with $\omega$ in place of $n$.
-\end{enumerate}
-Moreover, the transformed algebras are described as in Proposition~\ref{PChangeSigDerivor}, with $\omega$ in place of $n$.
-\end{proposition}
-\begin{proof}
-The proofs of Lemma~\ref{LTermFunctor}, of Proposition~\ref{PChangeSigDerivor} and of Proposition~\ref{PChangeSigCat} only use, for every dimension $k$ and every pair, or triple, of dimensions, the axioms of the corresponding specifications for these dimensions, which are axioms of $\spec{C}^{\sig{\Lambda}^{(\omega)}}$ and of $\spec{C}^{\sig{\Lambda}^{\gl(\omega)}}$ for all the dimensions in $\omega$.
-Hence the same proofs, with $\omega$ in place of $n$ and of $n+1$, prove the first part of~(1), (2) and~(3).
-Finally, let $\calg{B}$ be an $\omega$-categorial $\sig{\Lambda}$-algebra.
-Then every cell of sort $s$ of $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\calg{B})$ is a cell $x$ of sort $\varphi(s)$ of $\calg{B}$, and its $k$-source in $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\calg{B})$ is $\src^{k}_{\varphi(s)}(x)$.
-Since $x$ is a $k$-cell of $\calg{B}$ for some $k\in\omega$, it is a $k$-cell of $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\calg{B})$.
-Therefore, by Remark~\ref{RSingleSetIdentOmega}, $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\calg{B})$ is an object in $\omega\mathsf{CatAlg}(\sig{\Sigma})$.
-\end{proof}
-
-As in the finite-dimensional case, and by abuse of notation, we denote the restrictions and corestrictions of Proposition~\ref{PChangeSigOmega} by
+The clauses of Definition~\ref{DChangeSigDerivor}, for every $k\in\omega$ and every pair of dimensions $j<k$ in $\omega$, define generalized hep-derivors $\mathbf{c}^{(\omega)}$ from $\sig{\Sigma}^{(\omega)}$ to $\sig{\Lambda}^{(\omega)}$ and $\mathbf{c}^{\gl(\omega)}$ from $\sig{\Sigma}^{\gl(\omega)}$ to $\sig{\Lambda}^{\gl(\omega)}$.
+The proofs of Lemma~\ref{LTermFunctor} and of Propositions~\ref{PChangeSigDerivor} and~\ref{PChangeSigCat} only use finitely many dimensions at a time.
+Hence they show that the induced functors restrict to functors
 \begin{enumerate}
 	\item
-	$ (\mathbf{c}^{(\omega)})^{\ast}_{\gd}\colon\omega\mathsf{CatAlg}(\sig{\Lambda})\mor\omega\mathsf{CatAlg}(\sig{\Sigma}) $; and
+	$(\mathbf{c}^{(\omega)})^{\ast}_{\gd}\colon\omega\mathsf{CatAlg}(\sig{\Lambda})\mor\omega\mathsf{CatAlg}(\sig{\Sigma})$; and
 
 	\item
-	$ (\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}\colon\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Lambda})\mor\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma}) $.
+	$(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}\colon\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Lambda})\mor\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$,
 \end{enumerate}
-
-We next consider truncation and discretization in dimension $\omega$.
-
-\begin{proposition}\label{PChangeSigOmegaDsTr}
-Let $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ be many-sorted signatures, $\mathbf{c}=(\varphi,c)$ a derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $n\in\mathbb{N}$.
-Then the following equalities hold
+which preserve compositions and identities; the first one keeps the finite dimension of the cells.
+The truncation and discretization derivors in dimension $\omega$ are defined by the same clauses as the finite-dimensional ones.
+Hence the computations of Proposition~\ref{PChangeSigDsTr} show that $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}$ and $(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}$ commute with $\Tr^{(n,\omega)}$, $\Tr^{\gl(n,\omega)}$, $\Ds^{(\omega,n)}$ and $\Ds^{\gl(\omega,n)}$.
+In particular, by Proposition~\ref{PUnivPropCatAlg}, they are the functors induced by the compatible families $((\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}})_{n\in\omega}$ and $((\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\circ\Tr^{\gl(n,\omega)}_{\sig{\Lambda}})_{n\in\omega}$.
+Finally, they also commute with graduation and unification:
 \begin{enumerate}
 	\item
-	$\Ds^{(\omega,n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(n)})^{\ast}_{\gd}=(\mathbf{c}^{(\omega)})^{\ast}_{\gd}\circ\Ds^{(\omega,n)}_{\sig{\Lambda}}$;
+	$\Gd^{(\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(\omega)})^{\ast}_{\gd}=(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}\circ\Gd^{(\omega)}_{\sig{\Lambda}}$; and
 
 	\item
-	$\Tr^{(n,\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(\omega)})^{\ast}_{\gd}=(\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}}$;
-
-	\item
-	$\Ds^{\gl(\omega,n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}=(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}\circ\Ds^{\gl(\omega,n)}_{\sig{\Lambda}}$; and
-
-	\item
-	$\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}=(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\circ\Tr^{\gl(n,\omega)}_{\sig{\Lambda}}$.
+	$\Uf^{(\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}=(\mathbf{c}^{(\omega)})^{\ast}_{\gd}\circ\Uf^{(\omega)}_{\sig{\Lambda}}$.
 \end{enumerate}
-\end{proposition}
-\begin{proof}
-The derivors $\bDs^{(\omega,n)}$, $\bDs^{\gl(\omega,n)}$, $\bTr^{(n,\omega)}$ and $\bTr^{\gl(n,\omega)}$ are defined by the same clauses as their finite-dimensional counterparts, see Definitions~\ref{DTruncOmegaDerivor} and~\ref{DDiscOmegaDerivor}, and so are $\mathbf{c}^{(\omega)}$ and $\mathbf{c}^{\gl(\omega)}$.
-Hence the computations of Lemma~\ref{LChangeSigTerms}~(3) and~(4) and of Claim~\ref{CChangeSigDsTrA} prove the corresponding equalities between generalized hep-derivors.
-As for the transformed algebras, the cells are computed as in Claim~\ref{CChangeSigDsTrB}, by the notes after Definitions~\ref{DTruncOmegaDerivor} and~\ref{DDiscOmegaDerivor}, and, by Propositions~\ref{PTruncOmegaDerivor}, \ref{PDiscOmegaDerivor} and~\ref{PChangeSigOmega}, the composites of the functors involved send categorial algebras to ep-algebras.
-Therefore the equalities follow from Lemma~\ref{LCommSquare}.
-\end{proof}
+The first equality follows from the uniqueness in Proposition~\ref{PUnivPropCatAlg}~(2), since, by Definition~\ref{DGdOmega} and Propositions~\ref{PChangeSigGdUf} and~\ref{PChangeSigDsTr}, both functors have the same truncations.
+The second one follows from Definition~\ref{DUfOmega}: both algebras have the classes $[x]_{k}$, with $x\in B_{(k,\varphi(s))}$, as cells of sort $s$, and their operations are computed at a finite level $p$, where, by Proposition~\ref{PChangeSigGdUf}, $\Uf^{(p)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(p)})^{\ast}_{\gd}=(\mathbf{c}^{(p)})^{\ast}_{\gd}\circ\Uf^{(p)}_{\sig{\Lambda}}$.
+\end{remark}
 
-By Proposition~\ref{PChangeSigOmegaDsTr} and Proposition~\ref{PUnivPropCatAlg}, $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}$ is the functor induced, by the universal property of the projective limit $\omega\mathsf{CatAlg}(\sig{\Sigma})$, by the compatible family $((\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}})_{n\in\omega}$, and, similarly, $(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}$ is the functor induced by $((\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\circ\Tr^{\gl(n,\omega)}_{\sig{\Lambda}})_{n\in\omega}$, see Proposition~\ref{PUnivPropCatAlg}~(2).
-We end this section with graduation and unification in dimension $\omega$, which are not induced by generalized hep-derivors, see Section~\ref{SOmegaFunctors}.
-
-\begin{proposition}\label{PChangeSigOmegaGdUf}
-Let $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ be many-sorted signatures and $\mathbf{c}=(\varphi,c)$ a derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$.
-Then the following equalities hold
-\begin{align*}
-\Gd^{(\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(\omega)})^{\ast}_{\gd}&=(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}\circ\Gd^{(\omega)}_{\sig{\Lambda}},
-&
-\Uf^{(\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}&=(\mathbf{c}^{(\omega)})^{\ast}_{\gd}\circ\Uf^{(\omega)}_{\sig{\Lambda}}.
-\end{align*}
-\end{proposition}
-\begin{proof}
-\textsf{(Graduation)} For every $n\in\mathbb{N}$, the following chain of equalities holds
-\begin{align*}
-\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}\circ\Gd^{(\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(\omega)})^{\ast}_{\gd}
-&=
-\Gd^{(n)}_{\sig{\Sigma}}\circ\Tr^{(n,\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(\omega)})^{\ast}_{\gd}
-\tag{1}
-\\&=
-\Gd^{(n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}}
-\tag{2}
-\\&=
-(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\circ\Gd^{(n)}_{\sig{\Lambda}}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}}
-\tag{3}
-\\&=
-(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\circ\Tr^{\gl(n,\omega)}_{\sig{\Lambda}}\circ\Gd^{(\omega)}_{\sig{\Lambda}}
-\tag{4}
-\\&=
-\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}\circ\Gd^{(\omega)}_{\sig{\Lambda}}.
-\tag{5}
-\end{align*}
-
-The first equality follows from Definition~\ref{DGdOmega}; the second equality follows from Proposition~\ref{PChangeSigOmegaDsTr}; the third equality follows from Proposition~\ref{PChangeSigGdUf}; the fourth equality follows from Definition~\ref{DGdOmega}; finally, the last equality follows from Proposition~\ref{PChangeSigOmegaDsTr}.
-Therefore, by the uniqueness in Proposition~\ref{PUnivPropCatAlg}~(2), applied to the category $\omega\mathsf{CatAlg}(\sig{\Lambda})$ and to the compatible family $(\Gd^{(n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}})_{n\in\omega}$, both functors are equal.
-
-\textsf{(Unification)} Let $\calg{B}$ be a globular $\omega$-categorial $\sig{\Lambda}$-algebra and $\calg{A}=(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}(\calg{B})$.
-By Proposition~\ref{PChangeSigOmega}, $A_{(k,s)}=B_{(k,\varphi(s))}$ and the $(k,j)$-identities of sort $s$ of $\calg{A}$ are those of sort $\varphi(s)$ of $\calg{B}$.
-Hence, by Definition~\ref{DUfOmegaCells}, $[A]_{s}=[B]_{\varphi(s)}$ and the mapping $\mathrm{in}^{[k]}_{s}$ of $\calg{A}$ is the mapping $\mathrm{in}^{[k]}_{\varphi(s)}$ of $\calg{B}$.
-Since the domains of $\mathbf{c}^{(\omega)}$ are empty, $[B]_{\varphi}$ is also the underlying $S$-sorted set of $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\Uf^{(\omega)}_{\sig{\Lambda}}(\calg{B}))$.
-
-Let $\tau$ be an operation symbol of $\Sigma^{(\omega)}$, of arity $\mathbf{s}$ and coarity $s$, $p\in\mathbb{N}$ such that $\tau$ is an operation symbol of $\Sigma^{(p)}$ and $\mathbf{x}=(x_{j})_{j\in\bb{\mathbf{s}}}$ a family with $x_{j}\in B_{(p,\varphi(s_{j}))}$.
-For every $p\in\mathbb{N}$, let $\calg{U}_{p}$ stand for $\Uf^{(p)}_{\sig{\Lambda}}(\Tr^{\gl(p,\omega)}_{\sig{\Lambda}}(\calg{B}))$.
-By Propositions~\ref{PChangeSigGdUf} and~\ref{PChangeSigOmegaDsTr}, the following equality holds
-$$
-\Uf^{(p)}_{\sig{\Sigma}}\left(\Tr^{\gl(p,\omega)}_{\sig{\Sigma}}(\calg{A})\right)=(\mathbf{c}^{(p)})^{\ast}_{\gd}(\calg{U}_{p}).
-$$
-Hence, by Definition~\ref{DUfOmega}, the family $([x_{j}]_{p})_{j\in\bb{\mathbf{s}}}$ is in the domain of $\tau^{\Uf^{(\omega)}_{\sig{\Sigma}}(\calg{A})}$ if, and only if, $\mathbf{x}\in\Dom(\tau^{(\mathbf{c}^{(p)})^{\ast}_{\gd}(\calg{U}_{p})})$, and then
-$$
-\tau^{\Uf^{(\omega)}_{\sig{\Sigma}}(\calg{A})}\left(([x_{j}]_{p})_{j\in\bb{\mathbf{s}}}\right)=\left[\tau^{(\mathbf{c}^{(p)})^{\ast}_{\gd}(\calg{U}_{p})}(\mathbf{x})\right]_{p}.
-$$
-
-On the other hand, let $\calg{W}$ stand for $\Uf^{(\omega)}_{\sig{\Lambda}}(\calg{B})$.
-By Proposition~\ref{PUfOmega}, $\mathrm{in}^{[p]}$ is an isomorphism from $\calg{U}_{p}$ onto $\Tr^{(p,\omega)}_{\sig{\Lambda}}(\calg{W})$.
-Since $(\mathbf{c}^{(p)})^{\ast}_{\gd}$ is a functor, by Proposition~\ref{PChangeSigOmegaDsTr}, $(\mathbf{c}^{(p)})^{\ast}_{\gd}(\mathrm{in}^{[p]})=(\mathrm{in}^{[p]}_{\varphi(s')})_{s'\in S}$ is an isomorphism from $(\mathbf{c}^{(p)})^{\ast}_{\gd}(\calg{U}_{p})$ onto
-$$
-(\mathbf{c}^{(p)})^{\ast}_{\gd}\left(\Tr^{(p,\omega)}_{\sig{\Lambda}}(\calg{W})\right)=\Tr^{(p,\omega)}_{\sig{\Sigma}}\left((\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\calg{W})\right).
-$$
-By the note after Definition~\ref{DTruncationOmega}, the latter is the relative subalgebra of $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\calg{W})$ on its $p$-cells, which, by Proposition~\ref{PUfOmega}, are the classes $[x]_{p}$.
-Therefore $([x_{j}]_{p})_{j\in\bb{\mathbf{s}}}\in\Dom(\tau^{(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\calg{W})})$ if, and only if, $\mathbf{x}\in\Dom(\tau^{(\mathbf{c}^{(p)})^{\ast}_{\gd}(\calg{U}_{p})})$, and then the value is $[\tau^{(\mathbf{c}^{(p)})^{\ast}_{\gd}(\calg{U}_{p})}(\mathbf{x})]_{p}$.
-
-Since every finite family of classes has representatives in a common level, see Lemma~\ref{LUfOmegaCells}~(3), it follows that $\Uf^{(\omega)}_{\sig{\Sigma}}(\calg{A})=(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\calg{W})$.
-Finally, for every globular $\omega$-categorial $\sig{\Lambda}$-homomorphism $F$, both $\Uf^{(\omega)}_{\sig{\Sigma}}((\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}(F))$ and $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\Uf^{(\omega)}_{\sig{\Lambda}}(F))$ send, for every $s\in S$, the class $[x]_{k}$, with $x\in B_{(k,\varphi(s))}$, to $[F_{(k,\varphi(s))}(x)]_{k}$, see Definition~\ref{DUfOmega} and Proposition~\ref{PChangeSigOmega}.
-
-This completes the proof.
-\end{proof}
-
-As in Remark~\ref{RChangeSigNat}, the natural isomorphisms of Section~\ref{SOmegaFunctors}, in particular the natural isomorphism $\mathrm{in}^{[m]}$ of Proposition~\ref{PUfOmega}, and the counits of Proposition~\ref{POmegaDiscTrunc} are compatible with the change of signature, since they are given by families of identities, inclusions, $(k,j)$-identities and the mappings $\mathrm{in}^{[m]}_{s}$, which are reindexed along $\varphi$; hence so is the algebraic square of Proposition~\ref{PAlgSquareOmega}.
+% The detailed treatment of the dimension omega, kept for reference.
+% \subsection{Change of signature in dimension \texorpdfstring{$\omega$}{omega}}\label{OldSChangeSigOmega}
+%
+% In this subsection we extend the above results to the dimension $\omega$.
+%
+% \begin{definition}\label{OldDChangeSigDerivorOmega}
+% Let $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ be many-sorted signatures and $\mathbf{c}=(\varphi,c)$ a derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$.
+% We let $\mathbf{c}^{(\omega)}=(\varphi,c^{(\omega)},\varnothing)$ stand for the generalized hep-derivor from $\sig{\Sigma}^{(\omega)}$ to $\sig{\Lambda}^{(\omega)}$, and $\mathbf{c}^{\gl(\omega)}=(\varphi^{\gl(\omega)},c^{\gl(\omega)},\varnothing)$ for the generalized hep-derivor from $\sig{\Sigma}^{\gl(\omega)}$ to $\sig{\Lambda}^{\gl(\omega)}$, defined by the same clauses as in Definition~\ref{DChangeSigDerivor}, for every $k\in\omega$ and every pair of dimensions $j<k$ in $\omega$, respectively.
+% \end{definition}
+%
+% Let us note that, for every $n\in\mathbb{N}$, the restriction of $c^{(\omega)}$ to $\Sigma^{(n)}\subseteq\Sigma^{(\omega)}$ is $c^{(n)}$ and the restriction of $c^{\gl(\omega)}$ to the image of $\Sigma^{\gl(n)}$ in $\Sigma^{\gl(\omega)}$ is $c^{\gl(n)}$, up to the canonical embeddings.
+%
+% \begin{proposition}\label{OldPChangeSigOmega}
+% Let $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ be many-sorted signatures and $\mathbf{c}=(\varphi,c)$ a derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$.
+% Then the following statements hold:
+% \begin{enumerate}
+% \item the restriction of $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Lambda}^{(\omega)}})$ corestricts to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(\omega)}})$, and its restriction to $\omega\mathsf{CatAlg}(\sig{\Lambda})$ corestricts to $\omega\mathsf{CatAlg}(\sig{\Sigma})$;
+% \item the restriction of $(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Lambda}^{\gl(\omega)}})=\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Lambda})$ corestricts to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(\omega)}})=\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$; and
+% \item the equalities of Proposition~\ref{PChangeSigCat} hold with $\omega$ in place of $n$.
+% \end{enumerate}
+% Moreover, the transformed algebras are described as in Proposition~\ref{PChangeSigDerivor}, with $\omega$ in place of $n$.
+% \end{proposition}
+% \begin{proof}
+% The proofs of Lemma~\ref{LTermFunctor}, of Proposition~\ref{PChangeSigDerivor} and of Proposition~\ref{PChangeSigCat} only use, for every dimension $k$ and every pair, or triple, of dimensions, the axioms of the corresponding specifications for these dimensions, which are axioms of $\spec{C}^{\sig{\Lambda}^{(\omega)}}$ and of $\spec{C}^{\sig{\Lambda}^{\gl(\omega)}}$ for all the dimensions in $\omega$.
+% Hence the same proofs, with $\omega$ in place of $n$ and of $n+1$, prove the first part of~(1), (2) and~(3).
+% Finally, let $\calg{B}$ be an $\omega$-categorial $\sig{\Lambda}$-algebra.
+% Then every cell of sort $s$ of $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\calg{B})$ is a cell $x$ of sort $\varphi(s)$ of $\calg{B}$, and its $k$-source in $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\calg{B})$ is $\src^{k}_{\varphi(s)}(x)$.
+% Since $x$ is a $k$-cell of $\calg{B}$ for some $k\in\omega$, it is a $k$-cell of $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\calg{B})$.
+% Therefore, by Remark~\ref{RSingleSetIdentOmega}, $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\calg{B})$ is an object in $\omega\mathsf{CatAlg}(\sig{\Sigma})$.
+% \end{proof}
+%
+% As in the finite-dimensional case, and by abuse of notation, we denote the restrictions and corestrictions of Proposition~\ref{PChangeSigOmega} by
+% \begin{enumerate}
+% 	\item
+% 	$ (\mathbf{c}^{(\omega)})^{\ast}_{\gd}\colon\omega\mathsf{CatAlg}(\sig{\Lambda})\mor\omega\mathsf{CatAlg}(\sig{\Sigma}) $; and
+%
+% 	\item
+% 	$ (\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}\colon\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Lambda})\mor\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma}) $.
+% \end{enumerate}
+%
+% We next consider truncation and discretization in dimension $\omega$.
+%
+% \begin{proposition}\label{OldPChangeSigOmegaDsTr}
+% Let $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ be many-sorted signatures, $\mathbf{c}=(\varphi,c)$ a derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $n\in\mathbb{N}$.
+% Then the following equalities hold
+% \begin{enumerate}
+% 	\item
+% 	$\Ds^{(\omega,n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(n)})^{\ast}_{\gd}=(\mathbf{c}^{(\omega)})^{\ast}_{\gd}\circ\Ds^{(\omega,n)}_{\sig{\Lambda}}$;
+%
+% 	\item
+% 	$\Tr^{(n,\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(\omega)})^{\ast}_{\gd}=(\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}}$;
+%
+% 	\item
+% 	$\Ds^{\gl(\omega,n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}=(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}\circ\Ds^{\gl(\omega,n)}_{\sig{\Lambda}}$; and
+%
+% 	\item
+% 	$\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}=(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\circ\Tr^{\gl(n,\omega)}_{\sig{\Lambda}}$.
+% \end{enumerate}
+% \end{proposition}
+% \begin{proof}
+% The derivors $\bDs^{(\omega,n)}$, $\bDs^{\gl(\omega,n)}$, $\bTr^{(n,\omega)}$ and $\bTr^{\gl(n,\omega)}$ are defined by the same clauses as their finite-dimensional counterparts, see Definitions~\ref{DTruncOmegaDerivor} and~\ref{DDiscOmegaDerivor}, and so are $\mathbf{c}^{(\omega)}$ and $\mathbf{c}^{\gl(\omega)}$.
+% Hence the computations of Lemma~\ref{LChangeSigTerms}~(3) and~(4) and of Claim~\ref{CChangeSigDsTrA} prove the corresponding equalities between generalized hep-derivors.
+% As for the transformed algebras, the cells are computed as in Claim~\ref{CChangeSigDsTrB}, by the notes after Definitions~\ref{DTruncOmegaDerivor} and~\ref{DDiscOmegaDerivor}, and, by Propositions~\ref{PTruncOmegaDerivor}, \ref{PDiscOmegaDerivor} and~\ref{PChangeSigOmega}, the composites of the functors involved send categorial algebras to ep-algebras.
+% Therefore the equalities follow from Lemma~\ref{LCommSquare}.
+% \end{proof}
+%
+% By Proposition~\ref{PChangeSigOmegaDsTr} and Proposition~\ref{PUnivPropCatAlg}, $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}$ is the functor induced, by the universal property of the projective limit $\omega\mathsf{CatAlg}(\sig{\Sigma})$, by the compatible family $((\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}})_{n\in\omega}$, and, similarly, $(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}$ is the functor induced by $((\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\circ\Tr^{\gl(n,\omega)}_{\sig{\Lambda}})_{n\in\omega}$, see Proposition~\ref{PUnivPropCatAlg}~(2).
+% We end this section with graduation and unification in dimension $\omega$, which are not induced by generalized hep-derivors, see Section~\ref{SOmegaFunctors}.
+%
+% \begin{proposition}\label{OldPChangeSigOmegaGdUf}
+% Let $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ be many-sorted signatures and $\mathbf{c}=(\varphi,c)$ a derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$.
+% Then the following equalities hold
+% \begin{align*}
+% \Gd^{(\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(\omega)})^{\ast}_{\gd}&=(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}\circ\Gd^{(\omega)}_{\sig{\Lambda}},
+% &
+% \Uf^{(\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}&=(\mathbf{c}^{(\omega)})^{\ast}_{\gd}\circ\Uf^{(\omega)}_{\sig{\Lambda}}.
+% \end{align*}
+% \end{proposition}
+% \begin{proof}
+% \textsf{(Graduation)} For every $n\in\mathbb{N}$, the following chain of equalities holds
+% \begin{align*}
+% \Tr^{\gl(n,\omega)}_{\sig{\Sigma}}\circ\Gd^{(\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(\omega)})^{\ast}_{\gd}
+% &=
+% \Gd^{(n)}_{\sig{\Sigma}}\circ\Tr^{(n,\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(\omega)})^{\ast}_{\gd}
+% \tag{1}
+% \\&=
+% \Gd^{(n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}}
+% \tag{2}
+% \\&=
+% (\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\circ\Gd^{(n)}_{\sig{\Lambda}}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}}
+% \tag{3}
+% \\&=
+% (\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\circ\Tr^{\gl(n,\omega)}_{\sig{\Lambda}}\circ\Gd^{(\omega)}_{\sig{\Lambda}}
+% \tag{4}
+% \\&=
+% \Tr^{\gl(n,\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}\circ\Gd^{(\omega)}_{\sig{\Lambda}}.
+% \tag{5}
+% \end{align*}
+%
+% The first equality follows from Definition~\ref{DGdOmega}; the second equality follows from Proposition~\ref{PChangeSigOmegaDsTr}; the third equality follows from Proposition~\ref{PChangeSigGdUf}; the fourth equality follows from Definition~\ref{DGdOmega}; finally, the last equality follows from Proposition~\ref{PChangeSigOmegaDsTr}.
+% Therefore, by the uniqueness in Proposition~\ref{PUnivPropCatAlg}~(2), applied to the category $\omega\mathsf{CatAlg}(\sig{\Lambda})$ and to the compatible family $(\Gd^{(n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}})_{n\in\omega}$, both functors are equal.
+%
+% \textsf{(Unification)} Let $\calg{B}$ be a globular $\omega$-categorial $\sig{\Lambda}$-algebra and $\calg{A}=(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}(\calg{B})$.
+% By Proposition~\ref{PChangeSigOmega}, $A_{(k,s)}=B_{(k,\varphi(s))}$ and the $(k,j)$-identities of sort $s$ of $\calg{A}$ are those of sort $\varphi(s)$ of $\calg{B}$.
+% Hence, by Definition~\ref{DUfOmegaCells}, $[A]_{s}=[B]_{\varphi(s)}$ and the mapping $\mathrm{in}^{[k]}_{s}$ of $\calg{A}$ is the mapping $\mathrm{in}^{[k]}_{\varphi(s)}$ of $\calg{B}$.
+% Since the domains of $\mathbf{c}^{(\omega)}$ are empty, $[B]_{\varphi}$ is also the underlying $S$-sorted set of $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\Uf^{(\omega)}_{\sig{\Lambda}}(\calg{B}))$.
+%
+% Let $\tau$ be an operation symbol of $\Sigma^{(\omega)}$, of arity $\mathbf{s}$ and coarity $s$, $p\in\mathbb{N}$ such that $\tau$ is an operation symbol of $\Sigma^{(p)}$ and $\mathbf{x}=(x_{j})_{j\in\bb{\mathbf{s}}}$ a family with $x_{j}\in B_{(p,\varphi(s_{j}))}$.
+% For every $p\in\mathbb{N}$, let $\calg{U}_{p}$ stand for $\Uf^{(p)}_{\sig{\Lambda}}(\Tr^{\gl(p,\omega)}_{\sig{\Lambda}}(\calg{B}))$.
+% By Propositions~\ref{PChangeSigGdUf} and~\ref{PChangeSigOmegaDsTr}, the following equality holds
+% $$
+% \Uf^{(p)}_{\sig{\Sigma}}\left(\Tr^{\gl(p,\omega)}_{\sig{\Sigma}}(\calg{A})\right)=(\mathbf{c}^{(p)})^{\ast}_{\gd}(\calg{U}_{p}).
+% $$
+% Hence, by Definition~\ref{DUfOmega}, the family $([x_{j}]_{p})_{j\in\bb{\mathbf{s}}}$ is in the domain of $\tau^{\Uf^{(\omega)}_{\sig{\Sigma}}(\calg{A})}$ if, and only if, $\mathbf{x}\in\Dom(\tau^{(\mathbf{c}^{(p)})^{\ast}_{\gd}(\calg{U}_{p})})$, and then
+% $$
+% \tau^{\Uf^{(\omega)}_{\sig{\Sigma}}(\calg{A})}\left(([x_{j}]_{p})_{j\in\bb{\mathbf{s}}}\right)=\left[\tau^{(\mathbf{c}^{(p)})^{\ast}_{\gd}(\calg{U}_{p})}(\mathbf{x})\right]_{p}.
+% $$
+%
+% On the other hand, let $\calg{W}$ stand for $\Uf^{(\omega)}_{\sig{\Lambda}}(\calg{B})$.
+% By Proposition~\ref{PUfOmega}, $\mathrm{in}^{[p]}$ is an isomorphism from $\calg{U}_{p}$ onto $\Tr^{(p,\omega)}_{\sig{\Lambda}}(\calg{W})$.
+% Since $(\mathbf{c}^{(p)})^{\ast}_{\gd}$ is a functor, by Proposition~\ref{PChangeSigOmegaDsTr}, $(\mathbf{c}^{(p)})^{\ast}_{\gd}(\mathrm{in}^{[p]})=(\mathrm{in}^{[p]}_{\varphi(s')})_{s'\in S}$ is an isomorphism from $(\mathbf{c}^{(p)})^{\ast}_{\gd}(\calg{U}_{p})$ onto
+% $$
+% (\mathbf{c}^{(p)})^{\ast}_{\gd}\left(\Tr^{(p,\omega)}_{\sig{\Lambda}}(\calg{W})\right)=\Tr^{(p,\omega)}_{\sig{\Sigma}}\left((\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\calg{W})\right).
+% $$
+% By the note after Definition~\ref{DTruncationOmega}, the latter is the relative subalgebra of $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\calg{W})$ on its $p$-cells, which, by Proposition~\ref{PUfOmega}, are the classes $[x]_{p}$.
+% Therefore $([x_{j}]_{p})_{j\in\bb{\mathbf{s}}}\in\Dom(\tau^{(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\calg{W})})$ if, and only if, $\mathbf{x}\in\Dom(\tau^{(\mathbf{c}^{(p)})^{\ast}_{\gd}(\calg{U}_{p})})$, and then the value is $[\tau^{(\mathbf{c}^{(p)})^{\ast}_{\gd}(\calg{U}_{p})}(\mathbf{x})]_{p}$.
+%
+% Since every finite family of classes has representatives in a common level, see Lemma~\ref{LUfOmegaCells}~(3), it follows that $\Uf^{(\omega)}_{\sig{\Sigma}}(\calg{A})=(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\calg{W})$.
+% Finally, for every globular $\omega$-categorial $\sig{\Lambda}$-homomorphism $F$, both $\Uf^{(\omega)}_{\sig{\Sigma}}((\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}(F))$ and $(\mathbf{c}^{(\omega)})^{\ast}_{\gd}(\Uf^{(\omega)}_{\sig{\Lambda}}(F))$ send, for every $s\in S$, the class $[x]_{k}$, with $x\in B_{(k,\varphi(s))}$, to $[F_{(k,\varphi(s))}(x)]_{k}$, see Definition~\ref{DUfOmega} and Proposition~\ref{PChangeSigOmega}.
+%
+% This completes the proof.
+% \end{proof}
+%
+% As in Remark~\ref{RChangeSigNat}, the natural isomorphisms of Section~\ref{SOmegaFunctors}, in particular the natural isomorphism $\mathrm{in}^{[m]}$ of Proposition~\ref{PUfOmega}, and the counits of Proposition~\ref{POmegaDiscTrunc} are compatible with the change of signature, since they are given by families of identities, inclusions, $(k,j)$-identities and the mappings $\mathrm{in}^{[m]}_{s}$, which are reindexed along $\varphi$; hence so is the algebraic square of Proposition~\ref{PAlgSquareOmega}.
 
 \bibliographystyle{amsplain}
 \bibliography{Biblio}
