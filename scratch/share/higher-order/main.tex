@@ -3884,89 +3884,6 @@ Let us note that, for $k\geq m$, $\Ds^{(n,m)}_{\sig{\Sigma}}(\circ^{k}_{s})$ is 
 Thus the $k$-composition of two cells is defined if, and only if, they are equal.
 No term of $\Sigma^{(m)}$ could express this condition: in a monoid, regarded as a single-set category with a single identity, every term operation is total.
 
-\begin{definition}\label{DDiscretization}
-Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-The \emph{discretization functor} $\Ds^{(n,m)}_{\sig{\Sigma}}$ is the functor $(\bDs^{(n,m)}_{\sig{\Sigma}})^{\ast}_{\gd}$ induced by the generalized hep-derivor $\bDs^{(n,m)}_{\sig{\Sigma}}$, see Definitions~\ref{DDiscDerivor} and~\ref{DDiscGlDerivor}, from $\mathsf{PAlg}(\Sigma^{(m)})$ to $\mathsf{PAlg}(\Sigma^{(n)})$, see Proposition~\ref{PGenHepDerivorFunctor}.
-\end{definition}
-
-In the following lemma we describe the transformed algebra along the single-set discretization derivor.
-
-\begin{lemma}\label{LDiscDescription}
-Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature, $m,n\in\mathbb{N}$ with $m<n$ and $\mathbf{B}$ an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(m)}})$.
-Then $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{(n)}$-algebra whose cells are all the cells of $\mathbf{B}$.
-Moreover, for every $s\in S$, the following statements hold:
-\begin{enumerate}
-\item the operations of $\Sigma$ and, for $k<m$, the $k$-sources, the $k$-targets and the $k$-compositions of $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ are those of $\mathbf{B}$; and
-\item for $m\leq k<n$, $\src^{k}_{s}$ and $\tgt^{k}_{s}$ are identities in $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$, and $x\circ^{k}_{s}y$ is defined in $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ if, and only if, $x=y$, and, in this case, the $k$-composition of $x$ and $y$ in $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ is $x$.
-\end{enumerate}
-\end{lemma}
-\begin{proof}
-Since the domains of $\bDs^{(n,m)}_{\sig{\Sigma}}$ are empty, the cells of $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ are all the cells of $\mathbf{B}$.
-By Proposition~\ref{PTransformedEpAlg}, we check that, for every operation symbol of $\Sigma^{(n)}$, the corresponding partial term operation is defined on the families that satisfy its domain conditions in $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$.
-
-\textsf{(Operation symbols with empty domain conditions)} They are sent to total derived operations, which act as $\sigma^{\mathbf{B}}$, $\src^{k\,\mathbf{B}}_{s}$ and $\tgt^{k\,\mathbf{B}}_{s}$, for $k<m$, by~(A0) and~(A$^{k}$1), and as identities, for $k\geq m$.
-
-\textsf{(Compositions of dimension $k<m$)} By the above, two cells $x$, $y$ satisfy the domain condition of $\circ^{k}_{s}$ in $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ if, and only if, $\src^{k\,\mathbf{B}}_{s}(x)=\tgt^{k\,\mathbf{B}}_{s}(y)$, in which case, by~(A$^{k}$3), $x\circ^{k}_{s}y$ is defined in $\mathbf{B}$.
-
-\textsf{(Compositions of dimension $k\geq m$)} By the above, two cells $x$, $y$ satisfy the domain condition of $\circ^{k}_{s}$ in $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ if, and only if, $x=y$, in which case the term $\Ds^{(n,m)}_{\sig{\Sigma}}(\circ^{k}_{s})=v^{s}_{0}$ is defined, with value $x$.
-
-In all cases, the values are cells of $\mathbf{B}$, i.e., cells of $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$.
-All in all, by Proposition~\ref{PTransformedEpAlg}, $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{(n)}$-algebra and, by Proposition~\ref{PTransformedAlg}, its operations are as stated.
-
-This completes the proof.
-\end{proof}
-
-We next prove that the discretization of a single-set $m$-categorial $\sig{\Sigma}$-algebra is a single-set $n$-categorial $\sig{\Sigma}$-algebra.
-
-\begin{proposition}\label{PDiscDerivor}
-Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-Then the restriction of $\Ds^{(n,m)}_{\sig{\Sigma}}$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(m)}})$ corestricts to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$.
-\end{proposition}
-\begin{proof}
-For $m=n$ this follows from Proposition~\ref{PHepId}.
-Let $m<n$ and $\mathbf{B}$ an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(m)}})$.
-By Definitions~\ref{DCorestriction} and~\ref{DEpVariety}, we have to prove that $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{(n)}$-algebra in which every axiom of $\mathcal{C}^{\sig{\Sigma}^{(n)}}$ holds.
-
-\textsf{(Ep-algebra)} By Lemma~\ref{LDiscDescription}, which rests on Proposition~\ref{PTransformedEpAlg}, $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{(n)}$-algebra.
-
-\textsf{(Axioms)} By Lemma~\ref{LDiscDescription}, the axioms of $\spec{C}^{\sig{\Sigma}^{(n)}}$ in $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ become statements on $\mathbf{B}$, which we check according to the dimensions involved.
-In the following computations, the operation symbols are interpreted in $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$.
-
-\textsf{(Dimensions smaller than $m$)} The axioms of $\spec{C}^{\sig{\Sigma}^{(n)}}$ in which all the dimensions are smaller than $m$ are axioms of $\spec{C}^{\sig{\Sigma}^{(m)}}$, which hold in $\mathbf{B}$.
-
-\textsf{(Axioms (A$^{k}$1)--(A$^{k}$8) for $k\geq m$)} They become trivial.
-For instance, (A$^{k}$5) becomes $x=x$, (A$^{k}$3) becomes $x=y\leftrightarrow x=y$, and (A$^{k}$8) becomes the statement that, if $x_{p}=y_{p}$ for every $p$, then $\sigma((x_{p})_{p})=\sigma((y_{p})_{p})$.
-
-\textsf{(Axioms (AB$^{l,k}$1)--(AB$^{l,k}$3) for $l<m\leq k$)} They become trivial.
-For instance, for $x$, $y$ such that $x\circ^{l}_{s}y$ is defined, the following chain of equalities holds
-\begin{align*}
-\src^{k}_{s}\left(x\circ^{l}_{s}y\right)
-&=
-x\circ^{l}_{s}y
-\tag{1}
-\\&=
-\src^{k}_{s}(x)\circ^{l}_{s}\src^{k}_{s}(y).
-\tag{2}
-\end{align*}
-
-Both equalities follow from Lemma~\ref{LDiscDescription}, since $\src^{k}_{s}$ acts as the identity.
-Moreover, the premises of (AB$^{l,k}$3) become that $x\circ^{l}_{s}y$ and $z\circ^{l}_{s}t$ are defined, $x=z$ and $y=t$, and then its conclusion becomes $x\circ^{l}_{s}y=x\circ^{l}_{s}y$.
-
-\textsf{(Axioms (AB$^{l,k}$1)--(AB$^{l,k}$3) for $m\leq l<k$)} They become trivial, since all the premises become equalities between the variables involved.
-
-All in all, every axiom of $\spec{C}^{\sig{\Sigma}^{(n)}}$ holds in $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$, so that $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ is an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$.
-
-This completes the proof.
-\end{proof}
-
-Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-By Remark~\ref{RSingleSetIdent} and Proposition~\ref{PDiscDerivor}, the restriction of $\Ds^{(n,m)}_{\sig{\Sigma}}$ to $\mathsf{mCatAlg}(\sig{\Sigma})$ corestricts to $\mathsf{nCatAlg}(\sig{\Sigma})$, and, by abuse of notation, we denote the corestriction by
-$$
-\Ds^{(n,m)}_{\sig{\Sigma}}\colon\mathsf{mCatAlg}(\sig{\Sigma})\mor\mathsf{nCatAlg}(\sig{\Sigma}).
-$$
-By Lemma~\ref{LDiscDescription}, it sends an $m$-categorial $\sig{\Sigma}$-algebra $\calg{A}$ to the $n$-categorial $\sig{\Sigma}$-algebra with the same cells, the same structure in the dimensions $k<m$, and in which, for $k\geq m$, $\src^{k}_{s}$ and $\tgt^{k}_{s}$ are identities, so that all the cells are $k$-cells, and $x\circ^{k}_{s}y$ is defined if, and only if, $x=y$, and then it is $x$; and it sends a homomorphism to itself.
-By Proposition~\ref{PHepId}, $\Ds^{(n,n)}_{\sig{\Sigma}}$ is the identity.
-
 In the globular presentation, a cell of dimension $k$ of the discretization is a cell of dimension $k$ of the given algebra if $k\leq m$, and a cell of dimension $m$ if $k>m$.
 Accordingly, every dimension $k\in n+1$ of $\Sigma^{\gl(n)}$ is sent to the dimension $\min\{k,m\}\in m+1$ of $\Sigma^{\gl(m)}$.
 We next define the globular discretization derivor.
@@ -4009,73 +3926,95 @@ For $m=n$, we let $\bDs^{(n,n)}_{\sig{\Sigma}}$ and $\bDs^{\gl(n,n)}_{\sig{\Sigm
 
 Let us note that, on the dimensions $k\leq m$, $\bDs^{\gl(n,m)}_{\sig{\Sigma}}$ is the identity, and that every operation symbol that involves a dimension $j\geq m$ is sent to a variable of sort $(m,s)$.
 
-\begin{definition}\label{DDiscretizationGl}
+\begin{definition}\label{DDiscretization}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-The \emph{globular discretization functor} $\Ds^{\gl(n,m)}_{\sig{\Sigma}}$ is the functor $(\bDs^{\gl(n,m)}_{\sig{\Sigma}})^{\ast}_{\gd}$ induced by the generalized hep-derivor $\bDs^{\gl(n,m)}_{\sig{\Sigma}}$ from $\mathsf{PAlg}(\Sigma^{\gl(m)})$ to $\mathsf{PAlg}(\Sigma^{\gl(n)})$, see Proposition~\ref{PGenHepDerivorFunctor}.
+The \emph{discretization functor} $\Ds^{(n,m)}_{\sig{\Sigma}}$ is the functor $(\bDs^{(n,m)}_{\sig{\Sigma}})^{\ast}_{\gd}$ from $\mathsf{PAlg}(\Sigma^{(m)})$ to $\mathsf{PAlg}(\Sigma^{(n)})$, and the \emph{globular discretization functor} $\Ds^{\gl(n,m)}_{\sig{\Sigma}}$ is the functor $(\bDs^{\gl(n,m)}_{\sig{\Sigma}})^{\ast}_{\gd}$ from $\mathsf{PAlg}(\Sigma^{\gl(m)})$ to $\mathsf{PAlg}(\Sigma^{\gl(n)})$, see Definitions~\ref{DDiscDerivor} and~\ref{DDiscGlDerivor} and Proposition~\ref{PGenHepDerivorFunctor}.
 \end{definition}
 
-In the following lemma we describe the transformed algebra along the globular discretization derivor.
+In the following lemma we describe the transformed algebras along the discretization derivors.
 
-\begin{lemma}\label{LDiscGlDescription}
-Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature, $m,n\in\mathbb{N}$ with $m<n$ and $\mathbf{B}$ an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(m)}})$.
-Then $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{\gl(n)}$-algebra whose cells of sort $(k,s)$ are the $\min\{k,m\}$-cells of sort $s$ of $\mathbf{B}$.
-Moreover, for every pair of dimensions $j<k$ and every $s\in S$, the following statements hold:
+\begin{lemma}\label{LDiscDescription}
+Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m<n$.
+Then the following statements hold:
 \begin{enumerate}
-\item $\sigma_{k}$ acts in $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ as $\sigma^{\mathbf{B}}_{\min\{k,m\}}$;
-\item if $j<m$, then the $(j,k)$-sources, $(j,k)$-targets, $(k,j)$-identities and $j$-compositions of $k$-cells of $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ are the $(j,\min\{k,m\})$-sources, $(j,\min\{k,m\})$-targets, $(\min\{k,m\},j)$-identities and $j$-compositions of $\min\{k,m\}$-cells of $\mathbf{B}$; and
-\item if $j\geq m$, then the $(j,k)$-sources, $(j,k)$-targets and $(k,j)$-identities of $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ are identities, and the $j$-composition of two $k$-cells is defined if, and only if, they are equal, and then it is the common cell.
+\item for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(m)}})$, $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{(n)}$-algebra whose cells are all the cells of $\mathbf{B}$; its operations of $\Sigma$ and its $k$-sources, $k$-targets and $k$-compositions, for $k<m$, are those of $\mathbf{B}$; and, for $m\leq k<n$, $\src^{k}_{s}$ and $\tgt^{k}_{s}$ are identities and $x\circ^{k}_{s}y$ is defined if, and only if, $x=y$, in which case it is $x$; and
+\item for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(m)}})$, $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{\gl(n)}$-algebra whose cells of sort $(k,s)$ are the $\min\{k,m\}$-cells of sort $s$ of $\mathbf{B}$; $\sigma_{k}$ acts as $\sigma^{\mathbf{B}}_{\min\{k,m\}}$; for $j<m$, the $(j,k)$-sources, $(j,k)$-targets, $(k,j)$-identities and $j$-compositions of $k$-cells are the $(j,\min\{k,m\})$-sources, $(j,\min\{k,m\})$-targets, $(\min\{k,m\},j)$-identities and $j$-compositions of $\min\{k,m\}$-cells of $\mathbf{B}$; and, for $j\geq m$, the $(j,k)$-sources, $(j,k)$-targets and $(k,j)$-identities are identities and the $j$-composition of two $k$-cells is defined if, and only if, they are equal, in which case it is the common cell.
 \end{enumerate}
 \end{lemma}
 \begin{proof}
-Since the domains of $\bDs^{\gl(n,m)}_{\sig{\Sigma}}$ are empty, the cells of sort $(k,s)$ of $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ are the $\min\{k,m\}$-cells of sort $s$ of $\mathbf{B}$.
-As in the proof of Lemma~\ref{LDiscDescription}, the operation symbols with empty domain conditions act through total derived operations.
-Let $j<k$ be dimensions, $s\in S$ and $x$, $y$ cells of sort $(k,s)$ of $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\mathbf{B})$.
+(1) Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(m)}})$.
+Since the domains of $\bDs^{(n,m)}_{\sig{\Sigma}}$ are empty, the cells of $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ are all the cells of $\mathbf{B}$.
+We apply Proposition~\ref{PTransformedEpAlg}.
 
-\textsf{(Case $j<m$)} The cells $x$, $y$ satisfy the domain condition of $\circ^{(j,k)}_{s}$ in $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ if, and only if, $\src^{(j,\min\{k,m\})}_{s}(x)=\tgt^{(j,\min\{k,m\})}_{s}(y)$ in $\mathbf{B}$, in which case, by~(EA$^{j,\min\{k,m\}}$3), $x\circ^{(j,\min\{k,m\})}_{s}y$ is defined in $\mathbf{B}$.
+The operation symbols with empty sets of domain conditions are sent to total derived operations.
+By~(A0) and~(A$^{k}$1), they act as $\sigma^{\mathbf{B}}$, $\src^{k\,\mathbf{B}}_{s}$ and $\tgt^{k\,\mathbf{B}}_{s}$, for $k<m$, and as identities, for $k\geq m$.
 
-\textsf{(Case $j\geq m$)} The cells $x$, $y$ satisfy the domain condition of $\circ^{(j,k)}_{s}$ in $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ if, and only if, $x=y$, in which case the term $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\circ^{(j,k)}_{s})=v^{(m,s)}_{0}$ is defined, with value $x$.
+Now let $x$, $y$ be cells of sort $s$.
+If $k<m$, they satisfy the domain condition of $\circ^{k}_{s}$ if, and only if, $\src^{k\,\mathbf{B}}_{s}(x)=\tgt^{k\,\mathbf{B}}_{s}(y)$.
+In this case, by~(A$^{k}$3), $x\circ^{k}_{s}y$ is defined in $\mathbf{B}$.
+If $k\geq m$, they satisfy the domain condition of $\circ^{k}_{s}$ if, and only if, $x=y$.
+In this case, the term $\Ds^{(n,m)}_{\sig{\Sigma}}(\circ^{k}_{s})=v^{s}_{0}$ is defined, with value $x$.
 
-All in all, by Proposition~\ref{PTransformedEpAlg}, $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{\gl(n)}$-algebra and, by Proposition~\ref{PTransformedAlg}, its operations are as stated.
+Hence, by Proposition~\ref{PTransformedEpAlg}, $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{(n)}$-algebra.
+By Proposition~\ref{PTransformedAlg}, its operations are as stated.
+
+(2) The proof is the same.
+The cells of sort $(k,s)$ are the $\min\{k,m\}$-cells of sort $s$ of $\mathbf{B}$, since the domains of $\bDs^{\gl(n,m)}_{\sig{\Sigma}}$ are empty.
+For $j<m$, two $k$-cells satisfy the domain condition of $\circ^{(j,k)}_{s}$ if, and only if, $\src^{(j,\min\{k,m\})}_{s}(x)=\tgt^{(j,\min\{k,m\})}_{s}(y)$ in $\mathbf{B}$, and then, by~(EA$^{j,\min\{k,m\}}$3), their composition is defined in $\mathbf{B}$.
+For $j\geq m$, they satisfy it if, and only if, $x=y$.
 
 This completes the proof.
 \end{proof}
 
-We next prove that the globular discretization of a globular $m$-categorial $\sig{\Sigma}$-algebra is a globular $n$-categorial $\sig{\Sigma}$-algebra.
+We next prove that discretization sends categorial algebras to categorial algebras.
 
-\begin{proposition}\label{PDiscGlDerivor}
+\begin{proposition}\label{PDiscDerivor}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-Then the restriction of $\Ds^{\gl(n,m)}_{\sig{\Sigma}}$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(m)}})$ corestricts to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})$.
+Then the following statements hold:
+\begin{enumerate}
+\item the restriction of $\Ds^{(n,m)}_{\sig{\Sigma}}$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(m)}})$ corestricts to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$; and
+\item the restriction of $\Ds^{\gl(n,m)}_{\sig{\Sigma}}$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(m)}})$ corestricts to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})$.
+\end{enumerate}
 \end{proposition}
 \begin{proof}
-For $m=n$ this follows from Proposition~\ref{PHepId}.
-Let $m<n$ and $\mathbf{B}$ an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(m)}})$.
-By Definitions~\ref{DCorestriction} and~\ref{DEpVariety}, we have to prove that $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{\gl(n)}$-algebra in which every axiom of $\mathcal{C}^{\sig{\Sigma}^{\gl(n)}}$ holds.
+For $m=n$, both statements follow from Proposition~\ref{PHepId}.
+Let $m<n$.
 
-\textsf{(Ep-algebra)} By Lemma~\ref{LDiscGlDescription}, which rests on Proposition~\ref{PTransformedEpAlg}, $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{\gl(n)}$-algebra.
+(1) Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(m)}})$.
+By Lemma~\ref{LDiscDescription}~(1), $\Ds^{(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{(n)}$-algebra.
+It remains to check the axioms of $\spec{C}^{\sig{\Sigma}^{(n)}}$.
+We do it according to the dimensions involved.
 
-\textsf{(Axioms)} By Lemma~\ref{LDiscGlDescription}, the axioms of $\spec{C}^{\sig{\Sigma}^{\gl(n)}}$ in $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ become statements on $\mathbf{B}$, which we check according to the dimensions involved.
+The axioms in which all the dimensions are smaller than $m$ are axioms of $\spec{C}^{\sig{\Sigma}^{(m)}}$, which hold in $\mathbf{B}$.
 
-\textsf{(Dimensions at most $m$)} The axioms in which all the dimensions are at most $m$ become axioms of $\spec{C}^{\sig{\Sigma}^{\gl(m)}}$.
+The axioms (A$^{k}$1)--(A$^{k}$8), for $k\geq m$, become trivial, since $\src^{k}_{s}$ and $\tgt^{k}_{s}$ are identities and $x\circ^{k}_{s}y$ is only defined for $x=y$.
+For instance, (A$^{k}$5) becomes $x=x$.
 
-\textsf{(Pairs $j<k$)} For $j<m<k$, the axioms (EA$^{j,k}$1)--(EA$^{j,k}$8) become (EA$^{j,m}$1)--(EA$^{j,m}$8).
-For $m\leq j<k$, they become trivial, as in the proof of Proposition~\ref{PDiscDerivor}.
+The axioms (AB$^{l,k}$1)--(AB$^{l,k}$3), for $l<k$ and $k\geq m$, also become trivial.
+For instance, if $x\circ^{l}_{s}y$ is defined, then both sides of (AB$^{l,k}$2) are $x\circ^{l}_{s}y$, since $\src^{k}_{s}$ is the identity.
+And the premises of (AB$^{l,k}$3) force $x=z$ and $y=t$.
 
-\textsf{(Triples $h<j<k$)} For $j<m<k$, the axioms (EA$^{h,j,k}$1)--(EA$^{h,j,k}$5) become (EA$^{h,j,m}$1)--(EA$^{h,j,m}$5).
-For $h<m\leq j<k$, the $(j,k)$-sources, targets and identities become identities and the $j$-compositions of $k$-cells become trivial, so that the axioms become trivial: for instance, (EA$^{h,j,k}$3) becomes $x\circ^{(h,m)}_{s}y=x\circ^{(h,m)}_{s}y$, and (EA$^{h,j,k}$4), whose premises become $x=y$, $z=t$ and $x\circ^{(h,m)}_{s}z$ defined, becomes $x\circ^{(h,m)}_{s}z=x\circ^{(h,m)}_{s}z$.
-For $m\leq h$, all the axioms become trivial.
-
-All in all, every axiom of $\spec{C}^{\sig{\Sigma}^{\gl(n)}}$ holds in $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\mathbf{B})$, so that $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\mathbf{B})$ is an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})$.
+(2) The proof is the same, by Lemma~\ref{LDiscDescription}~(2).
+The axioms in which all the dimensions are at most $m$ are axioms of $\spec{C}^{\sig{\Sigma}^{\gl(m)}}$.
+For $j<m<k$, the axioms (EA$^{j,k}$1)--(EA$^{j,k}$8) become (EA$^{j,m}$1)--(EA$^{j,m}$8), and, for $h<j<m<k$, the axioms (EA$^{h,j,k}$1)--(EA$^{h,j,k}$5) become (EA$^{h,j,m}$1)--(EA$^{h,j,m}$5).
+The remaining axioms involve a dimension $j\geq m$ as lower dimension, and they become trivial, as in~(1).
 
 This completes the proof.
 \end{proof}
 
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-By Remark~\ref{RGlobularIdent} and Proposition~\ref{PDiscGlDerivor}, the restriction of $\Ds^{\gl(n,m)}_{\sig{\Sigma}}$ to $\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ corestricts to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$, and, by abuse of notation, we denote the corestriction by
-$$
-\Ds^{\gl(n,m)}_{\sig{\Sigma}}\colon\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})\mor\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}).
-$$
-By Lemma~\ref{LDiscGlDescription}, it sends a globular $m$-categorial $\sig{\Sigma}$-algebra $\calg{A}$ to the globular $n$-categorial $\sig{\Sigma}$-algebra whose $k$-cells are the $k$-cells of $\calg{A}$, if $k\leq m$, and the $m$-cells of $\calg{A}$, if $k>m$, in which the structure in the dimensions $k\leq m$ is that of $\calg{A}$, the $(j,k)$-sources, targets and identities with $j\geq m$ are identities, and the $j$-composition of two $k$-cells, for $j\geq m$, is defined if, and only if, they are equal, and then it is the common cell.
-By Proposition~\ref{PHepId}, $\Ds^{\gl(n,n)}_{\sig{\Sigma}}$ is the identity.
+By Remarks~\ref{RSingleSetIdent} and~\ref{RGlobularIdent} and Proposition~\ref{PDiscDerivor}, and by abuse of notation, we have the functors
+\begin{enumerate}
+	\item
+	$\Ds^{(n,m)}_{\sig{\Sigma}}\colon\mathsf{mCatAlg}(\sig{\Sigma})\mor\mathsf{nCatAlg}(\sig{\Sigma})$; and
+
+	\item
+	$\Ds^{\gl(n,m)}_{\sig{\Sigma}}\colon\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})\mor\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$.
+\end{enumerate}
+By Lemma~\ref{LDiscDescription}, $\Ds^{(n,m)}_{\sig{\Sigma}}$ keeps the cells and the structure in the dimensions $k<m$, and makes all the cells $k$-cells, for $k\geq m$.
+Similarly, $\Ds^{\gl(n,m)}_{\sig{\Sigma}}$ takes as $k$-cells, for $k>m$, the $m$-cells.
+Both functors send a homomorphism to itself, in the globular case repeating its component at the $m$-cells in the dimensions $k>m$.
+By Proposition~\ref{PHepId}, $\Ds^{(n,n)}_{\sig{\Sigma}}$ and $\Ds^{\gl(n,n)}_{\sig{\Sigma}}$ are identities.
 
 \subsection{Truncation of higher-order categorial algebras}\label{STruncationAlg}
 
@@ -4123,12 +4062,7 @@ Let us note that, by Definition~\ref{DDomainSet}, for every partial $\Sigma^{(n)
 
 \begin{definition}\label{DTruncation}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-The \emph{truncation functor} $\Tr^{(m,n)}_{\sig{\Sigma}}$ is the functor $(\bTr^{(m,n)}_{\sig{\Sigma}})^{\ast}_{\gd}$ induced by the generalized hep-derivor $\bTr^{(m,n)}_{\sig{\Sigma}}$ from $\mathsf{PAlg}(\Sigma^{(n)})$ to $\mathsf{PAlg}(\Sigma^{(m)})$, see Proposition~\ref{PGenHepDerivorFunctor}.
-\end{definition}
-
-\begin{definition}\label{DTruncationGl}
-Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-The \emph{globular truncation functor} $\Tr^{\gl(m,n)}_{\sig{\Sigma}}$ is the functor $(\bTr^{\gl(m,n)}_{\sig{\Sigma}})^{\ast}_{\gd}$ induced by the generalized hep-derivor $\bTr^{\gl(m,n)}_{\sig{\Sigma}}$ from $\mathsf{PAlg}(\Sigma^{\gl(n)})$ to $\mathsf{PAlg}(\Sigma^{\gl(m)})$, see Proposition~\ref{PGenHepDerivorFunctor}.
+The \emph{truncation functor} $\Tr^{(m,n)}_{\sig{\Sigma}}$ is the functor $(\bTr^{(m,n)}_{\sig{\Sigma}})^{\ast}_{\gd}$ from $\mathsf{PAlg}(\Sigma^{(n)})$ to $\mathsf{PAlg}(\Sigma^{(m)})$, and the \emph{globular truncation functor} $\Tr^{\gl(m,n)}_{\sig{\Sigma}}$ is the functor $(\bTr^{\gl(m,n)}_{\sig{\Sigma}})^{\ast}_{\gd}$ from $\mathsf{PAlg}(\Sigma^{\gl(n)})$ to $\mathsf{PAlg}(\Sigma^{\gl(m)})$, see Proposition~\ref{PGenHepDerivorFunctor}.
 \end{definition}
 
 In the following lemma we prove that the $m$-cells of a single-set $n$-categorial $\sig{\Sigma}$-algebra are closed under the operations of $\Sigma^{(m)}$.
@@ -4150,167 +4084,154 @@ Then the following statements hold:
 (3) It follows from Lemma~\ref{LGradCells}~(4), with $k$ and $m$ in place of $j$ and $k$.
 \end{proof}
 
-We next prove that the truncation of a single-set $n$-categorial $\sig{\Sigma}$-algebra is a single-set $m$-categorial $\sig{\Sigma}$-algebra.
+We next prove that truncation sends categorial algebras to categorial algebras.
 
 \begin{proposition}\label{PTruncDerivor}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-Then the restriction of $\Tr^{(m,n)}_{\sig{\Sigma}}$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$ corestricts to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(m)}})$.
+Then the following statements hold:
+\begin{enumerate}
+\item the restriction of $\Tr^{(m,n)}_{\sig{\Sigma}}$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$ corestricts to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(m)}})$; and
+\item the restriction of $\Tr^{\gl(m,n)}_{\sig{\Sigma}}$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})$ corestricts to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(m)}})$.
+\end{enumerate}
 \end{proposition}
 \begin{proof}
-For $m=n$ this follows from Proposition~\ref{PHepId}.
-Let $m<n$ and $\mathbf{B}$ an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$.
-By Definition~\ref{DTruncDerivor}, the note after it and Proposition~\ref{PTransformedAlg}, the cells of $\Tr^{(m,n)}_{\sig{\Sigma}}(\mathbf{B})$ are the $m$-cells of $\mathbf{B}$, and its operations are restrictions of those of $\mathbf{B}$.
-By Definitions~\ref{DCorestriction} and~\ref{DEpVariety}, we have to prove that $\Tr^{(m,n)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{(m)}$-algebra in which every axiom of $\mathcal{C}^{\sig{\Sigma}^{(m)}}$ holds.
+For $m=n$, both statements follow from Proposition~\ref{PHepId}.
+Let $m<n$.
 
-\textsf{(Ep-algebra)} By Lemma~\ref{LTruncCells}, the $m$-cells are closed under the operations of $\Sigma^{(m)}$, which are defined on the families of $m$-cells that satisfy their domain conditions, by~(A0), (A$^{k}$1) and~(A$^{k}$3).
+(1) Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$.
+By the note after Definition~\ref{DTruncDerivor}, the cells of $\Tr^{(m,n)}_{\sig{\Sigma}}(\mathbf{B})$ are the $m$-cells of $\mathbf{B}$.
+By Lemma~\ref{LTruncCells}, the $m$-cells are closed under the operations of $\Sigma^{(m)}$.
+Moreover, by~(A0), (A$^{k}$1) and~(A$^{k}$3), these operations are defined on the families of $m$-cells that satisfy their domain conditions.
 Hence, by Proposition~\ref{PTransformedEpAlg}, $\Tr^{(m,n)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{(m)}$-algebra.
+In fact, it is the relative subalgebra of $\mathbf{B}$ on the $m$-cells.
+Therefore every axiom of $\spec{C}^{\sig{\Sigma}^{(m)}}$, which is an axiom of $\spec{C}^{\sig{\Sigma}^{(n)}}$, holds in it.
 
-\textsf{(Axioms)} By the above, $\Tr^{(m,n)}_{\sig{\Sigma}}(\mathbf{B})$ is the relative subalgebra of $\mathbf{B}$ on the $m$-cells, in which the values of terms are their values in $\mathbf{B}$.
-Therefore, every axiom of $\spec{C}^{\sig{\Sigma}^{(m)}}$, which is an axiom of $\spec{C}^{\sig{\Sigma}^{(n)}}$, holds in $\Tr^{(m,n)}_{\sig{\Sigma}}(\mathbf{B})$.
-
-This completes the proof.
-\end{proof}
-
-We next prove the analogous result for the globular presentation.
-
-\begin{proposition}\label{PTruncGlDerivor}
-Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-Then the restriction of $\Tr^{\gl(m,n)}_{\sig{\Sigma}}$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})$ corestricts to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(m)}})$.
-\end{proposition}
-\begin{proof}
-For $m=n$ this follows from Proposition~\ref{PHepId}.
-Let $m<n$ and $\mathbf{B}$ an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})$.
-By Definitions~\ref{DCorestriction} and~\ref{DEpVariety}, we have to prove that $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{\gl(m)}$-algebra in which every axiom of $\mathcal{C}^{\sig{\Sigma}^{\gl(m)}}$ holds.
-
-\textsf{(Ep-algebra)} By the note after Definition~\ref{DTruncDerivor}, all the cells of dimension at most $m$ of $\mathbf{B}$ are cells of the transformed algebra, and every operation symbol of $\Sigma^{\gl(m)}$ is sent to itself.
-Hence, by Proposition~\ref{PTransformedEpAlg}, since $\mathbf{B}$ is a $\sig{\Sigma}^{\gl(n)}$-algebra and the domain conditions of the operation symbols of $\Sigma^{\gl(m)}$ are the same in $\sig{\Sigma}^{\gl(m)}$ and in $\sig{\Sigma}^{\gl(n)}$, $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{\gl(m)}$-algebra.
-
-\textsf{(Axioms)} The axioms of $\spec{C}^{\sig{\Sigma}^{\gl(m)}}$ are axioms of $\spec{C}^{\sig{\Sigma}^{\gl(n)}}$, which hold in $\mathbf{B}$, and the values of terms in the transformed algebra are their values in $\mathbf{B}$.
+(2) Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})$.
+By the note after Definition~\ref{DTruncDerivor}, $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\mathbf{B})$ is the reduct of $\mathbf{B}$ to the sorts of dimension at most $m$ and to the operation symbols of $\Sigma^{\gl(m)}$.
+These operation symbols have the same domain conditions in $\sig{\Sigma}^{\gl(m)}$ and in $\sig{\Sigma}^{\gl(n)}$.
+Hence it is a $\sig{\Sigma}^{\gl(m)}$-algebra.
+Moreover, the axioms of $\spec{C}^{\sig{\Sigma}^{\gl(m)}}$ are axioms of $\spec{C}^{\sig{\Sigma}^{\gl(n)}}$, so that they hold in it.
 
 This completes the proof.
 \end{proof}
 
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-By Remark~\ref{RSingleSetIdent} and Proposition~\ref{PTruncDerivor}, the restriction of $\Tr^{(m,n)}_{\sig{\Sigma}}$ to $\mathsf{nCatAlg}(\sig{\Sigma})$ corestricts to $\mathsf{mCatAlg}(\sig{\Sigma})$, and, by abuse of notation, we denote the corestriction by
-$$
-\Tr^{(m,n)}_{\sig{\Sigma}}\colon\mathsf{nCatAlg}(\sig{\Sigma})\mor\mathsf{mCatAlg}(\sig{\Sigma}).
-$$
-It sends an $n$-categorial $\sig{\Sigma}$-algebra $\calg{A}$ to the $m$-categorial $\sig{\Sigma}$-algebra formed by the $m$-cells of $\calg{A}$, i.e., by~(AB$^{m,k}$1), by the cells that are $k$-cells for every $k\in n$ with $k\geq m$, with the restrictions of the operations of $\Sigma^{(m)}$, and a homomorphism to its restriction.
-By Proposition~\ref{PHepId}, $\Tr^{(n,n)}_{\sig{\Sigma}}$ is the identity.
+By Remarks~\ref{RSingleSetIdent} and~\ref{RGlobularIdent} and Proposition~\ref{PTruncDerivor}, and by abuse of notation, we have the functors
+\begin{enumerate}
+	\item
+	$\Tr^{(m,n)}_{\sig{\Sigma}}\colon\mathsf{nCatAlg}(\sig{\Sigma})\mor\mathsf{mCatAlg}(\sig{\Sigma})$; and
 
-Similarly, by Remark~\ref{RGlobularIdent} and Proposition~\ref{PTruncGlDerivor}, the restriction of $\Tr^{\gl(m,n)}_{\sig{\Sigma}}$ to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ corestricts to $\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$, and, by abuse of notation, we denote the corestriction by
-$$
-\Tr^{\gl(m,n)}_{\sig{\Sigma}}\colon\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})\mor\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}).
-$$
-It sends a globular $n$-categorial $\sig{\Sigma}$-algebra $\calg{A}$ to the globular $m$-categorial $\sig{\Sigma}$-algebra formed by its cells of dimension at most $m$, and a globular $n$-categorial $\sig{\Sigma}$-homomorphism $F$ to $(F_{(k,s)})_{(k,s)\in(m+1)\times S}$.
-By Proposition~\ref{PHepId}, $\Tr^{\gl(n,n)}_{\sig{\Sigma}}$ is the identity.
+	\item
+	$\Tr^{\gl(m,n)}_{\sig{\Sigma}}\colon\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})\mor\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$.
+\end{enumerate}
+The first one sends an $n$-categorial $\sig{\Sigma}$-algebra to the $m$-categorial $\sig{\Sigma}$-algebra of its $m$-cells, and a homomorphism to its restriction.
+The second one forgets the cells of dimension greater than $m$, and the corresponding components of the homomorphisms.
+By Proposition~\ref{PHepId}, $\Tr^{(n,n)}_{\sig{\Sigma}}$ and $\Tr^{\gl(n,n)}_{\sig{\Sigma}}$ are identities.
 
 \subsection{On the relationship between discretization and truncation}\label{SDiscTrunc}
 
 In this subsection we prove that discretization is left adjoint to truncation and that these functors compose as expected.
 As in Subsection~\ref{SGradUnif}, we compute the composites of these functors by composing the corresponding generalized hep-derivors, by means of Proposition~\ref{PHepComp} and Lemma~\ref{LSameCells}.
-We first consider the single-set presentation.
 
 \begin{proposition}\label{PTruncDisc}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-Then the following equality holds
-$$
-\Tr^{(m,n)}_{\sig{\Sigma}}\circ\Ds^{(n,m)}_{\sig{\Sigma}}=\Id_{\mathsf{mCatAlg}(\sig{\Sigma})}.
-$$
+Then the following equalities hold:
+\begin{enumerate}
+	\item
+	$\Tr^{(m,n)}_{\sig{\Sigma}}\circ\Ds^{(n,m)}_{\sig{\Sigma}}=\Id_{\mathsf{mCatAlg}(\sig{\Sigma})}$; and
+
+	\item
+	$\Tr^{\gl(m,n)}_{\sig{\Sigma}}\circ\Ds^{\gl(n,m)}_{\sig{\Sigma}}=\Id_{\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$.
+\end{enumerate}
 \end{proposition}
 \begin{proof}
-For $m=n$, both functors are identities, by Proposition~\ref{PHepId}.
+For $m=n$, all the functors involved are identities, by Proposition~\ref{PHepId}.
 Let $m<n$.
-We prove the following two claims.
 
-\begin{claim}\label{CTruncDiscA}
-The underlying derivor of $\bDs^{(n,m)}_{\sig{\Sigma}}\circ\bTr^{(m,n)}_{\sig{\Sigma}}$ is the identity derivor $(\id_{S},\eta^{\Sigma^{(m)}})$.
-\end{claim}
+(1) We first compare the underlying derivors.
+Both mappings on sorts are $\id_{S}$.
+Moreover, $\Tr^{(m,n)}_{\sig{\Sigma}}$ sends every operation symbol $\tau$ of $\Sigma^{(m)}$ to itself, applied to variables, and so does $\Ds^{(n,m)}_{\sig{\Sigma}}$.
+Hence, by~(Der1) and~(Der2), $(\Ds^{(n,m)}_{\sig{\Sigma}})^{\sharp}\circ\Tr^{(m,n)}_{\sig{\Sigma}}=\eta^{\Sigma^{(m)}}$.
+That is, the underlying derivor of $\bDs^{(n,m)}_{\sig{\Sigma}}\circ\bTr^{(m,n)}_{\sig{\Sigma}}$ is the identity derivor, see~(Der3).
 
-By Definitions~\ref{DDiscDerivor} and~\ref{DTruncDerivor}, both mappings on sorts are $\id_{S}$.
-Since $\Tr^{(m,n)}_{\sig{\Sigma}}$ sends every operation symbol $\tau$ of $\Sigma^{(m)}$ of arity $\mathbf{s}$ to $\tau((v^{\mathbf{s}}_{p})_{p\in\bb{\mathbf{s}}})$ and $\Ds^{(n,m)}_{\sig{\Sigma}}$ sends every operation symbol of $\Sigma^{(m)}\subseteq\Sigma^{(n)}$ to itself, applied to variables, it follows from~(Der1) and~(Der2) that
+We next compare the cells.
+By Definition~\ref{DHepComp}, for every $s\in S$, the following equality holds
 $$
-\left(\Ds^{(n,m)}_{\sig{\Sigma}}\right)^{\sharp}\circ \Tr^{(m,n)}_{\sig{\Sigma}}=\eta^{\Sigma^{(m)}},
+\Dom^{\bDs^{(n,m)}_{\sig{\Sigma}}\circ\bTr^{(m,n)}_{\sig{\Sigma}}}_{s}=\left(\Ds^{(n,m)}_{\sig{\Sigma}}\right)^{\sharp}\left[\left\lbrace\left(v^{s}_{0},\src^{m}_{s}(v^{s}_{0})\right)\right\rbrace\right]=\left\lbrace\left(v^{s}_{0},v^{s}_{0}\right)\right\rbrace.
 $$
-see~(Der3).
-
-Claim~\ref{CTruncDiscA} follows.
-
-\begin{claim}\label{CTruncDiscB}
-For every $m$-categorial $\sig{\Sigma}$-algebra $\calg{A}$, $\Tr^{(m,n)}_{\sig{\Sigma}}(\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A}))=(\bDs^{(n,m)}_{\sig{\Sigma}}\circ\bTr^{(m,n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\calg{A})$, and the cells of this partial $\Sigma^{(m)}$-algebra are all the cells of $\calg{A}$.
-\end{claim}
-
+This domain is satisfied by every cell.
 Let $\calg{A}$ be an $m$-categorial $\sig{\Sigma}$-algebra.
-By Lemma~\ref{LDiscDescription}, $\src^{m}_{s}$ acts as the identity in $\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})$, so that, by the note after Definition~\ref{DTruncDerivor}, every cell of $\calg{A}$ is a cell of $\Tr^{(m,n)}_{\sig{\Sigma}}(\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A}))$.
-On the other hand, by Definitions~\ref{DHepComp}, \ref{DDiscDerivor} and~\ref{DTruncDerivor}, for every $s\in S$,
-$$
-\Dom^{\bDs^{(n,m)}_{\sig{\Sigma}}\circ\bTr^{(m,n)}_{\sig{\Sigma}}}_{s}=\varnothing\cup\left(\Ds^{(n,m)}_{\sig{\Sigma}}\right)^{\sharp}\left[\left\lbrace\left(v^{s}_{0},\src^{m}_{s}(v^{s}_{0})\right)\right\rbrace\right]=\left\lbrace\left(v^{s}_{0},v^{s}_{0}\right)\right\rbrace,
-$$
-which is satisfied by every cell.
-Hence both partial algebras have the same cells.
-Moreover, by Propositions~\ref{PDiscDerivor} and~\ref{PTruncDerivor}, $\Tr^{(m,n)}_{\sig{\Sigma}}(\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A}))$ is a $\sig{\Sigma}^{(m)}$-algebra.
-Therefore, by Proposition~\ref{PHepComp}~(2), both partial algebras are equal.
+By Lemma~\ref{LDiscDescription}~(1), $\src^{m}_{s}$ acts as the identity in $\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})$.
+Hence every cell of $\calg{A}$ is a cell of $\Tr^{(m,n)}_{\sig{\Sigma}}(\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A}))$.
 
-Claim~\ref{CTruncDiscB} follows.
-
-Let $\calg{A}$ be an $m$-categorial $\sig{\Sigma}$-algebra.
-By Claim~\ref{CTruncDiscA}, $\bDs^{(n,m)}_{\sig{\Sigma}}\circ\bTr^{(m,n)}_{\sig{\Sigma}}$ and $\id_{\sig{\Sigma}^{(m)}}$ have the same underlying derivor and, by Claim~\ref{CTruncDiscB}, they determine the same cells of $\calg{A}$, since the domains of $\id_{\sig{\Sigma}^{(m)}}$ are empty.
-Therefore the following chain of equalities holds
-\begin{align*}
+Now, by Propositions~\ref{PDiscDerivor} and~\ref{PTruncDerivor}, $\Tr^{(m,n)}_{\sig{\Sigma}}(\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A}))$ is a $\sig{\Sigma}^{(m)}$-algebra.
+Therefore, by Proposition~\ref{PHepComp}~(2), Lemma~\ref{LSameCells} and Proposition~\ref{PHepId}, the following equalities hold
+$$
 \Tr^{(m,n)}_{\sig{\Sigma}}\left(\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})\right)
-&=
+=
 \left(\bDs^{(n,m)}_{\sig{\Sigma}}\circ\bTr^{(m,n)}_{\sig{\Sigma}}\right)^{\ast}_{\gd}(\calg{A})
-\tag{1}
-\\&=
+=
 \left(\id_{\sig{\Sigma}^{(m)}}\right)^{\ast}_{\gd}(\calg{A})
-\tag{2}
-\\&=
+=
 \calg{A}.
-\tag{3}
-\end{align*}
+$$
+By the same results, the equality also holds for the homomorphisms.
 
-The first equality follows from Claim~\ref{CTruncDiscB}; the second equality follows from Lemma~\ref{LSameCells}; finally, the last equality follows from Proposition~\ref{PHepId}.
-By the same results, the equality also holds for the $m$-categorial $\sig{\Sigma}$-homomorphisms.
+(2) In the globular case, $\bDs^{\gl(n,m)}_{\sig{\Sigma}}\circ\bTr^{\gl(m,n)}_{\sig{\Sigma}}=\id_{\sig{\Sigma}^{\gl(m)}}$.
+In fact, for every $(k,s)\in(m+1)\times S$, the composite mapping on sorts sends $(k,s)$ to $(\min\{k,m\},s)=(k,s)$.
+Both derivors send the operation symbols of $\Sigma^{\gl(m)}$ to themselves, applied to variables, since all their dimensions are at most $m$.
+And all the domains are empty.
+Hence the equality follows, as in~(1), from Propositions~\ref{PHepComp}~(2) and~\ref{PHepId}.
 
 This completes the proof.
 \end{proof}
 
-In the following lemma we introduce the counit of the adjunction between discretization and truncation.
+In the following lemma we introduce the counits of the adjunctions between discretization and truncation.
 
 \begin{lemma}\label{LDiscTruncCounit}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-For every $n$-categorial $\sig{\Sigma}$-algebra $\calg{B}$, the inclusion $\varepsilon_{\calg{B}}$ of the $m$-cells of $\calg{B}$ into $\calg{B}$ is an $n$-categorial $\sig{\Sigma}$-homomorphism from $\Ds^{(n,m)}_{\sig{\Sigma}}(\Tr^{(m,n)}_{\sig{\Sigma}}(\calg{B}))$ to $\calg{B}$.
-Moreover, the family $\varepsilon=(\varepsilon_{\calg{B}})_{\calg{B}\in\mathrm{Ob}(\mathsf{nCatAlg}(\sig{\Sigma}))}$ is a natural transformation from $\Ds^{(n,m)}_{\sig{\Sigma}}\circ\Tr^{(m,n)}_{\sig{\Sigma}}$ to $\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$.
+Then the following statements hold:
+\begin{enumerate}
+\item for every $n$-categorial $\sig{\Sigma}$-algebra $\calg{B}$, the inclusion $\varepsilon_{\calg{B}}$ of the $m$-cells of $\calg{B}$ into $\calg{B}$ is a homomorphism from $\Ds^{(n,m)}_{\sig{\Sigma}}(\Tr^{(m,n)}_{\sig{\Sigma}}(\calg{B}))$ to $\calg{B}$, natural in $\calg{B}$; and
+\item for every globular $n$-categorial $\sig{\Sigma}$-algebra $\calg{B}$, the family $\varepsilon^{\gl}_{\calg{B}}$ whose component at the sort $(k,s)$ is the identity, if $k\leq m$, and $\mathrm{i}^{(k,m)}_{s}$, if $k>m$, is a homomorphism from $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\calg{B}))$ to $\calg{B}$, natural in $\calg{B}$.
+\end{enumerate}
 \end{lemma}
 \begin{proof}
 For $m=n$ there is nothing to prove.
-Let $m<n$ and $\calg{B}$ an $n$-categorial $\sig{\Sigma}$-algebra.
+Let $m<n$.
+
+(1) Let $\calg{B}$ be an $n$-categorial $\sig{\Sigma}$-algebra.
 By Remark~\ref{RSingleSetIdent}, it suffices to prove that $\varepsilon_{\calg{B}}$ is a homomorphism of partial $\Sigma^{(n)}$-algebras.
+By Lemma~\ref{LDiscDescription}~(1), the operations of $\Sigma$ and those of dimension $k<m$ of $\Ds^{(n,m)}_{\sig{\Sigma}}(\Tr^{(m,n)}_{\sig{\Sigma}}(\calg{B}))$ are restrictions of those of $\calg{B}$.
+So the inclusion commutes with them.
 
-\textsf{(Operations of $\Sigma$ and of dimension $k<m$)} The inclusion commutes with them, since, by Lemma~\ref{LDiscDescription} and the description of $\Tr^{(m,n)}_{\sig{\Sigma}}$, the operations of $\Ds^{(n,m)}_{\sig{\Sigma}}(\Tr^{(m,n)}_{\sig{\Sigma}}(\calg{B}))$ of these kinds are restrictions of those of $\calg{B}$.
+Now let $k\geq m$ and $x$ an $m$-cell of sort $s$.
+In the domain of $\varepsilon_{\calg{B}}$, the $k$-source and the $k$-target of $x$ are $x$, and $x\circ^{k}_{s}x=x$.
+In $\calg{B}$, by Lemma~\ref{LGradCells}~(3), $x$ is a $k$-cell, so that $\src^{k}_{s}(x)=x=\tgt^{k}_{s}(x)$ and, by~(A$^{k}$5), $x\circ^{k}_{s}x=x\circ^{k}_{s}\src^{k}_{s}(x)=x$.
+Hence $\varepsilon_{\calg{B}}$ is a homomorphism.
 
-\textsf{(Sources and targets of dimension $k\geq m$)} Let $x$ be an $m$-cell of sort $s$.
-Then, by Lemma~\ref{LDiscDescription}, the $k$-source of $x$ in $\Ds^{(n,m)}_{\sig{\Sigma}}(\Tr^{(m,n)}_{\sig{\Sigma}}(\calg{B}))$ is $x$ and, by Lemma~\ref{LGradCells}~(3), $\src^{k}_{s}(x)=x$ in $\calg{B}$.
-By a similar argument for the targets, $\varepsilon_{\calg{B}}$ commutes with the $k$-sources and the $k$-targets.
+Finally, $\Ds^{(n,m)}_{\sig{\Sigma}}(\Tr^{(m,n)}_{\sig{\Sigma}}(H))$ is the restriction of a homomorphism $H$ to the $m$-cells, so that $\varepsilon$ is natural.
 
-\textsf{(Compositions of dimension $k\geq m$)} Let $x$ be an $m$-cell of sort $s$.
-By Lemma~\ref{LDiscDescription}, $x\circ^{k}_{s}x$ is defined in $\Ds^{(n,m)}_{\sig{\Sigma}}(\Tr^{(m,n)}_{\sig{\Sigma}}(\calg{B}))$ and equal to $x$.
-In $\calg{B}$, the following chain of equalities holds
-\begin{align*}
-x\circ^{k}_{s}x
-&=
-x\circ^{k}_{s}\src^{k}_{s}(x)
-\tag{1}
-\\&=
-x.
-\tag{2}
-\end{align*}
+(2) Let $\calg{B}$ be a globular $n$-categorial $\sig{\Sigma}$-algebra.
+By Remark~\ref{RGlobularIdent}, it suffices to prove that $\varepsilon^{\gl}_{\calg{B}}$ is a homomorphism of partial $\Sigma^{\gl(n)}$-algebras.
+On the dimensions $k\leq m$ it is the identity, and, by Lemma~\ref{LDiscDescription}~(2), the structure of its domain is that of $\calg{B}$.
+Let $j<k$ with $k>m$ and $s\in S$.
 
-The first equality follows from the fact that $x$ is a $k$-cell; finally, the last equality follows from~(A$^{k}$5).
-Hence $\varepsilon_{\calg{B}}$ preserves the defined $k$-compositions.
+By the third equation of~(EA$^{m,k}$7), $\mathrm{i}^{(k,m)}_{s}$ commutes with the operations $\sigma$.
 
-\textsf{(Naturality)} Let $H\colon\calg{B}\mor\calg{B}'$ be an $n$-categorial $\sig{\Sigma}$-homomorphism.
-Since $\Ds^{(n,m)}_{\sig{\Sigma}}(\Tr^{(m,n)}_{\sig{\Sigma}}(H))$ is the restriction of $H$ to the $m$-cells, we have that $H\circ\varepsilon_{\calg{B}}=\varepsilon_{\calg{B}'}\circ\Ds^{(n,m)}_{\sig{\Sigma}}(\Tr^{(m,n)}_{\sig{\Sigma}}(H))$.
+Let $j<m$.
+For every $m$-cell $x$, by~(EA$^{j,m,k}$1) and Lemma~\ref{LUnifInj}, $\src^{(j,k)}_{s}(\mathrm{i}^{(k,m)}_{s}(x))=\src^{(j,m)}_{s}(\src^{(m,k)}_{s}(\mathrm{i}^{(k,m)}_{s}(x)))=\src^{(j,m)}_{s}(x)$, and similarly for the targets.
+By~(EA$^{j,m,k}$2), $\mathrm{i}^{(k,m)}_{s}\circ\mathrm{i}^{(m,j)}_{s}=\mathrm{i}^{(k,j)}_{s}$.
+By~(EA$^{j,m,k}$5), $\mathrm{i}^{(k,m)}_{s}$ preserves the defined $j$-compositions.
+
+Let $j\geq m$.
+By~(EA$^{m,j,k}$2), $\mathrm{i}^{(k,m)}_{s}=\mathrm{i}^{(k,j)}_{s}\circ\mathrm{i}^{(j,m)}_{s}$.
+Hence, by Lemma~\ref{LUnifInj}, the $(j,k)$-source and the $(j,k)$-target of $\mathrm{i}^{(k,m)}_{s}(x)$ are $\mathrm{i}^{(j,m)}_{s}(x)$.
+In the domain of $\varepsilon^{\gl}_{\calg{B}}$ they are $x$, so that $\varepsilon^{\gl}_{\calg{B}}$ commutes with them.
+Similarly, it commutes with the identities.
+Finally, by~(EA$^{j,k}$5), $\mathrm{i}^{(k,m)}_{s}(x)\circ^{(j,k)}_{s}\mathrm{i}^{(k,m)}_{s}(x)=\mathrm{i}^{(k,m)}_{s}(x)$.
+
+The naturality follows from the fact that the homomorphisms commute with the identities.
 
 This completes the proof.
 \end{proof}
@@ -4319,272 +4240,43 @@ We are now in position to prove that discretization is left adjoint to truncatio
 
 \begin{proposition}\label{PDiscTruncAdj}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-Then $\Ds^{(n,m)}_{\sig{\Sigma}}$ is left adjoint to $\Tr^{(m,n)}_{\sig{\Sigma}}$.
-More precisely, see Definition~\ref{DAdj},
-$$
-(\Tr^{(m,n)}_{\sig{\Sigma}},\Ds^{(n,m)}_{\sig{\Sigma}},\id,\varepsilon)
-$$
-is an adjunction from $\mathsf{mCatAlg}(\sig{\Sigma})$ to $\mathsf{nCatAlg}(\sig{\Sigma})$ whose unit is the identity and whose counit is the natural transformation $\varepsilon$ of Lemma~\ref{LDiscTruncCounit}.
+Then the following statements hold:
+\begin{enumerate}
+\item $(\Tr^{(m,n)}_{\sig{\Sigma}},\Ds^{(n,m)}_{\sig{\Sigma}},\id,\varepsilon)$ is an adjunction from $\mathsf{mCatAlg}(\sig{\Sigma})$ to $\mathsf{nCatAlg}(\sig{\Sigma})$; and
+\item $(\Tr^{\gl(m,n)}_{\sig{\Sigma}},\Ds^{\gl(n,m)}_{\sig{\Sigma}},\id,\varepsilon^{\gl})$ is an adjunction from $\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$.
+\end{enumerate}
+Thus discretization is left adjoint to truncation, with the identity as unit and the counits of Lemma~\ref{LDiscTruncCounit}.
 \end{proposition}
 \begin{proof}
-By Proposition~\ref{PTruncDisc}, $\Tr^{(m,n)}_{\sig{\Sigma}}\circ\Ds^{(n,m)}_{\sig{\Sigma}}=\Id_{\mathsf{mCatAlg}(\sig{\Sigma})}$, so that the identity $\id=(\id_{\calg{A}})_{\calg{A}\in\mathrm{Ob}(\mathsf{mCatAlg}(\sig{\Sigma}))}$ is a natural transformation from $\Id_{\mathsf{mCatAlg}(\sig{\Sigma})}$ to $\Tr^{(m,n)}_{\sig{\Sigma}}\circ\Ds^{(n,m)}_{\sig{\Sigma}}$; and, by Lemma~\ref{LDiscTruncCounit}, $\varepsilon$ is a natural transformation from $\Ds^{(n,m)}_{\sig{\Sigma}}\circ\Tr^{(m,n)}_{\sig{\Sigma}}$ to $\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$.
-By Definition~\ref{DAdj}, we have to prove the triangular identities
+By Proposition~\ref{PTruncDisc}, the identity is a natural transformation from the identity functor to $\Tr^{(m,n)}_{\sig{\Sigma}}\circ\Ds^{(n,m)}_{\sig{\Sigma}}$.
+By Lemma~\ref{LDiscTruncCounit}, $\varepsilon$ is a natural transformation from $\Ds^{(n,m)}_{\sig{\Sigma}}\circ\Tr^{(m,n)}_{\sig{\Sigma}}$ to the identity functor.
+The same holds in the globular case.
+By Definition~\ref{DAdj}, it remains to prove the triangular identities.
+If $m=n$, all the functors and natural transformations involved are identities.
+Let $m<n$.
+
+Since the unit is the identity, the triangular identities state that, for every $n$-categorial $\sig{\Sigma}$-algebra $\calg{B}$ and every $m$-categorial $\sig{\Sigma}$-algebra $\calg{A}$,
 \begin{enumerate}
 	\item[(TI1)]
-	$\left(\Tr^{(m,n)}_{\sig{\Sigma}}\ast\varepsilon\right)\circ\left(\id\ast\Tr^{(m,n)}_{\sig{\Sigma}}\right)=\id_{\Tr^{(m,n)}_{\sig{\Sigma}}}$; and
+	$\Tr^{(m,n)}_{\sig{\Sigma}}(\varepsilon_{\calg{B}})$ is the identity of $\Tr^{(m,n)}_{\sig{\Sigma}}(\calg{B})$; and
 
 	\item[(TI2)]
-	$\left(\varepsilon\ast\Ds^{(n,m)}_{\sig{\Sigma}}\right)\circ\left(\Ds^{(n,m)}_{\sig{\Sigma}}\ast\id\right)=\id_{\Ds^{(n,m)}_{\sig{\Sigma}}}$.
+	$\varepsilon_{\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})}$ is the identity of $\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})$,
 \end{enumerate}
-If $m=n$, then all the functors involved are identities and $\varepsilon$ is the identity, so that both identities hold.
-Let us assume that $m<n$.
+and similarly in the globular case.
 We recall that a homomorphism is determined by its domain, its codomain and its underlying many-sorted mapping.
 
-\textsf{(First triangular identity)} Let $\calg{B}$ be an $n$-categorial $\sig{\Sigma}$-algebra.
-By Proposition~\ref{PTruncDisc}, the domain $\Tr^{(m,n)}_{\sig{\Sigma}}(\Ds^{(n,m)}_{\sig{\Sigma}}(\Tr^{(m,n)}_{\sig{\Sigma}}(\calg{B})))$ of $\Tr^{(m,n)}_{\sig{\Sigma}}(\varepsilon_{\calg{B}})$ is $\Tr^{(m,n)}_{\sig{\Sigma}}(\calg{B})$, whose cells of sort $s$ are the $m$-cells of sort $s$ of $\calg{B}$.
-Let $s\in S$ and $x$ an $m$-cell of sort $s$ of $\calg{B}$.
-Then the following chain of equalities holds
-\begin{align*}
-\left(\left(\left(\Tr^{(m,n)}_{\sig{\Sigma}}\ast\varepsilon\right)\circ\left(\id\ast\Tr^{(m,n)}_{\sig{\Sigma}}\right)\right)_{\calg{B}}\right)_{s}(x)
-&=
-\left(\Tr^{(m,n)}_{\sig{\Sigma}}\left(\varepsilon_{\calg{B}}\right)\circ\id_{\Tr^{(m,n)}_{\sig{\Sigma}}(\calg{B})}\right)_{s}(x)
-\tag{1}
-\\&=
-\Tr^{(m,n)}_{\sig{\Sigma}}\left(\varepsilon_{\calg{B}}\right)_{s}(x)
-\tag{2}
-\\&=
-\left(\varepsilon_{\calg{B}}\right)_{s}(x)
-\tag{3}
-\\&=
-x
-\tag{4}
-\\&=
-\left(\id_{\Tr^{(m,n)}_{\sig{\Sigma}}}\right)_{\calg{B},s}(x).
-\tag{5}
-\end{align*}
+(TI1) By Proposition~\ref{PGenHepDerivorFunctor}, $\Tr^{(m,n)}_{\sig{\Sigma}}(\varepsilon_{\calg{B}})$ is the birestriction of $\varepsilon_{\calg{B}}$ to the $m$-cells.
+Since $\varepsilon_{\calg{B}}$ is the inclusion of the $m$-cells, it is the identity.
+In the globular case, $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\varepsilon^{\gl}_{\calg{B}})$ is the family of the components of $\varepsilon^{\gl}_{\calg{B}}$ at the dimensions $k\leq m$, which are identities.
 
-The first equality unravels the definitions of the horizontal and vertical composition of natural transformations; the second equality follows from the fact that $\id_{\Tr^{(m,n)}_{\sig{\Sigma}}(\calg{B})}$ is the identity homomorphism; the third equality follows from Proposition~\ref{PGenHepDerivorFunctor}, since $\varphi^{\Tr^{(m,n)}_{\sig{\Sigma}}}=\id_{S}$, so that $\Tr^{(m,n)}_{\sig{\Sigma}}(\varepsilon_{\calg{B}})_{s}$ is the birestriction of $(\varepsilon_{\calg{B}})_{s}$ to the $m$-cells; the fourth equality follows from Lemma~\ref{LDiscTruncCounit}, since $\varepsilon_{\calg{B}}$ is an inclusion; finally, the last equality unravels the definition of the identity natural transformation at $\Tr^{(m,n)}_{\sig{\Sigma}}$.
-
-Hence the first triangular identity holds.
-
-\textsf{(Second triangular identity)} Let $\calg{A}$ be an $m$-categorial $\sig{\Sigma}$-algebra.
-By Proposition~\ref{PTruncDisc}, the domain $\Ds^{(n,m)}_{\sig{\Sigma}}(\Tr^{(m,n)}_{\sig{\Sigma}}(\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})))$ of $\varepsilon_{\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})}$ is $\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})$.
-Let $s\in S$ and $x$ a cell of sort $s$ of $\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})$.
-By Lemma~\ref{LDiscDescription}~(2), $\src^{m}_{s}$ acts as the identity in $\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})$, so that $x$ is an $m$-cell of $\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})$.
-Then the following chain of equalities holds
-\begin{align*}
-\left(\left(\left(\varepsilon\ast\Ds^{(n,m)}_{\sig{\Sigma}}\right)\circ\left(\Ds^{(n,m)}_{\sig{\Sigma}}\ast\id\right)\right)_{\calg{A}}\right)_{s}(x)
-&=
-\left(\varepsilon_{\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})}\circ\Ds^{(n,m)}_{\sig{\Sigma}}\left(\id_{\calg{A}}\right)\right)_{s}(x)
-\tag{1}
-\\&=
-\left(\varepsilon_{\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})}\right)_{s}(x)
-\tag{2}
-\\&=
-x
-\tag{3}
-\\&=
-\left(\id_{\Ds^{(n,m)}_{\sig{\Sigma}}}\right)_{\calg{A},s}(x).
-\tag{4}
-\end{align*}
-
-The first equality unravels the definitions of the horizontal and vertical composition of natural transformations; the second equality follows from the fact that $\Ds^{(n,m)}_{\sig{\Sigma}}$ preserves identities; the third equality follows from Lemma~\ref{LDiscTruncCounit}, since $\varepsilon_{\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})}$ is the inclusion of the $m$-cells of $\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})$ and $x$ is one of them; finally, the last equality unravels the definition of the identity natural transformation at $\Ds^{(n,m)}_{\sig{\Sigma}}$.
-
-Hence the second triangular identity holds.
+(TI2) By Lemma~\ref{LDiscDescription}~(1), every cell of $\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})$ is an $m$-cell.
+Hence $\varepsilon_{\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})}$, the inclusion of the $m$-cells, is the identity.
+In the globular case, the components of $\varepsilon^{\gl}_{\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})}$ at the dimensions $k>m$ are the $(k,m)$-identities of $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})$, which, by Lemma~\ref{LDiscDescription}~(2), are identities.
 
 This completes the proof.
 \end{proof}
 
-We next consider the globular presentation.
-
-\begin{proposition}\label{PTruncDiscGl}
-Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-Then the following equality holds in $\mathsf{hepSig}_{\gd}$
-$$
-\bDs^{\gl(n,m)}_{\sig{\Sigma}}\circ\bTr^{\gl(m,n)}_{\sig{\Sigma}}=\id_{\sig{\Sigma}^{\gl(m)}}.
-$$
-Consequently, $\Tr^{\gl(m,n)}_{\sig{\Sigma}}\circ\Ds^{\gl(n,m)}_{\sig{\Sigma}}=\Id_{\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$.
-\end{proposition}
-\begin{proof}
-For $m=n$ both generalized hep-derivors are identities.
-Let $m<n$.
-We compare the underlying derivors and the domains.
-
-\textsf{(Underlying derivors)} By Definitions~\ref{DDiscGlDerivor} and~\ref{DTruncDerivor}, for every $(k,s)\in(m+1)\times S$, the following chain of equalities holds
-\begin{align*}
-\varphi^{\Ds^{\gl(n,m)}_{\sig{\Sigma}}}\left(\varphi^{\Tr^{\gl(m,n)}_{\sig{\Sigma}}}(k,s)\right)
-&=
-\varphi^{\Ds^{\gl(n,m)}_{\sig{\Sigma}}}(k,s)
-\tag{1}
-\\&=
-(\min\{k,m\},s)
-\tag{2}
-\\&=
-(k,s).
-\tag{3}
-\end{align*}
-
-The first equality unravels Definition~\ref{DTruncDerivor}; the second equality unravels Definition~\ref{DDiscGlDerivor}; finally, the last equality follows from the fact that $k\leq m$.
-Moreover, $\Tr^{\gl(m,n)}_{\sig{\Sigma}}$ sends every operation symbol $\tau$ of $\Sigma^{\gl(m)}$ to itself, applied to variables, and, by Definition~\ref{DDiscGlDerivor}, since all the dimensions of $\tau$ are at most $m$, $\Ds^{\gl(n,m)}_{\sig{\Sigma}}$ sends $\tau$ to itself, applied to variables.
-Hence, by~(Der1) and~(Der2), $(\Ds^{\gl(n,m)}_{\sig{\Sigma}})^{\sharp}\circ\Tr^{\gl(m,n)}_{\sig{\Sigma}}=\eta^{\Sigma^{\gl(m)}}$, i.e., the underlying derivor of $\bDs^{\gl(n,m)}_{\sig{\Sigma}}\circ\bTr^{\gl(m,n)}_{\sig{\Sigma}}$ is the identity derivor at $\Sigma^{\gl(m)}$, see~(Der3).
-
-\textsf{(Domains)} By Definitions~\ref{DHepComp}, \ref{DDiscGlDerivor} and~\ref{DTruncDerivor}, for every $(k,s)\in(m+1)\times S$,
-$$
-\Dom^{\bDs^{\gl(n,m)}_{\sig{\Sigma}}\circ\bTr^{\gl(m,n)}_{\sig{\Sigma}}}_{(k,s)}=\varnothing\cup\left(\Ds^{\gl(n,m)}_{\sig{\Sigma}}\right)^{\sharp}[\varnothing]=\varnothing.
-$$
-Hence the stated equality holds.
-
-\textsf{(Functors)} Let $\calg{A}$ be a globular $m$-categorial $\sig{\Sigma}$-algebra.
-Since the domains of $\bTr^{\gl(m,n)}_{\sig{\Sigma}}$ are empty, by the note after Proposition~\ref{PHepComp}, $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A}))$ and $(\bDs^{\gl(n,m)}_{\sig{\Sigma}}\circ\bTr^{\gl(m,n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\calg{A})$ have the same cells and, by Propositions~\ref{PDiscGlDerivor} and~\ref{PTruncGlDerivor}, the former is a $\sig{\Sigma}^{\gl(m)}$-algebra.
-Therefore, by Proposition~\ref{PHepComp}~(2), the stated equality and Proposition~\ref{PHepId}, $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A}))=(\id_{\sig{\Sigma}^{\gl(m)}})^{\ast}_{\gd}(\calg{A})=\calg{A}$, and similarly for the homomorphisms.
-
-This completes the proof.
-\end{proof}
-
-In the following lemma we introduce the counit of the adjunction between globular discretization and globular truncation.
-
-\begin{lemma}\label{LDiscTruncCounitGl}
-Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-For every globular $n$-categorial $\sig{\Sigma}$-algebra $\calg{B}$, let $\varepsilon^{\gl}_{\calg{B}}$ be the family of mappings whose component at the sort $(k,s)$ is the identity, if $k\leq m$, and $\mathrm{i}^{(k,m)}_{s}$, if $k>m$.
-Then $\varepsilon^{\gl}_{\calg{B}}$ is a globular $n$-categorial $\sig{\Sigma}$-homomorphism from $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\calg{B}))$ to $\calg{B}$, and the family $\varepsilon^{\gl}=(\varepsilon^{\gl}_{\calg{B}})_{\calg{B}\in\mathrm{Ob}(\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}))}$ is a natural transformation from $\Ds^{\gl(n,m)}_{\sig{\Sigma}}\circ\Tr^{\gl(m,n)}_{\sig{\Sigma}}$ to $\Id_{\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$.
-\end{lemma}
-\begin{proof}
-For $m=n$ there is nothing to prove.
-Let $m<n$ and $\calg{B}$ a globular $n$-categorial $\sig{\Sigma}$-algebra.
-By Remark~\ref{RGlobularIdent}, it suffices to prove that $\varepsilon^{\gl}_{\calg{B}}$ is a homomorphism of partial $\Sigma^{\gl(n)}$-algebras.
-On the dimensions $k\leq m$ it is the identity, and the structure of $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\calg{B}))$ is that of $\calg{B}$, by Lemma~\ref{LDiscGlDescription}.
-Let $j<k$ with $k>m$ and $s\in S$.
-
-\textsf{(Operation symbols $\sigma_{k}$)} By the third equation of~(EA$^{m,k}$7), $\mathrm{i}^{(k,m)}_{s}$ commutes with the operations $\sigma$.
-
-\textsf{(Case $j<m$)} Let $x$ be an $m$-cell of sort $s$.
-Then the following chain of equalities holds
-\begin{align*}
-\src^{(j,k)}_{s}\left(\mathrm{i}^{(k,m)}_{s}(x)\right)
-&=
-\src^{(j,m)}_{s}\left(\src^{(m,k)}_{s}\left(\mathrm{i}^{(k,m)}_{s}(x)\right)\right)
-\tag{1}
-\\&=
-\src^{(j,m)}_{s}(x).
-\tag{2}
-\end{align*}
-
-The first equality follows from~(EA$^{j,m,k}$1); finally, the last equality follows from Lemma~\ref{LUnifInj}.
-By a similar argument, $\varepsilon^{\gl}_{\calg{B}}$ commutes with the targets.
-Moreover, for every $j$-cell $u$, by~(EA$^{j,m,k}$2), $\mathrm{i}^{(k,m)}_{s}(\mathrm{i}^{(m,j)}_{s}(u))=\mathrm{i}^{(k,j)}_{s}(u)$, and, for every pair of $m$-cells $x$, $y$ such that $x\circ^{(j,m)}_{s}y$ is defined, by~(EA$^{j,m,k}$5), $\mathrm{i}^{(k,m)}_{s}(x\circ^{(j,m)}_{s}y)=\mathrm{i}^{(k,m)}_{s}(x)\circ^{(j,k)}_{s}\mathrm{i}^{(k,m)}_{s}(y)$.
-
-\textsf{(Case $j\geq m$)} By~(EA$^{m,j,k}$2), $\mathrm{i}^{(k,m)}_{s}=\mathrm{i}^{(k,j)}_{s}\circ\mathrm{i}^{(j,m)}_{s}$.
-Hence, for every $m$-cell $x$ of sort $s$, by Lemma~\ref{LUnifInj}, $\src^{(j,k)}_{s}(\mathrm{i}^{(k,m)}_{s}(x))=\mathrm{i}^{(j,m)}_{s}(x)$, and similarly for the targets; moreover, $\mathrm{i}^{(k,j)}_{s}(\mathrm{i}^{(j,m)}_{s}(x))=\mathrm{i}^{(k,m)}_{s}(x)$.
-Finally, by~(EA$^{j,k}$5), the following chain of equalities holds
-\begin{align*}
-\mathrm{i}^{(k,m)}_{s}(x)\circ^{(j,k)}_{s}\mathrm{i}^{(k,m)}_{s}(x)
-&=
-\mathrm{i}^{(k,m)}_{s}(x)\circ^{(j,k)}_{s}\mathrm{i}^{(k,j)}_{s}\left(\src^{(j,k)}_{s}\left(\mathrm{i}^{(k,m)}_{s}(x)\right)\right)
-\tag{1}
-\\&=
-\mathrm{i}^{(k,m)}_{s}(x).
-\tag{2}
-\end{align*}
-
-The first equality follows from the above computation of the $(j,k)$-source; finally, the last equality follows from~(EA$^{j,k}$5).
-
-\textsf{(Naturality)} It follows from the fact that the globular $n$-categorial $\sig{\Sigma}$-homomorphisms commute with the identities.
-
-This completes the proof.
-\end{proof}
-
-\begin{proposition}\label{PDiscTruncAdjGl}
-Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-Then $\Ds^{\gl(n,m)}_{\sig{\Sigma}}$ is left adjoint to $\Tr^{\gl(m,n)}_{\sig{\Sigma}}$.
-More precisely,
-$$
-(\Tr^{\gl(m,n)}_{\sig{\Sigma}},\Ds^{\gl(n,m)}_{\sig{\Sigma}},\id,\varepsilon^{\gl})
-$$
-is an adjunction from $\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ whose unit is the identity and whose counit is the natural transformation $\varepsilon^{\gl}$ of Lemma~\ref{LDiscTruncCounitGl}.
-\end{proposition}
-\begin{proof}
-By Proposition~\ref{PTruncDiscGl}, $\Tr^{\gl(m,n)}_{\sig{\Sigma}}\circ\Ds^{\gl(n,m)}_{\sig{\Sigma}}=\Id_{\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$, so that the identity $\id=(\id_{\calg{A}})_{\calg{A}\in\mathrm{Ob}(\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}))}$ is a natural transformation from $\Id_{\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$ to $\Tr^{\gl(m,n)}_{\sig{\Sigma}}\circ\Ds^{\gl(n,m)}_{\sig{\Sigma}}$; and, by Lemma~\ref{LDiscTruncCounitGl}, $\varepsilon^{\gl}$ is a natural transformation from $\Ds^{\gl(n,m)}_{\sig{\Sigma}}\circ\Tr^{\gl(m,n)}_{\sig{\Sigma}}$ to $\Id_{\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$.
-By Definition~\ref{DAdj}, we have to prove the triangular identities
-\begin{enumerate}
-	\item
-	$\left(\Tr^{\gl(m,n)}_{\sig{\Sigma}}\ast\varepsilon^{\gl}\right)\circ\left(\id\ast\Tr^{\gl(m,n)}_{\sig{\Sigma}}\right)=\id_{\Tr^{\gl(m,n)}_{\sig{\Sigma}}}$; and
-
-	\item
-	$\left(\varepsilon^{\gl}\ast\Ds^{\gl(n,m)}_{\sig{\Sigma}}\right)\circ\left(\Ds^{\gl(n,m)}_{\sig{\Sigma}}\ast\id\right)=\id_{\Ds^{\gl(n,m)}_{\sig{\Sigma}}}$.
-\end{enumerate}
-If $m=n$, then all the functors involved are identities and $\varepsilon^{\gl}$ is the identity, so that both identities hold.
-Let us assume that $m<n$.
-We recall that a homomorphism is determined by its domain, its codomain and its underlying many-sorted mapping.
-
-\textsf{(First triangular identity)} Let $\calg{B}$ be a globular $n$-categorial $\sig{\Sigma}$-algebra.
-By Proposition~\ref{PTruncDiscGl}, the domain of $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\varepsilon^{\gl}_{\calg{B}})$ is $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\calg{B})$.
-Let $(k,s)\in(m+1)\times S$ and $x$ a cell of sort $(k,s)$ of $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\calg{B})$, i.e., a $k$-cell of sort $s$ of $\calg{B}$.
-Then the following chain of equalities holds
-\begin{flushleft}
-$
-\left(\left(\left(\Tr^{\gl(m,n)}_{\sig{\Sigma}}\ast\varepsilon^{\gl}\right)\circ\left(\id\ast\Tr^{\gl(m,n)}_{\sig{\Sigma}}\right)\right)_{\calg{B}}\right)_{(k,s)}(x)
-$
-\begin{align*}
-&=
-\left(\Tr^{\gl(m,n)}_{\sig{\Sigma}}\left(\varepsilon^{\gl}_{\calg{B}}\right)\circ\id_{\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\calg{B})}\right)_{(k,s)}(x)
-\tag{1}
-\\&=
-\left(\varepsilon^{\gl}_{\calg{B}}\right)_{(k,s)}(x)
-\tag{2}
-\\&=
-x
-\tag{3}
-\\&=
-\left(\id_{\Tr^{\gl(m,n)}_{\sig{\Sigma}}}\right)_{\calg{B},(k,s)}(x).
-\tag{4}
-\end{align*}
-\end{flushleft}
-
-The first equality unravels the definitions of the horizontal and vertical composition of natural transformations; the second equality follows from the fact that $\id_{\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\calg{B})}$ is the identity homomorphism and from Proposition~\ref{PGenHepDerivorFunctor}, since
-$$
-\varphi^{\Tr^{\gl(m,n)}_{\sig{\Sigma}}}(k,s)=(k,s)
-$$
-and the domains of $\bTr^{\gl(m,n)}_{\sig{\Sigma}}$ are empty; the third equality follows from Lemma~\ref{LDiscTruncCounitGl}, since $k\leq m$; finally, the last equality unravels the definition of the identity natural transformation at $\Tr^{\gl(m,n)}_{\sig{\Sigma}}$.
-
-Hence the first triangular identity holds.
-
-\textsf{(Second triangular identity)} Let $\calg{A}$ be a globular $m$-categorial $\sig{\Sigma}$-algebra.
-By Proposition~\ref{PTruncDiscGl}, the domain of $\varepsilon^{\gl}_{\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})}$ is $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})$.
-Let $(k,s)\in(n+1)\times S$ and $x$ a cell of sort $(k,s)$ of $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})$.
-If $k\leq m$, then, by Lemma~\ref{LDiscTruncCounitGl}, $(\varepsilon^{\gl}_{\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})})_{(k,s)}(x)=x$.
-If $k>m$, then the following chain of equalities holds
-\begin{align*}
-\left(\varepsilon^{\gl}_{\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})}\right)_{(k,s)}(x)
-&=
-\mathrm{i}^{(k,m)\,\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})}_{s}(x)
-\tag{1}
-\\&=
-x.
-\tag{2}
-\end{align*}
-
-The first equality unravels the definition of $\varepsilon^{\gl}$, see Lemma~\ref{LDiscTruncCounitGl}; finally, the last equality follows from Lemma~\ref{LDiscGlDescription}~(3), since $m\geq m$, so that the $(k,m)$-identities of $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})$ are identity mappings.
-
-Hence $\varepsilon^{\gl}_{\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})}=\id_{\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})}$, and the following chain of equalities holds
-\begin{align*}
-\left(\left(\varepsilon^{\gl}\ast\Ds^{\gl(n,m)}_{\sig{\Sigma}}\right)\circ\left(\Ds^{\gl(n,m)}_{\sig{\Sigma}}\ast\id\right)\right)_{\calg{A}}
-&=
-\varepsilon^{\gl}_{\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})}\circ\Ds^{\gl(n,m)}_{\sig{\Sigma}}\left(\id_{\calg{A}}\right)
-\tag{1}
-\\&=
-\id_{\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})}\circ\id_{\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})}
-\tag{2}
-\\&=
-\left(\id_{\Ds^{\gl(n,m)}_{\sig{\Sigma}}}\right)_{\calg{A}}.
-\tag{3}
-\end{align*}
-
-The first equality unravels the definitions of the horizontal and vertical composition of natural transformations; the second equality follows from the above and from the fact that $\Ds^{\gl(n,m)}_{\sig{\Sigma}}$ preserves identities; finally, the last equality unravels the definition of the identity natural transformation at $\Ds^{\gl(n,m)}_{\sig{\Sigma}}$.
-
-Hence the second triangular identity holds.
-
-This completes the proof.
-\end{proof}
 
 Finally, the truncation functors compose as expected, and so do the discretization functors; this is the fact used in Sections~\ref{SLimitSingleSet} and~\ref{SLimitGlobular} to form the projective systems of categorial algebras.
 
@@ -4669,7 +4361,7 @@ Thus the underlying derivor of $\bTr^{\gl(n,p)}_{\sig{\Sigma}}\circ\bTr^{\gl(m,n
 \textsf{(Globular case: domains)} By Definitions~\ref{DHepComp} and~\ref{DTruncDerivor}, the domains of $\bTr^{\gl(n,p)}_{\sig{\Sigma}}\circ\bTr^{\gl(m,n)}_{\sig{\Sigma}}$ are $\varnothing\cup(\Tr^{\gl(n,p)}_{\sig{\Sigma}})^{\sharp}[\varnothing]=\varnothing$, which are the domains of $\bTr^{\gl(m,p)}_{\sig{\Sigma}}$.
 Hence $\bTr^{\gl(n,p)}_{\sig{\Sigma}}\circ\bTr^{\gl(m,n)}_{\sig{\Sigma}}=\bTr^{\gl(m,p)}_{\sig{\Sigma}}$.
 
-\textsf{(Globular case: functors)} Since the domains of $\bTr^{\gl(m,n)}_{\sig{\Sigma}}$ are empty, by the note after Proposition~\ref{PHepComp}, Proposition~\ref{PTruncGlDerivor} and Proposition~\ref{PHepComp}~(2), for every globular $p$-categorial $\sig{\Sigma}$-algebra $\calg{B}$, $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\Tr^{\gl(n,p)}_{\sig{\Sigma}}(\calg{B}))=(\bTr^{\gl(n,p)}_{\sig{\Sigma}}\circ\bTr^{\gl(m,n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\calg{B})=\Tr^{\gl(m,p)}_{\sig{\Sigma}}(\calg{B})$, and similarly for the homomorphisms.
+\textsf{(Globular case: functors)} Since the domains of $\bTr^{\gl(m,n)}_{\sig{\Sigma}}$ are empty, by the note after Proposition~\ref{PHepComp}, Proposition~\ref{PTruncDerivor} and Proposition~\ref{PHepComp}~(2), for every globular $p$-categorial $\sig{\Sigma}$-algebra $\calg{B}$, $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\Tr^{\gl(n,p)}_{\sig{\Sigma}}(\calg{B}))=(\bTr^{\gl(n,p)}_{\sig{\Sigma}}\circ\bTr^{\gl(m,n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\calg{B})=\Tr^{\gl(m,p)}_{\sig{\Sigma}}(\calg{B})$, and similarly for the homomorphisms.
 
 This completes the proof.
 \end{proof}
@@ -4739,7 +4431,7 @@ Thus the underlying derivor of $\bDs^{\gl(n,m)}_{\sig{\Sigma}}\circ\bDs^{\gl(p,n
 \textsf{(Globular case: domains)} By Definitions~\ref{DHepComp} and~\ref{DDiscGlDerivor}, the domains of $\bDs^{\gl(n,m)}_{\sig{\Sigma}}\circ\bDs^{\gl(p,n)}_{\sig{\Sigma}}$ are $\varnothing\cup(\Ds^{\gl(n,m)}_{\sig{\Sigma}})^{\sharp}[\varnothing]=\varnothing$, which are the domains of $\bDs^{\gl(p,m)}_{\sig{\Sigma}}$.
 Hence $\bDs^{\gl(n,m)}_{\sig{\Sigma}}\circ\bDs^{\gl(p,n)}_{\sig{\Sigma}}=\bDs^{\gl(p,m)}_{\sig{\Sigma}}$.
 
-\textsf{(Functors)} Since the domains of the discretization derivors are empty, by the note after Proposition~\ref{PHepComp}, Propositions~\ref{PDiscDerivor} and~\ref{PDiscGlDerivor} and Proposition~\ref{PHepComp}~(2), the functors induced by the above compositions are, on categorial algebras, the composites of the induced functors.
+\textsf{(Functors)} Since the domains of the discretization derivors are empty, by the note after Proposition~\ref{PHepComp}, Proposition~\ref{PDiscDerivor} and Proposition~\ref{PHepComp}~(2), the functors induced by the above compositions are, on categorial algebras, the composites of the induced functors.
 Hence the stated equalities of functors follow from the equalities of generalized hep-derivors.
 
 This completes the proof.
@@ -4787,8 +4479,8 @@ If $m\leq n$, then, by Definition~\ref{DDiscGlDerivor}, the clauses that define 
 If $n\leq m$, then all the dimensions of $\Sigma^{\gl(n)}$ are at most $m$, so that, by Definition~\ref{DDiscGlDerivor}, $\Ds^{\gl(p,m)}_{\sig{\Sigma}}(\tau)$ is $\tau$, applied to variables, i.e., $\Tr^{\gl(n,m)}_{\sig{\Sigma}}(\tau)$.
 
 \textsf{(Globular case: cells)} Let $\calg{A}$ be a globular $m$-categorial $\sig{\Sigma}$-algebra.
-Since the domains of the globular truncation and discretization derivors are empty, by the note after Proposition~\ref{PHepComp} and Propositions~\ref{PDiscGlDerivor}, \ref{PTruncGlDerivor} and~\ref{PHepComp}~(2), $\Tr^{\gl(n,p)}_{\sig{\Sigma}}(\Ds^{\gl(p,m)}_{\sig{\Sigma}}(\calg{A}))=(\bDs^{\gl(p,m)}_{\sig{\Sigma}}\circ\bTr^{\gl(n,p)}_{\sig{\Sigma}})^{\ast}_{\gd}(\calg{A})$.
-By the note after Definition~\ref{DTruncDerivor} and Lemma~\ref{LDiscGlDescription}, its cells of sort $(k,s)$, for $k\leq n$, are the $\min\{k,m\}$-cells of sort $s$ of $\calg{A}$.
+Since the domains of the globular truncation and discretization derivors are empty, by the note after Proposition~\ref{PHepComp} and Propositions~\ref{PDiscDerivor}, \ref{PTruncDerivor} and~\ref{PHepComp}~(2), $\Tr^{\gl(n,p)}_{\sig{\Sigma}}(\Ds^{\gl(p,m)}_{\sig{\Sigma}}(\calg{A}))=(\bDs^{\gl(p,m)}_{\sig{\Sigma}}\circ\bTr^{\gl(n,p)}_{\sig{\Sigma}})^{\ast}_{\gd}(\calg{A})$.
+By the note after Definition~\ref{DTruncDerivor} and Lemma~\ref{LDiscDescription}, its cells of sort $(k,s)$, for $k\leq n$, are the $\min\{k,m\}$-cells of sort $s$ of $\calg{A}$.
 If $m\leq n$, they are the cells of sort $(k,s)$ of $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})$; if $n\leq m$, they are the $k$-cells of $\calg{A}$, i.e., the cells of sort $(k,s)$ of $\Tr^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})$.
 Thus, by Lemma~\ref{LSameCells} and the comparison of the underlying derivors, the globular equality holds, on objects and on morphisms.
 
@@ -4807,7 +4499,7 @@ Thus, for $m=n$, Proposition~\ref{PTruncDiscComp} states that
 	\item
 	$\Tr^{\gl(n,p)}_{\sig{\Sigma}}\circ\Ds^{\gl(p,n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$,
 \end{enumerate}
-i.e., it recovers Propositions~\ref{PTruncDisc} and~\ref{PTruncDiscGl}, with $n$ and $p$ in place of $m$ and $n$, respectively.
+i.e., it recovers Proposition~\ref{PTruncDisc}, with $n$ and $p$ in place of $m$ and $n$, respectively.
 Moreover, when $n=p$, all the functors involved are identities.
 \end{remark}
 
@@ -4843,7 +4535,7 @@ $$
 \end{proposition}
 \begin{proof}
 Let $\calg{A}$ be an $m$-categorial $\sig{\Sigma}$-algebra.
-By Lemmas~\ref{LGradDescription}, \ref{LDiscDescription} and~\ref{LDiscGlDescription}, both globular $n$-categorial algebras have as cells of sort $(k,s)$ the $k$-cells of $\calg{A}$, for $k<m$, and all the cells of sort $s$ of $\calg{A}$, for $m\leq k\leq n$.
+By Lemmas~\ref{LGradDescription} and~\ref{LDiscDescription}, both globular $n$-categorial algebras have as cells of sort $(k,s)$ the $k$-cells of $\calg{A}$, for $k<m$, and all the cells of sort $s$ of $\calg{A}$, for $m\leq k\leq n$.
 In both of them, for every pair of dimensions $j<k$,
 \begin{enumerate}
 \item if $j<m$, the $(j,k)$-sources, $(j,k)$-targets and $j$-compositions are those of $\calg{A}$, and the $(k,j)$-identities are inclusions;
@@ -4864,7 +4556,7 @@ $$
 \end{proposition}
 \begin{proof}
 Let $\calg{B}$ be a globular $m$-categorial $\sig{\Sigma}$-algebra.
-By Lemmas~\ref{LUnifDescription}, \ref{LDiscDescription} and~\ref{LDiscGlDescription}, both $n$-categorial algebras have as cells of sort $s$ the $m$-cells of sort $s$ of $\calg{B}$.
+By Lemmas~\ref{LUnifDescription} and~\ref{LDiscDescription}, both $n$-categorial algebras have as cells of sort $s$ the $m$-cells of sort $s$ of $\calg{B}$.
 In both of them,
 \begin{enumerate}
 \item for $k<m$, $\src^{k}_{s}=\mathrm{i}^{(m,k)}_{s}\circ\src^{(k,m)}_{s}$, $\tgt^{k}_{s}=\mathrm{i}^{(m,k)}_{s}\circ\tgt^{(k,m)}_{s}$ and $\circ^{k}_{s}=\circ^{(k,m)}_{s}$;
@@ -5136,12 +4828,12 @@ Therefore, by Remark~\ref{RSingleSetIdentOmega}, $(\bDs^{(\omega,n)}_{\sig{\Sigm
 
 \textsf{(Globular case: ep-algebra)} Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})$.
 Let $\tau$ be an operation symbol of $\Sigma^{\gl(\omega)}$ and $p\in\mathbb{N}$ with $n<p$ such that $\tau$ is in the image of $\Sigma^{\gl(p)}$.
-By the above note, the interpretation of $\tau$ in $(\bDs^{\gl(\omega,n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\mathbf{B})$ is its interpretation in $\Ds^{\gl(p,n)}_{\sig{\Sigma}}(\mathbf{B})$, which, by Lemma~\ref{LDiscGlDescription}, is a $\sig{\Sigma}^{\gl(p)}$-algebra.
+By the above note, the interpretation of $\tau$ in $(\bDs^{\gl(\omega,n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\mathbf{B})$ is its interpretation in $\Ds^{\gl(p,n)}_{\sig{\Sigma}}(\mathbf{B})$, which, by Lemma~\ref{LDiscDescription}, is a $\sig{\Sigma}^{\gl(p)}$-algebra.
 Since the domain conditions of $\tau$ are the same in $\sig{\Sigma}^{\gl(p)}$ and in $\sig{\Sigma}^{\gl(\omega)}$, $(\bDs^{\gl(\omega,n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\mathbf{B})$ is a $\sig{\Sigma}^{\gl(\omega)}$-algebra, see Definition~\ref{DEpAlgebra} and Proposition~\ref{PTransformedEpAlg}.
 
 \textsf{(Globular case: axioms)} Every axiom of $\spec{C}^{\sig{\Sigma}^{\gl(\omega)}}$ only involves finitely many dimensions.
 Let $p\in\mathbb{N}$ with $n<p$ be greater than all of them.
-Then the axiom is, up to the canonical embedding, an axiom of $\spec{C}^{\sig{\Sigma}^{\gl(p)}}$ and, by the above note, it holds in $(\bDs^{\gl(\omega,n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\mathbf{B})$ if, and only if, it holds in $\Ds^{\gl(p,n)}_{\sig{\Sigma}}(\mathbf{B})$, which, by Proposition~\ref{PDiscGlDerivor}, is an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(p)}})$.
+Then the axiom is, up to the canonical embedding, an axiom of $\spec{C}^{\sig{\Sigma}^{\gl(p)}}$ and, by the above note, it holds in $(\bDs^{\gl(\omega,n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\mathbf{B})$ if, and only if, it holds in $\Ds^{\gl(p,n)}_{\sig{\Sigma}}(\mathbf{B})$, which, by Proposition~\ref{PDiscDerivor}, is an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(p)}})$.
 Hence every axiom of $\spec{C}^{\sig{\Sigma}^{\gl(\omega)}}$ holds in $(\bDs^{\gl(\omega,n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\mathbf{B})$.
 
 This completes the proof.
@@ -5169,7 +4861,7 @@ $$
 is the functor $(\bDs^{\gl(\omega,n)}_{\sig{\Sigma}})^{\ast}_{\gd}$ from $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})=\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(\omega)}})=\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$, see Proposition~\ref{PDiscOmegaDerivor}.
 \end{definition}
 
-By the above note, Lemma~\ref{LDiscGlDescription} and Proposition~\ref{PGenHepDerivorFunctor}, $\Ds^{\gl(\omega,n)}_{\sig{\Sigma}}$ sends a globular $n$-categorial $\sig{\Sigma}$-algebra $\calg{A}$ to the globular $\omega$-categorial $\sig{\Sigma}$-algebra whose $k$-cells of sort $s$, for $k\in\omega$, are the $\min\{k,n\}$-cells of sort $s$ of $\calg{A}$, in which, for every pair of dimensions $j<k$, $\sigma_{k}$ is $\sigma_{\min\{k,n\}}$, and the $(j,k)$-sources, $(j,k)$-targets, $(k,j)$-identities and $j$-compositions of $k$-cells are, for $j<n$, the $(j,\min\{k,n\})$-sources, $(j,\min\{k,n\})$-targets, $(\min\{k,n\},j)$-identities and $j$-compositions of $\min\{k,n\}$-cells of $\calg{A}$, whereas, for $j\geq n$, the $(j,k)$-sources, $(j,k)$-targets and $(k,j)$-identities are identities and the $j$-composition of two $k$-cells is defined if, and only if, they are equal, and then it is the common cell; and it sends a globular $n$-categorial $\sig{\Sigma}$-homomorphism $F$ to the family whose component at $(k,s)$ is $F_{(\min\{k,n\},s)}$.
+By the above note, Lemma~\ref{LDiscDescription} and Proposition~\ref{PGenHepDerivorFunctor}, $\Ds^{\gl(\omega,n)}_{\sig{\Sigma}}$ sends a globular $n$-categorial $\sig{\Sigma}$-algebra $\calg{A}$ to the globular $\omega$-categorial $\sig{\Sigma}$-algebra whose $k$-cells of sort $s$, for $k\in\omega$, are the $\min\{k,n\}$-cells of sort $s$ of $\calg{A}$, in which, for every pair of dimensions $j<k$, $\sigma_{k}$ is $\sigma_{\min\{k,n\}}$, and the $(j,k)$-sources, $(j,k)$-targets, $(k,j)$-identities and $j$-compositions of $k$-cells are, for $j<n$, the $(j,\min\{k,n\})$-sources, $(j,\min\{k,n\})$-targets, $(\min\{k,n\},j)$-identities and $j$-compositions of $\min\{k,n\}$-cells of $\calg{A}$, whereas, for $j\geq n$, the $(j,k)$-sources, $(j,k)$-targets and $(k,j)$-identities are identities and the $j$-composition of two $k$-cells is defined if, and only if, they are equal, and then it is the common cell; and it sends a globular $n$-categorial $\sig{\Sigma}$-homomorphism $F$ to the family whose component at $(k,s)$ is $F_{(\min\{k,n\},s)}$.
 
 In the following remark we collect the relations between these functors and the finite-dimensional ones.
 
@@ -5307,7 +4999,7 @@ This completes the proof.
 
 \section{$\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ as a projective limit}\label{SLimitGlobular}
 
-In this section we prove that the category $\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ of $S$-sorted globular $\omega$-categorial $\Sigma$-algebras and globular $\omega$-categorial $\Sigma$-homomorphisms is the projective limit of the projective system $(\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}),\Tr^{\gl(\bigcdot)}_{\sig{\Sigma}})$, where the functors $\Tr^{\gl(m,n)}_{\sig{\Sigma}}$ are the truncation functors defined in Definition~\ref{DTruncationGl}, and the projections of the limit are the truncation functors $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}$ of Definition~\ref{DTruncationOmegaGl}.
+In this section we prove that the category $\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ of $S$-sorted globular $\omega$-categorial $\Sigma$-algebras and globular $\omega$-categorial $\Sigma$-homomorphisms is the projective limit of the projective system $(\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}),\Tr^{\gl(\bigcdot)}_{\sig{\Sigma}})$, where the functors $\Tr^{\gl(m,n)}_{\sig{\Sigma}}$ are the truncation functors defined in Definition~\ref{DTruncation}, and the projections of the limit are the truncation functors $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}$ of Definition~\ref{DTruncationOmegaGl}.
 We follow the same pattern as in Section~\ref{SLimitSingleSet}.
 
 \begin{remark}\label{RTruncGlProjSys}
@@ -5772,8 +5464,8 @@ $
 \end{cases}
 \end{align*}
 \end{flushleft}
-Let $\varepsilon^{\gl,n}_{\calg{B}}$ be the component of the counit of Proposition~\ref{PDiscTruncAdjGl} at $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\calg{B})$, if $m\leq n$, and the identity, if $n<m$.
-By Lemma~\ref{LDiscTruncCounitGl}, the component of $\varepsilon^{\gl,n}_{\calg{B}}$ at the sort $(k,s)$, for $k\leq n$, is the identity, if $k\leq m$, and $\mathrm{i}^{(k,m)}_{s}$, if $k>m$.
+Let $\varepsilon^{\gl,n}_{\calg{B}}$ be the component of the counit of Proposition~\ref{PDiscTruncAdj} at $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\calg{B})$, if $m\leq n$, and the identity, if $n<m$.
+By Lemma~\ref{LDiscTruncCounit}, the component of $\varepsilon^{\gl,n}_{\calg{B}}$ at the sort $(k,s)$, for $k\leq n$, is the identity, if $k\leq m$, and $\mathrm{i}^{(k,m)}_{s}$, if $k>m$.
 Hence, for $n\leq n'$, the components of $\varepsilon^{\gl,n}_{\calg{B}}$ are the components of $\varepsilon^{\gl,n'}_{\calg{B}}$ at the sorts of dimension at most $n$, i.e., $\Tr^{\gl(n,n')}_{\sig{\Sigma}}(\varepsilon^{\gl,n'}_{\calg{B}})=\varepsilon^{\gl,n}_{\calg{B}}$.
 Thus the family satisfies the compatibility condition of Corollary~\ref{CLimitNatGl}, and it induces a natural transformation $\varepsilon^{\gl}=(\varepsilon^{\gl}_{\calg{B}})_{\calg{B}\in\mathrm{Ob}(\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma}))}$ from $\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}\circ\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}$ to $\Id_{\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$, whose component at $\calg{B}$ and at the sort $(k,s)$ is the identity, if $k\leq m$, and $\mathrm{i}^{(k,m)}_{s}$, if $k>m$.
 
@@ -5913,7 +5605,7 @@ $$
 Then the adjunctions
 \begin{enumerate}
 \item $\Gd^{(m)}_{\sig{\Sigma}}\dashv\Uf^{(m)}_{\sig{\Sigma}}$ and $\Gd^{(n)}_{\sig{\Sigma}}\dashv\Uf^{(n)}_{\sig{\Sigma}}$ of Proposition~\ref{PGdUfAdj}, and
-\item $\Ds^{(n,m)}_{\sig{\Sigma}}\dashv \Tr^{(m,n)}_{\sig{\Sigma}}$ and $\Ds^{\gl(n,m)}_{\sig{\Sigma}}\dashv \Tr^{\gl(m,n)}_{\sig{\Sigma}}$ of Propositions~\ref{PDiscTruncAdj} and~\ref{PDiscTruncAdjGl}
+\item $\Ds^{(n,m)}_{\sig{\Sigma}}\dashv \Tr^{(m,n)}_{\sig{\Sigma}}$ and $\Ds^{\gl(n,m)}_{\sig{\Sigma}}\dashv \Tr^{\gl(m,n)}_{\sig{\Sigma}}$ of Proposition~\ref{PDiscTruncAdj}
 \end{enumerate}
 form an algebraic square, with $F=\Gd^{(m)}_{\sig{\Sigma}}$, $G=\Uf^{(m)}_{\sig{\Sigma}}$, $F'=\Gd^{(n)}_{\sig{\Sigma}}$, $G'=\Uf^{(n)}_{\sig{\Sigma}}$, $J=\Ds^{(n,m)}_{\sig{\Sigma}}$, $K=\Tr^{(m,n)}_{\sig{\Sigma}}$, $H=\Ds^{\gl(n,m)}_{\sig{\Sigma}}$ and $I=\Tr^{\gl(m,n)}_{\sig{\Sigma}}$, in which $\alpha$ is the identity of $\Gd^{(n)}_{\sig{\Sigma}}\circ\Ds^{(n,m)}_{\sig{\Sigma}}=\Ds^{\gl(n,m)}_{\sig{\Sigma}}\circ\Gd^{(m)}_{\sig{\Sigma}}$ and $\beta=\beta^{(m,n)}$ is the natural isomorphism from $\Uf^{(m)}_{\sig{\Sigma}}\circ \Tr^{\gl(m,n)}_{\sig{\Sigma}}$ to $\Tr^{(m,n)}_{\sig{\Sigma}}\circ\Uf^{(n)}_{\sig{\Sigma}}$ given by the $(n,m)$-identities.
 
@@ -5945,7 +5637,7 @@ form an algebraic square, with $F=\Gd^{(m)}_{\sig{\Sigma}}$, $G=\Uf^{(m)}_{\sig{
 \begin{proof}
 By Definition~\ref{DAlgSquare}, we must check that the four pairs of functors involved are adjunctions and that there exist the natural isomorphisms $\alpha$ and $\beta$.
 
-\textsf{(Adjunctions)} The four adjunctions are those of Propositions~\ref{PGdUfAdj}, \ref{PDiscTruncAdj} and~\ref{PDiscTruncAdjGl}.
+\textsf{(Adjunctions)} The four adjunctions are those of Propositions~\ref{PGdUfAdj} and~\ref{PDiscTruncAdj}.
 
 \textsf{(The natural isomorphism $\alpha$)} By Proposition~\ref{PCompatGdDs}, the following equality holds
 $$
@@ -6519,9 +6211,9 @@ Let $\calg{B}$ be an algebra in the domain of the functors involved.
 
 \textsf{(Single-set truncation)} By the note after Definition~\ref{DTruncDerivor} and Proposition~\ref{PChangeSigDerivor}, the cells of sort $s$ of $\Tr^{(m,n)}_{\sig{\Sigma}}((\mathbf{c}^{(n)})^{\ast}_{\gd}(\calg{B}))$, of $(\mathbf{c}^{(m)})^{\ast}_{\gd}(\Tr^{(m,n)}_{\sig{\Lambda}}(\calg{B}))$ and, by the computation of the domains in Claim~\ref{CChangeSigDsTrA}, of the transformed algebra along the composite are the $m$-cells of sort $\varphi(s)$ of $\calg{B}$; and, by Propositions~\ref{PTruncDerivor} and~\ref{PChangeSigDerivor}, the first two are $\sig{\Sigma}^{(m)}$-algebras.
 
-\textsf{(Globular discretization)} By Lemma~\ref{LDiscGlDescription} and Proposition~\ref{PChangeSigDerivor}, the cells of sort $(k,s)$ of the three algebras are the $\min\{k,m\}$-cells of sort $\varphi(s)$ of $\calg{B}$; and, by Propositions~\ref{PDiscGlDerivor} and~\ref{PChangeSigDerivor}, the first two are $\sig{\Sigma}^{\gl(n)}$-algebras.
+\textsf{(Globular discretization)} By Lemma~\ref{LDiscDescription} and Proposition~\ref{PChangeSigDerivor}, the cells of sort $(k,s)$ of the three algebras are the $\min\{k,m\}$-cells of sort $\varphi(s)$ of $\calg{B}$; and, by Propositions~\ref{PDiscDerivor} and~\ref{PChangeSigDerivor}, the first two are $\sig{\Sigma}^{\gl(n)}$-algebras.
 
-\textsf{(Globular truncation)} By the note after Definition~\ref{DTruncDerivor} and Proposition~\ref{PChangeSigDerivor}, the cells of sort $(k,s)$ of the three algebras, for $k\in m+1$, are the $k$-cells of sort $\varphi(s)$ of $\calg{B}$; and, by Propositions~\ref{PTruncGlDerivor} and~\ref{PChangeSigDerivor}, the first two are $\sig{\Sigma}^{\gl(m)}$-algebras.
+\textsf{(Globular truncation)} By the note after Definition~\ref{DTruncDerivor} and Proposition~\ref{PChangeSigDerivor}, the cells of sort $(k,s)$ of the three algebras, for $k\in m+1$, are the $k$-cells of sort $\varphi(s)$ of $\calg{B}$; and, by Propositions~\ref{PTruncDerivor} and~\ref{PChangeSigDerivor}, the first two are $\sig{\Sigma}^{\gl(m)}$-algebras.
 
 In the four cases, by Lemma~\ref{LCommSquare}, both algebras are equal, and the same holds for the homomorphisms.
 
@@ -6534,7 +6226,7 @@ The natural transformations of Sections~\ref{SGraduation} and~\ref{STruncation} 
 
 \begin{remark}\label{RChangeSigNat}
 Let $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ be many-sorted signatures, $\mathbf{c}=(\varphi,c)$ a derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $m,n\in\mathbb{N}$ with $m\leq n$.
-The natural isomorphisms $\theta$ of Proposition~\ref{PGdUfAdj} and $\beta^{(m,n)}$ of Proposition~\ref{PCompatUfTr}, and the counits $\varepsilon$ and $\varepsilon^{\gl}$ of Lemmas~\ref{LDiscTruncCounit} and~\ref{LDiscTruncCounitGl}, are given, at every algebra, by families of identities, inclusions and $(k,j)$-identities indexed by the sorts.
+The natural isomorphisms $\theta$ of Proposition~\ref{PGdUfAdj} and $\beta^{(m,n)}$ of Proposition~\ref{PCompatUfTr}, and the counits $\varepsilon$ and $\varepsilon^{\gl}$ of Lemma~\ref{LDiscTruncCounit}, are given, at every algebra, by families of identities, inclusions and $(k,j)$-identities indexed by the sorts.
 By Proposition~\ref{PChangeSigDerivor}, the functors $(\mathbf{c}^{(n)})^{\ast}_{\gd}$ and $(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}$ reindex the sorts along $\varphi$ and keep the cells, the sources, the targets, the identities and the compositions.
 Therefore, by Propositions~\ref{PChangeSigGdUf} and~\ref{PChangeSigDsTr}, for every globular $n$-categorial $\sig{\Lambda}$-algebra $\calg{B}$,
 \begin{align*}
@@ -6551,7 +6243,7 @@ For instance, $\beta^{(m,n),\sig{\Sigma}}_{(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}(\c
 	\item
 	$ \Tr^{(m,n)}_{\sig{\Sigma}}\circ\Uf^{(n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}=(\mathbf{c}^{(m)})^{\ast}_{\gd}\circ\Tr^{(m,n)}_{\sig{\Lambda}}\circ\Uf^{(n)}_{\sig{\Lambda}} $.
 \end{enumerate}
-Thus the adjunctions of Propositions~\ref{PGdUfAdj}, \ref{PDiscTruncAdj} and~\ref{PDiscTruncAdjGl}, and the algebraic square of Proposition~\ref{PAlgSquareFinite}, are compatible with the change of signature.
+Thus the adjunctions of Propositions~\ref{PGdUfAdj} and~\ref{PDiscTruncAdj}, and the algebraic square of Proposition~\ref{PAlgSquareFinite}, are compatible with the change of signature.
 \end{remark}
 
 By Propositions~\ref{PChangeSigGdUf} and~\ref{PChangeSigDsTr}, the families $(\Gd^{(n)}_{\sig{\Sigma}})_{\sig{\Sigma}}$, $(\Uf^{(n)}_{\sig{\Sigma}})_{\sig{\Sigma}}$, $(\Ds^{(n,m)}_{\sig{\Sigma}})_{\sig{\Sigma}}$, $(\Tr^{(m,n)}_{\sig{\Sigma}})_{\sig{\Sigma}}$ and their globular counterparts, indexed by the many-sorted signatures, commute strictly with the functors induced by the derivors.
