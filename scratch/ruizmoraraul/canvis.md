@@ -1171,29 +1171,29 @@ Data: 2026-10-19. Commit `0d04a30`.
 
 - **Macro nova:** `\spec{E}` $=\boldsymbol{\mathcal{E}}$, al costat de `\sig`
   i `\calg`.
-- **`DEpSpec`:** l'ep-especificació $(\sig{\Sigma},\mathcal{E})$ s'escriu
-  simplement $\spec{E}$. Allà on s'introdueix una especificació es dona
-  explícitament, $\spec{E}=(\sig{\Sigma},\mathcal{E})$ i
-  $\spec{F}=(\sig{\Lambda},\mathcal{F})$ (`DEpVariety`, la correstricció i la
-  remarca que la segueix); després només s'usa $\spec{E}$:
-  $\mathcal{V}(\spec{E})$, $\mathsf{EPAlg}(\spec{E})$.
-- **Especificacions categorials:** $\spec{C}^{\sig{\Sigma}^{(n)}}$ i
-  $\spec{C}^{\sig{\Sigma}^{\gl(n)}}$ (`DSpecSingleSet`, `DSpecGlobular` i el
+- **`DEpSpec`:** l'ep-especificació $(\mathbf{\Sigma},\mathcal{E})$ s'escriu
+  simplement $\boldsymbol{\mathcal{E}}$. Allà on s'introdueix una especificació es dona
+  explícitament, $\boldsymbol{\mathcal{E}}=(\mathbf{\Sigma},\mathcal{E})$ i
+  $\boldsymbol{\mathcal{F}}=(\mathbf{\Lambda},\mathcal{F})$ (`DEpVariety`, la correstricció i la
+  remarca que la segueix); després només s'usa $\boldsymbol{\mathcal{E}}$:
+  $\mathcal{V}(\boldsymbol{\mathcal{E}})$, $\mathsf{EPAlg}(\boldsymbol{\mathcal{E}})$.
+- **Especificacions categorials:** $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$ i
+  $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$ (`DSpecSingleSet`, `DSpecGlobular` i el
   cas globular $\omega$) eren quàdruples $(S,\Sigma^{(n)},V^{S},\mathcal{C})$;
-  ara són els parells $(\sig{\Sigma}^{(n)},\mathcal{C}^{\sig{\Sigma}^{(n)}})$,
+  ara són els parells $(\mathbf{\Sigma}^{(n)},\mathcal{C}^{\mathbf{\Sigma}^{(n)}})$,
   com demana `DEpSpec`. Totes les aparicions de
-  $\mathsf{EPAlg}(\sig{\Sigma}^{(n)},\mathcal{C}^{\sig{\Sigma}^{(n)}})$ i
-  semblants (98 en total) passen a $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$.
+  $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{\mathbf{\Sigma}^{(n)}})$ i
+  semblants (98 en total) passen a $\mathsf{EPAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$.
 - **Sense canvis:** les especificacions dels preliminars, que no són
   ep-especificacions: la finitària $(S,\Sigma,\mathcal{E})$, la de Hall
-  $\mathrm{H}_{S}$ i les $\QE$-especificacions $(S,\Sigma,X,\mathcal{E})$
+  $\mathrm{H}_{S}$ i les $\mathrm{QE}$-especificacions $(S,\Sigma,X,\mathcal{E})$
   amb $\mathrm{Mod}_{\Sigma}(\mathcal{E})$. Tampoc
-  $(\sig{\Sigma},\varnothing)$ ni $\mathsf{EPAlg}(\sig{\Sigma})$.
+  $(\mathbf{\Sigma},\varnothing)$ ni $\mathsf{EPAlg}(\mathbf{\Sigma})$.
 
 Decisions que has de revisar:
 
 1. $\boldsymbol{\mathcal{U}}$ (l'univers) i $\boldsymbol{\mathcal{K}}$ (una
    classe d'àlgebres, `DQEEq`) tenen la mateixa tipografia que les
    especificacions. No s'hi confonen, però si vols pots canviar-ne una.
-2. Si vols, les $\QE$-especificacions dels preliminars també es poden
+2. Si vols, les $\mathrm{QE}$-especificacions dels preliminars també es poden
    escriure en negreta.
