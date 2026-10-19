@@ -1339,3 +1339,47 @@ Data: 2026-10-19. Commit `095a135`.
 - L'exemple del punt (2) ja és `RGradNotEp`, que és on remet ara el paràgraf
   previ a `PGenHepDerivorFunctor`.
 - La introducció de la secció `SGraduation` remet només a `DCorestriction`.
+
+---
+
+# Estil de PathMain i neteja del codi
+
+Data: 2026-10-19. Commits `b6ec836` (les teues edicions), `f71c12c`, `c505e48`,
+`98e9b6d` i `dfdb840`.
+
+## Què he comparat
+
+He llegit el codi de `Curry_Howard/PathMain.tex` (els capítols de les parts 0–2)
+i el de `Projecte Investigador/main.tex`. El preàmbul (estils de teorema, macros),
+les cadenes «The following chain of equalities holds» amb «The first equality
+…; finally, the last equality …», les afirmacions amb «Claim … follows.» i
+«This completes the proof.» ja seguien PathMain. Les teues edicions d'avui han
+marcat la resta.
+
+## Canvis d'estil
+
+- **Parells de fórmules:** totes les fórmules «A \qquad and \qquad B» que
+  quedaven són ara enumeracions «A; and / B.», amb (TI1)–(TI2) per a les
+  identitats triangulars (també a `DAdj`). N'he deixat dues: la de dins d'un
+  ítem de `DGradDerivor` i la de «Therefore both … are homomorphisms», que
+  quedarien estranyes.
+- **Quatre igualtats** en dues columnes (`PChangeSigDsTr`,
+  `PChangeSigOmegaDsTr`) passen a ser una enumeració.
+- **Cadenes llargues:** `flushleft` amb el membre esquerre a part, com fas tu.
+  He partit en línies les igualtats encadenades que sortien del marge.
+- **«if, and only if,»** a tot arreu (n'hi havia 8 sense comes).
+- **Línies fora del marge:** n'hi havia 71; ara només en queda una d'1pt.
+  He afegit `\emergencystretch`, que resol les fórmules en línia que TeX no pot
+  tallar, i he arreglat les restants a mà.
+
+## Neteja del codi
+
+- Una frase per línia a la prosa. És el canvi més gran, però no altera el PDF
+  (comprovat caràcter a caràcter) i fa que els diffs de git siguen llegibles.
+- Un sol `\allowdisplaybreaks` al preàmbul, en lloc dels 101 que hi havia.
+- Fora els espais al final de línia i les línies en blanc repetides.
+
+## No he tocat
+
+Les etiquetes (la biblioteca hi remet) i la subsecció comentada
+`SEpRestriction`.
