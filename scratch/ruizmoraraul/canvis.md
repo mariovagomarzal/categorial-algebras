@@ -1324,3 +1324,18 @@ Decisions que has de revisar:
 hep-signatura amb dominis buits, i no cal la generalització a hep-signatures
 amb condicions de domini; (2) es manté $\mathbf c$; (3) `RChangeSigNat` i la
 nota sobre Grothendieck queden com estan.
+
+---
+
+# `SEpRestriction` comentada
+
+Data: 2026-10-19. Commit `095a135`.
+
+- La subsecció «Restriction to ep-varieties», amb la remarca
+  `RGenHepDerivorCases`, està comentada (línies amb `%`).
+- El punt (1) de la remarca, que un derivor indueix el functor usual entre
+  àlgebres totals, s'usava tres vegades: ara és dins de `RHepAlgCat`, i les
+  referències de la secció de canvi de signatura apunten allà.
+- L'exemple del punt (2) ja és `RGradNotEp`, que és on remet ara el paràgraf
+  previ a `PGenHepDerivorFunctor`.
+- La introducció de la secció `SGraduation` remet només a `DCorestriction`.
