@@ -3131,70 +3131,23 @@ Then the restriction of $\Gd^{(n)}_{\sig{\Sigma}}$ to $\mathsf{EPAlg}(\spec{C}^{
 \end{proposition}
 \begin{proof}
 Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$.
-By Definitions~\ref{DCorestriction} and~\ref{DEpVariety}, we have to prove that $\Gd^{(n)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{\gl(n)}$-algebra in which every axiom of $\mathcal{C}^{\sig{\Sigma}^{\gl(n)}}$ holds.
+By Lemma~\ref{LGradDescription}, $\Gd^{(n)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{\gl(n)}$-algebra.
+It remains to check the axioms of $\spec{C}^{\sig{\Sigma}^{\gl(n)}}$.
 
-\textsf{(Ep-algebra)} By Lemma~\ref{LGradDescription}, which rests on Proposition~\ref{PTransformedEpAlg}, $\Gd^{(n)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{\gl(n)}$-algebra.
+By Lemma~\ref{LGradDescription}, the operations of $\Gd^{(n)}_{\sig{\Sigma}}(\mathbf{B})$ are restrictions of those of $\mathbf{B}$.
+Its identities are inclusions.
+And $x\circ^{(j,k)}_{s}y$ is defined if, and only if, $x\circ^{j}_{s}y$ is defined in $\mathbf{B}$.
+Hence the axioms become statements on $\mathbf{B}$.
+Let $h<j<k$ be dimensions.
 
-\textsf{(Axioms)} By Lemma~\ref{LGradDescription}, the operations of $\Gd^{(n)}_{\sig{\Sigma}}(\mathbf{B})$ are the restrictions of those of $\mathbf{B}$, and $x\circ^{(j,k)}_{s}y$ is defined in $\Gd^{(n)}_{\sig{\Sigma}}(\mathbf{B})$ if, and only if, $x\circ^{j}_{s}y$ is defined in $\mathbf{B}$.
-Under this description, the axioms of $\spec{C}^{\sig{\Sigma}^{\gl(n)}}$ become statements on $\mathbf{B}$, which we check in turn.
-In the following computations, the operation symbols of $\Sigma^{\gl(n)}$ are interpreted in $\Gd^{(n)}_{\sig{\Sigma}}(\mathbf{B})$ and those of $\Sigma^{(n)}$ in $\mathbf{B}$.
-Let $h<j<k$ be dimensions and $s\in S$.
+The axioms (EA0), (EA$^{j,k}$1) and (EA$^{j,k}$3) hold by Lemma~\ref{LGradDescription}.
+The axiom (EA$^{j,k}$2) holds since every $j$-cell $u$ satisfies $\src^{j}_{s}(u)=u=\tgt^{j}_{s}(u)$.
+The axioms (EA$^{j,k}$4)--(EA$^{j,k}$8) become the axioms (A$^{j}$4)--(A$^{j}$8) restricted to $k$-cells; the last equation of (EA$^{j,k}$7) becomes trivial.
+The axioms (EA$^{h,j,k}$2) and (EA$^{h,j,k}$5) become trivial, since the identities are inclusions.
 
-\textsf{(EA0) and (EA$^{j,k}$1)} They hold by Lemma~\ref{LGradDescription}~(1).
-
-\textsf{(EA$^{j,k}$2)} Let $u$ be a $j$-cell of sort $s$.
-Then the following chain of equalities holds
-\begin{align*}
-\src^{(j,k)}_{s}\left(\mathrm{i}^{(k,j)}_{s}(u)\right)
-&=
-\src^{j}_{s}(u)
-\tag{1}
-\\&=
-u.
-\tag{2}
-\end{align*}
-
-The first equality follows from Lemma~\ref{LGradDescription}~(1); finally, the last equality follows from the fact that $u$ is a $j$-cell.
-By a similar argument we also have that $\tgt^{(j,k)}_{s}(\mathrm{i}^{(k,j)}_{s}(u))=u$.
-
-\textsf{(EA$^{j,k}$3)} It holds by Lemma~\ref{LGradDescription}~(2).
-
-\textsf{(EA$^{j,k}$4)--(EA$^{j,k}$8)} By Lemma~\ref{LGradDescription}, they become the axioms (A$^{j}$4)--(A$^{j}$8) restricted to $k$-cells, except for the last equation of (EA$^{j,k}$7), which becomes trivial, since the identities are inclusions.
-For instance, for every $k$-cell $x$ of sort $s$, the following chain of equalities holds
-\begin{align*}
-x\circ^{(j,k)}_{s}\mathrm{i}^{(k,j)}_{s}\left(\src^{(j,k)}_{s}(x)\right)
-&=
-x\circ^{j}_{s}\src^{j}_{s}(x)
-\tag{1}
-\\&=
-x.
-\tag{2}
-\end{align*}
-
-The first equality follows from Lemma~\ref{LGradDescription}; finally, the last equality follows from~(A$^{j}$5).
-
-\textsf{(EA$^{h,j,k}$1)} Let $x$ be a $k$-cell of sort $s$.
-Then the following chain of equalities holds
-\begin{align*}
-\src^{(h,j)}_{s}\left(\src^{(j,k)}_{s}(x)\right)
-&=
-\src^{h}_{s}\left(\src^{j}_{s}(x)\right)
-\tag{1}
-\\&=
-\src^{h}_{s}(x)
-\tag{2}
-\\&=
-\src^{(h,k)}_{s}(x).
-\tag{3}
-\end{align*}
-
-The first equality follows from Lemma~\ref{LGradDescription}; the second equality follows from~(AB$^{h,j}$1); finally, the last equality follows from Lemma~\ref{LGradDescription}.
-By a similar argument, the remaining equations of (EA$^{h,j,k}$1) also hold.
-
-\textsf{(EA$^{h,j,k}$2) and (EA$^{h,j,k}$5)} They become trivial, since the identities are inclusions.
-
-\textsf{(EA$^{h,j,k}$3)} Let $x$, $y$ be $k$-cells of sort $s$ such that $x\circ^{(h,k)}_{s}y$ is defined.
-Then the following chain of equalities holds
+Finally, the axioms (EA$^{h,j,k}$1), (EA$^{h,j,k}$3) and (EA$^{h,j,k}$4) become the axioms (AB$^{h,j}$1), (AB$^{h,j}$2) and (AB$^{h,j}$3) restricted to $k$-cells, the last one after exchanging $y$ and $z$.
+Here we use that, by Lemma~\ref{LGradCells}~(2), the $j$-sources and the $j$-targets are $j$-cells.
+For instance, for $k$-cells $x$, $y$ of sort $s$ such that $x\circ^{(h,k)}_{s}y$ is defined, the following chain of equalities holds
 \begin{align*}
 \src^{(j,k)}_{s}\left(x\circ^{(h,k)}_{s}y\right)
 &=
@@ -3208,12 +3161,7 @@ Then the following chain of equalities holds
 \tag{3}
 \end{align*}
 
-The first equality follows from Lemma~\ref{LGradDescription}; the second equality follows from~(AB$^{h,j}$2); finally, the last equality follows from Lemma~\ref{LGradDescription}, taking into account that, by Lemma~\ref{LGradCells}~(2), $\src^{j}_{s}(x)$ and $\src^{j}_{s}(y)$ are $j$-cells.
-By a similar argument we also have the equation for the targets.
-
-\textsf{(EA$^{h,j,k}$4)} By Lemma~\ref{LGradDescription}, it becomes the axiom (AB$^{h,j}$3) restricted to $k$-cells, after exchanging the variables $y$ and $z$.
-
-All in all, every axiom of $\spec{C}^{\sig{\Sigma}^{\gl(n)}}$ holds in $\Gd^{(n)}_{\sig{\Sigma}}(\mathbf{B})$, so that $\Gd^{(n)}_{\sig{\Sigma}}(\mathbf{B})$ is an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})$.
+The first and the last equalities follow from Lemma~\ref{LGradDescription}; the second equality follows from~(AB$^{h,j}$2).
 
 This completes the proof.
 \end{proof}
@@ -3309,91 +3257,23 @@ Then the restriction of $\Uf^{(n)}_{\sig{\Sigma}}$ to $\mathsf{EPAlg}(\spec{C}^{
 \end{proposition}
 \begin{proof}
 Let $\mathbf{A}$ be an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})$.
-By Definitions~\ref{DCorestriction} and~\ref{DEpVariety}, we have to prove that $\Uf^{(n)}_{\sig{\Sigma}}(\mathbf{A})$ is a $\sig{\Sigma}^{(n)}$-algebra in which every axiom of $\mathcal{C}^{\sig{\Sigma}^{(n)}}$ holds.
+By Lemma~\ref{LUnifDescription}, $\Uf^{(n)}_{\sig{\Sigma}}(\mathbf{A})$ is a $\sig{\Sigma}^{(n)}$-algebra.
+It remains to check the axioms of $\spec{C}^{\sig{\Sigma}^{(n)}}$.
 
-\textsf{(Ep-algebra)} By Lemma~\ref{LUnifDescription}, which rests on Proposition~\ref{PTransformedEpAlg}, $\Uf^{(n)}_{\sig{\Sigma}}(\mathbf{A})$ is a $\sig{\Sigma}^{(n)}$-algebra.
-
-\textsf{(Axioms)} By Lemma~\ref{LUnifDescription}, the axioms of $\spec{C}^{\sig{\Sigma}^{(n)}}$ in $\Uf^{(n)}_{\sig{\Sigma}}(\mathbf{A})$ become statements on the $n$-cells of $\mathbf{A}$, which we call their translations and which we check in turn.
-In the following computations, all the operation symbols are interpreted in $\mathbf{A}$.
+By Lemma~\ref{LUnifDescription}, these axioms become statements on the $n$-cells of $\mathbf{A}$, their translations, in which $\src^{k}_{s}$ is replaced by $\mathrm{i}^{(n,k)}_{s}\circ\src^{(k,n)}_{s}$, $\tgt^{k}_{s}$ by $\mathrm{i}^{(n,k)}_{s}\circ\tgt^{(k,n)}_{s}$, $\circ^{k}_{s}$ by $\circ^{(k,n)}_{s}$ and $\sigma$ by $\sigma_{n}$.
+In what follows, all the operation symbols are interpreted in $\mathbf{A}$.
 Let $l<k$ in $n$ and $s\in S$.
 
-\textsf{(A0), (A$^{k}$1) and (A$^{k}$3)} Their translations are consequences of (EA0), (EA$^{k,n}$1), and (EA$^{k,n}$3) together with Lemma~\ref{LUnifInj}, respectively.
+The translations of (A0), (A$^{k}$1) and (A$^{k}$3) follow from (EA0), (EA$^{k,n}$1) and (EA$^{k,n}$3), together with Lemma~\ref{LUnifInj}.
+The translation of (A$^{k}$2) follows from Lemma~\ref{LUnifInj}.
+The translations of (A$^{k}$4), (A$^{k}$5), (A$^{k}$6) and (A$^{k}$8) follow from (EA$^{k,n}$4), (EA$^{k,n}$5), (EA$^{k,n}$6) and (EA$^{k,n}$8).
+The translation of (A$^{k}$7) follows from the first and the third equations of~(EA$^{k,n}$7).
 
-\textsf{(A$^{k}$2)} Let $x$ be an $n$-cell of sort $s$.
-Then the following chain of equalities holds
-\begin{align*}
-\mathrm{i}^{(n,k)}_{s}\left(\src^{(k,n)}_{s}\left(
-\mathrm{i}^{(n,k)}_{s}\left(\src^{(k,n)}_{s}(x)\right)
-\right)\right)
-&=
-\mathrm{i}^{(n,k)}_{s}\left(\src^{(k,n)}_{s}(x)\right).
-\tag{1}
-\end{align*}
-
-The equality follows from Lemma~\ref{LUnifInj}.
-By a similar argument, the remaining equations of (A$^{k}$2) also hold.
-
-\textsf{(A$^{k}$4), (A$^{k}$5), (A$^{k}$6) and (A$^{k}$8)} Their translations are consequences of (EA$^{k,n}$4), (EA$^{k,n}$5), (EA$^{k,n}$6) and (EA$^{k,n}$8), respectively.
-
-\textsf{(A$^{k}$7)} Let $(\mathbf{s},s)\in S^{\star}\times S$, $\sigma\in\Sigma_{\mathbf{s},s}$ and $(x_{p})_{p\in\bb{\mathbf{s}}}$ a family of $n$-cells.
-Then the following chain of equalities holds
-\begin{align*}
-\mathrm{i}^{(n,k)}_{s}\left(\src^{(k,n)}_{s}\left(\sigma_{n}\left((x_{p})_{p\in\bb{\mathbf{s}}}\right)\right)\right)
-&=
-\mathrm{i}^{(n,k)}_{s}\left(\sigma_{k}\left(\left(\src^{(k,n)}_{s_{p}}(x_{p})\right)_{p\in\bb{\mathbf{s}}}\right)\right)
-\tag{1}
-\\&=
-\sigma_{n}\left(\left(\mathrm{i}^{(n,k)}_{s_{p}}\left(\src^{(k,n)}_{s_{p}}(x_{p})\right)\right)_{p\in\bb{\mathbf{s}}}\right).
-\tag{2}
-\end{align*}
-
-The first equality follows from the first equation of~(EA$^{k,n}$7); finally, the last equality follows from the third equation of~(EA$^{k,n}$7).
-By a similar argument we also have the equation for the targets.
-
-\textsf{(AB$^{l,k}$1)} Let $x$ be an $n$-cell of sort $s$ and $u=\src^{(l,n)}_{s}(x)$.
-Then the following chain of equalities holds
-\begin{align*}
-\mathrm{i}^{(n,k)}_{s}\left(\src^{(k,n)}_{s}\left(\mathrm{i}^{(n,l)}_{s}\left(\src^{(l,n)}_{s}(x)\right)\right)\right)
-&=
-\mathrm{i}^{(n,k)}_{s}\left(\src^{(k,n)}_{s}\left(\mathrm{i}^{(n,k)}_{s}\left(\mathrm{i}^{(k,l)}_{s}(u)\right)\right)\right)
-\tag{1}
-\\&=
-\mathrm{i}^{(n,k)}_{s}\left(\mathrm{i}^{(k,l)}_{s}(u)\right)
-\tag{2}
-\\&=
-\mathrm{i}^{(n,l)}_{s}\left(\src^{(l,n)}_{s}(x)\right).
-\tag{3}
-\end{align*}
-
-The first equality follows from~(EA$^{l,k,n}$2); the second equality follows from Lemma~\ref{LUnifInj}; finally, the last equality follows from~(EA$^{l,k,n}$2).
-
-Moreover, by~(EA$^{l,k,n}$1) and Lemma~\ref{LUnifInj}, for every $k$-cell $w$ of sort $s$, the following chain of equalities holds
-\begin{align*}
-\src^{(l,n)}_{s}\left(\mathrm{i}^{(n,k)}_{s}(w)\right)
-&=
-\src^{(l,k)}_{s}\left(\src^{(k,n)}_{s}\left(\mathrm{i}^{(n,k)}_{s}(w)\right)\right)
-\tag{1}
-\\&=
-\src^{(l,k)}_{s}(w).
-\tag{2}
-\end{align*}
-
-Hence, taking $w=\src^{(k,n)}_{s}(x)$, we have that
-\begin{align*}
-\mathrm{i}^{(n,l)}_{s}\left(\src^{(l,n)}_{s}\left(\mathrm{i}^{(n,k)}_{s}\left(\src^{(k,n)}_{s}(x)\right)\right)\right)
-&=
-\mathrm{i}^{(n,l)}_{s}\left(\src^{(l,k)}_{s}\left(\src^{(k,n)}_{s}(x)\right)\right)
-\tag{1}
-\\&=
-\mathrm{i}^{(n,l)}_{s}\left(\src^{(l,n)}_{s}(x)\right).
-\tag{2}
-\end{align*}
-
-The first equality follows from the above; finally, the last equality follows from~(EA$^{l,k,n}$1).
-By a similar argument, the remaining equations of (AB$^{l,k}$1) also hold.
-
-\textsf{(AB$^{l,k}$2)} Let $x$, $y$ be $n$-cells of sort $s$ such that $x\circ^{(l,n)}_{s}y$ is defined.
-Then the following chain of equalities holds
+We next consider the axioms that relate two dimensions.
+By~(EA$^{l,k,n}$1) and Lemma~\ref{LUnifInj}, for every $k$-cell $w$ of sort $s$, $\src^{(l,n)}_{s}(\mathrm{i}^{(n,k)}_{s}(w))=\src^{(l,k)}_{s}(w)$, and similarly for the targets.
+With this, the translation of (AB$^{l,k}$1) follows from~(EA$^{l,k,n}$1) and~(EA$^{l,k,n}$2).
+The translation of (AB$^{l,k}$3) is the axiom (EA$^{l,k,n}$4), after exchanging $y$ and $z$.
+Finally, for $n$-cells $x$, $y$ of sort $s$ such that $x\circ^{(l,n)}_{s}y$ is defined, the following chain of equalities holds
 \begin{align*}
 \mathrm{i}^{(n,k)}_{s}\left(\src^{(k,n)}_{s}\left(x\circ^{(l,n)}_{s}y\right)\right)
 &=
@@ -3404,12 +3284,8 @@ Then the following chain of equalities holds
 \tag{2}
 \end{align*}
 
-The first equality follows from~(EA$^{l,k,n}$3); finally, the last equality follows from~(EA$^{l,k,n}$5).
-By a similar argument we also have the equation for the targets.
-
-\textsf{(AB$^{l,k}$3)} Its translation is the axiom (EA$^{l,k,n}$4), after exchanging the variables $y$ and $z$.
-
-All in all, every axiom of $\spec{C}^{\sig{\Sigma}^{(n)}}$ holds in $\Uf^{(n)}_{\sig{\Sigma}}(\mathbf{A})$, so that $\Uf^{(n)}_{\sig{\Sigma}}(\mathbf{A})$ is an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$.
+The first equality follows from~(EA$^{l,k,n}$3); the second equality follows from~(EA$^{l,k,n}$5).
+This is the translation of (AB$^{l,k}$2) for the sources, and the targets are similar.
 
 This completes the proof.
 \end{proof}
@@ -3764,74 +3640,24 @@ By Definition~\ref{DAdj}, we have to prove the triangular identities
 	\item[(TI2)]
 	$\left(\theta^{-1}\ast\Gd^{(n)}_{\sig{\Sigma}}\right)\circ\left(\Gd^{(n)}_{\sig{\Sigma}}\ast\id\right)=\id_{\Gd^{(n)}_{\sig{\Sigma}}}$.
 \end{enumerate}
-Let us recall that, by Claim~\ref{CGradUnifC} in the proof of Proposition~\ref{PGradUnif}, for every globular $n$-categorial $\sig{\Sigma}$-algebra $\calg{A}$, every $k\in n+1$ and every $s\in S$, the component of $\theta^{-1}_{\calg{A}}$ at the sort $(k,s)$ sends a cell $x$ of sort $(k,s)$ of $\Gd^{(n)}_{\sig{\Sigma}}(\Uf^{(n)}_{\sig{\Sigma}}(\calg{A}))$ to $\src^{(k,n)}_{s}(x)$, where $\src^{(n,n)}_{s}$ is the identity mapping on the $n$-cells of sort $s$.
+Since the unit is the identity, the triangular identities state that, for every globular $n$-categorial $\sig{\Sigma}$-algebra $\calg{A}$ and every $n$-categorial $\sig{\Sigma}$-algebra $\calg{B}$,
+\begin{enumerate}
+	\item[(TI1)]
+	$\Uf^{(n)}_{\sig{\Sigma}}(\theta^{-1}_{\calg{A}})$ is the identity of $\Uf^{(n)}_{\sig{\Sigma}}(\calg{A})$; and
 
-\textsf{(First triangular identity)} Let $\calg{A}$ be a globular $n$-categorial $\sig{\Sigma}$-algebra.
-Since $\Uf^{(n)}_{\sig{\Sigma}}(\calg{A})$ is an $n$-categorial $\sig{\Sigma}$-algebra, by Proposition~\ref{PUnifGrad}, the domain $\Uf^{(n)}_{\sig{\Sigma}}(\Gd^{(n)}_{\sig{\Sigma}}(\Uf^{(n)}_{\sig{\Sigma}}(\calg{A})))$ of $\Uf^{(n)}_{\sig{\Sigma}}(\theta^{-1}_{\calg{A}})$ is $\Uf^{(n)}_{\sig{\Sigma}}(\calg{A})$, whose cells of sort $s$ are, by Lemma~\ref{LUnifDescription}, the $n$-cells of sort $s$ of $\calg{A}$.
-Let $s\in S$ and $x$ an $n$-cell of sort $s$ of $\calg{A}$.
-Then the following chain of equalities holds
-\begin{align*}
-\left(\left(\left(\Uf^{(n)}_{\sig{\Sigma}}\ast\theta^{-1}\right)\circ\left(\id\ast\Uf^{(n)}_{\sig{\Sigma}}\right)\right)_{\calg{A}}\right)_{s}(x)
-&=
-\left(\Uf^{(n)}_{\sig{\Sigma}}\left(\theta^{-1}_{\calg{A}}\right)\circ\id_{\Uf^{(n)}_{\sig{\Sigma}}(\calg{A})}\right)_{s}(x)
-\tag{1}
-\\&=
-\Uf^{(n)}_{\sig{\Sigma}}\left(\theta^{-1}_{\calg{A}}\right)_{s}(x)
-\tag{2}
-\\&=
-\left(\theta^{-1}_{\calg{A}}\right)_{(n,s)}(x)
-\tag{3}
-\\&=
-\src^{(n,n)}_{s}(x)
-\tag{4}
-\\&=
-x
-\tag{5}
-\\&=
-\left(\id_{\Uf^{(n)}_{\sig{\Sigma}}}\right)_{\calg{A},s}(x).
-\tag{6}
-\end{align*}
+	\item[(TI2)]
+	$\theta^{-1}_{\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})}$ is the identity of $\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})$.
+\end{enumerate}
+We recall that a homomorphism is determined by its domain, its codomain and its underlying many-sorted mapping.
+We also recall, from the proof of Proposition~\ref{PGradUnif}, that the component of $\theta_{\calg{A}}$ at the sort $(k,s)$ is $\mathrm{i}^{(n,k)}_{s}$.
 
-The first equality unravels the definitions of the horizontal and vertical composition of natural transformations; the second equality follows from the fact that $\id_{\Uf^{(n)}_{\sig{\Sigma}}(\calg{A})}$ is the identity homomorphism; the third equality follows from Proposition~\ref{PGenHepDerivorFunctor}, since $\varphi^{\Uf^{(n)}_{\sig{\Sigma}}}(s)=(n,s)$, see Definition~\ref{DUnifDerivor}, so that $\Uf^{(n)}_{\sig{\Sigma}}(\theta^{-1}_{\calg{A}})_{s}$ is the birestriction of $(\theta^{-1}_{\calg{A}})_{(n,s)}$ to the cells; the fourth equality follows from Claim~\ref{CGradUnifC}; the fifth equality follows from the fact that $\src^{(n,n)}_{s}$ is the identity mapping on the $n$-cells of sort $s$; finally, the last equality unravels the definition of the identity natural transformation at $\Uf^{(n)}_{\sig{\Sigma}}$.
+(TI1) By Proposition~\ref{PGenHepDerivorFunctor}, $\Uf^{(n)}_{\sig{\Sigma}}(\theta^{-1}_{\calg{A}})$ is the family of the components of $\theta^{-1}_{\calg{A}}$ at the sorts $(n,s)$.
+These components are inverse to the $(n,n)$-identities, i.e., they are identities.
 
-Since a homomorphism is determined by its domain, its codomain and its underlying many-sorted mapping, the first triangular identity holds.
+(TI2) By Lemma~\ref{LGradDescription}~(1), the $(n,k)$-identities of $\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})$ are inclusions.
+Since the cells of sort $(k,s)$ and $(n,s)$ of $\Gd^{(n)}_{\sig{\Sigma}}(\Uf^{(n)}_{\sig{\Sigma}}(\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})))=\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})$ are cells of $\calg{B}$, $\theta_{\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})}$ is the identity.
+Hence so is its inverse.
 
-\textsf{(Second triangular identity)} Let $\calg{B}$ be an $n$-categorial $\sig{\Sigma}$-algebra.
-By Proposition~\ref{PUnifGrad}, the codomain $\Gd^{(n)}_{\sig{\Sigma}}(\Uf^{(n)}_{\sig{\Sigma}}(\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})))$ of $\theta_{\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})}$ is $\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})$.
-We first prove that $\theta_{\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})}$ is the identity homomorphism of $\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})$.
-Let $k\in n+1$, $s\in S$ and $u$ a cell of sort $(k,s)$ of $\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})$.
-If $k=n$, then, by definition, $(\theta_{\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})})_{(n,s)}(u)=\mathrm{i}^{(n,n)}_{s}(u)=u$.
-If $k\in n$, then the following chain of equalities holds
-\begin{align*}
-\left(\theta_{\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})}\right)_{(k,s)}(u)
-&=
-\mathrm{i}^{(n,k)\,\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})}_{s}(u)
-\tag{1}
-\\&=
-u.
-\tag{2}
-\end{align*}
-
-The first equality unravels the definition of $\theta_{\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})}$, see the proof of Proposition~\ref{PGradUnif}; finally, the last equality follows from Lemma~\ref{LGradDescription}~(1), since the $(n,k)$-identities of $\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})$ act as inclusions.
-
-Hence $\theta_{\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})}=\id_{\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})}$ and, consequently, $\theta^{-1}_{\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})}=\id_{\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})}$.
-Therefore the following chain of equalities holds
-\begin{align*}
-\left(\left(\theta^{-1}\ast\Gd^{(n)}_{\sig{\Sigma}}\right)\circ\left(\Gd^{(n)}_{\sig{\Sigma}}\ast\id\right)\right)_{\calg{B}}
-&=
-\theta^{-1}_{\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})}\circ\Gd^{(n)}_{\sig{\Sigma}}\left(\id_{\calg{B}}\right)
-\tag{1}
-\\&=
-\id_{\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})}\circ\id_{\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})}
-\tag{2}
-\\&=
-\left(\id_{\Gd^{(n)}_{\sig{\Sigma}}}\right)_{\calg{B}}.
-\tag{3}
-\end{align*}
-
-The first equality unravels the definitions of the horizontal and vertical composition of natural transformations; the second equality follows from the above and from the fact that $\Gd^{(n)}_{\sig{\Sigma}}$ preserves identities; finally, the last equality unravels the definition of the identity natural transformation at $\Gd^{(n)}_{\sig{\Sigma}}$.
-
-Thus the second triangular identity holds.
 Finally, since the unit and the counit are natural isomorphisms, the adjunction is an adjoint equivalence.
 
 This completes the proof.
@@ -5375,157 +5201,24 @@ Then $\Tr^{(m,\omega)}_{\sig{\Sigma}}\circ\Ds^{(\omega,m)}_{\sig{\Sigma}}=\Id_{\
 The same holds for $\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}$ and $\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}$, the component of the counit at the sort $(k,s)$ being the identity, if $k\leq m$, and $\mathrm{i}^{(k,m)}_{s}$, if $k>m$.
 \end{proposition}
 \begin{proof}
-We consider first the single-set case and then the globular case.
+\textsf{(Unit)} By Remark~\ref{RDiscOmegaTrunc}~(2), for $n=m$, $\Tr^{(m,\omega)}_{\sig{\Sigma}}\circ\Ds^{(\omega,m)}_{\sig{\Sigma}}$ and $\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}\circ\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}$ are identities.
 
-\textsf{(Single-set case: unit)} The equation $\Tr^{(m,\omega)}_{\sig{\Sigma}}\circ\Ds^{(\omega,m)}_{\sig{\Sigma}}=\Id_{\mathsf{mCatAlg}(\sig{\Sigma})}$ is Remark~\ref{RDiscOmegaTrunc}~(2) for $n=m$.
-
-\textsf{(Single-set case: counit)} Let $\calg{B}$ be an $\omega$-categorial $\sig{\Sigma}$-algebra and $n\in\mathbb{N}$.
-By Remark~\ref{RDiscOmegaTrunc}, the following equality holds
-$$
-\Tr^{(n,\omega)}_{\sig{\Sigma}}\left(\Ds^{(\omega,m)}_{\sig{\Sigma}}\left(\Tr^{(m,\omega)}_{\sig{\Sigma}}(\calg{B})\right)\right)
-=
-\begin{cases}
-\Ds^{(n,m)}_{\sig{\Sigma}}\left(\Tr^{(m,n)}_{\sig{\Sigma}}\left(\Tr^{(n,\omega)}_{\sig{\Sigma}}(\calg{B})\right)\right), & \text{if $m\leq n$;}\\
-\Tr^{(n,\omega)}_{\sig{\Sigma}}(\calg{B}), & \text{if $n<m$.}
-\end{cases}
-$$
+\textsf{(Counit)} Let $\calg{B}$ be an $\omega$-categorial $\sig{\Sigma}$-algebra and $n\in\mathbb{N}$.
+By Remark~\ref{RDiscOmegaTrunc}, $\Tr^{(n,\omega)}_{\sig{\Sigma}}(\Ds^{(\omega,m)}_{\sig{\Sigma}}(\Tr^{(m,\omega)}_{\sig{\Sigma}}(\calg{B})))$ is $\Ds^{(n,m)}_{\sig{\Sigma}}(\Tr^{(m,n)}_{\sig{\Sigma}}(\Tr^{(n,\omega)}_{\sig{\Sigma}}(\calg{B})))$, if $m\leq n$, and $\Tr^{(n,\omega)}_{\sig{\Sigma}}(\calg{B})$, if $n<m$.
 Let $\varepsilon^{n}_{\calg{B}}$ be the component of the counit of Proposition~\ref{PDiscTruncAdj} at $\Tr^{(n,\omega)}_{\sig{\Sigma}}(\calg{B})$, if $m\leq n$, and the identity, if $n<m$.
-All of them are inclusions of $m$-cells, or identities, so that they satisfy the compatibility condition of Corollary~\ref{CLimitNat}, and they induce a natural transformation $\varepsilon=(\varepsilon_{\calg{B}})_{\calg{B}\in\mathrm{Ob}(\omega\mathsf{CatAlg}(\sig{\Sigma}))}$ from $\Ds^{(\omega,m)}_{\sig{\Sigma}}\circ\Tr^{(m,\omega)}_{\sig{\Sigma}}$ to $\Id_{\omega\mathsf{CatAlg}(\sig{\Sigma})}$, whose component $\varepsilon_{\calg{B}}$ at $\calg{B}$ is the inclusion of the $m$-cells of $\calg{B}$ into $\calg{B}$.
+All of them are inclusions of $m$-cells, or identities.
+Hence they satisfy the compatibility condition of Corollary~\ref{CLimitNat}.
+Therefore they induce a natural transformation $\varepsilon$ from $\Ds^{(\omega,m)}_{\sig{\Sigma}}\circ\Tr^{(m,\omega)}_{\sig{\Sigma}}$ to the identity, whose component at $\calg{B}$ is the inclusion of the $m$-cells of $\calg{B}$.
 
-\textsf{(Single-set case: triangular identities)} By Definition~\ref{DAdj}, we have to prove the triangular identities
-\begin{enumerate}
-	\item[(TI1)]
-	$ \left(\Tr^{(m,\omega)}_{\sig{\Sigma}}\ast\varepsilon\right)\circ\left(\id\ast\Tr^{(m,\omega)}_{\sig{\Sigma}}\right)=\id_{\Tr^{(m,\omega)}_{\sig{\Sigma}}} $; and
+In the globular case, the components of the counits of Proposition~\ref{PDiscTruncAdj} at the sorts of dimension at most $n$ are identities and $(k,m)$-identities, see Lemma~\ref{LDiscTruncCounit}.
+Hence they are compatible, and, by Corollary~\ref{CLimitNatGl}, they induce the natural transformation $\varepsilon^{\gl}$ of the statement.
 
-	\item[(TI2)]
-	$ \left(\varepsilon\ast\Ds^{(\omega,m)}_{\sig{\Sigma}}\right)\circ\left(\Ds^{(\omega,m)}_{\sig{\Sigma}}\ast\id\right)=\id_{\Ds^{(\omega,m)}_{\sig{\Sigma}}} $.
-\end{enumerate}
-We recall that a homomorphism is determined by its domain, its codomain and its underlying many-sorted mapping.
-
-Let $\calg{B}$ be an $\omega$-categorial $\sig{\Sigma}$-algebra.
-By the equation of the unit, the domain of $\Tr^{(m,\omega)}_{\sig{\Sigma}}(\varepsilon_{\calg{B}})$ is $\Tr^{(m,\omega)}_{\sig{\Sigma}}(\calg{B})$, whose cells of sort $s$ are the $m$-cells of sort $s$ of $\calg{B}$.
-Let $s\in S$ and $x$ an $m$-cell of sort $s$ of $\calg{B}$.
-Then the following chain of equalities holds
-\begin{align*}
-\left(\left(\left(\Tr^{(m,\omega)}_{\sig{\Sigma}}\ast\varepsilon\right)\circ\left(\id\ast\Tr^{(m,\omega)}_{\sig{\Sigma}}\right)\right)_{\calg{B}}\right)_{s}(x)
-&=
-\left(\Tr^{(m,\omega)}_{\sig{\Sigma}}\left(\varepsilon_{\calg{B}}\right)\circ\id_{\Tr^{(m,\omega)}_{\sig{\Sigma}}(\calg{B})}\right)_{s}(x)
-\tag{1}
-\\&=
-\left(\varepsilon_{\calg{B}}\right)_{s}(x)
-\tag{2}
-\\&=
-x
-\tag{3}
-\\&=
-\left(\id_{\Tr^{(m,\omega)}_{\sig{\Sigma}}}\right)_{\calg{B},s}(x).
-\tag{4}
-\end{align*}
-
-The first equality unravels the definitions of the horizontal and vertical composition of natural transformations; the second equality follows from the fact that $\id_{\Tr^{(m,\omega)}_{\sig{\Sigma}}(\calg{B})}$ is the identity homomorphism and from Proposition~\ref{PGenHepDerivorFunctor}, since $\varphi^{\Tr^{(m,\omega)}_{\sig{\Sigma}}}=\id_{S}$; the third equality follows from the fact that $\varepsilon_{\calg{B}}$ is an inclusion; finally, the last equality unravels the definition of the identity natural transformation at $\Tr^{(m,\omega)}_{\sig{\Sigma}}$.
-Hence the first triangular identity holds.
-
-Let $\calg{A}$ be an $m$-categorial $\sig{\Sigma}$-algebra.
-By the equation of the unit, the domain of $\varepsilon_{\Ds^{(\omega,m)}_{\sig{\Sigma}}(\calg{A})}$ is $\Ds^{(\omega,m)}_{\sig{\Sigma}}(\calg{A})$, and, by Proposition~\ref{PDiscOmegaDerivor}, every cell of $\Ds^{(\omega,m)}_{\sig{\Sigma}}(\calg{A})$ is an $m$-cell.
-Let $s\in S$ and $x$ a cell of sort $s$ of $\Ds^{(\omega,m)}_{\sig{\Sigma}}(\calg{A})$.
-Then the following chain of equalities holds
-\begin{align*}
-\left(\left(\left(\varepsilon\ast\Ds^{(\omega,m)}_{\sig{\Sigma}}\right)\circ\left(\Ds^{(\omega,m)}_{\sig{\Sigma}}\ast\id\right)\right)_{\calg{A}}\right)_{s}(x)
-&=
-\left(\varepsilon_{\Ds^{(\omega,m)}_{\sig{\Sigma}}(\calg{A})}\circ\Ds^{(\omega,m)}_{\sig{\Sigma}}\left(\id_{\calg{A}}\right)\right)_{s}(x)
-\tag{1}
-\\&=
-\left(\varepsilon_{\Ds^{(\omega,m)}_{\sig{\Sigma}}(\calg{A})}\right)_{s}(x)
-\tag{2}
-\\&=
-x
-\tag{3}
-\\&=
-\left(\id_{\Ds^{(\omega,m)}_{\sig{\Sigma}}}\right)_{\calg{A},s}(x).
-\tag{4}
-\end{align*}
-
-The first equality unravels the definitions of the horizontal and vertical composition of natural transformations; the second equality follows from the fact that $\Ds^{(\omega,m)}_{\sig{\Sigma}}$ preserves identities; the third equality follows from the fact that $\varepsilon_{\Ds^{(\omega,m)}_{\sig{\Sigma}}(\calg{A})}$ is the inclusion of the $m$-cells of $\Ds^{(\omega,m)}_{\sig{\Sigma}}(\calg{A})$ and $x$ is one of them; finally, the last equality unravels the definition of the identity natural transformation at $\Ds^{(\omega,m)}_{\sig{\Sigma}}$.
-Hence the second triangular identity holds.
-
-\textsf{(Globular case: unit)} The equation $\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}\circ\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}=\Id_{\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$ is Remark~\ref{RDiscOmegaTrunc}~(2) for $n=m$.
-
-\textsf{(Globular case: counit)} Let $\calg{B}$ be a globular $\omega$-categorial $\sig{\Sigma}$-algebra and $n\in\mathbb{N}$.
-By Remark~\ref{RDiscOmegaTrunc}, the following equality holds
-\begin{flushleft}
-$
-\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}\left(\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}\left(\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}(\calg{B})\right)\right)
-$
-\begin{align*}
-&=
-\begin{cases}
-\Ds^{\gl(n,m)}_{\sig{\Sigma}}\left(\Tr^{\gl(m,n)}_{\sig{\Sigma}}\left(\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\calg{B})\right)\right), & \text{if $m\leq n$;}\\
-\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\calg{B}), & \text{if $n<m$.}
-\end{cases}
-\end{align*}
-\end{flushleft}
-Let $\varepsilon^{\gl,n}_{\calg{B}}$ be the component of the counit of Proposition~\ref{PDiscTruncAdj} at $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\calg{B})$, if $m\leq n$, and the identity, if $n<m$.
-By Lemma~\ref{LDiscTruncCounit}, the component of $\varepsilon^{\gl,n}_{\calg{B}}$ at the sort $(k,s)$, for $k\leq n$, is the identity, if $k\leq m$, and $\mathrm{i}^{(k,m)}_{s}$, if $k>m$.
-Hence, for $n\leq n'$, the components of $\varepsilon^{\gl,n}_{\calg{B}}$ are the components of $\varepsilon^{\gl,n'}_{\calg{B}}$ at the sorts of dimension at most $n$, i.e., $\Tr^{\gl(n,n')}_{\sig{\Sigma}}(\varepsilon^{\gl,n'}_{\calg{B}})=\varepsilon^{\gl,n}_{\calg{B}}$.
-Thus the family satisfies the compatibility condition of Corollary~\ref{CLimitNatGl}, and it induces a natural transformation $\varepsilon^{\gl}=(\varepsilon^{\gl}_{\calg{B}})_{\calg{B}\in\mathrm{Ob}(\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma}))}$ from $\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}\circ\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}$ to $\Id_{\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$, whose component at $\calg{B}$ and at the sort $(k,s)$ is the identity, if $k\leq m$, and $\mathrm{i}^{(k,m)}_{s}$, if $k>m$.
-
-\textsf{(Globular case: triangular identities)} By Definition~\ref{DAdj}, we have to prove the triangular identities
-\begin{enumerate}
-	\item[(TI1)]
-	$ \left(\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}\ast\varepsilon^{\gl}\right)\circ\left(\id\ast\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}\right)=\id_{\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}} $;
-
-	\item[(TI2)]
-	$ \left(\varepsilon^{\gl}\ast\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}\right)\circ\left(\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}\ast\id\right)=\id_{\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}} $.
-\end{enumerate}
-
-Let $\calg{B}$ be a globular $\omega$-categorial $\sig{\Sigma}$-algebra.
-By the equation of the unit, the domain of $\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}(\varepsilon^{\gl}_{\calg{B}})$ is $\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}(\calg{B})$.
-Let $(k,s)\in(m+1)\times S$ and $x$ a $k$-cell of sort $s$ of $\calg{B}$.
-Then the following chain of equalities holds
-\begin{align*}
-\left(\left(\left(\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}\ast\varepsilon^{\gl}\right)\circ\left(\id\ast\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}\right)\right)_{\calg{B}}\right)_{(k,s)}(x)
-&=
-\left(\varepsilon^{\gl}_{\calg{B}}\right)_{(k,s)}(x)
-\tag{1}
-\\&=
-x
-\tag{2}
-\\&=
-\left(\id_{\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}}\right)_{\calg{B},(k,s)}(x).
-\tag{3}
-\end{align*}
-
-The first equality unravels the definitions of the horizontal and vertical composition of natural transformations, taking into account Proposition~\ref{PGenHepDerivorFunctor} and the fact that $\varphi^{\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}}(k,s)=(k,s)$; the second equality follows from the description of $\varepsilon^{\gl}_{\calg{B}}$, since $k\leq m$; finally, the last equality unravels the definition of the identity natural transformation at $\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}$.
-Hence the first triangular identity holds.
-
-Let $\calg{A}$ be a globular $m$-categorial $\sig{\Sigma}$-algebra.
-By the equation of the unit, the domain of $\varepsilon^{\gl}_{\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}(\calg{A})}$ is $\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}(\calg{A})$.
-Let $(k,s)\in\omega\times S$ and $x$ a cell of sort $(k,s)$ of $\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}(\calg{A})$.
-If $k\leq m$, then $(\varepsilon^{\gl}_{\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}(\calg{A})})_{(k,s)}(x)=x$.
-If $k>m$, then, by the explicit description of $\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}$ after Definition~\ref{DDiscretizationOmegaGl}, the $(k,m)$-identities of $\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}(\calg{A})$ are identity mappings, so that
-$$
-\left(\varepsilon^{\gl}_{\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}(\calg{A})}\right)_{(k,s)}(x)
-=
-\mathrm{i}^{(k,m)\,\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}(\calg{A})}_{s}(x)
-=
-x.
-$$
-Hence $\varepsilon^{\gl}_{\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}(\calg{A})}=\id_{\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}(\calg{A})}$ and the following chain of equalities holds
-\begin{align*}
-\left(\left(\varepsilon^{\gl}\ast\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}\right)\circ\left(\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}\ast\id\right)\right)_{\calg{A}}
-&=
-\varepsilon^{\gl}_{\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}(\calg{A})}\circ\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}\left(\id_{\calg{A}}\right)
-\tag{1}
-\\&=
-\id_{\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}(\calg{A})}
-\tag{2}
-\\&=
-\left(\id_{\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}}\right)_{\calg{A}}.
-\tag{3}
-\end{align*}
-
-The first equality unravels the definitions of the horizontal and vertical composition of natural transformations; the second equality follows from the above and from the fact that $\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}$ preserves identities; finally, the last equality unravels the definition of the identity natural transformation at $\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}$.
-Hence the second triangular identity holds.
+\textsf{(Triangular identities)} Since the unit is the identity, the triangular identities state that $\Tr^{(m,\omega)}_{\sig{\Sigma}}(\varepsilon_{\calg{B}})$ and $\varepsilon_{\Ds^{(\omega,m)}_{\sig{\Sigma}}(\calg{A})}$ are identities, for every $\omega$-categorial $\sig{\Sigma}$-algebra $\calg{B}$ and every $m$-categorial $\sig{\Sigma}$-algebra $\calg{A}$, and similarly in the globular case.
+They hold as in Proposition~\ref{PDiscTruncAdj}.
+In fact, $\Tr^{(m,\omega)}_{\sig{\Sigma}}(\varepsilon_{\calg{B}})$ is the restriction of $\varepsilon_{\calg{B}}$ to the $m$-cells, which is an identity.
+By Proposition~\ref{PDiscOmegaDerivor}, every cell of $\Ds^{(\omega,m)}_{\sig{\Sigma}}(\calg{A})$ is an $m$-cell, so that $\varepsilon_{\Ds^{(\omega,m)}_{\sig{\Sigma}}(\calg{A})}$ is an identity.
+In the globular case, the components of $\varepsilon^{\gl}_{\calg{B}}$ at the dimensions $k\leq m$ are identities.
+And the components of $\varepsilon^{\gl}_{\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}(\calg{A})}$ at the dimensions $k>m$ are the $(k,m)$-identities of $\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}(\calg{A})$, which are identities, by the description after Definition~\ref{DDiscretizationOmegaGl}.
 
 This completes the proof.
 \end{proof}
