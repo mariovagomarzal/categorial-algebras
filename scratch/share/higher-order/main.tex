@@ -2331,12 +2331,13 @@ We next relate the globular $n$-categorial $\sig{\Sigma}$-algebras with the $\si
 
 \begin{remark}\label{RGlobularIdent}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature. Then, under the above identification, the following equalities hold
-$$
-\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})=\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}}),
-\text{ for }n\in\mathbb{N},
-\qquad\text{and}\qquad
-\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})=\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(\omega)}}).
-$$
+\begin{enumerate}
+	\item 
+	for every $n \in \mathbb{N}$, $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})=\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})$; and
+	
+	\item 
+	$\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})=\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(\omega)}})$.
+\end{enumerate}
 In fact, in a globular $n$-category, the $(j,k)$-sources, $(j,k)$-targets and $(k,j)$-identities are total mappings, i.e., (EA$^{j,k}$1) holds, and the domain of $\circ^{(j,k)}$ is the fibered product of Definition~\ref{DOmegaCatGl}, i.e., (EA$^{j,k}$3) holds; as noted after the axioms of Definition~\ref{DSpecGlobular}, the conditions (MS1)--(MS9) of Definition~\ref{DOmegaCatGl} correspond to the remaining axioms on the globular structure; since the products $\mathsf{A}_{\mathbf{s}}$ are taken dimensionwise, a family of total mappings $(F_{\sigma,k})_{k}$ is a globular $n$-functor if, and only if, the axioms (EA0), (EA$^{j,k}$7) and (EA$^{j,k}$8) hold for $\sigma$; and the globular $n$-categorial $\sig{\Sigma}$-homomorphisms are exactly the homomorphisms of partial $\Sigma^{\gl(n)}$-algebras, see Definitions~\ref{DPartialAlg} and~\ref{DGlCatAlg}. Finally, every model of $\spec{C}^{\sig{\Sigma}^{\gl(n)}}$ is a $\sig{\Sigma}^{\gl(n)}$-algebra, see Definitions~\ref{DEpAlgebra} and~\ref{DSigmaCatGlobular}: the operation symbols $\sigma_{k}$, $\src^{(j,k)}_{s}$, $\tgt^{(j,k)}_{s}$ and $\mathrm{i}^{(k,j)}_{s}$ have empty sets of domain conditions, and they are total, by (EA0) and (EA$^{j,k}$1); and, by (EA$^{j,k}$3), $x\circ^{(j,k)}_{s}y$ is defined if, and only if, $(x,y)$ satisfies the domain condition of $\circ^{(j,k)}_{s}$. Hence the objects of $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})$ are exactly the models of $\spec{C}^{\sig{\Sigma}^{\gl(n)}}$. The same arguments apply in dimension $\omega$. In contrast with the single-set presentation, see Proposition~\ref{PFiniteDimNotQE}, in the globular presentation every cell has a dimension, namely the first coordinate of its sort, so that no further condition is needed in dimension $\omega$. The correspondences between the conditions of Definition~\ref{DOmegaCatGl} and the axioms are the following:
 \begin{align*}
 &\text{(MS1)}\leftrightarrow\text{(EA$^{h,j,k}$1)};
@@ -3711,17 +3712,22 @@ is an adjunction from $\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ to $\maths
 \end{proposition}
 \begin{proof}
 By Proposition~\ref{PTruncDiscGl}, $\Tr^{\gl(m,n)}_{\sig{\Sigma}}\circ\Ds^{\gl(n,m)}_{\sig{\Sigma}}=\Id_{\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$, so that the identity $\id=(\id_{\calg{A}})_{\calg{A}\in\mathrm{Ob}(\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}))}$ is a natural transformation from $\Id_{\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$ to $\Tr^{\gl(m,n)}_{\sig{\Sigma}}\circ\Ds^{\gl(n,m)}_{\sig{\Sigma}}$; and, by Lemma~\ref{LDiscTruncCounitGl}, $\varepsilon^{\gl}$ is a natural transformation from $\Ds^{\gl(n,m)}_{\sig{\Sigma}}\circ\Tr^{\gl(m,n)}_{\sig{\Sigma}}$ to $\Id_{\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$. By Definition~\ref{DAdj}, we have to prove the triangular identities
-$$
-\left(\Tr^{\gl(m,n)}_{\sig{\Sigma}}\ast\varepsilon^{\gl}\right)\circ\left(\id\ast\Tr^{\gl(m,n)}_{\sig{\Sigma}}\right)=\id_{\Tr^{\gl(m,n)}_{\sig{\Sigma}}}
-\qquad\text{and}\qquad
-\left(\varepsilon^{\gl}\ast\Ds^{\gl(n,m)}_{\sig{\Sigma}}\right)\circ\left(\Ds^{\gl(n,m)}_{\sig{\Sigma}}\ast\id\right)=\id_{\Ds^{\gl(n,m)}_{\sig{\Sigma}}}.
-$$
+\begin{enumerate}
+	\item
+	$\left(\Tr^{\gl(m,n)}_{\sig{\Sigma}}\ast\varepsilon^{\gl}\right)\circ\left(\id\ast\Tr^{\gl(m,n)}_{\sig{\Sigma}}\right)=\id_{\Tr^{\gl(m,n)}_{\sig{\Sigma}}}$; and
+	
+	\item
+	$\left(\varepsilon^{\gl}\ast\Ds^{\gl(n,m)}_{\sig{\Sigma}}\right)\circ\left(\Ds^{\gl(n,m)}_{\sig{\Sigma}}\ast\id\right)=\id_{\Ds^{\gl(n,m)}_{\sig{\Sigma}}}$.
+\end{enumerate}
 If $m=n$, then all the functors involved are identities and $\varepsilon^{\gl}$ is the identity, so that both identities hold. Let us assume that $m<n$. We recall that a homomorphism is determined by its domain, its codomain and its underlying many-sorted mapping.
 
 \textsf{(First triangular identity)} Let $\calg{B}$ be a globular $n$-categorial $\sig{\Sigma}$-algebra. By Proposition~\ref{PTruncDiscGl}, the domain of $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\varepsilon^{\gl}_{\calg{B}})$ is $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\calg{B})$. Let $(k,s)\in(m+1)\times S$ and $x$ a cell of sort $(k,s)$ of $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\calg{B})$, i.e., a $k$-cell of sort $s$ of $\calg{B}$. Then the following chain of equalities holds
+\begin{flushleft}
+$
+\left(\left(\left(\Tr^{\gl(m,n)}_{\sig{\Sigma}}\ast\varepsilon^{\gl}\right)\circ\left(\id\ast\Tr^{\gl(m,n)}_{\sig{\Sigma}}\right)\right)_{\calg{B}}\right)_{(k,s)}(x)
+$
 \allowdisplaybreaks
 \begin{align*}
-\left(\left(\left(\Tr^{\gl(m,n)}_{\sig{\Sigma}}\ast\varepsilon^{\gl}\right)\circ\left(\id\ast\Tr^{\gl(m,n)}_{\sig{\Sigma}}\right)\right)_{\calg{B}}\right)_{(k,s)}(x)
 &=
 \left(\Tr^{\gl(m,n)}_{\sig{\Sigma}}\left(\varepsilon^{\gl}_{\calg{B}}\right)\circ\id_{\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\calg{B})}\right)_{(k,s)}(x)
 \tag{1}
@@ -3735,8 +3741,13 @@ x
 \left(\id_{\Tr^{\gl(m,n)}_{\sig{\Sigma}}}\right)_{\calg{B},(k,s)}(x).
 \tag{4}
 \end{align*}
+\end{flushleft}
 
-The first equality unravels the definitions of the horizontal and vertical composition of natural transformations; the second equality follows from the fact that $\id_{\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\calg{B})}$ is the identity homomorphism and from Proposition~\ref{PGenHepDerivorFunctor}, since $\varphi^{\Tr^{\gl(m,n)}_{\sig{\Sigma}}}(k,s)=(k,s)$ and the domains of $\bTr^{\gl(m,n)}_{\sig{\Sigma}}$ are empty; the third equality follows from Lemma~\ref{LDiscTruncCounitGl}, since $k\leq m$; finally, the last equality unravels the definition of the identity natural transformation at $\Tr^{\gl(m,n)}_{\sig{\Sigma}}$.
+The first equality unravels the definitions of the horizontal and vertical composition of natural transformations; the second equality follows from the fact that $\id_{\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\calg{B})}$ is the identity homomorphism and from Proposition~\ref{PGenHepDerivorFunctor}, since 
+$$
+\varphi^{\Tr^{\gl(m,n)}_{\sig{\Sigma}}}(k,s)=(k,s)
+$$
+and the domains of $\bTr^{\gl(m,n)}_{\sig{\Sigma}}$ are empty; the third equality follows from Lemma~\ref{LDiscTruncCounitGl}, since $k\leq m$; finally, the last equality unravels the definition of the identity natural transformation at $\Tr^{\gl(m,n)}_{\sig{\Sigma}}$.
 
 Hence the first triangular identity holds.
 
@@ -4685,11 +4696,13 @@ $$
 Let $\varepsilon^{n}_{\calg{B}}$ be the component of the counit of Proposition~\ref{PDiscTruncAdj} at $\Tr^{(n,\omega)}_{\sig{\Sigma}}(\calg{B})$, if $m\leq n$, and the identity, if $n<m$. All of them are inclusions of $m$-cells, or identities, so that they satisfy the compatibility condition of Corollary~\ref{CLimitNat}, and they induce a natural transformation $\varepsilon=(\varepsilon_{\calg{B}})_{\calg{B}\in\mathrm{Ob}(\omega\mathsf{CatAlg}(\sig{\Sigma}))}$ from $\Ds^{(\omega,m)}_{\sig{\Sigma}}\circ\Tr^{(m,\omega)}_{\sig{\Sigma}}$ to $\Id_{\omega\mathsf{CatAlg}(\sig{\Sigma})}$, whose component $\varepsilon_{\calg{B}}$ at $\calg{B}$ is the inclusion of the $m$-cells of $\calg{B}$ into $\calg{B}$.
 
 \textsf{(Single-set case: triangular identities)} By Definition~\ref{DAdj}, we have to prove the triangular identities
-$$
-\left(\Tr^{(m,\omega)}_{\sig{\Sigma}}\ast\varepsilon\right)\circ\left(\id\ast\Tr^{(m,\omega)}_{\sig{\Sigma}}\right)=\id_{\Tr^{(m,\omega)}_{\sig{\Sigma}}}
-\qquad\text{and}\qquad
-\left(\varepsilon\ast\Ds^{(\omega,m)}_{\sig{\Sigma}}\right)\circ\left(\Ds^{(\omega,m)}_{\sig{\Sigma}}\ast\id\right)=\id_{\Ds^{(\omega,m)}_{\sig{\Sigma}}}.
-$$
+\begin{enumerate}
+	\item[(TI1)]
+	$ \left(\Tr^{(m,\omega)}_{\sig{\Sigma}}\ast\varepsilon\right)\circ\left(\id\ast\Tr^{(m,\omega)}_{\sig{\Sigma}}\right)=\id_{\Tr^{(m,\omega)}_{\sig{\Sigma}}} $; and
+	
+	\item[(TI2)]
+	$ \left(\varepsilon\ast\Ds^{(\omega,m)}_{\sig{\Sigma}}\right)\circ\left(\Ds^{(\omega,m)}_{\sig{\Sigma}}\ast\id\right)=\id_{\Ds^{(\omega,m)}_{\sig{\Sigma}}} $.
+\end{enumerate}
 We recall that a homomorphism is determined by its domain, its codomain and its underlying many-sorted mapping.
 
 Let $\calg{B}$ be an $\omega$-categorial $\sig{\Sigma}$-algebra. By the equation of the unit, the domain of $\Tr^{(m,\omega)}_{\sig{\Sigma}}(\varepsilon_{\calg{B}})$ is $\Tr^{(m,\omega)}_{\sig{\Sigma}}(\calg{B})$, whose cells of sort $s$ are the $m$-cells of sort $s$ of $\calg{B}$. Let $s\in S$ and $x$ an $m$-cell of sort $s$ of $\calg{B}$. Then the following chain of equalities holds
@@ -4746,11 +4759,13 @@ $$
 Let $\varepsilon^{\gl,n}_{\calg{B}}$ be the component of the counit of Proposition~\ref{PDiscTruncAdjGl} at $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\calg{B})$, if $m\leq n$, and the identity, if $n<m$. By Lemma~\ref{LDiscTruncCounitGl}, the component of $\varepsilon^{\gl,n}_{\calg{B}}$ at the sort $(k,s)$, for $k\leq n$, is the identity, if $k\leq m$, and $\mathrm{i}^{(k,m)}_{s}$, if $k>m$. Hence, for $n\leq n'$, the components of $\varepsilon^{\gl,n}_{\calg{B}}$ are the components of $\varepsilon^{\gl,n'}_{\calg{B}}$ at the sorts of dimension at most $n$, i.e., $\Tr^{\gl(n,n')}_{\sig{\Sigma}}(\varepsilon^{\gl,n'}_{\calg{B}})=\varepsilon^{\gl,n}_{\calg{B}}$. Thus the family satisfies the compatibility condition of Corollary~\ref{CLimitNatGl}, and it induces a natural transformation $\varepsilon^{\gl}=(\varepsilon^{\gl}_{\calg{B}})_{\calg{B}\in\mathrm{Ob}(\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma}))}$ from $\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}\circ\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}$ to $\Id_{\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$, whose component at $\calg{B}$ and at the sort $(k,s)$ is the identity, if $k\leq m$, and $\mathrm{i}^{(k,m)}_{s}$, if $k>m$.
 
 \textsf{(Globular case: triangular identities)} By Definition~\ref{DAdj}, we have to prove the triangular identities
-$$
-\left(\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}\ast\varepsilon^{\gl}\right)\circ\left(\id\ast\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}\right)=\id_{\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}}
-\quad\text{and}\quad
-\left(\varepsilon^{\gl}\ast\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}\right)\circ\left(\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}\ast\id\right)=\id_{\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}}.
-$$
+\begin{enumerate}
+	\item[(TI1)]
+	$ \left(\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}\ast\varepsilon^{\gl}\right)\circ\left(\id\ast\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}\right)=\id_{\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}} $;
+	
+	\item[(TI2)]
+	$ \left(\varepsilon^{\gl}\ast\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}\right)\circ\left(\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}\ast\id\right)=\id_{\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}} $.
+\end{enumerate}
 
 Let $\calg{B}$ be a globular $\omega$-categorial $\sig{\Sigma}$-algebra. By the equation of the unit, the domain of $\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}(\varepsilon^{\gl}_{\calg{B}})$ is $\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}(\calg{B})$. Let $(k,s)\in(m+1)\times S$ and $x$ a $k$-cell of sort $s$ of $\calg{B}$. Then the following chain of equalities holds
 \allowdisplaybreaks
@@ -5106,11 +5121,13 @@ This completes the proof.
 \end{proof}
 
 Let $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ be many-sorted signatures, $\mathbf{c}=(\varphi,c)$ a derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $n\in\mathbb{N}$. By Proposition~\ref{PChangeSigDerivor} and Remarks~\ref{RSingleSetIdent} and~\ref{RGlobularIdent}, and by abuse of notation, we denote the corestrictions by
-$$
-(\mathbf{c}^{(n)})^{\ast}_{\gd}\colon\mathsf{nCatAlg}(\sig{\Lambda})\mor\mathsf{nCatAlg}(\sig{\Sigma})
-\qquad\text{and}\qquad
-(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\colon\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Lambda})\mor\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}).
-$$
+\begin{enumerate}
+	\item
+	$ (\mathbf{c}^{(n)})^{\ast}_{\gd}\colon\mathsf{nCatAlg}(\sig{\Lambda})\mor\mathsf{nCatAlg}(\sig{\Sigma}) $; and 
+	
+	\item 
+	$ (\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\colon\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Lambda})\mor\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}) $.
+\end{enumerate}
 Explicitly, $(\mathbf{c}^{(n)})^{\ast}_{\gd}$ sends an $n$-categorial $\sig{\Lambda}$-algebra $\calg{B}$ to the $n$-categorial $\sig{\Sigma}$-algebra whose single-set $n$-category of sort $s$ is the single-set $n$-category of sort $\varphi(s)$ of $\calg{B}$ and in which every $\sigma\in\Sigma$ acts as the $n$-functor $c(\sigma)^{\calg{B}}$, see Lemma~\ref{LTermFunctor}; and, by Proposition~\ref{PGenHepDerivorFunctor}, it sends an $n$-categorial $\sig{\Lambda}$-homomorphism $F$ to $F_{\varphi}=(F_{\varphi(s)})_{s\in S}$. Similarly, $(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}$ sends a globular $n$-categorial $\sig{\Lambda}$-algebra $\calg{B}$ to the globular $n$-categorial $\sig{\Sigma}$-algebra whose globular $n$-category of sort $s$ is that of sort $\varphi(s)$ of $\calg{B}$ and in which every $\sigma_{k}$ acts as $c(\sigma)_{k}^{\calg{B}}$; and it sends $F$ to $F_{\varphi^{\gl(n)}}=(F_{(k,\varphi(s))})_{(k,s)\in(n+1)\times S}$. For $n=0$, $(\mathbf{c}^{(0)})^{\ast}_{\gd}$ is the usual functor from $\mathsf{Alg}(\Lambda)$ to $\mathsf{Alg}(\Sigma)$ induced by $\mathbf{c}$, see Remark~\ref{RHepAlgCat}.
 
 In the following lemma we collect the translations of the terms $P$ and $P_{k}$ along the generalized hep-derivors of this work that we need. By~(Der4), for every pair of derivors $\mathbf{d}=(\psi,d)$ from $(T,\Lambda)$ to $(U,\Omega)$ and $\mathbf{e}=(\chi,e)$ from $(U,\Omega)$ to $(W,\Xi)$, $(e^{\sharp}\circ d)^{\sharp}=e^{\sharp}\circ d^{\sharp}$, so that $e^{\sharp}\circ d^{\sharp}$ only depends on the composite derivor $(\chi\circ\psi,e^{\sharp}\circ d)$, see~(Der3). Hence, in order to prove an equality of the form $e^{\sharp}\circ d^{\sharp}=e'^{\sharp}\circ d'^{\sharp}$, it suffices to prove that the composite derivors have the same mapping on sorts and that $e^{\sharp}(d(\tau))=e'^{\sharp}(d'(\tau))$, for every operation symbol $\tau$ of $\Lambda$.
@@ -5402,11 +5419,13 @@ Let $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ be many-sorted sig
 \beta^{(m,n),\sig{\Sigma}}_{(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}(\calg{B})}&=(\mathbf{c}^{(m)})^{\ast}_{\gd}\left(\beta^{(m,n),\sig{\Lambda}}_{\calg{B}}\right),
 \end{align*}
 where the superscripts $\sig{\Sigma}$ and $\sig{\Lambda}$ indicate the signature, and, similarly, $\varepsilon^{\sig{\Sigma}}_{(\mathbf{c}^{(n)})^{\ast}_{\gd}(\calg{B})}=(\mathbf{c}^{(n)})^{\ast}_{\gd}(\varepsilon^{\sig{\Lambda}}_{\calg{B}})$, for every $n$-categorial $\sig{\Lambda}$-algebra $\calg{B}$, and $\varepsilon^{\gl,\sig{\Sigma}}_{(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}(\calg{B})}=(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}(\varepsilon^{\gl,\sig{\Lambda}}_{\calg{B}})$, for every globular $n$-categorial $\sig{\Lambda}$-algebra $\calg{B}$. For instance, $\beta^{(m,n),\sig{\Sigma}}_{(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}(\calg{B})}$ is the family $(\mathrm{i}^{(n,m)}_{\varphi(s)})_{s\in S}$ of $(n,m)$-identities of $\calg{B}$, which is $(\beta^{(m,n),\sig{\Lambda}}_{\calg{B}})_{\varphi}$; and both homomorphisms have the same domain and codomain, since, by Propositions~\ref{PChangeSigGdUf} and~\ref{PChangeSigDsTr},
-$$
-\Uf^{(m)}_{\sig{\Sigma}}\circ\Tr^{\gl(m,n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}=(\mathbf{c}^{(m)})^{\ast}_{\gd}\circ\Uf^{(m)}_{\sig{\Lambda}}\circ\Tr^{\gl(m,n)}_{\sig{\Lambda}}
-\quad\text{and}\quad
-\Tr^{(m,n)}_{\sig{\Sigma}}\circ\Uf^{(n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}=(\mathbf{c}^{(m)})^{\ast}_{\gd}\circ\Tr^{(m,n)}_{\sig{\Lambda}}\circ\Uf^{(n)}_{\sig{\Lambda}}.
-$$
+\begin{enumerate}
+	\item 
+	$ \Uf^{(m)}_{\sig{\Sigma}}\circ\Tr^{\gl(m,n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}=(\mathbf{c}^{(m)})^{\ast}_{\gd}\circ\Uf^{(m)}_{\sig{\Lambda}}\circ\Tr^{\gl(m,n)}_{\sig{\Lambda}} $; and
+	
+	\item 
+	$ \Tr^{(m,n)}_{\sig{\Sigma}}\circ\Uf^{(n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}=(\mathbf{c}^{(m)})^{\ast}_{\gd}\circ\Tr^{(m,n)}_{\sig{\Lambda}}\circ\Uf^{(n)}_{\sig{\Lambda}} $.
+\end{enumerate}
 Thus the adjunctions of Propositions~\ref{PGdUfAdj}, \ref{PDiscTruncAdj} and~\ref{PDiscTruncAdjGl}, and the algebraic square of Proposition~\ref{PAlgSquareFinite}, are compatible with the change of signature.
 \end{remark}
 
@@ -5436,11 +5455,13 @@ The proofs of Lemma~\ref{LTermFunctor}, of Proposition~\ref{PChangeSigDerivor} a
 \end{proof}
 
 As in the finite-dimensional case, and by abuse of notation, we denote the restrictions and corestrictions of Proposition~\ref{PChangeSigOmega} by
-$$
-(\mathbf{c}^{(\omega)})^{\ast}_{\gd}\colon\omega\mathsf{CatAlg}(\sig{\Lambda})\mor\omega\mathsf{CatAlg}(\sig{\Sigma})
-\qquad\text{and}\qquad
-(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}\colon\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Lambda})\mor\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma}).
-$$
+\begin{enumerate}
+	\item
+	$ (\mathbf{c}^{(\omega)})^{\ast}_{\gd}\colon\omega\mathsf{CatAlg}(\sig{\Lambda})\mor\omega\mathsf{CatAlg}(\sig{\Sigma}) $; and
+	
+	\item 
+	$ (\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}\colon\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Lambda})\mor\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma}) $.
+\end{enumerate}
 
 We next consider truncation and discretization in dimension $\omega$.
 
