@@ -1360,21 +1360,21 @@ We proceed by induction on the term $P$.
 
 \textsf{(Variables)} If $P=v^{\mathbf{t}}_{j}$, for some $j\in\bb{\mathbf{t}}$, then, by~(Der1), $e^{\sharp}(P)=v^{\psi^{\star}(\mathbf{t})}_{j}$, so that $e^{\sharp}(P)^{\mathbf{C}}(\mathbf{c})=c_{j}=P^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c})$.
 
-\textsf{(Operation symbols)} Let us assume that $P=\lambda((P_{j})_{j\in\bb{\mathbf{r}}})$, with $\lambda\in\Lambda_{\mathbf{r},t}$, and that the statement holds for every $P_{j}$. Let $\mathbf{c}\in\Dom(P^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})})$ and let $\mathbf{y}$ stand for the family $(P_{j}^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c}))_{j\in\bb{\mathbf{r}}}$, which, by Definition~\ref{DTermOp}, is in $\Dom(\lambda^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})})$. By Proposition~\ref{PTransformedAlg}, $\mathbf{y}\in\Dom(e(\lambda)^{\mathbf{C}})$ and $\lambda^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{y})=e(\lambda)^{\mathbf{C}}(\mathbf{y})$. By~(Der2), $e^{\sharp}(P)=(e^{\sharp}(P_{j}))^{\sharp}_{j\in\bb{\mathbf{r}}}(e(\lambda))$. Therefore, by the induction hypothesis and Remark~\ref{RSubst}, $\mathbf{c}\in\Dom(e^{\sharp}(P)^{\mathbf{C}})$, and the following chain of equalities holds
+\textsf{(Operation symbols)} Let us assume that $P=\tau((P_{j})_{j\in\bb{\mathbf{r}}})$, with $\tau\in\Lambda_{\mathbf{r},t}$, and that the statement holds for every $P_{j}$. Let $\mathbf{c}\in\Dom(P^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})})$ and let $\mathbf{y}$ stand for the family $(P_{j}^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c}))_{j\in\bb{\mathbf{r}}}$, which, by Definition~\ref{DTermOp}, is in $\Dom(\tau^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})})$. By Proposition~\ref{PTransformedAlg}, $\mathbf{y}\in\Dom(e(\tau)^{\mathbf{C}})$ and $\tau^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{y})=e(\tau)^{\mathbf{C}}(\mathbf{y})$. By~(Der2), $e^{\sharp}(P)=(e^{\sharp}(P_{j}))^{\sharp}_{j\in\bb{\mathbf{r}}}(e(\tau))$. Therefore, by the induction hypothesis and Remark~\ref{RSubst}, $\mathbf{c}\in\Dom(e^{\sharp}(P)^{\mathbf{C}})$, and the following chain of equalities holds
 \allowdisplaybreaks
 \begin{align*}
 e^{\sharp}(P)^{\mathbf{C}}\left(\mathbf{c}\right)
 &=
-\left(\left(e^{\sharp}(P_{j})\right)^{\sharp}_{j\in\bb{\mathbf{r}}}\left(e(\lambda)\right)\right)^{\mathbf{C}}\left(\mathbf{c}\right)
+\left(\left(e^{\sharp}(P_{j})\right)^{\sharp}_{j\in\bb{\mathbf{r}}}\left(e(\tau)\right)\right)^{\mathbf{C}}\left(\mathbf{c}\right)
 \tag{1}
 \\&=
-e(\lambda)^{\mathbf{C}}\left(\left(e^{\sharp}(P_{j})^{\mathbf{C}}(\mathbf{c})\right)_{j\in\bb{\mathbf{r}}}\right)
+e(\tau)^{\mathbf{C}}\left(\left(e^{\sharp}(P_{j})^{\mathbf{C}}(\mathbf{c})\right)_{j\in\bb{\mathbf{r}}}\right)
 \tag{2}
 \\&=
-e(\lambda)^{\mathbf{C}}\left(\mathbf{y}\right)
+e(\tau)^{\mathbf{C}}\left(\mathbf{y}\right)
 \tag{3}
 \\&=
-\lambda^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}\left(\mathbf{y}\right)
+\tau^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}\left(\mathbf{y}\right)
 \tag{4}
 \\&=
 P^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}\left(\mathbf{c}\right).
