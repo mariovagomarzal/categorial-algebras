@@ -154,7 +154,7 @@ As is customary in the work of our group, see~\cite{CVCL16, CVCL18, CVCL23, CVCL
 
 \subsection{Our work}
 
-In Section~\ref{SPreliminaries} we collect the notions on many-sorted sets, free monoids, many-sorted algebras, terms and variables, Hall algebras and derivors, many-sorted partial algebras, existence and quasi-existence equations, adjunctions and the Grothendieck construction that we use in the rest of this work.
+In Section~\ref{SPreliminaries} we collect the notions on many-sorted sets, free monoids, many-sorted algebras, terms and variables, derivors, many-sorted partial algebras, existence and quasi-existence equations, adjunctions and the Grothendieck construction that we use in the rest of this work.
 
 In Section~\ref{SGenHepDerivors} we introduce the ep-signatures, the ep-algebras and their varieties, the hierarchical ep-signatures, or hep-signatures, and the generalized hep-derivors between them.
 We prove that every generalized hep-derivor induces a functor between the categories of partial algebras, and we characterize when the transformed algebra of a partial algebra is an ep-algebra.
@@ -634,184 +634,311 @@ Finally, for every set of $\mathrm{E}$-equations $\mathcal{E}\subseteq\mathrm{Ee
 
 \subsection{Derivors}\label{SPrelimDerivors}
 
-In this subsection, after defining the variety of Hall algebras, we introduce the notion of derivor between many-sorted signatures and the category $\mathsf{Sig}_{\mathfrak{d}}$ of many-sorted signatures and derivors, see~\cite{CVST10b}.
-Before defining the notion of Hall algebra, we recall that
-\begin{enumerate}
-	\item a finitary specification is an ordered triple $(S,\Sigma,\mathcal{E})$, where $S$ is a set of sorts, $\Sigma$ an $S$-sorted signature, and $\mathcal{E}\subseteq\mathrm{Eq}_{V^{S}}(\Sigma)=
-	(\mathrm{T}_{\Sigma}(X)_{s}^{2})_{(X,s)\in \mathrm{Sub}_{\mathrm{f}}(V^{S})\times S}$, i.e., a set of finitary $\Sigma$-equations, where $V^{S}$, the $S$-sorted set of the variables, is a fixed $S$-countably infinite $S$-sorted set and $\mathrm{Sub}_{\mathrm{f}}(V^{S})$ is the set of its finite subsets; and that
-	\item a $\Sigma$-algebra $\mathbf{A}$ is a $(S,\Sigma,\mathcal{E})$-algebra if $\mathbf{A}\models^{\Sigma} \mathcal{E}$, i.e., if, for every $(X,s)\in \mathrm{Sub}_{\mathrm{f}}(V^{S})\times S$ and every $(P,Q)\in \mathcal{E}_{X,s}$, $\mathbf{A}$ is a model of $(P,Q)$, in symbols $\mathbf{A}\models^{\Sigma}_{X,s} (P,Q)$, which in turn means that, for every $a\in \mathrm{Hom}(X,A)$, $a^{\sharp}_{s}(P) = a^{\sharp}_{s}(Q)$.
-\end{enumerate}
-
-\begin{definition}\label{DHall}
-	Let $S$ be a set of sorts and let $V^{\mathrm{H}_{S}} = (V^{\mathrm{H}_{S}}_{\mathbf{s},s})_{(\mathbf{s},s)\in S^{\star}\times S}$ be a fixed $S^{\star}\times S$-sorted set of variables with a countably infinity of variables in each component, say $V^{\mathrm{H}_{S}}_{\mathbf{s},s} = \{\,v^{\mathbf{s},s}_{n}\mid n\in \mathbb{N}\,\}$ (which is isomorphic to $\{(\mathbf{s},s)\}\times\mathbb{N}$), for every $(\mathbf{s},s)\in S^{\star}\times S$.
-A \emph{Hall algebra for} $S$ is a $\mathrm{H}_{S} = (S^{\star}\times S,\Sigma^{\mathrm{H}_{S}},\mathcal{E}^{\mathrm{H}_{S}})$-algebra, where $\Sigma^{\mathrm{H}_{S}}$ is the $S^{\star}\times S$-sorted signature, i.e., the $(S^{\star}\times S)^{\star}\times (S^{\star}\times S)$-sorted set, defined as follows:
-	\begin{enumerate}
-		\item[$\mathrm{HS}_{1}$.] For every $\mathbf{s}\in S^{\star}$ and $i\in\bb{\mathbf{s}}$,
-		$$
-		\pi^{\mathbf{s}}_{i}\colon\lambda\mor(\mathbf{s},s_{i}),
-		$$
-		where $\bb{\mathbf{s}}$ is the \emph{length} of the word $\mathbf{s}$ and $\lambda$ the \emph{empty word} in the underlying set of the free monoid on $S^{\star}\times S$.
-		\item[$\mathrm{HS}_{2}$.] For every $\mathbf{r}$, $\mathbf{s}\in S^{\star}$ and $s\in S$,
-		$$
-		\xi_{\mathbf{r},\mathbf{s},s}\colon ((\mathbf{s},s),(\mathbf{r},s_{0}),\ldots,(\mathbf{r},s_{\bb{\mathbf{s}}-1}))\mor(\mathbf{r},s);
-		$$
-	\end{enumerate}
-	while $\mathcal{E}^{\mathrm{H}_{S}}$ is the sub-$(S^{\star}\times S)^{\star}\times (S^{\star}\times S)$-sorted set of $\mathrm{Eq}(\Sigma^{\mathrm{H}_{S}})$, where
-	$$
-	\mathrm{Eq}\left(\Sigma^{\mathrm{H}_{S}}\right) =
-	\left(\mathrm{T}_{\Sigma^{\mathrm{H}_{S}}}(\vs{\ol{\mathbf{s}}})_{(\mathbf{r},s)}^{2}\right)_{(\ol{\mathbf{s}},(\mathbf{r},s))\in
-		(S^{\star}\times S)^{\star}\times (S^{\star}\times S)},
-	$$
-	defined as follows:
-	\begin{enumerate}
-		\item[$\mathrm{H}_{1}$.] \emph{Projection}.
-For every $\mathbf{r}$, $\mathbf{s}\in S^{\star}$ and $i\in\bb{\mathbf{s}}$, the equation
-		$$
-		\xi_{\mathbf{r},\mathbf{s},s_{i}}(\pi^{\mathbf{s}}_{i},v^{\mathbf{r},s_{0}}_{0},\ldots,
-		v^{\mathbf{r},s_{\bb{\mathbf{s}}-1}}_{\bb{\mathbf{s}}-1})=v^{\mathbf{r},s_{i}}_{i}
-		$$
-		of type $(((\mathbf{r},s_{0}),\ldots,(\mathbf{r},s_{\bb{\mathbf{s}}-1})),(\mathbf{r},s_{i})).$
-		\item[$\mathrm{H}_{2}$.] \emph{Identity}.
-For every $\mathbf{r}\in S^{\star}$ and $j\in \bb{\mathbf{r}}$, the equation
-		$$
-		\xi_{\mathbf{r},\mathbf{r},r_{j}}(v^{\mathbf{r},r_{j}}_{j},\pi^{\mathbf{r}}_{0},\ldots,\pi^{\mathbf{r}}_{\bb{\mathbf{r}}-1})=
-		v^{\mathbf{r},r_{j}}_{j}
-		$$
-		of type $(((\mathbf{r},r_{j})),(\mathbf{r},r_{j})).$
-		\item[$\mathrm{H}_{3}$.] \emph{Associativity}.
-For every $\mathbf{q}$, $\mathbf{r}$, $\mathbf{s}\in S^{\star}$ and $s\in S$, the equation
-		\begin{multline*}
-			\xi_{\mathbf{q},\mathbf{r},s}(
-			\xi_{\mathbf{r},\mathbf{s},s}(v^{\mathbf{s},s}_{0},v^{\mathbf{r},s_{0}}_{1},\ldots,
-			v^{\mathbf{r},s_{\bb{\mathbf{s}}-1}}_{\bb{\mathbf{s}}}),
-			v^{\mathbf{q},r_{0}}_{\bb{\mathbf{s}}+1},
-			\ldots,v^{\mathbf{q},r_{\bb{\mathbf{r}}-1}}_{\bb{\mathbf{s}}+\bb{\mathbf{r}}}) = \\
-			\xi_{\mathbf{q},\mathbf{s},s}(v^{\mathbf{s},s}_{0},
-			\xi_{\mathbf{q},\mathbf{r},s_{0}}(v^{\mathbf{r},s_{0}}_{1},v^{\mathbf{q},r_{0}}_{\bb{\mathbf{s}}+1},
-			\ldots,v^{\mathbf{q},r_{\bb{\mathbf{r}}-1}}_{\bb{\mathbf{s}}+\bb{\mathbf{r}}}),
-			\\
-			\ldots,
-			\xi_{\mathbf{q},\mathbf{r},s_{\bb{\mathbf{s}}-1}}(v^{\mathbf{r},s_{\bb{\mathbf{s}}-1}}_{\bb{\mathbf{s}}},
-			v^{\mathbf{q},r_{0}}_{\bb{\mathbf{s}}+1},
-			\ldots,v^{\mathbf{q},r_{\bb{\mathbf{r}}-1}}_{\bb{\mathbf{s}}+\bb{\mathbf{r}}}))
-		\end{multline*}
-		of type $(((\mathbf{s},s),(\mathbf{r},s_{0}),\ldots,(\mathbf{r},s_{\bb{\mathbf{s}}-1}),
-		(\mathbf{q},r_{0}),\ldots,(\mathbf{q},r_{\bb{\mathbf{r}}-1})),(\mathbf{q},s)).$
-	\end{enumerate}
-	We call the formal constants $\pi^{\mathbf{s}}_{i}$ \emph{projections}, and the formal operations $\xi_{\mathbf{r},\mathbf{s},s}$ \emph{substitution operators}.
-Furthermore, we will denote by $\mathsf{Alg}(\mathrm{H}_{S})$ the category of Hall algebras for $S$ and homomorphisms between Hall algebras.
-Since $\mathsf{Alg}(\mathrm{H}_{S})$ is a variety, the forgetful functor $\mathrm{G}_{\mathrm{H}_{S}}$ from $\mathsf{Alg}(\mathrm{H}_{S})$ to $\mathsf{Set}^{S^{\star}\times S}$ has a left adjoint $\mathbf{T}_{\mathrm{H}_{S}}$, which assigns to an $S^{\star}\times S$-sorted set $\Sigma$ the corresponding free Hall algebra $\mathbf{T}_{\mathrm{H}_{S}}(\Sigma)$.
-\end{definition}
-
-For every $S$-sorted set $A$, $\mathrm{O}_{\mathrm{H}_{S}}(A) = (\mathrm{Hom}(A_{\mathbf{s}},A_{s}))_{(\mathbf{s},s)\in S^{\star}\times S}$, the $S^{\star}\times S$-sorted set of operations for $A$, is naturally equipped with a structure of Hall algebra, as stated in the following proposition, if we realize the projections as the true projections and the substitution operators as the generalized composition of mappings.
-
-\begin{proposition}\label{PHallOp}
-	Let $S$ be a set of sorts, $A$ an $S$-sorted set and $\mathbf{O}_{\mathrm{H}_{S}}(A)$ the $\Sigma^{\mathrm{H}_{S}}$-algebra with underlying many-sorted set $\mathrm{O}_{\mathrm{H}_{S}}(A)$ and algebraic structure defined as follows:
-	\begin{enumerate}
-		\item For every $\mathbf{s}\in S^{\star}$ and $i\in\bb{\mathbf{s}}$, $(\pi^{\mathbf{s}}_{i})^{\mathbf{O}_{\mathrm{H}_{S}}(A)} = \mathrm{pr}^{A}_{\mathbf{s},i}\colon A_{\mathbf{s}}\mor A_{s_{i}}$.
-		\item For every $\mathbf{r},\mathbf{s}\in S^{\star}$ and $s\in S$, $\xi_{\mathbf{r},\mathbf{s},s}^{\mathbf{O}_{\mathrm{H}_{S}}(A)}$ is defined, for every $f\in A_{s}^{ A_{\mathbf{s}} }$ and $g\in A^{A_{\mathbf{r}}}_{\mathbf{s}}$, as $\xi_{\mathbf{r},\mathbf{s},s}^{\mathbf{O}_{\mathrm{H}_{S}}(A)}(f,g_{0},\ldots,g_{\bb{\mathbf{s}}-1}) = f\circ\langle g_{i}\rangle_{i\in\bb{\mathbf{s}} }$, where $\langle g_{i}\rangle_{i\in\bb{\mathbf{s}}}$ is the unique mapping from $A_{\mathbf{r}}$ to $A_{\mathbf{s}}$ such that, for every $i\in \bb{\mathbf{s}}$, we have that
-		$$
-		\mathrm{pr}^{A}_{\mathbf{s},i}\circ\langle g_{i}\rangle_{i\in\bb{\mathbf{s}}} = g_{i}.
-		$$
-	\end{enumerate}
-	Then $\mathbf{O}_{\mathrm{H}_{S}}(A)$ is a Hall algebra, the \emph{Hall algebra for} $(S,A)$.
-\end{proposition}
-
-For every $S$-sorted signature $\Sigma$, $\mathrm{Tm}_{\mathrm{H}_{S}}(\Sigma) = (\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s})_{(\mathbf{s},s)\in S^{\star}\times S}$ is also equipped with a structure of Hall algebra that formalizes the concept of substitution as stated in the following proposition.
-
-\begin{proposition}\label{PHallTm}
-	Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature and $\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)$ the $\Sigma^{\mathrm{H}_{S}}$-algebra with underlying many-sorted set $\mathrm{Tm}_{\mathrm{H}_{S}}(\Sigma)$ and algebraic structure defined as follows:
-	\begin{enumerate}
-		\item For every $\mathbf{s}\in S^{\star}$ and $i\in\bb{\mathbf{s}}$, $(\pi^{\mathbf{s}}_{i})^{\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)}$ is the image under $\eta^{\vs{\mathbf{s}}}_{s_{i}}$ of the variable $v^{\mathbf{s}}_{i}$, where $\eta^{\vs{\mathbf{s}}} = (\eta^{\vs{\mathbf{s}}}_{s})_{s\in S}$ is the canonical embedding of $\vs{\mathbf{s}}$ into $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})$.
-Sometimes, to abbreviate, we will write $\pi^{\mathbf{s}}_{i}$ instead of $(\pi^{\mathbf{s}}_{i})^{\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)}$.
-		\item For every $\mathbf{r},\mathbf{s}\in S^{\star}$ and $s\in S$, $\xi_{\mathbf{r},\mathbf{s},s}^{\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)}$ is the mapping
-		$$\xi_{\mathbf{r},\mathbf{s},s}^{\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)}\nfunction
-		{\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s} \times
-			\mathrm{T}_{\Sigma}(\vs{\mathbf{r}})_{s_{0}} \times \cdots \times
-			\mathrm{T}_{\Sigma}(\vs{\mathbf{r}})_{s_{\bb{\mathbf{s}}-1}}}
-		{\mathrm{T}_{\Sigma}(\vs{\mathbf{r}})_{s}}
-		{(P,(Q_{i})_{i\in\bb{\mathbf{s}}})}
-		{\left(\left(\!\begin{smallmatrix}v^{\mathbf{s}}_{i}\\Q_{i}\end{smallmatrix}\!\right)_{i\in \bb{\mathbf{s}}}\right)^{\sharp}_{s}(P)}
-		$$
-		where, for $\left(\!\begin{smallmatrix}v^{\mathbf{s}}_{i}\\Q_{i}\end{smallmatrix}\!\right)_{i\in \bb{\mathbf{s}}}$, the $S$-sorted mapping from $\vs{\mathbf{s}}$ to $\mathrm{T}_{\Sigma}(\vs{\mathbf{r}})$ canonically associated to the family $(Q_{i})_{i\in\bb{\mathbf{s}}}$, $\left(\left(\!\begin{smallmatrix}v^{\mathbf{s}}_{i}\\Q_{i}\end{smallmatrix}\!\right)_{i\in \bb{\mathbf{s}}}\right)^{\sharp}$, also denoted by $\mathcal{Q}^{\sharp}$, is the unique homomorphism from $\mathbf{T}_{\Sigma}(\vs{\mathbf{s}})$ into $\mathbf{T}_{\Sigma}(\vs{\mathbf{r}})$ such that
-		$$
-		\left(\left(\!\begin{smallmatrix}v^{\mathbf{s}}_{i}\\Q_{i}\end{smallmatrix}\!\right)_{i\in \bb{\mathbf{s}}}\right)^{\sharp}\circ \eta^{\vs{\mathbf{s}}} = \left(\!\begin{smallmatrix}v^{\mathbf{s}}_{i}\\Q_{i}\end{smallmatrix}\!\right)_{i\in \bb{\mathbf{s}}}.
-		$$
-		Sometimes, to abbreviate, we will write $\xi_{\mathbf{r},\mathbf{s},s}$ instead of $\xi_{\mathbf{r},\mathbf{s},s}^{\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)}$.
-	\end{enumerate}
-	Then $\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)$ is a Hall algebra, the \emph{Hall algebra for} $(S,\Sigma)$.
-\end{proposition}
-
-The Hall algebra for $(S,\Sigma)$ is, up to isomorphism, the free Hall algebra on $\Sigma$, see~\cite{CVCLRM26}.
-
-\begin{proposition}\label{PHallFree}
-	Let $S$ be a set of sorts and $\Sigma$ an $S$-sorted signature, i.e., an $S^{\star}\times S$-sorted set.
-Then the Hall algebra $\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)$ is isomorphic to $\mathbf{T}_{\mathrm{H}_{S}}(\Sigma)$, the free Hall algebra on $\Sigma$.
-More precisely, for the $S^{\star}\times S$-sorted mapping $\eta^{\Sigma}$ from $\Sigma$ to $\mathrm{Tm}_{\mathrm{H}_{S}}(\Sigma)$ defined, for every $(\mathbf{s},s)\in S^{\star}\times S$, as
-	$$
-	\eta^{\Sigma}_{\mathbf{s},s}\nfunction
-	{\Sigma_{\mathbf{s},s}}
-	{\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s}}
-	{\sigma}
-	{\sigma\left((v^{\mathbf{s}}_{j})_{j\in\bb{\mathbf{s}}}\right),}
-	$$
-	for every Hall algebra $\mathbf{A}$ and every $S^{\star}\times S$-sorted mapping $f$ from $\Sigma$ to $A$, there is a unique homomorphism $f^{\sharp}$ from $\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)$ to $\mathbf{A}$ such that $f^{\sharp}\circ \eta^{\Sigma} = f$.
-\end{proposition}
-
-For a set of sorts $S$ and an $S$-sorted signature $\Sigma$, the derived operation symbols of $\Sigma$, i.e., the elements of the components $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s}$ of $\mathrm{Tm}_{\mathrm{H}_{S}}(\Sigma)$, can be considered as the operation symbols of a new signature.
-The mappings $\varphi$ from a set of sorts $S$ to another $T$, together with the $S^{\star}\times S$-sorted mappings $c$ that assign to operation symbols of an $S$-sorted signature $\Sigma$ derived operation symbols of a $T$-sorted signature $\Lambda$, i.e., terms of the components $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$ of $\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$, form a new class of morphisms between many-sorted signatures which we will call \emph{derivors}.
+In this subsection we recall the derivors between many-sorted signatures and the category $\mathsf{Sig}_{\mathfrak{d}}$ of many-sorted signatures and derivors, see~\cite{CVST10b}.
+A derivor sends the sorts of a signature to sorts of another one, and its operation symbols to terms of the other one.
 
 \begin{definition}\label{DDerivor}
-	Let $\sig{\Sigma} = (S,\Sigma)$ and $\sig{\Lambda} = (T,\Lambda)$ be many-sorted signatures.
-A \emph{derivor} from $\sig{\Sigma}$ to $\sig{\Lambda}$ is an ordered pair $\mathbf{c} = (\varphi,c)$, where $\varphi\colon S\mor T$ and $c\colon\Sigma\mor\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$.
-Thus, for every $(\mathbf{s},s)\in S^{\star}\times S$,
-	$$
-	c_{\mathbf{s},s}\colon \Sigma_{\mathbf{s},s}\mor\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}(\mathbf{s}),\varphi(s)}=
-	\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}.
-	$$
-	Hence, for every $\sigma\in \Sigma_{\mathbf{s},s}$, $c_{\mathbf{s},s}(\sigma)\in \mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$, i.e., $c_{\mathbf{s},s}(\sigma)$ is a term of sort $\varphi(s)$ with variables in $\vs{\varphi^{\star}(\mathbf{s})}$.
+Let $\sig{\Sigma} = (S,\Sigma)$ and $\sig{\Lambda} = (T,\Lambda)$ be many-sorted signatures.
+A \emph{derivor} from $\sig{\Sigma}$ to $\sig{\Lambda}$ is an ordered pair $\mathbf{c} = (\varphi,c)$, where $\varphi\colon S\mor T$ is a mapping and $c=(c_{\mathbf{s},s})_{(\mathbf{s},s)\in S^{\star}\times S}$ is a family of mappings
+$$
+c_{\mathbf{s},s}\colon \Sigma_{\mathbf{s},s}\mor\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}.
+$$
+Thus, for every $\sigma\in \Sigma_{\mathbf{s},s}$, $c_{\mathbf{s},s}(\sigma)$ is a term of sort $\varphi(s)$ with variables in $\vs{\varphi^{\star}(\mathbf{s})}$.
 We will write $c(\sigma)$ instead of $c_{\mathbf{s},s}(\sigma)$ when this is unlikely to cause confusion.
 \end{definition}
 
-Every mapping $\varphi\colon S\mor T$ determines a functor from the category $\mathsf{Alg}(\mathrm{H}_{T})$ to the category $\mathsf{Alg}(\mathrm{H}_{S})$, so that $\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$ is in its turn equipped with a structure of Hall algebra for $S$, which allows us to define the composition of derivors.
-In fact, the $S^{\star}\times S$-sorted mapping $h^{\varphi}$ from $\Sigma^{\mathrm{H}_{S}}$ to $\Sigma^{\mathrm{H}_{T}}_{\varphi^{\star}\times \varphi}$ that sends $\pi^{\mathbf{s}}_{i}$ to $\pi^{\varphi^{\star}(\mathbf{s})}_{i}$ and $\xi_{\mathbf{r},\mathbf{s},s}$ to $\xi_{\varphi^{\star}(\mathbf{r}),\varphi^{\star}(\mathbf{s}),\varphi(s)}$ determines a morphism of algebraic presentations $(\varphi^{\star}\times \varphi, h^{\varphi})$ from $(S^{\star}\times S,\Sigma^{\mathrm{H}_{S}},\mathcal{E}^{\mathrm{H}_{S}})$ to $(T^{\star}\times T,\Sigma^{\mathrm{H}_{T}},\mathcal{E}^{\mathrm{H}_{T}})$, and the morphisms of algebraic presentations determine functors in the opposite direction between the associated categories of algebras, see~\cite{CVCLRM26}.
+A derivor translates terms into terms.
+We next define this translation by recursion on terms, see Proposition~\ref{PTermChar}.
 
-If $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$ is a derivor, then $c\colon \Sigma\mor \mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$ determines a homomorphism of Hall algebras $c^{\sharp}\colon\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)\mor
-\mathbf{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$. Thus, for every $(\mathbf{s},s)\in S^{\star}\times S$, $c^{\sharp}_{\mathbf{s},s}$ sends terms in $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s}$ to terms in $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$.
-
-\begin{definition}\label{DDerCompId}
-	Let $\mathbf{c}=(\varphi,c)\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{d}=(\psi,d)\colon\sig{\Lambda}\mor\sig{\Omega}$ be derivors, where $\sig{\Omega}=(U,\Omega)$ is a many-sorted signature.
-Then $\mathbf{d}\circ \mathbf{c} = (\psi,d)\circ(\varphi,c)$, the \emph{composition} of $\mathbf{c}$ and $\mathbf{d}$, is the derivor $(\psi\circ\varphi,d^{\sharp}_{\varphi^{\star}\times\varphi}\circ c)$, where $d^{\sharp}$ is the canonical extension of $d$ to the free Hall algebra on $\Lambda$.
-For every many-sorted signature $\sig{\Sigma} = (S,\Sigma)$, the \emph{identity} at $(S,\Sigma)$ is $(\id^{S},\eta^{\Sigma})$.
-When this is unlikely to cause confusion, we write $d^{\sharp}\circ c$ instead of $d^{\sharp}_{\varphi^{\star}\times\varphi}\circ c$.
-\end{definition}
-
-The just stated definition allows us to form a category of many-sorted signatures whose morphisms are the derivors.
-
-\begin{proposition}\label{PSigdCat}
-	The many-sorted signatures together with the derivors constitute a category, denoted by $\mathsf{Sig}_{\mathfrak{d}}$.
-\end{proposition}
-
-In the following remark we describe the homomorphisms $c^{\sharp}$, the composition and the identities of derivors in terms of substitutions, which is the form in which we use them in this work.
-
-\begin{remark}\label{RDerivorTerms}
+\begin{definition}\label{DDerivorExt}
 Let $\mathbf{c}=(\varphi,c)$ be a derivor from $\sig{\Sigma}=(S,\Sigma)$ to $\sig{\Lambda}=(T,\Lambda)$ and $\mathbf{s}\in S^{\star}$.
-Then, by Propositions~\ref{PHallTm} and~\ref{PHallFree}, the mapping $c^{\sharp}$, which sends, for every $s'\in S$, the terms in $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s'}$ to terms in $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s')}$, satisfies the following equalities:
+We let $c^{\sharp}$ stand for the $S$-sorted mapping from $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})$ to $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi}$ defined by recursion on terms as follows:
 \begin{enumerate}
-\item[(Der1)] $c^{\sharp}(v^{\mathbf{s}}_{j})=v^{\varphi^{\star}(\mathbf{s})}_{j}$, for every $j\in\bb{\mathbf{s}}$;
-\item[(Der2)] $c^{\sharp}(\sigma((R_{j})_{j\in\bb{\mathbf{r}}}))=(c^{\sharp}(R_{j}))^{\sharp}_{j\in\bb{\mathbf{r}}}(c(\sigma))$, for every $(\mathbf{r},s')\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{r},s'}$ and every $(R_{j})_{j\in\bb{\mathbf{r}}}\in\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{\mathbf{r}}$, i.e., $c(\sigma)$ with $c^{\sharp}(R_{j})$ substituted for $v^{\varphi^{\star}(\mathbf{r})}_{j}$.
+\item[(Der1)] $c^{\sharp}(v^{\mathbf{s}}_{j})=v^{\varphi^{\star}(\mathbf{s})}_{j}$, for every $j\in\bb{\mathbf{s}}$; and
+\item[(Der2)] $c^{\sharp}(\sigma((R_{j})_{j\in\bb{\mathbf{r}}}))=(c^{\sharp}(R_{j}))^{\sharp}_{j\in\bb{\mathbf{r}}}(c(\sigma))$, for every $(\mathbf{r},s')\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{r},s'}$ and every $(R_{j})_{j\in\bb{\mathbf{r}}}\in\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{\mathbf{r}}$.
 \end{enumerate}
+That is, $c^{\sharp}(\sigma((R_{j})_{j\in\bb{\mathbf{r}}}))$ is the term $c(\sigma)$ with $c^{\sharp}(R_{j})$ substituted for $v^{\varphi^{\star}(\mathbf{r})}_{j}$.
 In particular, $c^{\sharp}(\sigma((v^{\mathbf{r}}_{j})_{j\in\bb{\mathbf{r}}}))=c(\sigma)$.
-Moreover:
-\begin{enumerate}
-\item[(Der3)] the identity derivor at $(S,\Sigma)$ is $(\id^{S},\eta^{\Sigma})$, where $\eta^{\Sigma}(\sigma)=\sigma((v^{\mathbf{s}}_{j})_{j\in\bb{\mathbf{s}}})$, for $\sigma\in\Sigma_{\mathbf{s},s}$, and $(\eta^{\Sigma})^{\sharp}$ is the identity; and the composition of $(\varphi,c)$ and a derivor $(\psi,d)$ from $(T,\Lambda)$ to a many-sorted signature $(U,\Omega)$ is the derivor $(\psi\circ\varphi,d^{\sharp}\circ c)$ from $(S,\Sigma)$ to $(U,\Omega)$; and
-\item[(Der4)] the composition of derivors is associative and the identity derivors are neutral for it, i.e., for every derivor $(\chi,e)$ from $(U,\Omega)$ to a many-sorted signature $(W,\Xi)$, $(e^{\sharp}\circ d)^{\sharp}\circ c=e^{\sharp}\circ(d^{\sharp}\circ c)$, which follows from the equality $(e^{\sharp}\circ d)^{\sharp}=e^{\sharp}\circ d^{\sharp}$, and $(\eta^{\Lambda})^{\sharp}\circ c=c=c^{\sharp}\circ\eta^{\Sigma}$, see Proposition~\ref{PSigdCat}.
-\end{enumerate}
-Finally, for every $\mathbf{s}\in S^{\star}$ and every set of $\mathrm{E}$-equations $\mathcal{H}\subseteq\mathrm{Eeqt}(\Sigma)_{\vs{\mathbf{s}}}$, see Definition~\ref{DEEq} below, we let $c^{\sharp}[\mathcal{H}]\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\varphi^{\star}(\mathbf{s})}}$ stand for the set of $\mathrm{E}$-equations
+Moreover, for every set of $\mathrm{E}$-equations $\mathcal{H}\subseteq\mathrm{Eeqt}(\Sigma)_{\vs{\mathbf{s}}}$, see Definition~\ref{DEEq} below, we let $c^{\sharp}[\mathcal{H}]\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\varphi^{\star}(\mathbf{s})}}$ stand for the set of $\mathrm{E}$-equations
 $$
 c^{\sharp}[\mathcal{H}]=\left\lbrace\left(c^{\sharp}(P),c^{\sharp}(Q)\right)\,\middle|\,(P,Q)\in\mathcal{H}\right\rbrace.
 $$
+\end{definition}
+
+We next define the composition and the identities of derivors.
+
+\begin{definition}\label{DDerCompId}
+Let $\mathbf{c}=(\varphi,c)\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{d}=(\psi,d)\colon\sig{\Lambda}\mor\sig{\Omega}$ be derivors, where $\sig{\Omega}=(U,\Omega)$ is a many-sorted signature.
+The \emph{composition} of $\mathbf{c}$ and $\mathbf{d}$ is the derivor $\mathbf{d}\circ \mathbf{c}=(\psi\circ\varphi,d^{\sharp}\circ c)$ from $\sig{\Sigma}$ to $\sig{\Omega}$.
+The \emph{identity} at $\sig{\Sigma}=(S,\Sigma)$ is the derivor $(\id_{S},\eta^{\Sigma})$, where $\eta^{\Sigma}(\sigma)=\sigma((v^{\mathbf{s}}_{j})_{j\in\bb{\mathbf{s}}})$, for every $\sigma\in\Sigma_{\mathbf{s},s}$.
+\end{definition}
+
+In the following lemma we prove that the translation of terms along a derivor commutes with substitutions.
+
+\begin{lemma}\label{LDerSubst}
+Let $\mathbf{d}=(\psi,d)$ be a derivor from $\sig{\Lambda}=(T,\Lambda)$ to $\sig{\Omega}=(U,\Omega)$, $\mathbf{r},\mathbf{t}\in T^{\star}$, $t\in T$, $P\in\mathrm{T}_{\Lambda}(\vs{\mathbf{t}})_{t}$ and $(Q_{j})_{j\in\bb{\mathbf{t}}}\in\mathrm{T}_{\Lambda}(\vs{\mathbf{r}})_{\mathbf{t}}$.
+Then the following equality holds
+$$
+d^{\sharp}\left((Q_{j})^{\sharp}_{j\in\bb{\mathbf{t}}}(P)\right)=\left(d^{\sharp}(Q_{j})\right)^{\sharp}_{j\in\bb{\mathbf{t}}}\left(d^{\sharp}(P)\right).
+$$
+\end{lemma}
+\begin{proof}
+We proceed by induction on the term $P$.
+
+\textsf{(Variables)} If $P=v^{\mathbf{t}}_{j}$, then both sides are equal to $d^{\sharp}(Q_{j})$, by~(Der1).
+
+\textsf{(Operation symbols)} Let us assume that $P=\tau((P_{i})_{i\in\bb{\mathbf{q}}})$, with $\tau\in\Lambda_{\mathbf{q},t}$, and that the statement holds for every $P_{i}$.
+Let us write $\mathcal{Q}$ for $(Q_{j})_{j\in\bb{\mathbf{t}}}$ and $d^{\sharp}(\mathcal{Q})$ for $(d^{\sharp}(Q_{j}))_{j\in\bb{\mathbf{t}}}$.
+Then the following chain of equalities holds
+\begin{align*}
+d^{\sharp}\left(\mathcal{Q}^{\sharp}(P)\right)
+&=
+\left(d^{\sharp}\left(\mathcal{Q}^{\sharp}(P_{i})\right)\right)^{\sharp}_{i\in\bb{\mathbf{q}}}\left(d(\tau)\right)
+\tag{1}
+\\&=
+\left(d^{\sharp}(\mathcal{Q})^{\sharp}\left(d^{\sharp}(P_{i})\right)\right)^{\sharp}_{i\in\bb{\mathbf{q}}}\left(d(\tau)\right)
+\tag{2}
+\\&=
+d^{\sharp}(\mathcal{Q})^{\sharp}\left(\left(d^{\sharp}(P_{i})\right)^{\sharp}_{i\in\bb{\mathbf{q}}}\left(d(\tau)\right)\right)
+\tag{3}
+\\&=
+d^{\sharp}(\mathcal{Q})^{\sharp}\left(d^{\sharp}(P)\right).
+\tag{4}
+\end{align*}
+
+The first equality follows from~(Der2), since $\mathcal{Q}^{\sharp}(P)=\tau((\mathcal{Q}^{\sharp}(P_{i}))_{i\in\bb{\mathbf{q}}})$; the second equality follows from the induction hypothesis; the third equality follows from the fact that the composite of two substitutions is the substitution determined by the composite mapping, by Proposition~\ref{PPropUniv}; finally, the last equality follows from~(Der2).
+
+This completes the proof.
+\end{proof}
+
+We are now in position to prove that the derivors form a category.
+
+\begin{proposition}\label{PSigdCat}
+Let $\mathbf{c}=(\varphi,c)\colon\sig{\Sigma}\mor\sig{\Lambda}$, $\mathbf{d}=(\psi,d)\colon\sig{\Lambda}\mor\sig{\Omega}$ and $\mathbf{e}=(\chi,e)\colon\sig{\Omega}\mor\sig{\Xi}$ be derivors.
+Then $(e^{\sharp}\circ d)^{\sharp}=e^{\sharp}\circ d^{\sharp}$, $(\eta^{\Lambda})^{\sharp}$ is the identity and $c^{\sharp}\circ\eta^{\Sigma}=c$.
+Consequently, the many-sorted signatures together with the derivors, the composition and the identities of Definition~\ref{DDerCompId} constitute a category, denoted by $\mathsf{Sig}_{\mathfrak{d}}$.
+\end{proposition}
+\begin{proof}
+We prove the first equality by induction on terms.
+For variables, both sides agree, by~(Der1).
+Let $P=\tau((P_{i})_{i\in\bb{\mathbf{q}}})$ and let us assume that the equality holds for every $P_{i}$.
+Then the following chain of equalities holds
+\begin{align*}
+(e^{\sharp}\circ d)^{\sharp}(P)
+&=
+\left((e^{\sharp}\circ d)^{\sharp}(P_{i})\right)^{\sharp}_{i\in\bb{\mathbf{q}}}\left(e^{\sharp}(d(\tau))\right)
+\tag{1}
+\\&=
+\left(e^{\sharp}\left(d^{\sharp}(P_{i})\right)\right)^{\sharp}_{i\in\bb{\mathbf{q}}}\left(e^{\sharp}(d(\tau))\right)
+\tag{2}
+\\&=
+e^{\sharp}\left(\left(d^{\sharp}(P_{i})\right)^{\sharp}_{i\in\bb{\mathbf{q}}}\left(d(\tau)\right)\right)
+\tag{3}
+\\&=
+e^{\sharp}\left(d^{\sharp}(P)\right).
+\tag{4}
+\end{align*}
+
+The first equality follows from~(Der2); the second equality follows from the induction hypothesis; the third equality follows from Lemma~\ref{LDerSubst}; finally, the last equality follows from~(Der2).
+
+By~(Der1) and~(Der2), $(\eta^{\Lambda})^{\sharp}$ sends every term to itself and $c^{\sharp}(\eta^{\Sigma}(\sigma))=c^{\sharp}(\sigma((v^{\mathbf{s}}_{j})_{j\in\bb{\mathbf{s}}}))=c(\sigma)$.
+
+Finally, the first equality implies that the composition is associative, since $(e^{\sharp}\circ d)^{\sharp}\circ c=e^{\sharp}\circ(d^{\sharp}\circ c)$, and the other two imply that the identities are neutral for it.
+
+This completes the proof.
+\end{proof}
+
+In the rest of this work we use the following facts, which collect Definitions~\ref{DDerivorExt} and~\ref{DDerCompId} and Proposition~\ref{PSigdCat}.
+
+\begin{remark}\label{RDerivorTerms}
+Besides~(Der1) and~(Der2), derivors satisfy the following properties:
+\begin{enumerate}
+\item[(Der3)] the identity derivor at $(S,\Sigma)$ is $(\id_{S},\eta^{\Sigma})$, where $\eta^{\Sigma}(\sigma)=\sigma((v^{\mathbf{s}}_{j})_{j\in\bb{\mathbf{s}}})$, and $(\eta^{\Sigma})^{\sharp}$ is the identity; and the composition of $(\varphi,c)$ and $(\psi,d)$ is $(\psi\circ\varphi,d^{\sharp}\circ c)$; and
+\item[(Der4)] for all derivors $(\varphi,c)$, $(\psi,d)$ and $(\chi,e)$ that can be composed, $(e^{\sharp}\circ d)^{\sharp}=e^{\sharp}\circ d^{\sharp}$, so that the composition of derivors is associative; and $(\eta^{\Lambda})^{\sharp}\circ c=c=c^{\sharp}\circ\eta^{\Sigma}$.
+\end{enumerate}
 \end{remark}
+
+% The presentation of derivors by means of Hall algebras, kept for reference.
+% \subsection{Derivors}\label{OldSPrelimDerivors}
+%
+% In this subsection, after defining the variety of Hall algebras, we introduce the notion of derivor between many-sorted signatures and the category $\mathsf{Sig}_{\mathfrak{d}}$ of many-sorted signatures and derivors, see~\cite{CVST10b}.
+% Before defining the notion of Hall algebra, we recall that
+% \begin{enumerate}
+% 	\item a finitary specification is an ordered triple $(S,\Sigma,\mathcal{E})$, where $S$ is a set of sorts, $\Sigma$ an $S$-sorted signature, and $\mathcal{E}\subseteq\mathrm{Eq}_{V^{S}}(\Sigma)=
+% 	(\mathrm{T}_{\Sigma}(X)_{s}^{2})_{(X,s)\in \mathrm{Sub}_{\mathrm{f}}(V^{S})\times S}$, i.e., a set of finitary $\Sigma$-equations, where $V^{S}$, the $S$-sorted set of the variables, is a fixed $S$-countably infinite $S$-sorted set and $\mathrm{Sub}_{\mathrm{f}}(V^{S})$ is the set of its finite subsets; and that
+% 	\item a $\Sigma$-algebra $\mathbf{A}$ is a $(S,\Sigma,\mathcal{E})$-algebra if $\mathbf{A}\models^{\Sigma} \mathcal{E}$, i.e., if, for every $(X,s)\in \mathrm{Sub}_{\mathrm{f}}(V^{S})\times S$ and every $(P,Q)\in \mathcal{E}_{X,s}$, $\mathbf{A}$ is a model of $(P,Q)$, in symbols $\mathbf{A}\models^{\Sigma}_{X,s} (P,Q)$, which in turn means that, for every $a\in \mathrm{Hom}(X,A)$, $a^{\sharp}_{s}(P) = a^{\sharp}_{s}(Q)$.
+% \end{enumerate}
+%
+% \begin{definition}\label{OldDHall}
+% 	Let $S$ be a set of sorts and let $V^{\mathrm{H}_{S}} = (V^{\mathrm{H}_{S}}_{\mathbf{s},s})_{(\mathbf{s},s)\in S^{\star}\times S}$ be a fixed $S^{\star}\times S$-sorted set of variables with a countably infinity of variables in each component, say $V^{\mathrm{H}_{S}}_{\mathbf{s},s} = \{\,v^{\mathbf{s},s}_{n}\mid n\in \mathbb{N}\,\}$ (which is isomorphic to $\{(\mathbf{s},s)\}\times\mathbb{N}$), for every $(\mathbf{s},s)\in S^{\star}\times S$.
+% A \emph{Hall algebra for} $S$ is a $\mathrm{H}_{S} = (S^{\star}\times S,\Sigma^{\mathrm{H}_{S}},\mathcal{E}^{\mathrm{H}_{S}})$-algebra, where $\Sigma^{\mathrm{H}_{S}}$ is the $S^{\star}\times S$-sorted signature, i.e., the $(S^{\star}\times S)^{\star}\times (S^{\star}\times S)$-sorted set, defined as follows:
+% 	\begin{enumerate}
+% 		\item[$\mathrm{HS}_{1}$.] For every $\mathbf{s}\in S^{\star}$ and $i\in\bb{\mathbf{s}}$,
+% 		$$
+% 		\pi^{\mathbf{s}}_{i}\colon\lambda\mor(\mathbf{s},s_{i}),
+% 		$$
+% 		where $\bb{\mathbf{s}}$ is the \emph{length} of the word $\mathbf{s}$ and $\lambda$ the \emph{empty word} in the underlying set of the free monoid on $S^{\star}\times S$.
+% 		\item[$\mathrm{HS}_{2}$.] For every $\mathbf{r}$, $\mathbf{s}\in S^{\star}$ and $s\in S$,
+% 		$$
+% 		\xi_{\mathbf{r},\mathbf{s},s}\colon ((\mathbf{s},s),(\mathbf{r},s_{0}),\ldots,(\mathbf{r},s_{\bb{\mathbf{s}}-1}))\mor(\mathbf{r},s);
+% 		$$
+% 	\end{enumerate}
+% 	while $\mathcal{E}^{\mathrm{H}_{S}}$ is the sub-$(S^{\star}\times S)^{\star}\times (S^{\star}\times S)$-sorted set of $\mathrm{Eq}(\Sigma^{\mathrm{H}_{S}})$, where
+% 	$$
+% 	\mathrm{Eq}\left(\Sigma^{\mathrm{H}_{S}}\right) =
+% 	\left(\mathrm{T}_{\Sigma^{\mathrm{H}_{S}}}(\vs{\ol{\mathbf{s}}})_{(\mathbf{r},s)}^{2}\right)_{(\ol{\mathbf{s}},(\mathbf{r},s))\in
+% 		(S^{\star}\times S)^{\star}\times (S^{\star}\times S)},
+% 	$$
+% 	defined as follows:
+% 	\begin{enumerate}
+% 		\item[$\mathrm{H}_{1}$.] \emph{Projection}.
+% For every $\mathbf{r}$, $\mathbf{s}\in S^{\star}$ and $i\in\bb{\mathbf{s}}$, the equation
+% 		$$
+% 		\xi_{\mathbf{r},\mathbf{s},s_{i}}(\pi^{\mathbf{s}}_{i},v^{\mathbf{r},s_{0}}_{0},\ldots,
+% 		v^{\mathbf{r},s_{\bb{\mathbf{s}}-1}}_{\bb{\mathbf{s}}-1})=v^{\mathbf{r},s_{i}}_{i}
+% 		$$
+% 		of type $(((\mathbf{r},s_{0}),\ldots,(\mathbf{r},s_{\bb{\mathbf{s}}-1})),(\mathbf{r},s_{i})).$
+% 		\item[$\mathrm{H}_{2}$.] \emph{Identity}.
+% For every $\mathbf{r}\in S^{\star}$ and $j\in \bb{\mathbf{r}}$, the equation
+% 		$$
+% 		\xi_{\mathbf{r},\mathbf{r},r_{j}}(v^{\mathbf{r},r_{j}}_{j},\pi^{\mathbf{r}}_{0},\ldots,\pi^{\mathbf{r}}_{\bb{\mathbf{r}}-1})=
+% 		v^{\mathbf{r},r_{j}}_{j}
+% 		$$
+% 		of type $(((\mathbf{r},r_{j})),(\mathbf{r},r_{j})).$
+% 		\item[$\mathrm{H}_{3}$.] \emph{Associativity}.
+% For every $\mathbf{q}$, $\mathbf{r}$, $\mathbf{s}\in S^{\star}$ and $s\in S$, the equation
+% 		\begin{multline*}
+% 			\xi_{\mathbf{q},\mathbf{r},s}(
+% 			\xi_{\mathbf{r},\mathbf{s},s}(v^{\mathbf{s},s}_{0},v^{\mathbf{r},s_{0}}_{1},\ldots,
+% 			v^{\mathbf{r},s_{\bb{\mathbf{s}}-1}}_{\bb{\mathbf{s}}}),
+% 			v^{\mathbf{q},r_{0}}_{\bb{\mathbf{s}}+1},
+% 			\ldots,v^{\mathbf{q},r_{\bb{\mathbf{r}}-1}}_{\bb{\mathbf{s}}+\bb{\mathbf{r}}}) = \\
+% 			\xi_{\mathbf{q},\mathbf{s},s}(v^{\mathbf{s},s}_{0},
+% 			\xi_{\mathbf{q},\mathbf{r},s_{0}}(v^{\mathbf{r},s_{0}}_{1},v^{\mathbf{q},r_{0}}_{\bb{\mathbf{s}}+1},
+% 			\ldots,v^{\mathbf{q},r_{\bb{\mathbf{r}}-1}}_{\bb{\mathbf{s}}+\bb{\mathbf{r}}}),
+% 			\\
+% 			\ldots,
+% 			\xi_{\mathbf{q},\mathbf{r},s_{\bb{\mathbf{s}}-1}}(v^{\mathbf{r},s_{\bb{\mathbf{s}}-1}}_{\bb{\mathbf{s}}},
+% 			v^{\mathbf{q},r_{0}}_{\bb{\mathbf{s}}+1},
+% 			\ldots,v^{\mathbf{q},r_{\bb{\mathbf{r}}-1}}_{\bb{\mathbf{s}}+\bb{\mathbf{r}}}))
+% 		\end{multline*}
+% 		of type $(((\mathbf{s},s),(\mathbf{r},s_{0}),\ldots,(\mathbf{r},s_{\bb{\mathbf{s}}-1}),
+% 		(\mathbf{q},r_{0}),\ldots,(\mathbf{q},r_{\bb{\mathbf{r}}-1})),(\mathbf{q},s)).$
+% 	\end{enumerate}
+% 	We call the formal constants $\pi^{\mathbf{s}}_{i}$ \emph{projections}, and the formal operations $\xi_{\mathbf{r},\mathbf{s},s}$ \emph{substitution operators}.
+% Furthermore, we will denote by $\mathsf{Alg}(\mathrm{H}_{S})$ the category of Hall algebras for $S$ and homomorphisms between Hall algebras.
+% Since $\mathsf{Alg}(\mathrm{H}_{S})$ is a variety, the forgetful functor $\mathrm{G}_{\mathrm{H}_{S}}$ from $\mathsf{Alg}(\mathrm{H}_{S})$ to $\mathsf{Set}^{S^{\star}\times S}$ has a left adjoint $\mathbf{T}_{\mathrm{H}_{S}}$, which assigns to an $S^{\star}\times S$-sorted set $\Sigma$ the corresponding free Hall algebra $\mathbf{T}_{\mathrm{H}_{S}}(\Sigma)$.
+% \end{definition}
+%
+% For every $S$-sorted set $A$, $\mathrm{O}_{\mathrm{H}_{S}}(A) = (\mathrm{Hom}(A_{\mathbf{s}},A_{s}))_{(\mathbf{s},s)\in S^{\star}\times S}$, the $S^{\star}\times S$-sorted set of operations for $A$, is naturally equipped with a structure of Hall algebra, as stated in the following proposition, if we realize the projections as the true projections and the substitution operators as the generalized composition of mappings.
+%
+% \begin{proposition}\label{OldPHallOp}
+% 	Let $S$ be a set of sorts, $A$ an $S$-sorted set and $\mathbf{O}_{\mathrm{H}_{S}}(A)$ the $\Sigma^{\mathrm{H}_{S}}$-algebra with underlying many-sorted set $\mathrm{O}_{\mathrm{H}_{S}}(A)$ and algebraic structure defined as follows:
+% 	\begin{enumerate}
+% 		\item For every $\mathbf{s}\in S^{\star}$ and $i\in\bb{\mathbf{s}}$, $(\pi^{\mathbf{s}}_{i})^{\mathbf{O}_{\mathrm{H}_{S}}(A)} = \mathrm{pr}^{A}_{\mathbf{s},i}\colon A_{\mathbf{s}}\mor A_{s_{i}}$.
+% 		\item For every $\mathbf{r},\mathbf{s}\in S^{\star}$ and $s\in S$, $\xi_{\mathbf{r},\mathbf{s},s}^{\mathbf{O}_{\mathrm{H}_{S}}(A)}$ is defined, for every $f\in A_{s}^{ A_{\mathbf{s}} }$ and $g\in A^{A_{\mathbf{r}}}_{\mathbf{s}}$, as $\xi_{\mathbf{r},\mathbf{s},s}^{\mathbf{O}_{\mathrm{H}_{S}}(A)}(f,g_{0},\ldots,g_{\bb{\mathbf{s}}-1}) = f\circ\langle g_{i}\rangle_{i\in\bb{\mathbf{s}} }$, where $\langle g_{i}\rangle_{i\in\bb{\mathbf{s}}}$ is the unique mapping from $A_{\mathbf{r}}$ to $A_{\mathbf{s}}$ such that, for every $i\in \bb{\mathbf{s}}$, we have that
+% 		$$
+% 		\mathrm{pr}^{A}_{\mathbf{s},i}\circ\langle g_{i}\rangle_{i\in\bb{\mathbf{s}}} = g_{i}.
+% 		$$
+% 	\end{enumerate}
+% 	Then $\mathbf{O}_{\mathrm{H}_{S}}(A)$ is a Hall algebra, the \emph{Hall algebra for} $(S,A)$.
+% \end{proposition}
+%
+% For every $S$-sorted signature $\Sigma$, $\mathrm{Tm}_{\mathrm{H}_{S}}(\Sigma) = (\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s})_{(\mathbf{s},s)\in S^{\star}\times S}$ is also equipped with a structure of Hall algebra that formalizes the concept of substitution as stated in the following proposition.
+%
+% \begin{proposition}\label{OldPHallTm}
+% 	Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature and $\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)$ the $\Sigma^{\mathrm{H}_{S}}$-algebra with underlying many-sorted set $\mathrm{Tm}_{\mathrm{H}_{S}}(\Sigma)$ and algebraic structure defined as follows:
+% 	\begin{enumerate}
+% 		\item For every $\mathbf{s}\in S^{\star}$ and $i\in\bb{\mathbf{s}}$, $(\pi^{\mathbf{s}}_{i})^{\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)}$ is the image under $\eta^{\vs{\mathbf{s}}}_{s_{i}}$ of the variable $v^{\mathbf{s}}_{i}$, where $\eta^{\vs{\mathbf{s}}} = (\eta^{\vs{\mathbf{s}}}_{s})_{s\in S}$ is the canonical embedding of $\vs{\mathbf{s}}$ into $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})$.
+% Sometimes, to abbreviate, we will write $\pi^{\mathbf{s}}_{i}$ instead of $(\pi^{\mathbf{s}}_{i})^{\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)}$.
+% 		\item For every $\mathbf{r},\mathbf{s}\in S^{\star}$ and $s\in S$, $\xi_{\mathbf{r},\mathbf{s},s}^{\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)}$ is the mapping
+% 		$$\xi_{\mathbf{r},\mathbf{s},s}^{\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)}\nfunction
+% 		{\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s} \times
+% 			\mathrm{T}_{\Sigma}(\vs{\mathbf{r}})_{s_{0}} \times \cdots \times
+% 			\mathrm{T}_{\Sigma}(\vs{\mathbf{r}})_{s_{\bb{\mathbf{s}}-1}}}
+% 		{\mathrm{T}_{\Sigma}(\vs{\mathbf{r}})_{s}}
+% 		{(P,(Q_{i})_{i\in\bb{\mathbf{s}}})}
+% 		{\left(\left(\!\begin{smallmatrix}v^{\mathbf{s}}_{i}\\Q_{i}\end{smallmatrix}\!\right)_{i\in \bb{\mathbf{s}}}\right)^{\sharp}_{s}(P)}
+% 		$$
+% 		where, for $\left(\!\begin{smallmatrix}v^{\mathbf{s}}_{i}\\Q_{i}\end{smallmatrix}\!\right)_{i\in \bb{\mathbf{s}}}$, the $S$-sorted mapping from $\vs{\mathbf{s}}$ to $\mathrm{T}_{\Sigma}(\vs{\mathbf{r}})$ canonically associated to the family $(Q_{i})_{i\in\bb{\mathbf{s}}}$, $\left(\left(\!\begin{smallmatrix}v^{\mathbf{s}}_{i}\\Q_{i}\end{smallmatrix}\!\right)_{i\in \bb{\mathbf{s}}}\right)^{\sharp}$, also denoted by $\mathcal{Q}^{\sharp}$, is the unique homomorphism from $\mathbf{T}_{\Sigma}(\vs{\mathbf{s}})$ into $\mathbf{T}_{\Sigma}(\vs{\mathbf{r}})$ such that
+% 		$$
+% 		\left(\left(\!\begin{smallmatrix}v^{\mathbf{s}}_{i}\\Q_{i}\end{smallmatrix}\!\right)_{i\in \bb{\mathbf{s}}}\right)^{\sharp}\circ \eta^{\vs{\mathbf{s}}} = \left(\!\begin{smallmatrix}v^{\mathbf{s}}_{i}\\Q_{i}\end{smallmatrix}\!\right)_{i\in \bb{\mathbf{s}}}.
+% 		$$
+% 		Sometimes, to abbreviate, we will write $\xi_{\mathbf{r},\mathbf{s},s}$ instead of $\xi_{\mathbf{r},\mathbf{s},s}^{\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)}$.
+% 	\end{enumerate}
+% 	Then $\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)$ is a Hall algebra, the \emph{Hall algebra for} $(S,\Sigma)$.
+% \end{proposition}
+%
+% The Hall algebra for $(S,\Sigma)$ is, up to isomorphism, the free Hall algebra on $\Sigma$, see~\cite{CVCLRM26}.
+%
+% \begin{proposition}\label{OldPHallFree}
+% 	Let $S$ be a set of sorts and $\Sigma$ an $S$-sorted signature, i.e., an $S^{\star}\times S$-sorted set.
+% Then the Hall algebra $\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)$ is isomorphic to $\mathbf{T}_{\mathrm{H}_{S}}(\Sigma)$, the free Hall algebra on $\Sigma$.
+% More precisely, for the $S^{\star}\times S$-sorted mapping $\eta^{\Sigma}$ from $\Sigma$ to $\mathrm{Tm}_{\mathrm{H}_{S}}(\Sigma)$ defined, for every $(\mathbf{s},s)\in S^{\star}\times S$, as
+% 	$$
+% 	\eta^{\Sigma}_{\mathbf{s},s}\nfunction
+% 	{\Sigma_{\mathbf{s},s}}
+% 	{\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s}}
+% 	{\sigma}
+% 	{\sigma\left((v^{\mathbf{s}}_{j})_{j\in\bb{\mathbf{s}}}\right),}
+% 	$$
+% 	for every Hall algebra $\mathbf{A}$ and every $S^{\star}\times S$-sorted mapping $f$ from $\Sigma$ to $A$, there is a unique homomorphism $f^{\sharp}$ from $\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)$ to $\mathbf{A}$ such that $f^{\sharp}\circ \eta^{\Sigma} = f$.
+% \end{proposition}
+%
+% For a set of sorts $S$ and an $S$-sorted signature $\Sigma$, the derived operation symbols of $\Sigma$, i.e., the elements of the components $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s}$ of $\mathrm{Tm}_{\mathrm{H}_{S}}(\Sigma)$, can be considered as the operation symbols of a new signature.
+% The mappings $\varphi$ from a set of sorts $S$ to another $T$, together with the $S^{\star}\times S$-sorted mappings $c$ that assign to operation symbols of an $S$-sorted signature $\Sigma$ derived operation symbols of a $T$-sorted signature $\Lambda$, i.e., terms of the components $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$ of $\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$, form a new class of morphisms between many-sorted signatures which we will call \emph{derivors}.
+%
+% \begin{definition}\label{OldDDerivor}
+% 	Let $\sig{\Sigma} = (S,\Sigma)$ and $\sig{\Lambda} = (T,\Lambda)$ be many-sorted signatures.
+% A \emph{derivor} from $\sig{\Sigma}$ to $\sig{\Lambda}$ is an ordered pair $\mathbf{c} = (\varphi,c)$, where $\varphi\colon S\mor T$ and $c\colon\Sigma\mor\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$.
+% Thus, for every $(\mathbf{s},s)\in S^{\star}\times S$,
+% 	$$
+% 	c_{\mathbf{s},s}\colon \Sigma_{\mathbf{s},s}\mor\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}(\mathbf{s}),\varphi(s)}=
+% 	\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}.
+% 	$$
+% 	Hence, for every $\sigma\in \Sigma_{\mathbf{s},s}$, $c_{\mathbf{s},s}(\sigma)\in \mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$, i.e., $c_{\mathbf{s},s}(\sigma)$ is a term of sort $\varphi(s)$ with variables in $\vs{\varphi^{\star}(\mathbf{s})}$.
+% We will write $c(\sigma)$ instead of $c_{\mathbf{s},s}(\sigma)$ when this is unlikely to cause confusion.
+% \end{definition}
+%
+% Every mapping $\varphi\colon S\mor T$ determines a functor from the category $\mathsf{Alg}(\mathrm{H}_{T})$ to the category $\mathsf{Alg}(\mathrm{H}_{S})$, so that $\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$ is in its turn equipped with a structure of Hall algebra for $S$, which allows us to define the composition of derivors.
+% In fact, the $S^{\star}\times S$-sorted mapping $h^{\varphi}$ from $\Sigma^{\mathrm{H}_{S}}$ to $\Sigma^{\mathrm{H}_{T}}_{\varphi^{\star}\times \varphi}$ that sends $\pi^{\mathbf{s}}_{i}$ to $\pi^{\varphi^{\star}(\mathbf{s})}_{i}$ and $\xi_{\mathbf{r},\mathbf{s},s}$ to $\xi_{\varphi^{\star}(\mathbf{r}),\varphi^{\star}(\mathbf{s}),\varphi(s)}$ determines a morphism of algebraic presentations $(\varphi^{\star}\times \varphi, h^{\varphi})$ from $(S^{\star}\times S,\Sigma^{\mathrm{H}_{S}},\mathcal{E}^{\mathrm{H}_{S}})$ to $(T^{\star}\times T,\Sigma^{\mathrm{H}_{T}},\mathcal{E}^{\mathrm{H}_{T}})$, and the morphisms of algebraic presentations determine functors in the opposite direction between the associated categories of algebras, see~\cite{CVCLRM26}.
+%
+% If $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$ is a derivor, then $c\colon \Sigma\mor \mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$ determines a homomorphism of Hall algebras $c^{\sharp}\colon\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)\mor
+% \mathbf{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$. Thus, for every $(\mathbf{s},s)\in S^{\star}\times S$, $c^{\sharp}_{\mathbf{s},s}$ sends terms in $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s}$ to terms in $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$.
+%
+% \begin{definition}\label{OldDDerCompId}
+% 	Let $\mathbf{c}=(\varphi,c)\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{d}=(\psi,d)\colon\sig{\Lambda}\mor\sig{\Omega}$ be derivors, where $\sig{\Omega}=(U,\Omega)$ is a many-sorted signature.
+% Then $\mathbf{d}\circ \mathbf{c} = (\psi,d)\circ(\varphi,c)$, the \emph{composition} of $\mathbf{c}$ and $\mathbf{d}$, is the derivor $(\psi\circ\varphi,d^{\sharp}_{\varphi^{\star}\times\varphi}\circ c)$, where $d^{\sharp}$ is the canonical extension of $d$ to the free Hall algebra on $\Lambda$.
+% For every many-sorted signature $\sig{\Sigma} = (S,\Sigma)$, the \emph{identity} at $(S,\Sigma)$ is $(\id^{S},\eta^{\Sigma})$.
+% When this is unlikely to cause confusion, we write $d^{\sharp}\circ c$ instead of $d^{\sharp}_{\varphi^{\star}\times\varphi}\circ c$.
+% \end{definition}
+%
+% The just stated definition allows us to form a category of many-sorted signatures whose morphisms are the derivors.
+%
+% \begin{proposition}\label{OldPSigdCat}
+% 	The many-sorted signatures together with the derivors constitute a category, denoted by $\mathsf{Sig}_{\mathfrak{d}}$.
+% \end{proposition}
+%
+% In the following remark we describe the homomorphisms $c^{\sharp}$, the composition and the identities of derivors in terms of substitutions, which is the form in which we use them in this work.
+%
+% \begin{remark}\label{OldRDerivorTerms}
+% Let $\mathbf{c}=(\varphi,c)$ be a derivor from $\sig{\Sigma}=(S,\Sigma)$ to $\sig{\Lambda}=(T,\Lambda)$ and $\mathbf{s}\in S^{\star}$.
+% Then, by Propositions~\ref{PHallTm} and~\ref{PHallFree}, the mapping $c^{\sharp}$, which sends, for every $s'\in S$, the terms in $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s'}$ to terms in $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s')}$, satisfies the following equalities:
+% \begin{enumerate}
+% \item[(Der1)] $c^{\sharp}(v^{\mathbf{s}}_{j})=v^{\varphi^{\star}(\mathbf{s})}_{j}$, for every $j\in\bb{\mathbf{s}}$;
+% \item[(Der2)] $c^{\sharp}(\sigma((R_{j})_{j\in\bb{\mathbf{r}}}))=(c^{\sharp}(R_{j}))^{\sharp}_{j\in\bb{\mathbf{r}}}(c(\sigma))$, for every $(\mathbf{r},s')\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{r},s'}$ and every $(R_{j})_{j\in\bb{\mathbf{r}}}\in\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{\mathbf{r}}$, i.e., $c(\sigma)$ with $c^{\sharp}(R_{j})$ substituted for $v^{\varphi^{\star}(\mathbf{r})}_{j}$.
+% \end{enumerate}
+% In particular, $c^{\sharp}(\sigma((v^{\mathbf{r}}_{j})_{j\in\bb{\mathbf{r}}}))=c(\sigma)$.
+% Moreover:
+% \begin{enumerate}
+% \item[(Der3)] the identity derivor at $(S,\Sigma)$ is $(\id^{S},\eta^{\Sigma})$, where $\eta^{\Sigma}(\sigma)=\sigma((v^{\mathbf{s}}_{j})_{j\in\bb{\mathbf{s}}})$, for $\sigma\in\Sigma_{\mathbf{s},s}$, and $(\eta^{\Sigma})^{\sharp}$ is the identity; and the composition of $(\varphi,c)$ and a derivor $(\psi,d)$ from $(T,\Lambda)$ to a many-sorted signature $(U,\Omega)$ is the derivor $(\psi\circ\varphi,d^{\sharp}\circ c)$ from $(S,\Sigma)$ to $(U,\Omega)$; and
+% \item[(Der4)] the composition of derivors is associative and the identity derivors are neutral for it, i.e., for every derivor $(\chi,e)$ from $(U,\Omega)$ to a many-sorted signature $(W,\Xi)$, $(e^{\sharp}\circ d)^{\sharp}\circ c=e^{\sharp}\circ(d^{\sharp}\circ c)$, which follows from the equality $(e^{\sharp}\circ d)^{\sharp}=e^{\sharp}\circ d^{\sharp}$, and $(\eta^{\Lambda})^{\sharp}\circ c=c=c^{\sharp}\circ\eta^{\Sigma}$, see Proposition~\ref{PSigdCat}.
+% \end{enumerate}
+% Finally, for every $\mathbf{s}\in S^{\star}$ and every set of $\mathrm{E}$-equations $\mathcal{H}\subseteq\mathrm{Eeqt}(\Sigma)_{\vs{\mathbf{s}}}$, see Definition~\ref{DEEq} below, we let $c^{\sharp}[\mathcal{H}]\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\varphi^{\star}(\mathbf{s})}}$ stand for the set of $\mathrm{E}$-equations
+% $$
+% c^{\sharp}[\mathcal{H}]=\left\lbrace\left(c^{\sharp}(P),c^{\sharp}(Q)\right)\,\middle|\,(P,Q)\in\mathcal{H}\right\rbrace.
+% $$
+% \end{remark}
 
 \subsection{Many-sorted partial algebras}\label{SPartialAlg}
 
