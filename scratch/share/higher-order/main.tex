@@ -430,7 +430,7 @@ The solution $(\mathbf{b},\mathbf{c})$ in which either $\mathbf{b}$ or $\mathbf{
 
 Let $\mathbf{a}$ be a word in $A^{\star}$ and $a\in A$.
 We will say that \emph{$a$ occurs in} $\mathbf{a}$ if there are words $\mathbf{b}$, $\mathbf{c}$ in $A^{\star}$ such that $\mathbf{a} = \mathbf{b}\bconcat(a)\bconcat \mathbf{c}$.
-Note that $a$ occurs in $\mathbf{a}$ if and only if there exists an $i\in \bb{\mathbf{a}}$ such that $\mathbf{a}(i) = a$.
+Note that $a$ occurs in $\mathbf{a}$ if, and only if, there exists an $i\in \bb{\mathbf{a}}$ such that $\mathbf{a}(i) = a$.
 We will denote by $\bb{\mathbf{a}}_{a}$ the natural number $\mathrm{card}(\{i\in \bb{\mathbf{a}}\mid \mathbf{a}(i) = a\}) = \mathrm{card}(\mathbf{a}^{-1}[\{a\}])$, i.e., the number of occurrences of $a$ in $\mathbf{a}$.
 Moreover, we let $(i_{j})_{j\in\bb{\mathbf{a}}_{a}}$ stand for the enumeration in ascending order of the occurrences of $a$ in $\mathbf{a}$.
 Thus $(i_{j})_{j\in\bb{\mathbf{a}}_{a}}$ is the order embedding of $(\bb{\mathbf{a}}_{a},<)$ into $(\bb{\mathbf{a}},<)$ defined recursively as follows:
@@ -547,7 +547,7 @@ In the many-sorted case we have, as in the single-sorted case, the following cha
 
 \begin{proposition}\label{PTermChar}
 Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature and $X$ an $S$-sorted set.
-Then, for every $s\in S$ and every $P\in \mathrm{T}_{\Sigma}(X)_{s}$, we have that $P$ is a term of type $s$ with variables in $X$ if and only if $P = (x)$, for a unique $x\in X_{s}$, or $P = (\sigma)$, for a unique $\sigma\in\Sigma_{\lambda,s}$, or $P = (\sigma)\curlywedge\concat(P_{j})_{j\in\bb{\mathbf{s}}}$, for a unique $\mathbf{s}\in S^{\star}-\{\lambda\}$, a unique $\sigma\in\Sigma_{\mathbf{s},s}$, and a unique family $(P_{j})_{j\in\bb{\mathbf{s}}}\in\mathrm{T}_{\Sigma}(X)_{\mathbf{s}}$.
+Then, for every $s\in S$ and every $P\in \mathrm{T}_{\Sigma}(X)_{s}$, we have that $P$ is a term of type $s$ with variables in $X$ if, and only if, $P = (x)$, for a unique $x\in X_{s}$, or $P = (\sigma)$, for a unique $\sigma\in\Sigma_{\lambda,s}$, or $P = (\sigma)\curlywedge\concat(P_{j})_{j\in\bb{\mathbf{s}}}$, for a unique $\mathbf{s}\in S^{\star}-\{\lambda\}$, a unique $\sigma\in\Sigma_{\mathbf{s},s}$, and a unique family $(P_{j})_{j\in\bb{\mathbf{s}}}\in\mathrm{T}_{\Sigma}(X)_{\mathbf{s}}$.
 
 Moreover, the three possibilities are mutually exclusive.
 From now on, for simplicity of notation, we will write $x$, $\sigma^{\mathbf{T}_{\Sigma}(X)}$, and $\sigma^{\mathbf{T}_{\Sigma}(X)}(P_{0},\ldots,P_{\bb{\mathbf{s}}-1})$ or $\sigma^{\mathbf{T}_{\Sigma}(X)}((P_{j})_{j\in \bb{\mathbf{s}}})$ instead of $(x)$, $(\sigma)$, and $(\sigma)\curlywedge\concat(P_{j})_{j\in\bb{\mathbf{s}}}$, respectively.
@@ -926,7 +926,7 @@ Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature, $\mathbf{A}$ a part
       $$
       \mathbf{A}\models^{\Sigma}_{X,s}(P,Q) [a],
       $$
-      if and only if $a\in\Dom(P^{\mathbf{A}})$, $a\in\Dom(Q^{\mathbf{A}})$, and $P^{\mathbf{A}}(a) = Q^{\mathbf{A}}(a)$, see Definition~\ref{DTermOp}.
+      if, and only if, $a\in\Dom(P^{\mathbf{A}})$, $a\in\Dom(Q^{\mathbf{A}})$, and $P^{\mathbf{A}}(a) = Q^{\mathbf{A}}(a)$, see Definition~\ref{DTermOp}.
 \item We will say that $\mathbf{A}$ \emph{satisfies} $\mathcal{E}$ \emph{with respect to the valuation} $a$, denoted by $\mathbf{A}\models^{\Sigma}_{X}\mathcal{E}[a]$, if, for every $s\in S$ and every $(P,Q)\in\mathcal{E}_{s}$, $\mathbf{A}\models^{\Sigma}_{X,s}(P,Q)[a]$.
 \item We will say that $(P,Q)$ is \emph{valid} in $\mathbf{A}$, denoted by $\mathbf{A}\models^{\Sigma}_{X,s}(P,Q)$, or by $\mathbf{A}\models(P,Q)$, when this is unlikely to cause confusion, if, for every $a\in A_{X}$, $\mathbf{A}\models^{\Sigma}_{X,s}(P,Q) [a]$.
 \end{enumerate}
@@ -2102,7 +2102,7 @@ The $S^{\star}\times S$-sorted set of finitary operations on $\mathsf{A}$ is $(\
 
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature.
  A \emph{structure of many-sorted $n$-categorial $\Sigma$-algebra on} an $S$-sorted $n$-category $\mathsf{A}$ is a family $F = (F_{\mathbf{s},s})_{(\mathbf{s},s)\in S^{\star}\times S}$, where, for $(\mathbf{s},s)\in S^{\star}\times S$, $F_{\mathbf{s},s}$ is a mapping from $\Sigma_{\mathbf{s},s}$ to $\mathrm{nFunc}(\mathsf{A}_{\mathbf{s}},\mathsf{A}_{s})$ (if $(\mathbf{s},s) = (\lambda,s)$ and $\sigma\in \Sigma_{\lambda,s}$, then $F_{\lambda,s}(\sigma)$ picks out a cell of $\mathsf{A}_{s}$ which is a $k$-cell for every $k\in n$, since $\mathsf{A}_{\lambda}$ is a final single-set $n$-category).
-The finite products $\mathsf{A}_{\mathbf{s}}$ are taken componentwise: sources and targets are computed componentwise, and $(\mathsf{g}_{j})_{j}\circ^{k}(\mathsf{f}_{j})_{j}$ is defined if and only if every $\mathsf{g}_{j}\circ^{k}\mathsf{f}_{j}$ is defined, and then it is $(\mathsf{g}_{j}\circ^{k}\mathsf{f}_{j})_{j}$.  An \emph{$S$-sorted single-set $n$-categorial $\Sigma$-algebra} or, simply, a \emph{many-sorted $n$-categorial $\sig{\Sigma}$-algebra}, is a pair $(\mathsf{A},F)$, abbreviated to $\calg{A}$, where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted single-set $n$-category and $F$ a structure of many-sorted $n$-categorial $\Sigma$-algebra on $\mathsf{A}$.  For a pair $(\mathbf{s},s)\in S^{\star}\times S$ and a formal operation $\sigma\in \Sigma_{\mathbf{s},s}$, in order to simplify the notation, the $n$-functor $F_{\mathbf{s},s}(\sigma)$ from $\mathsf{A}_{\mathbf{s}}$ to $\mathsf{A}_{s}$ will be written as $F_{\sigma}$, or simply as $\sigma^{\calg{A}}$.
+The finite products $\mathsf{A}_{\mathbf{s}}$ are taken componentwise: sources and targets are computed componentwise, and $(\mathsf{g}_{j})_{j}\circ^{k}(\mathsf{f}_{j})_{j}$ is defined if, and only if, every $\mathsf{g}_{j}\circ^{k}\mathsf{f}_{j}$ is defined, and then it is $(\mathsf{g}_{j}\circ^{k}\mathsf{f}_{j})_{j}$.  An \emph{$S$-sorted single-set $n$-categorial $\Sigma$-algebra} or, simply, a \emph{many-sorted $n$-categorial $\sig{\Sigma}$-algebra}, is a pair $(\mathsf{A},F)$, abbreviated to $\calg{A}$, where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted single-set $n$-category and $F$ a structure of many-sorted $n$-categorial $\Sigma$-algebra on $\mathsf{A}$.  For a pair $(\mathbf{s},s)\in S^{\star}\times S$ and a formal operation $\sigma\in \Sigma_{\mathbf{s},s}$, in order to simplify the notation, the $n$-functor $F_{\mathbf{s},s}(\sigma)$ from $\mathsf{A}_{\mathbf{s}}$ to $\mathsf{A}_{s}$ will be written as $F_{\sigma}$, or simply as $\sigma^{\calg{A}}$.
 
 An \emph{$S$-sorted single-set $n$-categorial $\Sigma$-homomorphism} or, simply, a \emph{many-sorted $n$-categorial $\sig{\Sigma}$-ho\-mo\-mor\-phism}, from $\calg{A}$ to $\calg{B}$, where $\calg{B}=(\mathsf{B},G)$, is a triple $(\calg{A},F,\calg{B})$, abbreviated to $F\colon\calg{A}\mor\calg{B}$, where $F$ is an $S$-sorted single-set $n$-functor from $\mathsf{A}$ to $\mathsf{B}$ such that, for every $(\mathbf{s},s)\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{s},s}$ and every family of cells $(\mathsf{a}_{j})_{j\in\bb{\mathbf{s}}}\in\mathsf{A}_{\mathbf{s}}$ (i.e., of $n$-cells, since $C_{n}=C$), we have that
 $$
@@ -2164,7 +2164,7 @@ Moreover, we regard $\Sigma^{(n)}$ as the hep-signature, see Definition~\ref{DHe
 $$
 \mathrm{def}^{(S,\Sigma^{(n)})}(\circ^{k}_{s})=\{(\src^{k}_{s}(v^{s}_{0}),\tgt^{k}_{s}(v^{s}_{1}))\},
 $$
-where $v^{s}_{0}$ and $v^{s}_{1}$ are the variables of $\vs{(s,s)}$ that correspond to the first and to the second argument, respectively, so that $v^{s}_{0}\circ^{k}_{s}v^{s}_{1}$ is defined if and only if the $k$-source of $v^{s}_{0}$ is equal to the $k$-target of $v^{s}_{1}$; and $\mathrm{def}^{(S,\Sigma^{(n)})}(\sigma)=\varnothing$, $\mathrm{def}^{(S,\Sigma^{(n)})}(\src^{k}_{s})=\varnothing$ and $\mathrm{def}^{(S,\Sigma^{(n)})}(\tgt^{k}_{s})=\varnothing$, for every $\sigma\in\Sigma$, every $k\in n$ and every $s\in S$.
+where $v^{s}_{0}$ and $v^{s}_{1}$ are the variables of $\vs{(s,s)}$ that correspond to the first and to the second argument, respectively, so that $v^{s}_{0}\circ^{k}_{s}v^{s}_{1}$ is defined if, and only if, the $k$-source of $v^{s}_{0}$ is equal to the $k$-target of $v^{s}_{1}$; and $\mathrm{def}^{(S,\Sigma^{(n)})}(\sigma)=\varnothing$, $\mathrm{def}^{(S,\Sigma^{(n)})}(\src^{k}_{s})=\varnothing$ and $\mathrm{def}^{(S,\Sigma^{(n)})}(\tgt^{k}_{s})=\varnothing$, for every $\sigma\in\Sigma$, every $k\in n$ and every $s\in S$.
 The relation $\lhd$ of $\sig{\Sigma}^{(n)}$, see Definition~\ref{DHepSignature}, is well-founded, since the domain conditions of the compositions only involve sources and targets, which have empty sets of domain conditions; hence $\sig{\Sigma}^{(n)}$ is indeed a hep-signature.
 \end{definition}
 
@@ -2214,7 +2214,7 @@ For every sort $s\in S$ and every variable $x\in V^{S}_{s}$, we have the followi
 In other words, $\src^{k}_{s}$ and $\tgt^{k}_{s}$ are right zeros.
 In particular, $\src^{k}_{s}$ and $\tgt^{k}_{s}$ are idempotent.
 
-For every sort $s\in S$ and every pair of variables $x,y\in V^{S}_{s}$, $x\circ^{k}_{s} y$ is defined if and only if the $k$-target of $y$ is equal to the $k$-source of $x$.
+For every sort $s\in S$ and every pair of variables $x,y\in V^{S}_{s}$, $x\circ^{k}_{s} y$ is defined if, and only if, the $k$-target of $y$ is equal to the $k$-source of $x$.
 Formally,
 \begin{align*}
 x\circ^{k}_{s} y\eeq x\circ^{k}_{s} y \;\;
@@ -2591,7 +2591,7 @@ Moreover, we regard $\Sigma^{\gl(n)}$ as the hep-signature, see Definition~\ref{
 $$
 \mathrm{def}^{((n+1)\times S,\Sigma^{\gl(n)})}(\circ^{(j,k)}_{s})=\{(\src^{(j,k)}_{s}(v^{(k,s)}_{0}),\tgt^{(j,k)}_{s}(v^{(k,s)}_{1}))\},
 $$
-where $v^{(k,s)}_{0}$ and $v^{(k,s)}_{1}$ are the variables of $\vs{((k,s),(k,s))}$, so that $v^{(k,s)}_{0}\circ^{(j,k)}_{s}v^{(k,s)}_{1}$ is defined if and only if the $(j,k)$-source of $v^{(k,s)}_{0}$ is equal to the $(j,k)$-target of $v^{(k,s)}_{1}$; and $\mathrm{def}^{((n+1)\times S,\Sigma^{\gl(n)})}(\tau)=\varnothing$ for every other operation symbol $\tau$ of $\Sigma^{\gl(n)}$.
+where $v^{(k,s)}_{0}$ and $v^{(k,s)}_{1}$ are the variables of $\vs{((k,s),(k,s))}$, so that $v^{(k,s)}_{0}\circ^{(j,k)}_{s}v^{(k,s)}_{1}$ is defined if, and only if, the $(j,k)$-source of $v^{(k,s)}_{0}$ is equal to the $(j,k)$-target of $v^{(k,s)}_{1}$; and $\mathrm{def}^{((n+1)\times S,\Sigma^{\gl(n)})}(\tau)=\varnothing$ for every other operation symbol $\tau$ of $\Sigma^{\gl(n)}$.
 The relation $\lhd$ of $\sig{\Sigma}^{\gl(n)}$, see Definition~\ref{DHepSignature}, is well-founded, since the domain conditions of the compositions only involve sources and targets, which have empty sets of domain conditions; hence $\sig{\Sigma}^{\gl(n)}$ is indeed a hep-signature.
 
 Finally, the \emph{globular $\omega$-categorial signature determined by $\Sigma$}, $\Sigma^{\gl(\omega)}$, and the hep-signature $\sig{\Sigma}^{\gl(\omega)}$ are the $\omega\times S$-sorted signature and the hep-signature defined by the same clauses, with $\omega$ in place of $n+1$.
@@ -2638,7 +2638,7 @@ Formally,
 In other words, $\mathrm{i}^{(k,j)}_{s}$ is a common section of $\src^{(j,k)}_{s}$ and $\tgt^{(j,k)}_{s}$.
 This is the globular counterpart of the fact that $\src^{k}_{s}$ and $\tgt^{k}_{s}$ are right zeros.
 
-For every sort $s\in S$ and every pair of variables $x,y\in V_{(k,s)}$, $x\circ^{(j,k)}_{s} y$ is defined if and only if the $(j,k)$-target of $y$ is equal to the $(j,k)$-source of $x$.
+For every sort $s\in S$ and every pair of variables $x,y\in V_{(k,s)}$, $x\circ^{(j,k)}_{s} y$ is defined if, and only if, the $(j,k)$-target of $y$ is equal to the $(j,k)$-source of $x$.
 Formally,
 \begin{align*}
 x\circ^{(j,k)}_{s} y\eeq x\circ^{(j,k)}_{s} y \;\;
