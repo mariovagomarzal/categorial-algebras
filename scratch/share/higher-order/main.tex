@@ -126,7 +126,7 @@
 
 \begin{abstract}
 We introduce generalized hep-derivors, morphisms between hierarchical equationally partial signatures that send every sort to a set of existence equations in one variable and every operation symbol to a term, and we prove that every generalized hep-derivor induces a functor between the corresponding categories of many-sorted partial algebras.
-The hierarchical equationally partial signatures and the generalized hep-derivors form a category over which the categories of weak ep-algebras constitute a normal lax indexed category, and its Grothendieck construction yields the category of the ep-algebras of all such signatures.
+The hierarchical equationally partial signatures and the generalized hep-derivors form a category.
 We apply these notions to higher-order categorial algebras, i.e., many-sorted algebras whose underlying many-sorted sets are strict higher-order categories and whose operations are higher-order functors.
 We present the single-set and the globular $n$-categorial algebras, for $n\in\mathbb{N}$, and the globular $\omega$-categorial algebras as ep-varieties, and we prove that, in the single-set case, the condition that every cell has a finite dimension cannot be expressed by quasi-existence equations.
 By means of generalized hep-derivors we define the graduation, unification, discretization and truncation functors, we prove that graduation and unification are mutually quasi-inverse equivalences and that discretization is left adjoint to truncation, we show that the categories of $\omega$-categorial algebras are projective limits of the categories of $n$-categorial algebras, and we combine all these functors in algebraic squares.
@@ -155,12 +155,12 @@ As is customary in the work of our group, see~\cite{CVCL16, CVCL18, CVCL23, CVCL
 \subsection{Our work}
 
 In Section~\ref{SPreliminaries} we collect the notions on many-sorted sets, free monoids, many-sorted algebras, terms and variables, Hall algebras and derivors, many-sorted partial algebras, existence and quasi-existence equations, adjunctions and the Grothendieck construction that we use in the rest of this work.
-In addition to the Grothendieck construction for split indexed categories, we state the Grothendieck construction for normal lax indexed categories, in which composites are only preserved up to a coherent family of natural transformations, and we prove that it gives rise to a category.
 
 In Section~\ref{SGenHepDerivors} we introduce the ep-signatures, the ep-algebras and their varieties, the hierarchical ep-signatures, or hep-signatures, and the generalized hep-derivors between them.
 We prove that every generalized hep-derivor induces a functor between the categories of partial algebras, and we characterize when the transformed algebra of a partial algebra is an ep-algebra.
-Then we prove that the hep-signatures and the generalized hep-derivors form a category $\mathsf{hepSig}_{\gd}$ and we compare the functor induced by a composite with the composite of the induced functors: in general, the latter is only contained in the former.
-Consequently, the categories of weak ep-algebras, together with the induced functors and these inclusions, constitute a normal lax indexed category over $\mathsf{hepSig}_{\gd}$, and, by means of the Grothendieck construction, we obtain the category $\mathsf{hepAlg}_{\gd}$ of the ep-algebras of all the hep-signatures, which generalizes the category $\mathsf{Alg}_{\mathfrak{d}}$ of~\cite{CVST10b}.
+Then we define the composition of generalized hep-derivors and we compare the functor induced by a composite with the composite of the induced functors: in general, the latter is only contained in the former.
+Next we prove that the hep-signatures and the generalized hep-derivors form a category $\mathsf{hepSig}_{\gd}$.
+We end this section by sketching how these inclusions give rise to a category $\mathsf{hepAlg}_{\gd}$ of the ep-algebras of all the hep-signatures, which generalizes the category $\mathsf{Alg}_{\mathfrak{d}}$ of~\cite{CVST10b}.
 
 In Sections~\ref{SSingleSet} and~\ref{SGlobular} we recall the single-set and the globular higher-order categorial algebras, and we present them as the categories canonically associated to the ep-varieties of suitable hep-specifications.
 In dimension $\omega$, the globular $\omega$-categorial algebras also form such a category, whereas, in the single-set presentation, the condition that every cell has a finite dimension cannot be expressed by $\QE$-equations, since the class of the single-set $\omega$-categorial algebras is not closed under products.
@@ -1047,113 +1047,113 @@ And $\pi_{F}$ is the functor from $\int^{\mathsf{I}}F$ to $\mathsf{I}$ that send
 The functor $\pi_{F}$ is a split fibration, the \emph{canonical split fibration} from $\int^{\mathsf{I}}F$ to $\mathsf{I}$ (determined by $(\mathsf{I},F)$).
 \end{definition}
 
-In Section~\ref{SGenHepDerivors} we will need the Grothendieck construction for assignments that preserve identities, but only preserve composites up to a coherent family of natural transformations, which need not be isomorphisms.
-We next state the corresponding notion and the corresponding construction.
-
-\begin{definition}\label{DLaxIndexed}
-Let $\mathsf{I}$ be a category.
-A \emph{normal lax} $\mathsf{I}$-\emph{indexed category} is an ordered pair $(F,\kappa)$ in which
-\begin{enumerate}
-\item $F$ assigns to every object $i$ of $\mathsf{I}$ a category $\mathsf{F}_{i}$, and to every morphism $\varphi\colon i\mor j$ of $\mathsf{I}$ a functor $F_{\varphi}\colon\mathsf{F}_{j}\mor\mathsf{F}_{i}$, in such a way that, for every object $i$ of $\mathsf{I}$, $F_{\id_{i}}=\Id_{\mathsf{F}_{i}}$; and
-\item $\kappa$ assigns to every pair of morphisms $\varphi\colon i\mor j$ and $\psi\colon j\mor k$ of $\mathsf{I}$ a natural transformation
-$$
-\kappa^{\varphi,\psi}=\left(\kappa^{\varphi,\psi}_{z}\right)_{z\in\mathrm{Ob}(\mathsf{F}_{k})}\colon F_{\varphi}\circ F_{\psi}\Longrightarrow F_{\psi\circ\varphi},
-$$
-\end{enumerate}
-subject to the following conditions:
-\begin{enumerate}
-\item[(L1)] for every morphism $\varphi\colon i\mor j$ of $\mathsf{I}$, $\kappa^{\id_{i},\varphi}=\id_{F_{\varphi}}=\kappa^{\varphi,\id_{j}}$; and
-\item[(L2)] for every triple of morphisms $\varphi\colon i\mor j$, $\psi\colon j\mor k$ and $\chi\colon k\mor l$ of $\mathsf{I}$, the following equality holds
-$$
-\kappa^{\varphi,\chi\circ\psi}\circ\left(F_{\varphi}\ast\kappa^{\psi,\chi}\right)
-=
-\kappa^{\psi\circ\varphi,\chi}\circ\left(\kappa^{\varphi,\psi}\ast F_{\chi}\right),
-$$
-i.e., for every object $w$ of $\mathsf{F}_{l}$, $\kappa^{\varphi,\chi\circ\psi}_{w}\circ F_{\varphi}(\kappa^{\psi,\chi}_{w})=\kappa^{\psi\circ\varphi,\chi}_{w}\circ\kappa^{\varphi,\psi}_{F_{\chi}(w)}$.
-\end{enumerate}
-Let us note that, if every $\kappa^{\varphi,\psi}$ is an identity, then $F$ is a split $\mathsf{I}$-indexed category, see Definition~\ref{DSplitIndexed}.
-\end{definition}
-
-\begin{definition}\label{DLaxGConst}
-Let $\mathsf{I}$ be a category and $(F,\kappa)$ a normal lax $\mathsf{I}$-indexed category.
-Then $\int^{\mathsf{I}}(F,\kappa)$ stands for the following data:
-\begin{enumerate}
-\item the objects are the ordered pairs $(i,x)$ with $i\in\mathrm{Ob}(\mathsf{I})$ and $x\in\mathrm{Ob}(\mathsf{F}_{i})$;
-\item the morphisms from $(i,x)$ to $(j,y)$ are the ordered pairs $(\varphi,f)$, where $\varphi\in \mathrm{Hom}_{\mathsf{I}}(i,j)$ and $f\in \mathrm{Hom}_{\mathsf{F}_{i}}(x,F_{\varphi}(y))$;
-\item the identity morphism at $(i,x)$ is $(\id_{i},\id_{x})$; and
-\item for every $(\varphi,f)\colon (i,x)\mor (j,y)$ and every $(\psi,g)\colon (j,y)\mor (k,z)$, the composite morphism $(\psi,g)\circ (\varphi,f)$ from $(i,x)$ to $(k,z)$ is
-$$
-(\psi,g)\circ (\varphi,f) = \left(\psi\circ \varphi,\kappa^{\varphi,\psi}_{z}\circ F_{\varphi}(g)\circ f\right).
-$$
-\end{enumerate}
-Moreover, $\pi_{(F,\kappa)}$ stands for the assignment that sends an object $(i,x)$ to $i$ and a morphism $(\varphi,f)$ to $\varphi$.
-\end{definition}
-
-Let us note that, since $f\colon x\mor F_{\varphi}(y)$ and $g\colon y\mor F_{\psi}(z)$, the composite $\kappa^{\varphi,\psi}_{z}\circ F_{\varphi}(g)\circ f$ is a morphism of $\mathsf{F}_{i}$ from $x$ to $F_{\psi\circ\varphi}(z)$, so that the above definition is correct.
-If every $\kappa^{\varphi,\psi}$ is an identity, then $\int^{\mathsf{I}}(F,\kappa)$ is the Grothendieck construction of Definition~\ref{DGConst}.
-
-\begin{proposition}\label{PLaxGConst}
-Let $\mathsf{I}$ be a category and $(F,\kappa)$ a normal lax $\mathsf{I}$-indexed category.
-Then $\int^{\mathsf{I}}(F,\kappa)$ is a category and $\pi_{(F,\kappa)}$ is a functor from $\int^{\mathsf{I}}(F,\kappa)$ to $\mathsf{I}$.
-\end{proposition}
-\begin{proof}
-\textsf{(Identities)} Let $(\varphi,f)\colon(i,x)\mor(j,y)$ be a morphism.
-Then the following chains of equalities hold
-\begin{align*}
-(\varphi,f)\circ(\id_{i},\id_{x})
-&=
-\left(\varphi\circ\id_{i},\kappa^{\id_{i},\varphi}_{y}\circ F_{\id_{i}}(f)\circ\id_{x}\right)
-\tag{1}
-\\&=
-\left(\varphi,\id_{F_{\varphi}(y)}\circ f\circ\id_{x}\right)
-\tag{2}
-\\&=
-(\varphi,f),
-\tag{3}
-\\
-(\id_{j},\id_{y})\circ(\varphi,f)
-&=
-\left(\id_{j}\circ\varphi,\kappa^{\varphi,\id_{j}}_{y}\circ F_{\varphi}(\id_{y})\circ f\right)
-\tag{4}
-\\&=
-\left(\varphi,\id_{F_{\varphi}(y)}\circ\id_{F_{\varphi}(y)}\circ f\right)
-\tag{5}
-\\&=
-(\varphi,f).
-\tag{6}
-\end{align*}
-
-The first and the fourth equalities unravel Definition~\ref{DLaxGConst}; the second and the fifth equalities follow from condition~(L1) of Definition~\ref{DLaxIndexed}, from the fact that $F_{\id_{i}}=\Id_{\mathsf{F}_{i}}$ and from the fact that $F_{\varphi}$ is a functor; finally, the third and the last equalities follow from the fact that $\mathsf{F}_{i}$ is a category.
-
-\textsf{(Associativity)} Let $(\varphi,f)\colon(i,x)\mor(j,y)$, $(\psi,g)\colon(j,y)\mor(k,z)$ and $(\chi,h)\colon(k,z)\mor(l,w)$ be morphisms.
-Both $(\chi,h)\circ((\psi,g)\circ(\varphi,f))$ and $((\chi,h)\circ(\psi,g))\circ(\varphi,f)$ have $\chi\circ\psi\circ\varphi$ as first coordinate.
-For the second coordinates, the following chain of equalities holds
-\begin{flushleft}
-$
-\kappa^{\psi\circ\varphi,\chi}_{w}\circ F_{\psi\circ\varphi}(h)\circ\kappa^{\varphi,\psi}_{z}\circ F_{\varphi}(g)\circ f
-$
-\begin{align*}
-&=
-\kappa^{\psi\circ\varphi,\chi}_{w}\circ\kappa^{\varphi,\psi}_{F_{\chi}(w)}\circ F_{\varphi}(F_{\psi}(h))\circ F_{\varphi}(g)\circ f
-\tag{1}
-\\&=
-\kappa^{\varphi,\chi\circ\psi}_{w}\circ F_{\varphi}(\kappa^{\psi,\chi}_{w})\circ F_{\varphi}(F_{\psi}(h))\circ F_{\varphi}(g)\circ f
-\tag{2}
-\\&=
-\kappa^{\varphi,\chi\circ\psi}_{w}\circ F_{\varphi}\left(\kappa^{\psi,\chi}_{w}\circ F_{\psi}(h)\circ g\right)\circ f.
-\tag{3}
-\end{align*}
-\end{flushleft}
-
-The first equality follows from the naturality of $\kappa^{\varphi,\psi}$, applied to the morphism $h\colon z\mor F_{\chi}(w)$ of $\mathsf{F}_{k}$; the second equality follows from condition~(L2) of Definition~\ref{DLaxIndexed}; finally, the last equality follows from the fact that $F_{\varphi}$ is a functor.
-By Definition~\ref{DLaxGConst}, the left-hand side of the above chain is the second coordinate of $(\chi,h)\circ((\psi,g)\circ(\varphi,f))$ and its right-hand side is the second coordinate of $((\chi,h)\circ(\psi,g))\circ(\varphi,f)$.
-
-\textsf{(The projection)} By Definition~\ref{DLaxGConst}, $\pi_{(F,\kappa)}$ preserves identities and composites.
-
-This completes the proof.
-\end{proof}
-
-We will call $(\int^{\mathsf{I}}(F,\kappa),\pi_{(F,\kappa)})$ the \emph{Grothendieck construction} at $(\mathsf{I},(F,\kappa))$.
+% In Section~\ref{SGenHepDerivors} we will need the Grothendieck construction for assignments that preserve identities, but only preserve composites up to a coherent family of natural transformations, which need not be isomorphisms.
+% We next state the corresponding notion and the corresponding construction.
+%
+% \begin{definition}\label{DLaxIndexed}
+% Let $\mathsf{I}$ be a category.
+% A \emph{normal lax} $\mathsf{I}$-\emph{indexed category} is an ordered pair $(F,\kappa)$ in which
+% \begin{enumerate}
+% \item $F$ assigns to every object $i$ of $\mathsf{I}$ a category $\mathsf{F}_{i}$, and to every morphism $\varphi\colon i\mor j$ of $\mathsf{I}$ a functor $F_{\varphi}\colon\mathsf{F}_{j}\mor\mathsf{F}_{i}$, in such a way that, for every object $i$ of $\mathsf{I}$, $F_{\id_{i}}=\Id_{\mathsf{F}_{i}}$; and
+% \item $\kappa$ assigns to every pair of morphisms $\varphi\colon i\mor j$ and $\psi\colon j\mor k$ of $\mathsf{I}$ a natural transformation
+% $$
+% \kappa^{\varphi,\psi}=\left(\kappa^{\varphi,\psi}_{z}\right)_{z\in\mathrm{Ob}(\mathsf{F}_{k})}\colon F_{\varphi}\circ F_{\psi}\Longrightarrow F_{\psi\circ\varphi},
+% $$
+% \end{enumerate}
+% subject to the following conditions:
+% \begin{enumerate}
+% \item[(L1)] for every morphism $\varphi\colon i\mor j$ of $\mathsf{I}$, $\kappa^{\id_{i},\varphi}=\id_{F_{\varphi}}=\kappa^{\varphi,\id_{j}}$; and
+% \item[(L2)] for every triple of morphisms $\varphi\colon i\mor j$, $\psi\colon j\mor k$ and $\chi\colon k\mor l$ of $\mathsf{I}$, the following equality holds
+% $$
+% \kappa^{\varphi,\chi\circ\psi}\circ\left(F_{\varphi}\ast\kappa^{\psi,\chi}\right)
+% =
+% \kappa^{\psi\circ\varphi,\chi}\circ\left(\kappa^{\varphi,\psi}\ast F_{\chi}\right),
+% $$
+% i.e., for every object $w$ of $\mathsf{F}_{l}$, $\kappa^{\varphi,\chi\circ\psi}_{w}\circ F_{\varphi}(\kappa^{\psi,\chi}_{w})=\kappa^{\psi\circ\varphi,\chi}_{w}\circ\kappa^{\varphi,\psi}_{F_{\chi}(w)}$.
+% \end{enumerate}
+% Let us note that, if every $\kappa^{\varphi,\psi}$ is an identity, then $F$ is a split $\mathsf{I}$-indexed category, see Definition~\ref{DSplitIndexed}.
+% \end{definition}
+%
+% \begin{definition}\label{DLaxGConst}
+% Let $\mathsf{I}$ be a category and $(F,\kappa)$ a normal lax $\mathsf{I}$-indexed category.
+% Then $\int^{\mathsf{I}}(F,\kappa)$ stands for the following data:
+% \begin{enumerate}
+% \item the objects are the ordered pairs $(i,x)$ with $i\in\mathrm{Ob}(\mathsf{I})$ and $x\in\mathrm{Ob}(\mathsf{F}_{i})$;
+% \item the morphisms from $(i,x)$ to $(j,y)$ are the ordered pairs $(\varphi,f)$, where $\varphi\in \mathrm{Hom}_{\mathsf{I}}(i,j)$ and $f\in \mathrm{Hom}_{\mathsf{F}_{i}}(x,F_{\varphi}(y))$;
+% \item the identity morphism at $(i,x)$ is $(\id_{i},\id_{x})$; and
+% \item for every $(\varphi,f)\colon (i,x)\mor (j,y)$ and every $(\psi,g)\colon (j,y)\mor (k,z)$, the composite morphism $(\psi,g)\circ (\varphi,f)$ from $(i,x)$ to $(k,z)$ is
+% $$
+% (\psi,g)\circ (\varphi,f) = \left(\psi\circ \varphi,\kappa^{\varphi,\psi}_{z}\circ F_{\varphi}(g)\circ f\right).
+% $$
+% \end{enumerate}
+% Moreover, $\pi_{(F,\kappa)}$ stands for the assignment that sends an object $(i,x)$ to $i$ and a morphism $(\varphi,f)$ to $\varphi$.
+% \end{definition}
+%
+% Let us note that, since $f\colon x\mor F_{\varphi}(y)$ and $g\colon y\mor F_{\psi}(z)$, the composite $\kappa^{\varphi,\psi}_{z}\circ F_{\varphi}(g)\circ f$ is a morphism of $\mathsf{F}_{i}$ from $x$ to $F_{\psi\circ\varphi}(z)$, so that the above definition is correct.
+% If every $\kappa^{\varphi,\psi}$ is an identity, then $\int^{\mathsf{I}}(F,\kappa)$ is the Grothendieck construction of Definition~\ref{DGConst}.
+%
+% \begin{proposition}\label{PLaxGConst}
+% Let $\mathsf{I}$ be a category and $(F,\kappa)$ a normal lax $\mathsf{I}$-indexed category.
+% Then $\int^{\mathsf{I}}(F,\kappa)$ is a category and $\pi_{(F,\kappa)}$ is a functor from $\int^{\mathsf{I}}(F,\kappa)$ to $\mathsf{I}$.
+% \end{proposition}
+% \begin{proof}
+% \textsf{(Identities)} Let $(\varphi,f)\colon(i,x)\mor(j,y)$ be a morphism.
+% Then the following chains of equalities hold
+% \begin{align*}
+% (\varphi,f)\circ(\id_{i},\id_{x})
+% &=
+% \left(\varphi\circ\id_{i},\kappa^{\id_{i},\varphi}_{y}\circ F_{\id_{i}}(f)\circ\id_{x}\right)
+% \tag{1}
+% \\&=
+% \left(\varphi,\id_{F_{\varphi}(y)}\circ f\circ\id_{x}\right)
+% \tag{2}
+% \\&=
+% (\varphi,f),
+% \tag{3}
+% \\
+% (\id_{j},\id_{y})\circ(\varphi,f)
+% &=
+% \left(\id_{j}\circ\varphi,\kappa^{\varphi,\id_{j}}_{y}\circ F_{\varphi}(\id_{y})\circ f\right)
+% \tag{4}
+% \\&=
+% \left(\varphi,\id_{F_{\varphi}(y)}\circ\id_{F_{\varphi}(y)}\circ f\right)
+% \tag{5}
+% \\&=
+% (\varphi,f).
+% \tag{6}
+% \end{align*}
+%
+% The first and the fourth equalities unravel Definition~\ref{DLaxGConst}; the second and the fifth equalities follow from condition~(L1) of Definition~\ref{DLaxIndexed}, from the fact that $F_{\id_{i}}=\Id_{\mathsf{F}_{i}}$ and from the fact that $F_{\varphi}$ is a functor; finally, the third and the last equalities follow from the fact that $\mathsf{F}_{i}$ is a category.
+%
+% \textsf{(Associativity)} Let $(\varphi,f)\colon(i,x)\mor(j,y)$, $(\psi,g)\colon(j,y)\mor(k,z)$ and $(\chi,h)\colon(k,z)\mor(l,w)$ be morphisms.
+% Both $(\chi,h)\circ((\psi,g)\circ(\varphi,f))$ and $((\chi,h)\circ(\psi,g))\circ(\varphi,f)$ have $\chi\circ\psi\circ\varphi$ as first coordinate.
+% For the second coordinates, the following chain of equalities holds
+% \begin{flushleft}
+% $
+% \kappa^{\psi\circ\varphi,\chi}_{w}\circ F_{\psi\circ\varphi}(h)\circ\kappa^{\varphi,\psi}_{z}\circ F_{\varphi}(g)\circ f
+% $
+% \begin{align*}
+% &=
+% \kappa^{\psi\circ\varphi,\chi}_{w}\circ\kappa^{\varphi,\psi}_{F_{\chi}(w)}\circ F_{\varphi}(F_{\psi}(h))\circ F_{\varphi}(g)\circ f
+% \tag{1}
+% \\&=
+% \kappa^{\varphi,\chi\circ\psi}_{w}\circ F_{\varphi}(\kappa^{\psi,\chi}_{w})\circ F_{\varphi}(F_{\psi}(h))\circ F_{\varphi}(g)\circ f
+% \tag{2}
+% \\&=
+% \kappa^{\varphi,\chi\circ\psi}_{w}\circ F_{\varphi}\left(\kappa^{\psi,\chi}_{w}\circ F_{\psi}(h)\circ g\right)\circ f.
+% \tag{3}
+% \end{align*}
+% \end{flushleft}
+%
+% The first equality follows from the naturality of $\kappa^{\varphi,\psi}$, applied to the morphism $h\colon z\mor F_{\chi}(w)$ of $\mathsf{F}_{k}$; the second equality follows from condition~(L2) of Definition~\ref{DLaxIndexed}; finally, the last equality follows from the fact that $F_{\varphi}$ is a functor.
+% By Definition~\ref{DLaxGConst}, the left-hand side of the above chain is the second coordinate of $(\chi,h)\circ((\psi,g)\circ(\varphi,f))$ and its right-hand side is the second coordinate of $((\chi,h)\circ(\psi,g))\circ(\varphi,f)$.
+%
+% \textsf{(The projection)} By Definition~\ref{DLaxGConst}, $\pi_{(F,\kappa)}$ preserves identities and composites.
+%
+% This completes the proof.
+% \end{proof}
+%
+% We will call $(\int^{\mathsf{I}}(F,\kappa),\pi_{(F,\kappa)})$ the \emph{Grothendieck construction} at $(\mathsf{I},(F,\kappa))$.
 
 \section{Generalized hep-derivors}\label{SGenHepDerivors}
 
@@ -1205,7 +1205,7 @@ $$
 $$
 \end{remark}
 
-In order to assemble the ep-algebras of all the hep-signatures into a single category by means of the Grothendieck construction, see Subsection~\ref{SHepAlgCat}, we will need the following weakening of the notion of ep-algebra, in which the operations are only required to be defined on families that satisfy the corresponding domain conditions.
+We will also need the following weakening of the notion of ep-algebra, in which the operations are only required to be defined on families that satisfy the corresponding domain conditions.
 
 \begin{definition}\label{DWeakEpAlgebra}
 Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ be an ep-signature and $\mathbf{A}$ a partial $\Sigma$-algebra.
@@ -1582,9 +1582,9 @@ It follows from Propositions~\ref{PDomainSetFunctor}, \ref{PTransformedAlg} and~
 % \end{enumerate}
 % \end{remark}
 
-\subsection{The category \texorpdfstring{$\mathsf{hepSig}_{\gd}$}{hepSiggd}}\label{SHepSigCat}
+\subsection{Composition of generalized hep-derivors}\label{SHepComp}
 
-In this subsection we prove that the hep-signatures and the generalized hep-derivors form a category.
+In this subsection we define the composition of generalized hep-derivors.
 We use the notation $d^{\sharp}[\mathcal{H}]$ of Remark~\ref{RDerivorTerms} for the translation of a set of $\mathrm{E}$-equations $\mathcal{H}$ along a derivor $(\psi,d)$.
 
 \begin{definition}\label{DHepComp}
@@ -1601,47 +1601,6 @@ The \emph{identity} at $\sig{\Sigma}$ is the generalized hep-derivor $\id_{\sig{
 \end{definition}
 
 Let us note that $\Dom^{(\psi,d)}_{\varphi(s)}$ and $d^{\sharp}[\Dom^{(\varphi,c)}_{s}]$ are sets of $\mathrm{E}$-equations with variables in $\vs{\psi(\varphi(s))}$, since $\psi^{\star}((\varphi(s)))=(\psi(\varphi(s)))$, so that the above definition is correct.
-
-\begin{proposition}\label{PHepSigCat}
-The hep-signatures, together with the generalized hep-derivors, the composition and the identities of Definition~\ref{DHepComp}, form a category, which we denote by $\mathsf{hepSig}_{\gd}$.
-\end{proposition}
-\begin{proof}
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$, $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$, $\sig{\Omega}=(U,\Omega,\mathrm{def}^{(U,\Omega)})$ and $\sig{\Xi}=(W,\Xi,\mathrm{def}^{(W,\Xi)})$ be hep-signatures, and $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$, $\mathbf{d}=(\psi,d,\Dom^{(\psi,d)})$ and $\mathbf{e}=(\chi,e,\Dom^{(\chi,e)})$ generalized hep-derivors from $\sig{\Sigma}$ to $\sig{\Lambda}$, from $\sig{\Lambda}$ to $\sig{\Omega}$ and from $\sig{\Omega}$ to $\sig{\Xi}$, respectively.
-By~(Der4), the underlying derivors of $\mathbf{e}\circ(\mathbf{d}\circ\mathbf{c})$ and of $(\mathbf{e}\circ\mathbf{d})\circ\mathbf{c}$ are equal, and the underlying derivors of $\id_{\sig{\Lambda}}\circ\mathbf{c}$ and of $\mathbf{c}\circ\id_{\sig{\Sigma}}$ are $(\varphi,c)$.
-It remains to compare the domains.
-Let $s\in S$.
-
-\textsf{(Associativity)} The following chain of equalities holds
-\begin{align*}
-\Dom^{\mathbf{e}\circ(\mathbf{d}\circ\mathbf{c})}_{s}
-&=
-\Dom^{(\chi,e)}_{\psi(\varphi(s))}\cup e^{\sharp}\left[\Dom^{(\psi,d)}_{\varphi(s)}\cup d^{\sharp}\left[\Dom^{(\varphi,c)}_{s}\right]\right]
-\tag{1}
-\\&=
-\Dom^{(\chi,e)}_{\psi(\varphi(s))}\cup e^{\sharp}\left[\Dom^{(\psi,d)}_{\varphi(s)}\right]\cup e^{\sharp}\left[d^{\sharp}\left[\Dom^{(\varphi,c)}_{s}\right]\right]
-\tag{2}
-\\&=
-\Dom^{\mathbf{e}\circ\mathbf{d}}_{\varphi(s)}\cup\left(e^{\sharp}\circ d\right)^{\sharp}\left[\Dom^{(\varphi,c)}_{s}\right]
-\tag{3}
-\\&=
-\Dom^{(\mathbf{e}\circ\mathbf{d})\circ\mathbf{c}}_{s}.
-\tag{4}
-\end{align*}
-
-The first equality unravels Definition~\ref{DHepComp}; the second equality follows from the fact that $e^{\sharp}[\,\cdot\,]$ preserves unions; the third equality follows from Definition~\ref{DHepComp} and the equality $(e^{\sharp}\circ d)^{\sharp}=e^{\sharp}\circ d^{\sharp}$, see~(Der4); finally, the last equality unravels Definition~\ref{DHepComp}.
-
-\textsf{(Identities)} By Definition~\ref{DHepComp} and~(Der3), the following equalities hold
-\begin{align*}
-\Dom^{\id_{\sig{\Lambda}}\circ\mathbf{c}}_{s}
-&=\varnothing\cup(\eta^{\Lambda})^{\sharp}\left[\Dom^{(\varphi,c)}_{s}\right]=\Dom^{(\varphi,c)}_{s},
-\\
-\Dom^{\mathbf{c}\circ\id_{\sig{\Sigma}}}_{s}
-&=\Dom^{(\varphi,c)}_{s}\cup c^{\sharp}[\varnothing]=\Dom^{(\varphi,c)}_{s},
-\end{align*}
-since $(\eta^{\Lambda})^{\sharp}$ is the identity.
-
-This completes the proof.
-\end{proof}
 
 \subsection{Composition and induced functors}\label{SHepCompFunctors}
 
@@ -1831,114 +1790,170 @@ This completes the proof.
 By Lemma~\ref{LTermComp}, the hypothesis on the cells in Proposition~\ref{PHepComp}~(2) amounts to the following condition: for every $s\in S$ and every cell $x$ of sort $\varphi(s)$ of $\mathbf{C}$ relative to $\mathbf{d}$, if $\mathbf{C}\models d^{\sharp}[\Dom^{(\varphi,c)}_{s}][x]$, then $\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\models\Dom^{(\varphi,c)}_{s}[x]$.
 It trivially holds when the domains of $\mathbf{c}$ are empty.
 
-\subsection{The category \texorpdfstring{$\mathsf{hepAlg}_{\gd}$}{hepAlggd}}\label{SHepAlgCat}
+\subsection{The category \texorpdfstring{$\mathsf{hepSig}_{\gd}$}{hepSiggd}}\label{SHepSigCat}
 
-In~\cite{CVST10b}, the category $\mathsf{Alg}_{\mathfrak{d}}$, whose objects are the pairs formed by a many-sorted signature and an algebra for it, is obtained by means of the Grothendieck construction, see Definition~\ref{DGConst}, for the split indexed category that sends a many-sorted signature $\sig{\Sigma}$ to $\mathsf{Alg}(\Sigma)$ and a derivor to the functor that it induces.
-Following this pattern, we next assemble the ep-algebras of all the hep-signatures into a single category.
-However, by Proposition~\ref{PHepComp}, the composite $\mathbf{c}^{\ast}_{\gd}\circ\mathbf{d}^{\ast}_{\gd}$ is, in general, only contained in $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}$, and the inclusions $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ need not be isomorphisms.
-Therefore the induced functors do not constitute a split, nor even a pseudo, indexed category, but a normal lax indexed category, see Definition~\ref{DLaxIndexed}, provided that we take as fibres the categories of weak ep-algebras, see Definition~\ref{DWeakEpAlgebra}, on which, by Proposition~\ref{PHepId}, the identity generalized hep-derivors induce identity functors.
-We begin by proving that the transformed algebras are weak ep-algebras.
+We end this section by proving that the hep-signatures and the generalized hep-derivors form a category.
 
-\begin{lemma}\label{LHepWeak}
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures and $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$.
-Then, for every partial $\Lambda$-algebra $\mathbf{B}$, $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is a weak $\sig{\Sigma}$-algebra.
-Consequently, the restriction of $\mathbf{c}^{\ast}_{\gd}$ to $\mathsf{wEPAlg}(\sig{\Lambda})$ corestricts to $\mathsf{wEPAlg}(\sig{\Sigma})$, see Definition~\ref{DCorestriction}, and we denote the corestriction by
-$$
-\mathbf{c}^{\ast}_{\gd}\colon\mathsf{wEPAlg}(\sig{\Lambda})\mor\mathsf{wEPAlg}(\sig{\Sigma}).
-$$
-\end{lemma}
-\begin{proof}
-Let $\mathbf{B}$ be a partial $\Lambda$-algebra, $(\mathbf{s},s)\in S^{\star}\times S$ and $\sigma\in\Sigma_{\mathbf{s},s}$.
-By condition (D1) of Proposition~\ref{PTransformedAlg}, every family in $\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})})$ satisfies $\mathrm{def}^{(S,\Sigma)}(\sigma)$ in $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$.
-Hence, by Definition~\ref{DWeakEpAlgebra}, $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is a weak $\sig{\Sigma}$-algebra.
-The last statement follows from Definition~\ref{DCorestriction}, since $\mathsf{wEPAlg}(\sig{\Lambda})$ and $\mathsf{wEPAlg}(\sig{\Sigma})$ are full subcategories of $\mathsf{PAlg}(\Lambda)$ and of $\mathsf{PAlg}(\Sigma)$, respectively.
-\end{proof}
-
-In the following proposition we prove that the categories of weak ep-algebras, together with the functors induced by the generalized hep-derivors and the inclusions of Proposition~\ref{PHepComp}, constitute a normal lax indexed category.
-
-\begin{proposition}\label{PHepLax}
-Let $\mathrm{wEPAlg}$ stand for the assignment that sends every hep-signature $\sig{\Sigma}$ to the category $\mathsf{wEPAlg}(\sig{\Sigma})$ and every generalized hep-derivor $\mathbf{c}$ from $\sig{\Sigma}$ to $\sig{\Lambda}$ to the functor $\mathbf{c}^{\ast}_{\gd}\colon\mathsf{wEPAlg}(\sig{\Lambda})\mor\mathsf{wEPAlg}(\sig{\Sigma})$ of Lemma~\ref{LHepWeak}, and let $\kappa$ stand for the assignment that sends every pair of generalized hep-derivors $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{d}\colon\sig{\Lambda}\mor\sig{\Omega}$ to the family
-$$
-\kappa^{\mathbf{c},\mathbf{d}}=\left(\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}\right)_{\mathbf{C}\in\mathrm{Ob}(\mathsf{wEPAlg}(\sig{\Omega}))}
-$$
-of the inclusions of Proposition~\ref{PHepComp}.
-Then $(\mathrm{wEPAlg},\kappa)$ is a normal lax $\mathsf{hepSig}_{\gd}$-indexed category, see Definition~\ref{DLaxIndexed}.
+\begin{proposition}\label{PHepSigCat}
+The hep-signatures, together with the generalized hep-derivors, the composition and the identities of Definition~\ref{DHepComp}, form a category, which we denote by $\mathsf{hepSig}_{\gd}$.
 \end{proposition}
 \begin{proof}
-\textsf{(Identities)} By Proposition~\ref{PHepId}, for every hep-signature $\sig{\Sigma}$, $(\id_{\sig{\Sigma}})^{\ast}_{\gd}=\Id_{\mathsf{wEPAlg}(\sig{\Sigma})}$.
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$, $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$, $\sig{\Omega}=(U,\Omega,\mathrm{def}^{(U,\Omega)})$ and $\sig{\Xi}=(W,\Xi,\mathrm{def}^{(W,\Xi)})$ be hep-signatures, and $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$, $\mathbf{d}=(\psi,d,\Dom^{(\psi,d)})$ and $\mathbf{e}=(\chi,e,\Dom^{(\chi,e)})$ generalized hep-derivors from $\sig{\Sigma}$ to $\sig{\Lambda}$, from $\sig{\Lambda}$ to $\sig{\Omega}$ and from $\sig{\Omega}$ to $\sig{\Xi}$, respectively.
+By~(Der4), the underlying derivors of $\mathbf{e}\circ(\mathbf{d}\circ\mathbf{c})$ and of $(\mathbf{e}\circ\mathbf{d})\circ\mathbf{c}$ are equal, and the underlying derivors of $\id_{\sig{\Lambda}}\circ\mathbf{c}$ and of $\mathbf{c}\circ\id_{\sig{\Sigma}}$ are $(\varphi,c)$.
+It remains to compare the domains.
+Let $s\in S$.
 
-\textsf{(Naturality)} Let $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{d}\colon\sig{\Lambda}\mor\sig{\Omega}$ be generalized hep-derivors.
-By Lemma~\ref{LHepWeak}, for every weak $\sig{\Omega}$-algebra $\mathbf{C}$, both $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ and $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$ are weak $\sig{\Sigma}$-algebras, so that, by Proposition~\ref{PHepComp}~(1), $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ is a morphism of the full subcategory $\mathsf{wEPAlg}(\sig{\Sigma})$ of $\mathsf{PAlg}(\Sigma)$.
-Moreover, again by Proposition~\ref{PHepComp}~(1), $\kappa^{\mathbf{c},\mathbf{d}}$ is a natural transformation from $\mathbf{c}^{\ast}_{\gd}\circ\mathbf{d}^{\ast}_{\gd}$ to $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}$.
-
-Before checking the conditions (L1) and (L2) of Definition~\ref{DLaxIndexed}, let us note that a homomorphism of partial algebras is determined by its domain, its codomain and its underlying many-sorted mapping, and that, by Proposition~\ref{PHepComp}~(1) and Proposition~\ref{PGenHepDerivorFunctor}, the underlying many-sorted mapping of every $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$, and of its image under every functor $\mathbf{e}^{\ast}_{\gd}$, which is a birestriction of it, is an inclusion.
-
-\textsf{(L1)} Let $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$ be a generalized hep-derivor and $\mathbf{B}$ a weak $\sig{\Lambda}$-algebra.
-By Proposition~\ref{PHepSigCat}, $\mathbf{c}\circ\id_{\sig{\Sigma}}=\mathbf{c}$ and, by Lemma~\ref{LHepWeak} and Proposition~\ref{PHepId}, $(\id_{\sig{\Sigma}})^{\ast}_{\gd}(\mathbf{c}^{\ast}_{\gd}(\mathbf{B}))=\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$.
-Hence $\kappa^{\id_{\sig{\Sigma}},\mathbf{c}}_{\mathbf{B}}$ is the inclusion of the underlying $S$-sorted set of $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ into itself, i.e., $\kappa^{\id_{\sig{\Sigma}},\mathbf{c}}_{\mathbf{B}}=\id_{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$.
-Similarly, $\id_{\sig{\Lambda}}\circ\mathbf{c}=\mathbf{c}$ and, by Proposition~\ref{PHepId}, $\mathbf{c}^{\ast}_{\gd}((\id_{\sig{\Lambda}})^{\ast}_{\gd}(\mathbf{B}))=\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$, so that $\kappa^{\mathbf{c},\id_{\sig{\Lambda}}}_{\mathbf{B}}=\id_{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$.
-Therefore $\kappa^{\id_{\sig{\Sigma}},\mathbf{c}}=\id_{\mathbf{c}^{\ast}_{\gd}}=\kappa^{\mathbf{c},\id_{\sig{\Lambda}}}$.
-
-\textsf{(L2)} Let $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$, $\mathbf{d}\colon\sig{\Lambda}\mor\sig{\Omega}$ and $\mathbf{e}\colon\sig{\Omega}\mor\sig{\Xi}$ be generalized hep-derivors and $\mathbf{D}$ a weak $\sig{\Xi}$-algebra.
-By Proposition~\ref{PHepSigCat}, $(\mathbf{e}\circ\mathbf{d})\circ\mathbf{c}=\mathbf{e}\circ(\mathbf{d}\circ\mathbf{c})$.
-Therefore both
-$$
-\kappa^{\mathbf{c},\mathbf{e}\circ\mathbf{d}}_{\mathbf{D}}\circ\mathbf{c}^{\ast}_{\gd}\left(\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{D}}\right)
-\qquad\text{and}\qquad
-\kappa^{\mathbf{d}\circ\mathbf{c},\mathbf{e}}_{\mathbf{D}}\circ\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{e}^{\ast}_{\gd}(\mathbf{D})}
-$$
-are homomorphisms from $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{D})))$ to $(\mathbf{e}\circ\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{D})$ whose underlying $S$-sorted mappings are composites of inclusions, i.e., the inclusion of the underlying $S$-sorted set of the former into that of the latter.
-Hence both homomorphisms are equal.
-
-This completes the proof.
-\end{proof}
-
-We are now in position to define the category of the ep-algebras of all the hep-signatures.
-
-\begin{definition}\label{DHepAlgCat}
-We let $\mathsf{hepAlg}_{\gd}$ stand for the full subcategory of
-$$
-\int^{\mathsf{hepSig}_{\gd}}(\mathrm{wEPAlg},\kappa),
-$$
-see Definition~\ref{DLaxGConst} and Proposition~\ref{PHepLax}, whose objects are the ordered pairs $(\sig{\Sigma},\mathbf{A})$, where $\sig{\Sigma}$ is a hep-signature and $\mathbf{A}$ a $\sig{\Sigma}$-algebra.
-Explicitly, $\mathsf{hepAlg}_{\gd}$ is defined as follows:
-\begin{enumerate}
-\item its objects are the ordered pairs $(\sig{\Sigma},\mathbf{A})$, where $\sig{\Sigma}$ is a hep-signature and $\mathbf{A}$ a $\sig{\Sigma}$-algebra;
-\item its morphisms from $(\sig{\Sigma},\mathbf{A})$ to $(\sig{\Lambda},\mathbf{B})$ are the ordered pairs $(\mathbf{c},f)$, where $\mathbf{c}$ is a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $f\colon\mathbf{A}\mor\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ a homomorphism of partial $\Sigma$-algebras;
-\item the composite of $(\mathbf{c},f)\colon(\sig{\Sigma},\mathbf{A})\mor(\sig{\Lambda},\mathbf{B})$ and $(\mathbf{d},g)\colon(\sig{\Lambda},\mathbf{B})\mor(\sig{\Omega},\mathbf{C})$ is
-\begin{flushleft}
-$
-(\mathbf{d},g)\circ(\mathbf{c},f)
-$
+\textsf{(Associativity)} The following chain of equalities holds
 \begin{align*}
+\Dom^{\mathbf{e}\circ(\mathbf{d}\circ\mathbf{c})}_{s}
 &=
-\left(\mathbf{d}\circ\mathbf{c},\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}\circ\mathbf{c}^{\ast}_{\gd}(g)\circ f\right),
+\Dom^{(\chi,e)}_{\psi(\varphi(s))}\cup e^{\sharp}\left[\Dom^{(\psi,d)}_{\varphi(s)}\cup d^{\sharp}\left[\Dom^{(\varphi,c)}_{s}\right]\right]
+\tag{1}
+\\&=
+\Dom^{(\chi,e)}_{\psi(\varphi(s))}\cup e^{\sharp}\left[\Dom^{(\psi,d)}_{\varphi(s)}\right]\cup e^{\sharp}\left[d^{\sharp}\left[\Dom^{(\varphi,c)}_{s}\right]\right]
+\tag{2}
+\\&=
+\Dom^{\mathbf{e}\circ\mathbf{d}}_{\varphi(s)}\cup\left(e^{\sharp}\circ d\right)^{\sharp}\left[\Dom^{(\varphi,c)}_{s}\right]
+\tag{3}
+\\&=
+\Dom^{(\mathbf{e}\circ\mathbf{d})\circ\mathbf{c}}_{s}.
+\tag{4}
 \end{align*}
-\end{flushleft}
-see Definition~\ref{DHepComp} and Proposition~\ref{PHepComp}; and
-\item the identity at $(\sig{\Sigma},\mathbf{A})$ is $(\id_{\sig{\Sigma}},\id_{\mathbf{A}})$.
-\end{enumerate}
-\end{definition}
 
-Let us note that, since every $\sig{\Sigma}$-algebra is a weak $\sig{\Sigma}$-algebra and $\mathsf{wEPAlg}(\sig{\Sigma})$ is a full subcategory of $\mathsf{PAlg}(\Sigma)$, the morphisms of $\int^{\mathsf{hepSig}_{\gd}}(\mathrm{wEPAlg},\kappa)$ between objects of $\mathsf{hepAlg}_{\gd}$ are exactly the pairs described in the second item of the above definition, so that both descriptions of $\mathsf{hepAlg}_{\gd}$ agree.
+The first equality unravels Definition~\ref{DHepComp}; the second equality follows from the fact that $e^{\sharp}[\,\cdot\,]$ preserves unions; the third equality follows from Definition~\ref{DHepComp} and the equality $(e^{\sharp}\circ d)^{\sharp}=e^{\sharp}\circ d^{\sharp}$, see~(Der4); finally, the last equality unravels Definition~\ref{DHepComp}.
 
-\begin{proposition}\label{PHepAlgCat}
-$\mathsf{hepAlg}_{\gd}$ is a category.
-Moreover, the assignment that sends every object $(\sig{\Sigma},\mathbf{A})$ to $\sig{\Sigma}$ and every morphism $(\mathbf{c},f)$ to $\mathbf{c}$ is a functor from $\mathsf{hepAlg}_{\gd}$ to $\mathsf{hepSig}_{\gd}$.
-\end{proposition}
-\begin{proof}
-By Propositions~\ref{PLaxGConst} and~\ref{PHepLax}, $\int^{\mathsf{hepSig}_{\gd}}(\mathrm{wEPAlg},\kappa)$ is a category and $\pi_{(\mathrm{wEPAlg},\kappa)}$ is a functor from it to $\mathsf{hepSig}_{\gd}$.
-Therefore its full subcategory $\mathsf{hepAlg}_{\gd}$ is a category, and the assignment of the statement, which is the restriction of $\pi_{(\mathrm{wEPAlg},\kappa)}$ to $\mathsf{hepAlg}_{\gd}$, is a functor.
+\textsf{(Identities)} By Definition~\ref{DHepComp} and~(Der3), the following equalities hold
+\begin{align*}
+\Dom^{\id_{\sig{\Lambda}}\circ\mathbf{c}}_{s}
+&=\varnothing\cup(\eta^{\Lambda})^{\sharp}\left[\Dom^{(\varphi,c)}_{s}\right]=\Dom^{(\varphi,c)}_{s},
+\\
+\Dom^{\mathbf{c}\circ\id_{\sig{\Sigma}}}_{s}
+&=\Dom^{(\varphi,c)}_{s}\cup c^{\sharp}[\varnothing]=\Dom^{(\varphi,c)}_{s},
+\end{align*}
+since $(\eta^{\Lambda})^{\sharp}$ is the identity.
 
 This completes the proof.
 \end{proof}
 
 \begin{remark}\label{RHepAlgCat}
-Let us consider the many-sorted signatures as hep-signatures with empty sets of domain conditions, see Remark~\ref{REpAlgebra}, and the derivors $(\varphi,c)$ between them as the generalized hep-derivors $(\varphi,c,\varnothing)$.
-For a many-sorted signature $(S,\Sigma)$, the weak $(S,\Sigma,\varnothing)$-algebras are all the partial $\Sigma$-algebras and the $(S,\Sigma,\varnothing)$-algebras are the $\Sigma$-algebras.
-Moreover, since the partial term operations of a total algebra are total, for every derivor $(\varphi,c)$ from $(S,\Sigma)$ to $(T,\Lambda)$, the restriction of $(\varphi,c,\varnothing)^{\ast}_{\gd}$ to $\mathsf{Alg}(\Lambda)$ corestricts to $\mathsf{Alg}(\Sigma)$, and this corestriction is the usual functor that sends a $\Lambda$-algebra $\mathbf{B}$ to the $\Sigma$-algebra on $B_{\varphi}$ in which every $\sigma$ is interpreted as the term operation $c(\sigma)^{\mathbf{B}}$, see~\cite{CVST10b}; and, since the domains of these generalized hep-derivors are empty, by the note after Proposition~\ref{PHepComp} and Proposition~\ref{PHepComp}~(2), the inclusions $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ are identities when $\mathbf{C}$ is a total algebra.
-Therefore the subcategory of $\mathsf{hepAlg}_{\gd}$ whose objects are the pairs $((S,\Sigma,\varnothing),\mathbf{A})$, with $\mathbf{A}$ a $\Sigma$-algebra, and whose morphisms are the pairs $((\varphi,c,\varnothing),f)$, is the category $\mathsf{Alg}_{\mathfrak{d}}$ of~\cite{CVST10b}.
+By Proposition~\ref{PHepComp}, the functors induced by the generalized hep-derivors only preserve composites up to the inclusions $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$.
+Hence, on the categories of weak ep-algebras, see Definition~\ref{DWeakEpAlgebra}, they form a normal lax $\mathsf{hepSig}_{\gd}$-indexed category, and its Grothendieck construction yields a category $\mathsf{hepAlg}_{\gd}$.
+Its objects are the pairs $(\sig{\Sigma},\mathbf{A})$, where $\mathbf{A}$ is a $\sig{\Sigma}$-algebra.
+Its morphisms from $(\sig{\Sigma},\mathbf{A})$ to $(\sig{\Lambda},\mathbf{B})$ are the pairs $(\mathbf{c},f)$, where $\mathbf{c}$ is a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $f\colon\mathbf{A}\mor\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ a homomorphism.
+The composite of $(\mathbf{c},f)$ and $(\mathbf{d},g)\colon(\sig{\Lambda},\mathbf{B})\mor(\sig{\Omega},\mathbf{C})$ is $(\mathbf{d}\circ\mathbf{c},\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}\circ\mathbf{c}^{\ast}_{\gd}(g)\circ f)$.
+Let us regard the many-sorted signatures as hep-signatures with empty sets of domain conditions, see Remark~\ref{REpAlgebra}, and every derivor $(\varphi,c)$ as the generalized hep-derivor $(\varphi,c,\varnothing)$.
+Since the partial term operations of a total algebra are total, $(\varphi,c,\varnothing)^{\ast}_{\gd}$ sends a $\Lambda$-algebra $\mathbf{B}$ to the $\Sigma$-algebra on $B_{\varphi}$ in which every $\sigma$ is interpreted as $c(\sigma)^{\mathbf{B}}$, i.e., it is the usual functor induced by $(\varphi,c)$, see~\cite{CVST10b}.
+Thus $\mathsf{hepAlg}_{\gd}$ contains the category $\mathsf{Alg}_{\mathfrak{d}}$ of~\cite{CVST10b}.
 \end{remark}
+
+% \subsection{The category \texorpdfstring{$\mathsf{hepAlg}_{\gd}$}{hepAlggd}}\label{SHepAlgCat}
+%
+% In~\cite{CVST10b}, the category $\mathsf{Alg}_{\mathfrak{d}}$, whose objects are the pairs formed by a many-sorted signature and an algebra for it, is obtained by means of the Grothendieck construction, see Definition~\ref{DGConst}, for the split indexed category that sends a many-sorted signature $\sig{\Sigma}$ to $\mathsf{Alg}(\Sigma)$ and a derivor to the functor that it induces.
+% Following this pattern, we next assemble the ep-algebras of all the hep-signatures into a single category.
+% However, by Proposition~\ref{PHepComp}, the composite $\mathbf{c}^{\ast}_{\gd}\circ\mathbf{d}^{\ast}_{\gd}$ is, in general, only contained in $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}$, and the inclusions $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ need not be isomorphisms.
+% Therefore the induced functors do not constitute a split, nor even a pseudo, indexed category, but a normal lax indexed category, see Definition~\ref{DLaxIndexed}, provided that we take as fibres the categories of weak ep-algebras, see Definition~\ref{DWeakEpAlgebra}, on which, by Proposition~\ref{PHepId}, the identity generalized hep-derivors induce identity functors.
+% We begin by proving that the transformed algebras are weak ep-algebras.
+%
+% \begin{lemma}\label{LHepWeak}
+% Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures and $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$.
+% Then, for every partial $\Lambda$-algebra $\mathbf{B}$, $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is a weak $\sig{\Sigma}$-algebra.
+% Consequently, the restriction of $\mathbf{c}^{\ast}_{\gd}$ to $\mathsf{wEPAlg}(\sig{\Lambda})$ corestricts to $\mathsf{wEPAlg}(\sig{\Sigma})$, see Definition~\ref{DCorestriction}, and we denote the corestriction by
+% $$
+% \mathbf{c}^{\ast}_{\gd}\colon\mathsf{wEPAlg}(\sig{\Lambda})\mor\mathsf{wEPAlg}(\sig{\Sigma}).
+% $$
+% \end{lemma}
+% \begin{proof}
+% Let $\mathbf{B}$ be a partial $\Lambda$-algebra, $(\mathbf{s},s)\in S^{\star}\times S$ and $\sigma\in\Sigma_{\mathbf{s},s}$.
+% By condition (D1) of Proposition~\ref{PTransformedAlg}, every family in $\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})})$ satisfies $\mathrm{def}^{(S,\Sigma)}(\sigma)$ in $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$.
+% Hence, by Definition~\ref{DWeakEpAlgebra}, $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is a weak $\sig{\Sigma}$-algebra.
+% The last statement follows from Definition~\ref{DCorestriction}, since $\mathsf{wEPAlg}(\sig{\Lambda})$ and $\mathsf{wEPAlg}(\sig{\Sigma})$ are full subcategories of $\mathsf{PAlg}(\Lambda)$ and of $\mathsf{PAlg}(\Sigma)$, respectively.
+% \end{proof}
+%
+% In the following proposition we prove that the categories of weak ep-algebras, together with the functors induced by the generalized hep-derivors and the inclusions of Proposition~\ref{PHepComp}, constitute a normal lax indexed category.
+%
+% \begin{proposition}\label{PHepLax}
+% Let $\mathrm{wEPAlg}$ stand for the assignment that sends every hep-signature $\sig{\Sigma}$ to the category $\mathsf{wEPAlg}(\sig{\Sigma})$ and every generalized hep-derivor $\mathbf{c}$ from $\sig{\Sigma}$ to $\sig{\Lambda}$ to the functor $\mathbf{c}^{\ast}_{\gd}\colon\mathsf{wEPAlg}(\sig{\Lambda})\mor\mathsf{wEPAlg}(\sig{\Sigma})$ of Lemma~\ref{LHepWeak}, and let $\kappa$ stand for the assignment that sends every pair of generalized hep-derivors $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{d}\colon\sig{\Lambda}\mor\sig{\Omega}$ to the family
+% $$
+% \kappa^{\mathbf{c},\mathbf{d}}=\left(\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}\right)_{\mathbf{C}\in\mathrm{Ob}(\mathsf{wEPAlg}(\sig{\Omega}))}
+% $$
+% of the inclusions of Proposition~\ref{PHepComp}.
+% Then $(\mathrm{wEPAlg},\kappa)$ is a normal lax $\mathsf{hepSig}_{\gd}$-indexed category, see Definition~\ref{DLaxIndexed}.
+% \end{proposition}
+% \begin{proof}
+% \textsf{(Identities)} By Proposition~\ref{PHepId}, for every hep-signature $\sig{\Sigma}$, $(\id_{\sig{\Sigma}})^{\ast}_{\gd}=\Id_{\mathsf{wEPAlg}(\sig{\Sigma})}$.
+%
+% \textsf{(Naturality)} Let $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{d}\colon\sig{\Lambda}\mor\sig{\Omega}$ be generalized hep-derivors.
+% By Lemma~\ref{LHepWeak}, for every weak $\sig{\Omega}$-algebra $\mathbf{C}$, both $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ and $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$ are weak $\sig{\Sigma}$-algebras, so that, by Proposition~\ref{PHepComp}~(1), $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ is a morphism of the full subcategory $\mathsf{wEPAlg}(\sig{\Sigma})$ of $\mathsf{PAlg}(\Sigma)$.
+% Moreover, again by Proposition~\ref{PHepComp}~(1), $\kappa^{\mathbf{c},\mathbf{d}}$ is a natural transformation from $\mathbf{c}^{\ast}_{\gd}\circ\mathbf{d}^{\ast}_{\gd}$ to $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}$.
+%
+% Before checking the conditions (L1) and (L2) of Definition~\ref{DLaxIndexed}, let us note that a homomorphism of partial algebras is determined by its domain, its codomain and its underlying many-sorted mapping, and that, by Proposition~\ref{PHepComp}~(1) and Proposition~\ref{PGenHepDerivorFunctor}, the underlying many-sorted mapping of every $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$, and of its image under every functor $\mathbf{e}^{\ast}_{\gd}$, which is a birestriction of it, is an inclusion.
+%
+% \textsf{(L1)} Let $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$ be a generalized hep-derivor and $\mathbf{B}$ a weak $\sig{\Lambda}$-algebra.
+% By Proposition~\ref{PHepSigCat}, $\mathbf{c}\circ\id_{\sig{\Sigma}}=\mathbf{c}$ and, by Lemma~\ref{LHepWeak} and Proposition~\ref{PHepId}, $(\id_{\sig{\Sigma}})^{\ast}_{\gd}(\mathbf{c}^{\ast}_{\gd}(\mathbf{B}))=\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$.
+% Hence $\kappa^{\id_{\sig{\Sigma}},\mathbf{c}}_{\mathbf{B}}$ is the inclusion of the underlying $S$-sorted set of $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ into itself, i.e., $\kappa^{\id_{\sig{\Sigma}},\mathbf{c}}_{\mathbf{B}}=\id_{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$.
+% Similarly, $\id_{\sig{\Lambda}}\circ\mathbf{c}=\mathbf{c}$ and, by Proposition~\ref{PHepId}, $\mathbf{c}^{\ast}_{\gd}((\id_{\sig{\Lambda}})^{\ast}_{\gd}(\mathbf{B}))=\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$, so that $\kappa^{\mathbf{c},\id_{\sig{\Lambda}}}_{\mathbf{B}}=\id_{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$.
+% Therefore $\kappa^{\id_{\sig{\Sigma}},\mathbf{c}}=\id_{\mathbf{c}^{\ast}_{\gd}}=\kappa^{\mathbf{c},\id_{\sig{\Lambda}}}$.
+%
+% \textsf{(L2)} Let $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$, $\mathbf{d}\colon\sig{\Lambda}\mor\sig{\Omega}$ and $\mathbf{e}\colon\sig{\Omega}\mor\sig{\Xi}$ be generalized hep-derivors and $\mathbf{D}$ a weak $\sig{\Xi}$-algebra.
+% By Proposition~\ref{PHepSigCat}, $(\mathbf{e}\circ\mathbf{d})\circ\mathbf{c}=\mathbf{e}\circ(\mathbf{d}\circ\mathbf{c})$.
+% Therefore both
+% $$
+% \kappa^{\mathbf{c},\mathbf{e}\circ\mathbf{d}}_{\mathbf{D}}\circ\mathbf{c}^{\ast}_{\gd}\left(\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{D}}\right)
+% \qquad\text{and}\qquad
+% \kappa^{\mathbf{d}\circ\mathbf{c},\mathbf{e}}_{\mathbf{D}}\circ\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{e}^{\ast}_{\gd}(\mathbf{D})}
+% $$
+% are homomorphisms from $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{D})))$ to $(\mathbf{e}\circ\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{D})$ whose underlying $S$-sorted mappings are composites of inclusions, i.e., the inclusion of the underlying $S$-sorted set of the former into that of the latter.
+% Hence both homomorphisms are equal.
+%
+% This completes the proof.
+% \end{proof}
+%
+% We are now in position to define the category of the ep-algebras of all the hep-signatures.
+%
+% \begin{definition}\label{DHepAlgCat}
+% We let $\mathsf{hepAlg}_{\gd}$ stand for the full subcategory of
+% $$
+% \int^{\mathsf{hepSig}_{\gd}}(\mathrm{wEPAlg},\kappa),
+% $$
+% see Definition~\ref{DLaxGConst} and Proposition~\ref{PHepLax}, whose objects are the ordered pairs $(\sig{\Sigma},\mathbf{A})$, where $\sig{\Sigma}$ is a hep-signature and $\mathbf{A}$ a $\sig{\Sigma}$-algebra.
+% Explicitly, $\mathsf{hepAlg}_{\gd}$ is defined as follows:
+% \begin{enumerate}
+% \item its objects are the ordered pairs $(\sig{\Sigma},\mathbf{A})$, where $\sig{\Sigma}$ is a hep-signature and $\mathbf{A}$ a $\sig{\Sigma}$-algebra;
+% \item its morphisms from $(\sig{\Sigma},\mathbf{A})$ to $(\sig{\Lambda},\mathbf{B})$ are the ordered pairs $(\mathbf{c},f)$, where $\mathbf{c}$ is a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $f\colon\mathbf{A}\mor\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ a homomorphism of partial $\Sigma$-algebras;
+% \item the composite of $(\mathbf{c},f)\colon(\sig{\Sigma},\mathbf{A})\mor(\sig{\Lambda},\mathbf{B})$ and $(\mathbf{d},g)\colon(\sig{\Lambda},\mathbf{B})\mor(\sig{\Omega},\mathbf{C})$ is
+% \begin{flushleft}
+% $
+% (\mathbf{d},g)\circ(\mathbf{c},f)
+% $
+% \begin{align*}
+% &=
+% \left(\mathbf{d}\circ\mathbf{c},\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}\circ\mathbf{c}^{\ast}_{\gd}(g)\circ f\right),
+% \end{align*}
+% \end{flushleft}
+% see Definition~\ref{DHepComp} and Proposition~\ref{PHepComp}; and
+% \item the identity at $(\sig{\Sigma},\mathbf{A})$ is $(\id_{\sig{\Sigma}},\id_{\mathbf{A}})$.
+% \end{enumerate}
+% \end{definition}
+%
+% Let us note that, since every $\sig{\Sigma}$-algebra is a weak $\sig{\Sigma}$-algebra and $\mathsf{wEPAlg}(\sig{\Sigma})$ is a full subcategory of $\mathsf{PAlg}(\Sigma)$, the morphisms of $\int^{\mathsf{hepSig}_{\gd}}(\mathrm{wEPAlg},\kappa)$ between objects of $\mathsf{hepAlg}_{\gd}$ are exactly the pairs described in the second item of the above definition, so that both descriptions of $\mathsf{hepAlg}_{\gd}$ agree.
+%
+% \begin{proposition}\label{PHepAlgCat}
+% $\mathsf{hepAlg}_{\gd}$ is a category.
+% Moreover, the assignment that sends every object $(\sig{\Sigma},\mathbf{A})$ to $\sig{\Sigma}$ and every morphism $(\mathbf{c},f)$ to $\mathbf{c}$ is a functor from $\mathsf{hepAlg}_{\gd}$ to $\mathsf{hepSig}_{\gd}$.
+% \end{proposition}
+% \begin{proof}
+% By Propositions~\ref{PLaxGConst} and~\ref{PHepLax}, $\int^{\mathsf{hepSig}_{\gd}}(\mathrm{wEPAlg},\kappa)$ is a category and $\pi_{(\mathrm{wEPAlg},\kappa)}$ is a functor from it to $\mathsf{hepSig}_{\gd}$.
+% Therefore its full subcategory $\mathsf{hepAlg}_{\gd}$ is a category, and the assignment of the statement, which is the restriction of $\pi_{(\mathrm{wEPAlg},\kappa)}$ to $\mathsf{hepAlg}_{\gd}$, is a functor.
+%
+% This completes the proof.
+% \end{proof}
+%
+% \begin{remark}\label{RHepAlgCatOld}
+% Let us consider the many-sorted signatures as hep-signatures with empty sets of domain conditions, see Remark~\ref{REpAlgebra}, and the derivors $(\varphi,c)$ between them as the generalized hep-derivors $(\varphi,c,\varnothing)$.
+% For a many-sorted signature $(S,\Sigma)$, the weak $(S,\Sigma,\varnothing)$-algebras are all the partial $\Sigma$-algebras and the $(S,\Sigma,\varnothing)$-algebras are the $\Sigma$-algebras.
+% Moreover, since the partial term operations of a total algebra are total, for every derivor $(\varphi,c)$ from $(S,\Sigma)$ to $(T,\Lambda)$, the restriction of $(\varphi,c,\varnothing)^{\ast}_{\gd}$ to $\mathsf{Alg}(\Lambda)$ corestricts to $\mathsf{Alg}(\Sigma)$, and this corestriction is the usual functor that sends a $\Lambda$-algebra $\mathbf{B}$ to the $\Sigma$-algebra on $B_{\varphi}$ in which every $\sigma$ is interpreted as the term operation $c(\sigma)^{\mathbf{B}}$, see~\cite{CVST10b}; and, since the domains of these generalized hep-derivors are empty, by the note after Proposition~\ref{PHepComp} and Proposition~\ref{PHepComp}~(2), the inclusions $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ are identities when $\mathbf{C}$ is a total algebra.
+% Therefore the subcategory of $\mathsf{hepAlg}_{\gd}$ whose objects are the pairs $((S,\Sigma,\varnothing),\mathbf{A})$, with $\mathbf{A}$ a $\Sigma$-algebra, and whose morphisms are the pairs $((\varphi,c,\varnothing),f)$, is the category $\mathsf{Alg}_{\mathfrak{d}}$ of~\cite{CVST10b}.
+% \end{remark}
 
 \section{Single-set presentation of higher-order categorial algebras}\label{SSingleSet}
 
