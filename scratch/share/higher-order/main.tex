@@ -908,9 +908,12 @@ Let $\mathsf{I}$ be a category and $(F,\kappa)$ a normal lax $\mathsf{I}$-indexe
 The first and the fourth equalities unravel Definition~\ref{DLaxGConst}; the second and the fifth equalities follow from condition~(L1) of Definition~\ref{DLaxIndexed}, from the fact that $F_{\id_{i}}=\Id_{\mathsf{F}_{i}}$ and from the fact that $F_{\varphi}$ is a functor; finally, the third and the last equalities follow from the fact that $\mathsf{F}_{i}$ is a category.
 
 \textsf{(Associativity)} Let $(\varphi,f)\colon(i,x)\mor(j,y)$, $(\psi,g)\colon(j,y)\mor(k,z)$ and $(\chi,h)\colon(k,z)\mor(l,w)$ be morphisms. Both $(\chi,h)\circ((\psi,g)\circ(\varphi,f))$ and $((\chi,h)\circ(\psi,g))\circ(\varphi,f)$ have $\chi\circ\psi\circ\varphi$ as first coordinate. For the second coordinates, the following chain of equalities holds
+\begin{flushleft}
+$
+\kappa^{\psi\circ\varphi,\chi}_{w}\circ F_{\psi\circ\varphi}(h)\circ\kappa^{\varphi,\psi}_{z}\circ F_{\varphi}(g)\circ f
+$
 \allowdisplaybreaks
 \begin{align*}
-\kappa^{\psi\circ\varphi,\chi}_{w}\circ F_{\psi\circ\varphi}(h)\circ\kappa^{\varphi,\psi}_{z}\circ F_{\varphi}(g)\circ f
 &=
 \kappa^{\psi\circ\varphi,\chi}_{w}\circ\kappa^{\varphi,\psi}_{F_{\chi}(w)}\circ F_{\varphi}(F_{\psi}(h))\circ F_{\varphi}(g)\circ f
 \tag{1}
@@ -921,6 +924,7 @@ The first and the fourth equalities unravel Definition~\ref{DLaxGConst}; the sec
 \kappa^{\varphi,\chi\circ\psi}_{w}\circ F_{\varphi}\left(\kappa^{\psi,\chi}_{w}\circ F_{\psi}(h)\circ g\right)\circ f.
 \tag{3}
 \end{align*}
+\end{flushleft}
 
 The first equality follows from the naturality of $\kappa^{\varphi,\psi}$, applied to the morphism $h\colon z\mor F_{\chi}(w)$ of $\mathsf{F}_{k}$; the second equality follows from condition~(L2) of Definition~\ref{DLaxIndexed}; finally, the last equality follows from the fact that $F_{\varphi}$ is a functor. By Definition~\ref{DLaxGConst}, the left-hand side of the above chain is the second coordinate of $(\chi,h)\circ((\psi,g)\circ(\varphi,f))$ and its right-hand side is the second coordinate of $((\chi,h)\circ(\psi,g))\circ(\varphi,f)$.
 
@@ -1250,7 +1254,7 @@ All in all, since $\lhd$ is well-founded, (H$_{\sigma}$1) and (H$_{\sigma}$2) ho
 This completes the proof.
 \end{proof}
 
-We are now in position to prove that every generalized hep-derivor induces a functor between the categories of partial algebras. Let us note that, in general, the transformed algebra of a $\sig{\Lambda}$-algebra need not be a $\sig{\Sigma}$-algebra, see Proposition~\ref{PTransformedEpAlg} and Remark~\ref{RGenHepDerivorCases}. Hence a generalized hep-derivor does not induce, in general, a functor from $\mathsf{EPAlg}(\sig{\Lambda})$ to $\mathsf{EPAlg}(\sig{\Sigma})$, and we define the induced functor on all the partial $\Lambda$-algebras. In Subsection~\ref{SEpRestriction} we consider its restrictions to the categories canonically associated to ep-varieties.
+We are now in position to prove that every generalized hep-derivor induces a functor between the categories of partial algebras. Let us note that, in general, the transformed algebra of a $\sig{\Lambda}$-algebra need not be a $\sig{\Sigma}$-algebra, see Proposition~\ref{PTransformedEpAlg} and Remark~\ref{RGradNotEp}. Hence a generalized hep-derivor does not induce, in general, a functor from $\mathsf{EPAlg}(\sig{\Lambda})$ to $\mathsf{EPAlg}(\sig{\Sigma})$, and we define the induced functor on all the partial $\Lambda$-algebras.
 
 \begin{proposition}\label{PGenHepDerivorFunctor}
 Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$. Then $\mathbf{c}^{\ast}_{\gd}$, the assignment from $\mathsf{PAlg}(\Lambda)$ to $\mathsf{PAlg}(\Sigma)$ defined as follows:
@@ -1281,19 +1285,19 @@ where $\G_{\Sigma}$ is the forgetful functor.
 It follows from Propositions~\ref{PDomainSetFunctor}, \ref{PTransformedAlg} and~\ref{PGenHepDerivorFunctor}, since the underlying $S$-sorted set of $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is $B_{\Dom^{(\varphi,c)}}$ and the underlying $S$-sorted mapping of $\mathbf{c}^{\ast}_{\gd}(f)$ is $f_{\Dom^{(\varphi,c)}}$.
 \end{proof}
 
-\subsection{Restriction to ep-varieties}\label{SEpRestriction}
-
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$, and $\spec{E}=(\sig{\Sigma},\mathcal{E})$ and $\spec{F}=(\sig{\Lambda},\mathcal{F})$ hep-specifications. By Definitions~\ref{DCorestriction} and~\ref{DEpVariety}, the restriction of $\mathbf{c}^{\ast}_{\gd}$ to $\mathsf{EPAlg}(\spec{F})$ corestricts to $\mathsf{EPAlg}(\spec{E})$ if, and only if, for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\spec{F})$, $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is a $\sig{\Sigma}$-algebra in which every $\QE$-equation of $\mathcal{E}$ holds. Accordingly, for each of the generalized hep-derivors of Sections~\ref{SGraduation} and~\ref{STruncation}, we first prove, by means of Proposition~\ref{PTransformedEpAlg}, that the transformed algebras are ep-algebras, and then that the axioms of the corresponding ep-variety hold in them. In this case, the corestriction of the restriction of $\mathbf{c}^{\ast}_{\gd}$ is denoted by
-$$
-\mathbf{c}^{\ast}_{\gd}\colon\mathsf{EPAlg}(\spec{F})\mor\mathsf{EPAlg}(\spec{E}).
-$$
-
-\begin{remark}\label{RGenHepDerivorCases}
-\begin{enumerate}
-\item If $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ are many-sorted signatures, regarded as hep-signatures with empty sets of domain conditions, then, for every derivor $(\varphi,c)$, the restriction of $(\varphi,c,\varnothing)^{\ast}_{\gd}$ to $\mathsf{EPAlg}(T,\Lambda,\varnothing)=\mathsf{Alg}(\Lambda)$ corestricts to $\mathsf{EPAlg}(S,\Sigma,\varnothing)=\mathsf{Alg}(\Sigma)$, since the partial term operations of a total algebra are total. Moreover, this corestriction is the usual functor that sends a $\Lambda$-algebra $\mathbf{B}$ to the $\Sigma$-algebra on $B_{\varphi}$ in which every $\sigma$ is interpreted as the term operation $c(\sigma)^{\mathbf{B}}$, see~\cite{CVST10b}.
-\item Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures and $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$. The functor $\mathbf{c}^{\ast}_{\gd}$ is defined on all the partial $\Lambda$-algebras, but its restriction to $\mathsf{EPAlg}(\spec{F})$ may only corestrict to $\mathsf{EPAlg}(\spec{E})$ for some hep-specifications $\spec{F}=(\sig{\Lambda},\mathcal{F})$ and $\spec{E}=(\sig{\Sigma},\mathcal{E})$. For instance, the domains of the sorts of the graduation derivor of Section~\ref{SGraduation} are only preserved by the term operations in the objects of the category canonically associated to the ep-variety of the axioms of $n$-categories: in a partial algebra in which $\src^{j}_{s}$ is not idempotent, the $j$-source of a cell need not be a $j$-cell.
-\end{enumerate}
-\end{remark}
+% \subsection{Restriction to ep-varieties}\label{SEpRestriction}
+%
+% Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$, and $\spec{E}=(\sig{\Sigma},\mathcal{E})$ and $\spec{F}=(\sig{\Lambda},\mathcal{F})$ hep-specifications. By Definitions~\ref{DCorestriction} and~\ref{DEpVariety}, the restriction of $\mathbf{c}^{\ast}_{\gd}$ to $\mathsf{EPAlg}(\spec{F})$ corestricts to $\mathsf{EPAlg}(\spec{E})$ if, and only if, for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\spec{F})$, $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is a $\sig{\Sigma}$-algebra in which every $\QE$-equation of $\mathcal{E}$ holds. Accordingly, for each of the generalized hep-derivors of Sections~\ref{SGraduation} and~\ref{STruncation}, we first prove, by means of Proposition~\ref{PTransformedEpAlg}, that the transformed algebras are ep-algebras, and then that the axioms of the corresponding ep-variety hold in them. In this case, the corestriction of the restriction of $\mathbf{c}^{\ast}_{\gd}$ is denoted by
+% $$
+% \mathbf{c}^{\ast}_{\gd}\colon\mathsf{EPAlg}(\spec{F})\mor\mathsf{EPAlg}(\spec{E}).
+% $$
+%
+% \begin{remark}\label{RGenHepDerivorCases}
+% \begin{enumerate}
+% \item If $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ are many-sorted signatures, regarded as hep-signatures with empty sets of domain conditions, then, for every derivor $(\varphi,c)$, the restriction of $(\varphi,c,\varnothing)^{\ast}_{\gd}$ to $\mathsf{EPAlg}(T,\Lambda,\varnothing)=\mathsf{Alg}(\Lambda)$ corestricts to $\mathsf{EPAlg}(S,\Sigma,\varnothing)=\mathsf{Alg}(\Sigma)$, since the partial term operations of a total algebra are total. Moreover, this corestriction is the usual functor that sends a $\Lambda$-algebra $\mathbf{B}$ to the $\Sigma$-algebra on $B_{\varphi}$ in which every $\sigma$ is interpreted as the term operation $c(\sigma)^{\mathbf{B}}$, see~\cite{CVST10b}.
+% \item Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures and $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$. The functor $\mathbf{c}^{\ast}_{\gd}$ is defined on all the partial $\Lambda$-algebras, but its restriction to $\mathsf{EPAlg}(\spec{F})$ may only corestrict to $\mathsf{EPAlg}(\spec{E})$ for some hep-specifications $\spec{F}=(\sig{\Lambda},\mathcal{F})$ and $\spec{E}=(\sig{\Sigma},\mathcal{E})$. For instance, the domains of the sorts of the graduation derivor of Section~\ref{SGraduation} are only preserved by the term operations in the objects of the category canonically associated to the ep-variety of the axioms of $n$-categories: in a partial algebra in which $\src^{j}_{s}$ is not idempotent, the $j$-source of a cell need not be a $j$-cell.
+% \end{enumerate}
+% \end{remark}
 
 \subsection{The category \texorpdfstring{$\mathsf{hepSig}_{\gd}$}{hepSiggd}}\label{SHepSigCat}
 
@@ -1574,7 +1578,7 @@ This completes the proof.
 \end{proof}
 
 \begin{remark}\label{RHepAlgCat}
-Let us consider the many-sorted signatures as hep-signatures with empty sets of domain conditions, see Remark~\ref{REpAlgebra}, and the derivors $(\varphi,c)$ between them as the generalized hep-derivors $(\varphi,c,\varnothing)$. For a many-sorted signature $(S,\Sigma)$, the weak $(S,\Sigma,\varnothing)$-algebras are all the partial $\Sigma$-algebras and the $(S,\Sigma,\varnothing)$-algebras are the $\Sigma$-algebras. Moreover, by Remark~\ref{RGenHepDerivorCases}~(1), the functors induced by the derivors send total algebras to total algebras and, since the domains of these generalized hep-derivors are empty, by the note after Proposition~\ref{PHepComp} and Proposition~\ref{PHepComp}~(2), the inclusions $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ are identities when $\mathbf{C}$ is a total algebra. Therefore the subcategory of $\mathsf{hepAlg}_{\gd}$ whose objects are the pairs $((S,\Sigma,\varnothing),\mathbf{A})$, with $\mathbf{A}$ a $\Sigma$-algebra, and whose morphisms are the pairs $((\varphi,c,\varnothing),f)$, is the category $\mathsf{Alg}_{\mathfrak{d}}$ of~\cite{CVST10b}.
+Let us consider the many-sorted signatures as hep-signatures with empty sets of domain conditions, see Remark~\ref{REpAlgebra}, and the derivors $(\varphi,c)$ between them as the generalized hep-derivors $(\varphi,c,\varnothing)$. For a many-sorted signature $(S,\Sigma)$, the weak $(S,\Sigma,\varnothing)$-algebras are all the partial $\Sigma$-algebras and the $(S,\Sigma,\varnothing)$-algebras are the $\Sigma$-algebras. Moreover, since the partial term operations of a total algebra are total, for every derivor $(\varphi,c)$ from $(S,\Sigma)$ to $(T,\Lambda)$, the restriction of $(\varphi,c,\varnothing)^{\ast}_{\gd}$ to $\mathsf{Alg}(\Lambda)$ corestricts to $\mathsf{Alg}(\Sigma)$, and this corestriction is the usual functor that sends a $\Lambda$-algebra $\mathbf{B}$ to the $\Sigma$-algebra on $B_{\varphi}$ in which every $\sigma$ is interpreted as the term operation $c(\sigma)^{\mathbf{B}}$, see~\cite{CVST10b}; and, since the domains of these generalized hep-derivors are empty, by the note after Proposition~\ref{PHepComp} and Proposition~\ref{PHepComp}~(2), the inclusions $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ are identities when $\mathbf{C}$ is a total algebra. Therefore the subcategory of $\mathsf{hepAlg}_{\gd}$ whose objects are the pairs $((S,\Sigma,\varnothing),\mathbf{A})$, with $\mathbf{A}$ a $\Sigma$-algebra, and whose morphisms are the pairs $((\varphi,c,\varnothing),f)$, is the category $\mathsf{Alg}_{\mathfrak{d}}$ of~\cite{CVST10b}.
 \end{remark}
 
 \section{Single-set presentation of higher-order categorial algebras}\label{SSingleSet}
@@ -2359,7 +2363,7 @@ $$
 \qquad\text{and}\qquad
 \mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})=\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}}).
 $$
-Thus, the categories of higher-order categorial algebras are the categories canonically associated to the ep-varieties $\mathcal{V}(\spec{C}^{\sig{\Sigma}^{(n)}})$ and $\mathcal{V}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})$ of hep-specifications. The functors of this section are induced by generalized hep-derivors between the corresponding hep-signatures, i.e., by morphisms of $\mathsf{hepSig}_{\gd}$, see Proposition~\ref{PHepSigCat}. They are defined on all the partial algebras, and we prove, by means of Proposition~\ref{PTransformedEpAlg}, that their restrictions to the categories of higher-order categorial algebras corestrict to categories of higher-order categorial algebras, see Definition~\ref{DCorestriction} and Subsection~\ref{SEpRestriction}. By abuse of notation, we denote these corestrictions as the functors themselves.
+Thus, the categories of higher-order categorial algebras are the categories canonically associated to the ep-varieties $\mathcal{V}(\spec{C}^{\sig{\Sigma}^{(n)}})$ and $\mathcal{V}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})$ of hep-specifications. The functors of this section are induced by generalized hep-derivors between the corresponding hep-signatures, i.e., by morphisms of $\mathsf{hepSig}_{\gd}$, see Proposition~\ref{PHepSigCat}. They are defined on all the partial algebras, and we prove, by means of Proposition~\ref{PTransformedEpAlg}, that their restrictions to the categories of higher-order categorial algebras corestrict to categories of higher-order categorial algebras, see Definition~\ref{DCorestriction}. By abuse of notation, we denote these corestrictions as the functors themselves.
 
 For the generalized hep-derivors of this work we use the following notation, which we explain for the graduation. For a many-sorted signature $\sig{\Sigma}=(S,\Sigma)$ and $n\in\mathbb{N}$, the graduation functor $\Gd^{(n)}_{\sig{\Sigma}}$ is induced by the generalized hep-derivor
 $$
@@ -4994,7 +4998,7 @@ c^{\gl(n)}(\circ^{(j,k)}_{s})&=v^{(k,\varphi(s))}_{0}\circ^{(j,k)}_{\varphi(s)}v
 \end{enumerate}
 \end{definition}
 
-Let us note that $c(\sigma)$ is a term of $\Lambda$ with variables in $\vs{\varphi^{\star}(\mathbf{s})}$, hence of $\Lambda^{(n)}$, and that, since $(\varphi^{\gl(n)})^{\star}((k,\mathbf{s}))=(k,\varphi^{\star}(\mathbf{s}))$, $c(\sigma)_{k}$ is a term of $\Lambda^{\gl(n)}$ of sort $(k,\varphi(s))$ with variables in $\vs{(k,\varphi^{\star}(\mathbf{s}))}$, so that the above definition is correct. For $n=0$, since $\Sigma^{(0)}=\Sigma$ and $\Lambda^{(0)}=\Lambda$, $\mathbf{c}^{(0)}$ is the derivor $\mathbf{c}$, regarded as the generalized hep-derivor $(\varphi,c,\varnothing)$, see Remark~\ref{RGenHepDerivorCases}.
+Let us note that $c(\sigma)$ is a term of $\Lambda$ with variables in $\vs{\varphi^{\star}(\mathbf{s})}$, hence of $\Lambda^{(n)}$, and that, since $(\varphi^{\gl(n)})^{\star}((k,\mathbf{s}))=(k,\varphi^{\star}(\mathbf{s}))$, $c(\sigma)_{k}$ is a term of $\Lambda^{\gl(n)}$ of sort $(k,\varphi(s))$ with variables in $\vs{(k,\varphi^{\star}(\mathbf{s}))}$, so that the above definition is correct. For $n=0$, since $\Sigma^{(0)}=\Sigma$ and $\Lambda^{(0)}=\Lambda$, $\mathbf{c}^{(0)}$ is the derivor $\mathbf{c}$, regarded as the generalized hep-derivor $(\varphi,c,\varnothing)$, see Remark~\ref{RHepAlgCat}.
 
 In the following lemma we prove that the partial term operations of a higher-order categorial algebra are higher-order functors.
 
@@ -5107,7 +5111,7 @@ $$
 \qquad\text{and}\qquad
 (\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\colon\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Lambda})\mor\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}).
 $$
-Explicitly, $(\mathbf{c}^{(n)})^{\ast}_{\gd}$ sends an $n$-categorial $\sig{\Lambda}$-algebra $\calg{B}$ to the $n$-categorial $\sig{\Sigma}$-algebra whose single-set $n$-category of sort $s$ is the single-set $n$-category of sort $\varphi(s)$ of $\calg{B}$ and in which every $\sigma\in\Sigma$ acts as the $n$-functor $c(\sigma)^{\calg{B}}$, see Lemma~\ref{LTermFunctor}; and, by Proposition~\ref{PGenHepDerivorFunctor}, it sends an $n$-categorial $\sig{\Lambda}$-homomorphism $F$ to $F_{\varphi}=(F_{\varphi(s)})_{s\in S}$. Similarly, $(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}$ sends a globular $n$-categorial $\sig{\Lambda}$-algebra $\calg{B}$ to the globular $n$-categorial $\sig{\Sigma}$-algebra whose globular $n$-category of sort $s$ is that of sort $\varphi(s)$ of $\calg{B}$ and in which every $\sigma_{k}$ acts as $c(\sigma)_{k}^{\calg{B}}$; and it sends $F$ to $F_{\varphi^{\gl(n)}}=(F_{(k,\varphi(s))})_{(k,s)\in(n+1)\times S}$. For $n=0$, $(\mathbf{c}^{(0)})^{\ast}_{\gd}$ is the usual functor from $\mathsf{Alg}(\Lambda)$ to $\mathsf{Alg}(\Sigma)$ induced by $\mathbf{c}$, see Remark~\ref{RGenHepDerivorCases}.
+Explicitly, $(\mathbf{c}^{(n)})^{\ast}_{\gd}$ sends an $n$-categorial $\sig{\Lambda}$-algebra $\calg{B}$ to the $n$-categorial $\sig{\Sigma}$-algebra whose single-set $n$-category of sort $s$ is the single-set $n$-category of sort $\varphi(s)$ of $\calg{B}$ and in which every $\sigma\in\Sigma$ acts as the $n$-functor $c(\sigma)^{\calg{B}}$, see Lemma~\ref{LTermFunctor}; and, by Proposition~\ref{PGenHepDerivorFunctor}, it sends an $n$-categorial $\sig{\Lambda}$-homomorphism $F$ to $F_{\varphi}=(F_{\varphi(s)})_{s\in S}$. Similarly, $(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}$ sends a globular $n$-categorial $\sig{\Lambda}$-algebra $\calg{B}$ to the globular $n$-categorial $\sig{\Sigma}$-algebra whose globular $n$-category of sort $s$ is that of sort $\varphi(s)$ of $\calg{B}$ and in which every $\sigma_{k}$ acts as $c(\sigma)_{k}^{\calg{B}}$; and it sends $F$ to $F_{\varphi^{\gl(n)}}=(F_{(k,\varphi(s))})_{(k,s)\in(n+1)\times S}$. For $n=0$, $(\mathbf{c}^{(0)})^{\ast}_{\gd}$ is the usual functor from $\mathsf{Alg}(\Lambda)$ to $\mathsf{Alg}(\Sigma)$ induced by $\mathbf{c}$, see Remark~\ref{RHepAlgCat}.
 
 In the following lemma we collect the translations of the terms $P$ and $P_{k}$ along the generalized hep-derivors of this work that we need. By~(Der4), for every pair of derivors $\mathbf{d}=(\psi,d)$ from $(T,\Lambda)$ to $(U,\Omega)$ and $\mathbf{e}=(\chi,e)$ from $(U,\Omega)$ to $(W,\Xi)$, $(e^{\sharp}\circ d)^{\sharp}=e^{\sharp}\circ d^{\sharp}$, so that $e^{\sharp}\circ d^{\sharp}$ only depends on the composite derivor $(\chi\circ\psi,e^{\sharp}\circ d)$, see~(Der3). Hence, in order to prove an equality of the form $e^{\sharp}\circ d^{\sharp}=e'^{\sharp}\circ d'^{\sharp}$, it suffices to prove that the composite derivors have the same mapping on sorts and that $e^{\sharp}(d(\tau))=e'^{\sharp}(d'(\tau))$, for every operation symbol $\tau$ of $\Lambda$.
 
