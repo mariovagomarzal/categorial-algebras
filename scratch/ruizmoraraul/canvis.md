@@ -1383,3 +1383,56 @@ marcat la resta.
 
 Les etiquetes (la biblioteca hi remet) i la subsecció comentada
 `SEpRestriction`.
+
+---
+
+# Propostes B–H, estil d'enunciats i proves, i versió compacta
+
+Data: 2026-10-19. Commits `c458707`–`8ba67e6` (`main.tex`) i `f46d3fa`
+(`article.tex`).
+
+## `main.tex` (de 112 a 95 pàgines)
+
+- **B.** La secció 3 acaba amb $\mathsf{hepSig}_{\mathfrak{gd}}$
+  (`PHepSigCat`). La construcció de Grothendieck laxa dels preliminars i la
+  subsecció de $\mathsf{hepAlg}_{\mathfrak{gd}}$ estan comentades. La remarca
+  `RHepAlgCat`, nova, n'explica la construcció en poques línies.
+- **C.** Les àlgebres de Hall estan comentades. $c^\sharp$ es defineix per
+  recursió sobre termes amb (Der1)–(Der2), i (Der4) es demostra
+  (`LDerSubst`, `PSigdCat`).
+- **E.** Les comprovacions d'axiomes de `PGradDerivor` i `PUnifDerivor` són
+  ara una llista amb un càlcul representatiu.
+- **F.** Discretització i truncació: un sol enunciat per als casos single-set
+  i globular. Les etiquetes `...Gl` desapareixen i les referències apunten a
+  l'etiqueta single-set. Les seccions 8 i 9 són ara una sola.
+- **G.** Les identitats triangulars s'enuncien com «$\Tr(\varepsilon)$ i
+  $\varepsilon_{\Ds}$ són identitats», amb una prova d'un paràgraf.
+- **H.** El canvi de signatura en dimensió $\omega$ queda resumit a
+  `RChangeSigOmega`; el detall està comentat.
+
+## Estil d'enunciats i proves (comparat amb PathMain)
+
+- Els enunciats de PathMain són més curts (mediana de 35 paraules, davant de
+  51 als nostres). Una convenció després de `DGenHepDerivor` fixa els noms
+  dels components de signatures i derivors, i els enunciats ja no els
+  repeteixen.
+- A PathMain, `\textsf{(...)}` només numera apartats: (1), (2), (i)…. Els
+  passos s'anuncien amb frases: «We first prove…», «Now we prove…», «Next,
+  …», «Finally, …». Els 92 rètols amb nom que havia posat jo, com «(Ep-algebra)»
+  o «(Axioms)», ara són frases. Els numerats, com (D1), (H$_\sigma$1) o
+  «(1) implies (2)», es mantenen.
+- La llargària mitjana de les frases a les proves ja era semblant (14 paraules,
+  davant de 15,5 a PathMain).
+
+## `article.tex`, versió compacta (20 pàgines)
+
+Fitxer nou, amb els mateixos resultats que `main.tex`:
+- preliminars reduïts a la notació;
+- les àlgebres categorials definides directament pels axiomes (només en forma
+  de fórmula), amb una remarca que en remet a la noció usual;
+- casos single-set i globular sempre junts;
+- comprovacions rutinàries resumides en una frase;
+- dimensió $\omega$ tractada a part.
+
+Les proves conserven tots els passos lògics, però deixen al lector les
+comprovacions mecàniques.
