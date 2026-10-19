@@ -1222,3 +1222,21 @@ Data: 2026-10-19. Commits `0dd5d64` i `e31011f`.
   $\mathbf{c}$; ara es diuen $x$. A `LTermComp` les famílies
   $\mathbf{c}$ de $\mathbf{C}$ es mantenen, perquè allà l'únic derivor és
   $\mathbf{d}$.
+
+---
+
+# Principi d'inducció bem fundada
+
+Data: 2026-10-19. Commit `2072b78`.
+
+- **`PPWFI` (nova):** «Principle of Proof by Well-Founded Induction», just
+  després de `DHepSignature`, amb l'estil de `PPAI`: per demostrar que tot
+  símbol d'operació d'una hep-signatura té una propietat, n'hi ha prou amb el
+  pas d'inducció «si tot $\tau\lhd\sigma$ la té, $\sigma$ la té».
+- **Nota que la segueix:** no cal cas base, perquè per als símbols
+  $\lhd$-minimals (sense símbols d'operació a les condicions de domini) la
+  hipòtesi és buida; i el mateix per a la recursió bem fundada.
+- **Referències:** les sis demostracions per inducció o recursió al llarg de
+  $\lhd$ (`PTransformedAlg`, `PGenHepDerivorHom`, `PHepId`, la
+  proposició que la segueix i les dues parts de `PHepComp`) remeten a
+  `PPWFI`.
