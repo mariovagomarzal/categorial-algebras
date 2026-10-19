@@ -605,24 +605,24 @@ The Hall algebra for $(S,\Sigma)$ is, up to isomorphism, the free Hall algebra o
 	for every Hall algebra $\mathbf{A}$ and every $S^{\star}\times S$-sorted mapping $f$ from $\Sigma$ to $A$, there is a unique homomorphism $f^{\sharp}$ from $\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)$ to $\mathbf{A}$ such that $f^{\sharp}\circ \eta^{\Sigma} = f$.
 \end{proposition}
 
-For a set of sorts $S$ and an $S$-sorted signature $\Sigma$, the derived operation symbols of $\Sigma$, i.e., the elements of the components $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s}$ of $\mathrm{Tm}_{\mathrm{H}_{S}}(\Sigma)$, can be considered as the operation symbols of a new signature. The mappings $\varphi$ from a set of sorts $S$ to another $T$, together with the $S^{\star}\times S$-sorted mappings $d$ that assign to operation symbols of an $S$-sorted signature $\Sigma$ derived operation symbols of a $T$-sorted signature $\Lambda$, i.e., terms of the components $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$ of $\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$, form a new class of morphisms between many-sorted signatures which we will call \emph{derivors}.
+For a set of sorts $S$ and an $S$-sorted signature $\Sigma$, the derived operation symbols of $\Sigma$, i.e., the elements of the components $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s}$ of $\mathrm{Tm}_{\mathrm{H}_{S}}(\Sigma)$, can be considered as the operation symbols of a new signature. The mappings $\varphi$ from a set of sorts $S$ to another $T$, together with the $S^{\star}\times S$-sorted mappings $c$ that assign to operation symbols of an $S$-sorted signature $\Sigma$ derived operation symbols of a $T$-sorted signature $\Lambda$, i.e., terms of the components $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$ of $\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$, form a new class of morphisms between many-sorted signatures which we will call \emph{derivors}.
 
 \begin{definition}\label{DDerivor}
-	Let $\sig{\Sigma} = (S,\Sigma)$ and $\sig{\Lambda} = (T,\Lambda)$ be many-sorted signatures. A \emph{derivor} from $\sig{\Sigma}$ to $\sig{\Lambda}$ is an ordered pair $\mathbf{d} = (\varphi,d)$, where $\varphi\colon S\mor T$ and $d\colon\Sigma\mor\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$. Thus, for every $(\mathbf{s},s)\in S^{\star}\times S$,
+	Let $\sig{\Sigma} = (S,\Sigma)$ and $\sig{\Lambda} = (T,\Lambda)$ be many-sorted signatures. A \emph{derivor} from $\sig{\Sigma}$ to $\sig{\Lambda}$ is an ordered pair $\mathbf{c} = (\varphi,c)$, where $\varphi\colon S\mor T$ and $c\colon\Sigma\mor\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$. Thus, for every $(\mathbf{s},s)\in S^{\star}\times S$,
 	$$
-	d_{\mathbf{s},s}\colon \Sigma_{\mathbf{s},s}\mor\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}(\mathbf{s}),\varphi(s)}=
+	c_{\mathbf{s},s}\colon \Sigma_{\mathbf{s},s}\mor\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}(\mathbf{s}),\varphi(s)}=
 	\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}.
 	$$
-	Hence, for every $\sigma\in \Sigma_{\mathbf{s},s}$, $d_{\mathbf{s},s}(\sigma)\in \mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$, i.e., $d_{\mathbf{s},s}(\sigma)$ is a term of sort $\varphi(s)$ with variables in $\vs{\varphi^{\star}(\mathbf{s})}$. We will write $d(\sigma)$ instead of $d_{\mathbf{s},s}(\sigma)$ when this is unlikely to cause confusion.
+	Hence, for every $\sigma\in \Sigma_{\mathbf{s},s}$, $c_{\mathbf{s},s}(\sigma)\in \mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$, i.e., $c_{\mathbf{s},s}(\sigma)$ is a term of sort $\varphi(s)$ with variables in $\vs{\varphi^{\star}(\mathbf{s})}$. We will write $c(\sigma)$ instead of $c_{\mathbf{s},s}(\sigma)$ when this is unlikely to cause confusion.
 \end{definition}
 
 Every mapping $\varphi\colon S\mor T$ determines a functor from the category $\mathsf{Alg}(\mathrm{H}_{T})$ to the category $\mathsf{Alg}(\mathrm{H}_{S})$, so that $\mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$ is in its turn equipped with a structure of Hall algebra for $S$, which allows us to define the composition of derivors. In fact, the $S^{\star}\times S$-sorted mapping $h^{\varphi}$ from $\Sigma^{\mathrm{H}_{S}}$ to $\Sigma^{\mathrm{H}_{T}}_{\varphi^{\star}\times \varphi}$ that sends $\pi^{\mathbf{s}}_{i}$ to $\pi^{\varphi^{\star}(\mathbf{s})}_{i}$ and $\xi_{\mathbf{r},\mathbf{s},s}$ to $\xi_{\varphi^{\star}(\mathbf{r}),\varphi^{\star}(\mathbf{s}),\varphi(s)}$ determines a morphism of algebraic presentations $(\varphi^{\star}\times \varphi, h^{\varphi})$ from $(S^{\star}\times S,\Sigma^{\mathrm{H}_{S}},\mathcal{E}^{\mathrm{H}_{S}})$ to $(T^{\star}\times T,\Sigma^{\mathrm{H}_{T}},\mathcal{E}^{\mathrm{H}_{T}})$, and the morphisms of algebraic presentations determine functors in the opposite direction between the associated categories of algebras, see~\cite{CVCLRM26}.
 
-If $\mathbf{d}\colon\sig{\Sigma}\mor\sig{\Lambda}$ is a derivor, then $d\colon \Sigma\mor \mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$ determines a homomorphism of Hall algebras $d^{\sharp}\colon\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)\mor
-\mathbf{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$. Thus, for every $(\mathbf{s},s)\in S^{\star}\times S$, $d^{\sharp}_{\mathbf{s},s}$ sends terms in $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s}$ to terms in $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$.
+If $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$ is a derivor, then $c\colon \Sigma\mor \mathrm{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$ determines a homomorphism of Hall algebras $c^{\sharp}\colon\mathbf{Tm}_{\mathrm{H}_{S}}(\Sigma)\mor
+\mathbf{Tm}_{\mathrm{H}_{T}}(\Lambda)_{\varphi^{\star}\times\varphi}$. Thus, for every $(\mathbf{s},s)\in S^{\star}\times S$, $c^{\sharp}_{\mathbf{s},s}$ sends terms in $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s}$ to terms in $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$.
 
 \begin{definition}\label{DDerCompId}
-	Let $\mathbf{d}=(\varphi,d)\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{e}=(\psi,e)\colon\sig{\Lambda}\mor\sig{\Omega}$ be derivors, where $\sig{\Omega}=(U,\Omega)$ is a many-sorted signature. Then $\mathbf{e}\circ \mathbf{d} = (\psi,e)\circ(\varphi,d)$, the \emph{composition} of $\mathbf{d}$ and $\mathbf{e}$, is the derivor $(\psi\circ\varphi,e^{\sharp}_{\varphi^{\star}\times\varphi}\circ d)$, where $e^{\sharp}$ is the canonical extension of $e$ to the free Hall algebra on $\Lambda$. For every many-sorted signature $\sig{\Sigma} = (S,\Sigma)$, the \emph{identity} at $(S,\Sigma)$ is $(\id^{S},\eta^{\Sigma})$. When this is unlikely to cause confusion, we write $e^{\sharp}\circ d$ instead of $e^{\sharp}_{\varphi^{\star}\times\varphi}\circ d$.
+	Let $\mathbf{c}=(\varphi,c)\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{d}=(\psi,d)\colon\sig{\Lambda}\mor\sig{\Omega}$ be derivors, where $\sig{\Omega}=(U,\Omega)$ is a many-sorted signature. Then $\mathbf{d}\circ \mathbf{c} = (\psi,d)\circ(\varphi,c)$, the \emph{composition} of $\mathbf{c}$ and $\mathbf{d}$, is the derivor $(\psi\circ\varphi,d^{\sharp}_{\varphi^{\star}\times\varphi}\circ c)$, where $d^{\sharp}$ is the canonical extension of $d$ to the free Hall algebra on $\Lambda$. For every many-sorted signature $\sig{\Sigma} = (S,\Sigma)$, the \emph{identity} at $(S,\Sigma)$ is $(\id^{S},\eta^{\Sigma})$. When this is unlikely to cause confusion, we write $d^{\sharp}\circ c$ instead of $d^{\sharp}_{\varphi^{\star}\times\varphi}\circ c$.
 \end{definition}
 
 The just stated definition allows us to form a category of many-sorted signatures whose morphisms are the derivors.
@@ -631,22 +631,22 @@ The just stated definition allows us to form a category of many-sorted signature
 	The many-sorted signatures together with the derivors constitute a category, denoted by $\mathsf{Sig}_{\mathfrak{d}}$.
 \end{proposition}
 
-In the following remark we describe the homomorphisms $d^{\sharp}$, the composition and the identities of derivors in terms of substitutions, which is the form in which we use them in this work.
+In the following remark we describe the homomorphisms $c^{\sharp}$, the composition and the identities of derivors in terms of substitutions, which is the form in which we use them in this work.
 
 \begin{remark}\label{RDerivorTerms}
-Let $\mathbf{d}=(\varphi,d)$ be a derivor from $\sig{\Sigma}=(S,\Sigma)$ to $\sig{\Lambda}=(T,\Lambda)$ and $\mathbf{s}\in S^{\star}$. Then, by Propositions~\ref{PHallTm} and~\ref{PHallFree}, the mapping $d^{\sharp}$, which sends, for every $s'\in S$, the terms in $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s'}$ to terms in $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s')}$, satisfies the following equalities:
+Let $\mathbf{c}=(\varphi,c)$ be a derivor from $\sig{\Sigma}=(S,\Sigma)$ to $\sig{\Lambda}=(T,\Lambda)$ and $\mathbf{s}\in S^{\star}$. Then, by Propositions~\ref{PHallTm} and~\ref{PHallFree}, the mapping $c^{\sharp}$, which sends, for every $s'\in S$, the terms in $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{s'}$ to terms in $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s')}$, satisfies the following equalities:
 \begin{enumerate}
-\item[(Der1)] $d^{\sharp}(v^{\mathbf{s}}_{j})=v^{\varphi^{\star}(\mathbf{s})}_{j}$, for every $j\in\bb{\mathbf{s}}$;
-\item[(Der2)] $d^{\sharp}(\sigma((R_{j})_{j\in\bb{\mathbf{r}}}))=(d^{\sharp}(R_{j}))^{\sharp}_{j\in\bb{\mathbf{r}}}(d(\sigma))$, for every $(\mathbf{r},s')\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{r},s'}$ and every $(R_{j})_{j\in\bb{\mathbf{r}}}\in\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{\mathbf{r}}$, i.e., $d(\sigma)$ with $d^{\sharp}(R_{j})$ substituted for $v^{\varphi^{\star}(\mathbf{r})}_{j}$.
+\item[(Der1)] $c^{\sharp}(v^{\mathbf{s}}_{j})=v^{\varphi^{\star}(\mathbf{s})}_{j}$, for every $j\in\bb{\mathbf{s}}$;
+\item[(Der2)] $c^{\sharp}(\sigma((R_{j})_{j\in\bb{\mathbf{r}}}))=(c^{\sharp}(R_{j}))^{\sharp}_{j\in\bb{\mathbf{r}}}(c(\sigma))$, for every $(\mathbf{r},s')\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{r},s'}$ and every $(R_{j})_{j\in\bb{\mathbf{r}}}\in\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})_{\mathbf{r}}$, i.e., $c(\sigma)$ with $c^{\sharp}(R_{j})$ substituted for $v^{\varphi^{\star}(\mathbf{r})}_{j}$.
 \end{enumerate}
-In particular, $d^{\sharp}(\sigma((v^{\mathbf{r}}_{j})_{j\in\bb{\mathbf{r}}}))=d(\sigma)$. Moreover:
+In particular, $c^{\sharp}(\sigma((v^{\mathbf{r}}_{j})_{j\in\bb{\mathbf{r}}}))=c(\sigma)$. Moreover:
 \begin{enumerate}
-\item[(Der3)] the identity derivor at $(S,\Sigma)$ is $(\id^{S},\eta^{\Sigma})$, where $\eta^{\Sigma}(\sigma)=\sigma((v^{\mathbf{s}}_{j})_{j\in\bb{\mathbf{s}}})$, for $\sigma\in\Sigma_{\mathbf{s},s}$, and $(\eta^{\Sigma})^{\sharp}$ is the identity; and the composition of $(\varphi,d)$ and a derivor $(\psi,e)$ from $(T,\Lambda)$ to a many-sorted signature $(U,\Omega)$ is the derivor $(\psi\circ\varphi,e^{\sharp}\circ d)$ from $(S,\Sigma)$ to $(U,\Omega)$; and
-\item[(Der4)] the composition of derivors is associative and the identity derivors are neutral for it, i.e., for every derivor $(\chi,g)$ from $(U,\Omega)$ to a many-sorted signature $(W,\Xi)$, $(g^{\sharp}\circ e)^{\sharp}\circ d=g^{\sharp}\circ(e^{\sharp}\circ d)$, which follows from the equality $(g^{\sharp}\circ e)^{\sharp}=g^{\sharp}\circ e^{\sharp}$, and $(\eta^{\Lambda})^{\sharp}\circ d=d=d^{\sharp}\circ\eta^{\Sigma}$, see Proposition~\ref{PSigdCat}.
+\item[(Der3)] the identity derivor at $(S,\Sigma)$ is $(\id^{S},\eta^{\Sigma})$, where $\eta^{\Sigma}(\sigma)=\sigma((v^{\mathbf{s}}_{j})_{j\in\bb{\mathbf{s}}})$, for $\sigma\in\Sigma_{\mathbf{s},s}$, and $(\eta^{\Sigma})^{\sharp}$ is the identity; and the composition of $(\varphi,c)$ and a derivor $(\psi,d)$ from $(T,\Lambda)$ to a many-sorted signature $(U,\Omega)$ is the derivor $(\psi\circ\varphi,d^{\sharp}\circ c)$ from $(S,\Sigma)$ to $(U,\Omega)$; and
+\item[(Der4)] the composition of derivors is associative and the identity derivors are neutral for it, i.e., for every derivor $(\chi,e)$ from $(U,\Omega)$ to a many-sorted signature $(W,\Xi)$, $(e^{\sharp}\circ d)^{\sharp}\circ c=e^{\sharp}\circ(d^{\sharp}\circ c)$, which follows from the equality $(e^{\sharp}\circ d)^{\sharp}=e^{\sharp}\circ d^{\sharp}$, and $(\eta^{\Lambda})^{\sharp}\circ c=c=c^{\sharp}\circ\eta^{\Sigma}$, see Proposition~\ref{PSigdCat}.
 \end{enumerate}
-Finally, for every $\mathbf{s}\in S^{\star}$ and every set of $\mathrm{E}$-equations $\mathcal{H}\subseteq\mathrm{Eeqt}(\Sigma)_{\vs{\mathbf{s}}}$, see Definition~\ref{DEEq} below, we let $d^{\sharp}[\mathcal{H}]\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\varphi^{\star}(\mathbf{s})}}$ stand for the set of $\mathrm{E}$-equations
+Finally, for every $\mathbf{s}\in S^{\star}$ and every set of $\mathrm{E}$-equations $\mathcal{H}\subseteq\mathrm{Eeqt}(\Sigma)_{\vs{\mathbf{s}}}$, see Definition~\ref{DEEq} below, we let $c^{\sharp}[\mathcal{H}]\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\varphi^{\star}(\mathbf{s})}}$ stand for the set of $\mathrm{E}$-equations
 $$
-d^{\sharp}[\mathcal{H}]=\left\lbrace\left(d^{\sharp}(P),d^{\sharp}(Q)\right)\,\middle|\,(P,Q)\in\mathcal{H}\right\rbrace.
+c^{\sharp}[\mathcal{H}]=\left\lbrace\left(c^{\sharp}(P),c^{\sharp}(Q)\right)\,\middle|\,(P,Q)\in\mathcal{H}\right\rbrace.
 $$
 \end{remark}
 
@@ -1030,97 +1030,97 @@ Let us note that $\mathcal{V}(\sig{\Sigma},\varnothing)$ is the class of all the
 We next define the notion of generalized hep-derivor.
 
 \begin{definition}\label{DGenHepDerivor}
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, see Definition~\ref{DHepSignature}. A \emph{generalized hep-derivor} from $\sig{\Sigma}$ to $\sig{\Lambda}$ is an ordered triple $\mathbf{d}=(\varphi,d,\Dom^{(\varphi,d)})$ such that
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, see Definition~\ref{DHepSignature}. A \emph{generalized hep-derivor} from $\sig{\Sigma}$ to $\sig{\Lambda}$ is an ordered triple $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ such that
 \begin{enumerate}
-\item $(\varphi,d)$ is a derivor from $(S,\Sigma)$ to $(T,\Lambda)$, see Subsection~\ref{SPrelimDerivors}, i.e., $\varphi$ is a mapping from $S$ to $T$ and $d$ assigns to every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$ a term $d(\sigma)\in\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$; and
-\item $\Dom^{(\varphi,d)}=(\Dom^{(\varphi,d)}_{s})_{s\in S}$ assigns to every sort $s\in S$ a set
+\item $(\varphi,c)$ is a derivor from $(S,\Sigma)$ to $(T,\Lambda)$, see Subsection~\ref{SPrelimDerivors}, i.e., $\varphi$ is a mapping from $S$ to $T$ and $c$ assigns to every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$ a term $c(\sigma)\in\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$; and
+\item $\Dom^{(\varphi,c)}=(\Dom^{(\varphi,c)}_{s})_{s\in S}$ assigns to every sort $s\in S$ a set
 $$
-\Dom^{(\varphi,d)}_{s}\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\varphi(s)}}
+\Dom^{(\varphi,c)}_{s}\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\varphi(s)}}
 $$
 of $\mathrm{E}$-equations in the single variable $v^{\varphi(s)}_{0}$, the \emph{domain} of $s$.
 \end{enumerate}
 \end{definition}
 
-We next associate to every partial $\Lambda$-algebra the $S$-sorted set of the elements that satisfy the domains of a generalized hep-derivor. Since it is obtained from the $S$-sorted set $B_{\varphi}=(B_{\varphi(s)})_{s\in S}$ by restricting every $B_{\varphi(s)}$ to the elements that satisfy $\Dom^{(\varphi,d)}_{s}$, we denote it, as the sets $A_{\mathrm{def}^{(S,\Sigma)}(\sigma)}$ of Definition~\ref{DEpAlgebra}, by subscripting the domains. Let us recall that, by the identifications of Subsection~\ref{SVariables}, for every $s\in S$, an element $b\in B_{\varphi(s)}$ is identified with the valuation of $\vs{(\varphi(s))}$ in $B$ that sends $v^{\varphi(s)}_{0}$ to $b$.
+We next associate to every partial $\Lambda$-algebra the $S$-sorted set of the elements that satisfy the domains of a generalized hep-derivor. Since it is obtained from the $S$-sorted set $B_{\varphi}=(B_{\varphi(s)})_{s\in S}$ by restricting every $B_{\varphi(s)}$ to the elements that satisfy $\Dom^{(\varphi,c)}_{s}$, we denote it, as the sets $A_{\mathrm{def}^{(S,\Sigma)}(\sigma)}$ of Definition~\ref{DEpAlgebra}, by subscripting the domains. Let us recall that, by the identifications of Subsection~\ref{SVariables}, for every $s\in S$, an element $b\in B_{\varphi(s)}$ is identified with the valuation of $\vs{(\varphi(s))}$ in $B$ that sends $v^{\varphi(s)}_{0}$ to $b$.
 
 \begin{definition}\label{DDomainSet}
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{d}=(\varphi,d,\Dom^{(\varphi,d)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra. We let $B_{\Dom^{(\varphi,d)}}$ stand for the $S$-sorted subset of $B_{\varphi}$ defined, for every $s\in S$, as
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra. We let $B_{\Dom^{(\varphi,c)}}$ stand for the $S$-sorted subset of $B_{\varphi}$ defined, for every $s\in S$, as
 $$
-\left(B_{\Dom^{(\varphi,d)}}\right)_{s}=\left\lbrace b\in B_{\varphi(s)}\,\middle|\,\mathbf{B}\models\Dom^{(\varphi,d)}_{s}[b]\right\rbrace.
+\left(B_{\Dom^{(\varphi,c)}}\right)_{s}=\left\lbrace b\in B_{\varphi(s)}\,\middle|\,\mathbf{B}\models\Dom^{(\varphi,c)}_{s}[b]\right\rbrace.
 $$
-The elements of $(B_{\Dom^{(\varphi,d)}})_{s}$ will be called the \emph{cells of sort $s$} of $\mathbf{B}$ relative to $\mathbf{d}$.
+The elements of $(B_{\Dom^{(\varphi,c)}})_{s}$ will be called the \emph{cells of sort $s$} of $\mathbf{B}$ relative to $\mathbf{c}$.
 \end{definition}
 
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{d}=(\varphi,d,\Dom^{(\varphi,d)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $f\colon\mathbf{B}\mor\mathbf{B}'$ a homomorphism of partial $\Lambda$-algebras. Then, for every $s\in S$, $f_{\varphi(s)}{\,\!\upharpoonright}_{(B_{\Dom^{(\varphi,d)}})_{s}}$ corestricts to $(B'_{\Dom^{(\varphi,d)}})_{s}$, see Proposition~\ref{PUS}. Indeed, let $b$ be a cell of sort $s$ of $\mathbf{B}$, i.e., $\mathbf{B}\models\Dom^{(\varphi,d)}_{s}[b]$. Then, by Remark~\ref{RHomTerm}, it happens that
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $f\colon\mathbf{B}\mor\mathbf{B}'$ a homomorphism of partial $\Lambda$-algebras. Then, for every $s\in S$, $f_{\varphi(s)}{\,\!\upharpoonright}_{(B_{\Dom^{(\varphi,c)}})_{s}}$ corestricts to $(B'_{\Dom^{(\varphi,c)}})_{s}$, see Proposition~\ref{PUS}. Indeed, let $b$ be a cell of sort $s$ of $\mathbf{B}$, i.e., $\mathbf{B}\models\Dom^{(\varphi,c)}_{s}[b]$. Then, by Remark~\ref{RHomTerm}, it happens that
 $$
-\mathbf{B}'\models\Dom^{(\varphi,d)}_{s}[f_{\varphi(s)}(b)],
+\mathbf{B}'\models\Dom^{(\varphi,c)}_{s}[f_{\varphi(s)}(b)],
 $$
-i.e., $f_{\varphi(s)}(b)\in(B'_{\Dom^{(\varphi,d)}})_{s}$. Taking this into account, we let $f_{\Dom^{(\varphi,d)}}$ stand for the $S$-sorted mapping
+i.e., $f_{\varphi(s)}(b)\in(B'_{\Dom^{(\varphi,c)}})_{s}$. Taking this into account, we let $f_{\Dom^{(\varphi,c)}}$ stand for the $S$-sorted mapping
 $$
-f_{\Dom^{(\varphi,d)}}=f_{\varphi}\bigr|^{B'_{\Dom^{(\varphi,d)}}}_{B_{\Dom^{(\varphi,d)}}}=\left(f_{\varphi(s)}\bigr|^{(B'_{\Dom^{(\varphi,d)}})_{s}}_{(B_{\Dom^{(\varphi,d)}})_{s}}\right)_{s\in S},
+f_{\Dom^{(\varphi,c)}}=f_{\varphi}\bigr|^{B'_{\Dom^{(\varphi,c)}}}_{B_{\Dom^{(\varphi,c)}}}=\left(f_{\varphi(s)}\bigr|^{(B'_{\Dom^{(\varphi,c)}})_{s}}_{(B_{\Dom^{(\varphi,c)}})_{s}}\right)_{s\in S},
 $$
-i.e., the family of the corresponding birestrictions. Thus $f_{\Dom^{(\varphi,d)}}\colon B_{\Dom^{(\varphi,d)}}\mor B'_{\Dom^{(\varphi,d)}}$.
+i.e., the family of the corresponding birestrictions. Thus $f_{\Dom^{(\varphi,c)}}\colon B_{\Dom^{(\varphi,c)}}\mor B'_{\Dom^{(\varphi,c)}}$.
 
 In the following proposition we prove that the above construction is functorial.
 
 \begin{proposition}\label{PDomainSetFunctor}
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{d}=(\varphi,d,\Dom^{(\varphi,d)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$. Then $\G_{\mathbf{d}}$, the assignment from $\mathsf{PAlg}(\Lambda)$ to $\mathsf{Set}^{S}$ defined as follows:
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$. Then $\G_{\mathbf{c}}$, the assignment from $\mathsf{PAlg}(\Lambda)$ to $\mathsf{Set}^{S}$ defined as follows:
 \begin{enumerate}
-\item for every partial $\Lambda$-algebra $\mathbf{B}$, $\G_{\mathbf{d}}(\mathbf{B})$ is the $S$-sorted set $B_{\Dom^{(\varphi,d)}}$, introduced in Definition~\ref{DDomainSet}; and
-\item for every homomorphism $f\colon\mathbf{B}\mor\mathbf{B}'$ of partial $\Lambda$-algebras, $\G_{\mathbf{d}}(f)$ is the $S$-sorted mapping $f_{\Dom^{(\varphi,d)}}$ from $B_{\Dom^{(\varphi,d)}}$ to $B'_{\Dom^{(\varphi,d)}}$;
+\item for every partial $\Lambda$-algebra $\mathbf{B}$, $\G_{\mathbf{c}}(\mathbf{B})$ is the $S$-sorted set $B_{\Dom^{(\varphi,c)}}$, introduced in Definition~\ref{DDomainSet}; and
+\item for every homomorphism $f\colon\mathbf{B}\mor\mathbf{B}'$ of partial $\Lambda$-algebras, $\G_{\mathbf{c}}(f)$ is the $S$-sorted mapping $f_{\Dom^{(\varphi,c)}}$ from $B_{\Dom^{(\varphi,c)}}$ to $B'_{\Dom^{(\varphi,c)}}$;
 \end{enumerate}
 is a functor.
 \end{proposition}
 \begin{proof}
-By the discussion after Definition~\ref{DDomainSet}, it suffices to prove that $\G_{\mathbf{d}}$ preserves identities and composites.
+By the discussion after Definition~\ref{DDomainSet}, it suffices to prove that $\G_{\mathbf{c}}$ preserves identities and composites.
 
 Let $\mathbf{B}$ be a partial $\Lambda$-algebra. For every $s\in S$, the following chain of equalities holds
 \allowdisplaybreaks
 \begin{align*}
-\G_{\mathbf{d}}\left(\id_{\mathbf{B}}\right)_{s}
+\G_{\mathbf{c}}\left(\id_{\mathbf{B}}\right)_{s}
 &=
-\left(\id_{B}\right)_{\varphi(s)}\bigr|^{(B_{\Dom^{(\varphi,d)}})_{s}}_{(B_{\Dom^{(\varphi,d)}})_{s}}
+\left(\id_{B}\right)_{\varphi(s)}\bigr|^{(B_{\Dom^{(\varphi,c)}})_{s}}_{(B_{\Dom^{(\varphi,c)}})_{s}}
 \tag{1}
 \\&=
-\id_{(B_{\Dom^{(\varphi,d)}})_{s}}
+\id_{(B_{\Dom^{(\varphi,c)}})_{s}}
 \tag{2}
 \\&=
-\left(\id_{\G_{\mathbf{d}}(\mathbf{B})}\right)_{s}.
+\left(\id_{\G_{\mathbf{c}}(\mathbf{B})}\right)_{s}.
 \tag{3}
 \end{align*}
 
-The first equality unravels the definition of $\G_{\mathbf{d}}$ on morphisms; the second equality follows from the fact that the birestriction of an identity mapping is an identity mapping; finally, the last equality unravels the definition of $\G_{\mathbf{d}}$ on objects.
+The first equality unravels the definition of $\G_{\mathbf{c}}$ on morphisms; the second equality follows from the fact that the birestriction of an identity mapping is an identity mapping; finally, the last equality unravels the definition of $\G_{\mathbf{c}}$ on objects.
 
-Thus, $\G_{\mathbf{d}}$ preserves identities.
+Thus, $\G_{\mathbf{c}}$ preserves identities.
 
 Let $f\colon\mathbf{B}\mor\mathbf{B}'$ and $g\colon\mathbf{B}'\mor\mathbf{B}''$ be homomorphisms of partial $\Lambda$-algebras. For every $s\in S$, the following chain of equalities holds
 \allowdisplaybreaks
 \begin{align*}
-\G_{\mathbf{d}}\left(g\circ f\right)_{s}
+\G_{\mathbf{c}}\left(g\circ f\right)_{s}
 &=
-\left(g_{\varphi(s)}\circ f_{\varphi(s)}\right)\bigr|^{(B''_{\Dom^{(\varphi,d)}})_{s}}_{(B_{\Dom^{(\varphi,d)}})_{s}}
+\left(g_{\varphi(s)}\circ f_{\varphi(s)}\right)\bigr|^{(B''_{\Dom^{(\varphi,c)}})_{s}}_{(B_{\Dom^{(\varphi,c)}})_{s}}
 \tag{1}
 \\&=
-g_{\varphi(s)}\bigr|^{(B''_{\Dom^{(\varphi,d)}})_{s}}_{(B'_{\Dom^{(\varphi,d)}})_{s}}
+g_{\varphi(s)}\bigr|^{(B''_{\Dom^{(\varphi,c)}})_{s}}_{(B'_{\Dom^{(\varphi,c)}})_{s}}
 \circ
-f_{\varphi(s)}\bigr|^{(B'_{\Dom^{(\varphi,d)}})_{s}}_{(B_{\Dom^{(\varphi,d)}})_{s}}
+f_{\varphi(s)}\bigr|^{(B'_{\Dom^{(\varphi,c)}})_{s}}_{(B_{\Dom^{(\varphi,c)}})_{s}}
 \tag{2}
 \\&=
-\G_{\mathbf{d}}\left(g\right)_{s}\circ\G_{\mathbf{d}}\left(f\right)_{s}.
+\G_{\mathbf{c}}\left(g\right)_{s}\circ\G_{\mathbf{c}}\left(f\right)_{s}.
 \tag{3}
 \end{align*}
 
-The first equality unravels the definition of $\G_{\mathbf{d}}$ on the composite $g\circ f$; the second equality follows from the fact that the birestriction of the composite of two mappings is the composite of their respective birestrictions, taking into account that, by the discussion after Definition~\ref{DDomainSet}, $f_{\varphi(s)}{\,\!\upharpoonright}_{(B_{\Dom^{(\varphi,d)}})_{s}}$ corestricts to $(B'_{\Dom^{(\varphi,d)}})_{s}$; finally, the last equality unravels the definition of $\G_{\mathbf{d}}$ on $g$ and on $f$.
+The first equality unravels the definition of $\G_{\mathbf{c}}$ on the composite $g\circ f$; the second equality follows from the fact that the birestriction of the composite of two mappings is the composite of their respective birestrictions, taking into account that, by the discussion after Definition~\ref{DDomainSet}, $f_{\varphi(s)}{\,\!\upharpoonright}_{(B_{\Dom^{(\varphi,c)}})_{s}}$ corestricts to $(B'_{\Dom^{(\varphi,c)}})_{s}$; finally, the last equality unravels the definition of $\G_{\mathbf{c}}$ on $g$ and on $f$.
 
-Thus, $\G_{\mathbf{d}}$ preserves composites.
+Thus, $\G_{\mathbf{c}}$ preserves composites.
 
 This completes the proof.
 \end{proof}
 
 \begin{remark}\label{RDomainSetEmpty}
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{d}=(\varphi,d,\Dom^{(\varphi,d)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ such that $\Dom^{(\varphi,d)}_{s}=\varnothing$, for every $s\in S$. Then, for every partial $\Lambda$-algebra $\mathbf{B}$, $B_{\Dom^{(\varphi,d)}}=B_{\varphi}$, and, for every homomorphism $f$, $f_{\Dom^{(\varphi,d)}}=f_{\varphi}$. Therefore
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ such that $\Dom^{(\varphi,c)}_{s}=\varnothing$, for every $s\in S$. Then, for every partial $\Lambda$-algebra $\mathbf{B}$, $B_{\Dom^{(\varphi,c)}}=B_{\varphi}$, and, for every homomorphism $f$, $f_{\Dom^{(\varphi,c)}}=f_{\varphi}$. Therefore
 $$
-\G_{\mathbf{d}}=\Delta_{\varphi}\circ\G_{\Lambda},
+\G_{\mathbf{c}}=\Delta_{\varphi}\circ\G_{\Lambda},
 $$
 where $\G_{\Lambda}$ is the forgetful functor from $\mathsf{PAlg}(\Lambda)$ to $\mathsf{Set}^{T}$ and $\Delta_{\varphi}$ is the functor from $\mathsf{Set}^{T}$ to $\mathsf{Set}^{S}$ that sends a $T$-sorted set $B$ to $B_{\varphi}=(B_{\varphi(s)})_{s\in S}$.
 \end{remark}
@@ -1128,64 +1128,64 @@ where $\G_{\Lambda}$ is the forgetful functor from $\mathsf{PAlg}(\Lambda)$ to $
 We next show that the $S$-sorted set of cells is equipped with a structure of partial $\Sigma$-algebra, which we call the transformed algebra.
 
 \begin{proposition}\label{PTransformedAlg}
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{d}=(\varphi,d,\Dom^{(\varphi,d)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra. Then there exists a partial $\Sigma$-algebra $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$, the \emph{transformed algebra} of $\mathbf{B}$ along $\mathbf{d}$, whose underlying $S$-sorted set is $B_{\Dom^{(\varphi,d)}}$.
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra. Then there exists a partial $\Sigma$-algebra $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$, the \emph{transformed algebra} of $\mathbf{B}$ along $\mathbf{c}$, whose underlying $S$-sorted set is $B_{\Dom^{(\varphi,c)}}$.
 \end{proposition}
 \begin{proof}
 For every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$, we interpret the operation symbol $\sigma$ as the partial mapping
 $$
-\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})}\colon\left(B_{\Dom^{(\varphi,d)}}\right)_{\mathbf{s}}\dmor\left(B_{\Dom^{(\varphi,d)}}\right)_{s}
+\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}\colon\left(B_{\Dom^{(\varphi,c)}}\right)_{\mathbf{s}}\dmor\left(B_{\Dom^{(\varphi,c)}}\right)_{s}
 $$
 defined as follows:
 \begin{enumerate}
-\item its domain is the set of the families $\mathbf{b}\in(B_{\Dom^{(\varphi,d)}})_{\mathbf{s}}$ such that
+\item its domain is the set of the families $\mathbf{b}\in(B_{\Dom^{(\varphi,c)}})_{\mathbf{s}}$ such that
 \begin{enumerate}
-\item[(D1)] $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{b}]$, i.e., $\mathbf{b}$ satisfies the domain conditions of $\sigma$ in $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$;
-\item[(D2)] $\mathbf{b}\in\Dom(d(\sigma)^{\mathbf{B}})$, i.e., the partial term operation $d(\sigma)^{\mathbf{B}}$ is defined at $\mathbf{b}$; and
-\item[(D3)] $d(\sigma)^{\mathbf{B}}(\mathbf{b})\in(B_{\Dom^{(\varphi,d)}})_{s}$, i.e., its value is a cell of sort $s$; and
+\item[(D1)] $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{b}]$, i.e., $\mathbf{b}$ satisfies the domain conditions of $\sigma$ in $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$;
+\item[(D2)] $\mathbf{b}\in\Dom(c(\sigma)^{\mathbf{B}})$, i.e., the partial term operation $c(\sigma)^{\mathbf{B}}$ is defined at $\mathbf{b}$; and
+\item[(D3)] $c(\sigma)^{\mathbf{B}}(\mathbf{b})\in(B_{\Dom^{(\varphi,c)}})_{s}$, i.e., its value is a cell of sort $s$; and
 \end{enumerate}
-\item it sends every family $\mathbf{b}$ in its domain to $d(\sigma)^{\mathbf{B}}(\mathbf{b})$.
+\item it sends every family $\mathbf{b}$ in its domain to $c(\sigma)^{\mathbf{B}}(\mathbf{b})$.
 \end{enumerate}
-Condition (D1) refers to the operations of $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$ itself. We prove, by well-founded recursion along $\lhd$, that the above clauses determine a unique partial mapping $\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})}$ for every operation symbol $\sigma$ of $\Sigma$.
+Condition (D1) refers to the operations of $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ itself. We prove, by well-founded recursion along $\lhd$, that the above clauses determine a unique partial mapping $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ for every operation symbol $\sigma$ of $\Sigma$.
 
-Let $(\mathbf{s},s)\in S^{\star}\times S$ and $\sigma\in\Sigma_{\mathbf{s},s}$, and let us assume that $\tau^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})}$ has been uniquely determined for every $\tau\lhd\sigma$. By Definition~\ref{DHepSignature}, the operation symbols that occur in $\mathrm{def}^{(S,\Sigma)}(\sigma)$ are exactly the $\tau\lhd\sigma$. Therefore, by Definitions~\ref{DTermOp} and~\ref{DEEq}, whether a family $\mathbf{b}\in(B_{\Dom^{(\varphi,d)}})_{\mathbf{s}}$ satisfies (D1) only depends on the partial mappings already determined. Conditions (D2) and (D3) only depend on $\mathbf{B}$ and on $\mathbf{d}$. Hence the domain of $\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})}$ is uniquely determined. Moreover, by (D3), for every family $\mathbf{b}$ in it, $d(\sigma)^{\mathbf{B}}(\mathbf{b})$ is a cell of sort $s$, so that $\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})}$ is a well-defined partial mapping from $(B_{\Dom^{(\varphi,d)}})_{\mathbf{s}}$ to $(B_{\Dom^{(\varphi,d)}})_{s}$.
+Let $(\mathbf{s},s)\in S^{\star}\times S$ and $\sigma\in\Sigma_{\mathbf{s},s}$, and let us assume that $\tau^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ has been uniquely determined for every $\tau\lhd\sigma$. By Definition~\ref{DHepSignature}, the operation symbols that occur in $\mathrm{def}^{(S,\Sigma)}(\sigma)$ are exactly the $\tau\lhd\sigma$. Therefore, by Definitions~\ref{DTermOp} and~\ref{DEEq}, whether a family $\mathbf{b}\in(B_{\Dom^{(\varphi,c)}})_{\mathbf{s}}$ satisfies (D1) only depends on the partial mappings already determined. Conditions (D2) and (D3) only depend on $\mathbf{B}$ and on $\mathbf{c}$. Hence the domain of $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ is uniquely determined. Moreover, by (D3), for every family $\mathbf{b}$ in it, $c(\sigma)^{\mathbf{B}}(\mathbf{b})$ is a cell of sort $s$, so that $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ is a well-defined partial mapping from $(B_{\Dom^{(\varphi,c)}})_{\mathbf{s}}$ to $(B_{\Dom^{(\varphi,c)}})_{s}$.
 
-All in all, since $\lhd$ is well-founded, $\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})}$ is uniquely determined for every operation symbol $\sigma$ of $\Sigma$, and $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})=(B_{\Dom^{(\varphi,d)}},(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})})_{\sigma})$ is a partial $\Sigma$-algebra.
+All in all, since $\lhd$ is well-founded, $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ is uniquely determined for every operation symbol $\sigma$ of $\Sigma$, and $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})=(B_{\Dom^{(\varphi,c)}},(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})})_{\sigma})$ is a partial $\Sigma$-algebra.
 
 This completes the proof.
 \end{proof}
 
-In what follows, the conditions (D1), (D2) and (D3) of Proposition~\ref{PTransformedAlg} are those of its proof. Thus, for every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$, a family $\mathbf{b}\in(B_{\Dom^{(\varphi,d)}})_{\mathbf{s}}$ is in $\Dom(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})})$ if, and only if, it satisfies (D1), (D2) and (D3), and, in this case, $\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})}(\mathbf{b})=d(\sigma)^{\mathbf{B}}(\mathbf{b})$. In particular, by (D1), for every $\sigma\in\Sigma_{\mathbf{s},s}$,
+In what follows, the conditions (D1), (D2) and (D3) of Proposition~\ref{PTransformedAlg} are those of its proof. Thus, for every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$, a family $\mathbf{b}\in(B_{\Dom^{(\varphi,c)}})_{\mathbf{s}}$ is in $\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})})$ if, and only if, it satisfies (D1), (D2) and (D3), and, in this case, $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}(\mathbf{b})=c(\sigma)^{\mathbf{B}}(\mathbf{b})$. In particular, by (D1), for every $\sigma\in\Sigma_{\mathbf{s},s}$,
 \begin{equation*}
-\Dom\left(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})}\right)
+\Dom\left(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}\right)
 \subseteq
-\left(B_{\Dom^{(\varphi,d)}}\right)_{\mathrm{def}^{(S,\Sigma)}(\sigma)},
+\left(B_{\Dom^{(\varphi,c)}}\right)_{\mathrm{def}^{(S,\Sigma)}(\sigma)},
 \end{equation*}
-where $(B_{\Dom^{(\varphi,d)}})_{\mathrm{def}^{(S,\Sigma)}(\sigma)}$ is the set of the families of cells that satisfy $\mathrm{def}^{(S,\Sigma)}(\sigma)$ in $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$, see Definition~\ref{DEpAlgebra}, i.e., $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$ is a weak $\sig{\Sigma}$-algebra, see Definition~\ref{DWeakEpAlgebra}.
+where $(B_{\Dom^{(\varphi,c)}})_{\mathrm{def}^{(S,\Sigma)}(\sigma)}$ is the set of the families of cells that satisfy $\mathrm{def}^{(S,\Sigma)}(\sigma)$ in $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$, see Definition~\ref{DEpAlgebra}, i.e., $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is a weak $\sig{\Sigma}$-algebra, see Definition~\ref{DWeakEpAlgebra}.
 
-Let us note that, in $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$, the domain of $\sigma$ is not part of the data, and it may be smaller than that of $d(\sigma)^{\mathbf{B}}$. For instance, for the discretization functors of Section~\ref{STruncation}, the term assigned to $\circ^{k}_{s}$, for $k$ greater than or equal to the dimension of the algebra, is the variable $v^{s}_{0}$, which is defined everywhere, whereas, in the transformed algebras, the domain condition of $\circ^{k}_{s}$ is satisfied only by the pairs of equal cells. In~\cite{Rei87}, the morphisms of ep-signatures are required, moreover, to translate the domain conditions of $\sigma$ into a set of equations equivalent to the definedness of $d(\sigma)$.
+Let us note that, in $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$, the domain of $\sigma$ is not part of the data, and it may be smaller than that of $c(\sigma)^{\mathbf{B}}$. For instance, for the discretization functors of Section~\ref{STruncation}, the term assigned to $\circ^{k}_{s}$, for $k$ greater than or equal to the dimension of the algebra, is the variable $v^{s}_{0}$, which is defined everywhere, whereas, in the transformed algebras, the domain condition of $\circ^{k}_{s}$ is satisfied only by the pairs of equal cells. In~\cite{Rei87}, the morphisms of ep-signatures are required, moreover, to translate the domain conditions of $\sigma$ into a set of equations equivalent to the definedness of $c(\sigma)$.
 
 In the following proposition we characterize when the transformed algebra is a $\sig{\Sigma}$-algebra.
 
 \begin{proposition}\label{PTransformedEpAlg}
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{d}=(\varphi,d,\Dom^{(\varphi,d)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra. Then the following conditions are equivalent:
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra. Then the following conditions are equivalent:
 \begin{enumerate}
-\item $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$ is a $\sig{\Sigma}$-algebra; and
-\item for every $(\mathbf{s},s)\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{s},s}$ and every $\mathbf{b}\in(B_{\Dom^{(\varphi,d)}})_{\mathbf{s}}$ such that $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{b}]$, we have that $\mathbf{b}\in\Dom(d(\sigma)^{\mathbf{B}})$ and $d(\sigma)^{\mathbf{B}}(\mathbf{b})\in(B_{\Dom^{(\varphi,d)}})_{s}$.
+\item $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is a $\sig{\Sigma}$-algebra; and
+\item for every $(\mathbf{s},s)\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{s},s}$ and every $\mathbf{b}\in(B_{\Dom^{(\varphi,c)}})_{\mathbf{s}}$ such that $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{b}]$, we have that $\mathbf{b}\in\Dom(c(\sigma)^{\mathbf{B}})$ and $c(\sigma)^{\mathbf{B}}(\mathbf{b})\in(B_{\Dom^{(\varphi,c)}})_{s}$.
 \end{enumerate}
 \end{proposition}
 \begin{proof}
-Let $(\mathbf{s},s)\in S^{\star}\times S$ and $\sigma\in\Sigma_{\mathbf{s},s}$. We let $(B_{\Dom^{(\varphi,d)}})_{\mathrm{def}^{(S,\Sigma)}(\sigma)}$ stand for the set of the families of cells that satisfy $\mathrm{def}^{(S,\Sigma)}(\sigma)$ in $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$, see Definition~\ref{DEpAlgebra}. By condition (D1) of Proposition~\ref{PTransformedAlg}, the following inclusion holds
+Let $(\mathbf{s},s)\in S^{\star}\times S$ and $\sigma\in\Sigma_{\mathbf{s},s}$. We let $(B_{\Dom^{(\varphi,c)}})_{\mathrm{def}^{(S,\Sigma)}(\sigma)}$ stand for the set of the families of cells that satisfy $\mathrm{def}^{(S,\Sigma)}(\sigma)$ in $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$, see Definition~\ref{DEpAlgebra}. By condition (D1) of Proposition~\ref{PTransformedAlg}, the following inclusion holds
 \begin{equation*}
-\Dom\left(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})}\right)
+\Dom\left(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}\right)
 \subseteq
-\left(B_{\Dom^{(\varphi,d)}}\right)_{\mathrm{def}^{(S,\Sigma)}(\sigma)}.
+\left(B_{\Dom^{(\varphi,c)}}\right)_{\mathrm{def}^{(S,\Sigma)}(\sigma)}.
 \tag{I}
 \end{equation*}
-By Definition~\ref{DEpAlgebra}, $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$ is a $\sig{\Sigma}$-algebra if, and only if, the inclusion~(I) is an equality for every operation symbol $\sigma$ of $\Sigma$.
+By Definition~\ref{DEpAlgebra}, $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is a $\sig{\Sigma}$-algebra if, and only if, the inclusion~(I) is an equality for every operation symbol $\sigma$ of $\Sigma$.
 
-\textsf{(1) implies (2)} Let us assume that the inclusion~(I) is an equality and let $\mathbf{b}$ be a family in $(B_{\Dom^{(\varphi,d)}})_{\mathrm{def}^{(S,\Sigma)}(\sigma)}$. Then $\mathbf{b}\in\Dom(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})})$, so that, by conditions (D2) and (D3) of Proposition~\ref{PTransformedAlg}, $\mathbf{b}\in\Dom(d(\sigma)^{\mathbf{B}})$ and $d(\sigma)^{\mathbf{B}}(\mathbf{b})\in(B_{\Dom^{(\varphi,d)}})_{s}$.
+\textsf{(1) implies (2)} Let us assume that the inclusion~(I) is an equality and let $\mathbf{b}$ be a family in $(B_{\Dom^{(\varphi,c)}})_{\mathrm{def}^{(S,\Sigma)}(\sigma)}$. Then $\mathbf{b}\in\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})})$, so that, by conditions (D2) and (D3) of Proposition~\ref{PTransformedAlg}, $\mathbf{b}\in\Dom(c(\sigma)^{\mathbf{B}})$ and $c(\sigma)^{\mathbf{B}}(\mathbf{b})\in(B_{\Dom^{(\varphi,c)}})_{s}$.
 
-\textsf{(2) implies (1)} Let us assume that condition (2) holds for $\sigma$ and let $\mathbf{b}$ be a family in $(B_{\Dom^{(\varphi,d)}})_{\mathrm{def}^{(S,\Sigma)}(\sigma)}$. Then $\mathbf{b}$ satisfies condition (D1) and, by condition (2), conditions (D2) and (D3) of Proposition~\ref{PTransformedAlg}. Hence $\mathbf{b}\in\Dom(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})})$, and the inclusion~(I) is an equality.
+\textsf{(2) implies (1)} Let us assume that condition (2) holds for $\sigma$ and let $\mathbf{b}$ be a family in $(B_{\Dom^{(\varphi,c)}})_{\mathrm{def}^{(S,\Sigma)}(\sigma)}$. Then $\mathbf{b}$ satisfies condition (D1) and, by condition (2), conditions (D2) and (D3) of Proposition~\ref{PTransformedAlg}. Hence $\mathbf{b}\in\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})})$, and the inclusion~(I) is an equality.
 
 This completes the proof.
 \end{proof}
@@ -1193,51 +1193,51 @@ This completes the proof.
 In the following proposition we prove that the birestrictions of homomorphisms introduced after Definition~\ref{DDomainSet} are homomorphisms between the transformed algebras.
 
 \begin{proposition}\label{PGenHepDerivorHom}
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{d}=(\varphi,d,\Dom^{(\varphi,d)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $f\colon\mathbf{B}\mor\mathbf{B}'$ a homomorphism of partial $\Lambda$-algebras. Then $f_{\Dom^{(\varphi,d)}}$ is a homomorphism of partial $\Sigma$-algebras from $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$ to $\mathbf{d}^{\ast}_{\gd}(\mathbf{B}')$.
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $f\colon\mathbf{B}\mor\mathbf{B}'$ a homomorphism of partial $\Lambda$-algebras. Then $f_{\Dom^{(\varphi,c)}}$ is a homomorphism of partial $\Sigma$-algebras from $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ to $\mathbf{c}^{\ast}_{\gd}(\mathbf{B}')$.
 \end{proposition}
 \begin{proof}
-Let $h$ stand for $f_{\Dom^{(\varphi,d)}}$, which, by the discussion after Definition~\ref{DDomainSet}, is an $S$-sorted mapping from $B_{\Dom^{(\varphi,d)}}$ to $B'_{\Dom^{(\varphi,d)}}$. We prove, by well-founded induction along $\lhd$, that, for every $(\mathbf{s},s)\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{s},s}$ and every $\mathbf{b}\in\Dom(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})})$, the following conditions hold:
+Let $h$ stand for $f_{\Dom^{(\varphi,c)}}$, which, by the discussion after Definition~\ref{DDomainSet}, is an $S$-sorted mapping from $B_{\Dom^{(\varphi,c)}}$ to $B'_{\Dom^{(\varphi,c)}}$. We prove, by well-founded induction along $\lhd$, that, for every $(\mathbf{s},s)\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{s},s}$ and every $\mathbf{b}\in\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})})$, the following conditions hold:
 \begin{enumerate}
-\item[(H$_{\sigma}$1)] $h\circ\mathbf{b}\in\Dom(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B}')})$; and
-\item[(H$_{\sigma}$2)] $h_{s}(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})}(\mathbf{b}))=\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B}')}(h\circ\mathbf{b})$.
+\item[(H$_{\sigma}$1)] $h\circ\mathbf{b}\in\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B}')})$; and
+\item[(H$_{\sigma}$2)] $h_{s}(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}(\mathbf{b}))=\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B}')}(h\circ\mathbf{b})$.
 \end{enumerate}
 
-Let $\sigma\in\Sigma_{\mathbf{s},s}$ and assume that (H$_{\tau}$1) and (H$_{\tau}$2) hold for every $\tau\lhd\sigma$. Let $\mathbf{b}$ be a family in $\Dom(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})})$.
+Let $\sigma\in\Sigma_{\mathbf{s},s}$ and assume that (H$_{\tau}$1) and (H$_{\tau}$2) hold for every $\tau\lhd\sigma$. Let $\mathbf{b}$ be a family in $\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})})$.
 
-\textsf{(H$_{\sigma}$1)} We check the conditions (D1), (D2) and (D3) that define the domain of $\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B}')}$ in Proposition~\ref{PTransformedAlg}.
+\textsf{(H$_{\sigma}$1)} We check the conditions (D1), (D2) and (D3) that define the domain of $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B}')}$ in Proposition~\ref{PTransformedAlg}.
 
-\textsf{(D1)} By the induction hypothesis, $h$ is a homomorphism between the reducts of $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$ and $\mathbf{d}^{\ast}_{\gd}(\mathbf{B}')$ to the operation symbols that occur in $\mathrm{def}^{(S,\Sigma)}(\sigma)$. Since $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{b}]$, by Remark~\ref{RHomTerm}, it follows that
+\textsf{(D1)} By the induction hypothesis, $h$ is a homomorphism between the reducts of $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ and $\mathbf{c}^{\ast}_{\gd}(\mathbf{B}')$ to the operation symbols that occur in $\mathrm{def}^{(S,\Sigma)}(\sigma)$. Since $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{b}]$, by Remark~\ref{RHomTerm}, it follows that
 $$
-\mathbf{d}^{\ast}_{\gd}(\mathbf{B}')\models\mathrm{def}^{(S,\Sigma)}(\sigma)[h\circ\mathbf{b}].
-$$
-
-\textsf{(D2)} Since $\mathbf{b}\in\Dom(d(\sigma)^{\mathbf{B}})$ and $f$ is a homomorphism, by Remark~\ref{RHomTerm}, $f_{\varphi}\circ\mathbf{b}=h\circ\mathbf{b}$ is in $\Dom(d(\sigma)^{\mathbf{B}'})$ and
-$$
-d(\sigma)^{\mathbf{B}'}(h\circ\mathbf{b})=f_{\varphi(s)}\left(d(\sigma)^{\mathbf{B}}(\mathbf{b})\right).
+\mathbf{c}^{\ast}_{\gd}(\mathbf{B}')\models\mathrm{def}^{(S,\Sigma)}(\sigma)[h\circ\mathbf{b}].
 $$
 
-\textsf{(D3)} Since $d(\sigma)^{\mathbf{B}}(\mathbf{b})\in(B_{\Dom^{(\varphi,d)}})_{s}$, by the discussion after Definition~\ref{DDomainSet}, $f_{\varphi(s)}(d(\sigma)^{\mathbf{B}}(\mathbf{b}))\in(B'_{\Dom^{(\varphi,d)}})_{s}$, i.e., by (D2), $d(\sigma)^{\mathbf{B}'}(h\circ\mathbf{b})$ is a cell of sort $s$ of $\mathbf{B}'$.
+\textsf{(D2)} Since $\mathbf{b}\in\Dom(c(\sigma)^{\mathbf{B}})$ and $f$ is a homomorphism, by Remark~\ref{RHomTerm}, $f_{\varphi}\circ\mathbf{b}=h\circ\mathbf{b}$ is in $\Dom(c(\sigma)^{\mathbf{B}'})$ and
+$$
+c(\sigma)^{\mathbf{B}'}(h\circ\mathbf{b})=f_{\varphi(s)}\left(c(\sigma)^{\mathbf{B}}(\mathbf{b})\right).
+$$
 
-Therefore, by Proposition~\ref{PTransformedAlg}, $h\circ\mathbf{b}\in\Dom(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B}')})$.
+\textsf{(D3)} Since $c(\sigma)^{\mathbf{B}}(\mathbf{b})\in(B_{\Dom^{(\varphi,c)}})_{s}$, by the discussion after Definition~\ref{DDomainSet}, $f_{\varphi(s)}(c(\sigma)^{\mathbf{B}}(\mathbf{b}))\in(B'_{\Dom^{(\varphi,c)}})_{s}$, i.e., by (D2), $c(\sigma)^{\mathbf{B}'}(h\circ\mathbf{b})$ is a cell of sort $s$ of $\mathbf{B}'$.
+
+Therefore, by Proposition~\ref{PTransformedAlg}, $h\circ\mathbf{b}\in\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B}')})$.
 
 \textsf{(H$_{\sigma}$2)} The following chain of equalities holds
 \allowdisplaybreaks
 \begin{align*}
-h_{s}\left(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})}\left(\mathbf{b}\right)\right)
+h_{s}\left(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}\left(\mathbf{b}\right)\right)
 &=
-f_{\varphi(s)}\left(d(\sigma)^{\mathbf{B}}\left(\mathbf{b}\right)\right)
+f_{\varphi(s)}\left(c(\sigma)^{\mathbf{B}}\left(\mathbf{b}\right)\right)
 \tag{1}
 \\&=
-d(\sigma)^{\mathbf{B}'}\left(h\circ\mathbf{b}\right)
+c(\sigma)^{\mathbf{B}'}\left(h\circ\mathbf{b}\right)
 \tag{2}
 \\&=
-\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B}')}\left(h\circ\mathbf{b}\right).
+\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B}')}\left(h\circ\mathbf{b}\right).
 \tag{3}
 \end{align*}
 
-The first equality unravels the definitions of $h$ and of $\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})}$, see Proposition~\ref{PTransformedAlg}; the second equality follows from Remark~\ref{RHomTerm}, as shown in the proof of (H$_{\sigma}$1); finally, the last equality follows from Proposition~\ref{PTransformedAlg}, taking into account that, by (H$_{\sigma}$1), $h\circ\mathbf{b}\in\Dom(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B}')})$.
+The first equality unravels the definitions of $h$ and of $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$, see Proposition~\ref{PTransformedAlg}; the second equality follows from Remark~\ref{RHomTerm}, as shown in the proof of (H$_{\sigma}$1); finally, the last equality follows from Proposition~\ref{PTransformedAlg}, taking into account that, by (H$_{\sigma}$1), $h\circ\mathbf{b}\in\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B}')})$.
 
-All in all, since $\lhd$ is well-founded, (H$_{\sigma}$1) and (H$_{\sigma}$2) hold for every operation symbol $\sigma$ of $\Sigma$, i.e., $h$ is a homomorphism from $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$ to $\mathbf{d}^{\ast}_{\gd}(\mathbf{B}')$.
+All in all, since $\lhd$ is well-founded, (H$_{\sigma}$1) and (H$_{\sigma}$2) hold for every operation symbol $\sigma$ of $\Sigma$, i.e., $h$ is a homomorphism from $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ to $\mathbf{c}^{\ast}_{\gd}(\mathbf{B}')$.
 
 This completes the proof.
 \end{proof}
@@ -1245,24 +1245,24 @@ This completes the proof.
 We are now in position to prove that every generalized hep-derivor induces a functor between the categories of partial algebras. Let us note that, in general, the transformed algebra of a $\sig{\Lambda}$-algebra need not be a $\sig{\Sigma}$-algebra, see Proposition~\ref{PTransformedEpAlg} and Remark~\ref{RGenHepDerivorCases}. Hence a generalized hep-derivor does not induce, in general, a functor from $\mathsf{EPAlg}(\sig{\Lambda})$ to $\mathsf{EPAlg}(\sig{\Sigma})$, and we define the induced functor on all the partial $\Lambda$-algebras. In Subsection~\ref{SEpRestriction} we consider its restrictions to the categories canonically associated to ep-varieties.
 
 \begin{proposition}\label{PGenHepDerivorFunctor}
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{d}=(\varphi,d,\Dom^{(\varphi,d)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$. Then $\mathbf{d}^{\ast}_{\gd}$, the assignment from $\mathsf{PAlg}(\Lambda)$ to $\mathsf{PAlg}(\Sigma)$ defined as follows:
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$. Then $\mathbf{c}^{\ast}_{\gd}$, the assignment from $\mathsf{PAlg}(\Lambda)$ to $\mathsf{PAlg}(\Sigma)$ defined as follows:
 \begin{enumerate}
-\item for every partial $\Lambda$-algebra $\mathbf{B}$, $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$ is the partial $\Sigma$-algebra introduced in Proposition~\ref{PTransformedAlg}; and
-\item for every homomorphism $f\colon\mathbf{B}\mor\mathbf{B}'$ of partial $\Lambda$-algebras, $\mathbf{d}^{\ast}_{\gd}(f)$ is the homomorphism $f_{\Dom^{(\varphi,d)}}$ from $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$ to $\mathbf{d}^{\ast}_{\gd}(\mathbf{B}')$, see Proposition~\ref{PGenHepDerivorHom};
+\item for every partial $\Lambda$-algebra $\mathbf{B}$, $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is the partial $\Sigma$-algebra introduced in Proposition~\ref{PTransformedAlg}; and
+\item for every homomorphism $f\colon\mathbf{B}\mor\mathbf{B}'$ of partial $\Lambda$-algebras, $\mathbf{c}^{\ast}_{\gd}(f)$ is the homomorphism $f_{\Dom^{(\varphi,c)}}$ from $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ to $\mathbf{c}^{\ast}_{\gd}(\mathbf{B}')$, see Proposition~\ref{PGenHepDerivorHom};
 \end{enumerate}
 is a functor.
 \end{proposition}
 \begin{proof}
-By Propositions~\ref{PTransformedAlg} and~\ref{PGenHepDerivorHom}, it suffices to prove that $\mathbf{d}^{\ast}_{\gd}$ preserves identities and composites. Since $\mathbf{d}^{\ast}_{\gd}$ and $\G_{\mathbf{d}}$ act in the same way on homomorphisms, this follows from Proposition~\ref{PDomainSetFunctor}.
+By Propositions~\ref{PTransformedAlg} and~\ref{PGenHepDerivorHom}, it suffices to prove that $\mathbf{c}^{\ast}_{\gd}$ preserves identities and composites. Since $\mathbf{c}^{\ast}_{\gd}$ and $\G_{\mathbf{c}}$ act in the same way on homomorphisms, this follows from Proposition~\ref{PDomainSetFunctor}.
 
 This completes the proof.
 \end{proof}
 
 \begin{corollary}\label{CGenHepDerivorDiagram}
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{d}=(\varphi,d,\Dom^{(\varphi,d)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$. Then the following diagram commutes
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$. Then the following diagram commutes
 $$
 \xymatrix@C=50pt@R=35pt{
-\mathsf{PAlg}(\Lambda)\ar[r]^-{\mathbf{d}^{\ast}_{\gd}}\ar[rd]_-{\G_{\mathbf{d}}} &
+\mathsf{PAlg}(\Lambda)\ar[r]^-{\mathbf{c}^{\ast}_{\gd}}\ar[rd]_-{\G_{\mathbf{c}}} &
 \mathsf{PAlg}(\Sigma)\ar[d]^-{\G_{\Sigma}}\\
 & \mathsf{Set}^{S}
 }
@@ -1270,74 +1270,74 @@ $$
 where $\G_{\Sigma}$ is the forgetful functor.
 \end{corollary}
 \begin{proof}
-It follows from Propositions~\ref{PDomainSetFunctor}, \ref{PTransformedAlg} and~\ref{PGenHepDerivorFunctor}, since the underlying $S$-sorted set of $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$ is $B_{\Dom^{(\varphi,d)}}$ and the underlying $S$-sorted mapping of $\mathbf{d}^{\ast}_{\gd}(f)$ is $f_{\Dom^{(\varphi,d)}}$.
+It follows from Propositions~\ref{PDomainSetFunctor}, \ref{PTransformedAlg} and~\ref{PGenHepDerivorFunctor}, since the underlying $S$-sorted set of $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is $B_{\Dom^{(\varphi,c)}}$ and the underlying $S$-sorted mapping of $\mathbf{c}^{\ast}_{\gd}(f)$ is $f_{\Dom^{(\varphi,c)}}$.
 \end{proof}
 
 \subsection{Restriction to ep-varieties}\label{SEpRestriction}
 
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{d}=(\varphi,d,\Dom^{(\varphi,d)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$, and $\spec{E}=(\sig{\Sigma},\mathcal{E})$ and $\spec{F}=(\sig{\Lambda},\mathcal{F})$ hep-specifications. By Definitions~\ref{DCorestriction} and~\ref{DEpVariety}, the restriction of $\mathbf{d}^{\ast}_{\gd}$ to $\mathsf{EPAlg}(\spec{F})$ corestricts to $\mathsf{EPAlg}(\spec{E})$ if, and only if, for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\spec{F})$, $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$ is a $\sig{\Sigma}$-algebra in which every $\QE$-equation of $\mathcal{E}$ holds. Accordingly, for each of the generalized hep-derivors of Sections~\ref{SGraduation} and~\ref{STruncation}, we first prove, by means of Proposition~\ref{PTransformedEpAlg}, that the transformed algebras are ep-algebras, and then that the axioms of the corresponding ep-variety hold in them. In this case, the corestriction of the restriction of $\mathbf{d}^{\ast}_{\gd}$ is denoted by
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$, and $\spec{E}=(\sig{\Sigma},\mathcal{E})$ and $\spec{F}=(\sig{\Lambda},\mathcal{F})$ hep-specifications. By Definitions~\ref{DCorestriction} and~\ref{DEpVariety}, the restriction of $\mathbf{c}^{\ast}_{\gd}$ to $\mathsf{EPAlg}(\spec{F})$ corestricts to $\mathsf{EPAlg}(\spec{E})$ if, and only if, for every object $\mathbf{B}$ in $\mathsf{EPAlg}(\spec{F})$, $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is a $\sig{\Sigma}$-algebra in which every $\QE$-equation of $\mathcal{E}$ holds. Accordingly, for each of the generalized hep-derivors of Sections~\ref{SGraduation} and~\ref{STruncation}, we first prove, by means of Proposition~\ref{PTransformedEpAlg}, that the transformed algebras are ep-algebras, and then that the axioms of the corresponding ep-variety hold in them. In this case, the corestriction of the restriction of $\mathbf{c}^{\ast}_{\gd}$ is denoted by
 $$
-\mathbf{d}^{\ast}_{\gd}\colon\mathsf{EPAlg}(\spec{F})\mor\mathsf{EPAlg}(\spec{E}).
+\mathbf{c}^{\ast}_{\gd}\colon\mathsf{EPAlg}(\spec{F})\mor\mathsf{EPAlg}(\spec{E}).
 $$
 
 \begin{remark}\label{RGenHepDerivorCases}
 \begin{enumerate}
-\item If $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ are many-sorted signatures, regarded as hep-signatures with empty sets of domain conditions, then, for every derivor $(\varphi,d)$, the restriction of $(\varphi,d,\varnothing)^{\ast}_{\gd}$ to $\mathsf{EPAlg}(T,\Lambda,\varnothing)=\mathsf{Alg}(\Lambda)$ corestricts to $\mathsf{EPAlg}(S,\Sigma,\varnothing)=\mathsf{Alg}(\Sigma)$, since the partial term operations of a total algebra are total. Moreover, this corestriction is the usual functor that sends a $\Lambda$-algebra $\mathbf{B}$ to the $\Sigma$-algebra on $B_{\varphi}$ in which every $\sigma$ is interpreted as the term operation $d(\sigma)^{\mathbf{B}}$, see~\cite{CVST10b}.
-\item Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures and $\mathbf{d}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$. The functor $\mathbf{d}^{\ast}_{\gd}$ is defined on all the partial $\Lambda$-algebras, but its restriction to $\mathsf{EPAlg}(\spec{F})$ may only corestrict to $\mathsf{EPAlg}(\spec{E})$ for some hep-specifications $\spec{F}=(\sig{\Lambda},\mathcal{F})$ and $\spec{E}=(\sig{\Sigma},\mathcal{E})$. For instance, the domains of the sorts of the graduation derivor of Section~\ref{SGraduation} are only preserved by the term operations in the objects of the category canonically associated to the ep-variety of the axioms of $n$-categories: in a partial algebra in which $\src^{j}_{s}$ is not idempotent, the $j$-source of a cell need not be a $j$-cell.
+\item If $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ are many-sorted signatures, regarded as hep-signatures with empty sets of domain conditions, then, for every derivor $(\varphi,c)$, the restriction of $(\varphi,c,\varnothing)^{\ast}_{\gd}$ to $\mathsf{EPAlg}(T,\Lambda,\varnothing)=\mathsf{Alg}(\Lambda)$ corestricts to $\mathsf{EPAlg}(S,\Sigma,\varnothing)=\mathsf{Alg}(\Sigma)$, since the partial term operations of a total algebra are total. Moreover, this corestriction is the usual functor that sends a $\Lambda$-algebra $\mathbf{B}$ to the $\Sigma$-algebra on $B_{\varphi}$ in which every $\sigma$ is interpreted as the term operation $c(\sigma)^{\mathbf{B}}$, see~\cite{CVST10b}.
+\item Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures and $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$. The functor $\mathbf{c}^{\ast}_{\gd}$ is defined on all the partial $\Lambda$-algebras, but its restriction to $\mathsf{EPAlg}(\spec{F})$ may only corestrict to $\mathsf{EPAlg}(\spec{E})$ for some hep-specifications $\spec{F}=(\sig{\Lambda},\mathcal{F})$ and $\spec{E}=(\sig{\Sigma},\mathcal{E})$. For instance, the domains of the sorts of the graduation derivor of Section~\ref{SGraduation} are only preserved by the term operations in the objects of the category canonically associated to the ep-variety of the axioms of $n$-categories: in a partial algebra in which $\src^{j}_{s}$ is not idempotent, the $j$-source of a cell need not be a $j$-cell.
 \end{enumerate}
 \end{remark}
 
 \subsection{The category \texorpdfstring{$\mathsf{hepSig}_{\gd}$}{hepSiggd}}\label{SHepSigCat}
 
-In this subsection we prove that the hep-signatures and the generalized hep-derivors form a category. We use the notation $e^{\sharp}[\mathcal{H}]$ of Remark~\ref{RDerivorTerms} for the translation of a set of $\mathrm{E}$-equations $\mathcal{H}$ along a derivor $(\psi,e)$.
+In this subsection we prove that the hep-signatures and the generalized hep-derivors form a category. We use the notation $d^{\sharp}[\mathcal{H}]$ of Remark~\ref{RDerivorTerms} for the translation of a set of $\mathrm{E}$-equations $\mathcal{H}$ along a derivor $(\psi,d)$.
 
 \begin{definition}\label{DHepComp}
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$, $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ and $\sig{\Omega}=(U,\Omega,\mathrm{def}^{(U,\Omega)})$ be hep-signatures, $\mathbf{d}=(\varphi,d,\Dom^{(\varphi,d)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{e}=(\psi,e,\Dom^{(\psi,e)})$ a generalized hep-derivor from $\sig{\Lambda}$ to $\sig{\Omega}$. The \emph{composition} of $\mathbf{d}$ and $\mathbf{e}$ is the generalized hep-derivor
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$, $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ and $\sig{\Omega}=(U,\Omega,\mathrm{def}^{(U,\Omega)})$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{d}=(\psi,d,\Dom^{(\psi,d)})$ a generalized hep-derivor from $\sig{\Lambda}$ to $\sig{\Omega}$. The \emph{composition} of $\mathbf{c}$ and $\mathbf{d}$ is the generalized hep-derivor
 $$
-\mathbf{e}\circ\mathbf{d}=\left(\psi\circ\varphi,e^{\sharp}\circ d,\Dom^{\mathbf{e}\circ\mathbf{d}}\right)
+\mathbf{d}\circ\mathbf{c}=\left(\psi\circ\varphi,d^{\sharp}\circ c,\Dom^{\mathbf{d}\circ\mathbf{c}}\right)
 $$
-from $\sig{\Sigma}$ to $\sig{\Omega}$, where $(\psi\circ\varphi,e^{\sharp}\circ d)$ is the composition of the derivors $(\varphi,d)$ and $(\psi,e)$, see~(Der3), and, for every $s\in S$,
+from $\sig{\Sigma}$ to $\sig{\Omega}$, where $(\psi\circ\varphi,d^{\sharp}\circ c)$ is the composition of the derivors $(\varphi,c)$ and $(\psi,d)$, see~(Der3), and, for every $s\in S$,
 $$
-\Dom^{\mathbf{e}\circ\mathbf{d}}_{s}=\Dom^{(\psi,e)}_{\varphi(s)}\cup e^{\sharp}\left[\Dom^{(\varphi,d)}_{s}\right].
+\Dom^{\mathbf{d}\circ\mathbf{c}}_{s}=\Dom^{(\psi,d)}_{\varphi(s)}\cup d^{\sharp}\left[\Dom^{(\varphi,c)}_{s}\right].
 $$
 The \emph{identity} at $\sig{\Sigma}$ is the generalized hep-derivor $\id_{\sig{\Sigma}}=(\id_{S},\eta^{\Sigma},\varnothing)$ from $\sig{\Sigma}$ to $\sig{\Sigma}$, where $(\id_{S},\eta^{\Sigma})$ is the identity derivor at $(S,\Sigma)$, see~(Der3), and every domain is empty.
 \end{definition}
 
-Let us note that $\Dom^{(\psi,e)}_{\varphi(s)}$ and $e^{\sharp}[\Dom^{(\varphi,d)}_{s}]$ are sets of $\mathrm{E}$-equations with variables in $\vs{\psi(\varphi(s))}$, since $\psi^{\star}((\varphi(s)))=(\psi(\varphi(s)))$, so that the above definition is correct.
+Let us note that $\Dom^{(\psi,d)}_{\varphi(s)}$ and $d^{\sharp}[\Dom^{(\varphi,c)}_{s}]$ are sets of $\mathrm{E}$-equations with variables in $\vs{\psi(\varphi(s))}$, since $\psi^{\star}((\varphi(s)))=(\psi(\varphi(s)))$, so that the above definition is correct.
 
 \begin{proposition}\label{PHepSigCat}
 The hep-signatures, together with the generalized hep-derivors, the composition and the identities of Definition~\ref{DHepComp}, form a category, which we denote by $\mathsf{hepSig}_{\gd}$.
 \end{proposition}
 \begin{proof}
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$, $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$, $\sig{\Omega}=(U,\Omega,\mathrm{def}^{(U,\Omega)})$ and $\sig{\Xi}=(W,\Xi,\mathrm{def}^{(W,\Xi)})$ be hep-signatures, and $\mathbf{d}=(\varphi,d,\Dom^{(\varphi,d)})$, $\mathbf{e}=(\psi,e,\Dom^{(\psi,e)})$ and $\mathbf{g}=(\chi,g,\Dom^{(\chi,g)})$ generalized hep-derivors from $\sig{\Sigma}$ to $\sig{\Lambda}$, from $\sig{\Lambda}$ to $\sig{\Omega}$ and from $\sig{\Omega}$ to $\sig{\Xi}$, respectively. By~(Der4), the underlying derivors of $\mathbf{g}\circ(\mathbf{e}\circ\mathbf{d})$ and of $(\mathbf{g}\circ\mathbf{e})\circ\mathbf{d}$ are equal, and the underlying derivors of $\id_{\sig{\Lambda}}\circ\mathbf{d}$ and of $\mathbf{d}\circ\id_{\sig{\Sigma}}$ are $(\varphi,d)$. It remains to compare the domains. Let $s\in S$.
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$, $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$, $\sig{\Omega}=(U,\Omega,\mathrm{def}^{(U,\Omega)})$ and $\sig{\Xi}=(W,\Xi,\mathrm{def}^{(W,\Xi)})$ be hep-signatures, and $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$, $\mathbf{d}=(\psi,d,\Dom^{(\psi,d)})$ and $\mathbf{e}=(\chi,e,\Dom^{(\chi,e)})$ generalized hep-derivors from $\sig{\Sigma}$ to $\sig{\Lambda}$, from $\sig{\Lambda}$ to $\sig{\Omega}$ and from $\sig{\Omega}$ to $\sig{\Xi}$, respectively. By~(Der4), the underlying derivors of $\mathbf{e}\circ(\mathbf{d}\circ\mathbf{c})$ and of $(\mathbf{e}\circ\mathbf{d})\circ\mathbf{c}$ are equal, and the underlying derivors of $\id_{\sig{\Lambda}}\circ\mathbf{c}$ and of $\mathbf{c}\circ\id_{\sig{\Sigma}}$ are $(\varphi,c)$. It remains to compare the domains. Let $s\in S$.
 
 \textsf{(Associativity)} The following chain of equalities holds
 \allowdisplaybreaks
 \begin{align*}
-\Dom^{\mathbf{g}\circ(\mathbf{e}\circ\mathbf{d})}_{s}
+\Dom^{\mathbf{e}\circ(\mathbf{d}\circ\mathbf{c})}_{s}
 &=
-\Dom^{(\chi,g)}_{\psi(\varphi(s))}\cup g^{\sharp}\left[\Dom^{(\psi,e)}_{\varphi(s)}\cup e^{\sharp}\left[\Dom^{(\varphi,d)}_{s}\right]\right]
+\Dom^{(\chi,e)}_{\psi(\varphi(s))}\cup e^{\sharp}\left[\Dom^{(\psi,d)}_{\varphi(s)}\cup d^{\sharp}\left[\Dom^{(\varphi,c)}_{s}\right]\right]
 \tag{1}
 \\&=
-\Dom^{(\chi,g)}_{\psi(\varphi(s))}\cup g^{\sharp}\left[\Dom^{(\psi,e)}_{\varphi(s)}\right]\cup g^{\sharp}\left[e^{\sharp}\left[\Dom^{(\varphi,d)}_{s}\right]\right]
+\Dom^{(\chi,e)}_{\psi(\varphi(s))}\cup e^{\sharp}\left[\Dom^{(\psi,d)}_{\varphi(s)}\right]\cup e^{\sharp}\left[d^{\sharp}\left[\Dom^{(\varphi,c)}_{s}\right]\right]
 \tag{2}
 \\&=
-\Dom^{\mathbf{g}\circ\mathbf{e}}_{\varphi(s)}\cup\left(g^{\sharp}\circ e\right)^{\sharp}\left[\Dom^{(\varphi,d)}_{s}\right]
+\Dom^{\mathbf{e}\circ\mathbf{d}}_{\varphi(s)}\cup\left(e^{\sharp}\circ d\right)^{\sharp}\left[\Dom^{(\varphi,c)}_{s}\right]
 \tag{3}
 \\&=
-\Dom^{(\mathbf{g}\circ\mathbf{e})\circ\mathbf{d}}_{s}.
+\Dom^{(\mathbf{e}\circ\mathbf{d})\circ\mathbf{c}}_{s}.
 \tag{4}
 \end{align*}
 
-The first equality unravels Definition~\ref{DHepComp}; the second equality follows from the fact that $g^{\sharp}[\,\cdot\,]$ preserves unions; the third equality follows from Definition~\ref{DHepComp} and the equality $(g^{\sharp}\circ e)^{\sharp}=g^{\sharp}\circ e^{\sharp}$, see~(Der4); finally, the last equality unravels Definition~\ref{DHepComp}.
+The first equality unravels Definition~\ref{DHepComp}; the second equality follows from the fact that $e^{\sharp}[\,\cdot\,]$ preserves unions; the third equality follows from Definition~\ref{DHepComp} and the equality $(e^{\sharp}\circ d)^{\sharp}=e^{\sharp}\circ d^{\sharp}$, see~(Der4); finally, the last equality unravels Definition~\ref{DHepComp}.
 
 \textsf{(Identities)} By Definition~\ref{DHepComp} and~(Der3), the following equalities hold
 \begin{align*}
-\Dom^{\id_{\sig{\Lambda}}\circ\mathbf{d}}_{s}
-&=\varnothing\cup(\eta^{\Lambda})^{\sharp}\left[\Dom^{(\varphi,d)}_{s}\right]=\Dom^{(\varphi,d)}_{s},
+\Dom^{\id_{\sig{\Lambda}}\circ\mathbf{c}}_{s}
+&=\varnothing\cup(\eta^{\Lambda})^{\sharp}\left[\Dom^{(\varphi,c)}_{s}\right]=\Dom^{(\varphi,c)}_{s},
 \\
-\Dom^{\mathbf{d}\circ\id_{\sig{\Sigma}}}_{s}
-&=\Dom^{(\varphi,d)}_{s}\cup d^{\sharp}[\varnothing]=\Dom^{(\varphi,d)}_{s},
+\Dom^{\mathbf{c}\circ\id_{\sig{\Sigma}}}_{s}
+&=\Dom^{(\varphi,c)}_{s}\cup c^{\sharp}[\varnothing]=\Dom^{(\varphi,c)}_{s},
 \end{align*}
 since $(\eta^{\Lambda})^{\sharp}$ is the identity.
 
@@ -1346,44 +1346,44 @@ This completes the proof.
 
 \subsection{Composition and induced functors}\label{SHepCompFunctors}
 
-In this subsection we compare the functor induced by the composition of two generalized hep-derivors with the composite of the induced functors. The composition of Definition~\ref{DHepComp} translates the domains of $\mathbf{d}$ by means of the terms of $\mathbf{e}$, but these terms may be defined in a partial $\Omega$-algebra $\mathbf{C}$ on more families than the corresponding operations of $\mathbf{e}^{\ast}_{\gd}(\mathbf{C})$. Therefore both functors need not coincide; we prove that the first one always contains the second one, and that they coincide under a condition that we will check in Sections~\ref{SGraduation} and~\ref{STruncation}. We begin by relating the partial term operations of $\mathbf{e}^{\ast}_{\gd}(\mathbf{C})$ with those of $\mathbf{C}$.
+In this subsection we compare the functor induced by the composition of two generalized hep-derivors with the composite of the induced functors. The composition of Definition~\ref{DHepComp} translates the domains of $\mathbf{c}$ by means of the terms of $\mathbf{d}$, but these terms may be defined in a partial $\Omega$-algebra $\mathbf{C}$ on more families than the corresponding operations of $\mathbf{d}^{\ast}_{\gd}(\mathbf{C})$. Therefore both functors need not coincide; we prove that the first one always contains the second one, and that they coincide under a condition that we will check in Sections~\ref{SGraduation} and~\ref{STruncation}. We begin by relating the partial term operations of $\mathbf{d}^{\ast}_{\gd}(\mathbf{C})$ with those of $\mathbf{C}$.
 
 \begin{lemma}\label{LTermComp}
-Let $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ and $\sig{\Omega}=(U,\Omega,\mathrm{def}^{(U,\Omega)})$ be hep-signatures, $\mathbf{e}=(\psi,e,\Dom^{(\psi,e)})$ a generalized hep-derivor from $\sig{\Lambda}$ to $\sig{\Omega}$ and $\mathbf{C}$ a partial $\Omega$-algebra. Let $\mathbf{t}\in T^{\star}$, $t\in T$, $P\in\mathrm{T}_{\Lambda}(\vs{\mathbf{t}})_{t}$ and $\mathbf{c}\in(C_{\Dom^{(\psi,e)}})_{\mathbf{t}}$. If $\mathbf{c}\in\Dom(P^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})})$, then $\mathbf{c}\in\Dom(e^{\sharp}(P)^{\mathbf{C}})$ and
+Let $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ and $\sig{\Omega}=(U,\Omega,\mathrm{def}^{(U,\Omega)})$ be hep-signatures, $\mathbf{d}=(\psi,d,\Dom^{(\psi,d)})$ a generalized hep-derivor from $\sig{\Lambda}$ to $\sig{\Omega}$ and $\mathbf{C}$ a partial $\Omega$-algebra. Let $\mathbf{t}\in T^{\star}$, $t\in T$, $P\in\mathrm{T}_{\Lambda}(\vs{\mathbf{t}})_{t}$ and $\mathbf{c}\in(C_{\Dom^{(\psi,d)}})_{\mathbf{t}}$. If $\mathbf{c}\in\Dom(P^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})})$, then $\mathbf{c}\in\Dom(d^{\sharp}(P)^{\mathbf{C}})$ and
 $$
-e^{\sharp}(P)^{\mathbf{C}}(\mathbf{c})=P^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c}).
+d^{\sharp}(P)^{\mathbf{C}}(\mathbf{c})=P^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c}).
 $$
-Consequently, for every $\mathcal{H}\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\mathbf{t}}}$, if $\mathbf{e}^{\ast}_{\gd}(\mathbf{C})\models\mathcal{H}[\mathbf{c}]$, then $\mathbf{C}\models e^{\sharp}[\mathcal{H}][\mathbf{c}]$.
+Consequently, for every $\mathcal{H}\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\mathbf{t}}}$, if $\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\models\mathcal{H}[\mathbf{c}]$, then $\mathbf{C}\models d^{\sharp}[\mathcal{H}][\mathbf{c}]$.
 \end{lemma}
 \begin{proof}
 We proceed by induction on the term $P$.
 
-\textsf{(Variables)} If $P=v^{\mathbf{t}}_{j}$, for some $j\in\bb{\mathbf{t}}$, then, by~(Der1), $e^{\sharp}(P)=v^{\psi^{\star}(\mathbf{t})}_{j}$, so that $e^{\sharp}(P)^{\mathbf{C}}(\mathbf{c})=c_{j}=P^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c})$.
+\textsf{(Variables)} If $P=v^{\mathbf{t}}_{j}$, for some $j\in\bb{\mathbf{t}}$, then, by~(Der1), $d^{\sharp}(P)=v^{\psi^{\star}(\mathbf{t})}_{j}$, so that $d^{\sharp}(P)^{\mathbf{C}}(\mathbf{c})=c_{j}=P^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c})$.
 
-\textsf{(Operation symbols)} Let us assume that $P=\tau((P_{j})_{j\in\bb{\mathbf{r}}})$, with $\tau\in\Lambda_{\mathbf{r},t}$, and that the statement holds for every $P_{j}$. Let $\mathbf{c}\in\Dom(P^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})})$ and let $\mathbf{y}$ stand for the family $(P_{j}^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c}))_{j\in\bb{\mathbf{r}}}$, which, by Definition~\ref{DTermOp}, is in $\Dom(\tau^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})})$. By Proposition~\ref{PTransformedAlg}, $\mathbf{y}\in\Dom(e(\tau)^{\mathbf{C}})$ and $\tau^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{y})=e(\tau)^{\mathbf{C}}(\mathbf{y})$. By~(Der2), $e^{\sharp}(P)=(e^{\sharp}(P_{j}))^{\sharp}_{j\in\bb{\mathbf{r}}}(e(\tau))$. Therefore, by the induction hypothesis and Remark~\ref{RSubst}, $\mathbf{c}\in\Dom(e^{\sharp}(P)^{\mathbf{C}})$, and the following chain of equalities holds
+\textsf{(Operation symbols)} Let us assume that $P=\tau((P_{j})_{j\in\bb{\mathbf{r}}})$, with $\tau\in\Lambda_{\mathbf{r},t}$, and that the statement holds for every $P_{j}$. Let $\mathbf{c}\in\Dom(P^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})})$ and let $\mathbf{y}$ stand for the family $(P_{j}^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c}))_{j\in\bb{\mathbf{r}}}$, which, by Definition~\ref{DTermOp}, is in $\Dom(\tau^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})})$. By Proposition~\ref{PTransformedAlg}, $\mathbf{y}\in\Dom(d(\tau)^{\mathbf{C}})$ and $\tau^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{y})=d(\tau)^{\mathbf{C}}(\mathbf{y})$. By~(Der2), $d^{\sharp}(P)=(d^{\sharp}(P_{j}))^{\sharp}_{j\in\bb{\mathbf{r}}}(d(\tau))$. Therefore, by the induction hypothesis and Remark~\ref{RSubst}, $\mathbf{c}\in\Dom(d^{\sharp}(P)^{\mathbf{C}})$, and the following chain of equalities holds
 \allowdisplaybreaks
 \begin{align*}
-e^{\sharp}(P)^{\mathbf{C}}\left(\mathbf{c}\right)
+d^{\sharp}(P)^{\mathbf{C}}\left(\mathbf{c}\right)
 &=
-\left(\left(e^{\sharp}(P_{j})\right)^{\sharp}_{j\in\bb{\mathbf{r}}}\left(e(\tau)\right)\right)^{\mathbf{C}}\left(\mathbf{c}\right)
+\left(\left(d^{\sharp}(P_{j})\right)^{\sharp}_{j\in\bb{\mathbf{r}}}\left(d(\tau)\right)\right)^{\mathbf{C}}\left(\mathbf{c}\right)
 \tag{1}
 \\&=
-e(\tau)^{\mathbf{C}}\left(\left(e^{\sharp}(P_{j})^{\mathbf{C}}(\mathbf{c})\right)_{j\in\bb{\mathbf{r}}}\right)
+d(\tau)^{\mathbf{C}}\left(\left(d^{\sharp}(P_{j})^{\mathbf{C}}(\mathbf{c})\right)_{j\in\bb{\mathbf{r}}}\right)
 \tag{2}
 \\&=
-e(\tau)^{\mathbf{C}}\left(\mathbf{y}\right)
+d(\tau)^{\mathbf{C}}\left(\mathbf{y}\right)
 \tag{3}
 \\&=
-\tau^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}\left(\mathbf{y}\right)
+\tau^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}\left(\mathbf{y}\right)
 \tag{4}
 \\&=
-P^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}\left(\mathbf{c}\right).
+P^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}\left(\mathbf{c}\right).
 \tag{5}
 \end{align*}
 
-The first equality follows from~(Der2); the second equality follows from Remark~\ref{RSubst}; the third equality follows from the induction hypothesis; the fourth equality follows from Proposition~\ref{PTransformedAlg}; finally, the last equality unravels the definition of the partial term operation $P^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}$, see Definition~\ref{DTermOp}.
+The first equality follows from~(Der2); the second equality follows from Remark~\ref{RSubst}; the third equality follows from the induction hypothesis; the fourth equality follows from Proposition~\ref{PTransformedAlg}; finally, the last equality unravels the definition of the partial term operation $P^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}$, see Definition~\ref{DTermOp}.
 
-\textsf{(Equations)} Let $(P,Q)\in\mathcal{H}$ be such that $\mathbf{e}^{\ast}_{\gd}(\mathbf{C})\models(P,Q)[\mathbf{c}]$. Then $P^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c})$ and $Q^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c})$ are defined and equal, so that, by the above, $e^{\sharp}(P)^{\mathbf{C}}(\mathbf{c})$ and $e^{\sharp}(Q)^{\mathbf{C}}(\mathbf{c})$ are defined and equal, i.e., $\mathbf{C}\models(e^{\sharp}(P),e^{\sharp}(Q))[\mathbf{c}]$.
+\textsf{(Equations)} Let $(P,Q)\in\mathcal{H}$ be such that $\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\models(P,Q)[\mathbf{c}]$. Then $P^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c})$ and $Q^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c})$ are defined and equal, so that, by the above, $d^{\sharp}(P)^{\mathbf{C}}(\mathbf{c})$ and $d^{\sharp}(Q)^{\mathbf{C}}(\mathbf{c})$ are defined and equal, i.e., $\mathbf{C}\models(d^{\sharp}(P),d^{\sharp}(Q))[\mathbf{c}]$.
 
 This completes the proof.
 \end{proof}
@@ -1391,10 +1391,10 @@ This completes the proof.
 In the following lemma we prove that the transformed algebra only depends on the domains through the cells they determine.
 
 \begin{lemma}\label{LSameCells}
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{d}=(\varphi,d,\Dom)$ and $\mathbf{d}'=(\varphi,d,\Dom')$ generalized hep-derivors from $\sig{\Sigma}$ to $\sig{\Lambda}$ with the same underlying derivor, and $\mathbf{B}$ a partial $\Lambda$-algebra such that $B_{\Dom}=B_{\Dom'}$. Then $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})=\mathbf{d}'^{\ast}_{\gd}(\mathbf{B})$. Moreover, for every homomorphism $f\colon\mathbf{B}\mor\mathbf{B}'$ of partial $\Lambda$-algebras such that $B'_{\Dom}=B'_{\Dom'}$, $\mathbf{d}^{\ast}_{\gd}(f)=\mathbf{d}'^{\ast}_{\gd}(f)$.
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom)$ and $\mathbf{c}'=(\varphi,c,\Dom')$ generalized hep-derivors from $\sig{\Sigma}$ to $\sig{\Lambda}$ with the same underlying derivor, and $\mathbf{B}$ a partial $\Lambda$-algebra such that $B_{\Dom}=B_{\Dom'}$. Then $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})=\mathbf{c}'^{\ast}_{\gd}(\mathbf{B})$. Moreover, for every homomorphism $f\colon\mathbf{B}\mor\mathbf{B}'$ of partial $\Lambda$-algebras such that $B'_{\Dom}=B'_{\Dom'}$, $\mathbf{c}^{\ast}_{\gd}(f)=\mathbf{c}'^{\ast}_{\gd}(f)$.
 \end{lemma}
 \begin{proof}
-Both partial $\Sigma$-algebras have the same underlying $S$-sorted set. We prove, by well-founded induction along $\lhd$, that every $\sigma\in\Sigma_{\mathbf{s},s}$ has the same interpretation in both. Let us assume that every $\tau\lhd\sigma$ does. Then, by Definition~\ref{DHepSignature}, a family of cells satisfies condition (D1) of Proposition~\ref{PTransformedAlg} for $\mathbf{d}$ if, and only if, it satisfies it for $\mathbf{d}'$. Conditions (D2) and (D3) only depend on $d(\sigma)$, on $\mathbf{B}$ and on the common cells. Hence $\sigma$ has the same domain in both algebras and, on it, both interpretations send $\mathbf{b}$ to $d(\sigma)^{\mathbf{B}}(\mathbf{b})$. Finally, by Proposition~\ref{PGenHepDerivorFunctor}, $\mathbf{d}^{\ast}_{\gd}(f)$ and $\mathbf{d}'^{\ast}_{\gd}(f)$ are the birestrictions of $f_{\varphi}$ to the same cells.
+Both partial $\Sigma$-algebras have the same underlying $S$-sorted set. We prove, by well-founded induction along $\lhd$, that every $\sigma\in\Sigma_{\mathbf{s},s}$ has the same interpretation in both. Let us assume that every $\tau\lhd\sigma$ does. Then, by Definition~\ref{DHepSignature}, a family of cells satisfies condition (D1) of Proposition~\ref{PTransformedAlg} for $\mathbf{c}$ if, and only if, it satisfies it for $\mathbf{c}'$. Conditions (D2) and (D3) only depend on $c(\sigma)$, on $\mathbf{B}$ and on the common cells. Hence $\sigma$ has the same domain in both algebras and, on it, both interpretations send $\mathbf{b}$ to $c(\sigma)^{\mathbf{B}}(\mathbf{b})$. Finally, by Proposition~\ref{PGenHepDerivorFunctor}, $\mathbf{c}^{\ast}_{\gd}(f)$ and $\mathbf{c}'^{\ast}_{\gd}(f)$ are the birestrictions of $f_{\varphi}$ to the same cells.
 
 This completes the proof.
 \end{proof}
@@ -1433,107 +1433,107 @@ This completes the proof.
 We are now in position to compare the functor induced by a composition with the composite of the induced functors.
 
 \begin{proposition}\label{PHepComp}
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$, $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ and $\sig{\Omega}=(U,\Omega,\mathrm{def}^{(U,\Omega)})$ be hep-signatures, $\mathbf{d}=(\varphi,d,\Dom^{(\varphi,d)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$, $\mathbf{e}=(\psi,e,\Dom^{(\psi,e)})$ a generalized hep-derivor from $\sig{\Lambda}$ to $\sig{\Omega}$ and $\mathbf{C}$ a partial $\Omega$-algebra. Then the following statements hold:
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$, $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ and $\sig{\Omega}=(U,\Omega,\mathrm{def}^{(U,\Omega)})$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$, $\mathbf{d}=(\psi,d,\Dom^{(\psi,d)})$ a generalized hep-derivor from $\sig{\Lambda}$ to $\sig{\Omega}$ and $\mathbf{C}$ a partial $\Omega$-algebra. Then the following statements hold:
 \begin{enumerate}
-\item the underlying $S$-sorted set of $\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))$ is an $S$-sorted subset of that of $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C})$, and the inclusion $\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}$ of the former into the latter is a homomorphism of partial $\Sigma$-algebras
+\item the underlying $S$-sorted set of $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ is an $S$-sorted subset of that of $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$, and the inclusion $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ of the former into the latter is a homomorphism of partial $\Sigma$-algebras
 $$
-\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}\colon\mathbf{d}^{\ast}_{\gd}\left(\mathbf{e}^{\ast}_{\gd}(\mathbf{C})\right)\mor(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C});
+\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}\colon\mathbf{c}^{\ast}_{\gd}\left(\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\right)\mor(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C});
 $$
 moreover, for every homomorphism $f\colon\mathbf{C}\mor\mathbf{C}'$ of partial $\Omega$-algebras,
 $$
-(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(f)\circ\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}=\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}'}\circ\mathbf{d}^{\ast}_{\gd}\left(\mathbf{e}^{\ast}_{\gd}(f)\right);
+(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(f)\circ\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}=\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}'}\circ\mathbf{c}^{\ast}_{\gd}\left(\mathbf{d}^{\ast}_{\gd}(f)\right);
 $$
-\item if $\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))$ and $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C})$ have the same underlying $S$-sorted set and $\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))$ is a $\sig{\Sigma}$-algebra, then
+\item if $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ and $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$ have the same underlying $S$-sorted set and $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ is a $\sig{\Sigma}$-algebra, then
 $$
-(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C})=\mathbf{d}^{\ast}_{\gd}\left(\mathbf{e}^{\ast}_{\gd}(\mathbf{C})\right);
+(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})=\mathbf{c}^{\ast}_{\gd}\left(\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\right);
 $$
-and, if, moreover, $f\colon\mathbf{C}\mor\mathbf{C}'$ is a homomorphism of partial $\Omega$-algebras and $\mathbf{C}'$ satisfies the same hypotheses, then $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(f)=\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(f))$.
+and, if, moreover, $f\colon\mathbf{C}\mor\mathbf{C}'$ is a homomorphism of partial $\Omega$-algebras and $\mathbf{C}'$ satisfies the same hypotheses, then $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(f)=\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(f))$.
 \end{enumerate}
 \end{proposition}
 \begin{proof}
-\textsf{(Inclusion of the cells)} Let $s\in S$ and $c$ a cell of sort $s$ of $\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))$, i.e., $c\in(C_{\Dom^{(\psi,e)}})_{\varphi(s)}$ and $\mathbf{e}^{\ast}_{\gd}(\mathbf{C})\models\Dom^{(\varphi,d)}_{s}[c]$. By Lemma~\ref{LTermComp}, $\mathbf{C}\models e^{\sharp}[\Dom^{(\varphi,d)}_{s}][c]$. Hence, by Definition~\ref{DHepComp}, $\mathbf{C}\models\Dom^{\mathbf{e}\circ\mathbf{d}}_{s}[c]$, i.e., $c$ is a cell of sort $s$ of $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C})$.
+\textsf{(Inclusion of the cells)} Let $s\in S$ and $x$ a cell of sort $s$ of $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$, i.e., $x\in(C_{\Dom^{(\psi,d)}})_{\varphi(s)}$ and $\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\models\Dom^{(\varphi,c)}_{s}[x]$. By Lemma~\ref{LTermComp}, $\mathbf{C}\models d^{\sharp}[\Dom^{(\varphi,c)}_{s}][x]$. Hence, by Definition~\ref{DHepComp}, $\mathbf{C}\models\Dom^{\mathbf{d}\circ\mathbf{c}}_{s}[x]$, i.e., $x$ is a cell of sort $s$ of $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$.
 
-\textsf{(The inclusion is a homomorphism)} We prove, by well-founded induction along $\lhd$, that, for every $\sigma\in\Sigma_{\mathbf{s},s}$ and every $\mathbf{a}\in\Dom(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))})$, the family $\mathbf{a}$ is in $\Dom(\sigma^{(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C})})$ and
+\textsf{(The inclusion is a homomorphism)} We prove, by well-founded induction along $\lhd$, that, for every $\sigma\in\Sigma_{\mathbf{s},s}$ and every $\mathbf{a}\in\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))})$, the family $\mathbf{a}$ is in $\Dom(\sigma^{(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})})$ and
 $$
-\sigma^{(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C})}(\mathbf{a})=\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))}(\mathbf{a}).
+\sigma^{(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})}(\mathbf{a})=\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))}(\mathbf{a}).
 $$
-Let us assume that this holds for every $\tau\lhd\sigma$ and let $\mathbf{a}\in\Dom(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))})$. We check the conditions (D1), (D2) and (D3) of Proposition~\ref{PTransformedAlg} for $\mathbf{e}\circ\mathbf{d}$.
+Let us assume that this holds for every $\tau\lhd\sigma$ and let $\mathbf{a}\in\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))})$. We check the conditions (D1), (D2) and (D3) of Proposition~\ref{PTransformedAlg} for $\mathbf{d}\circ\mathbf{c}$.
 
-\textsf{(D1)} By the induction hypothesis, the inclusion is a homomorphism between the reducts of $\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))$ and $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C})$ to the operation symbols that occur in $\mathrm{def}^{(S,\Sigma)}(\sigma)$. Since $\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$, by Remark~\ref{RHomTerm}, $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C})\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$.
+\textsf{(D1)} By the induction hypothesis, the inclusion is a homomorphism between the reducts of $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ and $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$ to the operation symbols that occur in $\mathrm{def}^{(S,\Sigma)}(\sigma)$. Since $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$, by Remark~\ref{RHomTerm}, $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$.
 
-\textsf{(D2)} By Proposition~\ref{PTransformedAlg}, $\mathbf{a}\in\Dom(d(\sigma)^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})})$. By Lemma~\ref{LTermComp}, $\mathbf{a}\in\Dom(e^{\sharp}(d(\sigma))^{\mathbf{C}})$ and $e^{\sharp}(d(\sigma))^{\mathbf{C}}(\mathbf{a})=d(\sigma)^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{a})$.
+\textsf{(D2)} By Proposition~\ref{PTransformedAlg}, $\mathbf{a}\in\Dom(c(\sigma)^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})})$. By Lemma~\ref{LTermComp}, $\mathbf{a}\in\Dom(d^{\sharp}(c(\sigma))^{\mathbf{C}})$ and $d^{\sharp}(c(\sigma))^{\mathbf{C}}(\mathbf{a})=c(\sigma)^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{a})$.
 
-\textsf{(D3)} By Proposition~\ref{PTransformedAlg}, $d(\sigma)^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{a})=\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))}(\mathbf{a})$ is a cell of $\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))$, hence, by the inclusion of the cells, a cell of $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C})$.
+\textsf{(D3)} By Proposition~\ref{PTransformedAlg}, $c(\sigma)^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{a})=\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))}(\mathbf{a})$ is a cell of $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$, hence, by the inclusion of the cells, a cell of $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$.
 
-Therefore, by Proposition~\ref{PTransformedAlg}, $\mathbf{a}\in\Dom(\sigma^{(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C})})$ and the following chain of equalities holds
+Therefore, by Proposition~\ref{PTransformedAlg}, $\mathbf{a}\in\Dom(\sigma^{(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})})$ and the following chain of equalities holds
 \allowdisplaybreaks
 \begin{align*}
-\sigma^{(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C})}\left(\mathbf{a}\right)
+\sigma^{(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})}\left(\mathbf{a}\right)
 &=
-e^{\sharp}(d(\sigma))^{\mathbf{C}}\left(\mathbf{a}\right)
+d^{\sharp}(c(\sigma))^{\mathbf{C}}\left(\mathbf{a}\right)
 \tag{1}
 \\&=
-d(\sigma)^{\mathbf{e}^{\ast}_{\gd}(\mathbf{C})}\left(\mathbf{a}\right)
+c(\sigma)^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}\left(\mathbf{a}\right)
 \tag{2}
 \\&=
-\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))}\left(\mathbf{a}\right).
+\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))}\left(\mathbf{a}\right).
 \tag{3}
 \end{align*}
 
-The first equality follows from Proposition~\ref{PTransformedAlg} applied to $\mathbf{e}\circ\mathbf{d}$; the second equality follows from Lemma~\ref{LTermComp}; finally, the last equality follows from Proposition~\ref{PTransformedAlg} applied to $\mathbf{d}$.
+The first equality follows from Proposition~\ref{PTransformedAlg} applied to $\mathbf{d}\circ\mathbf{c}$; the second equality follows from Lemma~\ref{LTermComp}; finally, the last equality follows from Proposition~\ref{PTransformedAlg} applied to $\mathbf{c}$.
 
-\textsf{(Naturality)} By Proposition~\ref{PGenHepDerivorFunctor}, for every $s\in S$, both $((\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(f)\circ\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}})_{s}$ and $(\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}'}\circ\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(f)))_{s}$ send a cell $c$ of sort $s$ of $\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))$ to $f_{\psi(\varphi(s))}(c)$. This proves statement~(1).
+\textsf{(Naturality)} By Proposition~\ref{PGenHepDerivorFunctor}, for every $s\in S$, both $((\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(f)\circ\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}})_{s}$ and $(\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}'}\circ\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(f)))_{s}$ send a cell $x$ of sort $s$ of $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ to $f_{\psi(\varphi(s))}(x)$. This proves statement~(1).
 
-\textsf{(Statement (2))} Let us assume that $\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))$ and $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C})$ have the same underlying $S$-sorted set and that $\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))$ is a $\sig{\Sigma}$-algebra. By statement~(1), for every $\sigma\in\Sigma_{\mathbf{s},s}$,
+\textsf{(Statement (2))} Let us assume that $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ and $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$ have the same underlying $S$-sorted set and that $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ is a $\sig{\Sigma}$-algebra. By statement~(1), for every $\sigma\in\Sigma_{\mathbf{s},s}$,
 $$
-\Dom\left(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))}\right)\subseteq\Dom\left(\sigma^{(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C})}\right)
+\Dom\left(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))}\right)\subseteq\Dom\left(\sigma^{(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})}\right)
 $$
-and both operations agree on $\Dom(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))})$. We prove, by well-founded induction along $\lhd$, the reverse inclusion. Let us assume that every $\tau\lhd\sigma$ has the same interpretation in both partial $\Sigma$-algebras and let $\mathbf{a}\in\Dom(\sigma^{(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C})})$. Then, by Proposition~\ref{PTransformedAlg}, $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C})\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$, hence, by the induction hypothesis and Definition~\ref{DHepSignature}, $\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$. Since $\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))$ is a $\sig{\Sigma}$-algebra, by Definition~\ref{DEpAlgebra}, $\mathbf{a}\in\Dom(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))})$. Therefore both partial $\Sigma$-algebras are equal, i.e., $\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}$ is the identity. If $\mathbf{C}'$ satisfies the same hypotheses, then $\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}'}$ is also the identity and, by statement~(1), $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(f)=\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(f))$.
+and both operations agree on $\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))})$. We prove, by well-founded induction along $\lhd$, the reverse inclusion. Let us assume that every $\tau\lhd\sigma$ has the same interpretation in both partial $\Sigma$-algebras and let $\mathbf{a}\in\Dom(\sigma^{(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})})$. Then, by Proposition~\ref{PTransformedAlg}, $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$, hence, by the induction hypothesis and Definition~\ref{DHepSignature}, $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$. Since $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ is a $\sig{\Sigma}$-algebra, by Definition~\ref{DEpAlgebra}, $\mathbf{a}\in\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))})$. Therefore both partial $\Sigma$-algebras are equal, i.e., $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ is the identity. If $\mathbf{C}'$ satisfies the same hypotheses, then $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}'}$ is also the identity and, by statement~(1), $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(f)=\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(f))$.
 
 This completes the proof.
 \end{proof}
 
-By Lemma~\ref{LTermComp}, the hypothesis on the cells in Proposition~\ref{PHepComp}~(2) amounts to the following condition: for every $s\in S$ and every cell $c$ of sort $\varphi(s)$ of $\mathbf{C}$ relative to $\mathbf{e}$, if $\mathbf{C}\models e^{\sharp}[\Dom^{(\varphi,d)}_{s}][c]$, then $\mathbf{e}^{\ast}_{\gd}(\mathbf{C})\models\Dom^{(\varphi,d)}_{s}[c]$. It trivially holds when the domains of $\mathbf{d}$ are empty.
+By Lemma~\ref{LTermComp}, the hypothesis on the cells in Proposition~\ref{PHepComp}~(2) amounts to the following condition: for every $s\in S$ and every cell $x$ of sort $\varphi(s)$ of $\mathbf{C}$ relative to $\mathbf{d}$, if $\mathbf{C}\models d^{\sharp}[\Dom^{(\varphi,c)}_{s}][x]$, then $\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\models\Dom^{(\varphi,c)}_{s}[x]$. It trivially holds when the domains of $\mathbf{c}$ are empty.
 
 \subsection{The category \texorpdfstring{$\mathsf{hepAlg}_{\gd}$}{hepAlggd}}\label{SHepAlgCat}
 
-In~\cite{CVST10b}, the category $\mathsf{Alg}_{\mathfrak{d}}$, whose objects are the pairs formed by a many-sorted signature and an algebra for it, is obtained by means of the Grothendieck construction, see Definition~\ref{DGConst}, for the split indexed category that sends a many-sorted signature $\sig{\Sigma}$ to $\mathsf{Alg}(\Sigma)$ and a derivor to the functor that it induces. Following this pattern, we next assemble the ep-algebras of all the hep-signatures into a single category. However, by Proposition~\ref{PHepComp}, the composite $\mathbf{d}^{\ast}_{\gd}\circ\mathbf{e}^{\ast}_{\gd}$ is, in general, only contained in $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}$, and the inclusions $\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}$ need not be isomorphisms. Therefore the induced functors do not constitute a split, nor even a pseudo, indexed category, but a normal lax indexed category, see Definition~\ref{DLaxIndexed}, provided that we take as fibres the categories of weak ep-algebras, see Definition~\ref{DWeakEpAlgebra}, on which, by Proposition~\ref{PHepId}, the identity generalized hep-derivors induce identity functors. We begin by proving that the transformed algebras are weak ep-algebras.
+In~\cite{CVST10b}, the category $\mathsf{Alg}_{\mathfrak{d}}$, whose objects are the pairs formed by a many-sorted signature and an algebra for it, is obtained by means of the Grothendieck construction, see Definition~\ref{DGConst}, for the split indexed category that sends a many-sorted signature $\sig{\Sigma}$ to $\mathsf{Alg}(\Sigma)$ and a derivor to the functor that it induces. Following this pattern, we next assemble the ep-algebras of all the hep-signatures into a single category. However, by Proposition~\ref{PHepComp}, the composite $\mathbf{c}^{\ast}_{\gd}\circ\mathbf{d}^{\ast}_{\gd}$ is, in general, only contained in $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}$, and the inclusions $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ need not be isomorphisms. Therefore the induced functors do not constitute a split, nor even a pseudo, indexed category, but a normal lax indexed category, see Definition~\ref{DLaxIndexed}, provided that we take as fibres the categories of weak ep-algebras, see Definition~\ref{DWeakEpAlgebra}, on which, by Proposition~\ref{PHepId}, the identity generalized hep-derivors induce identity functors. We begin by proving that the transformed algebras are weak ep-algebras.
 
 \begin{lemma}\label{LHepWeak}
-Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures and $\mathbf{d}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$. Then, for every partial $\Lambda$-algebra $\mathbf{B}$, $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$ is a weak $\sig{\Sigma}$-algebra. Consequently, the restriction of $\mathbf{d}^{\ast}_{\gd}$ to $\mathsf{wEPAlg}(\sig{\Lambda})$ corestricts to $\mathsf{wEPAlg}(\sig{\Sigma})$, see Definition~\ref{DCorestriction}, and we denote the corestriction by
+Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures and $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$. Then, for every partial $\Lambda$-algebra $\mathbf{B}$, $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is a weak $\sig{\Sigma}$-algebra. Consequently, the restriction of $\mathbf{c}^{\ast}_{\gd}$ to $\mathsf{wEPAlg}(\sig{\Lambda})$ corestricts to $\mathsf{wEPAlg}(\sig{\Sigma})$, see Definition~\ref{DCorestriction}, and we denote the corestriction by
 $$
-\mathbf{d}^{\ast}_{\gd}\colon\mathsf{wEPAlg}(\sig{\Lambda})\mor\mathsf{wEPAlg}(\sig{\Sigma}).
+\mathbf{c}^{\ast}_{\gd}\colon\mathsf{wEPAlg}(\sig{\Lambda})\mor\mathsf{wEPAlg}(\sig{\Sigma}).
 $$
 \end{lemma}
 \begin{proof}
-Let $\mathbf{B}$ be a partial $\Lambda$-algebra, $(\mathbf{s},s)\in S^{\star}\times S$ and $\sigma\in\Sigma_{\mathbf{s},s}$. By condition (D1) of Proposition~\ref{PTransformedAlg}, every family in $\Dom(\sigma^{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})})$ satisfies $\mathrm{def}^{(S,\Sigma)}(\sigma)$ in $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$. Hence, by Definition~\ref{DWeakEpAlgebra}, $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$ is a weak $\sig{\Sigma}$-algebra. The last statement follows from Definition~\ref{DCorestriction}, since $\mathsf{wEPAlg}(\sig{\Lambda})$ and $\mathsf{wEPAlg}(\sig{\Sigma})$ are full subcategories of $\mathsf{PAlg}(\Lambda)$ and of $\mathsf{PAlg}(\Sigma)$, respectively.
+Let $\mathbf{B}$ be a partial $\Lambda$-algebra, $(\mathbf{s},s)\in S^{\star}\times S$ and $\sigma\in\Sigma_{\mathbf{s},s}$. By condition (D1) of Proposition~\ref{PTransformedAlg}, every family in $\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})})$ satisfies $\mathrm{def}^{(S,\Sigma)}(\sigma)$ in $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$. Hence, by Definition~\ref{DWeakEpAlgebra}, $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is a weak $\sig{\Sigma}$-algebra. The last statement follows from Definition~\ref{DCorestriction}, since $\mathsf{wEPAlg}(\sig{\Lambda})$ and $\mathsf{wEPAlg}(\sig{\Sigma})$ are full subcategories of $\mathsf{PAlg}(\Lambda)$ and of $\mathsf{PAlg}(\Sigma)$, respectively.
 \end{proof}
 
 In the following proposition we prove that the categories of weak ep-algebras, together with the functors induced by the generalized hep-derivors and the inclusions of Proposition~\ref{PHepComp}, constitute a normal lax indexed category.
 
 \begin{proposition}\label{PHepLax}
-Let $\mathrm{wEPAlg}$ stand for the assignment that sends every hep-signature $\sig{\Sigma}$ to the category $\mathsf{wEPAlg}(\sig{\Sigma})$ and every generalized hep-derivor $\mathbf{d}$ from $\sig{\Sigma}$ to $\sig{\Lambda}$ to the functor $\mathbf{d}^{\ast}_{\gd}\colon\mathsf{wEPAlg}(\sig{\Lambda})\mor\mathsf{wEPAlg}(\sig{\Sigma})$ of Lemma~\ref{LHepWeak}, and let $\kappa$ stand for the assignment that sends every pair of generalized hep-derivors $\mathbf{d}\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{e}\colon\sig{\Lambda}\mor\sig{\Omega}$ to the family
+Let $\mathrm{wEPAlg}$ stand for the assignment that sends every hep-signature $\sig{\Sigma}$ to the category $\mathsf{wEPAlg}(\sig{\Sigma})$ and every generalized hep-derivor $\mathbf{c}$ from $\sig{\Sigma}$ to $\sig{\Lambda}$ to the functor $\mathbf{c}^{\ast}_{\gd}\colon\mathsf{wEPAlg}(\sig{\Lambda})\mor\mathsf{wEPAlg}(\sig{\Sigma})$ of Lemma~\ref{LHepWeak}, and let $\kappa$ stand for the assignment that sends every pair of generalized hep-derivors $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{d}\colon\sig{\Lambda}\mor\sig{\Omega}$ to the family
 $$
-\kappa^{\mathbf{d},\mathbf{e}}=\left(\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}\right)_{\mathbf{C}\in\mathrm{Ob}(\mathsf{wEPAlg}(\sig{\Omega}))}
+\kappa^{\mathbf{c},\mathbf{d}}=\left(\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}\right)_{\mathbf{C}\in\mathrm{Ob}(\mathsf{wEPAlg}(\sig{\Omega}))}
 $$
 of the inclusions of Proposition~\ref{PHepComp}. Then $(\mathrm{wEPAlg},\kappa)$ is a normal lax $\mathsf{hepSig}_{\gd}$-indexed category, see Definition~\ref{DLaxIndexed}.
 \end{proposition}
 \begin{proof}
 \textsf{(Identities)} By Proposition~\ref{PHepId}, for every hep-signature $\sig{\Sigma}$, $(\id_{\sig{\Sigma}})^{\ast}_{\gd}=\Id_{\mathsf{wEPAlg}(\sig{\Sigma})}$.
 
-\textsf{(Naturality)} Let $\mathbf{d}\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{e}\colon\sig{\Lambda}\mor\sig{\Omega}$ be generalized hep-derivors. By Lemma~\ref{LHepWeak}, for every weak $\sig{\Omega}$-algebra $\mathbf{C}$, both $\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{C}))$ and $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{C})$ are weak $\sig{\Sigma}$-algebras, so that, by Proposition~\ref{PHepComp}~(1), $\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}$ is a morphism of the full subcategory $\mathsf{wEPAlg}(\sig{\Sigma})$ of $\mathsf{PAlg}(\Sigma)$. Moreover, again by Proposition~\ref{PHepComp}~(1), $\kappa^{\mathbf{d},\mathbf{e}}$ is a natural transformation from $\mathbf{d}^{\ast}_{\gd}\circ\mathbf{e}^{\ast}_{\gd}$ to $(\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}$.
+\textsf{(Naturality)} Let $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{d}\colon\sig{\Lambda}\mor\sig{\Omega}$ be generalized hep-derivors. By Lemma~\ref{LHepWeak}, for every weak $\sig{\Omega}$-algebra $\mathbf{C}$, both $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ and $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$ are weak $\sig{\Sigma}$-algebras, so that, by Proposition~\ref{PHepComp}~(1), $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ is a morphism of the full subcategory $\mathsf{wEPAlg}(\sig{\Sigma})$ of $\mathsf{PAlg}(\Sigma)$. Moreover, again by Proposition~\ref{PHepComp}~(1), $\kappa^{\mathbf{c},\mathbf{d}}$ is a natural transformation from $\mathbf{c}^{\ast}_{\gd}\circ\mathbf{d}^{\ast}_{\gd}$ to $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}$.
 
-Before checking the conditions (L1) and (L2) of Definition~\ref{DLaxIndexed}, let us note that a homomorphism of partial algebras is determined by its domain, its codomain and its underlying many-sorted mapping, and that, by Proposition~\ref{PHepComp}~(1) and Proposition~\ref{PGenHepDerivorFunctor}, the underlying many-sorted mapping of every $\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}$, and of its image under every functor $\mathbf{g}^{\ast}_{\gd}$, which is a birestriction of it, is an inclusion.
+Before checking the conditions (L1) and (L2) of Definition~\ref{DLaxIndexed}, let us note that a homomorphism of partial algebras is determined by its domain, its codomain and its underlying many-sorted mapping, and that, by Proposition~\ref{PHepComp}~(1) and Proposition~\ref{PGenHepDerivorFunctor}, the underlying many-sorted mapping of every $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$, and of its image under every functor $\mathbf{e}^{\ast}_{\gd}$, which is a birestriction of it, is an inclusion.
 
-\textsf{(L1)} Let $\mathbf{d}\colon\sig{\Sigma}\mor\sig{\Lambda}$ be a generalized hep-derivor and $\mathbf{B}$ a weak $\sig{\Lambda}$-algebra. By Proposition~\ref{PHepSigCat}, $\mathbf{d}\circ\id_{\sig{\Sigma}}=\mathbf{d}$ and, by Lemma~\ref{LHepWeak} and Proposition~\ref{PHepId}, $(\id_{\sig{\Sigma}})^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{B}))=\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$. Hence $\kappa^{\id_{\sig{\Sigma}},\mathbf{d}}_{\mathbf{B}}$ is the inclusion of the underlying $S$-sorted set of $\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$ into itself, i.e., $\kappa^{\id_{\sig{\Sigma}},\mathbf{d}}_{\mathbf{B}}=\id_{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})}$. Similarly, $\id_{\sig{\Lambda}}\circ\mathbf{d}=\mathbf{d}$ and, by Proposition~\ref{PHepId}, $\mathbf{d}^{\ast}_{\gd}((\id_{\sig{\Lambda}})^{\ast}_{\gd}(\mathbf{B}))=\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$, so that $\kappa^{\mathbf{d},\id_{\sig{\Lambda}}}_{\mathbf{B}}=\id_{\mathbf{d}^{\ast}_{\gd}(\mathbf{B})}$. Therefore $\kappa^{\id_{\sig{\Sigma}},\mathbf{d}}=\id_{\mathbf{d}^{\ast}_{\gd}}=\kappa^{\mathbf{d},\id_{\sig{\Lambda}}}$.
+\textsf{(L1)} Let $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$ be a generalized hep-derivor and $\mathbf{B}$ a weak $\sig{\Lambda}$-algebra. By Proposition~\ref{PHepSigCat}, $\mathbf{c}\circ\id_{\sig{\Sigma}}=\mathbf{c}$ and, by Lemma~\ref{LHepWeak} and Proposition~\ref{PHepId}, $(\id_{\sig{\Sigma}})^{\ast}_{\gd}(\mathbf{c}^{\ast}_{\gd}(\mathbf{B}))=\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$. Hence $\kappa^{\id_{\sig{\Sigma}},\mathbf{c}}_{\mathbf{B}}$ is the inclusion of the underlying $S$-sorted set of $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ into itself, i.e., $\kappa^{\id_{\sig{\Sigma}},\mathbf{c}}_{\mathbf{B}}=\id_{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$. Similarly, $\id_{\sig{\Lambda}}\circ\mathbf{c}=\mathbf{c}$ and, by Proposition~\ref{PHepId}, $\mathbf{c}^{\ast}_{\gd}((\id_{\sig{\Lambda}})^{\ast}_{\gd}(\mathbf{B}))=\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$, so that $\kappa^{\mathbf{c},\id_{\sig{\Lambda}}}_{\mathbf{B}}=\id_{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$. Therefore $\kappa^{\id_{\sig{\Sigma}},\mathbf{c}}=\id_{\mathbf{c}^{\ast}_{\gd}}=\kappa^{\mathbf{c},\id_{\sig{\Lambda}}}$.
 
-\textsf{(L2)} Let $\mathbf{d}\colon\sig{\Sigma}\mor\sig{\Lambda}$, $\mathbf{e}\colon\sig{\Lambda}\mor\sig{\Omega}$ and $\mathbf{g}\colon\sig{\Omega}\mor\sig{\Xi}$ be generalized hep-derivors and $\mathbf{D}$ a weak $\sig{\Xi}$-algebra. By Proposition~\ref{PHepSigCat}, $(\mathbf{g}\circ\mathbf{e})\circ\mathbf{d}=\mathbf{g}\circ(\mathbf{e}\circ\mathbf{d})$. Therefore both
+\textsf{(L2)} Let $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$, $\mathbf{d}\colon\sig{\Lambda}\mor\sig{\Omega}$ and $\mathbf{e}\colon\sig{\Omega}\mor\sig{\Xi}$ be generalized hep-derivors and $\mathbf{D}$ a weak $\sig{\Xi}$-algebra. By Proposition~\ref{PHepSigCat}, $(\mathbf{e}\circ\mathbf{d})\circ\mathbf{c}=\mathbf{e}\circ(\mathbf{d}\circ\mathbf{c})$. Therefore both
 $$
-\kappa^{\mathbf{d},\mathbf{g}\circ\mathbf{e}}_{\mathbf{D}}\circ\mathbf{d}^{\ast}_{\gd}\left(\kappa^{\mathbf{e},\mathbf{g}}_{\mathbf{D}}\right)
+\kappa^{\mathbf{c},\mathbf{e}\circ\mathbf{d}}_{\mathbf{D}}\circ\mathbf{c}^{\ast}_{\gd}\left(\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{D}}\right)
 \qquad\text{and}\qquad
-\kappa^{\mathbf{e}\circ\mathbf{d},\mathbf{g}}_{\mathbf{D}}\circ\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{g}^{\ast}_{\gd}(\mathbf{D})}
+\kappa^{\mathbf{d}\circ\mathbf{c},\mathbf{e}}_{\mathbf{D}}\circ\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{e}^{\ast}_{\gd}(\mathbf{D})}
 $$
-are homomorphisms from $\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{g}^{\ast}_{\gd}(\mathbf{D})))$ to $(\mathbf{g}\circ\mathbf{e}\circ\mathbf{d})^{\ast}_{\gd}(\mathbf{D})$ whose underlying $S$-sorted mappings are composites of inclusions, i.e., the inclusion of the underlying $S$-sorted set of the former into that of the latter. Hence both homomorphisms are equal.
+are homomorphisms from $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{e}^{\ast}_{\gd}(\mathbf{D})))$ to $(\mathbf{e}\circ\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{D})$ whose underlying $S$-sorted mappings are composites of inclusions, i.e., the inclusion of the underlying $S$-sorted set of the former into that of the latter. Hence both homomorphisms are equal.
 
 This completes the proof.
 \end{proof}
@@ -1544,10 +1544,10 @@ We are now in position to define the category of the ep-algebras of all the hep-
 We let $\mathsf{hepAlg}_{\gd}$ stand for the full subcategory of $\int^{\mathsf{hepSig}_{\gd}}(\mathrm{wEPAlg},\kappa)$, see Definition~\ref{DLaxGConst} and Proposition~\ref{PHepLax}, whose objects are the ordered pairs $(\sig{\Sigma},\mathbf{A})$, where $\sig{\Sigma}$ is a hep-signature and $\mathbf{A}$ a $\sig{\Sigma}$-algebra. Explicitly, $\mathsf{hepAlg}_{\gd}$ is defined as follows:
 \begin{enumerate}
 \item its objects are the ordered pairs $(\sig{\Sigma},\mathbf{A})$, where $\sig{\Sigma}$ is a hep-signature and $\mathbf{A}$ a $\sig{\Sigma}$-algebra;
-\item its morphisms from $(\sig{\Sigma},\mathbf{A})$ to $(\sig{\Lambda},\mathbf{B})$ are the ordered pairs $(\mathbf{d},f)$, where $\mathbf{d}$ is a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $f\colon\mathbf{A}\mor\mathbf{d}^{\ast}_{\gd}(\mathbf{B})$ a homomorphism of partial $\Sigma$-algebras;
-\item the composite of $(\mathbf{d},f)\colon(\sig{\Sigma},\mathbf{A})\mor(\sig{\Lambda},\mathbf{B})$ and $(\mathbf{e},g)\colon(\sig{\Lambda},\mathbf{B})\mor(\sig{\Omega},\mathbf{C})$ is
+\item its morphisms from $(\sig{\Sigma},\mathbf{A})$ to $(\sig{\Lambda},\mathbf{B})$ are the ordered pairs $(\mathbf{c},f)$, where $\mathbf{c}$ is a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $f\colon\mathbf{A}\mor\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ a homomorphism of partial $\Sigma$-algebras;
+\item the composite of $(\mathbf{c},f)\colon(\sig{\Sigma},\mathbf{A})\mor(\sig{\Lambda},\mathbf{B})$ and $(\mathbf{d},g)\colon(\sig{\Lambda},\mathbf{B})\mor(\sig{\Omega},\mathbf{C})$ is
 $$
-(\mathbf{e},g)\circ(\mathbf{d},f)=\left(\mathbf{e}\circ\mathbf{d},\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}\circ\mathbf{d}^{\ast}_{\gd}(g)\circ f\right),
+(\mathbf{d},g)\circ(\mathbf{c},f)=\left(\mathbf{d}\circ\mathbf{c},\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}\circ\mathbf{c}^{\ast}_{\gd}(g)\circ f\right),
 $$
 see Definition~\ref{DHepComp} and Proposition~\ref{PHepComp}; and
 \item the identity at $(\sig{\Sigma},\mathbf{A})$ is $(\id_{\sig{\Sigma}},\id_{\mathbf{A}})$.
@@ -1557,7 +1557,7 @@ see Definition~\ref{DHepComp} and Proposition~\ref{PHepComp}; and
 Let us note that, since every $\sig{\Sigma}$-algebra is a weak $\sig{\Sigma}$-algebra and $\mathsf{wEPAlg}(\sig{\Sigma})$ is a full subcategory of $\mathsf{PAlg}(\Sigma)$, the morphisms of $\int^{\mathsf{hepSig}_{\gd}}(\mathrm{wEPAlg},\kappa)$ between objects of $\mathsf{hepAlg}_{\gd}$ are exactly the pairs described in the second item of the above definition, so that both descriptions of $\mathsf{hepAlg}_{\gd}$ agree.
 
 \begin{proposition}\label{PHepAlgCat}
-$\mathsf{hepAlg}_{\gd}$ is a category. Moreover, the assignment that sends every object $(\sig{\Sigma},\mathbf{A})$ to $\sig{\Sigma}$ and every morphism $(\mathbf{d},f)$ to $\mathbf{d}$ is a functor from $\mathsf{hepAlg}_{\gd}$ to $\mathsf{hepSig}_{\gd}$.
+$\mathsf{hepAlg}_{\gd}$ is a category. Moreover, the assignment that sends every object $(\sig{\Sigma},\mathbf{A})$ to $\sig{\Sigma}$ and every morphism $(\mathbf{c},f)$ to $\mathbf{c}$ is a functor from $\mathsf{hepAlg}_{\gd}$ to $\mathsf{hepSig}_{\gd}$.
 \end{proposition}
 \begin{proof}
 By Propositions~\ref{PLaxGConst} and~\ref{PHepLax}, $\int^{\mathsf{hepSig}_{\gd}}(\mathrm{wEPAlg},\kappa)$ is a category and $\pi_{(\mathrm{wEPAlg},\kappa)}$ is a functor from it to $\mathsf{hepSig}_{\gd}$. Therefore its full subcategory $\mathsf{hepAlg}_{\gd}$ is a category, and the assignment of the statement, which is the restriction of $\pi_{(\mathrm{wEPAlg},\kappa)}$ to $\mathsf{hepAlg}_{\gd}$, is a functor.
@@ -1566,7 +1566,7 @@ This completes the proof.
 \end{proof}
 
 \begin{remark}\label{RHepAlgCat}
-Let us consider the many-sorted signatures as hep-signatures with empty sets of domain conditions, see Remark~\ref{REpAlgebra}, and the derivors $(\varphi,d)$ between them as the generalized hep-derivors $(\varphi,d,\varnothing)$. For a many-sorted signature $(S,\Sigma)$, the weak $(S,\Sigma,\varnothing)$-algebras are all the partial $\Sigma$-algebras and the $(S,\Sigma,\varnothing)$-algebras are the $\Sigma$-algebras. Moreover, by Remark~\ref{RGenHepDerivorCases}~(1), the functors induced by the derivors send total algebras to total algebras and, since the domains of these generalized hep-derivors are empty, by the note after Proposition~\ref{PHepComp} and Proposition~\ref{PHepComp}~(2), the inclusions $\kappa^{\mathbf{d},\mathbf{e}}_{\mathbf{C}}$ are identities when $\mathbf{C}$ is a total algebra. Therefore the subcategory of $\mathsf{hepAlg}_{\gd}$ whose objects are the pairs $((S,\Sigma,\varnothing),\mathbf{A})$, with $\mathbf{A}$ a $\Sigma$-algebra, and whose morphisms are the pairs $((\varphi,d,\varnothing),f)$, is the category $\mathsf{Alg}_{\mathfrak{d}}$ of~\cite{CVST10b}.
+Let us consider the many-sorted signatures as hep-signatures with empty sets of domain conditions, see Remark~\ref{REpAlgebra}, and the derivors $(\varphi,c)$ between them as the generalized hep-derivors $(\varphi,c,\varnothing)$. For a many-sorted signature $(S,\Sigma)$, the weak $(S,\Sigma,\varnothing)$-algebras are all the partial $\Sigma$-algebras and the $(S,\Sigma,\varnothing)$-algebras are the $\Sigma$-algebras. Moreover, by Remark~\ref{RGenHepDerivorCases}~(1), the functors induced by the derivors send total algebras to total algebras and, since the domains of these generalized hep-derivors are empty, by the note after Proposition~\ref{PHepComp} and Proposition~\ref{PHepComp}~(2), the inclusions $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ are identities when $\mathbf{C}$ is a total algebra. Therefore the subcategory of $\mathsf{hepAlg}_{\gd}$ whose objects are the pairs $((S,\Sigma,\varnothing),\mathbf{A})$, with $\mathbf{A}$ a $\Sigma$-algebra, and whose morphisms are the pairs $((\varphi,c,\varnothing),f)$, is the category $\mathsf{Alg}_{\mathfrak{d}}$ of~\cite{CVST10b}.
 \end{remark}
 
 \section{Single-set presentation of higher-order categorial algebras}\label{SSingleSet}
@@ -2401,7 +2401,7 @@ For the generalized hep-derivors of this work we use the following notation, whi
 $$
 \bGd^{(n)}_{\sig{\Sigma}}=\left(\varphi^{\Gd^{(n)}_{\sig{\Sigma}}},\Gd^{(n)}_{\sig{\Sigma}},\Dom^{\Gd^{(n)}_{\sig{\Sigma}}}\right),
 $$
-whose mapping on sorts is $\varphi^{\Gd^{(n)}_{\sig{\Sigma}}}$, whose assignment of terms to operation symbols is denoted, as the functor, by $\Gd^{(n)}_{\sig{\Sigma}}$, and whose domains are $\Dom^{\Gd^{(n)}_{\sig{\Sigma}}}$. Since the assignment of terms is applied to operation symbols and the functor to algebras and homomorphisms, this will not cause confusion. The same convention applies to the unification, discretization and truncation derivors $\bUf$, $\bDs$ and $\bTr$. For the compositions of these generalized hep-derivors, see Definition~\ref{DHepComp}, we keep the notation $\Dom^{\mathbf{e}\circ\mathbf{d}}$, e.g., $\Dom^{\bGd^{(n)}_{\sig{\Sigma}}\circ\bUf^{(n)}_{\sig{\Sigma}}}$. The dimensions of $\Sigma^{\gl(n)}$ are the elements of $n+1$. In this section and in Section~\ref{STruncation} we only consider finite dimensions; the $\omega$-dimensional functors are considered in Subsection~\ref{SDTOmega} and in Section~\ref{SOmegaFunctors}.
+whose mapping on sorts is $\varphi^{\Gd^{(n)}_{\sig{\Sigma}}}$, whose assignment of terms to operation symbols is denoted, as the functor, by $\Gd^{(n)}_{\sig{\Sigma}}$, and whose domains are $\Dom^{\Gd^{(n)}_{\sig{\Sigma}}}$. Since the assignment of terms is applied to operation symbols and the functor to algebras and homomorphisms, this will not cause confusion. The same convention applies to the unification, discretization and truncation derivors $\bUf$, $\bDs$ and $\bTr$. For the compositions of these generalized hep-derivors, see Definition~\ref{DHepComp}, we keep the notation $\Dom^{\mathbf{d}\circ\mathbf{c}}$, e.g., $\Dom^{\bGd^{(n)}_{\sig{\Sigma}}\circ\bUf^{(n)}_{\sig{\Sigma}}}$. The dimensions of $\Sigma^{\gl(n)}$ are the elements of $n+1$. In this section and in Section~\ref{STruncation} we only consider finite dimensions; the $\omega$-dimensional functors are considered in Subsection~\ref{SDTOmega} and in Section~\ref{SOmegaFunctors}.
 
 \subsection{Graduation of higher-order categorial algebras}\label{SGraduationSub}
 
@@ -4516,7 +4516,7 @@ Let us note that the functor exists and is unique by Proposition~\ref{PUnivPropG
 We next consider unification. In contrast with graduation, it cannot be obtained in the same way.
 
 \begin{remark}\label{RUfOmegaNotDerivor}
-Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature. The unification functor cannot be obtained as the functor induced by a generalized hep-derivor. In fact, for every generalized hep-derivor $\mathbf{d}=(\varphi,d,\Dom^{(\varphi,d)})$ from $\sig{\Sigma}^{(\omega)}$ to $\sig{\Sigma}^{\gl(\omega)}$, the cells of sort $s$ of $\mathbf{d}^{\ast}_{\gd}(\calg{A})$ are cells of a single sort $\varphi(s)=(k,s')$ of $\calg{A}$. For $S=\{s\}$, $\Sigma=\varnothing$ and $\varphi(s)=(k,s)$, let $\calg{A}$ be the globular $\omega$-category with exactly one cell in every dimension up to $k$, whose $(k+1)$-cells form the two-element monoid $\{e,f\}$, with $f\circ f=f$, for all the compositions, and whose cells of dimension greater than $k+1$ are the identities of the $(k+1)$-cells. Then $\mathbf{d}^{\ast}_{\gd}(\calg{A})$ has at most one cell, whereas its unification must have two distinct cells, which correspond to $e$ and $f$.
+Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature. The unification functor cannot be obtained as the functor induced by a generalized hep-derivor. In fact, for every generalized hep-derivor $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ from $\sig{\Sigma}^{(\omega)}$ to $\sig{\Sigma}^{\gl(\omega)}$, the cells of sort $s$ of $\mathbf{c}^{\ast}_{\gd}(\calg{A})$ are cells of a single sort $\varphi(s)=(k,s')$ of $\calg{A}$. For $S=\{s\}$, $\Sigma=\varnothing$ and $\varphi(s)=(k,s)$, let $\calg{A}$ be the globular $\omega$-category with exactly one cell in every dimension up to $k$, whose $(k+1)$-cells form the two-element monoid $\{e,f\}$, with $f\circ f=f$, for all the compositions, and whose cells of dimension greater than $k+1$ are the identities of the $(k+1)$-cells. Then $\mathbf{c}^{\ast}_{\gd}(\calg{A})$ has at most one cell, whereas its unification must have two distinct cells, which correspond to $e$ and $f$.
 
 Nor can we apply directly the universal property of Proposition~\ref{PUnivPropCatAlg} to the family $(\Uf^{(n)}_{\sig{\Sigma}}\circ \Tr^{\gl(n,\omega)}_{\sig{\Sigma}})_{n\in\omega}$, since, by Proposition~\ref{PCompatUfTr}, it is only compatible up to the natural isomorphisms $\beta^{(m,n)}$: the $m$-cells of $\Uf^{(n)}_{\sig{\Sigma}}(\calg{B})$ are not the $m$-cells of $\calg{B}$, but their $(n,m)$-identities. These isomorphisms, however, are the inclusions of an inductive system, and the unification of a globular $\omega$-categorial $\sig{\Sigma}$-algebra is its inductive limit, as for $\omega$-categories.
 \end{remark}
