@@ -1240,3 +1240,82 @@ Data: 2026-10-19. Commit `2072b78`.
   $\lhd$ (`PTransformedAlg`, `PGenHepDerivorHom`, `LSameCells`, `PHepId`
   i les dues parts de `PHepComp`) remeten a
   `PPWFI`.
+
+---
+
+# Dimensió $\omega$ a part, `PSingleSetEp`/`PGlobularEp` i canvi de signatura
+
+Data: 2026-10-19. Commits `ae0d777` i `3d3fa35`.
+
+## Dimensió $\omega$ per separat
+
+- `DSpecSingleSet` és ara només per a $n\in\mathbb{N}$. Just després hi ha
+  un paràgraf que defineix $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}}$
+  (axiomes (A0), (A$^k$1)–(A$^k$8) per a $k\in\omega$ i (AB$^{l,k}$1)–(AB$^{l,k}$3)
+  per a $l<k$ en $\omega$), com ja es feia en el cas globular.
+- La identificació d'àlgebres i àlgebres parcials es fa per a $n\in\mathbb{N}$
+  i, a part, per a $\omega$ (single-set i globular).
+- La nota sobre les immersions $\Sigma^{\mathrm{gl}(n)}\to\Sigma^{\mathrm{gl}(m)}$
+  separa el cas $m\in\mathbb{N}$ del cas $\omega$.
+- L'abstract ja no diu «$n\in\mathbb{N}\cup\{\omega\}$»: parla de les àlgebres
+  $n$-categorials, per a $n\in\mathbb{N}$, i de les globulars $\omega$-categorials.
+  Ja no queda cap «$\mathbb{N}\cup\{\omega\}$» al document.
+
+## `PSingleSetEp` i `PGlobularEp` eliminades
+
+El seu contingut passa a l'última frase de `RSingleSetIdent` i de
+`RGlobularIdent`: els símbols amb condicions de domini buides són totals per
+(A0)/(A$^k$1) (resp. (EA0)/(EA$^{j,k}$1)), i (A$^k$3) (resp. (EA$^{j,k}$3)) diu
+que el domini de la composició és el que fixa la seua condició de domini. Per
+tant, els objectes de $\mathsf{EPAlg}$ de l'especificació són exactament els
+seus models. `PFiniteDimNotQE` usa aquest fet en dimensió $\omega$, i les
+remarques el cobreixen.
+
+## Secció nova: `SChangeSig` (Change of signature)
+
+Al final del document, després de l'square algebraic.
+
+- **`DChangeSigDerivor`:** per a un derivor $\mathbf c=(\varphi,c)$ entre
+  signatures heterogènies, $\mathbf c^{(n)}=(\varphi,c^{(n)},\varnothing)$ de
+  $\mathbf\Sigma^{(n)}$ a $\mathbf\Lambda^{(n)}$ i
+  $\mathbf c^{\mathrm{gl}(n)}$ de $\mathbf\Sigma^{\mathrm{gl}(n)}$ a
+  $\mathbf\Lambda^{\mathrm{gl}(n)}$: tradueixen $\sigma$ per $c(\sigma)$ (resp.
+  $\sigma_k$ per $c(\sigma)_k$, la còpia de dimensió $k$ del terme) i deixen
+  igual l'estructura categorial. Per a $n=0$, $\mathbf c^{(0)}=\mathbf c$.
+- **`LTermFunctor`:** les operacions terme d'una àlgebra categorial són
+  functors d'ordre superior (inducció sobre termes).
+- **`PChangeSigDerivor`:** els functors induïts envien àlgebres $n$-categorials
+  de $\mathbf\Lambda$ a àlgebres $n$-categorials de $\mathbf\Sigma$, amb
+  descripció explícita.
+- **`LChangeSigTerms`:** com es tradueixen $P$ i $P_k$ per
+  $\mathbf d^{(n)}$, $\mathbf d^{\mathrm{gl}(n)}$, Gd, Uf, Ds i Tr (via (Der4)).
+- **`PChangeSigCat`:** $(\mathbf d\circ\mathbf c)^{(n)}=\mathbf d^{(n)}\circ\mathbf c^{(n)}$
+  i identitats, també globulars; per tant, $\mathbf\Sigma\mapsto\mathsf{nCatAlg}(\mathbf\Sigma)$
+  és una categoria indexada escindida sobre $\mathsf{Sig}_{\mathfrak d}$.
+- **`LCommSquare`:** la conseqüència de `PHepComp` (2) que s'usa per comparar
+  composicions.
+- **`PChangeSigGdUf`, `PChangeSigDsTr`:** igualtats de derivors hep
+  generalitzats i, per tant, igualtats estrictes de functors:
+  $\mathrm{Gd}_\Sigma\circ\mathbf c^{(n)*}=\mathbf c^{\mathrm{gl}(n)*}\circ\mathrm{Gd}_\Lambda$,
+  $\mathrm{Uf}_\Sigma\circ\mathbf c^{\mathrm{gl}(n)*}=\mathbf c^{(n)*}\circ\mathrm{Uf}_\Lambda$,
+  i el mateix per a Ds i Tr en les dues presentacions.
+- **`RChangeSigNat`:** $\theta$, $\beta^{(m,n)}$, $\varepsilon$ i
+  $\varepsilon^{\mathrm{gl}}$ també són compatibles; per tant, ho són les
+  adjuncions i el quadrat algebraic. Al final, una nota mostra que Gd, Uf, Ds i Tr
+  s'estenen a les construccions de Grothendieck.
+- **Dimensió $\omega$:** `DChangeSigDerivorOmega`, `PChangeSigOmega`,
+  `PChangeSigOmegaDsTr` i `PChangeSigOmegaGdUf`. La de Gd es prova per la
+  unicitat de la propietat universal; la de Uf, comparant els límits inductius.
+
+Decisions que has de revisar:
+
+1. Has escrit «dues hep-signatures», però $\Sigma^{(n)}$ i
+   $\Sigma^{\mathrm{gl}(n)}$ només estan definides per a signatures
+   heterogènies (sense condicions de domini). Per això la secció parteix d'un
+   derivor entre signatures heterogènies.
+2. He anomenat el derivor $\mathbf c$, i no $\mathbf d$, segons la convenció
+   nova (els derivors comencen per $\mathbf c$); en les composicions apareix
+   $\mathbf d$.
+3. `RChangeSigNat` i la nota sobre Grothendieck estan justificades de forma
+   breu, no amb una demostració completa. Si vols, es poden convertir en
+   proposicions amb prova.
