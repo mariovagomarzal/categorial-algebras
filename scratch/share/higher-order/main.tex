@@ -84,6 +84,7 @@
 	\right. }
 
 \allowdisplaybreaks
+\setlength{\emergencystretch}{3em}
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
@@ -996,10 +997,13 @@ Moreover, for categories $\mathsf{A}$ and $\mathsf{X}$, functors $F,G\colon\math
 
 \begin{definition}\label{DAdj}
 An \emph{adjointness} is a $6$-tuple $(\mathsf{A},\mathsf{X},G,F,\eta,\varepsilon)$ where $\mathsf{A}$ and $\mathsf{X}$ are categories, $G$ a functor from $\mathsf{A}$ to $\mathsf{X}$, $F$ a functor from $\mathsf{X}$ to $\mathsf{A}$, $\eta$ a natural transformation from $\Id_{\mathsf{X}}$ to $G\circ F$ and $\varepsilon$ a natural transformation from $F\circ G$ to $\Id_{\mathsf{A}}$ subject to the so called triangular identities
-$$
-(G\ast \varepsilon)\circ (\eta\ast G) = \id_{G} \text{ and }
-(\varepsilon\ast F)\circ (F\ast\eta) = \id_{F}.
-$$
+\begin{enumerate}
+	\item[(TI1)]
+	$(G\ast \varepsilon)\circ (\eta\ast G) = \id_{G}$; and
+
+	\item[(TI2)]
+	$(\varepsilon\ast F)\circ (F\ast\eta) = \id_{F}$.
+\end{enumerate}
 Thus, for every object $a$ of $\mathsf{A}$, the first equation asserts that the morphism $\eta_{G(a)}$ from $G(a)$ to $G(F(G(a)))$ when composed with the morphism $G(\varepsilon_{a})$ from $G(F(G(a)))$ to $G(a)$ is $\id_{G(a)}$, the identity morphism at $G(a)$, and, for every object $x$ of $\mathsf{X}$, the second equation asserts that the morphism $F(\eta_{x})$ from $F(x)$ to $F(G(F(x)))$ when composed with the morphism $\varepsilon_{F(x)}$ from $F(G(F(x)))$ to $F(x)$ is $\id_{F(x)}$.
 If $(\mathsf{A},\mathsf{X},G,F,\eta,\varepsilon)$ is an adjointness, then we will say that $F$ is a \emph{left adjoint} of $G$, that $G$ is a \emph{right adjoint} of $F$, that $\eta$ is the \emph{unit} of the adjunction and that $\varepsilon$ is the \emph{counit} of the adjunction.
 We will also speak of an \emph{adjunction from} $\mathsf{X}$ \emph{to} $\mathsf{A}$, meaning by it a $4$-tuple $(G,F,\eta,\varepsilon)$ such that $(\mathsf{A},\mathsf{X},G,F,\eta,\varepsilon)$ is an adjointness, and we will write $F\dashv G$ to indicate that $F$ is a left adjoint of $G$.
@@ -1314,11 +1318,15 @@ $$
 $$
 i.e., $f_{\varphi(s)}(b)\in(B'_{\Dom^{(\varphi,c)}})_{s}$.
 Taking this into account, we let $f_{\Dom^{(\varphi,c)}}$ stand for the $S$-sorted mapping
-$$
-f_{\Dom^{(\varphi,c)}}=f_{\varphi}\bigr|^{B'_{\Dom^{(\varphi,c)}}}_{B_{\Dom^{(\varphi,c)}}}=\left(f_{\varphi(s)}\bigr|^{(B'_{\Dom^{(\varphi,c)}})_{s}}_{(B_{\Dom^{(\varphi,c)}})_{s}}\right)_{s\in S},
-$$
+\begin{align*}
+f_{\Dom^{(\varphi,c)}}
+&=
+f_{\varphi}\bigr|^{B'_{\Dom^{(\varphi,c)}}}_{B_{\Dom^{(\varphi,c)}}}
+\\&=
+\left(f_{\varphi(s)}\bigr|^{(B'_{\Dom^{(\varphi,c)}})_{s}}_{(B_{\Dom^{(\varphi,c)}})_{s}}\right)_{s\in S},
+\end{align*}
 i.e., the family of the corresponding birestrictions.
-Thus $f_{\Dom^{(\varphi,c)}}\colon B_{\Dom^{(\varphi,c)}}\mor B'_{\Dom^{(\varphi,c)}}$.
+Thus $f_{\Dom^{(\varphi,c)}}$ is an $S$-sorted mapping from $B_{\Dom^{(\varphi,c)}}$ to $B'_{\Dom^{(\varphi,c)}}$.
 
 In the following proposition we prove that the above construction is functorial.
 
@@ -1888,15 +1896,25 @@ This completes the proof.
 We are now in position to define the category of the ep-algebras of all the hep-signatures.
 
 \begin{definition}\label{DHepAlgCat}
-We let $\mathsf{hepAlg}_{\gd}$ stand for the full subcategory of $\int^{\mathsf{hepSig}_{\gd}}(\mathrm{wEPAlg},\kappa)$, see Definition~\ref{DLaxGConst} and Proposition~\ref{PHepLax}, whose objects are the ordered pairs $(\sig{\Sigma},\mathbf{A})$, where $\sig{\Sigma}$ is a hep-signature and $\mathbf{A}$ a $\sig{\Sigma}$-algebra.
+We let $\mathsf{hepAlg}_{\gd}$ stand for the full subcategory of
+$$
+\int^{\mathsf{hepSig}_{\gd}}(\mathrm{wEPAlg},\kappa),
+$$
+see Definition~\ref{DLaxGConst} and Proposition~\ref{PHepLax}, whose objects are the ordered pairs $(\sig{\Sigma},\mathbf{A})$, where $\sig{\Sigma}$ is a hep-signature and $\mathbf{A}$ a $\sig{\Sigma}$-algebra.
 Explicitly, $\mathsf{hepAlg}_{\gd}$ is defined as follows:
 \begin{enumerate}
 \item its objects are the ordered pairs $(\sig{\Sigma},\mathbf{A})$, where $\sig{\Sigma}$ is a hep-signature and $\mathbf{A}$ a $\sig{\Sigma}$-algebra;
 \item its morphisms from $(\sig{\Sigma},\mathbf{A})$ to $(\sig{\Lambda},\mathbf{B})$ are the ordered pairs $(\mathbf{c},f)$, where $\mathbf{c}$ is a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $f\colon\mathbf{A}\mor\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ a homomorphism of partial $\Sigma$-algebras;
 \item the composite of $(\mathbf{c},f)\colon(\sig{\Sigma},\mathbf{A})\mor(\sig{\Lambda},\mathbf{B})$ and $(\mathbf{d},g)\colon(\sig{\Lambda},\mathbf{B})\mor(\sig{\Omega},\mathbf{C})$ is
-$$
-(\mathbf{d},g)\circ(\mathbf{c},f)=\left(\mathbf{d}\circ\mathbf{c},\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}\circ\mathbf{c}^{\ast}_{\gd}(g)\circ f\right),
-$$
+\begin{flushleft}
+$
+(\mathbf{d},g)\circ(\mathbf{c},f)
+$
+\begin{align*}
+&=
+\left(\mathbf{d}\circ\mathbf{c},\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}\circ\mathbf{c}^{\ast}_{\gd}(g)\circ f\right),
+\end{align*}
+\end{flushleft}
 see Definition~\ref{DHepComp} and Proposition~\ref{PHepComp}; and
 \item the identity at $(\sig{\Sigma},\mathbf{A})$ is $(\id_{\sig{\Sigma}},\id_{\mathbf{A}})$.
 \end{enumerate}
@@ -2703,10 +2721,10 @@ Formally,
 For every sort $s\in S$ and every pair of variables $x,y\in V_{(k,s)}$, if $x\circ^{(h,k)}_{s}y$ is defined, then the $(j,k)$-source of $x\circ^{(h,k)}_{s}y$ is the $h$-composition of the $(j,k)$-source of $x$ with the $(j,k)$-source of $y$, and the $(j,k)$-target of $x\circ^{(h,k)}_{s}y$ is the $h$-composition of the $(j,k)$-target of $x$ with the $(j,k)$-target of $y$.
 Formally,
 \begin{align*}
-x\circ^{(h,k)}_{s}y&\eeq x\circ^{(h,k)}_{s}y \;\;\longrightarrow\;\;
-\src^{(j,k)}_{s}(x\circ^{(h,k)}_{s}y)\eeq\src^{(j,k)}_{s}(x)\circ^{(h,j)}_{s}\src^{(j,k)}_{s}(y);\\
-x\circ^{(h,k)}_{s}y&\eeq x\circ^{(h,k)}_{s}y \;\;\longrightarrow\;\;
-\tgt^{(j,k)}_{s}(x\circ^{(h,k)}_{s}y)\eeq\tgt^{(j,k)}_{s}(x)\circ^{(h,j)}_{s}\tgt^{(j,k)}_{s}(y).
+&x\circ^{(h,k)}_{s}y\eeq x\circ^{(h,k)}_{s}y \;\;\longrightarrow\\
+&\qquad\src^{(j,k)}_{s}(x\circ^{(h,k)}_{s}y)\eeq\src^{(j,k)}_{s}(x)\circ^{(h,j)}_{s}\src^{(j,k)}_{s}(y);\\
+&x\circ^{(h,k)}_{s}y\eeq x\circ^{(h,k)}_{s}y \;\;\longrightarrow\\
+&\qquad\tgt^{(j,k)}_{s}(x\circ^{(h,k)}_{s}y)\eeq\tgt^{(j,k)}_{s}(x)\circ^{(h,j)}_{s}\tgt^{(j,k)}_{s}(y).
 \label{AGlobularAhjk3}\tag{EA$^{h,j,k}$3}
 \end{align*}
 
@@ -2786,11 +2804,13 @@ Both constructions are induced by generalized hep-derivors.
 We end this section by showing that graduation and unification are mutually quasi-inverse equivalences of categories.
 
 By Remarks~\ref{RSingleSetIdent} and~\ref{RGlobularIdent}, for every many-sorted signature $\sig{\Sigma}=(S,\Sigma)$ and every $n\in\mathbb{N}$, the following equalities hold
-$$
-\mathsf{nCatAlg}(\sig{\Sigma})=\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})
-\qquad\text{and}\qquad
-\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})=\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}}).
-$$
+\begin{enumerate}
+	\item
+	$\mathsf{nCatAlg}(\sig{\Sigma})=\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$; and
+
+	\item
+	$\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})=\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})$.
+\end{enumerate}
 Thus, the categories of higher-order categorial algebras are the categories canonically associated to the ep-varieties $\mathcal{V}(\spec{C}^{\sig{\Sigma}^{(n)}})$ and $\mathcal{V}(\spec{C}^{\sig{\Sigma}^{\gl(n)}})$ of hep-specifications.
 The functors of this section are induced by generalized hep-derivors between the corresponding hep-signatures, i.e., by morphisms of $\mathsf{hepSig}_{\gd}$, see Proposition~\ref{PHepSigCat}.
 They are defined on all the partial algebras, and we prove, by means of Proposition~\ref{PTransformedEpAlg}, that their restrictions to the categories of higher-order categorial algebras corestrict to categories of higher-order categorial algebras, see Definition~\ref{DCorestriction}.
@@ -3398,9 +3418,9 @@ $$
 $$
 where $\varphi^{\Uf^{(n)}_{\sig{\Sigma}}}(\varphi^{\Gd^{(n)}_{\sig{\Sigma}}}(k,s))=(n,s)$ and, for every pair of dimensions $j<k$ and every $s\in S$,
 \begin{align*}
-\left(\Uf^{(n)}_{\sig{\Sigma}}\right)^{\sharp}\left(\Gd^{(n)}_{\sig{\Sigma}}(\sigma_{k})\right)&=\sigma_{n}((v^{(n,\mathbf{s})}_{p})_{p\in\bb{\mathbf{s}}}), &
+\left(\Uf^{(n)}_{\sig{\Sigma}}\right)^{\sharp}\left(\Gd^{(n)}_{\sig{\Sigma}}(\sigma_{k})\right)&=\sigma_{n}((v^{(n,\mathbf{s})}_{p})_{p\in\bb{\mathbf{s}}}),\\
 \left(\Uf^{(n)}_{\sig{\Sigma}}\right)^{\sharp}\left(\Gd^{(n)}_{\sig{\Sigma}}(\mathrm{i}^{(k,j)}_{s})\right)&=v^{(n,s)}_{0},\\
-\left(\Uf^{(n)}_{\sig{\Sigma}}\right)^{\sharp}\left(\Gd^{(n)}_{\sig{\Sigma}}(\src^{(j,k)}_{s})\right)&=\mathrm{i}^{(n,j)}_{s}(\src^{(j,n)}_{s}(v^{(n,s)}_{0})), &
+\left(\Uf^{(n)}_{\sig{\Sigma}}\right)^{\sharp}\left(\Gd^{(n)}_{\sig{\Sigma}}(\src^{(j,k)}_{s})\right)&=\mathrm{i}^{(n,j)}_{s}(\src^{(j,n)}_{s}(v^{(n,s)}_{0})),\\
 \left(\Uf^{(n)}_{\sig{\Sigma}}\right)^{\sharp}\left(\Gd^{(n)}_{\sig{\Sigma}}(\circ^{(j,k)}_{s})\right)&=v^{(n,s)}_{0}\circ^{(j,n)}_{s}v^{(n,s)}_{1},
 \end{align*}
 and similarly for the targets.
@@ -3594,11 +3614,13 @@ Thus it is an adjoint equivalence.
 \begin{proof}
 By Proposition~\ref{PUnifGrad}, $\Uf^{(n)}_{\sig{\Sigma}}\circ\Gd^{(n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$, so that the identity $\id=(\id_{\calg{B}})_{\calg{B}\in\mathrm{Ob}(\mathsf{nCatAlg}(\sig{\Sigma}))}$ is a natural transformation from $\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$ to $\Uf^{(n)}_{\sig{\Sigma}}\circ\Gd^{(n)}_{\sig{\Sigma}}$; and, by Proposition~\ref{PGradUnif}, $\theta^{-1}$ is a natural transformation from $\Gd^{(n)}_{\sig{\Sigma}}\circ\Uf^{(n)}_{\sig{\Sigma}}$ to $\Id_{\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$.
 By Definition~\ref{DAdj}, we have to prove the triangular identities
-$$
-\left(\Uf^{(n)}_{\sig{\Sigma}}\ast\theta^{-1}\right)\circ\left(\id\ast\Uf^{(n)}_{\sig{\Sigma}}\right)=\id_{\Uf^{(n)}_{\sig{\Sigma}}}
-\qquad\text{and}\qquad
-\left(\theta^{-1}\ast\Gd^{(n)}_{\sig{\Sigma}}\right)\circ\left(\Gd^{(n)}_{\sig{\Sigma}}\ast\id\right)=\id_{\Gd^{(n)}_{\sig{\Sigma}}}.
-$$
+\begin{enumerate}
+	\item[(TI1)]
+	$\left(\Uf^{(n)}_{\sig{\Sigma}}\ast\theta^{-1}\right)\circ\left(\id\ast\Uf^{(n)}_{\sig{\Sigma}}\right)=\id_{\Uf^{(n)}_{\sig{\Sigma}}}$; and
+
+	\item[(TI2)]
+	$\left(\theta^{-1}\ast\Gd^{(n)}_{\sig{\Sigma}}\right)\circ\left(\Gd^{(n)}_{\sig{\Sigma}}\ast\id\right)=\id_{\Gd^{(n)}_{\sig{\Sigma}}}$.
+\end{enumerate}
 Let us recall that, by Claim~\ref{CGradUnifC} in the proof of Proposition~\ref{PGradUnif}, for every globular $n$-categorial $\sig{\Sigma}$-algebra $\calg{A}$, every $k\in n+1$ and every $s\in S$, the component of $\theta^{-1}_{\calg{A}}$ at the sort $(k,s)$ sends a cell $x$ of sort $(k,s)$ of $\Gd^{(n)}_{\sig{\Sigma}}(\Uf^{(n)}_{\sig{\Sigma}}(\calg{A}))$ to $\src^{(k,n)}_{s}(x)$, where $\src^{(n,n)}_{s}$ is the identity mapping on the $n$-cells of sort $s$.
 
 \textsf{(First triangular identity)} Let $\calg{A}$ be a globular $n$-categorial $\sig{\Sigma}$-algebra.
@@ -4164,11 +4186,13 @@ is an adjunction from $\mathsf{mCatAlg}(\sig{\Sigma})$ to $\mathsf{nCatAlg}(\sig
 \begin{proof}
 By Proposition~\ref{PTruncDisc}, $\Tr^{(m,n)}_{\sig{\Sigma}}\circ\Ds^{(n,m)}_{\sig{\Sigma}}=\Id_{\mathsf{mCatAlg}(\sig{\Sigma})}$, so that the identity $\id=(\id_{\calg{A}})_{\calg{A}\in\mathrm{Ob}(\mathsf{mCatAlg}(\sig{\Sigma}))}$ is a natural transformation from $\Id_{\mathsf{mCatAlg}(\sig{\Sigma})}$ to $\Tr^{(m,n)}_{\sig{\Sigma}}\circ\Ds^{(n,m)}_{\sig{\Sigma}}$; and, by Lemma~\ref{LDiscTruncCounit}, $\varepsilon$ is a natural transformation from $\Ds^{(n,m)}_{\sig{\Sigma}}\circ\Tr^{(m,n)}_{\sig{\Sigma}}$ to $\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$.
 By Definition~\ref{DAdj}, we have to prove the triangular identities
-$$
-\left(\Tr^{(m,n)}_{\sig{\Sigma}}\ast\varepsilon\right)\circ\left(\id\ast\Tr^{(m,n)}_{\sig{\Sigma}}\right)=\id_{\Tr^{(m,n)}_{\sig{\Sigma}}}
-\qquad\text{and}\qquad
-\left(\varepsilon\ast\Ds^{(n,m)}_{\sig{\Sigma}}\right)\circ\left(\Ds^{(n,m)}_{\sig{\Sigma}}\ast\id\right)=\id_{\Ds^{(n,m)}_{\sig{\Sigma}}}.
-$$
+\begin{enumerate}
+	\item[(TI1)]
+	$\left(\Tr^{(m,n)}_{\sig{\Sigma}}\ast\varepsilon\right)\circ\left(\id\ast\Tr^{(m,n)}_{\sig{\Sigma}}\right)=\id_{\Tr^{(m,n)}_{\sig{\Sigma}}}$; and
+
+	\item[(TI2)]
+	$\left(\varepsilon\ast\Ds^{(n,m)}_{\sig{\Sigma}}\right)\circ\left(\Ds^{(n,m)}_{\sig{\Sigma}}\ast\id\right)=\id_{\Ds^{(n,m)}_{\sig{\Sigma}}}$.
+\end{enumerate}
 If $m=n$, then all the functors involved are identities and $\varepsilon$ is the identity, so that both identities hold.
 Let us assume that $m<n$.
 We recall that a homomorphism is determined by its domain, its codomain and its underlying many-sorted mapping.
@@ -4428,11 +4452,13 @@ $$
 \bTr^{\gl(n,p)}_{\sig{\Sigma}}\circ\bTr^{\gl(m,n)}_{\sig{\Sigma}}=\bTr^{\gl(m,p)}_{\sig{\Sigma}},
 $$
 and the following equalities of functors hold
-$$
-\Tr^{(m,n)}_{\sig{\Sigma}}\circ \Tr^{(n,p)}_{\sig{\Sigma}}=\Tr^{(m,p)}_{\sig{\Sigma}}
-\qquad\text{and}\qquad
-\Tr^{\gl(m,n)}_{\sig{\Sigma}}\circ \Tr^{\gl(n,p)}_{\sig{\Sigma}}=\Tr^{\gl(m,p)}_{\sig{\Sigma}}.
-$$
+\begin{enumerate}
+	\item
+	$\Tr^{(m,n)}_{\sig{\Sigma}}\circ \Tr^{(n,p)}_{\sig{\Sigma}}=\Tr^{(m,p)}_{\sig{\Sigma}}$; and
+
+	\item
+	$\Tr^{\gl(m,n)}_{\sig{\Sigma}}\circ \Tr^{\gl(n,p)}_{\sig{\Sigma}}=\Tr^{\gl(m,p)}_{\sig{\Sigma}}$.
+\end{enumerate}
 \end{proposition}
 \begin{proof}
 If two of the dimensions are equal, the statement follows from Definition~\ref{DTruncDerivor} and Propositions~\ref{PHepSigCat} and~\ref{PHepId}, since $\bTr^{(n,n)}_{\sig{\Sigma}}$ and $\bTr^{\gl(n,n)}_{\sig{\Sigma}}$ are identities.
@@ -4508,17 +4534,21 @@ This completes the proof.
 \begin{proposition}\label{PDiscComp}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m,n,p\in\mathbb{N}$ with $m\leq n\leq p$.
 Then the following equalities hold in $\mathsf{hepSig}_{\gd}$
-$$
-\bDs^{(n,m)}_{\sig{\Sigma}}\circ\bDs^{(p,n)}_{\sig{\Sigma}}=\bDs^{(p,m)}_{\sig{\Sigma}}
-\qquad\text{and}\qquad
-\bDs^{\gl(n,m)}_{\sig{\Sigma}}\circ\bDs^{\gl(p,n)}_{\sig{\Sigma}}=\bDs^{\gl(p,m)}_{\sig{\Sigma}}.
-$$
+\begin{enumerate}
+	\item
+	$\bDs^{(n,m)}_{\sig{\Sigma}}\circ\bDs^{(p,n)}_{\sig{\Sigma}}=\bDs^{(p,m)}_{\sig{\Sigma}}$; and
+
+	\item
+	$\bDs^{\gl(n,m)}_{\sig{\Sigma}}\circ\bDs^{\gl(p,n)}_{\sig{\Sigma}}=\bDs^{\gl(p,m)}_{\sig{\Sigma}}$.
+\end{enumerate}
 Consequently, the following equalities of functors hold
-$$
-\Ds^{(p,n)}_{\sig{\Sigma}}\circ\Ds^{(n,m)}_{\sig{\Sigma}}=\Ds^{(p,m)}_{\sig{\Sigma}}
-\qquad\text{and}\qquad
-\Ds^{\gl(p,n)}_{\sig{\Sigma}}\circ\Ds^{\gl(n,m)}_{\sig{\Sigma}}=\Ds^{\gl(p,m)}_{\sig{\Sigma}}.
-$$
+\begin{enumerate}
+	\item
+	$\Ds^{(p,n)}_{\sig{\Sigma}}\circ\Ds^{(n,m)}_{\sig{\Sigma}}=\Ds^{(p,m)}_{\sig{\Sigma}}$; and
+
+	\item
+	$\Ds^{\gl(p,n)}_{\sig{\Sigma}}\circ\Ds^{\gl(n,m)}_{\sig{\Sigma}}=\Ds^{\gl(p,m)}_{\sig{\Sigma}}$.
+\end{enumerate}
 \end{proposition}
 \begin{proof}
 If two of the dimensions are equal, the statement follows from Definition~\ref{DDiscGlDerivor} and Propositions~\ref{PHepSigCat} and~\ref{PHepId}.
@@ -4627,11 +4657,13 @@ Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $n,p\in\mathbb{N}$ 
 In Proposition~\ref{PTruncDiscComp}, the two cases overlap when $m=n$.
 In this case both expressions agree, since, by Definitions~\ref{DDiscGlDerivor} and~\ref{DTruncDerivor} and Proposition~\ref{PHepId}, $\Ds^{(n,n)}_{\sig{\Sigma}}=\Tr^{(n,n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$ and $\Ds^{\gl(n,n)}_{\sig{\Sigma}}=\Tr^{\gl(n,n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$.
 Thus, for $m=n$, Proposition~\ref{PTruncDiscComp} states that
-$$
-\Tr^{(n,p)}_{\sig{\Sigma}}\circ\Ds^{(p,n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}
-\qquad\text{and}\qquad
-\Tr^{\gl(n,p)}_{\sig{\Sigma}}\circ\Ds^{\gl(p,n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})},
-$$
+\begin{enumerate}
+	\item
+	$\Tr^{(n,p)}_{\sig{\Sigma}}\circ\Ds^{(p,n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$; and
+
+	\item
+	$\Tr^{\gl(n,p)}_{\sig{\Sigma}}\circ\Ds^{\gl(p,n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$,
+\end{enumerate}
 i.e., it recovers Propositions~\ref{PTruncDisc} and~\ref{PTruncDiscGl}, with $n$ and $p$ in place of $m$ and $n$, respectively.
 Moreover, when $n=p$, all the functors involved are identities.
 \end{remark}
@@ -5090,11 +5122,13 @@ Claim~\ref{CUnivPropCatAlgB} follows.
 
 For an object $X$ of $\mathsf{L}$, the family $(F_{n}(X))_{n\in\omega}$ is compatible, and, for a morphism $f$ of $\mathsf{L}$, so is $(F_{n}(f))_{n\in\omega}$.
 We let
-$$
-\langle F_{k}\rangle_{k\in\omega}(X)=\varprojlim_{n}F_{n}(X)
-\qquad\text{and}\qquad
-\langle F_{k}\rangle_{k\in\omega}(f)=\varprojlim_{n}F_{n}(f).
-$$
+\begin{enumerate}
+	\item
+	$\langle F_{k}\rangle_{k\in\omega}(X)=\varprojlim_{n}F_{n}(X)$; and
+
+	\item
+	$\langle F_{k}\rangle_{k\in\omega}(f)=\varprojlim_{n}F_{n}(f)$.
+\end{enumerate}
 
 \textsf{(Functoriality)} By the uniqueness in Claim~\ref{CUnivPropCatAlgB}, $\langle F_{k}\rangle_{k\in\omega}$ preserves identities and composites, since every $F_{n}$ does.
 
@@ -5192,11 +5226,13 @@ Claim~\ref{CUnivPropGlCatAlgB} follows.
 
 For an object $X$ of $\mathsf{L}$, the family $(F_{n}(X))_{n\in\omega}$ is compatible, and, for a morphism $f$ of $\mathsf{L}$, so is $(F_{n}(f))_{n\in\omega}$.
 We let
-$$
-\langle F_{k}\rangle_{k\in\omega}(X)=\varprojlim_{n}F_{n}(X)
-\qquad\text{and}\qquad
-\langle F_{k}\rangle_{k\in\omega}(f)=\varprojlim_{n}F_{n}(f).
-$$
+\begin{enumerate}
+	\item
+	$\langle F_{k}\rangle_{k\in\omega}(X)=\varprojlim_{n}F_{n}(X)$; and
+
+	\item
+	$\langle F_{k}\rangle_{k\in\omega}(f)=\varprojlim_{n}F_{n}(f)$.
+\end{enumerate}
 
 \textsf{(Functoriality)} By the uniqueness in Claim~\ref{CUnivPropGlCatAlgB}, $\langle F_{k}\rangle_{k\in\omega}$ preserves identities and composites, since every $F_{n}$ does.
 
@@ -5436,11 +5472,13 @@ We begin with graduation and unification.
 \begin{proposition}\label{POmegaGdUf}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature.
 Then the following natural isomorphisms hold
-$$
-\Uf^{(\omega)}_{\sig{\Sigma}}\circ\Gd^{(\omega)}_{\sig{\Sigma}}\cong\Id_{\omega\mathsf{CatAlg}(\sig{\Sigma})}
-\qquad\text{and}\qquad
-\Gd^{(\omega)}_{\sig{\Sigma}}\circ\Uf^{(\omega)}_{\sig{\Sigma}}\cong\Id_{\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}.
-$$
+\begin{enumerate}
+	\item
+	$\Uf^{(\omega)}_{\sig{\Sigma}}\circ\Gd^{(\omega)}_{\sig{\Sigma}}\cong\Id_{\omega\mathsf{CatAlg}(\sig{\Sigma})}$; and
+
+	\item
+	$\Gd^{(\omega)}_{\sig{\Sigma}}\circ\Uf^{(\omega)}_{\sig{\Sigma}}\cong\Id_{\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$.
+\end{enumerate}
 Hence $\Gd^{(\omega)}_{\sig{\Sigma}}$ and $\Uf^{(\omega)}_{\sig{\Sigma}}$ are mutually quasi-inverse equivalences of categories, and there exists an adjoint equivalence in which $\Gd^{(\omega)}_{\sig{\Sigma}}$ is left adjoint to $\Uf^{(\omega)}_{\sig{\Sigma}}$.
 \end{proposition}
 \begin{proof}
@@ -5579,14 +5617,18 @@ Hence the second triangular identity holds.
 
 \textsf{(Globular case: counit)} Let $\calg{B}$ be a globular $\omega$-categorial $\sig{\Sigma}$-algebra and $n\in\mathbb{N}$.
 By Remark~\ref{RDiscOmegaTrunc}, the following equality holds
-$$
+\begin{flushleft}
+$
 \Tr^{\gl(n,\omega)}_{\sig{\Sigma}}\left(\Ds^{\gl(\omega,m)}_{\sig{\Sigma}}\left(\Tr^{\gl(m,\omega)}_{\sig{\Sigma}}(\calg{B})\right)\right)
-=
+$
+\begin{align*}
+&=
 \begin{cases}
 \Ds^{\gl(n,m)}_{\sig{\Sigma}}\left(\Tr^{\gl(m,n)}_{\sig{\Sigma}}\left(\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\calg{B})\right)\right), & \text{if $m\leq n$;}\\
 \Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\calg{B}), & \text{if $n<m$.}
 \end{cases}
-$$
+\end{align*}
+\end{flushleft}
 Let $\varepsilon^{\gl,n}_{\calg{B}}$ be the component of the counit of Proposition~\ref{PDiscTruncAdjGl} at $\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}(\calg{B})$, if $m\leq n$, and the identity, if $n<m$.
 By Lemma~\ref{LDiscTruncCounitGl}, the component of $\varepsilon^{\gl,n}_{\calg{B}}$ at the sort $(k,s)$, for $k\leq n$, is the identity, if $k\leq m$, and $\mathrm{i}^{(k,m)}_{s}$, if $k>m$.
 Hence, for $n\leq n'$, the components of $\varepsilon^{\gl,n}_{\calg{B}}$ are the components of $\varepsilon^{\gl,n'}_{\calg{B}}$ at the sorts of dimension at most $n$, i.e., $\Tr^{\gl(n,n')}_{\sig{\Sigma}}(\varepsilon^{\gl,n'}_{\calg{B}})=\varepsilon^{\gl,n}_{\calg{B}}$.
@@ -6138,11 +6180,13 @@ We begin with graduation and unification.
 \begin{proposition}\label{PChangeSigGdUf}
 Let $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ be many-sorted signatures, $\mathbf{c}=(\varphi,c)$ a derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $n\in\mathbb{N}$.
 Then the following equalities hold in $\mathsf{hepSig}_{\gd}$
-$$
-\mathbf{c}^{(n)}\circ\bGd^{(n)}_{\sig{\Sigma}}=\bGd^{(n)}_{\sig{\Lambda}}\circ\mathbf{c}^{\gl(n)}
-\qquad\text{and}\qquad
-\mathbf{c}^{\gl(n)}\circ\bUf^{(n)}_{\sig{\Sigma}}=\bUf^{(n)}_{\sig{\Lambda}}\circ\mathbf{c}^{(n)}.
-$$
+\begin{enumerate}
+	\item
+	$\mathbf{c}^{(n)}\circ\bGd^{(n)}_{\sig{\Sigma}}=\bGd^{(n)}_{\sig{\Lambda}}\circ\mathbf{c}^{\gl(n)}$; and
+
+	\item
+	$\mathbf{c}^{\gl(n)}\circ\bUf^{(n)}_{\sig{\Sigma}}=\bUf^{(n)}_{\sig{\Lambda}}\circ\mathbf{c}^{(n)}$.
+\end{enumerate}
 Consequently, the following equalities hold
 \begin{align*}
 \Gd^{(n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(n)})^{\ast}_{\gd}&=(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\circ\Gd^{(n)}_{\sig{\Lambda}},
@@ -6253,15 +6297,19 @@ Then the following equalities hold in $\mathsf{hepSig}_{\gd}$
 \mathbf{c}^{\gl(n)}\circ\bTr^{\gl(m,n)}_{\sig{\Sigma}}&=\bTr^{\gl(m,n)}_{\sig{\Lambda}}\circ\mathbf{c}^{\gl(m)}.
 \end{align*}
 Consequently, the following equalities hold
-\begin{align*}
-\Ds^{(n,m)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(m)})^{\ast}_{\gd}&=(\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Ds^{(n,m)}_{\sig{\Lambda}},
-&
-\Tr^{(m,n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(n)})^{\ast}_{\gd}&=(\mathbf{c}^{(m)})^{\ast}_{\gd}\circ\Tr^{(m,n)}_{\sig{\Lambda}},
-\\
-\Ds^{\gl(n,m)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(m)})^{\ast}_{\gd}&=(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\circ\Ds^{\gl(n,m)}_{\sig{\Lambda}},
-&
-\Tr^{\gl(m,n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}&=(\mathbf{c}^{\gl(m)})^{\ast}_{\gd}\circ\Tr^{\gl(m,n)}_{\sig{\Lambda}}.
-\end{align*}
+\begin{enumerate}
+	\item
+	$\Ds^{(n,m)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(m)})^{\ast}_{\gd}=(\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Ds^{(n,m)}_{\sig{\Lambda}}$;
+
+	\item
+	$\Tr^{(m,n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(n)})^{\ast}_{\gd}=(\mathbf{c}^{(m)})^{\ast}_{\gd}\circ\Tr^{(m,n)}_{\sig{\Lambda}}$;
+
+	\item
+	$\Ds^{\gl(n,m)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(m)})^{\ast}_{\gd}=(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\circ\Ds^{\gl(n,m)}_{\sig{\Lambda}}$; and
+
+	\item
+	$\Tr^{\gl(m,n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}=(\mathbf{c}^{\gl(m)})^{\ast}_{\gd}\circ\Tr^{\gl(m,n)}_{\sig{\Lambda}}$.
+\end{enumerate}
 \end{proposition}
 \begin{proof}
 For $m=n$, all the discretization and truncation derivors involved are identities, and the statements follow from Proposition~\ref{PHepId}.
@@ -6299,9 +6347,15 @@ Moreover, by Definition~\ref{DHepComp}, for every $s\in S$,
 
 \textsf{(Globular discretization)} Let $\sigma\in\Sigma$, $j<k$ in $n+1$ and $s\in S$.
 By~(Der1), (Der2) and Lemma~\ref{LChangeSigTerms}~(4),
-$$
-(c^{\gl(m)})^{\sharp}\left(\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\sigma_{k})\right)=c(\sigma)_{\min\{k,m\}}=(\Ds^{\gl(n,m)}_{\sig{\Lambda}})^{\sharp}\left(c(\sigma)_{k}\right)=(\Ds^{\gl(n,m)}_{\sig{\Lambda}})^{\sharp}\left(c^{\gl(n)}(\sigma_{k})\right).
-$$
+\begin{align*}
+(c^{\gl(m)})^{\sharp}\left(\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\sigma_{k})\right)
+&=
+c(\sigma)_{\min\{k,m\}}
+\\&=
+(\Ds^{\gl(n,m)}_{\sig{\Lambda}})^{\sharp}\left(c(\sigma)_{k}\right)
+\\&=
+(\Ds^{\gl(n,m)}_{\sig{\Lambda}})^{\sharp}\left(c^{\gl(n)}(\sigma_{k})\right).
+\end{align*}
 If $j<m$, both generalized hep-derivors send $\src^{(j,k)}_{s}$, $\tgt^{(j,k)}_{s}$, $\mathrm{i}^{(k,j)}_{s}$ and $\circ^{(j,k)}_{s}$ to the corresponding operation symbols of sort $\varphi(s)$ and dimensions $j$ and $\min\{k,m\}$, applied to variables; and, if $j\geq m$, both send them to $v^{(m,\varphi(s))}_{0}$.
 All the domains are empty.
 
@@ -6405,15 +6459,19 @@ We next consider truncation and discretization in dimension $\omega$.
 \begin{proposition}\label{PChangeSigOmegaDsTr}
 Let $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ be many-sorted signatures, $\mathbf{c}=(\varphi,c)$ a derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $n\in\mathbb{N}$.
 Then the following equalities hold
-\begin{align*}
-\Ds^{(\omega,n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(n)})^{\ast}_{\gd}&=(\mathbf{c}^{(\omega)})^{\ast}_{\gd}\circ\Ds^{(\omega,n)}_{\sig{\Lambda}},
-&
-\Tr^{(n,\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(\omega)})^{\ast}_{\gd}&=(\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}},
-\\
-\Ds^{\gl(\omega,n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}&=(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}\circ\Ds^{\gl(\omega,n)}_{\sig{\Lambda}},
-&
-\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}&=(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\circ\Tr^{\gl(n,\omega)}_{\sig{\Lambda}}.
-\end{align*}
+\begin{enumerate}
+	\item
+	$\Ds^{(\omega,n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(n)})^{\ast}_{\gd}=(\mathbf{c}^{(\omega)})^{\ast}_{\gd}\circ\Ds^{(\omega,n)}_{\sig{\Lambda}}$;
+
+	\item
+	$\Tr^{(n,\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(\omega)})^{\ast}_{\gd}=(\mathbf{c}^{(n)})^{\ast}_{\gd}\circ\Tr^{(n,\omega)}_{\sig{\Lambda}}$;
+
+	\item
+	$\Ds^{\gl(\omega,n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}=(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}\circ\Ds^{\gl(\omega,n)}_{\sig{\Lambda}}$; and
+
+	\item
+	$\Tr^{\gl(n,\omega)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(\omega)})^{\ast}_{\gd}=(\mathbf{c}^{\gl(n)})^{\ast}_{\gd}\circ\Tr^{\gl(n,\omega)}_{\sig{\Lambda}}$.
+\end{enumerate}
 \end{proposition}
 \begin{proof}
 The derivors $\bDs^{(\omega,n)}$, $\bDs^{\gl(\omega,n)}$, $\bTr^{(n,\omega)}$ and $\bTr^{\gl(n,\omega)}$ are defined by the same clauses as their finite-dimensional counterparts, see Definitions~\ref{DTruncOmegaDerivor} and~\ref{DDiscOmegaDerivor}, and so are $\mathbf{c}^{(\omega)}$ and $\mathbf{c}^{\gl(\omega)}$.
