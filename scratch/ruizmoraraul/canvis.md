@@ -1197,3 +1197,28 @@ Decisions que has de revisar:
    especificacions. No s'hi confonen, però si vols pots canviar-ne una.
 2. Si vols, les $\mathrm{QE}$-especificacions dels preliminars també es poden
    escriure en negreta.
+
+---
+
+# Operacions de $\Lambda$ i lletres dels derivors
+
+Data: 2026-10-19. Commits `0dd5d64` i `e31011f`.
+
+- **Operacions de $\Lambda$:** s'escriuen $\tau$, perquè $\lambda$ és la
+  paraula buida. Només apareixien a `LTermComp`.
+- **Derivors:** comencen per $\mathbf{c}$. On abans hi havia $\mathbf{d}$,
+  $\mathbf{e}$, $\mathbf{g}$ (amb components $(\varphi,d)$, $(\psi,e)$,
+  $(\chi,g)$) ara hi ha $\mathbf{c}$, $\mathbf{d}$, $\mathbf{e}$ (amb
+  $(\varphi,c)$, $(\psi,d)$, $(\chi,e)$): als preliminars (`DDerivor`,
+  `DDerCompId`, `RDerivorTerms`), a tota la secció de derivors hep
+  generalitzats, a la nota de notació de la graduació i a
+  `RUfOmegaNotDerivor`. L'associativitat (`PHepSigCat`, (Der4), (L2)) usa
+  $\mathbf{c}$, $\mathbf{d}$, $\mathbf{e}$.
+- **Sense canvis:** els homomorfismes $f$, $g$; l'element $e$ del monoide
+  $\{e,f\}$ de `RUfOmegaNotDerivor`; els noms $\mathsf{Sig}_{\mathfrak{d}}$
+  i $\mathsf{Alg}_{\mathfrak{d}}$.
+- **Cel·les:** a `PHepComp` i a la nota que la segueix, les cel·les de
+  $\mathbf{C}$ es deien $c$, que ara és la component del derivor
+  $\mathbf{c}$; ara es diuen $x$. A `LTermComp` les famílies
+  $\mathbf{c}$ de $\mathbf{C}$ es mantenen, perquè allà l'únic derivor és
+  $\mathbf{d}$.
