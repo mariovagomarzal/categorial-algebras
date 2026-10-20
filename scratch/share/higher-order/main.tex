@@ -6121,17 +6121,21 @@ From Corollaries~\ref{CChangeSigIndexed} and~\ref{CChangeSigDsTr} we obtain that
 
 \begin{corollary}\label{CChangeSigDsTrNat}
 Let $m,n\in\mathbb{N}$ with $m\leq n$.
-Then the families $\Ds^{(n,m)}=(\Ds^{(n,m)}_{\sig{\Sigma}})_{\sig{\Sigma}}$, $\Tr^{(m,n)}=(\Tr^{(m,n)}_{\sig{\Sigma}})_{\sig{\Sigma}}$, $\Ds^{\gl(n,m)}=(\Ds^{\gl(n,m)}_{\sig{\Sigma}})_{\sig{\Sigma}}$ and $\Tr^{\gl(m,n)}=(\Tr^{\gl(m,n)}_{\sig{\Sigma}})_{\sig{\Sigma}}$, indexed by the many-sorted signatures, are natural transformations
-\begin{align*}
-\Ds^{(n,m)}&\colon\mathsf{mCatAlg}\Longrightarrow\mathsf{nCatAlg},
-&
-\Tr^{(m,n)}&\colon\mathsf{nCatAlg}\Longrightarrow\mathsf{mCatAlg},
-\\
-\Ds^{\gl(n,m)}&\colon\mathsf{mCat}^{\gl}\mathsf{Alg}\Longrightarrow\mathsf{nCat}^{\gl}\mathsf{Alg},
-&
-\Tr^{\gl(m,n)}&\colon\mathsf{nCat}^{\gl}\mathsf{Alg}\Longrightarrow\mathsf{mCat}^{\gl}\mathsf{Alg}
-\end{align*}
-between the split $\mathsf{Sig}_{\mathfrak{d}}$-indexed categories of Corollary~\ref{CChangeSigIndexed}.
+Then the families
+\begin{enumerate}
+	\item 
+	$\Ds^{(n,m)}=(\Ds^{(n,m)}_{\sig{\Sigma}})_{\sig{\Sigma} \in \mathrm{Ob}(\mathsf{Sig}_{\mathfrak{d}})}\colon\mathsf{mCatAlg}\Longrightarrow\mathsf{nCatAlg}$;
+	
+	\item
+	$\Tr^{(m,n)}=(\Tr^{(m,n)}_{\sig{\Sigma}})_{\sig{\Sigma}}\colon\mathsf{nCatAlg}\Longrightarrow\mathsf{mCatAlg}$;
+	
+	\item 
+	$\Ds^{\gl(n,m)}=(\Ds^{\gl(n,m)}_{\sig{\Sigma}})_{\sig{\Sigma}}\colon\mathsf{mCat}^{\gl}\mathsf{Alg}\Longrightarrow\mathsf{nCat}^{\gl}\mathsf{Alg}$;
+	
+	\item 
+	$\Tr^{\gl(m,n)}=(\Tr^{\gl(m,n)}_{\sig{\Sigma}})_{\sig{\Sigma}}\colon\mathsf{nCat}^{\gl}\mathsf{Alg}\Longrightarrow\mathsf{mCat}^{\gl}\mathsf{Alg}$.
+\end{enumerate}
+are natural transformations.
 \end{corollary}
 \begin{proof}
 By Corollary~\ref{CChangeSigIndexed}, the four assignments $\mathsf{mCatAlg}$, $\mathsf{nCatAlg}$, $\mathsf{mCat}^{\gl}\mathsf{Alg}$ and $\mathsf{nCat}^{\gl}\mathsf{Alg}$ are contravariant functors from $\mathsf{Sig}_{\mathfrak{d}}$ to $\mathsf{Cat}$.
