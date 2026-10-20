@@ -1436,3 +1436,75 @@ Fitxer nou, amb els mateixos resultats que `main.tex`:
 
 Les proves conserven tots els passos lògics, però deixen al lector les
 comprovacions mecàniques.
+
+# Proposicions seguides de corol·laris (estil Curry-Howard)
+
+Data: 2026-10-20. Commits `4e0d71e`, `ad7437a`, `1630430` i `b0db19a`.
+
+## Què he comparat
+
+A les parts 1 i 2 de `Curry_Howard` hi ha 243 proposicions i 83 corol·laris
+(aproximadament un corol·lari per cada tres proposicions); a `main.tex` n'hi
+havia 60 i 5. Quan un enunciat diu «Consequently, …», «In particular, …» o
+«Thus …» i afegeix un segon resultat, a Curry-Howard aquest segon resultat és
+un corol·lari, introduït per una frase («From the above proposition we
+obtain …») i amb una prova curta que cita la proposició. Ara `main.tex` té 60
+proposicions i 23 corol·laris. Cap resultat no canvia: només es reparteixen els
+enunciats i les proves.
+
+## Proposició + corol·lari
+
+| Proposició (es queda amb) | Corol·lari nou (passa a dir) |
+| --- | --- |
+| `PSigdCat`: les tres igualtats sobre $c^\sharp$ | `CSigdCat`: $\mathsf{Sig}_{\mathfrak{d}}$ és una categoria |
+| `LTermComp`: el valor de $d^\sharp(P)$ | `CTermComp`: la conseqüència per a les E-equacions |
+| `PHepId`: $(\id)^{\ast}_{\gd}$ deixa igual àlgebres i homomorfismes | `CHepId`: indueix el functor identitat |
+| `PHepComp`: la inclusió $\kappa^{\mathbf{c},\mathbf{d}}$ i la seua naturalitat | `CHepComp`: l'antic apartat (2), quan els dos functors coincideixen |
+| `PFiniteDimNotQE`: no hi ha cap conjunt de QE-equacions | `CFiniteDimNotQE`: subcategoria plena pròpia |
+| `PUnifGrad`: $\bGd\circ\bUf=\id$ | `CUnifGrad`: $\Uf\circ\Gd=\Id$ |
+| `PDiscComp`: igualtats de derivors | `CDiscComp`: igualtats de functors |
+| `PDiscOmegaDerivor`: corestriccions | `CDiscOmegaDerivor`: les cel·les tenen dimensió finita |
+| `POmegaGdUf`: els dos isomorfismes naturals | `COmegaGdUfEquiv`: equivalències i equivalència adjunta |
+| `PChangeSigCat`: igualtats de derivors | `CChangeSigCat`: igualtats de functors; `CChangeSigIndexed`: categories indexades escindides (abans, un paràgraf) |
+| `PChangeSigGdUf`, `PChangeSigDsTr`: igualtats de derivors | `CChangeSigGdUf`, `CChangeSigDsTr`: igualtats de functors |
+
+Els antics `Claim`s de `PChangeSigGdUf` i `PChangeSigDsTr` (igualtat de
+derivors / igualtat de functors) són ara la prova de la proposició i la del
+corol·lari.
+
+## Paràgrafs que ara són corol·laris
+
+Els paràgrafs «By Proposition … and Remarks … the restriction … corestricts
+…, and, by abuse of notation, we denote …» són ara corol·laris, seguits de la
+notació: `CGradFunctor`, `CUnifFunctor`, `CDiscFunctor`, `CTruncFunctor` i
+`CChangeSigFunctor`.
+
+## Altres canvis
+
+- `CGdUfEquiv` va ara després de `PGdUfAdj`, com a corol·lari seu, i també
+  diu que l'adjunció és una equivalència adjunta (abans, «Thus it is an
+  adjoint equivalence» dins de la proposició).
+- Les cites apunten al resultat que fan servir: per exemple, «Proposition
+  `PHepComp`~(2)» és ara «Corollary `CHepComp`», i les identitats
+  $\Ds^{(n,n)}$, $\Tr^{(n,n)}$ citen `CHepId`.
+- La introducció de la secció 3 descrivia subseccions que ja estan comentades
+  (`SEpRestriction` i la construcció de Grothendieck laxa); ara descriu el que
+  hi ha.
+- Una frase repetida a la prova de `PUnivPropCatAlg` («This does not depend on
+  $n$»).
+- Frases d'entrada abans de `CGenHepDerivorDiagram`, `DGraduation`,
+  `DUnification`, `PDiscComp` i `CLimitNatGl`.
+
+## Què no he canviat
+
+- Les observacions que contenen resultats (`RSingleSetIdent`,
+  `RGlobularIdent`, `RDiscOmegaTrunc`, …): a Curry-Howard, la igualtat
+  $\mathsf{PAlg}(\ldots)=\mathsf{nCatAlg}(\Sigma)$ també és una observació.
+- `PUfOmega` («Moreover, $\Uf^{(\omega)}$ is a functor»): la naturalitat de
+  $\mathrm{in}^{[n]}$, que és a l'enunciat, ja necessita el functor, i
+  separar-los demana reordenar la prova.
+- `PTruncComp`: la igualtat de functors single-set no es dedueix de cap
+  igualtat de derivors, i per tant no és un corol·lari.
+- Els preliminars, copiats de Curry-Howard, i `article.tex`.
+
+El document compila sense errors ni referències indefinides (97 pàgines).
