@@ -1695,6 +1695,8 @@ Since $\mathbf{c}^{\ast}_{\gd}$ and $\G_{\mathbf{c}}$ act in the same way on hom
 This completes the proof.
 \end{proof}
 
+From Propositions~\ref{PDomainSetFunctor} and~\ref{PGenHepDerivorFunctor} we obtain the following corollary.
+
 \begin{corollary}\label{CGenHepDerivorDiagram}
 Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$.
 Then the following diagram commutes
@@ -3054,6 +3056,8 @@ $$
 Let us note that $(\varphi^{\Gd^{(n)}_{\sig{\Sigma}}})^{\star}((k,\mathbf{s}))=\mathbf{s}$, so that $\Gd^{(n)}_{\sig{\Sigma}}(\sigma_{k})$ is a term with variables in $\vs{\mathbf{s}}$, and that $j\in n$ whenever $j<k$, so that $\src^{j}_{s}$, $\tgt^{j}_{s}$ and $\circ^{j}_{s}$ are operation symbols of $\Sigma^{(n)}$.
 Moreover, by Definition~\ref{DEEq}, for every partial $\Sigma^{(n)}$-algebra $\mathbf{B}$, every $s\in S$ and every $x\in B_{s}$, $\mathbf{B}\models\Dom^{\Gd^{(n)}_{\sig{\Sigma}}}_{(k,s)}[x]$ if, and only if, $x=\src^{k}_{s}(x)$, i.e., $x$ is a $k$-cell, for $k\in n$, and every element satisfies $\Dom^{\Gd^{(n)}_{\sig{\Sigma}}}_{(n,s)}$.
 
+We next define the graduation functor.
+
 \begin{definition}\label{DGraduation}
 Let $\sig{\Sigma}$ be a many-sorted signature and $n\in\mathbb{N}$.
 The \emph{graduation functor} $\Gd^{(n)}_{\sig{\Sigma}}$ is the functor $(\bGd^{(n)}_{\sig{\Sigma}})^{\ast}_{\gd}$ induced by the generalized hep-derivor $\bGd^{(n)}_{\sig{\Sigma}}$ from $\mathsf{PAlg}(\Sigma^{(n)})$ to $\mathsf{PAlg}(\Sigma^{\gl(n)})$, see Proposition~\ref{PGenHepDerivorFunctor}.
@@ -3259,6 +3263,8 @@ from $\sig{\Sigma}^{(n)}$ to $\sig{\Sigma}^{\gl(n)}$ defined as follows: $\varph
 \Uf^{(n)}_{\sig{\Sigma}}(\tgt^{k}_{s})&=\mathrm{i}^{(n,k)}_{s}(\tgt^{(k,n)}_{s}(v^{(n,s)}_{0})).
 \end{align*}
 \end{definition}
+
+We next define the unification functor.
 
 \begin{definition}\label{DUnification}
 Let $\sig{\Sigma}$ be a many-sorted signature and $n\in\mathbb{N}$.
@@ -4304,6 +4310,8 @@ Since the domains of $\bTr^{\gl(m,n)}_{\sig{\Sigma}}$ are empty, by Proposition~
 This completes the proof.
 \end{proof}
 
+We next prove that the discretization derivors compose as expected.
+
 \begin{proposition}\label{PDiscComp}
 Let $\sig{\Sigma}$ be a many-sorted signature and $m,n,p\in\mathbb{N}$ with $m\leq n\leq p$.
 Then the following equalities hold in $\mathsf{hepSig}_{\gd}$
@@ -4991,6 +4999,8 @@ If every $\varphi^{n}_{X}$ is an isomorphism, the inverses form a family as in~(
 This completes the proof.
 \end{proof}
 
+
+The same holds in the globular presentation.
 
 \begin{corollary}\label{CLimitNatGl}
 Let $\sig{\Sigma}$ be a many-sorted signature.
