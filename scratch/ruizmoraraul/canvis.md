@@ -1522,3 +1522,26 @@ s'enuncia a la nota després de `DChangeSigDerivor`. No he tocat
 $(\mathbf{d}^{(n)}\circ\mathbf{c}^{(n)})^{\ast}_{\gd}$, que és el functor
 induït per una composició de derivors generalitzats, com
 $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}$ a la secció 3.
+
+# `LCommSquare` i transformacions naturals
+
+Data: 2026-10-20.
+
+- **`LCommSquare`** anomena ara els derivors generalitzats $\mathbf{c}$,
+  $\mathbf{d}$, $\mathbf{c}'$ i $\mathbf{d}'$, com fixa la convenció després
+  de `DGenHepDerivor`. Abans s'hi feien servir $\mathbf{a}$ i $\mathbf{b}$
+  perquè, on s'aplica el lema, $\mathbf{c}$ ja és el derivor entre
+  signatures. Ara la prova de `CChangeSigGdUf` aplica el lema «a les
+  composicions $\mathbf{c}^{(n)}\circ\bGd^{(n)}_{\sig{\Sigma}}$ i
+  $\bGd^{(n)}_{\sig{\Lambda}}\circ\mathbf{c}^{\gl(n)}$», sense dir quina és
+  $\mathbf{c}$ ni quina és $\mathbf{d}$.
+- **`CChangeSigIndexed`** dona nom a les categories indexades escindides:
+  $\mathsf{nCatAlg}$ i $\mathsf{nCat}^{\gl}\mathsf{Alg}$.
+- **`CChangeSigGdUfNat`** (nou, després de `CChangeSigGdUf`):
+  $\Gd^{(n)}\colon\mathsf{nCatAlg}\Rightarrow\mathsf{nCat}^{\gl}\mathsf{Alg}$ i
+  $\Uf^{(n)}$ en sentit contrari són transformacions naturals. Els quadrats de
+  naturalitat, dibuixats a la prova, són les igualtats de `CChangeSigGdUf`.
+- **`CChangeSigDsTrNat`** (nou, després de `CChangeSigDsTr`): el mateix per a
+  $\Ds^{(n,m)}$, $\Tr^{(m,n)}$ i les versions globulars.
+- El paràgraf de les construccions de Grothendieck cita ara aquests dos
+  corol·laris.
