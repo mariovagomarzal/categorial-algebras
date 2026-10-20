@@ -5977,13 +5977,15 @@ From Corollaries~\ref{CChangeSigIndexed} and~\ref{CChangeSigGdUf} we obtain that
 
 \begin{corollary}\label{CChangeSigGdUfNat}
 Let $n\in\mathbb{N}$.
-Then the families $\Gd^{(n)}=(\Gd^{(n)}_{\sig{\Sigma}})_{\sig{\Sigma}}$ and $\Uf^{(n)}=(\Uf^{(n)}_{\sig{\Sigma}})_{\sig{\Sigma}}$, indexed by the many-sorted signatures, are natural transformations
-$$
-\Gd^{(n)}\colon\mathsf{nCatAlg}\Longrightarrow\mathsf{nCat}^{\gl}\mathsf{Alg}
-\qquad\text{and}\qquad
-\Uf^{(n)}\colon\mathsf{nCat}^{\gl}\mathsf{Alg}\Longrightarrow\mathsf{nCatAlg}
-$$
-between the split $\mathsf{Sig}_{\mathfrak{d}}$-indexed categories of Corollary~\ref{CChangeSigIndexed}.
+Then the families
+\begin{enumerate}
+	\item 
+	$\Gd^{(n)}=(\Gd^{(n)}_{\sig{\Sigma}})_{\sig{\Sigma} \in \mathrm{Ob}(\mathsf{Sig}_{\mathfrak{d}})}\colon\mathsf{nCatAlg}\Longrightarrow\mathsf{nCat}^{\gl}\mathsf{Alg}$;
+	
+	\item
+	$\Uf^{(n)}=(\Uf^{(n)}_{\sig{\Sigma}})_{\sig{\Sigma}}\colon\mathsf{nCat}^{\gl}\mathsf{Alg}\Longrightarrow\mathsf{nCatAlg}$.
+\end{enumerate}
+are natural transformations.
 \end{corollary}
 \begin{proof}
 By Corollary~\ref{CChangeSigIndexed}, $\mathsf{nCatAlg}$ and $\mathsf{nCat}^{\gl}\mathsf{Alg}$ are contravariant functors from $\mathsf{Sig}_{\mathfrak{d}}$ to $\mathsf{Cat}$.
