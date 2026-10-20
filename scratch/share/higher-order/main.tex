@@ -1542,7 +1542,7 @@ Since the domain conditions of $\sigma$ are evaluated in the algebra that we are
 
 \begin{proposition}\label{PTransformedAlg}
 Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra.
-Then there exists a partial $\Sigma$-algebra with underlying $S$-sorted set $B_{\Dom^{(\varphi,c)}}$, denoted by $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$.
+Then there exists a weak $\sig{\Sigma}$-algebra with underlying $S$-sorted set $B_{\Dom^{(\varphi,c)}}$, denoted by $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$.
 We will call $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ the \emph{transformed algebra} of $\mathbf{B}$ along $\mathbf{c}$.
 \end{proposition}
 \begin{proof}
@@ -1550,7 +1550,10 @@ Let us denote by $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ the partial $\Sigma$-alge
 
 \textsf{(1)} The underlying $S$-sorted set of $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is $B_{\Dom^{(\varphi,c)}}$, see Definition~\ref{DDomainSet}.
 
-\textsf{(2)} For every $(\mathbf{s},s)\in S^{\star}\times S$ and every operation symbol $\sigma\in\Sigma_{\mathbf{s},s}$, the operation $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ is the partial operation from $(B_{\Dom^{(\varphi,c)}})_{\mathbf{s}}$ to $(B_{\Dom^{(\varphi,c)}})_{s}$ with domain
+\textsf{(2)} For every $(\mathbf{s},s)\in S^{\star}\times S$ and every operation symbol $\sigma\in\Sigma_{\mathbf{s},s}$, the operation $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ is defined by well-founded recursion alon $\lhd$ as follows.
+
+
+$\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ is the partial operation from $(B_{\Dom^{(\varphi,c)}})_{\mathbf{s}}$ to $(B_{\Dom^{(\varphi,c)}})_{s}$ with domain
 $$
 \Dom\left(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}\right)
 =
@@ -1566,8 +1569,8 @@ c(\sigma)^{\mathbf{B}}(\mathbf{b})\in\left(B_{\Dom^{(\varphi,c)}}\right)_{s}
 $$
 which sends every family $\mathbf{b}$ in its domain to $c(\sigma)^{\mathbf{B}}(\mathbf{b})$.
 
-The first condition that defines $\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})})$ refers to the partial $\Sigma$-algebra $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ itself.
-Hence we define the operations of $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ by well-founded recursion along $\lhd$, see Proposition~\ref{PPWFI} and the note after it.
+%The first condition that defines $\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})})$ refers to the partial $\Sigma$-algebra $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ itself.
+%Hence we define the operations of $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ by well-founded recursion along $\lhd$, see Proposition~\ref{PPWFI} and the note after it.
 
 Let $(\mathbf{s},s)\in S^{\star}\times S$ and $\sigma\in\Sigma_{\mathbf{s},s}$, and let us assume that, for every $\tau\lhd\sigma$, the operation $\tau^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ has already been defined.
 By Definition~\ref{DHepSignature}, the operation symbols that occur in $\mathrm{def}^{(S,\Sigma)}(\sigma)$ are the $\tau\lhd\sigma$.
@@ -1588,15 +1591,15 @@ Let us note that, in $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$, the domain of $\sigm
 For instance, for the discretization functors of Section~\ref{STruncation}, the term assigned to $\circ^{k}_{s}$, for $k$ greater than or equal to the dimension of the algebra, is the variable $v^{s}_{0}$, which is defined everywhere, whereas, in the transformed algebras, the domain condition of $\circ^{k}_{s}$ is satisfied only by the pairs of equal cells.
 In~\cite{Rei87}, the morphisms of ep-signatures are required, moreover, to translate the domain conditions of $\sigma$ into a set of equations equivalent to the definedness of $c(\sigma)$.
 
-From the first condition of Proposition~\ref{PTransformedAlg} we obtain the following corollary.
+%From the first condition of Proposition~\ref{PTransformedAlg} we obtain the following corollary.
 
-\begin{corollary}\label{CTransformedWeak}
-Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra.
-Then $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is a weak $\sig{\Sigma}$-algebra, see Definition~\ref{DWeakEpAlgebra}.
-\end{corollary}
-\begin{proof}
-By Proposition~\ref{PTransformedAlg}, every family in the domain of $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ satisfies $\mathrm{def}^{(S,\Sigma)}(\sigma)$ in $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$.
-\end{proof}
+%\begin{corollary}\label{CTransformedWeak}
+%Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra.
+%Then $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is a weak $\sig{\Sigma}$-algebra, see Definition~\ref{DWeakEpAlgebra}.
+%\end{corollary}
+%\begin{proof}
+%By Proposition~\ref{PTransformedAlg}, every family in the domain of $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ satisfies $\mathrm{def}^{(S,\Sigma)}(\sigma)$ in $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$.
+%\end{proof}
 
 In the following proposition we characterize when the transformed algebra is a $\sig{\Sigma}$-algebra.
 
