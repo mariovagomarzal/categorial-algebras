@@ -5839,6 +5839,15 @@ By Corollary~\ref{CSigdCat}, $\mathsf{Sig}_{\mathfrak{d}}$ is a category and, by
 By Corollary~\ref{CChangeSigCat}, both assignments preserve compositions and identities, i.e., they are contravariant functors from $\mathsf{Sig}_{\mathfrak{d}}$ to $\mathsf{Cat}$.
 \end{proof}
 
+\begin{remark}\label{RChangeSigIndexedSize}
+The categories $\mathsf{nCatAlg}(\sig{\Sigma})$ and $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ are not $\boldsymbol{\mathcal{U}}$-small, since their classes of objects are not elements of $\boldsymbol{\mathcal{U}}$.
+However, they are objects of $\mathsf{Cat}$, which, see Section~\ref{SIntroduction}, is the category of all the $\boldsymbol{\mathcal{U}}$-categories, i.e., of the categories $\mathsf{C}$ such that $\mathrm{Ob}(\mathsf{C})\subseteq\boldsymbol{\mathcal{U}}$ and, for every $x,y\in\mathrm{Ob}(\mathsf{C})$, $\mathrm{Hom}(x,y)\in\boldsymbol{\mathcal{U}}$, so that no larger universe is needed in Corollary~\ref{CChangeSigIndexed}.
+In fact, let $\sig{\Sigma}$ be a many-sorted signature.
+By Definitions~\ref{DSortedSet} and~\ref{DSignature}, $S$ and $\Sigma$ are $\boldsymbol{\mathcal{U}}$-small.
+Hence every $n$-categorial $\sig{\Sigma}$-algebra, which, by Remark~\ref{RSingleSetIdent}, is a partial $\Sigma^{(n)}$-algebra $(A,F)$ with $A$ an $S$-sorted set, i.e., a mapping from $S$ to $\boldsymbol{\mathcal{U}}$, is an element of $\boldsymbol{\mathcal{U}}$, and, for every pair of $n$-categorial $\sig{\Sigma}$-algebras, the set of the homomorphisms between them is a subset of an element of $\boldsymbol{\mathcal{U}}$, hence an element of $\boldsymbol{\mathcal{U}}$.
+The same holds for $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$.
+\end{remark}
+
 For $n=0$, the first split indexed category of Corollary~\ref{CChangeSigIndexed} is the split indexed category of~\cite{CVST10b} that sends $\sig{\Sigma}$ to $\mathsf{Alg}(\Sigma)$.
 
 \subsection{Compatibility with graduation, unification, discretization and truncation}\label{SChangeSigCompat}
