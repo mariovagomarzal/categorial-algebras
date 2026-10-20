@@ -1623,3 +1623,8 @@ Curry-Howard (Ch1B, Ch1D).
   of …».
 - L'enunciat ja no parla d'unicitat: com a Curry-Howard, és la definició
   que es fa a la prova.
+- **Enunciat escurçat (2026-10-20):** a petició teva, l'enunciat només diu
+  que existeix una àlgebra parcial sobre $B_{\Dom^{(\varphi,c)}}$, denotada
+  $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$; desapareix «in which every operation
+  symbol … restriction of $c(\sigma)^{\mathbf{B}}$». Les operacions queden
+  descrites només a la prova.
