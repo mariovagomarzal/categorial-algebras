@@ -1162,3 +1162,477 @@ d'esborrar els comentaris) i l'entorn més proper:
 
 Moltes es deuen a l'eliminació de les abreviatures (apartat 14). Es poden
 partir amb `multline` o `align` quan decidisques el format final.
+
+---
+
+# Notació $\boldsymbol{\mathcal{E}}$ per a les especificacions
+
+Data: 2026-10-19. Commit `0d04a30`.
+
+- **Macro nova:** `\spec{E}` $=\boldsymbol{\mathcal{E}}$, al costat de `\sig`
+  i `\calg`.
+- **`DEpSpec`:** l'ep-especificació $(\mathbf{\Sigma},\mathcal{E})$ s'escriu
+  simplement $\boldsymbol{\mathcal{E}}$. Allà on s'introdueix una especificació es dona
+  explícitament, $\boldsymbol{\mathcal{E}}=(\mathbf{\Sigma},\mathcal{E})$ i
+  $\boldsymbol{\mathcal{F}}=(\mathbf{\Lambda},\mathcal{F})$ (`DEpVariety`, la correstricció i la
+  remarca que la segueix); després només s'usa $\boldsymbol{\mathcal{E}}$:
+  $\mathcal{V}(\boldsymbol{\mathcal{E}})$, $\mathsf{EPAlg}(\boldsymbol{\mathcal{E}})$.
+- **Especificacions categorials:** $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}}$ i
+  $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{\mathrm{gl}(n)}}$ (`DSpecSingleSet`, `DSpecGlobular` i el
+  cas globular $\omega$) eren quàdruples $(S,\Sigma^{(n)},V^{S},\mathcal{C})$;
+  ara són els parells $(\mathbf{\Sigma}^{(n)},\mathcal{C}^{\mathbf{\Sigma}^{(n)}})$,
+  com demana `DEpSpec`. Totes les aparicions de
+  $\mathsf{EPAlg}(\mathbf{\Sigma}^{(n)},\mathcal{C}^{\mathbf{\Sigma}^{(n)}})$ i
+  semblants (98 en total) passen a $\mathsf{EPAlg}(\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(n)}})$.
+- **Sense canvis:** les especificacions dels preliminars, que no són
+  ep-especificacions: la finitària $(S,\Sigma,\mathcal{E})$, la de Hall
+  $\mathrm{H}_{S}$ i les $\mathrm{QE}$-especificacions $(S,\Sigma,X,\mathcal{E})$
+  amb $\mathrm{Mod}_{\Sigma}(\mathcal{E})$. Tampoc
+  $(\mathbf{\Sigma},\varnothing)$ ni $\mathsf{EPAlg}(\mathbf{\Sigma})$.
+
+Decisions que has de revisar:
+
+1. $\boldsymbol{\mathcal{U}}$ (l'univers) i $\boldsymbol{\mathcal{K}}$ (una
+   classe d'àlgebres, `DQEEq`) tenen la mateixa tipografia que les
+   especificacions. No s'hi confonen, però si vols pots canviar-ne una.
+2. Si vols, les $\mathrm{QE}$-especificacions dels preliminars també es poden
+   escriure en negreta.
+
+---
+
+# Operacions de $\Lambda$ i lletres dels derivors
+
+Data: 2026-10-19. Commits `0dd5d64` i `e31011f`.
+
+- **Operacions de $\Lambda$:** s'escriuen $\tau$, perquè $\lambda$ és la
+  paraula buida. Només apareixien a `LTermComp`.
+- **Derivors:** comencen per $\mathbf{c}$. On abans hi havia $\mathbf{d}$,
+  $\mathbf{e}$, $\mathbf{g}$ (amb components $(\varphi,d)$, $(\psi,e)$,
+  $(\chi,g)$) ara hi ha $\mathbf{c}$, $\mathbf{d}$, $\mathbf{e}$ (amb
+  $(\varphi,c)$, $(\psi,d)$, $(\chi,e)$): als preliminars (`DDerivor`,
+  `DDerCompId`, `RDerivorTerms`), a tota la secció de derivors hep
+  generalitzats, a la nota de notació de la graduació i a
+  `RUfOmegaNotDerivor`. L'associativitat (`PHepSigCat`, (Der4), (L2)) usa
+  $\mathbf{c}$, $\mathbf{d}$, $\mathbf{e}$.
+- **Sense canvis:** els homomorfismes $f$, $g$; l'element $e$ del monoide
+  $\{e,f\}$ de `RUfOmegaNotDerivor`; els noms $\mathsf{Sig}_{\mathfrak{d}}$
+  i $\mathsf{Alg}_{\mathfrak{d}}$.
+- **Cel·les:** a `PHepComp` i a la nota que la segueix, les cel·les de
+  $\mathbf{C}$ es deien $c$, que ara és la component del derivor
+  $\mathbf{c}$; ara es diuen $x$. A `LTermComp` les famílies
+  $\mathbf{c}$ de $\mathbf{C}$ es mantenen, perquè allà l'únic derivor és
+  $\mathbf{d}$.
+
+---
+
+# Principi d'inducció bem fundada
+
+Data: 2026-10-19. Commit `2072b78`.
+
+- **`PPWFI` (nova):** «Principle of Proof by Well-Founded Induction», just
+  després de `DHepSignature`, amb l'estil de `PPAI`: per demostrar que tot
+  símbol d'operació d'una hep-signatura té una propietat, n'hi ha prou amb el
+  pas d'inducció «si tot $\tau\lhd\sigma$ la té, $\sigma$ la té».
+- **Nota que la segueix:** no cal cas base, perquè per als símbols
+  $\lhd$-minimals (sense símbols d'operació a les condicions de domini) la
+  hipòtesi és buida; i el mateix per a la recursió bem fundada.
+- **Referències:** les sis demostracions per inducció o recursió al llarg de
+  $\lhd$ (`PTransformedAlg`, `PGenHepDerivorHom`, `LSameCells`, `PHepId`
+  i les dues parts de `PHepComp`) remeten a
+  `PPWFI`.
+
+---
+
+# Dimensió $\omega$ a part, `PSingleSetEp`/`PGlobularEp` i canvi de signatura
+
+Data: 2026-10-19. Commits `ae0d777` i `3d3fa35`.
+
+## Dimensió $\omega$ per separat
+
+- `DSpecSingleSet` és ara només per a $n\in\mathbb{N}$. Just després hi ha
+  un paràgraf que defineix $\boldsymbol{\mathcal{C}}^{\mathbf{\Sigma}^{(\omega)}}$
+  (axiomes (A0), (A$^k$1)–(A$^k$8) per a $k\in\omega$ i (AB$^{l,k}$1)–(AB$^{l,k}$3)
+  per a $l<k$ en $\omega$), com ja es feia en el cas globular.
+- La identificació d'àlgebres i àlgebres parcials es fa per a $n\in\mathbb{N}$
+  i, a part, per a $\omega$ (single-set i globular).
+- La nota sobre les immersions $\Sigma^{\mathrm{gl}(n)}\to\Sigma^{\mathrm{gl}(m)}$
+  separa el cas $m\in\mathbb{N}$ del cas $\omega$.
+- L'abstract ja no diu «$n\in\mathbb{N}\cup\{\omega\}$»: parla de les àlgebres
+  $n$-categorials, per a $n\in\mathbb{N}$, i de les globulars $\omega$-categorials.
+  Ja no queda cap «$\mathbb{N}\cup\{\omega\}$» al document.
+
+## `PSingleSetEp` i `PGlobularEp` eliminades
+
+El seu contingut passa a l'última frase de `RSingleSetIdent` i de
+`RGlobularIdent`: els símbols amb condicions de domini buides són totals per
+(A0)/(A$^k$1) (resp. (EA0)/(EA$^{j,k}$1)), i (A$^k$3) (resp. (EA$^{j,k}$3)) diu
+que el domini de la composició és el que fixa la seua condició de domini. Per
+tant, els objectes de $\mathsf{EPAlg}$ de l'especificació són exactament els
+seus models. `PFiniteDimNotQE` usa aquest fet en dimensió $\omega$, i les
+remarques el cobreixen.
+
+## Secció nova: `SChangeSig` (Change of signature)
+
+Al final del document, després de l'square algebraic.
+
+- **`DChangeSigDerivor`:** per a un derivor $\mathbf c=(\varphi,c)$ entre
+  signatures heterogènies, $\mathbf c^{(n)}=(\varphi,c^{(n)},\varnothing)$ de
+  $\mathbf\Sigma^{(n)}$ a $\mathbf\Lambda^{(n)}$ i
+  $\mathbf c^{\mathrm{gl}(n)}$ de $\mathbf\Sigma^{\mathrm{gl}(n)}$ a
+  $\mathbf\Lambda^{\mathrm{gl}(n)}$: tradueixen $\sigma$ per $c(\sigma)$ (resp.
+  $\sigma_k$ per $c(\sigma)_k$, la còpia de dimensió $k$ del terme) i deixen
+  igual l'estructura categorial. Per a $n=0$, $\mathbf c^{(0)}=\mathbf c$.
+- **`LTermFunctor`:** les operacions terme d'una àlgebra categorial són
+  functors d'ordre superior (inducció sobre termes).
+- **`PChangeSigDerivor`:** els functors induïts envien àlgebres $n$-categorials
+  de $\mathbf\Lambda$ a àlgebres $n$-categorials de $\mathbf\Sigma$, amb
+  descripció explícita.
+- **`LChangeSigTerms`:** com es tradueixen $P$ i $P_k$ per
+  $\mathbf d^{(n)}$, $\mathbf d^{\mathrm{gl}(n)}$, Gd, Uf, Ds i Tr (via (Der4)).
+- **`PChangeSigCat`:** $(\mathbf d\circ\mathbf c)^{(n)}=\mathbf d^{(n)}\circ\mathbf c^{(n)}$
+  i identitats, també globulars; per tant, $\mathbf\Sigma\mapsto\mathsf{nCatAlg}(\mathbf\Sigma)$
+  és una categoria indexada escindida sobre $\mathsf{Sig}_{\mathfrak d}$.
+- **`LCommSquare`:** la conseqüència de `PHepComp` (2) que s'usa per comparar
+  composicions.
+- **`PChangeSigGdUf`, `PChangeSigDsTr`:** igualtats de derivors hep
+  generalitzats i, per tant, igualtats estrictes de functors:
+  $\mathrm{Gd}_\Sigma\circ\mathbf c^{(n)*}=\mathbf c^{\mathrm{gl}(n)*}\circ\mathrm{Gd}_\Lambda$,
+  $\mathrm{Uf}_\Sigma\circ\mathbf c^{\mathrm{gl}(n)*}=\mathbf c^{(n)*}\circ\mathrm{Uf}_\Lambda$,
+  i el mateix per a Ds i Tr en les dues presentacions.
+- **`RChangeSigNat`:** $\theta$, $\beta^{(m,n)}$, $\varepsilon$ i
+  $\varepsilon^{\mathrm{gl}}$ també són compatibles; per tant, ho són les
+  adjuncions i el quadrat algebraic. Al final, una nota mostra que Gd, Uf, Ds i Tr
+  s'estenen a les construccions de Grothendieck.
+- **Dimensió $\omega$:** `DChangeSigDerivorOmega`, `PChangeSigOmega`,
+  `PChangeSigOmegaDsTr` i `PChangeSigOmegaGdUf`. La de Gd es prova per la
+  unicitat de la propietat universal; la de Uf, comparant els límits inductius.
+
+Decisions que has de revisar:
+
+1. Has escrit «dues hep-signatures», però $\Sigma^{(n)}$ i
+   $\Sigma^{\mathrm{gl}(n)}$ només estan definides per a signatures
+   heterogènies (sense condicions de domini). Per això la secció parteix d'un
+   derivor entre signatures heterogènies.
+2. He anomenat el derivor $\mathbf c$, i no $\mathbf d$, segons la convenció
+   nova (els derivors comencen per $\mathbf c$); en les composicions apareix
+   $\mathbf d$.
+3. `RChangeSigNat` i la nota sobre Grothendieck estan justificades de forma
+   breu, no amb una demostració completa. Si vols, es poden convertir en
+   proposicions amb prova.
+
+**Respostes (2026-10-19):** (1) una signatura heterogènia és la
+hep-signatura amb dominis buits, i no cal la generalització a hep-signatures
+amb condicions de domini; (2) es manté $\mathbf c$; (3) `RChangeSigNat` i la
+nota sobre Grothendieck queden com estan.
+
+---
+
+# `SEpRestriction` comentada
+
+Data: 2026-10-19. Commit `095a135`.
+
+- La subsecció «Restriction to ep-varieties», amb la remarca
+  `RGenHepDerivorCases`, està comentada (línies amb `%`).
+- El punt (1) de la remarca, que un derivor indueix el functor usual entre
+  àlgebres totals, s'usava tres vegades: ara és dins de `RHepAlgCat`, i les
+  referències de la secció de canvi de signatura apunten allà.
+- L'exemple del punt (2) ja és `RGradNotEp`, que és on remet ara el paràgraf
+  previ a `PGenHepDerivorFunctor`.
+- La introducció de la secció `SGraduation` remet només a `DCorestriction`.
+
+---
+
+# Estil de PathMain i neteja del codi
+
+Data: 2026-10-19. Commits `b6ec836` (les teues edicions), `f71c12c`, `c505e48`,
+`98e9b6d` i `dfdb840`.
+
+## Què he comparat
+
+He llegit el codi de `Curry_Howard/PathMain.tex` (els capítols de les parts 0–2)
+i el de `Projecte Investigador/main.tex`. El preàmbul (estils de teorema, macros),
+les cadenes «The following chain of equalities holds» amb «The first equality
+…; finally, the last equality …», les afirmacions amb «Claim … follows.» i
+«This completes the proof.» ja seguien PathMain. Les teues edicions d'avui han
+marcat la resta.
+
+## Canvis d'estil
+
+- **Parells de fórmules:** totes les fórmules «A \qquad and \qquad B» que
+  quedaven són ara enumeracions «A; and / B.», amb (TI1)–(TI2) per a les
+  identitats triangulars (també a `DAdj`). N'he deixat dues: la de dins d'un
+  ítem de `DGradDerivor` i la de «Therefore both … are homomorphisms», que
+  quedarien estranyes.
+- **Quatre igualtats** en dues columnes (`PChangeSigDsTr`,
+  `PChangeSigOmegaDsTr`) passen a ser una enumeració.
+- **Cadenes llargues:** `flushleft` amb el membre esquerre a part, com fas tu.
+  He partit en línies les igualtats encadenades que sortien del marge.
+- **«if, and only if,»** a tot arreu (n'hi havia 8 sense comes).
+- **Línies fora del marge:** n'hi havia 71; ara només en queda una d'1pt.
+  He afegit `\emergencystretch`, que resol les fórmules en línia que TeX no pot
+  tallar, i he arreglat les restants a mà.
+
+## Neteja del codi
+
+- Una frase per línia a la prosa. És el canvi més gran, però no altera el PDF
+  (comprovat caràcter a caràcter) i fa que els diffs de git siguen llegibles.
+- Un sol `\allowdisplaybreaks` al preàmbul, en lloc dels 101 que hi havia.
+- Fora els espais al final de línia i les línies en blanc repetides.
+
+## No he tocat
+
+Les etiquetes (la biblioteca hi remet) i la subsecció comentada
+`SEpRestriction`.
+
+---
+
+# Propostes B–H, estil d'enunciats i proves, i versió compacta
+
+Data: 2026-10-19. Commits `c458707`–`8ba67e6` (`main.tex`) i `f46d3fa`
+(`article.tex`).
+
+## `main.tex` (de 112 a 95 pàgines)
+
+- **B.** La secció 3 acaba amb $\mathsf{hepSig}_{\mathfrak{gd}}$
+  (`PHepSigCat`). La construcció de Grothendieck laxa dels preliminars i la
+  subsecció de $\mathsf{hepAlg}_{\mathfrak{gd}}$ estan comentades. La remarca
+  `RHepAlgCat`, nova, n'explica la construcció en poques línies.
+- **C.** Les àlgebres de Hall estan comentades. $c^\sharp$ es defineix per
+  recursió sobre termes amb (Der1)–(Der2), i (Der4) es demostra
+  (`LDerSubst`, `PSigdCat`).
+- **E.** Les comprovacions d'axiomes de `PGradDerivor` i `PUnifDerivor` són
+  ara una llista amb un càlcul representatiu.
+- **F.** Discretització i truncació: un sol enunciat per als casos single-set
+  i globular. Les etiquetes `...Gl` desapareixen i les referències apunten a
+  l'etiqueta single-set. Les seccions 8 i 9 són ara una sola.
+- **G.** Les identitats triangulars s'enuncien com «$\Tr(\varepsilon)$ i
+  $\varepsilon_{\Ds}$ són identitats», amb una prova d'un paràgraf.
+- **H.** El canvi de signatura en dimensió $\omega$ queda resumit a
+  `RChangeSigOmega`; el detall està comentat.
+
+## Estil d'enunciats i proves (comparat amb PathMain)
+
+- Els enunciats de PathMain són més curts (mediana de 35 paraules, davant de
+  51 als nostres). Una convenció després de `DGenHepDerivor` fixa els noms
+  dels components de signatures i derivors, i els enunciats ja no els
+  repeteixen.
+- A PathMain, `\textsf{(...)}` només numera apartats: (1), (2), (i)…. Els
+  passos s'anuncien amb frases: «We first prove…», «Now we prove…», «Next,
+  …», «Finally, …». Els 92 rètols amb nom que havia posat jo, com «(Ep-algebra)»
+  o «(Axioms)», ara són frases. Els numerats, com (D1), (H$_\sigma$1) o
+  «(1) implies (2)», es mantenen.
+- La llargària mitjana de les frases a les proves ja era semblant (14 paraules,
+  davant de 15,5 a PathMain).
+
+## `article.tex`, versió compacta (20 pàgines)
+
+Fitxer nou, amb els mateixos resultats que `main.tex`:
+- preliminars reduïts a la notació;
+- les àlgebres categorials definides directament pels axiomes (només en forma
+  de fórmula), amb una remarca que en remet a la noció usual;
+- casos single-set i globular sempre junts;
+- comprovacions rutinàries resumides en una frase;
+- dimensió $\omega$ tractada a part.
+
+Les proves conserven tots els passos lògics, però deixen al lector les
+comprovacions mecàniques.
+
+# Proposicions seguides de corol·laris (estil Curry-Howard)
+
+Data: 2026-10-20. Commits `4e0d71e`, `ad7437a`, `1630430` i `b0db19a`.
+
+## Què he comparat
+
+A les parts 1 i 2 de `Curry_Howard` hi ha 243 proposicions i 83 corol·laris
+(aproximadament un corol·lari per cada tres proposicions); a `main.tex` n'hi
+havia 60 i 5. Quan un enunciat diu «Consequently, …», «In particular, …» o
+«Thus …» i afegeix un segon resultat, a Curry-Howard aquest segon resultat és
+un corol·lari, introduït per una frase («From the above proposition we
+obtain …») i amb una prova curta que cita la proposició. Ara `main.tex` té 60
+proposicions i 23 corol·laris. Cap resultat no canvia: només es reparteixen els
+enunciats i les proves.
+
+## Proposició + corol·lari
+
+| Proposició (es queda amb) | Corol·lari nou (passa a dir) |
+| --- | --- |
+| `PSigdCat`: les tres igualtats sobre $c^\sharp$ | `CSigdCat`: $\mathsf{Sig}_{\mathfrak{d}}$ és una categoria |
+| `LTermComp`: el valor de $d^\sharp(P)$ | `CTermComp`: la conseqüència per a les E-equacions |
+| `PHepId`: $(\id)^{\ast}_{\gd}$ deixa igual àlgebres i homomorfismes | `CHepId`: indueix el functor identitat |
+| `PHepComp`: la inclusió $\kappa^{\mathbf{c},\mathbf{d}}$ i la seua naturalitat | `CHepComp`: l'antic apartat (2), quan els dos functors coincideixen |
+| `PFiniteDimNotQE`: no hi ha cap conjunt de QE-equacions | `CFiniteDimNotQE`: subcategoria plena pròpia |
+| `PUnifGrad`: $\bGd\circ\bUf=\id$ | `CUnifGrad`: $\Uf\circ\Gd=\Id$ |
+| `PDiscComp`: igualtats de derivors | `CDiscComp`: igualtats de functors |
+| `PDiscOmegaDerivor`: corestriccions | `CDiscOmegaDerivor`: les cel·les tenen dimensió finita |
+| `POmegaGdUf`: els dos isomorfismes naturals | `COmegaGdUfEquiv`: equivalències i equivalència adjunta |
+| `PChangeSigCat`: igualtats de derivors | `CChangeSigCat`: igualtats de functors; `CChangeSigIndexed`: categories indexades escindides (abans, un paràgraf) |
+| `PChangeSigGdUf`, `PChangeSigDsTr`: igualtats de derivors | `CChangeSigGdUf`, `CChangeSigDsTr`: igualtats de functors |
+
+Els antics `Claim`s de `PChangeSigGdUf` i `PChangeSigDsTr` (igualtat de
+derivors / igualtat de functors) són ara la prova de la proposició i la del
+corol·lari.
+
+## Paràgrafs que ara són corol·laris
+
+Els paràgrafs «By Proposition … and Remarks … the restriction … corestricts
+…, and, by abuse of notation, we denote …» són ara corol·laris, seguits de la
+notació: `CGradFunctor`, `CUnifFunctor`, `CDiscFunctor`, `CTruncFunctor` i
+`CChangeSigFunctor`.
+
+## Altres canvis
+
+- `CGdUfEquiv` va ara després de `PGdUfAdj`, com a corol·lari seu, i també
+  diu que l'adjunció és una equivalència adjunta (abans, «Thus it is an
+  adjoint equivalence» dins de la proposició).
+- Les cites apunten al resultat que fan servir: per exemple, «Proposition
+  `PHepComp`~(2)» és ara «Corollary `CHepComp`», i les identitats
+  $\Ds^{(n,n)}$, $\Tr^{(n,n)}$ citen `CHepId`.
+- La introducció de la secció 3 descrivia subseccions que ja estan comentades
+  (`SEpRestriction` i la construcció de Grothendieck laxa); ara descriu el que
+  hi ha.
+- Una frase repetida a la prova de `PUnivPropCatAlg` («This does not depend on
+  $n$»).
+- Frases d'entrada abans de `CGenHepDerivorDiagram`, `DGraduation`,
+  `DUnification`, `PDiscComp` i `CLimitNatGl`.
+
+## Què no he canviat
+
+- Les observacions que contenen resultats (`RSingleSetIdent`,
+  `RGlobularIdent`, `RDiscOmegaTrunc`, …): a Curry-Howard, la igualtat
+  $\mathsf{PAlg}(\ldots)=\mathsf{nCatAlg}(\Sigma)$ també és una observació.
+- `PUfOmega` («Moreover, $\Uf^{(\omega)}$ is a functor»): la naturalitat de
+  $\mathrm{in}^{[n]}$, que és a l'enunciat, ja necessita el functor, i
+  separar-los demana reordenar la prova.
+- `PTruncComp`: la igualtat de functors single-set no es dedueix de cap
+  igualtat de derivors, i per tant no és un corol·lari.
+- Els preliminars, copiats de Curry-Howard, i `article.tex`.
+
+El document compila sense errors ni referències indefinides (97 pàgines).
+
+# Notació $\mathbf{c}^{(n)\ast}_{\gd}$
+
+Data: 2026-10-20. A petició teua, $(\mathbf{c}^{(n)})^{\ast}_{\gd}$ s'escriu ara
+$\mathbf{c}^{(n)\ast}_{\gd}$, i igualment per a $\gl(n)$, $(m)$, $(p)$, $(0)$ i
+$(\omega)$, i per a $\mathbf{d}$ (131 aparicions). Per coherència, també
+$((\mathbf{d}\circ\mathbf{c})^{(n)})^{\ast}_{\gd}$ i
+$((\id_{\sig{\Sigma}})^{(n)})^{\ast}_{\gd}$ passen a
+$(\mathbf{d}\circ\mathbf{c})^{(n)\ast}_{\gd}$ i
+$(\id_{\sig{\Sigma}})^{(n)\ast}_{\gd}$ (a `CChangeSigCat`). La convenció
+s'enuncia a la nota després de `DChangeSigDerivor`. No he tocat
+$(\mathbf{d}^{(n)}\circ\mathbf{c}^{(n)})^{\ast}_{\gd}$, que és el functor
+induït per una composició de derivors generalitzats, com
+$(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}$ a la secció 3.
+
+# `LCommSquare` i transformacions naturals
+
+Data: 2026-10-20.
+
+- **`LCommSquare`** anomena ara els derivors generalitzats $\mathbf{c}$,
+  $\mathbf{d}$, $\mathbf{c}'$ i $\mathbf{d}'$, com fixa la convenció després
+  de `DGenHepDerivor`. Abans s'hi feien servir $\mathbf{a}$ i $\mathbf{b}$
+  perquè, on s'aplica el lema, $\mathbf{c}$ ja és el derivor entre
+  signatures. Ara la prova de `CChangeSigGdUf` aplica el lema «a les
+  composicions $\mathbf{c}^{(n)}\circ\bGd^{(n)}_{\sig{\Sigma}}$ i
+  $\bGd^{(n)}_{\sig{\Lambda}}\circ\mathbf{c}^{\gl(n)}$», sense dir quina és
+  $\mathbf{c}$ ni quina és $\mathbf{d}$.
+- **`CChangeSigIndexed`** dona nom a les categories indexades escindides:
+  $\mathsf{nCatAlg}$ i $\mathsf{nCat}^{\gl}\mathsf{Alg}$.
+- **`CChangeSigGdUfNat`** (nou, després de `CChangeSigGdUf`):
+  $\Gd^{(n)}\colon\mathsf{nCatAlg}\Rightarrow\mathsf{nCat}^{\gl}\mathsf{Alg}$ i
+  $\Uf^{(n)}$ en sentit contrari són transformacions naturals. Els quadrats de
+  naturalitat, dibuixats a la prova, són les igualtats de `CChangeSigGdUf`.
+- **`CChangeSigDsTrNat`** (nou, després de `CChangeSigDsTr`): el mateix per a
+  $\Ds^{(n,m)}$, $\Tr^{(m,n)}$ i les versions globulars.
+- El paràgraf de les construccions de Grothendieck cita ara aquests dos
+  corol·laris.
+
+# Mida de les categories indexades (`RChangeSigIndexedSize`)
+
+Data: 2026-10-20. Observació nova després de `CChangeSigIndexed`. Abans
+d'escriure-la vaig comprovar la definició de $\mathsf{Cat}$ a la introducció:
+és la categoria de les $\boldsymbol{\mathcal{U}}$-categories, és a dir, de les
+que tenen $\mathrm{Ob}\subseteq\boldsymbol{\mathcal{U}}$ i conjunts de
+morfismes $\boldsymbol{\mathcal{U}}$-petits. $\mathsf{nCatAlg}(\sig{\Sigma})$
+no és $\boldsymbol{\mathcal{U}}$-petita, però sí que és una
+$\boldsymbol{\mathcal{U}}$-categoria, perquè $S$ i $\Sigma$ són
+$\boldsymbol{\mathcal{U}}$-petits, i per tant és un objecte de $\mathsf{Cat}$.
+No cal cap univers més gran: la preocupació que vaig plantejar no era fundada,
+i l'observació explica per què.
+
+# Reorganització de la secció 3 (`SGenHepDerivors`)
+
+Data: 2026-10-20.
+
+## Ordre nou
+
+1. `SEpSignatures` (sense canvis).
+2. `SGenHepDerivorsDef`. Has escrit «SGenEpDerivorsDef»; he mantingut
+   l'etiqueta que ja hi havia.
+3. `SHepSigCat`: la composició (`DHepComp`, abans a `SHepComp`, etiqueta
+   eliminada perquè ningú no la citava) i `PHepSigCat`.
+4. `SHepCompFunctors`, al final: `LTermComp`, `CTermComp`, `LSameCells`,
+   `PHepId`, `CHepId`, `PHepComp`, `CHepComp`, la nota i `RHepAlgCat`.
+
+La introducció de la secció i el resum de la secció 3 a la introducció del
+document segueixen aquest ordre.
+
+## `PTransformedAlg`
+
+L'enunciat diu ara directament què és l'àlgebra transformada: l'única àlgebra
+parcial sobre les cel·les en què $\sigma$ s'interpreta com la restricció de
+$c(\sigma)^{\mathbf{B}}$ al conjunt
+$$\{\mathbf{b}\mid \mathbf{c}^{\ast}_{\gd}(\mathbf{B})\models\mathrm{def}(\sigma)[\mathbf{b}],\ \mathbf{b}\in\Dom(c(\sigma)^{\mathbf{B}})\text{ i }c(\sigma)^{\mathbf{B}}(\mathbf{b})\text{ és una cel·la}\}.$$
+La prova només explica la recursió al llarg de $\lhd$: la primera condició
+només depèn dels $\tau\lhd\sigma$. Les etiquetes (D1)–(D3) desapareixen: les
+proves diuen «les tres condicions de la Proposició `PTransformedAlg`» o
+«la condició sobre els dominis», «la definició de $c(\sigma)$», «el valor és
+una cel·la».
+
+## Altres canvis de lectura
+
+- **`LDomainSetHom`** (lema nou): els homomorfismes conserven les cel·les.
+  Substitueix el paràgraf de després de `DDomainSet`; $f_{\Dom^{(\varphi,c)}}$
+  es defineix en una sola fórmula.
+- **`CTransformedWeak`** (corol·lari nou): l'àlgebra transformada és una
+  ep-àlgebra feble. Abans era una frase després de la prova; ara la cita
+  `RHepAlgCat`.
+- **`PTransformedEpAlg`**: l'enunciat i la prova, de dues frases, es basen en
+  el nou enunciat de `PTransformedAlg`. Desapareix la inclusió (I).
+- **`PGenHepDerivorHom`, `PHepComp` i `CHepComp`**: les proves anomenen
+  $\mathbf{A}$ i $\mathbf{A}'$ les dues àlgebres transformades, en lloc
+  d'escriure cada vegada $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$.
+  Els rètols (H$_\sigma$1), (H$_\sigma$2) i (D1)–(D3) són ara frases
+  («We first prove…», «Next…», «Finally…»).
+
+Cap enunciat no canvia de contingut, i les etiquetes que citen les altres
+seccions es mantenen.
+
+# `PTransformedAlg` a l'estil de Curry-Howard
+
+Data: 2026-10-20. Segueix el model de `PPthAlg` i `PPthCatAlg` de
+Curry-Howard (Ch1B, Ch1D).
+- **Enunciat:** existeix una àlgebra parcial sobre $B_{\Dom^{(\varphi,c)}}$,
+  denotada $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$, en què cada $\sigma$
+  s'interpreta com una restricció de $c(\sigma)^{\mathbf{B}}$. És la
+  «transformed algebra».
+- **Prova:** «Let us denote by … defined as follows», amb \textsf{(1)} el
+  conjunt subjacent i \textsf{(2)} l'operació $\sigma$, que és l'operació
+  parcial amb el domini donat pel conjunt de les tres condicions i el valor
+  $c(\sigma)^{\mathbf{B}}(\mathbf{b})$. Després ve el pas de la recursió
+  al llarg de $\lhd$, i la prova acaba amb «This completes the definition
+  of …».
+- L'enunciat ja no parla d'unicitat: com a Curry-Howard, és la definició
+  que es fa a la prova.
+- **Enunciat escurçat (2026-10-20):** a petició teva, l'enunciat només diu
+  que existeix una àlgebra parcial sobre $B_{\Dom^{(\varphi,c)}}$, denotada
+  $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$; desapareix «in which every operation
+  symbol … restriction of $c(\sigma)^{\mathbf{B}}$». Les operacions queden
+  descrites només a la prova.
+- **Àlgebra feble (2026-10-20):** l'enunciat diu ara que
+  $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ és una $\sig{\Sigma}$-àlgebra feble, i
+  el Corol·lari `CTransformedWeak` desapareix. A la prova, l'apartat (2)
+  dona la hipòtesi de recursió (amb la cita a `PPWFI`) abans del domini;
+  després es comprova que la recursió està ben definida, i un paràgraf final
+  dona la inclusió $\Dom(\sigma)\subseteq A_{\mathrm{def}(\sigma)}$. Les dues
+  cites a `CTransformedWeak` (prova de `PTransformedEpAlg` i Remark
+  `RHepAlgCat`) citen ara `PTransformedAlg`.

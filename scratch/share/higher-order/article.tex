@@ -1,0 +1,1149 @@
+\documentclass[a4paper,reqno]{amsart}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+
+\newcommand{\bb}[1]{\lvert #1 \rvert}           % length of a word
+\newcommand{\vs}[1]{\mathbin{\downarrow}#1}      % variables of a word
+\newcommand{\sig}[1]{\mathbf{#1}}                % signature
+\newcommand{\calg}[1]{\boldsymbol{\mathsf{#1}}}  % categorial algebra
+\newcommand{\spec}[1]{\boldsymbol{\mathcal{#1}}} % specification
+\newcommand{\eeq}{\overset{\mathrm e}{=}}        % existence equation
+\newcommand{\QE}{\mathrm{QE}}
+\newcommand{\Dom}{\mathrm{Dom}}
+\newcommand{\Op}{\mathrm{Op}}
+\newcommand{\Eeqt}{\mathrm{Eeqt}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Id}{\mathrm{Id}}
+\newcommand{\gd}{\mathfrak{gd}}
+\newcommand{\gl}{\mathrm{gl}}
+\newcommand{\src}{\mathrm{sc}}
+\newcommand{\tgt}{\mathrm{tg}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\Gd}{\mathrm{Gd}}
+\newcommand{\Uf}{\mathrm{Uf}}
+\newcommand{\Ds}{\mathrm{Ds}}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\bGd}{\mathbf{Gd}}
+\newcommand{\bUf}{\mathbf{Uf}}
+\newcommand{\bDs}{\mathbf{Ds}}
+\newcommand{\bTr}{\mathbf{Tr}}
+\newcommand{\EPAlg}{\mathsf{EPAlg}}
+\newcommand{\PAlg}{\mathsf{PAlg}}
+\newcommand{\mor}{\to}
+\newcommand{\dmor}{\rightharpoonup}
+\newcommand{\T}{\mathrm{T}}
+\newcommand{\defi}{\mathrm{def}}
+
+\allowdisplaybreaks
+\setlength{\emergencystretch}{3em}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{remark}[theorem]{Remark}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{convention}{Convention}
+
+\begin{document}
+
+\title{Higher-order categorial algebras}
+
+\author[Climent]{J. Climent Vidal}
+\address{Universitat de Val\`{e}ncia\\
+         Departament de L\`{o}gica i Filosofia de la Ci\`{e}ncia}
+\email{Juan.B.Climent@uv.es}
+
+\author[Cosme]{E. Cosme Ll\'{o}pez}
+\address{Universitat de Val\`{e}ncia\\
+         Departament de Matem\`{a}tiques\\ and
+         Nantong University\\
+         School of Mathematics and Statistics}
+\email{Enric.Cosme@uv.es}
+
+\author[Ruiz]{R. Ruiz Mora}
+\address{Universitat de Val\`{e}ncia\\
+         Departament de Matem\`{a}tiques}
+\email{Raul.Ruiz-Mora@uv.es}
+
+\author[Vago]{M. Vago Marzal}
+
+\begin{abstract}
+We introduce generalized hep-derivors, morphisms between hierarchical equationally partial signatures that send every sort to a set of existence equations in one variable and every operation symbol to a term.
+Every generalized hep-derivor induces a functor between the corresponding categories of partial algebras, and the hierarchical equationally partial signatures and the generalized hep-derivors form a category.
+We apply these notions to higher-order categorial algebras, i.e., many-sorted algebras whose underlying many-sorted sets are strict higher-order categories and whose operations are higher-order functors.
+We present them, in the single-set and in the globular forms, as ep-varieties, and we prove that, in the single-set form, the finite dimension of the cells in dimension $\omega$ cannot be expressed by quasi-existence equations.
+By means of generalized hep-derivors we define the graduation, unification, discretization and truncation functors.
+We prove that graduation and unification are equivalences, that discretization is left adjoint to truncation, that the categories of $\omega$-categorial algebras are projective limits, that these functors form algebraic squares and that all of them are compatible with the change of signature.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}\label{SIntroduction}
+
+Higher-order categorial algebras are many-sorted algebras whose underlying many-sorted sets carry a structure of strict higher-order category and whose operations are higher-order functors.
+They arise in the study of higher-order many-sorted rewriting systems: the paths of a rewriting system of order $n$, up to suitable congruences, form an $n$-categorial algebra, and the higher-order Curry-Howard isomorphisms of~\cite{CVCLRM26} are isomorphisms between such algebras.
+
+There are two natural ways of presenting them.
+In the \emph{single-set} presentation~\cite{Str87}, all the cells of a given sort form a single set.
+In the \emph{globular} presentation, see~\cite{abgmmm23}, the cells of every dimension form a separate sort.
+In both cases the composition is partial, and both presentations are described by quasi-existence equations in the sense of Burmeister~\cite{pb86, pb02}, over equationally partial signatures in the sense of Reichel~\cite{Rei87}.
+
+Our aim is to relate the presentations and the dimensions by functors induced by morphisms between signatures.
+To this end we introduce the generalized hep-derivors, which combine the derivors of~\cite{CVST10b}, which send operation symbols to terms, and the general derivors of~\cite{LG18}, which send sorts to formulas.
+
+\textbf{Contents.}
+In Section~\ref{SPreliminaries} we fix the notation.
+In Section~\ref{SGenHepDerivors} we introduce the generalized hep-derivors and their induced functors.
+In Section~\ref{SCatAlg} we present the higher-order categorial algebras as ep-varieties.
+In Section~\ref{SGraduation} we define graduation and unification, and in Section~\ref{STruncation} discretization and truncation.
+In Section~\ref{SOmega} we consider the dimension $\omega$, and in Section~\ref{SSquares} we assemble these functors in algebraic squares.
+Finally, in Section~\ref{SChangeSig} we prove that all of them are compatible with the change of signature.
+
+\section{Preliminaries}\label{SPreliminaries}
+
+We follow the notation of~\cite{CVST10b, CVCLRM26}, to which we refer for the details.
+
+\textbf{Many-sorted sets.}
+Let $S$ be a set of sorts.
+An $S$-sorted set is a family $A=(A_{s})_{s\in S}$, and an $S$-sorted mapping $f\colon A\mor B$ is a family $(f_{s}\colon A_{s}\mor B_{s})_{s\in S}$.
+For a mapping $\varphi\colon T\mor S$, we let $A_{\varphi}$ stand for the $T$-sorted set $(A_{\varphi(t)})_{t\in T}$, and similarly for $f_{\varphi}$.
+We let $S^{\star}$ stand for the set of the words on $S$, $\lambda$ for the empty word and $\bb{\mathbf{s}}$ for the length of $\mathbf{s}$.
+For $\mathbf{s}\in S^{\star}$, $A_{\mathbf{s}}=\prod_{j\in\bb{\mathbf{s}}}A_{s_{j}}$.
+For $\varphi\colon S\mor T$, $\varphi^{\star}\colon S^{\star}\mor T^{\star}$ acts letterwise.
+
+\textbf{Signatures and terms.}
+A \emph{many-sorted signature} is a pair $\sig{\Sigma}=(S,\Sigma)$, where $\Sigma=(\Sigma_{\mathbf{s},s})_{(\mathbf{s},s)\in S^{\star}\times S}$ is an $S^{\star}\times S$-sorted set of \emph{operation symbols}.
+For an $S$-sorted set $X$ of variables, $\T_{\Sigma}(X)$ is the $S$-sorted set of the terms, and every term is either a variable or $\sigma((P_{j})_{j\in\bb{\mathbf{s}}})$, uniquely, for $\sigma\in\Sigma_{\mathbf{s},s}$ and terms $P_{j}$ of sort $s_{j}$.
+Hence we can prove properties of terms by induction and define mappings on terms by recursion.
+For $\mathbf{s}\in S^{\star}$, $\vs{\mathbf{s}}$ is the $S$-sorted set of variables $\{v^{\mathbf{s}}_{j}\mid j\in\bb{\mathbf{s}}\}$, where $v^{\mathbf{s}}_{j}$ has sort $s_{j}$.
+We identify a family $(a_{j})_{j\in\bb{\mathbf{s}}}\in A_{\mathbf{s}}$ with the valuation of $\vs{\mathbf{s}}$ in $A$ that sends $v^{\mathbf{s}}_{j}$ to $a_{j}$.
+For a family of terms $\mathcal{Q}=(Q_{j})_{j\in\bb{\mathbf{s}}}\in\T_{\Sigma}(X)_{\mathbf{s}}$, we let $\mathcal{Q}^{\sharp}$, or $(Q_{j})^{\sharp}_{j\in\bb{\mathbf{s}}}$, stand for the \emph{substitution} of $Q_{j}$ for $v^{\mathbf{s}}_{j}$, i.e., the unique homomorphism from $\T_{\Sigma}(\vs{\mathbf{s}})$ to $\T_{\Sigma}(X)$ that sends $v^{\mathbf{s}}_{j}$ to $Q_{j}$.
+The composite of two substitutions is a substitution.
+We let $\Op(P)$ stand for the set of the operation symbols that occur in a term $P$, and $\Op(\mathcal{H})$ for those that occur in a set $\mathcal{H}$ of pairs of terms.
+
+\textbf{Derivors.}
+A \emph{derivor} from $\sig{\Sigma}=(S,\Sigma)$ to $\sig{\Lambda}=(T,\Lambda)$ is a pair $\mathbf{c}=(\varphi,c)$, where $\varphi\colon S\mor T$ and $c$ assigns to every $\sigma\in\Sigma_{\mathbf{s},s}$ a term $c(\sigma)\in\T_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$, see~\cite{CVST10b}.
+It translates terms by the recursion
+\begin{enumerate}
+\item[(Der1)] $c^{\sharp}(v^{\mathbf{s}}_{j})=v^{\varphi^{\star}(\mathbf{s})}_{j}$; and
+\item[(Der2)] $c^{\sharp}(\sigma((R_{j})_{j\in\bb{\mathbf{r}}}))=(c^{\sharp}(R_{j}))^{\sharp}_{j\in\bb{\mathbf{r}}}(c(\sigma))$,
+\end{enumerate}
+so that $c^{\sharp}$ sends $\T_{\Sigma}(\vs{\mathbf{s}})_{s}$ to $\T_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi(s)}$.
+For a set $\mathcal{H}$ of pairs of terms, $c^{\sharp}[\mathcal{H}]=\{(c^{\sharp}(P),c^{\sharp}(Q))\mid(P,Q)\in\mathcal{H}\}$.
+The composite of $\mathbf{c}$ and $\mathbf{d}=(\psi,d)\colon\sig{\Lambda}\mor\sig{\Omega}$ is $\mathbf{d}\circ\mathbf{c}=(\psi\circ\varphi,d^{\sharp}\circ c)$, and the identity at $\sig{\Sigma}$ is $(\id_{S},\eta^{\Sigma})$, where $\eta^{\Sigma}(\sigma)=\sigma((v^{\mathbf{s}}_{j})_{j\in\bb{\mathbf{s}}})$.
+
+\begin{proposition}\label{PDerivors}
+Let $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$, $\mathbf{d}\colon\sig{\Lambda}\mor\sig{\Omega}$ and $\mathbf{e}\colon\sig{\Omega}\mor\sig{\Xi}$ be derivors.
+Then the following statements hold:
+\begin{enumerate}
+\item[(Der3)] $d^{\sharp}(\mathcal{Q}^{\sharp}(P))=d^{\sharp}(\mathcal{Q})^{\sharp}(d^{\sharp}(P))$, for every term $P$ and every family of terms $\mathcal{Q}$; and
+\item[(Der4)] $(e^{\sharp}\circ d)^{\sharp}=e^{\sharp}\circ d^{\sharp}$, $(\eta^{\Lambda})^{\sharp}$ is the identity and $c^{\sharp}\circ\eta^{\Sigma}=c$.
+\end{enumerate}
+Hence the many-sorted signatures and the derivors form a category $\mathsf{Sig}_{\mathfrak{d}}$.
+\end{proposition}
+\begin{proof}
+We prove (Der3) by induction on $P$.
+For a variable $v_{j}$, both sides are $d^{\sharp}(Q_{j})$.
+For $P=\tau((P_{i})_{i})$, we have that $\mathcal{Q}^{\sharp}(P)=\tau((\mathcal{Q}^{\sharp}(P_{i}))_{i})$.
+Then, by (Der2), the induction hypothesis and the fact that substitutions compose, the following chain of equalities holds
+$$
+d^{\sharp}(\mathcal{Q}^{\sharp}(P))
+=\left(d^{\sharp}(\mathcal{Q})^{\sharp}(d^{\sharp}(P_{i}))\right)^{\sharp}_{i}(d(\tau))
+=d^{\sharp}(\mathcal{Q})^{\sharp}\left((d^{\sharp}(P_{i}))^{\sharp}_{i}(d(\tau))\right)
+=d^{\sharp}(\mathcal{Q})^{\sharp}(d^{\sharp}(P)).
+$$
+
+Now we prove (Der4).
+The first equality follows by induction on terms, from (Der2) and (Der3).
+The other two follow from (Der1) and (Der2).
+They state that the composition is associative and that the identities are neutral.
+
+This completes the proof.
+\end{proof}
+
+By (Der4), $e^{\sharp}\circ d^{\sharp}$ only depends on the composite derivor.
+Hence, to prove an equality $e^{\sharp}\circ d^{\sharp}=e'^{\sharp}\circ d'^{\sharp}$, it suffices to compare the composite derivors on sorts and on operation symbols.
+
+\textbf{Partial algebras.}
+A \emph{partial $\Sigma$-algebra} $\mathbf{A}$ is an $S$-sorted set $A$ together with a partial mapping $\sigma^{\mathbf{A}}\colon A_{\mathbf{s}}\dmor A_{s}$ for every $\sigma\in\Sigma_{\mathbf{s},s}$.
+A \emph{homomorphism} $h\colon\mathbf{A}\mor\mathbf{B}$ is an $S$-sorted mapping such that, if $\mathbf{a}\in\Dom(\sigma^{\mathbf{A}})$, then $h\circ\mathbf{a}\in\Dom(\sigma^{\mathbf{B}})$ and $h_{s}(\sigma^{\mathbf{A}}(\mathbf{a}))=\sigma^{\mathbf{B}}(h\circ\mathbf{a})$.
+They form a category $\PAlg(\Sigma)$; its full subcategory of the total algebras is $\mathsf{Alg}(\Sigma)$.
+A homomorphism is an isomorphism if, and only if, it is bijective and reflects definedness.
+Every term $P\in\T_{\Sigma}(X)_{s}$ induces a \emph{partial term operation} $P^{\mathbf{A}}$ from $A_{X}$ to $A_{s}$, defined by recursion on $P$: a variable is always defined, and $\sigma((P_{j})_{j})^{\mathbf{A}}(a)$ is defined if, and only if, every $P_{j}^{\mathbf{A}}(a)$ is defined and $(P_{j}^{\mathbf{A}}(a))_{j}\in\Dom(\sigma^{\mathbf{A}})$, and then it is $\sigma^{\mathbf{A}}((P_{j}^{\mathbf{A}}(a))_{j})$.
+Homomorphisms preserve the defined partial term operations.
+
+\textbf{Equations.}
+An \emph{existence equation} $P\eeq Q$ is a pair of terms of the same sort.
+It is \emph{satisfied} by a valuation $a$ in $\mathbf{A}$, in symbols $\mathbf{A}\models(P,Q)[a]$, if $P^{\mathbf{A}}(a)$ and $Q^{\mathbf{A}}(a)$ are defined and equal.
+In particular, $P\eeq P$ states that $P$ is defined.
+We let $\Eeqt(\Sigma)_{X}$ stand for the $S$-sorted set of the existence equations with variables in $X$.
+For a set $\mathcal{H}$ of existence equations, $\mathbf{A}\models\mathcal{H}[a]$ means that $a$ satisfies all of them.
+A \emph{quasi-existence equation} $\bigwedge_{j}(P_{j}\eeq Q_{j})\to(P\eeq Q)$ \emph{holds} in $\mathbf{A}$ if every valuation that satisfies the premisses satisfies the conclusion.
+The classes of partial algebras defined by quasi-existence equations, the \emph{$\QE$-varieties}, are closed under products, see~\cite{pb86}.
+Homomorphisms preserve satisfaction: if $\mathbf{A}\models\mathcal{H}[a]$, then $\mathbf{B}\models\mathcal{H}[h\circ a]$.
+For a substitution $\mathcal{Q}^{\sharp}$, $\mathbf{A}\models\mathcal{Q}^{\sharp}[\mathcal{H}][a]$ if, and only if, every $Q_{j}^{\mathbf{A}}(a)$ is defined and $\mathbf{A}\models\mathcal{H}[(Q_{j}^{\mathbf{A}}(a))_{j}]$.
+
+\textbf{Categories.}
+For an adjunction $(G,F,\eta,\varepsilon)$, with $F$ left adjoint to $G$, the triangular identities are $(G\ast\varepsilon)\circ(\eta\ast G)=\id_{G}$ and $(\varepsilon\ast F)\circ(F\ast\eta)=\id_{F}$, see~\cite{sM98}.
+A functor $F$ \emph{restricts} to full subcategories $\mathsf{C}'\subseteq\mathsf{C}$ and $\mathsf{D}'\subseteq\mathsf{D}$ if it sends the objects of $\mathsf{C}'$ to objects of $\mathsf{D}'$; we denote the restriction by the same symbol.
+A \emph{split $\mathsf{I}$-indexed category} is a functor from $\mathsf{I}^{\mathrm{op}}$ to the category of categories.
+
+\section{Generalized hep-derivors}\label{SGenHepDerivors}
+
+In this section we introduce the hierarchical equationally partial signatures, the generalized hep-derivors between them and the functors that they induce.
+
+\subsection{Hierarchical equationally partial signatures}
+
+\begin{definition}\label{DEpSignature}
+An \emph{ep-signature} is a triple $\sig{\Sigma}=(S,\Sigma,\defi^{\Sigma})$, where $(S,\Sigma)$ is a many-sorted signature and $\defi^{\Sigma}$ assigns to every $\sigma\in\Sigma_{\mathbf{s},s}$ a set $\defi^{\Sigma}(\sigma)\subseteq\Eeqt(\Sigma)_{\vs{\mathbf{s}}}$, the \emph{domain conditions} of $\sigma$.
+A partial $\Sigma$-algebra $\mathbf{A}$ is a \emph{$\sig{\Sigma}$-algebra} if, for every $\sigma\in\Sigma_{\mathbf{s},s}$,
+$$
+\Dom(\sigma^{\mathbf{A}})=A_{\defi(\sigma)}=\{\mathbf{a}\in A_{\mathbf{s}}\mid\mathbf{A}\models\defi^{\Sigma}(\sigma)[\mathbf{a}]\},
+$$
+and a \emph{weak $\sig{\Sigma}$-algebra} if $\Dom(\sigma^{\mathbf{A}})\subseteq A_{\defi(\sigma)}$.
+We let $\EPAlg(\sig{\Sigma})\subseteq\mathsf{wEPAlg}(\sig{\Sigma})\subseteq\PAlg(\Sigma)$ stand for the corresponding full subcategories.
+The ep-signature $\sig{\Sigma}$ is \emph{hierarchical}, a \emph{hep-signature}, if the relation $\tau\lhd\sigma$ defined by $\tau\in\Op(\defi^{\Sigma}(\sigma))$ is well-founded.
+\end{definition}
+
+A many-sorted signature $(S,\Sigma)$ is identified with the hep-signature $(S,\Sigma,\varnothing)$, whose algebras are the total $\Sigma$-algebras.
+In a hep-signature, properties of the operation symbols can be proved by well-founded induction along $\lhd$: it suffices to prove the property for $\sigma$ assuming it for every $\tau\lhd\sigma$.
+No separate basis is needed, since, for the $\lhd$-minimal symbols, the assumption is vacuous.
+In the same way, data can be defined by well-founded recursion along $\lhd$.
+
+\begin{definition}\label{DEpSpec}
+An \emph{ep-specification} is a pair $(\sig{\Sigma},\mathcal{E})$, written $\spec{E}$, where $\sig{\Sigma}$ is an ep-signature and $\mathcal{E}$ a set of quasi-existence equations of $\Sigma$; it is a \emph{hep-specification} if $\sig{\Sigma}$ is hierarchical.
+We let $\EPAlg(\spec{E})$ stand for the full subcategory of $\EPAlg(\sig{\Sigma})$ whose objects are the $\sig{\Sigma}$-algebras in which every equation of $\mathcal{E}$ holds, the \emph{ep-variety} of $\spec{E}$.
+\end{definition}
+
+\begin{convention}
+We write the hep-signatures as $\sig{\Sigma}=(S,\Sigma,\defi^{\Sigma})$, $\sig{\Lambda}=(T,\Lambda,\defi^{\Lambda})$ and $\sig{\Omega}=(U,\Omega,\defi^{\Omega})$, and the generalized hep-derivors of Definition~\ref{DGenHepDerivor} as $\mathbf{c}=(\varphi,c,\Dom^{\mathbf{c}})$ and $\mathbf{d}=(\psi,d,\Dom^{\mathbf{d}})$.
+\end{convention}
+
+\subsection{Generalized hep-derivors and their functors}
+
+\begin{definition}\label{DGenHepDerivor}
+A \emph{generalized hep-derivor} from $\sig{\Sigma}$ to $\sig{\Lambda}$ is a triple $\mathbf{c}=(\varphi,c,\Dom^{\mathbf{c}})$, where $(\varphi,c)$ is a derivor from $(S,\Sigma)$ to $(T,\Lambda)$ and $\Dom^{\mathbf{c}}$ assigns to every $s\in S$ a set $\Dom^{\mathbf{c}}_{s}\subseteq\Eeqt(\Lambda)_{\vs{(\varphi(s))}}$, the \emph{domain} of $s$.
+For a partial $\Lambda$-algebra $\mathbf{B}$, the \emph{cells of sort $s$} are the elements $b\in B_{\varphi(s)}$ such that $\mathbf{B}\models\Dom^{\mathbf{c}}_{s}[b]$.
+We let $B_{\mathbf{c}}$ stand for the $S$-sorted set of the cells.
+\end{definition}
+
+Homomorphisms preserve satisfaction.
+Hence, for every homomorphism $f\colon\mathbf{B}\mor\mathbf{B}'$, $f_{\varphi}$ sends cells to cells, and we let $f_{\mathbf{c}}\colon B_{\mathbf{c}}\mor B'_{\mathbf{c}}$ stand for its birestriction.
+If all the domains are empty, then $B_{\mathbf{c}}=B_{\varphi}$ and $f_{\mathbf{c}}=f_{\varphi}$.
+
+\begin{proposition}\label{PTransformedAlg}
+Let $\mathbf{c}$ be a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra.
+Then there exists a unique partial $\Sigma$-algebra $\mathbf{c}^{\ast}(\mathbf{B})$ on $B_{\mathbf{c}}$ in which, for every $\sigma\in\Sigma_{\mathbf{s},s}$, $\mathbf{b}\in(B_{\mathbf{c}})_{\mathbf{s}}$ is in $\Dom(\sigma^{\mathbf{c}^{\ast}(\mathbf{B})})$ if, and only if,
+\begin{enumerate}
+\item[(D1)] $\mathbf{c}^{\ast}(\mathbf{B})\models\defi^{\Sigma}(\sigma)[\mathbf{b}]$;
+\item[(D2)] $\mathbf{b}\in\Dom(c(\sigma)^{\mathbf{B}})$; and
+\item[(D3)] $c(\sigma)^{\mathbf{B}}(\mathbf{b})$ is a cell of sort $s$,
+\end{enumerate}
+and then $\sigma^{\mathbf{c}^{\ast}(\mathbf{B})}(\mathbf{b})=c(\sigma)^{\mathbf{B}}(\mathbf{b})$.
+It is a weak $\sig{\Sigma}$-algebra, the \emph{transformed algebra} of $\mathbf{B}$ along $\mathbf{c}$.
+\end{proposition}
+\begin{proof}
+We define $\sigma^{\mathbf{c}^{\ast}(\mathbf{B})}$ by well-founded recursion along $\lhd$.
+The symbols that occur in $\defi^{\Sigma}(\sigma)$ are the $\tau\lhd\sigma$.
+Hence condition (D1) only depends on the operations $\tau^{\mathbf{c}^{\ast}(\mathbf{B})}$ already defined.
+Conditions (D2) and (D3) only depend on $\mathbf{B}$.
+By (D3), the values are cells.
+Finally, by (D1), the transformed algebra is a weak $\sig{\Sigma}$-algebra.
+\end{proof}
+
+\begin{proposition}\label{PTransformedEpAlg}
+Let $\mathbf{c}$ be a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra.
+Then $\mathbf{c}^{\ast}(\mathbf{B})$ is a $\sig{\Sigma}$-algebra if, and only if, for every $\sigma\in\Sigma_{\mathbf{s},s}$ and every family of cells $\mathbf{b}$ that satisfies $\defi^{\Sigma}(\sigma)$ in $\mathbf{c}^{\ast}(\mathbf{B})$, $c(\sigma)^{\mathbf{B}}(\mathbf{b})$ is defined and is a cell of sort $s$.
+\end{proposition}
+\begin{proof}
+By Proposition~\ref{PTransformedAlg}, $\Dom(\sigma^{\mathbf{c}^{\ast}(\mathbf{B})})$ is the set of the families of cells that satisfy (D1), (D2) and (D3).
+It is equal to the set of the families that satisfy (D1) if, and only if, every such family satisfies (D2) and (D3).
+\end{proof}
+
+\begin{proposition}\label{PGenHepDerivorFunctor}
+Let $\mathbf{c}$ be a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$.
+Then the assignment $\mathbf{c}^{\ast}$ that sends $\mathbf{B}$ to $\mathbf{c}^{\ast}(\mathbf{B})$ and $f$ to $f_{\mathbf{c}}$ is a functor from $\PAlg(\Lambda)$ to $\mathsf{wEPAlg}(\sig{\Sigma})$.
+\end{proposition}
+\begin{proof}
+Clearly, $f\mapsto f_{\mathbf{c}}$ preserves identities and composites.
+It remains to prove that, for a homomorphism $f\colon\mathbf{B}\mor\mathbf{B}'$, $h=f_{\mathbf{c}}$ is a homomorphism.
+We prove, by well-founded induction along $\lhd$, that $h$ preserves the defined operation $\sigma$, assuming it for every $\tau\lhd\sigma$.
+Let $\mathbf{b}\in\Dom(\sigma^{\mathbf{c}^{\ast}(\mathbf{B})})$.
+We check (D1), (D2) and (D3) for $h\circ\mathbf{b}$.
+By the induction hypothesis, $h$ preserves the operations that occur in $\defi^{\Sigma}(\sigma)$, so that $h\circ\mathbf{b}$ satisfies $\defi^{\Sigma}(\sigma)$.
+Since $f$ is a homomorphism, $c(\sigma)^{\mathbf{B}'}(h\circ\mathbf{b})$ is defined and equal to $f_{\varphi(s)}(c(\sigma)^{\mathbf{B}}(\mathbf{b}))$, which is a cell.
+Hence $h\circ\mathbf{b}\in\Dom(\sigma^{\mathbf{c}^{\ast}(\mathbf{B}')})$ and $h_{s}(\sigma^{\mathbf{c}^{\ast}(\mathbf{B})}(\mathbf{b}))=\sigma^{\mathbf{c}^{\ast}(\mathbf{B}')}(h\circ\mathbf{b})$.
+\end{proof}
+
+In general, a generalized hep-derivor does not send ep-algebras to ep-algebras.
+For a hep-specification $\spec{F}$ of $\sig{\Lambda}$ and a hep-specification $\spec{E}$ of $\sig{\Sigma}$, we will say that $\mathbf{c}^{\ast}$ \emph{restricts} to a functor from $\EPAlg(\spec{F})$ to $\EPAlg(\spec{E})$ if, for every object $\mathbf{B}$ of $\EPAlg(\spec{F})$, $\mathbf{c}^{\ast}(\mathbf{B})$ is a $\sig{\Sigma}$-algebra in which the equations of $\spec{E}$ hold.
+In Sections~\ref{SGraduation} and~\ref{STruncation}, we check it by means of Proposition~\ref{PTransformedEpAlg}.
+
+\subsection{The category of hep-signatures}
+
+\begin{definition}\label{DHepComp}
+The \emph{composite} of $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{d}\colon\sig{\Lambda}\mor\sig{\Omega}$ is the generalized hep-derivor
+$$
+\mathbf{d}\circ\mathbf{c}=\left(\psi\circ\varphi,d^{\sharp}\circ c,\Dom^{\mathbf{d}\circ\mathbf{c}}\right),
+\quad\text{where}\quad
+\Dom^{\mathbf{d}\circ\mathbf{c}}_{s}=\Dom^{\mathbf{d}}_{\varphi(s)}\cup d^{\sharp}\left[\Dom^{\mathbf{c}}_{s}\right].
+$$
+The \emph{identity} at $\sig{\Sigma}$ is $\id_{\sig{\Sigma}}=(\id_{S},\eta^{\Sigma},\varnothing)$.
+\end{definition}
+
+The translation of terms along $\mathbf{d}$ is related to the transformed algebras as follows.
+
+\begin{lemma}\label{LTermComp}
+Let $\mathbf{d}\colon\sig{\Lambda}\mor\sig{\Omega}$ be a generalized hep-derivor, $\mathbf{C}$ a partial $\Omega$-algebra, $P\in\T_{\Lambda}(\vs{\mathbf{t}})_{t}$ and $\mathbf{x}$ a family of cells.
+If $P^{\mathbf{d}^{\ast}(\mathbf{C})}(\mathbf{x})$ is defined, then $d^{\sharp}(P)^{\mathbf{C}}(\mathbf{x})$ is defined and equal to it.
+Hence, if $\mathbf{d}^{\ast}(\mathbf{C})\models\mathcal{H}[\mathbf{x}]$, then $\mathbf{C}\models d^{\sharp}[\mathcal{H}][\mathbf{x}]$.
+\end{lemma}
+\begin{proof}
+By induction on $P$.
+For a variable it follows from (Der1).
+Let $P=\tau((P_{j})_{j})$ and $\mathbf{y}=(P_{j}^{\mathbf{d}^{\ast}(\mathbf{C})}(\mathbf{x}))_{j}$.
+By the induction hypothesis, $\mathbf{y}=(d^{\sharp}(P_{j})^{\mathbf{C}}(\mathbf{x}))_{j}$.
+By (Der2) and the behaviour of substitutions, $d^{\sharp}(P)^{\mathbf{C}}(\mathbf{x})=d(\tau)^{\mathbf{C}}(\mathbf{y})$.
+By Proposition~\ref{PTransformedAlg}, this is $\tau^{\mathbf{d}^{\ast}(\mathbf{C})}(\mathbf{y})=P^{\mathbf{d}^{\ast}(\mathbf{C})}(\mathbf{x})$.
+\end{proof}
+
+\begin{lemma}\label{LSameCells}
+Let $\mathbf{c}=(\varphi,c,\Dom)$ and $\mathbf{c}'=(\varphi,c,\Dom')$ be generalized hep-derivors with the same underlying derivor.
+If $\Dom$ and $\Dom'$ determine the same cells in $\mathbf{B}$ and in $\mathbf{B}'$, then $\mathbf{c}^{\ast}(\mathbf{B})=\mathbf{c}'^{\ast}(\mathbf{B})$ and $\mathbf{c}^{\ast}(f)=\mathbf{c}'^{\ast}(f)$, for every homomorphism $f\colon\mathbf{B}\mor\mathbf{B}'$.
+In particular, $(\id_{\sig{\Sigma}})^{\ast}$ is the identity on weak $\sig{\Sigma}$-algebras.
+\end{lemma}
+\begin{proof}
+By well-founded induction along $\lhd$, both algebras interpret every $\sigma$ in the same way, since conditions (D1), (D2) and (D3) agree.
+On homomorphisms, both functors give the same birestriction.
+For the identity, the cells are all the elements, $\eta^{\Sigma}(\sigma)^{\mathbf{A}}=\sigma^{\mathbf{A}}$ and, by induction along $\lhd$, the domain of $\sigma$ in $(\id_{\sig{\Sigma}})^{\ast}(\mathbf{A})$ is $A_{\defi(\sigma)}\cap\Dom(\sigma^{\mathbf{A}})=\Dom(\sigma^{\mathbf{A}})$, since $\mathbf{A}$ is weak.
+\end{proof}
+
+\begin{proposition}\label{PHepComp}
+Let $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{d}\colon\sig{\Lambda}\mor\sig{\Omega}$ be generalized hep-derivors and $\mathbf{C}$ a partial $\Omega$-algebra.
+Then the following statements hold:
+\begin{enumerate}
+\item $\mathbf{c}^{\ast}(\mathbf{d}^{\ast}(\mathbf{C}))$ is a subalgebra of $(\mathbf{d}\circ\mathbf{c})^{\ast}(\mathbf{C})$, i.e., the inclusion $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ is a homomorphism, natural in $\mathbf{C}$; and
+\item if both algebras have the same cells and $\mathbf{c}^{\ast}(\mathbf{d}^{\ast}(\mathbf{C}))$ is a $\sig{\Sigma}$-algebra, then they are equal; if, moreover, $\mathbf{C}'$ satisfies the same hypotheses, then both functors agree on every homomorphism $f\colon\mathbf{C}\mor\mathbf{C}'$.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+(1) We first prove the inclusion of the cells.
+Let $x$ be a cell of sort $s$ of $\mathbf{c}^{\ast}(\mathbf{d}^{\ast}(\mathbf{C}))$.
+Then $x$ is a cell of $\mathbf{d}^{\ast}(\mathbf{C})$ and $\mathbf{d}^{\ast}(\mathbf{C})\models\Dom^{\mathbf{c}}_{s}[x]$.
+By Lemma~\ref{LTermComp}, $\mathbf{C}\models d^{\sharp}[\Dom^{\mathbf{c}}_{s}][x]$, so that $x$ is a cell of $(\mathbf{d}\circ\mathbf{c})^{\ast}(\mathbf{C})$.
+
+Now we prove, by well-founded induction along $\lhd$, that the inclusion preserves the defined operations.
+Let $\mathbf{a}\in\Dom(\sigma^{\mathbf{c}^{\ast}(\mathbf{d}^{\ast}(\mathbf{C}))})$.
+By the induction hypothesis, $\mathbf{a}$ satisfies (D1) for $\mathbf{d}\circ\mathbf{c}$.
+By Lemma~\ref{LTermComp}, $(d^{\sharp}(c(\sigma)))^{\mathbf{C}}(\mathbf{a})$ is defined and equal to $c(\sigma)^{\mathbf{d}^{\ast}(\mathbf{C})}(\mathbf{a})=\sigma^{\mathbf{c}^{\ast}(\mathbf{d}^{\ast}(\mathbf{C}))}(\mathbf{a})$, which, by the inclusion of the cells, is a cell.
+Hence $\mathbf{a}$ satisfies (D2) and (D3), and both operations agree on $\mathbf{a}$.
+The naturality is clear, since both functors act on homomorphisms by birestriction.
+
+(2) We prove the reverse inclusion of the domains by well-founded induction along $\lhd$.
+Let $\mathbf{a}\in\Dom(\sigma^{(\mathbf{d}\circ\mathbf{c})^{\ast}(\mathbf{C})})$.
+By (D1) and the induction hypothesis, $\mathbf{a}$ satisfies $\defi^{\Sigma}(\sigma)$ in $\mathbf{c}^{\ast}(\mathbf{d}^{\ast}(\mathbf{C}))$.
+Since the latter is a $\sig{\Sigma}$-algebra, $\mathbf{a}$ is in the domain of $\sigma$ there.
+By~(1), $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ is the identity, and the statement on homomorphisms follows from the naturality.
+\end{proof}
+
+By Lemma~\ref{LTermComp}, both algebras have the same cells if, and only if, every cell $x$ of $\mathbf{d}^{\ast}(\mathbf{C})$ that satisfies $d^{\sharp}[\Dom^{\mathbf{c}}_{s}]$ in $\mathbf{C}$ satisfies $\Dom^{\mathbf{c}}_{s}$ in $\mathbf{d}^{\ast}(\mathbf{C})$.
+This holds trivially if the domains of $\mathbf{c}$ are empty.
+We will use Proposition~\ref{PHepComp}~(2) in the following form.
+
+\begin{lemma}\label{LCommSquare}
+Let $\mathbf{a}$, $\mathbf{b}$, $\mathbf{a}'$ and $\mathbf{b}'$ be generalized hep-derivors with $\mathbf{b}\circ\mathbf{a}=\mathbf{b}'\circ\mathbf{a}'$, and $\mathbf{B}$ a partial algebra such that $\mathbf{a}^{\ast}(\mathbf{b}^{\ast}(\mathbf{B}))$ and $\mathbf{a}'^{\ast}(\mathbf{b}'^{\ast}(\mathbf{B}))$ are ep-algebras with the same cells as $(\mathbf{b}\circ\mathbf{a})^{\ast}(\mathbf{B})$.
+Then $\mathbf{a}^{\ast}(\mathbf{b}^{\ast}(\mathbf{B}))=\mathbf{a}'^{\ast}(\mathbf{b}'^{\ast}(\mathbf{B}))$, and similarly for homomorphisms between such algebras.
+\end{lemma}
+\begin{proof}
+By Proposition~\ref{PHepComp}~(2), both are equal to $(\mathbf{b}\circ\mathbf{a})^{\ast}(\mathbf{B})$.
+\end{proof}
+
+\begin{proposition}\label{PHepSigCat}
+The hep-signatures and the generalized hep-derivors, with the composition and the identities of Definition~\ref{DHepComp}, form a category $\mathsf{hepSig}_{\gd}$.
+\end{proposition}
+\begin{proof}
+By (Der4), the underlying derivors compose associatively and the identities are neutral.
+It remains to compare the domains.
+For $\mathbf{e}=(\chi,e,\Dom^{\mathbf{e}})\colon\sig{\Omega}\mor\sig{\Xi}$, since $e^{\sharp}[\,\cdot\,]$ preserves unions and $(e^{\sharp}\circ d)^{\sharp}=e^{\sharp}\circ d^{\sharp}$, both $\Dom^{\mathbf{e}\circ(\mathbf{d}\circ\mathbf{c})}_{s}$ and $\Dom^{(\mathbf{e}\circ\mathbf{d})\circ\mathbf{c}}_{s}$ are equal to
+$$
+\Dom^{\mathbf{e}}_{\psi(\varphi(s))}\cup e^{\sharp}\left[\Dom^{\mathbf{d}}_{\varphi(s)}\right]\cup e^{\sharp}\left[d^{\sharp}\left[\Dom^{\mathbf{c}}_{s}\right]\right].
+$$
+Finally, since $(\eta^{\Lambda})^{\sharp}$ is the identity, the domains of $\id_{\sig{\Lambda}}\circ\mathbf{c}$ and $\mathbf{c}\circ\id_{\sig{\Sigma}}$ are those of $\mathbf{c}$.
+\end{proof}
+
+\begin{remark}\label{RHepAlgCat}
+By Proposition~\ref{PHepComp}, on the weak ep-algebras the induced functors only preserve composites up to the inclusions $\kappa^{\mathbf{c},\mathbf{d}}$.
+Hence they form a normal lax $\mathsf{hepSig}_{\gd}$-indexed category, whose Grothendieck construction yields a category $\mathsf{hepAlg}_{\gd}$ of the ep-algebras of all the hep-signatures.
+A morphism from $(\sig{\Sigma},\mathbf{A})$ to $(\sig{\Lambda},\mathbf{B})$ is a pair $(\mathbf{c},f)$ with $f\colon\mathbf{A}\mor\mathbf{c}^{\ast}(\mathbf{B})$, and $(\mathbf{d},g)\circ(\mathbf{c},f)=(\mathbf{d}\circ\mathbf{c},\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}\circ\mathbf{c}^{\ast}(g)\circ f)$.
+For a derivor $(\varphi,c)$ between many-sorted signatures, $(\varphi,c,\varnothing)^{\ast}$ sends a total $\Lambda$-algebra $\mathbf{B}$ to the $\Sigma$-algebra on $B_{\varphi}$ in which $\sigma$ acts as $c(\sigma)^{\mathbf{B}}$, i.e., it is the usual functor, see~\cite{CVST10b}.
+Thus $\mathsf{hepAlg}_{\gd}$ contains the category $\mathsf{Alg}_{\mathfrak{d}}$ of~\cite{CVST10b}.
+\end{remark}
+
+\section{Higher-order categorial algebras}\label{SCatAlg}
+
+In this section we present the higher-order categorial algebras, in their single-set and globular forms, as ep-varieties of hep-specifications.
+In both cases, the composition of two cells is defined exactly when a source of one is a target of the other, which is a domain condition.
+We write $x\circ y$ for $\circ(x,y)$, and $\mathbf{x}$ for a family $(x_{p})_{p\in\bb{\mathbf{s}}}$ of variables of arity $\mathbf{s}$.
+In this section, $\sig{\Sigma}=(S,\Sigma)$ is a many-sorted signature.
+
+\subsection{The single-set presentation}
+
+In the single-set presentation, all the cells of a sort form a single set, and the dimension of a cell is read off from its sources and targets, as in~\cite{Str87}.
+
+\begin{definition}\label{DSigmaCatSingleSet}
+Let $n\in\mathbb{N}$.
+The \emph{single-set $n$-categorial signature} $\sig{\Sigma}^{(n)}$ is the hep-signature with sorts $S$ whose operation symbols are those of $\Sigma$ and, for every $k\in n$ and every $s\in S$, the \emph{$k$-source} $\src^{k}_{s}$ and the \emph{$k$-target} $\tgt^{k}_{s}$, of arity $(s)$, and the \emph{$k$-composition} $\circ^{k}_{s}$, of arity $(s,s)$, all of them of coarity $s$.
+The only nonempty sets of domain conditions are
+$$
+\defi(\circ^{k}_{s})=\left\{\left(\src^{k}_{s}(v^{s}_{0}),\tgt^{k}_{s}(v^{s}_{1})\right)\right\}.
+$$
+It is hierarchical, since the domain conditions only involve sources and targets.
+\end{definition}
+
+The same clauses, with $\omega$ in place of $n$, define the hep-signature $\sig{\Sigma}^{(\omega)}$, and $\Sigma^{(\omega)}$ is the union of the $\Sigma^{(n)}$.
+
+\begin{definition}\label{DSpecSingleSet}
+Let $n\in\mathbb{N}$.
+We let $\spec{C}^{(n)}=(\sig{\Sigma}^{(n)},\mathcal{C}^{(n)})$ stand for the hep-specification whose equations are the following ones, for every $s\in S$, every $\sigma\in\Sigma_{\mathbf{s},s}$, every $k\in n$ and every $l<k$ in $n$; we omit the sort subscripts:
+\begin{align*}
+&\sigma(\mathbf{x})\eeq\sigma(\mathbf{x});
+\tag{A0}\\
+&\src^{k}(x)\eeq\src^{k}(x),\quad\tgt^{k}(x)\eeq\tgt^{k}(x);
+\tag{A$^{k}$1}\\
+&\src^{k}(\src^{k}(x))\eeq\tgt^{k}(\src^{k}(x))\eeq\src^{k}(x),\quad\src^{k}(\tgt^{k}(x))\eeq\tgt^{k}(\tgt^{k}(x))\eeq\tgt^{k}(x);
+\tag{A$^{k}$2}\\
+&x\circ^{k}y\eeq x\circ^{k}y\ \longleftrightarrow\ \src^{k}(x)\eeq\tgt^{k}(y);
+\tag{A$^{k}$3}\\
+&x\circ^{k}y\eeq x\circ^{k}y\ \longrightarrow\ \src^{k}(x\circ^{k}y)\eeq\src^{k}(y)\wedge\tgt^{k}(x\circ^{k}y)\eeq\tgt^{k}(x);
+\tag{A$^{k}$4}\\
+&x\circ^{k}\src^{k}(x)\eeq x,\quad\tgt^{k}(x)\circ^{k}x\eeq x;
+\tag{A$^{k}$5}\\
+&x\circ^{k}y\eeq x\circ^{k}y\wedge y\circ^{k}z\eeq y\circ^{k}z\ \longrightarrow\ (x\circ^{k}y)\circ^{k}z\eeq x\circ^{k}(y\circ^{k}z);
+\tag{A$^{k}$6}\\
+&\src^{k}(\sigma(\mathbf{x}))\eeq\sigma(\src^{k}(\mathbf{x})),\quad\tgt^{k}(\sigma(\mathbf{x}))\eeq\sigma(\tgt^{k}(\mathbf{x}));
+\tag{A$^{k}$7}\\
+&\textstyle\bigwedge_{p}x_{p}\circ^{k}y_{p}\eeq x_{p}\circ^{k}y_{p}\ \longrightarrow\ \sigma(\mathbf{x}\circ^{k}\mathbf{y})\eeq\sigma(\mathbf{x})\circ^{k}\sigma(\mathbf{y});
+\tag{A$^{k}$8}\\
+&\src^{k}(\src^{l}(x))\eeq\src^{l}(\src^{k}(x))\eeq\src^{l}(\tgt^{k}(x))\eeq\src^{l}(x),\ \text{and dually for $\tgt$};
+\tag{AB$^{l,k}$1}\\
+&x\circ^{l}y\eeq x\circ^{l}y\ \longrightarrow\ \src^{k}(x\circ^{l}y)\eeq\src^{k}(x)\circ^{l}\src^{k}(y)\wedge\tgt^{k}(x\circ^{l}y)\eeq\tgt^{k}(x)\circ^{l}\tgt^{k}(y);
+\tag{AB$^{l,k}$2}\\
+&x\circ^{l}y\eeq x\circ^{l}y\wedge z\circ^{l}t\eeq z\circ^{l}t\wedge x\circ^{k}z\eeq x\circ^{k}z\wedge y\circ^{k}t\eeq y\circ^{k}t
+\\&\qquad\longrightarrow\ (x\circ^{l}y)\circ^{k}(z\circ^{l}t)\eeq(x\circ^{k}z)\circ^{l}(y\circ^{k}t).
+\tag{AB$^{l,k}$3}
+\end{align*}
+Here $\src^{k}(\mathbf{x})=(\src^{k}(x_{p}))_{p}$, $\mathbf{x}\circ^{k}\mathbf{y}=(x_{p}\circ^{k}y_{p})_{p}$, a biconditional stands for two $\QE$-equations and a conjunction in a conclusion for several ones.
+\end{definition}
+
+The same equations, for every $k\in\omega$ and every $l<k$ in $\omega$, define the hep-specification $\spec{C}^{(\omega)}=(\sig{\Sigma}^{(\omega)},\mathcal{C}^{(\omega)})$.
+
+Every model of $\mathcal{C}^{(n)}$, and of $\mathcal{C}^{(\omega)}$, is an ep-algebra: by (A0) and (A$^{k}$1), the symbols without domain conditions are total, and, by (A$^{k}$3), $\circ^{k}$ is defined exactly on the pairs that satisfy its domain condition.
+Hence the objects of $\EPAlg(\spec{C}^{(n)})$ are the models of $\mathcal{C}^{(n)}$.
+
+\begin{definition}\label{DCatAlg}
+Let $n\in\mathbb{N}$.
+We let $\mathsf{nCatAlg}(\sig{\Sigma})$ stand for $\EPAlg(\spec{C}^{(n)})$, whose objects are the \emph{$n$-categorial $\sig{\Sigma}$-algebras}.
+For $x$ of sort $s$ and $k\in n$, $x$ is a \emph{$k$-cell} if $\src^{k}_{s}(x)=x$; every cell is an \emph{$n$-cell}.
+We let $\omega\mathsf{CatAlg}(\sig{\Sigma})$ stand for the full subcategory of $\EPAlg(\spec{C}^{(\omega)})$ whose objects, the \emph{$\omega$-categorial $\sig{\Sigma}$-algebras}, are those in which every cell is a $k$-cell for some $k\in\omega$.
+\end{definition}
+
+The axioms (A$^{k}$1)--(A$^{k}$6) state that, for every $k$, $(\src^{k},\tgt^{k},\circ^{k})$ is a single-set category, and the axioms (AB$^{l,k}$1)--(AB$^{l,k}$3) that every two of them form a single-set $2$-category.
+Hence every sort carries a single-set $n$-category in the sense of~\cite{Str87}.
+By (A0), (A$^{k}$7) and (A$^{k}$8), the operations of $\Sigma$ are total $n$-functors, and the homomorphisms are the $S$-sorted $n$-functors that commute with them.
+Thus $\mathsf{nCatAlg}(\sig{\Sigma})$ is the category of many-sorted algebras in $\mathsf{nCat}$; for $S=1$ and $\Sigma=\varnothing$ it is $\mathsf{nCat}$.
+For $n=0$, $\Sigma^{(0)}=\Sigma$ and $\mathsf{0CatAlg}(\sig{\Sigma})=\mathsf{Alg}(\Sigma)$.
+
+We collect the elementary facts on cells that we will use.
+
+\begin{lemma}\label{LGradCells}
+Let $n\in\mathbb{N}$, $\mathbf{B}$ an object of $\EPAlg(\spec{C}^{(n)})$ and $j<k$ in $n$.
+Then the following statements hold:
+\begin{enumerate}
+\item if $\mathbf{x}$ is a family of $k$-cells, then $\sigma(\mathbf{x})$ is a $k$-cell;
+\item $\src^{j}(x)$ and $\tgt^{j}(x)$ are $j$-cells;
+\item every $j$-cell is a $k$-cell; and
+\item if $x$, $y$ are $k$-cells and $\src^{j}(x)=\tgt^{j}(y)$, then $x\circ^{j}y$ is defined and is a $k$-cell.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+(1) follows from (A$^{k}$7), and (2) from (A$^{j}$2).
+For (3), if $u=\src^{j}(u)$, then, by (AB$^{j,k}$1), $\src^{k}(u)=\src^{k}(\src^{j}(u))=\src^{j}(u)=u$.
+For (4), $x\circ^{j}y$ is defined by (A$^{j}$3), and, by (AB$^{j,k}$2), $\src^{k}(x\circ^{j}y)=\src^{k}(x)\circ^{j}\src^{k}(y)=x\circ^{j}y$.
+\end{proof}
+
+The proof only uses the axioms for the dimensions $j<k$.
+Hence the same statements hold, for $j<k$ in $\omega$, in every object of $\EPAlg(\spec{C}^{(\omega)})$.
+
+In dimension $\omega$, the finite dimension of the cells is not equational.
+
+\begin{proposition}\label{PFiniteDimNotQE}
+If $S\neq\varnothing$, then there is no set of $\QE$-equations of $\Sigma^{(\omega)}$ whose models are exactly the $\omega$-categorial $\sig{\Sigma}$-algebras.
+In particular, $\omega\mathsf{CatAlg}(\sig{\Sigma})$ is a proper full subcategory of $\EPAlg(\spec{C}^{(\omega)})$.
+\end{proposition}
+\begin{proof}
+Since $\QE$-varieties are closed under products, it suffices to find $\omega$-categorial $\sig{\Sigma}$-algebras $\calg{A}_{k}$, for $k\in\omega$, whose product is not $\omega$-categorial.
+Let $\mathsf{G}_{k}$ be the single-set $\omega$-category freely generated by a $(k+1)$-cell $g_{k}$, which is not a $k$-cell.
+Let $\calg{A}_{k}$ have $\mathsf{G}_{k}$ in every sort and every $\sigma$ interpreted as the constant mapping with value the $0$-cell $\src^{0}(g_{k})$.
+This constant mapping is an $\omega$-functor.
+Moreover, every cell of $\calg{A}_{k}$ is a $(k+1)$-cell.
+In the product, the cell $(g_{k})_{k\in\omega}$ of sort $s\in S$ is not a $j$-cell for any $j$, since $\src^{j}(g_{j})\neq g_{j}$.
+Finally, the product is a model of $\mathcal{C}^{(\omega)}$, which consists of $\QE$-equations.
+\end{proof}
+
+\subsection{The globular presentation}
+
+In the globular presentation, see~\cite{abgmmm23}, the cells of every dimension form a separate sort.
+For $k\in\mathbb{N}$ and $\mathbf{s}\in S^{\star}$, we let $(k,\mathbf{s})$ stand for the word $((k,s_{p}))_{p\in\bb{\mathbf{s}}}$.
+
+\begin{definition}\label{DSigmaCatGlobular}
+Let $n\in\mathbb{N}$ and $N=n+1$.
+The \emph{globular $n$-categorial signature} $\sig{\Sigma}^{\gl(n)}$ is the hep-signature with sorts $N\times S$ whose operation symbols are, for every $\sigma\in\Sigma_{\mathbf{s},s}$, every $j<k$ in $N$ and every $s\in S$: a copy $\sigma_{k}$ of $\sigma$, of arity $(k,\mathbf{s})$ and coarity $(k,s)$; the \emph{$(j,k)$-source} $\src^{(j,k)}_{s}$ and the \emph{$(j,k)$-target} $\tgt^{(j,k)}_{s}$, of arity $((k,s))$ and coarity $(j,s)$; the \emph{$(k,j)$-identity} $\ii^{(k,j)}_{s}$, of arity $((j,s))$ and coarity $(k,s)$; and the \emph{$j$-composition of $k$-cells} $\circ^{(j,k)}_{s}$, of arity $((k,s),(k,s))$ and coarity $(k,s)$.
+The only nonempty sets of domain conditions are
+$$
+\defi(\circ^{(j,k)}_{s})=\left\{\left(\src^{(j,k)}_{s}(v^{(k,s)}_{0}),\tgt^{(j,k)}_{s}(v^{(k,s)}_{1})\right)\right\}.
+$$
+\end{definition}
+
+The same clauses, with $N=\omega$, define the hep-signature $\sig{\Sigma}^{\gl(\omega)}$.
+For $n\leq m$ in $\mathbb{N}$, $\Sigma^{\gl(n)}$ embeds canonically into $\Sigma^{\gl(m)}$; it also embeds into $\Sigma^{\gl(\omega)}$, which is the union of the images.
+
+\begin{definition}\label{DSpecGlobular}
+Let $n\in\mathbb{N}$ and $N=n+1$.
+We let $\spec{C}^{\gl(n)}=(\sig{\Sigma}^{\gl(n)},\mathcal{C}^{\gl(n)})$ stand for the hep-specification whose equations are the following ones, for every $\sigma\in\Sigma_{\mathbf{s},s}$, every $h<j<k$ in $N$ and every $s\in S$, with variables $x,y,z,t$ of sort $(k,s)$ and $u,w$ of sort $(j,s)$ or, in (EA$^{h,j,k}$2), of sort $(h,s)$:
+\begin{align*}
+&\sigma_{k}(\mathbf{x})\eeq\sigma_{k}(\mathbf{x});
+\tag{EA0}\\
+&\src^{(j,k)}(x)\eeq\src^{(j,k)}(x),\quad\tgt^{(j,k)}(x)\eeq\tgt^{(j,k)}(x),\quad\ii^{(k,j)}(u)\eeq\ii^{(k,j)}(u);
+\tag{EA$^{j,k}$1}\\
+&\src^{(j,k)}(\ii^{(k,j)}(u))\eeq u,\quad\tgt^{(j,k)}(\ii^{(k,j)}(u))\eeq u;
+\tag{EA$^{j,k}$2}\\
+&x\circ^{(j,k)}y\eeq x\circ^{(j,k)}y\ \longleftrightarrow\ \src^{(j,k)}(x)\eeq\tgt^{(j,k)}(y);
+\tag{EA$^{j,k}$3}\\
+&x\circ^{(j,k)}y\eeq x\circ^{(j,k)}y
+\\&\qquad\longrightarrow\ \src^{(j,k)}(x\circ^{(j,k)}y)\eeq\src^{(j,k)}(y)\wedge\tgt^{(j,k)}(x\circ^{(j,k)}y)\eeq\tgt^{(j,k)}(x);
+\tag{EA$^{j,k}$4}\\
+&x\circ^{(j,k)}\ii^{(k,j)}(\src^{(j,k)}(x))\eeq x,\quad\ii^{(k,j)}(\tgt^{(j,k)}(x))\circ^{(j,k)}x\eeq x;
+\tag{EA$^{j,k}$5}\\
+&x\circ^{(j,k)}y\eeq x\circ^{(j,k)}y\wedge y\circ^{(j,k)}z\eeq y\circ^{(j,k)}z
+\\&\qquad\longrightarrow\ (x\circ^{(j,k)}y)\circ^{(j,k)}z\eeq x\circ^{(j,k)}(y\circ^{(j,k)}z);
+\tag{EA$^{j,k}$6}\\
+&\src^{(j,k)}(\sigma_{k}(\mathbf{x}))\eeq\sigma_{j}(\src^{(j,k)}(\mathbf{x})),\quad\tgt^{(j,k)}(\sigma_{k}(\mathbf{x}))\eeq\sigma_{j}(\tgt^{(j,k)}(\mathbf{x})),
+\\&\ii^{(k,j)}(\sigma_{j}(\mathbf{u}))\eeq\sigma_{k}(\ii^{(k,j)}(\mathbf{u}));
+\tag{EA$^{j,k}$7}\\
+&\textstyle\bigwedge_{p}x_{p}\circ^{(j,k)}y_{p}\eeq x_{p}\circ^{(j,k)}y_{p}
+\\&\qquad\longrightarrow\ \sigma_{k}(\mathbf{x}\circ^{(j,k)}\mathbf{y})\eeq\sigma_{k}(\mathbf{x})\circ^{(j,k)}\sigma_{k}(\mathbf{y});
+\tag{EA$^{j,k}$8}\\
+&\src^{(h,j)}(\src^{(j,k)}(x))\eeq\src^{(h,j)}(\tgt^{(j,k)}(x))\eeq\src^{(h,k)}(x),\ \text{and dually for $\tgt$};
+\tag{EA$^{h,j,k}$1}\\
+&\ii^{(k,j)}(\ii^{(j,h)}(w))\eeq\ii^{(k,h)}(w);
+\tag{EA$^{h,j,k}$2}\\
+&x\circ^{(h,k)}y\eeq x\circ^{(h,k)}y
+\\&\qquad\longrightarrow\ \src^{(j,k)}(x\circ^{(h,k)}y)\eeq\src^{(j,k)}(x)\circ^{(h,j)}\src^{(j,k)}(y),\ \text{and dually for $\tgt$};
+\tag{EA$^{h,j,k}$3}\\
+&x\circ^{(j,k)}y\eeq x\circ^{(j,k)}y\wedge z\circ^{(j,k)}t\eeq z\circ^{(j,k)}t
+\\&\qquad\wedge x\circ^{(h,k)}z\eeq x\circ^{(h,k)}z\wedge y\circ^{(h,k)}t\eeq y\circ^{(h,k)}t
+\\&\qquad\longrightarrow\ (x\circ^{(j,k)}y)\circ^{(h,k)}(z\circ^{(j,k)}t)\eeq(x\circ^{(h,k)}z)\circ^{(j,k)}(y\circ^{(h,k)}t);
+\tag{EA$^{h,j,k}$4}\\
+&u\circ^{(h,j)}w\eeq u\circ^{(h,j)}w
+\\&\qquad\longrightarrow\ \ii^{(k,j)}(u\circ^{(h,j)}w)\eeq\ii^{(k,j)}(u)\circ^{(h,k)}\ii^{(k,j)}(w).
+\tag{EA$^{h,j,k}$5}
+\end{align*}
+\end{definition}
+
+The same equations, for the dimensions in $\omega$, define the hep-specification $\spec{C}^{\gl(\omega)}=(\sig{\Sigma}^{\gl(\omega)},\mathcal{C}^{\gl(\omega)})$.
+
+As in the single-set case, by (EA0), (EA$^{j,k}$1) and (EA$^{j,k}$3), the models of $\mathcal{C}^{\gl(n)}$ are $\sig{\Sigma}^{\gl(n)}$-algebras.
+
+\begin{definition}\label{DGlCatAlg}
+For $n\in\mathbb{N}$, we let $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ stand for $\EPAlg(\spec{C}^{\gl(n)})$, whose objects are the \emph{globular $n$-categorial $\sig{\Sigma}$-algebras}, and we let $\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ stand for $\EPAlg(\spec{C}^{\gl(\omega)})$.
+The elements of sort $(k,s)$ are the \emph{$k$-cells} of sort $s$.
+\end{definition}
+
+The axioms on $j<k$ and $h<j<k$ are those of the globular $n$-categories of~\cite{abgmmm23}, and (EA0), (EA$^{j,k}$7) and (EA$^{j,k}$8) state that every $\sigma$ is a globular $n$-functor.
+In contrast with Proposition~\ref{PFiniteDimNotQE}, in the globular presentation every cell has a dimension, the first coordinate of its sort.
+
+\begin{lemma}\label{LUnifInj}
+In every object of $\EPAlg(\spec{C}^{\gl(n)})$, $\src^{(j,k)}_{s}\circ\ii^{(k,j)}_{s}$ and $\tgt^{(j,k)}_{s}\circ\ii^{(k,j)}_{s}$ are identities.
+In particular, $\ii^{(k,j)}_{s}$ is injective.
+\end{lemma}
+\begin{proof}
+It is (EA$^{j,k}$2).
+\end{proof}
+
+The following fact, which follows from (EA0), (EA$^{j,k}$7) and (EA$^{j,k}$8) by induction on terms, as in Lemma~\ref{LGradCells}~(1), will be used in Section~\ref{SChangeSig}.
+For a term $P$ of $\Lambda$ and $k\in N$, we let $P_{k}$ stand for the term of $\Lambda^{\gl(n)}$ obtained by replacing every $\tau$ by $\tau_{k}$ and every variable $v^{\mathbf{t}}_{p}$ by $v^{(k,\mathbf{t})}_{p}$.
+
+\begin{lemma}\label{LTermFunctor}
+Let $\sig{\Lambda}=(T,\Lambda)$ be a many-sorted signature and $P$ a term of $\Lambda$.
+Then the following statements hold:
+\begin{enumerate}
+\item in every object of $\EPAlg(\spec{C}^{(n)})$ for $\sig{\Lambda}$, $P^{\mathbf{B}}$ is total and is an $n$-functor, i.e., it commutes with $\src^{k}$ and $\tgt^{k}$ and preserves the defined $k$-compositions; and
+\item in every object of $\EPAlg(\spec{C}^{\gl(n)})$ for $\sig{\Lambda}$, the terms $P_{k}$ are total and form a globular $n$-functor, i.e., $\src^{(j,k)}\circ P_{k}=P_{j}\circ\src^{(j,k)}$, $\tgt^{(j,k)}\circ P_{k}=P_{j}\circ\tgt^{(j,k)}$, $\ii^{(k,j)}\circ P_{j}=P_{k}\circ\ii^{(k,j)}$, and $P_{k}$ preserves the defined $j$-compositions.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+(1) By induction on $P$.
+For a variable it is trivial.
+For $P=\tau((P_{i})_{i})$, by the induction hypothesis and (A0), $P^{\mathbf{B}}$ is total.
+Moreover, $\src^{k}(P(\mathbf{x}))=\tau((\src^{k}(P_{i}(\mathbf{x})))_{i})=\tau((P_{i}(\src^{k}(\mathbf{x})))_{i})=P(\src^{k}(\mathbf{x}))$, by (A$^{k}$7) and the induction hypothesis.
+If every $x_{p}\circ^{k}y_{p}$ is defined, then, by the induction hypothesis, $P_{i}(\mathbf{x})\circ^{k}P_{i}(\mathbf{y})$ is defined and equal to $P_{i}(\mathbf{x}\circ^{k}\mathbf{y})$; hence, by (A$^{k}$8), $P(\mathbf{x})\circ^{k}P(\mathbf{y})$ is defined and equal to $P(\mathbf{x}\circ^{k}\mathbf{y})$.
+
+(2) The proof is the same, with (EA0), (EA$^{j,k}$7) and (EA$^{j,k}$8), since $(\tau((P_{i})_{i}))_{k}=\tau_{k}(((P_{i})_{k})_{i})$.
+\end{proof}
+
+\section{Graduation and unification}\label{SGraduation}
+
+In this section we pass from the single-set to the globular presentation, and back, by means of two generalized hep-derivors.
+In what follows, $\sig{\Sigma}=(S,\Sigma)$ is a many-sorted signature and $n\in\mathbb{N}$.
+For the generalized hep-derivors of this work we use the following notation: the graduation derivor is $\bGd^{(n)}=(\varphi^{\Gd},\Gd^{(n)},\Dom^{\Gd})$, where $\Gd^{(n)}$ denotes both the assignment of terms and the induced functor, and similarly for the unification, discretization and truncation derivors $\bUf$, $\bDs$ and $\bTr$.
+We omit the subscript $\sig{\Sigma}$.
+
+\subsection{Graduation}
+
+Graduating a single-set $n$-categorial algebra consists in distributing its cells into sorts according to their dimension.
+
+\begin{definition}\label{DGradDerivor}
+The \emph{graduation derivor} $\bGd^{(n)}$ is the generalized hep-derivor from $\sig{\Sigma}^{\gl(n)}$ to $\sig{\Sigma}^{(n)}$ that sends the sort $(k,s)$ to $s$ and, for every $j<k$ in $n+1$,
+\begin{align*}
+\Gd^{(n)}(\sigma_{k})&=\sigma((v^{\mathbf{s}}_{p})_{p}), &
+\Gd^{(n)}(\ii^{(k,j)}_{s})&=v^{s}_{0}, &
+\Gd^{(n)}(\circ^{(j,k)}_{s})&=v^{s}_{0}\circ^{j}_{s}v^{s}_{1},\\
+\Gd^{(n)}(\src^{(j,k)}_{s})&=\src^{j}_{s}(v^{s}_{0}), &
+\Gd^{(n)}(\tgt^{(j,k)}_{s})&=\tgt^{j}_{s}(v^{s}_{0}),
+\end{align*}
+with domains $\Dom^{\Gd}_{(k,s)}=\{(v^{s}_{0},\src^{k}_{s}(v^{s}_{0}))\}$, for $k\in n$, and $\Dom^{\Gd}_{(n,s)}=\varnothing$.
+The \emph{graduation functor} is $\Gd^{(n)}=(\bGd^{(n)})^{\ast}$.
+\end{definition}
+
+Thus the cells of sort $(k,s)$ of $\Gd^{(n)}(\mathbf{B})$ are the $k$-cells of sort $s$ of $\mathbf{B}$, for $k\in n$, and all its cells of sort $s$, for $k=n$.
+
+\begin{proposition}\label{PGradDerivor}
+The functor $\Gd^{(n)}$ restricts to a functor from $\mathsf{nCatAlg}(\sig{\Sigma})$ to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$.
+Moreover, in $\Gd^{(n)}(\calg{B})$, $\sigma_{k}$, $\src^{(j,k)}_{s}$ and $\tgt^{(j,k)}_{s}$ act as $\sigma$, $\src^{j}_{s}$ and $\tgt^{j}_{s}$, the identities are inclusions, and $x\circ^{(j,k)}_{s}y$ is defined if, and only if, $x\circ^{j}_{s}y$ is defined, and then it is $x\circ^{j}_{s}y$.
+\end{proposition}
+\begin{proof}
+Let $\calg{B}$ be an $n$-categorial $\sig{\Sigma}$-algebra.
+We first prove that $\Gd^{(n)}(\calg{B})$ is a $\sig{\Sigma}^{\gl(n)}$-algebra, by Proposition~\ref{PTransformedEpAlg}.
+By (A0) and (A$^{j}$1), the terms assigned to $\sigma_{k}$, $\src^{(j,k)}_{s}$, $\tgt^{(j,k)}_{s}$ and $\ii^{(k,j)}_{s}$ are total.
+By Lemma~\ref{LGradCells}, they send cells to cells of the right dimension.
+Two $k$-cells satisfy the domain condition of $\circ^{(j,k)}_{s}$ if, and only if, $\src^{j}_{s}(x)=\tgt^{j}_{s}(y)$, and then, by Lemma~\ref{LGradCells}~(4), $x\circ^{j}_{s}y$ is defined and is a $k$-cell.
+Hence it is a $\sig{\Sigma}^{\gl(n)}$-algebra, and, by Proposition~\ref{PTransformedAlg}, its operations are as stated.
+
+Now we prove that the axioms of $\mathcal{C}^{\gl(n)}$ hold.
+Let $h<j<k$.
+The axioms (EA0), (EA$^{j,k}$1) and (EA$^{j,k}$3) hold by the above.
+(EA$^{j,k}$2) holds since $\src^{j}(u)=u=\tgt^{j}(u)$ for every $j$-cell $u$.
+(EA$^{j,k}$4)--(EA$^{j,k}$8) become (A$^{j}$4)--(A$^{j}$8) restricted to $k$-cells.
+(EA$^{h,j,k}$2) and (EA$^{h,j,k}$5) are trivial, since the identities are inclusions.
+Finally, (EA$^{h,j,k}$1), (EA$^{h,j,k}$3) and (EA$^{h,j,k}$4) become (AB$^{h,j}$1), (AB$^{h,j}$2) and (AB$^{h,j}$3), after exchanging $y$ and $z$ in the last one.
+\end{proof}
+
+The restriction to $\mathsf{nCatAlg}(\sig{\Sigma})$ is necessary: in a $\sig{\Sigma}^{(n)}$-algebra in which $\src^{j}$ is not idempotent, the $j$-source of a cell need not be a $j$-cell, and $\src^{(j,k)}$ need not be total in $\Gd^{(n)}(\mathbf{B})$.
+
+\subsection{Unification}
+
+Unifying a globular $n$-categorial algebra consists in keeping its $n$-cells, in which every $k$-cell is represented by its $(n,k)$-identity.
+
+\begin{definition}\label{DUnifDerivor}
+The \emph{unification derivor} $\bUf^{(n)}$ is the generalized hep-derivor from $\sig{\Sigma}^{(n)}$ to $\sig{\Sigma}^{\gl(n)}$, with empty domains, that sends $s$ to $(n,s)$ and, for every $k\in n$,
+\begin{align*}
+\Uf^{(n)}(\sigma)&=\sigma_{n}((v^{(n,\mathbf{s})}_{p})_{p}), &
+\Uf^{(n)}(\src^{k}_{s})&=\ii^{(n,k)}_{s}(\src^{(k,n)}_{s}(v^{(n,s)}_{0})),\\
+\Uf^{(n)}(\circ^{k}_{s})&=v^{(n,s)}_{0}\circ^{(k,n)}_{s}v^{(n,s)}_{1}, &
+\Uf^{(n)}(\tgt^{k}_{s})&=\ii^{(n,k)}_{s}(\tgt^{(k,n)}_{s}(v^{(n,s)}_{0})).
+\end{align*}
+The \emph{unification functor} is $\Uf^{(n)}=(\bUf^{(n)})^{\ast}$.
+\end{definition}
+
+\begin{proposition}\label{PUnifDerivor}
+The functor $\Uf^{(n)}$ restricts to a functor from $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ to $\mathsf{nCatAlg}(\sig{\Sigma})$.
+Moreover, the cells of sort $s$ of $\Uf^{(n)}(\calg{A})$ are the $n$-cells of sort $s$ of $\calg{A}$, in which $\sigma$, $\src^{k}_{s}$, $\tgt^{k}_{s}$ and $\circ^{k}_{s}$ act as $\sigma_{n}$, $\ii^{(n,k)}_{s}\circ\src^{(k,n)}_{s}$, $\ii^{(n,k)}_{s}\circ\tgt^{(k,n)}_{s}$ and $\circ^{(k,n)}_{s}$.
+\end{proposition}
+\begin{proof}
+Let $\calg{A}$ be a globular $n$-categorial $\sig{\Sigma}$-algebra.
+We first prove that $\Uf^{(n)}(\calg{A})$ is a $\sig{\Sigma}^{(n)}$-algebra.
+The domains are empty, so that the cells are the $n$-cells.
+By (EA0) and (EA$^{k,n}$1), the terms assigned to $\sigma$, $\src^{k}_{s}$ and $\tgt^{k}_{s}$ are total.
+By Lemma~\ref{LUnifInj}, two $n$-cells satisfy the domain condition of $\circ^{k}_{s}$ if, and only if, $\src^{(k,n)}_{s}(x)=\tgt^{(k,n)}_{s}(y)$, and then, by (EA$^{k,n}$3), $x\circ^{(k,n)}_{s}y$ is defined.
+Hence, by Propositions~\ref{PTransformedEpAlg} and~\ref{PTransformedAlg}, it is a $\sig{\Sigma}^{(n)}$-algebra with the stated operations.
+
+Now we prove that the axioms of $\mathcal{C}^{(n)}$ hold.
+Let $l<k$ in $n$.
+(A0), (A$^{k}$1) and (A$^{k}$3) follow from (EA0), (EA$^{k,n}$1), (EA$^{k,n}$3) and Lemma~\ref{LUnifInj}.
+(A$^{k}$2) follows from Lemma~\ref{LUnifInj}.
+(A$^{k}$4), (A$^{k}$5), (A$^{k}$6) and (A$^{k}$8) follow from (EA$^{k,n}$4), (EA$^{k,n}$5), (EA$^{k,n}$6) and (EA$^{k,n}$8).
+(A$^{k}$7) follows from the first and the third equations of (EA$^{k,n}$7).
+By (EA$^{l,k,n}$1) and Lemma~\ref{LUnifInj}, $\src^{(l,n)}(\ii^{(n,k)}(w))=\src^{(l,k)}(w)$ for every $k$-cell $w$; with this, (AB$^{l,k}$1) follows from (EA$^{l,k,n}$1) and (EA$^{l,k,n}$2).
+(AB$^{l,k}$2) follows from (EA$^{l,k,n}$3) and (EA$^{l,k,n}$5), since
+\begin{align*}
+\ii^{(n,k)}(\src^{(k,n)}(x\circ^{(l,n)}y))
+&=\ii^{(n,k)}(\src^{(k,n)}(x)\circ^{(l,k)}\src^{(k,n)}(y))
+\\&=\ii^{(n,k)}(\src^{(k,n)}(x))\circ^{(l,n)}\ii^{(n,k)}(\src^{(k,n)}(y)).
+\end{align*}
+Finally, (AB$^{l,k}$3) is (EA$^{l,k,n}$4), after exchanging $y$ and $z$.
+\end{proof}
+
+\subsection{Graduation and unification are equivalences}
+
+We compute the composites of the functors by composing the corresponding generalized hep-derivors.
+
+\begin{proposition}\label{PUnifGrad}
+The equality $\bGd^{(n)}\circ\bUf^{(n)}=\id_{\sig{\Sigma}^{(n)}}$ holds in $\mathsf{hepSig}_{\gd}$.
+Consequently, $\Uf^{(n)}\circ\Gd^{(n)}=\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$.
+\end{proposition}
+\begin{proof}
+The composite sends $s$ to $s$.
+By (Der1) and (Der2), it sends $\src^{k}_{s}$ to $(\Gd^{(n)})^{\sharp}(\ii^{(n,k)}_{s}(\src^{(k,n)}_{s}(v_{0})))=\src^{k}_{s}(v_{0})$, and similarly every other operation symbol to itself, applied to variables.
+Its domains are $\Dom^{\Gd}_{(n,s)}\cup(\Gd^{(n)})^{\sharp}[\varnothing]=\varnothing$.
+Hence it is the identity.
+
+Now let $\calg{A}$ be an $n$-categorial $\sig{\Sigma}$-algebra.
+By Propositions~\ref{PGradDerivor} and~\ref{PUnifDerivor}, the cells of $\Uf^{(n)}(\Gd^{(n)}(\calg{A}))$ are those of $\calg{A}$, and it is a $\sig{\Sigma}^{(n)}$-algebra.
+Therefore, by Proposition~\ref{PHepComp}~(2) and Lemma~\ref{LSameCells}, $\Uf^{(n)}(\Gd^{(n)}(\calg{A}))=(\id_{\sig{\Sigma}^{(n)}})^{\ast}(\calg{A})=\calg{A}$, and similarly for homomorphisms.
+\end{proof}
+
+The composite in the other order is not the identity, since the $k$-cells of $\Gd^{(n)}(\Uf^{(n)}(\calg{A}))$ are the $(n,k)$-identities of the $k$-cells of $\calg{A}$.
+
+\begin{proposition}\label{PGradUnif}
+For every globular $n$-categorial $\sig{\Sigma}$-algebra $\calg{A}$, let $\theta_{\calg{A}}$ send every $k$-cell $u$ of sort $s$ to $\ii^{(n,k)}_{s}(u)$, where $\ii^{(n,n)}_{s}$ is the identity.
+Then $\theta$ is a natural isomorphism from $\Id$ to $\Gd^{(n)}\circ\Uf^{(n)}$.
+\end{proposition}
+\begin{proof}
+By Propositions~\ref{PGradDerivor} and~\ref{PUnifDerivor}, the cells of sort $(k,s)$ of $\Gd^{(n)}(\Uf^{(n)}(\calg{A}))$ are the $n$-cells $x$ with $x=\ii^{(n,k)}(\src^{(k,n)}(x))$.
+Its $(j,k)$-sources, $(j,k)$-targets and $j$-compositions are $\ii^{(n,j)}\circ\src^{(j,n)}$, $\ii^{(n,j)}\circ\tgt^{(j,n)}$ and $\circ^{(j,n)}$, its identities are inclusions, and $\sigma_{k}$ acts as $\sigma_{n}$.
+
+We first prove that $\theta_{\calg{A}}$ is a bijection onto these cells.
+By Lemma~\ref{LUnifInj}, $\ii^{(n,k)}(u)=\ii^{(n,k)}(\src^{(k,n)}(\ii^{(n,k)}(u)))$, so that $\theta_{\calg{A}}(u)$ is a cell of sort $(k,s)$.
+Its inverse sends a cell $x$ of sort $(k,s)$ to $\src^{(k,n)}(x)$.
+
+Now we prove that $\theta_{\calg{A}}$ is a homomorphism that reflects definedness.
+By the third equation of (EA$^{k,n}$7), it commutes with $\sigma_{k}$.
+By (EA$^{j,k,n}$1) and Lemma~\ref{LUnifInj}, $\ii^{(n,j)}(\src^{(j,n)}(\ii^{(n,k)}(u)))=\ii^{(n,j)}(\src^{(j,k)}(u))$, so that it commutes with the sources, and similarly with the targets.
+By (EA$^{j,k,n}$2), $\ii^{(n,k)}(\ii^{(k,j)}(w))=\ii^{(n,j)}(w)$, so that it commutes with the identities.
+By Lemma~\ref{LUnifInj} and (EA$^{j,k}$3), $\theta(u)\circ^{(j,k)}\theta(u')$ is defined if, and only if, $u\circ^{(j,k)}u'$ is defined, and then, by (EA$^{j,k,n}$5), $\theta(u\circ^{(j,k)}u')=\theta(u)\circ^{(j,n)}\theta(u')$.
+Hence $\theta_{\calg{A}}$ is an isomorphism.
+
+Finally, $\theta$ is natural, since the homomorphisms commute with the identities.
+\end{proof}
+
+\begin{proposition}\label{PGdUfAdj}
+The functors $\Gd^{(n)}$ and $\Uf^{(n)}$ are mutually quasi-inverse equivalences.
+More precisely, $(\Uf^{(n)},\Gd^{(n)},\id,\theta^{-1})$ is an adjoint equivalence, with $\Gd^{(n)}$ left adjoint to $\Uf^{(n)}$.
+\end{proposition}
+\begin{proof}
+By Propositions~\ref{PUnifGrad} and~\ref{PGradUnif}, the unit and the counit are natural isomorphisms.
+Since the unit is the identity, the triangular identities state that $\Uf^{(n)}(\theta^{-1}_{\calg{A}})$ and $\theta^{-1}_{\Gd^{(n)}(\calg{B})}$ are identities.
+The first one is the family of the components of $\theta^{-1}_{\calg{A}}$ at the sorts $(n,s)$, which are identities.
+For the second one, the identities of $\Gd^{(n)}(\calg{B})$ are inclusions, so that $\theta_{\Gd^{(n)}(\calg{B})}$ is the identity.
+\end{proof}
+
+\section{Discretization and truncation}\label{STruncation}
+
+In this section we move between dimensions.
+Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $m\leq n$ in $\mathbb{N}$.
+Discretization regards an $m$-categorial algebra as an $n$-categorial algebra whose cells of dimension at least $m$ are identities, and truncation forgets the cells of dimension greater than $m$.
+
+\subsection{The functors}
+
+\begin{definition}\label{DDiscDerivor}
+Let $m<n$.
+The \emph{discretization derivors} are the following generalized hep-derivors with empty domains:
+\begin{enumerate}
+\item $\bDs^{(n,m)}$, from $\sig{\Sigma}^{(n)}$ to $\sig{\Sigma}^{(m)}$, with $\id_{S}$ on sorts, which sends $\sigma$, $\src^{k}_{s}$, $\tgt^{k}_{s}$ and $\circ^{k}_{s}$, for $k<m$, to themselves, applied to variables, and $\src^{k}_{s}$, $\tgt^{k}_{s}$ and $\circ^{k}_{s}$, for $k\geq m$, to $v^{s}_{0}$; and
+\item $\bDs^{\gl(n,m)}$, from $\sig{\Sigma}^{\gl(n)}$ to $\sig{\Sigma}^{\gl(m)}$, which sends $(k,s)$ to $(\bar{k},s)$, where $\bar{k}=\min\{k,m\}$, $\sigma_{k}$ to $\sigma_{\bar{k}}$, the symbols $\src^{(j,k)}_{s}$, $\tgt^{(j,k)}_{s}$, $\ii^{(k,j)}_{s}$ and $\circ^{(j,k)}_{s}$, for $j<m$, to $\src^{(j,\bar{k})}_{s}$, $\tgt^{(j,\bar{k})}_{s}$, $\ii^{(\bar{k},j)}_{s}$ and $\circ^{(j,\bar{k})}_{s}$, and, for $j\geq m$, to $v^{(m,s)}_{0}$, all of them applied to variables.
+\end{enumerate}
+For $m=n$, both are identities.
+The \emph{discretization functors} are $\Ds^{(n,m)}=(\bDs^{(n,m)})^{\ast}$ and $\Ds^{\gl(n,m)}=(\bDs^{\gl(n,m)})^{\ast}$.
+\end{definition}
+
+For $k\geq m$, the term assigned to $\circ^{k}_{s}$ is total.
+However, in the transformed algebra $\src^{k}_{s}$ and $\tgt^{k}_{s}$ act as identities, so that, by (D1), $x\circ^{k}_{s}y$ is defined if, and only if, $x=y$.
+No term of $\Sigma^{(m)}$ could express this condition.
+
+\begin{proposition}\label{PDiscDerivor}
+The functors $\Ds^{(n,m)}$ and $\Ds^{\gl(n,m)}$ restrict to functors from $\mathsf{mCatAlg}(\sig{\Sigma})$ to $\mathsf{nCatAlg}(\sig{\Sigma})$ and from $\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$.
+Moreover, $\Ds^{(n,m)}(\calg{B})$ has the cells and the structure of dimension $k<m$ of $\calg{B}$, and, for $k\geq m$, $\src^{k}$ and $\tgt^{k}$ are identities and $x\circ^{k}y$ is defined if, and only if, $x=y$, and then it is $x$.
+The $k$-cells of $\Ds^{\gl(n,m)}(\calg{B})$ are the $\bar{k}$-cells of $\calg{B}$, and its structure is described similarly.
+\end{proposition}
+\begin{proof}
+For $m=n$ it is trivial.
+Let $m<n$ and $\calg{B}$ an $m$-categorial $\sig{\Sigma}$-algebra.
+We first prove that $\Ds^{(n,m)}(\calg{B})$ is a $\sig{\Sigma}^{(n)}$-algebra.
+The domains are empty, so that the cells are all the cells of $\calg{B}$.
+By (A0) and (A$^{k}$1), the symbols without domain conditions act as stated.
+For $k<m$, by (A$^{k}$3), $x\circ^{k}y$ is defined in $\calg{B}$ when $\src^{k}(x)=\tgt^{k}(y)$.
+For $k\geq m$, the domain condition holds if, and only if, $x=y$, and then $v_{0}$ is defined.
+Hence, by Proposition~\ref{PTransformedEpAlg}, it is a $\sig{\Sigma}^{(n)}$-algebra.
+
+Now we prove the axioms.
+Those in which all the dimensions are smaller than $m$ are axioms of $\mathcal{C}^{(m)}$, which hold in $\calg{B}$.
+The remaining ones become trivial, since $\src^{k}$ and $\tgt^{k}$ are identities and $\circ^{k}$ is only defined on equal cells for $k\geq m$.
+For instance, if $l<m\leq k$ and $x\circ^{l}y$ is defined, both sides of (AB$^{l,k}$2) are $x\circ^{l}y$.
+
+The globular case is similar.
+The axioms in which all the dimensions are at most $m$ are axioms of $\mathcal{C}^{\gl(m)}$, those with $j<m<k$ become axioms with $k$ replaced by $m$, and those with a lower dimension $j\geq m$ become trivial.
+\end{proof}
+
+\begin{definition}\label{DTruncDerivor}
+Let $m<n$.
+The \emph{truncation derivors} are the following generalized hep-derivors:
+\begin{enumerate}
+\item $\bTr^{(m,n)}$, from $\sig{\Sigma}^{(m)}$ to $\sig{\Sigma}^{(n)}$, with $\id_{S}$ on sorts, which sends every operation symbol to itself, applied to variables, and with domains $\Dom_{s}=\{(v^{s}_{0},\src^{m}_{s}(v^{s}_{0}))\}$; and
+\item $\bTr^{\gl(m,n)}$, from $\sig{\Sigma}^{\gl(m)}$ to $\sig{\Sigma}^{\gl(n)}$, given by the canonical embedding, with empty domains.
+\end{enumerate}
+For $m=n$, both are identities.
+The \emph{truncation functors} are $\Tr^{(m,n)}=(\bTr^{(m,n)})^{\ast}$ and $\Tr^{\gl(m,n)}=(\bTr^{\gl(m,n)})^{\ast}$.
+\end{definition}
+
+Thus the cells of $\Tr^{(m,n)}(\mathbf{B})$ are the $m$-cells of $\mathbf{B}$, and $\Tr^{\gl(m,n)}(\mathbf{B})$ is the reduct of $\mathbf{B}$ to the dimensions at most $m$.
+
+\begin{proposition}\label{PTruncDerivor}
+The functors $\Tr^{(m,n)}$ and $\Tr^{\gl(m,n)}$ restrict to functors from $\mathsf{nCatAlg}(\sig{\Sigma})$ to $\mathsf{mCatAlg}(\sig{\Sigma})$ and from $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ to $\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$.
+\end{proposition}
+\begin{proof}
+For $m=n$ it is trivial.
+Let $m<n$ and $\calg{B}$ an $n$-categorial $\sig{\Sigma}$-algebra.
+By Lemma~\ref{LGradCells}, the $m$-cells are closed under the operations of $\Sigma^{(m)}$, and, by (A0), (A$^{k}$1) and (A$^{k}$3), these operations are defined on the families of $m$-cells that satisfy their domain conditions.
+Hence, by Proposition~\ref{PTransformedEpAlg}, $\Tr^{(m,n)}(\calg{B})$ is the relative subalgebra of $\calg{B}$ on the $m$-cells, and it is a $\sig{\Sigma}^{(m)}$-algebra.
+The axioms of $\mathcal{C}^{(m)}$ are axioms of $\mathcal{C}^{(n)}$, so that they hold in it.
+In the globular case, the reduct is a $\sig{\Sigma}^{\gl(m)}$-algebra, since the domain conditions are the same, and the axioms of $\mathcal{C}^{\gl(m)}$ are axioms of $\mathcal{C}^{\gl(n)}$.
+\end{proof}
+
+\subsection{Discretization is left adjoint to truncation}
+
+\begin{proposition}\label{PTruncDisc}
+The equalities $\Tr^{(m,n)}\circ\Ds^{(n,m)}=\Id$ and $\Tr^{\gl(m,n)}\circ\Ds^{\gl(n,m)}=\Id$ hold.
+\end{proposition}
+\begin{proof}
+Let $m<n$.
+We first consider the single-set case.
+The underlying derivor of $\bDs^{(n,m)}\circ\bTr^{(m,n)}$ is the identity, since both derivors send the operation symbols of $\Sigma^{(m)}$ to themselves.
+Its domains are $(\Ds^{(n,m)})^{\sharp}[\{(v_{0},\src^{m}(v_{0}))\}]=\{(v_{0},v_{0})\}$, which every cell satisfies.
+By Proposition~\ref{PDiscDerivor}, $\src^{m}$ is the identity in $\Ds^{(n,m)}(\calg{A})$, so that every cell of $\calg{A}$ is a cell of $\Tr^{(m,n)}(\Ds^{(n,m)}(\calg{A}))$.
+By Propositions~\ref{PDiscDerivor} and~\ref{PTruncDerivor}, the latter is a $\sig{\Sigma}^{(m)}$-algebra.
+Hence, by Proposition~\ref{PHepComp}~(2) and Lemma~\ref{LSameCells}, $\Tr^{(m,n)}(\Ds^{(n,m)}(\calg{A}))=(\id_{\sig{\Sigma}^{(m)}})^{\ast}(\calg{A})=\calg{A}$.
+In the globular case, $\bDs^{\gl(n,m)}\circ\bTr^{\gl(m,n)}=\id_{\sig{\Sigma}^{\gl(m)}}$, since $\min\{k,m\}=k$ for $k\leq m$, and the equality follows in the same way.
+\end{proof}
+
+\begin{proposition}\label{PDiscTruncAdj}
+For every $n$-categorial $\sig{\Sigma}$-algebra $\calg{B}$, let $\varepsilon_{\calg{B}}$ be the inclusion of the $m$-cells of $\calg{B}$, and, for every globular one, let $\varepsilon^{\gl}_{\calg{B}}$ be the identity on the dimensions $k\leq m$ and $\ii^{(k,m)}_{s}$ on the dimensions $k>m$.
+Then $(\Tr^{(m,n)},\Ds^{(n,m)},\id,\varepsilon)$ and $(\Tr^{\gl(m,n)},\Ds^{\gl(n,m)},\id,\varepsilon^{\gl})$ are adjunctions.
+Thus discretization is left adjoint to truncation.
+\end{proposition}
+\begin{proof}
+Let $m<n$.
+We first prove that $\varepsilon_{\calg{B}}$ is a homomorphism from $\Ds^{(n,m)}(\Tr^{(m,n)}(\calg{B}))$ to $\calg{B}$.
+On $\Sigma$ and on the dimensions $k<m$, the domain is a relative subalgebra of $\calg{B}$.
+For $k\geq m$ and an $m$-cell $x$, by Lemma~\ref{LGradCells}~(3) and (A$^{k}$5), $\src^{k}(x)=x=\tgt^{k}(x)$ and $x\circ^{k}x=x$ in $\calg{B}$, as in the domain.
+Naturality is clear, since the functors act on homomorphisms by restriction.
+
+In the globular case, $\varepsilon^{\gl}_{\calg{B}}$ is a homomorphism, by (EA$^{m,k}$7) for $\sigma_{k}$, by (EA$^{j,m,k}$1), (EA$^{j,m,k}$2), (EA$^{j,m,k}$5) and Lemma~\ref{LUnifInj} for $j<m$, and, for $j\geq m$, by (EA$^{m,j,k}$2), Lemma~\ref{LUnifInj} and (EA$^{j,k}$5), which give $\src^{(j,k)}(\ii^{(k,m)}(x))=\ii^{(j,m)}(x)$ and $\ii^{(k,m)}(x)\circ^{(j,k)}\ii^{(k,m)}(x)=\ii^{(k,m)}(x)$.
+It is natural, since the homomorphisms commute with the identities.
+
+Now we prove the triangular identities.
+Since the unit is the identity, they state that $\Tr^{(m,n)}(\varepsilon_{\calg{B}})$ and $\varepsilon_{\Ds^{(n,m)}(\calg{A})}$ are identities.
+The first one is the restriction of $\varepsilon_{\calg{B}}$ to the $m$-cells.
+For the second one, every cell of $\Ds^{(n,m)}(\calg{A})$ is an $m$-cell.
+In the globular case, the components of $\varepsilon^{\gl}_{\calg{B}}$ at the dimensions $k\leq m$ are identities, and the $(k,m)$-identities of $\Ds^{\gl(n,m)}(\calg{A})$ are identities.
+\end{proof}
+
+\subsection{Composites and compatibility with graduation and unification}
+
+\begin{proposition}\label{PTruncComp}
+Let $m\leq n\leq p$ in $\mathbb{N}$.
+Then the following equalities hold:
+\begin{enumerate}
+\item $\Tr^{(m,n)}\circ\Tr^{(n,p)}=\Tr^{(m,p)}$ and $\Tr^{\gl(m,n)}\circ\Tr^{\gl(n,p)}=\Tr^{\gl(m,p)}$;
+\item $\Ds^{(p,n)}\circ\Ds^{(n,m)}=\Ds^{(p,m)}$ and $\Ds^{\gl(p,n)}\circ\Ds^{\gl(n,m)}=\Ds^{\gl(p,m)}$; and
+\item for every $q\leq p$ with $m\leq p$, $\Tr^{(q,p)}\circ\Ds^{(p,m)}$ is $\Ds^{(q,m)}$, if $m\leq q$, and $\Tr^{(q,m)}$, if $q\leq m$, and similarly in the globular case.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+In every case we compare the composite generalized hep-derivors and then apply Proposition~\ref{PHepComp}~(2) and Lemma~\ref{LSameCells}.
+
+(1) The underlying derivors agree, since all of them are inclusions.
+In the single-set case, the domain of the composite is $\{(v_{0},\src^{n}(v_{0})),(v_{0},\src^{m}(v_{0}))\}$, which determines the $m$-cells, by Lemma~\ref{LGradCells}~(3).
+In the globular case, all the domains are empty.
+
+(2) The composite of the underlying derivors sends a symbol of dimension $k$ to itself, if $k<m$, and to a variable, otherwise; and $\min\{\min\{k,n\},m\}=\min\{k,m\}$.
+All the domains are empty.
+
+(3) If $m\leq q$, the composite derivor is $\bDs^{(q,m)}$ on terms; if $q\leq m$, it is $\bTr^{(q,m)}$ on terms.
+In both cases the cells of $\Tr^{(q,p)}(\Ds^{(p,m)}(\calg{A}))$ are, by Proposition~\ref{PDiscDerivor}, all the cells of $\calg{A}$, if $m\leq q$, and its $q$-cells, if $q\leq m$.
+The globular case is similar.
+\end{proof}
+
+\begin{proposition}\label{PCompatGdUf}
+The following equalities hold:
+\begin{enumerate}
+\item $\Tr^{\gl(m,n)}\circ\Gd^{(n)}=\Gd^{(m)}\circ\Tr^{(m,n)}$;
+\item $\Gd^{(n)}\circ\Ds^{(n,m)}=\Ds^{\gl(n,m)}\circ\Gd^{(m)}$; and
+\item $\Uf^{(n)}\circ\Ds^{\gl(n,m)}=\Ds^{(n,m)}\circ\Uf^{(m)}$.
+\end{enumerate}
+Moreover, for every globular $n$-categorial $\sig{\Sigma}$-algebra $\calg{B}$, the family $\beta^{(m,n)}_{\calg{B}}=(\ii^{(n,m)}_{s})_{s\in S}$ is a natural isomorphism from $\Uf^{(m)}(\Tr^{\gl(m,n)}(\calg{B}))$ to $\Tr^{(m,n)}(\Uf^{(n)}(\calg{B}))$.
+\end{proposition}
+\begin{proof}
+All the functors involved act on homomorphisms by restriction, so that it suffices to compare the values on objects.
+
+(1) By Proposition~\ref{PGradDerivor} and Lemma~\ref{LGradCells}~(3), in both algebras the cells of sort $(k,s)$ are the $k$-cells of sort $s$, for $k\leq m$, with the restricted operations.
+
+(2) By Propositions~\ref{PGradDerivor} and~\ref{PDiscDerivor}, in both algebras the cells of sort $(k,s)$ are the $\min\{k,m\}$-cells of $\calg{A}$, with the structure of $\calg{A}$ for $j<m$ and the trivial structure for $j\geq m$.
+
+(3) By Propositions~\ref{PUnifDerivor} and~\ref{PDiscDerivor}, in both algebras the cells are the $m$-cells of $\calg{B}$, with $\src^{k}=\ii^{(m,k)}\circ\src^{(k,m)}$ and $\circ^{k}=\circ^{(k,m)}$ for $k<m$, and the trivial structure for $k\geq m$.
+
+Finally, the cells of $\Tr^{(m,n)}(\Uf^{(n)}(\calg{B}))$ are the $n$-cells $x$ with $x=\ii^{(n,m)}(\src^{(m,n)}(x))$, i.e., by Lemma~\ref{LUnifInj}, the image of $\ii^{(n,m)}$, which is injective.
+By (EA$^{m,n}$7), $\beta^{(m,n)}_{\calg{B}}$ commutes with the operations of $\Sigma$.
+By (EA$^{k,m,n}$1), (EA$^{k,m,n}$2) and Lemma~\ref{LUnifInj}, it commutes with the sources and the targets.
+By (EA$^{k,m,n}$5), it preserves and reflects the compositions.
+Hence it is an isomorphism, natural since the homomorphisms commute with the identities.
+\end{proof}
+
+\section{The dimension \texorpdfstring{$\omega$}{omega}}\label{SOmega}
+
+In this section we extend the above functors to the dimension $\omega$.
+Truncation and discretization are again induced by generalized hep-derivors, and they present the $\omega$-categorial algebras as projective limits.
+Graduation is then obtained from the universal property of the limit, and unification as an inductive limit.
+Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $n\in\mathbb{N}$.
+
+\subsection{Truncation and discretization}
+
+We let $\bTr^{(n,\omega)}$, $\bTr^{\gl(n,\omega)}$, $\bDs^{(\omega,n)}$ and $\bDs^{\gl(\omega,n)}$ stand for the generalized hep-derivors defined by the clauses of Definitions~\ref{DDiscDerivor} and~\ref{DTruncDerivor}, with $\omega$ in place of the greatest dimension.
+For every $p>n$, the restriction of $\bDs^{(\omega,n)}$ to $\Sigma^{(p)}$ is $\bDs^{(p,n)}$, and similarly in the globular case.
+Hence, by Proposition~\ref{PTransformedAlg}, the reduct of $\Ds^{(\omega,n)}(\calg{B})$ to $\Sigma^{(p)}$ is $\Ds^{(p,n)}(\calg{B})$.
+
+\begin{proposition}\label{PTruncOmega}
+The following functors are well defined:
+\begin{enumerate}
+\item $\Tr^{(n,\omega)}\colon\omega\mathsf{CatAlg}(\sig{\Sigma})\mor\mathsf{nCatAlg}(\sig{\Sigma})$ and $\Tr^{\gl(n,\omega)}\colon\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})\mor\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$; and
+\item $\Ds^{(\omega,n)}\colon\mathsf{nCatAlg}(\sig{\Sigma})\mor\omega\mathsf{CatAlg}(\sig{\Sigma})$ and $\Ds^{\gl(\omega,n)}\colon\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})\mor\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$.
+\end{enumerate}
+Moreover, the equalities of Proposition~\ref{PTruncComp} and the adjunctions of Proposition~\ref{PDiscTruncAdj} hold with $\omega$ in place of $p$ and $n$, respectively.
+\end{proposition}
+\begin{proof}
+(1) The proof of Proposition~\ref{PTruncDerivor} only uses Lemma~\ref{LGradCells}, which holds in dimension $\omega$, and axioms for finitely many dimensions.
+
+(2) We first prove that $\Ds^{(\omega,n)}(\calg{B})$ is a $\sig{\Sigma}^{(\omega)}$-algebra in which the axioms hold.
+Every operation symbol, and every axiom, involves finitely many dimensions.
+Choose $p>n$ greater than all of them.
+Then the operation symbol, or the axiom, is interpreted as in $\Ds^{(p,n)}(\calg{B})$, which, by Proposition~\ref{PDiscDerivor}, is a $p$-categorial algebra.
+Now we prove that every cell is an $n$-cell.
+In fact, by Proposition~\ref{PDiscDerivor}, $\src^{n}$ is the identity.
+The globular case is the same.
+
+The equalities of Proposition~\ref{PTruncComp} only involve finitely many dimensions at a time, and their proofs carry over.
+For the adjunction, the counit at an $\omega$-categorial algebra is again the inclusion of the $m$-cells, or the family of identities and $(k,m)$-identities, and the proof of Proposition~\ref{PDiscTruncAdj} carries over.
+\end{proof}
+
+\subsection{Projective limits}
+
+By Proposition~\ref{PTruncOmega}, the categories $\mathsf{nCatAlg}(\sig{\Sigma})$, with the functors $\Tr^{(m,n)}$, form a projective system of categories, and the functors $\Tr^{(n,\omega)}$ form a cone over it; and similarly in the globular case.
+
+\begin{proposition}\label{PUnivPropCatAlg}
+Let $\mathsf{L}$ be a category and $(F_{n}\colon\mathsf{L}\mor\mathsf{nCatAlg}(\sig{\Sigma}))_{n\in\omega}$ a family of functors with $F_{m}=\Tr^{(m,n)}\circ F_{n}$ for $m\leq n$.
+Then there exists a unique functor $\langle F_{k}\rangle_{k}\colon\mathsf{L}\mor\omega\mathsf{CatAlg}(\sig{\Sigma})$ with $\Tr^{(n,\omega)}\circ\langle F_{k}\rangle_{k}=F_{n}$ for every $n$.
+The same holds in the globular case.
+Hence $\omega\mathsf{CatAlg}(\sig{\Sigma})$ and $\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ are the projective limits of the categories of $n$-categorial algebras.
+\end{proposition}
+\begin{proof}
+We first consider the single-set case.
+Let $(\calg{A}_{n})_{n}$ be a compatible family of objects, i.e., $\Tr^{(m,n)}(\calg{A}_{n})=\calg{A}_{m}$ for $m\leq n$.
+Then the cells of each sort form an increasing chain.
+We let $\varprojlim_{n}\calg{A}_{n}$ be the union, in which every operation, on finitely many cells and of dimension $k$, is computed in any $\calg{A}_{n}$ with $n>k$ that contains the cells.
+This does not depend on $n$, since $\calg{A}_{n}$ is the relative subalgebra of $\calg{A}_{n'}$ on its $n$-cells.
+Every axiom involves finitely many cells and dimensions, so that it holds.
+Every cell of $\calg{A}_{n}$ is an $n$-cell of the limit, since $\calg{A}_{n}=\Tr^{(n,n+1)}(\calg{A}_{n+1})$.
+Hence the limit is an $\omega$-categorial algebra, and its $n$-cells are the cells of $\calg{A}_{n}$, i.e., $\Tr^{(n,\omega)}(\varprojlim_{k}\calg{A}_{k})=\calg{A}_{n}$.
+Conversely, every $\omega$-categorial algebra is the union of its truncations, so that it is determined by them.
+For a compatible family of homomorphisms $(H_{n})_{n}$, the mapping that acts on the cells of $\calg{A}_{n}$ as $H_{n}$ is the unique homomorphism with truncations $H_{n}$.
+Now let $\langle F_{k}\rangle_{k}(X)=\varprojlim_{n}F_{n}(X)$ and $\langle F_{k}\rangle_{k}(f)=\varprojlim_{n}F_{n}(f)$.
+By the uniqueness of the limits, it is a functor, it satisfies $\Tr^{(n,\omega)}\circ\langle F_{k}\rangle_{k}=F_{n}$, and it is the unique one.
+
+In the globular case, the limit of a compatible family $(\calg{A}_{n})_{n}$ has as $k$-cells the $k$-cells of $\calg{A}_{k}$, with the operations of the $\calg{A}_{k}$, and the same argument applies.
+\end{proof}
+
+\begin{corollary}\label{CLimitNat}
+Let $F,G\colon\mathsf{L}\mor\omega\mathsf{CatAlg}(\sig{\Sigma})$ be functors and $(\varphi^{n}\colon\Tr^{(n,\omega)}\circ F\mor\Tr^{(n,\omega)}\circ G)_{n}$ natural transformations with $\Tr^{(m,n)}\ast\varphi^{n}=\varphi^{m}$.
+Then there exists a unique natural transformation $\varphi\colon F\mor G$ with $\Tr^{(n,\omega)}\ast\varphi=\varphi^{n}$, and it is a natural isomorphism if every $\varphi^{n}$ is.
+The same holds in the globular case.
+\end{corollary}
+\begin{proof}
+By the proof of Proposition~\ref{PUnivPropCatAlg}, every compatible family of homomorphisms has a unique limit.
+The limit of $(\varphi^{n}_{X})_{n}$ is natural in $X$, since $G(f)\circ\varphi_{X}$ and $\varphi_{Y}\circ F(f)$ have the same truncations.
+If every $\varphi^{n}_{X}$ is invertible, the limit of the inverses is the inverse.
+\end{proof}
+
+\subsection{Graduation and unification}
+
+\begin{definition}\label{DGdOmega}
+The \emph{graduation functor} $\Gd^{(\omega)}\colon\omega\mathsf{CatAlg}(\sig{\Sigma})\mor\omega\mathsf{Cat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ is the unique functor such that $\Tr^{\gl(n,\omega)}\circ\Gd^{(\omega)}=\Gd^{(n)}\circ\Tr^{(n,\omega)}$, for every $n\in\mathbb{N}$.
+\end{definition}
+
+It exists by Proposition~\ref{PUnivPropCatAlg}, since, by Propositions~\ref{PCompatGdUf} and~\ref{PTruncOmega}, the family $(\Gd^{(n)}\circ\Tr^{(n,\omega)})_{n}$ is compatible.
+Explicitly, the $k$-cells of $\Gd^{(\omega)}(\calg{A})$ are the $k$-cells of $\calg{A}$, with the operations of Proposition~\ref{PGradDerivor}.
+
+Unification cannot be obtained in the same way.
+It is not induced by a generalized hep-derivor: the cells of a sort of the transformed algebra are cells of a single sort $(k,s')$, whereas a globular $\omega$-category with one cell in every dimension $j\leq k$ and two $(k+1)$-cells has a unification with two cells.
+Nor is the family $(\Uf^{(n)}\circ\Tr^{\gl(n,\omega)})_{n}$ compatible: by Proposition~\ref{PCompatGdUf}, it is only compatible up to the isomorphisms $\beta^{(m,n)}$, which are, however, the inclusions of an inductive system.
+
+\begin{definition}\label{DUfOmega}
+Let $\calg{B}$ be a globular $\omega$-categorial $\sig{\Sigma}$-algebra and $s\in S$.
+We let $[B]_{s}$ stand for the quotient of $\coprod_{k\in\omega}B_{(k,s)}$ by the equivalence relation that identifies $x\in B_{(j,s)}$ with $\ii^{(k,j)}_{s}(x)\in B_{(k,s)}$, for $j<k$, and $[x]_{k}$ for the class of $x\in B_{(k,s)}$.
+The \emph{unification} $\Uf^{(\omega)}(\calg{B})$ is the partial $\Sigma^{(\omega)}$-algebra on $[B]$ in which every operation symbol $\tau$ of $\Sigma^{(p)}$ acts on classes $[x_{j}]_{p}$ represented at the level $p$ as $\tau$ acts on the $x_{j}$ in $\Uf^{(p)}(\Tr^{\gl(p,\omega)}(\calg{B}))$, with the same domain.
+For a homomorphism $F$, $\Uf^{(\omega)}(F)$ sends $[x]_{k}$ to $[F_{(k,s)}(x)]_{k}$.
+\end{definition}
+
+By (EA$^{h,j,k}$2), the above relation is an equivalence, and, by Lemma~\ref{LUnifInj}, every mapping $x\mapsto[x]_{k}$, denoted by $\mathrm{in}^{[k]}_{s}$, is injective.
+Every finite family of classes is represented at a common level.
+By Proposition~\ref{PCompatGdUf}, $\ii^{(p',p)}$ is an isomorphism from the level $p$ onto the $p$-cells of the level $p'$, so that the definition does not depend on the level.
+
+\begin{proposition}\label{PUfOmega}
+For every globular $\omega$-categorial $\sig{\Sigma}$-algebra $\calg{B}$, $\Uf^{(\omega)}(\calg{B})$ is an $\omega$-categorial $\sig{\Sigma}$-algebra whose $k$-cells are the classes $[x]_{k}$, and $\mathrm{in}^{[n]}$ is a natural isomorphism from $\Uf^{(n)}\circ\Tr^{\gl(n,\omega)}$ to $\Tr^{(n,\omega)}\circ\Uf^{(\omega)}$.
+Moreover, $\Uf^{(\omega)}$ is a functor.
+\end{proposition}
+\begin{proof}
+We first prove that the axioms of $\mathcal{C}^{(\omega)}$ hold.
+Every axiom involves finitely many dimensions and variables.
+For a valuation, we choose a level $p$ greater than these dimensions at which the values are represented.
+Then the axiom holds, since it holds in the $p$-categorial algebra $\Uf^{(p)}(\Tr^{\gl(p,\omega)}(\calg{B}))$.
+
+Now we compute the $k$-cells.
+For $x\in B_{(k,s)}$ and $p>k$, by Proposition~\ref{PUnifDerivor} and Lemma~\ref{LUnifInj}, $\src^{k}(\ii^{(p,k)}(x))=\ii^{(p,k)}(\src^{(k,p)}(\ii^{(p,k)}(x)))=\ii^{(p,k)}(x)$, so that $[x]_{k}$ is a $k$-cell.
+Conversely, if $[y]_{p}$ is a $k$-cell, then $[y]_{p}=[\src^{(k,p)}(y)]_{k}$.
+Hence every cell has a finite dimension.
+
+Next, $\mathrm{in}^{[n]}$ is a bijection onto the $n$-cells, and, by Definition~\ref{DUfOmega}, it preserves and reflects the operations of $\Sigma^{(n)}$.
+Finally, $\Uf^{(\omega)}(F)\circ\mathrm{in}^{[p]}=\mathrm{in}^{[p]}\circ\Uf^{(p)}(\Tr^{\gl(p,\omega)}(F))$, so that $\Uf^{(\omega)}(F)$ is a homomorphism, and $\Uf^{(\omega)}$ preserves identities and composites.
+\end{proof}
+
+\begin{proposition}\label{POmegaGdUf}
+The functors $\Gd^{(\omega)}$ and $\Uf^{(\omega)}$ are mutually quasi-inverse equivalences, and there exists an adjoint equivalence in which $\Gd^{(\omega)}$ is left adjoint to $\Uf^{(\omega)}$.
+\end{proposition}
+\begin{proof}
+We first prove that $\Uf^{(\omega)}\circ\Gd^{(\omega)}\cong\Id$.
+Let $\calg{A}$ be an $\omega$-categorial algebra.
+The identities of $\Gd^{(\omega)}(\calg{A})$ are inclusions, so that $[x]_{j}=[y]_{k}$ if, and only if, $x=y$.
+Hence $\zeta_{\calg{A}}\colon[x]_{k}\mapsto x$ is a bijection onto the cells of $\calg{A}$.
+For every level $p$, by Definition~\ref{DGdOmega} and Proposition~\ref{PUnifGrad}, $\Uf^{(p)}(\Tr^{\gl(p,\omega)}(\Gd^{(\omega)}(\calg{A})))=\Tr^{(p,\omega)}(\calg{A})$.
+Hence $\zeta_{\calg{A}}$ preserves and reflects the operations, and it is a natural isomorphism.
+
+Now we prove that $\Gd^{(\omega)}\circ\Uf^{(\omega)}\cong\Id$.
+Let $\calg{B}$ be a globular $\omega$-categorial algebra.
+By Proposition~\ref{PUfOmega}, the family $(\mathrm{in}^{[k]}_{s})_{(k,s)}$ is a bijection from the cells of $\calg{B}$ onto those of $\Gd^{(\omega)}(\Uf^{(\omega)}(\calg{B}))$.
+It commutes with the operations, since the $j$-source of $[x]_{k}$ is $[\src^{(j,k)}(x)]_{j}$, the $(k,j)$-identity of $[u]_{j}$ is $[u]_{j}=[\ii^{(k,j)}(u)]_{k}$, and the compositions and the $\sigma$ are computed on representatives.
+Hence it is a natural isomorphism.
+Finally, every equivalence can be completed to an adjoint equivalence, see~\cite{sM98}, Theorem~IV.4.1.
+\end{proof}
+
+\section{Algebraic squares}\label{SSquares}
+
+Four adjunctions form an \emph{algebraic square}, see~\cite{CVCLRM26}, when they are arranged as follows and there exist natural isomorphisms between the composites of the left adjoints and between the composites of the right adjoints.
+
+\begin{definition}\label{DAlgSquare}
+Let $F\dashv G$, from $\mathsf{C}$ to $\mathsf{D}$, $F'\dashv G'$, from $\mathsf{C}'$ to $\mathsf{D}'$, $J\dashv K$, from $\mathsf{C}$ to $\mathsf{C}'$, and $H\dashv I$, from $\mathsf{D}$ to $\mathsf{D}'$, be adjunctions.
+They form an \emph{algebraic square} if there exist natural isomorphisms $\alpha\colon F'\circ J\mor H\circ F$ and $\beta\colon G\circ I\mor K\circ G'$.
+\end{definition}
+
+\begin{proposition}\label{PAlgSquare}
+Let $\sig{\Sigma}$ be a many-sorted signature and $m\leq n$ in $\mathbb{N}$.
+Then the following statements hold:
+\begin{enumerate}
+\item the adjunctions $\Gd^{(m)}\dashv\Uf^{(m)}$, $\Gd^{(n)}\dashv\Uf^{(n)}$, $\Ds^{(n,m)}\dashv\Tr^{(m,n)}$ and $\Ds^{\gl(n,m)}\dashv\Tr^{\gl(m,n)}$ form an algebraic square, with $\alpha$ the identity and $\beta=\beta^{(m,n)}$; and
+\item the same holds with $\omega$ in place of $n$, with $\alpha$ the identity and $\beta=\mathrm{in}^{[m]}$.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+(1) The adjunctions are those of Propositions~\ref{PGdUfAdj} and~\ref{PDiscTruncAdj}.
+By Proposition~\ref{PCompatGdUf}, $\Gd^{(n)}\circ\Ds^{(n,m)}=\Ds^{\gl(n,m)}\circ\Gd^{(m)}$ and $\beta^{(m,n)}$ is a natural isomorphism from $\Uf^{(m)}\circ\Tr^{\gl(m,n)}$ to $\Tr^{(m,n)}\circ\Uf^{(n)}$.
+
+(2) The adjunctions are those of Propositions~\ref{PGdUfAdj}, \ref{POmegaGdUf} and~\ref{PTruncOmega}.
+For every $p\in\mathbb{N}$, by Definition~\ref{DGdOmega} and Propositions~\ref{PCompatGdUf} and~\ref{PTruncOmega}, $\Gd^{(\omega)}\circ\Ds^{(\omega,m)}$ and $\Ds^{\gl(\omega,m)}\circ\Gd^{(m)}$ have the same truncations.
+Hence, by Proposition~\ref{PUnivPropCatAlg}, they are equal.
+By Proposition~\ref{PUfOmega}, $\mathrm{in}^{[m]}$ is a natural isomorphism from $\Uf^{(m)}\circ\Tr^{\gl(m,\omega)}$ to $\Tr^{(m,\omega)}\circ\Uf^{(\omega)}$.
+\end{proof}
+
+\section{Change of signature}\label{SChangeSig}
+
+In this section we prove that all the above constructions are compatible with the derivors between many-sorted signatures, regarded as hep-signatures with empty domain conditions.
+Let $\sig{\Sigma}=(S,\Sigma)$ and $\sig{\Lambda}=(T,\Lambda)$ be many-sorted signatures, $\mathbf{c}=(\varphi,c)$ a derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $n\in\mathbb{N}$.
+For a term $P$ of $\Lambda$ and $k\in n+1$, we let $P_{k}$ be as in Lemma~\ref{LTermFunctor}.
+
+\begin{definition}\label{DChangeSigDerivor}
+The generalized hep-derivors determined by $\mathbf{c}$ are the following ones, with empty domains:
+\begin{enumerate}
+\item $\mathbf{c}^{(n)}$, from $\sig{\Sigma}^{(n)}$ to $\sig{\Lambda}^{(n)}$, with $\varphi$ on sorts, which sends $\sigma$ to $c(\sigma)$, and $\src^{k}_{s}$, $\tgt^{k}_{s}$ and $\circ^{k}_{s}$ to $\src^{k}_{\varphi(s)}$, $\tgt^{k}_{\varphi(s)}$ and $\circ^{k}_{\varphi(s)}$, applied to variables; and
+\item $\mathbf{c}^{\gl(n)}$, from $\sig{\Sigma}^{\gl(n)}$ to $\sig{\Lambda}^{\gl(n)}$, which sends $(k,s)$ to $(k,\varphi(s))$, $\sigma_{k}$ to $c(\sigma)_{k}$, and $\src^{(j,k)}_{s}$, $\tgt^{(j,k)}_{s}$, $\ii^{(k,j)}_{s}$ and $\circ^{(j,k)}_{s}$ to the same symbols of sort $\varphi(s)$, applied to variables.
+\end{enumerate}
+For $n=0$, $\mathbf{c}^{(0)}$ is $\mathbf{c}$.
+The same clauses, with $\omega$ in place of $n$, define $\mathbf{c}^{(\omega)}$ and $\mathbf{c}^{\gl(\omega)}$.
+\end{definition}
+
+\begin{proposition}\label{PChangeSigDerivor}
+The functors $(\mathbf{c}^{(n)})^{\ast}$ and $(\mathbf{c}^{\gl(n)})^{\ast}$ restrict to functors from $\mathsf{nCatAlg}(\sig{\Lambda})$ to $\mathsf{nCatAlg}(\sig{\Sigma})$ and from $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Lambda})$ to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$.
+The first one keeps, in every sort $s$, the $n$-category of sort $\varphi(s)$, and interprets $\sigma$ as the $n$-functor $c(\sigma)^{\calg{B}}$; the second one is similar.
+Moreover, $(\mathbf{d}\circ\mathbf{c})^{(n)}=\mathbf{d}^{(n)}\circ\mathbf{c}^{(n)}$, $(\id_{\sig{\Sigma}})^{(n)}=\id_{\sig{\Sigma}^{(n)}}$, and similarly in the globular case, so that $\sig{\Sigma}\mapsto\mathsf{nCatAlg}(\sig{\Sigma})$ and $\sig{\Sigma}\mapsto\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ are split $\mathsf{Sig}_{\mathfrak{d}}$-indexed categories.
+The same holds in dimension $\omega$.
+\end{proposition}
+\begin{proof}
+Let $\calg{B}$ be an $n$-categorial $\sig{\Lambda}$-algebra.
+We first prove that $(\mathbf{c}^{(n)})^{\ast}(\calg{B})$ is a $\sig{\Sigma}^{(n)}$-algebra.
+The domains are empty, so that its cells of sort $s$ are the elements of $B_{\varphi(s)}$.
+By Lemma~\ref{LTermFunctor}, $c(\sigma)^{\calg{B}}$ is total, and so are the sources and the targets.
+By (A$^{k}$3), the composition is defined on the pairs that satisfy its domain condition.
+
+Now we prove the axioms.
+The axioms on the categorial structure of the sort $s$ are those of the sort $\varphi(s)$ of $\calg{B}$.
+(A0), (A$^{k}$7) and (A$^{k}$8) state that $c(\sigma)^{\calg{B}}$ is a total $n$-functor, which is Lemma~\ref{LTermFunctor}.
+The globular case is the same.
+
+Next, we prove the functoriality.
+We compare the composite derivors on operation symbols, see the note after Proposition~\ref{PDerivors}.
+For every term $P$ of $\Lambda$, $(d^{(n)})^{\sharp}(P)=d^{\sharp}(P)$ and $(d^{\gl(n)})^{\sharp}(P_{k})=(d^{\sharp}(P))_{k}$, since both sides of each equality are composites of derivors that agree on the operation symbols of $\Lambda$.
+Hence both composites send $\sigma$ to $d^{\sharp}(c(\sigma))$, and $\sigma_{k}$ to $(d^{\sharp}(c(\sigma)))_{k}$, and the categorial symbols to themselves.
+The identities are clear.
+By Proposition~\ref{PHepComp}~(2), since all the domains are empty and the transformed algebras are ep-algebras, the induced functors compose strictly.
+
+In dimension $\omega$, the proofs only involve finitely many dimensions at a time.
+Moreover, the cells of $(\mathbf{c}^{(\omega)})^{\ast}(\calg{B})$ have the dimensions they have in $\calg{B}$, so that $(\mathbf{c}^{(\omega)})^{\ast}$ preserves the finite dimension of the cells.
+\end{proof}
+
+\begin{proposition}\label{PChangeSigCompat}
+The functors induced by $\mathbf{c}$ commute with graduation, unification, discretization and truncation:
+\begin{enumerate}
+\item $\Gd^{(n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(n)})^{\ast}=(\mathbf{c}^{\gl(n)})^{\ast}\circ\Gd^{(n)}_{\sig{\Lambda}}$ and $\Uf^{(n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{\gl(n)})^{\ast}=(\mathbf{c}^{(n)})^{\ast}\circ\Uf^{(n)}_{\sig{\Lambda}}$;
+\item $\Ds^{(n,m)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(m)})^{\ast}=(\mathbf{c}^{(n)})^{\ast}\circ\Ds^{(n,m)}_{\sig{\Lambda}}$ and $\Tr^{(m,n)}_{\sig{\Sigma}}\circ(\mathbf{c}^{(n)})^{\ast}=(\mathbf{c}^{(m)})^{\ast}\circ\Tr^{(m,n)}_{\sig{\Lambda}}$, for $m\leq n$, and similarly in the globular case; and
+\item the same equalities hold in dimension $\omega$.
+\end{enumerate}
+Moreover, the natural transformations $\theta$, $\beta^{(m,n)}$, $\varepsilon$, $\varepsilon^{\gl}$ and $\mathrm{in}^{[m]}$ are compatible with the change of signature.
+\end{proposition}
+\begin{proof}
+(1) We first prove that $\mathbf{c}^{(n)}\circ\bGd^{(n)}_{\sig{\Sigma}}=\bGd^{(n)}_{\sig{\Lambda}}\circ\mathbf{c}^{\gl(n)}$.
+Both send $(k,s)$ to $\varphi(s)$.
+By (Der1), (Der2) and the fact that $(\Gd^{(n)}_{\sig{\Lambda}})^{\sharp}(P_{k})=P$, both send $\sigma_{k}$ to $c(\sigma)$; and both send every categorial symbol to the corresponding term of Definition~\ref{DGradDerivor}, for the sort $\varphi(s)$.
+Both have the domains $\{(v_{0},\src^{k}_{\varphi(s)}(v_{0}))\}$, for $k\in n$.
+Moreover, both $\Gd^{(n)}_{\sig{\Sigma}}((\mathbf{c}^{(n)})^{\ast}(\calg{B}))$ and $(\mathbf{c}^{\gl(n)})^{\ast}(\Gd^{(n)}_{\sig{\Lambda}}(\calg{B}))$ are ep-algebras whose cells of sort $(k,s)$ are the $k$-cells of sort $\varphi(s)$ of $\calg{B}$.
+Hence, by Lemma~\ref{LCommSquare}, they are equal.
+For unification, both derivors send $s$ to $(n,\varphi(s))$, $\sigma$ to $c(\sigma)_{n}$, since $(\Uf^{(n)}_{\sig{\Lambda}})^{\sharp}(P)=P_{n}$, and the categorial symbols to the terms of Definition~\ref{DUnifDerivor}; all the domains are empty, and the cells are the $n$-cells of sort $\varphi(s)$.
+
+(2) In the same way, the composite derivors agree, since discretization and truncation fix the terms of $\Lambda$, up to replacing $P_{k}$ by $P_{\min\{k,m\}}$, and since both composites have the same domains.
+The cells are, in both cases, the cells, the $m$-cells or the $\min\{k,m\}$-cells of the sort $\varphi(s)$.
+
+(3) The equalities for $\Tr^{(n,\omega)}$ and $\Ds^{(\omega,n)}$ are proved in the same way.
+For $\Gd^{(\omega)}$, both functors have the same truncations, by (1) and (2), so that, by Proposition~\ref{PUnivPropCatAlg}, they are equal.
+For $\Uf^{(\omega)}$, both algebras have the classes $[x]_{k}$, with $x$ of sort $(k,\varphi(s))$, as cells of sort $s$, and their operations are computed at a finite level, where they agree by~(1).
+
+Finally, these natural transformations are given by identities, inclusions, $(k,j)$-identities and the mappings $\mathrm{in}^{[m]}$, which the induced functors reindex along $\varphi$.
+\end{proof}
+
+Hence graduation, unification, discretization and truncation, and the algebraic squares of Proposition~\ref{PAlgSquare}, are natural in the many-sorted signature.
+
+\bibliographystyle{amsplain}
+\bibliography{Biblio}
+
+\end{document}
