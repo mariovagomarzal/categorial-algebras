@@ -711,12 +711,16 @@ The first equality follows from~(Der2), since $\mathcal{Q}^{\sharp}(P)=\tau((\ma
 This completes the proof.
 \end{proof}
 
-We are now in position to prove that the derivors form a category.
+In the following proposition we prove that the translation of terms is compatible with the composition and the identities of derivors.
 
 \begin{proposition}\label{PSigdCat}
 Let $\mathbf{c}=(\varphi,c)\colon\sig{\Sigma}\mor\sig{\Lambda}$, $\mathbf{d}=(\psi,d)\colon\sig{\Lambda}\mor\sig{\Omega}$ and $\mathbf{e}=(\chi,e)\colon\sig{\Omega}\mor\sig{\Xi}$ be derivors.
-Then $(e^{\sharp}\circ d)^{\sharp}=e^{\sharp}\circ d^{\sharp}$, $(\eta^{\Lambda})^{\sharp}$ is the identity and $c^{\sharp}\circ\eta^{\Sigma}=c$.
-Consequently, the many-sorted signatures together with the derivors, the composition and the identities of Definition~\ref{DDerCompId} constitute a category, denoted by $\mathsf{Sig}_{\mathfrak{d}}$.
+Then the following statements hold:
+\begin{enumerate}
+\item $(e^{\sharp}\circ d)^{\sharp}=e^{\sharp}\circ d^{\sharp}$;
+\item $(\eta^{\Lambda})^{\sharp}$ is the identity; and
+\item $c^{\sharp}\circ\eta^{\Sigma}=c$.
+\end{enumerate}
 \end{proposition}
 \begin{proof}
 We prove the first equality by induction on terms.
@@ -743,12 +747,19 @@ The first equality follows from~(Der2); the second equality follows from the ind
 
 By~(Der1) and~(Der2), $(\eta^{\Lambda})^{\sharp}$ sends every term to itself and $c^{\sharp}(\eta^{\Sigma}(\sigma))=c^{\sharp}(\sigma((v^{\mathbf{s}}_{j})_{j\in\bb{\mathbf{s}}}))=c(\sigma)$.
 
-Finally, the first equality implies that the composition is associative, since $(e^{\sharp}\circ d)^{\sharp}\circ c=e^{\sharp}\circ(d^{\sharp}\circ c)$, and the other two imply that the identities are neutral for it.
-
 This completes the proof.
 \end{proof}
 
-In the rest of this work we use the following facts, which collect Definitions~\ref{DDerivorExt} and~\ref{DDerCompId} and Proposition~\ref{PSigdCat}.
+From the above proposition we obtain that the derivors form a category.
+
+\begin{corollary}\label{CSigdCat}
+The many-sorted signatures together with the derivors, the composition and the identities of Definition~\ref{DDerCompId} constitute a category, denoted by $\mathsf{Sig}_{\mathfrak{d}}$.
+\end{corollary}
+\begin{proof}
+By Proposition~\ref{PSigdCat}~(1), the composition is associative, since $(e^{\sharp}\circ d)^{\sharp}\circ c=e^{\sharp}\circ(d^{\sharp}\circ c)$, and, by Proposition~\ref{PSigdCat}~(2) and~(3), the identities are neutral for it.
+\end{proof}
+
+In the rest of this work we use the following facts, which collect Definitions~\ref{DDerivorExt} and~\ref{DDerCompId}, Proposition~\ref{PSigdCat} and Corollary~\ref{CSigdCat}.
 
 \begin{remark}\label{RDerivorTerms}
 Besides~(Der1) and~(Der2), derivors satisfy the following properties:
@@ -1291,8 +1302,8 @@ We need neither the order on the sorts nor the predicates of~\cite{LG18} and, in
 
 We begin by recalling the notions of ep-signature and of ep-algebra, and by introducing the hierarchical ep-signatures, or hep-signatures, together with their specifications, their ep-varieties and the categories canonically associated to them.
 Next we define the generalized hep-derivors and we prove that every generalized hep-derivor induces a functor between the categories of partial algebras.
-Then we explain how we check that the restriction of such a functor to the category canonically associated to the ep-variety of a hep-specification corestricts to the category canonically associated to the ep-variety of another one.
-We end this section by proving that the hep-signatures and the generalized hep-derivors form a category, $\mathsf{hepSig}_{\gd}$, by comparing the functor induced by a composition with the composite of the induced functors, and by assembling, by means of the Grothendieck construction for a normal lax indexed category, the ep-algebras of all the hep-signatures into a category $\mathsf{hepAlg}_{\gd}$.
+Then we define the composition of generalized hep-derivors and we compare the functor induced by a composition with the composite of the induced functors.
+We end this section by proving that the hep-signatures and the generalized hep-derivors form a category, $\mathsf{hepSig}_{\gd}$, and by sketching how the ep-algebras of all the hep-signatures can be assembled into a category $\mathsf{hepAlg}_{\gd}$.
 We use the notions on terms, substitutions and derivors recalled in Subsections~\ref{SVariables}, \ref{SPrelimDerivors} and~\ref{STermsEq}.
 
 \subsection{ep-signatures, hep-signatures and their specifications}\label{SEpSignatures}
@@ -1748,7 +1759,6 @@ If $\mathbf{c}\in\Dom(P^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})})$, then $\mathbf{c
 $$
 d^{\sharp}(P)^{\mathbf{C}}(\mathbf{c})=P^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c}).
 $$
-Consequently, for every $\mathcal{H}\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\mathbf{t}}}$, if $\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\models\mathcal{H}[\mathbf{c}]$, then $\mathbf{C}\models d^{\sharp}[\mathcal{H}][\mathbf{c}]$.
 \end{lemma}
 \begin{proof}
 We proceed by induction on the term $P$.
@@ -1781,11 +1791,18 @@ P^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}\left(\mathbf{c}\right).
 
 The first equality follows from~(Der2); the second equality follows from Remark~\ref{RSubst}; the third equality follows from the induction hypothesis; the fourth equality follows from Proposition~\ref{PTransformedAlg}; finally, the last equality unravels the definition of the partial term operation $P^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}$, see Definition~\ref{DTermOp}.
 
-Now we prove the consequence on the $\mathrm{E}$-equations.
-Let $(P,Q)\in\mathcal{H}$ be such that $\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\models(P,Q)[\mathbf{c}]$.
-Then $P^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c})$ and $Q^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c})$ are defined and equal, so that, by the above, $d^{\sharp}(P)^{\mathbf{C}}(\mathbf{c})$ and $d^{\sharp}(Q)^{\mathbf{C}}(\mathbf{c})$ are defined and equal, i.e., $\mathbf{C}\models(d^{\sharp}(P),d^{\sharp}(Q))[\mathbf{c}]$.
-
 This completes the proof.
+\end{proof}
+
+From the above lemma we obtain the corresponding fact on the $\mathrm{E}$-equations.
+
+\begin{corollary}\label{CTermComp}
+Let $\sig{\Lambda}$ and $\sig{\Omega}$ be hep-signatures, $\mathbf{d}$ a generalized hep-derivor from $\sig{\Lambda}$ to $\sig{\Omega}$, $\mathbf{C}$ a partial $\Omega$-algebra, $\mathbf{t}\in T^{\star}$, $\mathbf{c}\in(C_{\Dom^{(\psi,d)}})_{\mathbf{t}}$ and $\mathcal{H}\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\mathbf{t}}}$.
+If $\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\models\mathcal{H}[\mathbf{c}]$, then $\mathbf{C}\models d^{\sharp}[\mathcal{H}][\mathbf{c}]$.
+\end{corollary}
+\begin{proof}
+Let $(P,Q)\in\mathcal{H}$ be such that $\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\models(P,Q)[\mathbf{c}]$.
+Then $P^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c})$ and $Q^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{c})$ are defined and equal, so that, by Lemma~\ref{LTermComp}, $d^{\sharp}(P)^{\mathbf{C}}(\mathbf{c})$ and $d^{\sharp}(Q)^{\mathbf{C}}(\mathbf{c})$ are defined and equal, i.e., $\mathbf{C}\models(d^{\sharp}(P),d^{\sharp}(Q))[\mathbf{c}]$.
 \end{proof}
 
 In the following lemma we prove that the transformed algebra only depends on the domains through the cells they determine.
@@ -1807,12 +1824,11 @@ Finally, by Proposition~\ref{PGenHepDerivorFunctor}, $\mathbf{c}^{\ast}_{\gd}(f)
 This completes the proof.
 \end{proof}
 
-In the following proposition we prove that the identity generalized hep-derivor induces, on the weak $\sig{\Sigma}$-algebras, and, in particular, on the $\sig{\Sigma}$-algebras, the identity functor.
+In the following proposition we prove that the identity generalized hep-derivor leaves the weak $\sig{\Sigma}$-algebras and their homomorphisms unchanged.
 
 \begin{proposition}\label{PHepId}
 Let $\sig{\Sigma}$ be a hep-signature.
 Then, for every weak $\sig{\Sigma}$-algebra $\mathbf{A}$ and every homomorphism $f$ between weak $\sig{\Sigma}$-algebras, see Definition~\ref{DWeakEpAlgebra}, $(\id_{\sig{\Sigma}})^{\ast}_{\gd}(\mathbf{A})=\mathbf{A}$ and $(\id_{\sig{\Sigma}})^{\ast}_{\gd}(f)=f$.
-Thus the restriction of $(\id_{\sig{\Sigma}})^{\ast}_{\gd}$ to $\mathsf{wEPAlg}(\sig{\Sigma})$ is $\Id_{\mathsf{wEPAlg}(\sig{\Sigma})}$ and its restriction to $\mathsf{EPAlg}(\sig{\Sigma})$ is $\Id_{\mathsf{EPAlg}(\sig{\Sigma})}$.
 \end{proposition}
 \begin{proof}
 Let $\mathbf{A}$ be a weak $\sig{\Sigma}$-algebra.
@@ -1839,36 +1855,36 @@ and, on this domain, $\sigma^{(\id_{\sig{\Sigma}})^{\ast}_{\gd}(\mathbf{A})}$ ac
 
 The first equality follows from Proposition~\ref{PTransformedAlg}, taking into account the induction hypothesis and the fact that all the elements of $A$ are cells, so that condition (D3) always holds; the second equality follows from the fact that $\eta^{\Sigma}(\sigma)^{\mathbf{A}}=\sigma^{\mathbf{A}}$; finally, the last equality follows from the fact that $\mathbf{A}$ is a weak $\sig{\Sigma}$-algebra, so that $\Dom(\sigma^{\mathbf{A}})\subseteq A_{\mathrm{def}^{(S,\Sigma)}(\sigma)}$, see Definition~\ref{DWeakEpAlgebra}.
 
-Finally, since $\mathsf{wEPAlg}(\sig{\Sigma})$ and $\mathsf{EPAlg}(\sig{\Sigma})$ are full subcategories of $\mathsf{PAlg}(\Sigma)$ and every $\sig{\Sigma}$-algebra is a weak $\sig{\Sigma}$-algebra, the last statement follows from the above.
-
 This completes the proof.
+\end{proof}
+
+From the above proposition we obtain that the identity generalized hep-derivor induces, on the weak $\sig{\Sigma}$-algebras, and, in particular, on the $\sig{\Sigma}$-algebras, the identity functor.
+
+\begin{corollary}\label{CHepId}
+Let $\sig{\Sigma}$ be a hep-signature.
+Then the restriction of $(\id_{\sig{\Sigma}})^{\ast}_{\gd}$ to $\mathsf{wEPAlg}(\sig{\Sigma})$ is $\Id_{\mathsf{wEPAlg}(\sig{\Sigma})}$ and its restriction to $\mathsf{EPAlg}(\sig{\Sigma})$ is $\Id_{\mathsf{EPAlg}(\sig{\Sigma})}$.
+\end{corollary}
+\begin{proof}
+It follows from Proposition~\ref{PHepId}, since $\mathsf{wEPAlg}(\sig{\Sigma})$ and $\mathsf{EPAlg}(\sig{\Sigma})$ are full subcategories of $\mathsf{PAlg}(\Sigma)$ and every $\sig{\Sigma}$-algebra is a weak $\sig{\Sigma}$-algebra.
 \end{proof}
 
 We are now in position to compare the functor induced by a composition with the composite of the induced functors.
 
 \begin{proposition}\label{PHepComp}
 Let $\sig{\Sigma}$, $\sig{\Lambda}$ and $\sig{\Omega}$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$, $\mathbf{d}$ a generalized hep-derivor from $\sig{\Lambda}$ to $\sig{\Omega}$ and $\mathbf{C}$ a partial $\Omega$-algebra.
-Then the following statements hold:
-\begin{enumerate}
-\item the underlying $S$-sorted set of $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ is an $S$-sorted subset of that of $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$, and the inclusion $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ of the former into the latter is a homomorphism of partial $\Sigma$-algebras
+Then the underlying $S$-sorted set of $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ is an $S$-sorted subset of that of $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$, and the inclusion $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ of the former into the latter is a homomorphism of partial $\Sigma$-algebras
 $$
-\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}\colon\mathbf{c}^{\ast}_{\gd}\left(\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\right)\mor(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C});
+\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}\colon\mathbf{c}^{\ast}_{\gd}\left(\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\right)\mor(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C}).
 $$
-moreover, for every homomorphism $f\colon\mathbf{C}\mor\mathbf{C}'$ of partial $\Omega$-algebras,
+Moreover, for every homomorphism $f\colon\mathbf{C}\mor\mathbf{C}'$ of partial $\Omega$-algebras,
 $$
-(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(f)\circ\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}=\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}'}\circ\mathbf{c}^{\ast}_{\gd}\left(\mathbf{d}^{\ast}_{\gd}(f)\right);
+(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(f)\circ\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}=\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}'}\circ\mathbf{c}^{\ast}_{\gd}\left(\mathbf{d}^{\ast}_{\gd}(f)\right).
 $$
-\item if $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ and $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$ have the same underlying $S$-sorted set and $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ is a $\sig{\Sigma}$-algebra, then
-$$
-(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})=\mathbf{c}^{\ast}_{\gd}\left(\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\right);
-$$
-and, if, moreover, $f\colon\mathbf{C}\mor\mathbf{C}'$ is a homomorphism of partial $\Omega$-algebras and $\mathbf{C}'$ satisfies the same hypotheses, then $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(f)=\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(f))$.
-\end{enumerate}
 \end{proposition}
 \begin{proof}
 We first prove that the cells of the former are cells of the latter.
 Let $s\in S$ and $x$ a cell of sort $s$ of $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$, i.e., $x\in(C_{\Dom^{(\psi,d)}})_{\varphi(s)}$ and $\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\models\Dom^{(\varphi,c)}_{s}[x]$.
-By Lemma~\ref{LTermComp}, $\mathbf{C}\models d^{\sharp}[\Dom^{(\varphi,c)}_{s}][x]$.
+By Corollary~\ref{CTermComp}, $\mathbf{C}\models d^{\sharp}[\Dom^{(\varphi,c)}_{s}][x]$.
 Hence, by Definition~\ref{DHepComp}, $\mathbf{C}\models\Dom^{\mathbf{d}\circ\mathbf{c}}_{s}[x]$, i.e., $x$ is a cell of sort $s$ of $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$.
 
 Now we prove that the inclusion is a homomorphism.
@@ -1903,13 +1919,24 @@ c(\sigma)^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}\left(\mathbf{a}\right)
 
 The first equality follows from Proposition~\ref{PTransformedAlg} applied to $\mathbf{d}\circ\mathbf{c}$; the second equality follows from Lemma~\ref{LTermComp}; finally, the last equality follows from Proposition~\ref{PTransformedAlg} applied to $\mathbf{c}$.
 
-Next, we prove the naturality.
+Finally, we prove the naturality.
 By Proposition~\ref{PGenHepDerivorFunctor}, for every $s\in S$, both $((\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(f)\circ\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}})_{s}$ and $(\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}'}\circ\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(f)))_{s}$ send a cell $x$ of sort $s$ of $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ to $f_{\psi(\varphi(s))}(x)$.
-This proves statement~(1).
 
-Finally, we prove statement~(2).
-Let us assume that $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ and $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$ have the same underlying $S$-sorted set and that $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ is a $\sig{\Sigma}$-algebra.
-By statement~(1), for every $\sigma\in\Sigma_{\mathbf{s},s}$,
+This completes the proof.
+\end{proof}
+
+From the above proposition we obtain a sufficient condition for the functor induced by a composition to agree with the composite of the induced functors.
+
+\begin{corollary}\label{CHepComp}
+Let $\sig{\Sigma}$, $\sig{\Lambda}$ and $\sig{\Omega}$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$, $\mathbf{d}$ a generalized hep-derivor from $\sig{\Lambda}$ to $\sig{\Omega}$ and $\mathbf{C}$ a partial $\Omega$-algebra such that $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ and $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$ have the same underlying $S$-sorted set and $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ is a $\sig{\Sigma}$-algebra.
+Then
+$$
+(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})=\mathbf{c}^{\ast}_{\gd}\left(\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\right).
+$$
+Moreover, if $f\colon\mathbf{C}\mor\mathbf{C}'$ is a homomorphism of partial $\Omega$-algebras and $\mathbf{C}'$ satisfies the same hypotheses, then $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(f)=\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(f))$.
+\end{corollary}
+\begin{proof}
+By Proposition~\ref{PHepComp}, for every $\sigma\in\Sigma_{\mathbf{s},s}$,
 $$
 \Dom\left(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))}\right)\subseteq\Dom\left(\sigma^{(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})}\right)
 $$
@@ -1919,12 +1946,12 @@ Let us assume that every $\tau\lhd\sigma$ has the same interpretation in both pa
 Then, by Proposition~\ref{PTransformedAlg}, $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$, hence, by the induction hypothesis and Definition~\ref{DHepSignature}, $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{a}]$.
 Since $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ is a $\sig{\Sigma}$-algebra, by Definition~\ref{DEpAlgebra}, $\mathbf{a}\in\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))})$.
 Therefore both partial $\Sigma$-algebras are equal, i.e., $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ is the identity.
-If $\mathbf{C}'$ satisfies the same hypotheses, then $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}'}$ is also the identity and, by statement~(1), $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(f)=\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(f))$.
+If $\mathbf{C}'$ satisfies the same hypotheses, then $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}'}$ is also the identity and, by Proposition~\ref{PHepComp}, $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(f)=\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(f))$.
 
 This completes the proof.
 \end{proof}
 
-By Lemma~\ref{LTermComp}, the hypothesis on the cells in Proposition~\ref{PHepComp}~(2) amounts to the following condition: for every $s\in S$ and every cell $x$ of sort $\varphi(s)$ of $\mathbf{C}$ relative to $\mathbf{d}$, if $\mathbf{C}\models d^{\sharp}[\Dom^{(\varphi,c)}_{s}][x]$, then $\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\models\Dom^{(\varphi,c)}_{s}[x]$.
+By Corollary~\ref{CTermComp}, the hypothesis on the cells in Corollary~\ref{CHepComp} amounts to the following condition: for every $s\in S$ and every cell $x$ of sort $\varphi(s)$ of $\mathbf{C}$ relative to $\mathbf{d}$, if $\mathbf{C}\models d^{\sharp}[\Dom^{(\varphi,c)}_{s}][x]$, then $\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\models\Dom^{(\varphi,c)}_{s}[x]$.
 It trivially holds when the domains of $\mathbf{c}$ are empty.
 
 \subsection{The category \texorpdfstring{$\mathsf{hepSig}_{\gd}$}{hepSiggd}}\label{SHepSigCat}
@@ -2090,7 +2117,7 @@ Thus $\mathsf{hepAlg}_{\gd}$ contains the category $\mathsf{Alg}_{\mathfrak{d}}$
 % \begin{remark}\label{RHepAlgCatOld}
 % Let us consider the many-sorted signatures as hep-signatures with empty sets of domain conditions, see Remark~\ref{REpAlgebra}, and the derivors $(\varphi,c)$ between them as the generalized hep-derivors $(\varphi,c,\varnothing)$.
 % For a many-sorted signature $(S,\Sigma)$, the weak $(S,\Sigma,\varnothing)$-algebras are all the partial $\Sigma$-algebras and the $(S,\Sigma,\varnothing)$-algebras are the $\Sigma$-algebras.
-% Moreover, since the partial term operations of a total algebra are total, for every derivor $(\varphi,c)$ from $(S,\Sigma)$ to $(T,\Lambda)$, the restriction of $(\varphi,c,\varnothing)^{\ast}_{\gd}$ to $\mathsf{Alg}(\Lambda)$ corestricts to $\mathsf{Alg}(\Sigma)$, and this corestriction is the usual functor that sends a $\Lambda$-algebra $\mathbf{B}$ to the $\Sigma$-algebra on $B_{\varphi}$ in which every $\sigma$ is interpreted as the term operation $c(\sigma)^{\mathbf{B}}$, see~\cite{CVST10b}; and, since the domains of these generalized hep-derivors are empty, by the note after Proposition~\ref{PHepComp} and Proposition~\ref{PHepComp}~(2), the inclusions $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ are identities when $\mathbf{C}$ is a total algebra.
+% Moreover, since the partial term operations of a total algebra are total, for every derivor $(\varphi,c)$ from $(S,\Sigma)$ to $(T,\Lambda)$, the restriction of $(\varphi,c,\varnothing)^{\ast}_{\gd}$ to $\mathsf{Alg}(\Lambda)$ corestricts to $\mathsf{Alg}(\Sigma)$, and this corestriction is the usual functor that sends a $\Lambda$-algebra $\mathbf{B}$ to the $\Sigma$-algebra on $B_{\varphi}$ in which every $\sigma$ is interpreted as the term operation $c(\sigma)^{\mathbf{B}}$, see~\cite{CVST10b}; and, since the domains of these generalized hep-derivors are empty, by the note after Corollary~\ref{CHepComp} and Corollary~\ref{CHepComp}, the inclusions $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ are identities when $\mathbf{C}$ is a total algebra.
 % Therefore the subcategory of $\mathsf{hepAlg}_{\gd}$ whose objects are the pairs $((S,\Sigma,\varnothing),\mathbf{A})$, with $\mathbf{A}$ a $\Sigma$-algebra, and whose morphisms are the pairs $((\varphi,c,\varnothing),f)$, is the category $\mathsf{Alg}_{\mathfrak{d}}$ of~\cite{CVST10b}.
 % \end{remark}
 
@@ -3339,7 +3366,7 @@ In this subsection, for a many-sorted signature $\sig{\Sigma}$ and $n\in\mathbb{
 \end{center}
 
 Both functors are induced by generalized hep-derivors.
-Therefore we compute their composites by means of the compositions $\bGd^{(n)}_{\sig{\Sigma}}\circ\bUf^{(n)}_{\sig{\Sigma}}$ and $\bUf^{(n)}_{\sig{\Sigma}}\circ\bGd^{(n)}_{\sig{\Sigma}}$, see Definition~\ref{DHepComp}, and Proposition~\ref{PHepComp}.
+Therefore we compute their composites by means of the compositions $\bGd^{(n)}_{\sig{\Sigma}}\circ\bUf^{(n)}_{\sig{\Sigma}}$ and $\bUf^{(n)}_{\sig{\Sigma}}\circ\bGd^{(n)}_{\sig{\Sigma}}$, see Definition~\ref{DHepComp}, Proposition~\ref{PHepComp} and Corollary~\ref{CHepComp}.
 We start by proving that the process of graduation followed by that of unification does not provide anything new.
 
 \begin{proposition}\label{PUnifGrad}
@@ -3422,7 +3449,7 @@ Therefore, the following chain of equalities holds
 \tag{3}
 \end{align*}
 
-The first equality follows from Proposition~\ref{PHepComp}~(2); the second equality follows from the above; finally, the last equality follows from Proposition~\ref{PHepId}.
+The first equality follows from Corollary~\ref{CHepComp}; the second equality follows from the above; finally, the last equality follows from Proposition~\ref{PHepId}.
 By the same propositions, the equality also holds for the $n$-categorial $\sig{\Sigma}$-homomorphisms.
 Since $\mathsf{nCatAlg}(\sig{\Sigma})=\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$, the stated equality of functors follows.
 
@@ -3441,8 +3468,8 @@ In this proof, for every $s\in S$, we let $\mathrm{i}^{(n,n)}_{s}$ and $\src^{(n
 Let $\calg{A}$ be a globular $n$-categorial $\sig{\Sigma}$-algebra.
 By Lemma~\ref{LUnifDescription}, $\src^{k}_{s}$ acts in $\Uf^{(n)}_{\sig{\Sigma}}(\calg{A})$ as $\mathrm{i}^{(n,k)}_{s}\circ\src^{(k,n)}_{s}$.
 Hence, by Definitions~\ref{DGradDerivor} and~\ref{DUnifDerivor}, an $n$-cell $x$ of sort $s$ satisfies $\Dom^{\Gd^{(n)}_{\sig{\Sigma}}}_{(k,s)}$ in $\Uf^{(n)}_{\sig{\Sigma}}(\calg{A})$ if, and only if, it satisfies $(\Uf^{(n)}_{\sig{\Sigma}})^{\sharp}[\Dom^{\Gd^{(n)}_{\sig{\Sigma}}}_{(k,s)}]=\{(v^{(n,s)}_{0},\mathrm{i}^{(n,k)}_{s}(\src^{(k,n)}_{s}(v^{(n,s)}_{0})))\}$ in $\calg{A}$.
-Thus, by the note after Proposition~\ref{PHepComp}, $\Gd^{(n)}_{\sig{\Sigma}}(\Uf^{(n)}_{\sig{\Sigma}}(\calg{A}))$ and $(\bUf^{(n)}_{\sig{\Sigma}}\circ\bGd^{(n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\calg{A})$ have the same cells and, by Propositions~\ref{PGradDerivor} and~\ref{PUnifDerivor}, the former is a $\sig{\Sigma}^{\gl(n)}$-algebra.
-Therefore, by Proposition~\ref{PHepComp}~(2),
+Thus, by the note after Corollary~\ref{CHepComp}, $\Gd^{(n)}_{\sig{\Sigma}}(\Uf^{(n)}_{\sig{\Sigma}}(\calg{A}))$ and $(\bUf^{(n)}_{\sig{\Sigma}}\circ\bGd^{(n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\calg{A})$ have the same cells and, by Propositions~\ref{PGradDerivor} and~\ref{PUnifDerivor}, the former is a $\sig{\Sigma}^{\gl(n)}$-algebra.
+Therefore, by Corollary~\ref{CHepComp},
 $$
 \Gd^{(n)}_{\sig{\Sigma}}\left(\Uf^{(n)}_{\sig{\Sigma}}(\calg{A})\right)=\left(\bUf^{(n)}_{\sig{\Sigma}}\circ\bGd^{(n)}_{\sig{\Sigma}}\right)^{\ast}_{\gd}(\calg{A}).
 $$
@@ -3825,7 +3852,7 @@ Then the following statements hold:
 \end{enumerate}
 \end{proposition}
 \begin{proof}
-For $m=n$, both statements follow from Proposition~\ref{PHepId}.
+For $m=n$, both statements follow from Corollary~\ref{CHepId}.
 Let $m<n$.
 
 (1) Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(m)}})$.
@@ -3862,7 +3889,7 @@ By Remarks~\ref{RSingleSetIdent} and~\ref{RGlobularIdent} and Proposition~\ref{P
 By Lemma~\ref{LDiscDescription}, $\Ds^{(n,m)}_{\sig{\Sigma}}$ keeps the cells and the structure in the dimensions $k<m$, and makes all the cells $k$-cells, for $k\geq m$.
 Similarly, $\Ds^{\gl(n,m)}_{\sig{\Sigma}}$ takes as $k$-cells, for $k>m$, the $m$-cells.
 Both functors send a homomorphism to itself, in the globular case repeating its component at the $m$-cells in the dimensions $k>m$.
-By Proposition~\ref{PHepId}, $\Ds^{(n,n)}_{\sig{\Sigma}}$ and $\Ds^{\gl(n,n)}_{\sig{\Sigma}}$ are identities.
+By Corollary~\ref{CHepId}, $\Ds^{(n,n)}_{\sig{\Sigma}}$ and $\Ds^{\gl(n,n)}_{\sig{\Sigma}}$ are identities.
 
 \subsection{Truncation of higher-order categorial algebras}\label{STruncationAlg}
 
@@ -3943,7 +3970,7 @@ Then the following statements hold:
 \end{enumerate}
 \end{proposition}
 \begin{proof}
-For $m=n$, both statements follow from Proposition~\ref{PHepId}.
+For $m=n$, both statements follow from Corollary~\ref{CHepId}.
 Let $m<n$.
 
 (1) Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$.
@@ -3974,12 +4001,12 @@ By Remarks~\ref{RSingleSetIdent} and~\ref{RGlobularIdent} and Proposition~\ref{P
 \end{enumerate}
 The first one sends an $n$-categorial $\sig{\Sigma}$-algebra to the $m$-categorial $\sig{\Sigma}$-algebra of its $m$-cells, and a homomorphism to its restriction.
 The second one forgets the cells of dimension greater than $m$, and the corresponding components of the homomorphisms.
-By Proposition~\ref{PHepId}, $\Tr^{(n,n)}_{\sig{\Sigma}}$ and $\Tr^{\gl(n,n)}_{\sig{\Sigma}}$ are identities.
+By Corollary~\ref{CHepId}, $\Tr^{(n,n)}_{\sig{\Sigma}}$ and $\Tr^{\gl(n,n)}_{\sig{\Sigma}}$ are identities.
 
 \subsection{On the relationship between discretization and truncation}\label{SDiscTrunc}
 
 In this subsection we prove that discretization is left adjoint to truncation and that these functors compose as expected.
-As in Subsection~\ref{SGradUnif}, we compute the composites of these functors by composing the corresponding generalized hep-derivors, by means of Proposition~\ref{PHepComp} and Lemma~\ref{LSameCells}.
+As in Subsection~\ref{SGradUnif}, we compute the composites of these functors by composing the corresponding generalized hep-derivors, by means of Corollary~\ref{CHepComp} and Lemma~\ref{LSameCells}.
 
 \begin{proposition}\label{PTruncDisc}
 Let $\sig{\Sigma}$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
@@ -3993,7 +4020,7 @@ Then the following equalities hold:
 \end{enumerate}
 \end{proposition}
 \begin{proof}
-For $m=n$, all the functors involved are identities, by Proposition~\ref{PHepId}.
+For $m=n$, all the functors involved are identities, by Corollary~\ref{CHepId}.
 Let $m<n$.
 
 (1) We first compare the underlying derivors.
@@ -4013,7 +4040,7 @@ By Lemma~\ref{LDiscDescription}~(1), $\src^{m}_{s}$ acts as the identity in $\Ds
 Hence every cell of $\calg{A}$ is a cell of $\Tr^{(m,n)}_{\sig{\Sigma}}(\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A}))$.
 
 Now, by Propositions~\ref{PDiscDerivor} and~\ref{PTruncDerivor}, $\Tr^{(m,n)}_{\sig{\Sigma}}(\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A}))$ is a $\sig{\Sigma}^{(m)}$-algebra.
-Therefore, by Proposition~\ref{PHepComp}~(2), Lemma~\ref{LSameCells} and Proposition~\ref{PHepId}, the following equalities hold
+Therefore, by Corollary~\ref{CHepComp}, Lemma~\ref{LSameCells} and Proposition~\ref{PHepId}, the following equalities hold
 $$
 \Tr^{(m,n)}_{\sig{\Sigma}}\left(\Ds^{(n,m)}_{\sig{\Sigma}}(\calg{A})\right)
 =
@@ -4029,7 +4056,7 @@ By the same results, the equality also holds for the homomorphisms.
 In fact, for every $(k,s)\in(m+1)\times S$, the composite mapping on sorts sends $(k,s)$ to $(\min\{k,m\},s)=(k,s)$.
 Both derivors send the operation symbols of $\Sigma^{\gl(m)}$ to themselves, applied to variables, since all their dimensions are at most $m$.
 And all the domains are empty.
-Hence the equality follows, as in~(1), from Propositions~\ref{PHepComp}~(2) and~\ref{PHepId}.
+Hence the equality follows, as in~(1), from Corollary~\ref{CHepComp} and Proposition~\ref{PHepId}.
 
 This completes the proof.
 \end{proof}
@@ -4144,7 +4171,7 @@ and the following equalities of functors hold
 \end{enumerate}
 \end{proposition}
 \begin{proof}
-If two of the dimensions are equal, the statement follows from Definition~\ref{DTruncDerivor} and Propositions~\ref{PHepSigCat} and~\ref{PHepId}, since $\bTr^{(n,n)}_{\sig{\Sigma}}$ and $\bTr^{\gl(n,n)}_{\sig{\Sigma}}$ are identities.
+If two of the dimensions are equal, the statement follows from Definition~\ref{DTruncDerivor}, Proposition~\ref{PHepSigCat} and Corollary~\ref{CHepId}, since $\bTr^{(n,n)}_{\sig{\Sigma}}$ and $\bTr^{\gl(n,n)}_{\sig{\Sigma}}$ are identities.
 Let $m<n<p$.
 We consider first the single-set case and then the globular case.
 
@@ -4179,7 +4206,7 @@ By the note after Definition~\ref{DTruncDerivor}, the cells of $\Tr^{(m,n)}_{\si
 By Lemma~\ref{LGradCells}~(3), in both cases these are the $m$-cells of $\calg{B}$, which are the cells of $\Tr^{(m,p)}_{\sig{\Sigma}}(\calg{B})$.
 Moreover, by Proposition~\ref{PTruncDerivor}, $\Tr^{(m,n)}_{\sig{\Sigma}}(\Tr^{(n,p)}_{\sig{\Sigma}}(\calg{B}))$ is a $\sig{\Sigma}^{(m)}$-algebra.
 
-Hence, by Proposition~\ref{PHepComp}~(2), Lemma~\ref{LSameCells} and the comparison of the underlying derivors, the following chain of equalities holds
+Hence, by Corollary~\ref{CHepComp}, Lemma~\ref{LSameCells} and the comparison of the underlying derivors, the following chain of equalities holds
 $$
 \Tr^{(m,n)}_{\sig{\Sigma}}\left(\Tr^{(n,p)}_{\sig{\Sigma}}(\calg{B})\right)
 =
@@ -4214,7 +4241,7 @@ By Definitions~\ref{DHepComp} and~\ref{DTruncDerivor}, the domains of $\bTr^{\gl
 Hence $\bTr^{\gl(n,p)}_{\sig{\Sigma}}\circ\bTr^{\gl(m,n)}_{\sig{\Sigma}}=\bTr^{\gl(m,p)}_{\sig{\Sigma}}$.
 
 Finally, we compare the induced functors.
-Since the domains of $\bTr^{\gl(m,n)}_{\sig{\Sigma}}$ are empty, by the note after Proposition~\ref{PHepComp}, Proposition~\ref{PTruncDerivor} and Proposition~\ref{PHepComp}~(2), for every globular $p$-categorial $\sig{\Sigma}$-algebra $\calg{B}$, $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\Tr^{\gl(n,p)}_{\sig{\Sigma}}(\calg{B}))=(\bTr^{\gl(n,p)}_{\sig{\Sigma}}\circ\bTr^{\gl(m,n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\calg{B})=\Tr^{\gl(m,p)}_{\sig{\Sigma}}(\calg{B})$, and similarly for the homomorphisms.
+Since the domains of $\bTr^{\gl(m,n)}_{\sig{\Sigma}}$ are empty, by Proposition~\ref{PTruncDerivor}, Corollary~\ref{CHepComp} and the note after it, for every globular $p$-categorial $\sig{\Sigma}$-algebra $\calg{B}$, $\Tr^{\gl(m,n)}_{\sig{\Sigma}}(\Tr^{\gl(n,p)}_{\sig{\Sigma}}(\calg{B}))=(\bTr^{\gl(n,p)}_{\sig{\Sigma}}\circ\bTr^{\gl(m,n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\calg{B})=\Tr^{\gl(m,p)}_{\sig{\Sigma}}(\calg{B})$, and similarly for the homomorphisms.
 
 This completes the proof.
 \end{proof}
@@ -4239,7 +4266,7 @@ Consequently, the following equalities of functors hold
 \end{enumerate}
 \end{proposition}
 \begin{proof}
-If two of the dimensions are equal, the statement follows from Definition~\ref{DDiscGlDerivor} and Propositions~\ref{PHepSigCat} and~\ref{PHepId}.
+If two of the dimensions are equal, the statement follows from Definition~\ref{DDiscGlDerivor}, Proposition~\ref{PHepSigCat} and Corollary~\ref{CHepId}.
 Let $m<n<p$.
 We compare the underlying derivors and the domains.
 We consider first the single-set case and then the globular case.
@@ -4290,7 +4317,7 @@ By Definitions~\ref{DHepComp} and~\ref{DDiscGlDerivor}, the domains of $\bDs^{\g
 Hence $\bDs^{\gl(n,m)}_{\sig{\Sigma}}\circ\bDs^{\gl(p,n)}_{\sig{\Sigma}}=\bDs^{\gl(p,m)}_{\sig{\Sigma}}$.
 
 Finally, we compare the induced functors.
-Since the domains of the discretization derivors are empty, by the note after Proposition~\ref{PHepComp}, Proposition~\ref{PDiscDerivor} and Proposition~\ref{PHepComp}~(2), the functors induced by the above compositions are, on categorial algebras, the composites of the induced functors.
+Since the domains of the discretization derivors are empty, by Proposition~\ref{PDiscDerivor}, Corollary~\ref{CHepComp} and the note after it, the functors induced by the above compositions are, on categorial algebras, the composites of the induced functors.
 Hence the stated equalities of functors follow from the equalities of generalized hep-derivors.
 
 This completes the proof.
@@ -4312,9 +4339,9 @@ and the same holds for the globular truncation and discretization functors.
 \end{proposition}
 
 \begin{proof}
-If $n=p$, the truncation derivor is an identity, and if $m=p$, so is the discretization derivor; in both cases the statement follows from Proposition~\ref{PHepId}.
+If $n=p$, the truncation derivor is an identity, and if $m=p$, so is the discretization derivor; in both cases the statement follows from Corollary~\ref{CHepId}.
 Let $m<p$ and $n<p$.
-We compare the underlying derivors and the cells, and we conclude by Proposition~\ref{PHepComp}~(2) and Lemma~\ref{LSameCells}.
+We compare the underlying derivors and the cells, and we conclude by Corollary~\ref{CHepComp} and Lemma~\ref{LSameCells}.
 We consider first the single-set case and then the globular case.
 
 We first consider the single-set case, and we begin by comparing the underlying derivors.
@@ -4330,7 +4357,7 @@ If $m\leq n$, then, by Lemma~\ref{LDiscDescription}, $\src^{n}_{s}$ acts as the 
 If $n<m$, then $\src^{n}_{s}$ acts as in $\calg{A}$, so that they are the $n$-cells of $\calg{A}$, which are the cells of $\Tr^{(n,m)}_{\sig{\Sigma}}(\calg{A})$.
 On the other hand, by Definitions~\ref{DHepComp}, \ref{DDiscDerivor} and~\ref{DTruncDerivor}, the domain of sort $s$ of $\bDs^{(p,m)}_{\sig{\Sigma}}\circ\bTr^{(n,p)}_{\sig{\Sigma}}$ is $(\Ds^{(p,m)}_{\sig{\Sigma}})^{\sharp}[\{(v^{s}_{0},\src^{n}_{s}(v^{s}_{0}))\}]$, i.e., $\{(v^{s}_{0},v^{s}_{0})\}$, if $m\leq n$, and $\{(v^{s}_{0},\src^{n}_{s}(v^{s}_{0}))\}$, if $n<m$, so that the cells of $(\bDs^{(p,m)}_{\sig{\Sigma}}\circ\bTr^{(n,p)}_{\sig{\Sigma}})^{\ast}_{\gd}(\calg{A})$ are the same.
 Moreover, by Propositions~\ref{PDiscDerivor} and~\ref{PTruncDerivor}, $\Tr^{(n,p)}_{\sig{\Sigma}}(\Ds^{(p,m)}_{\sig{\Sigma}}(\calg{A}))$ is a $\sig{\Sigma}^{(n)}$-algebra.
-Thus, by Proposition~\ref{PHepComp}~(2), Lemma~\ref{LSameCells} and the comparison of the underlying derivors, the single-set equality holds, on objects and, by the same results, on morphisms.
+Thus, by Corollary~\ref{CHepComp}, Lemma~\ref{LSameCells} and the comparison of the underlying derivors, the single-set equality holds, on objects and, by the same results, on morphisms.
 
 Now we consider the globular case, and we first compare the mappings on sorts.
 The composite of the mappings on sorts of $\bTr^{\gl(n,p)}_{\sig{\Sigma}}$ and $\bDs^{\gl(p,m)}_{\sig{\Sigma}}$ sends $(k,s)$, for $k\leq n$, to $(\min\{k,m\},s)$.
@@ -4343,7 +4370,7 @@ If $n\leq m$, then all the dimensions of $\Sigma^{\gl(n)}$ are at most $m$, so t
 
 Finally, we compare the cells.
 Let $\calg{A}$ be a globular $m$-categorial $\sig{\Sigma}$-algebra.
-Since the domains of the globular truncation and discretization derivors are empty, by the note after Proposition~\ref{PHepComp} and Propositions~\ref{PDiscDerivor}, \ref{PTruncDerivor} and~\ref{PHepComp}~(2), $\Tr^{\gl(n,p)}_{\sig{\Sigma}}(\Ds^{\gl(p,m)}_{\sig{\Sigma}}(\calg{A}))=(\bDs^{\gl(p,m)}_{\sig{\Sigma}}\circ\bTr^{\gl(n,p)}_{\sig{\Sigma}})^{\ast}_{\gd}(\calg{A})$.
+Since the domains of the globular truncation and discretization derivors are empty, by Propositions~\ref{PDiscDerivor} and~\ref{PTruncDerivor}, Corollary~\ref{CHepComp} and the note after it, $\Tr^{\gl(n,p)}_{\sig{\Sigma}}(\Ds^{\gl(p,m)}_{\sig{\Sigma}}(\calg{A}))=(\bDs^{\gl(p,m)}_{\sig{\Sigma}}\circ\bTr^{\gl(n,p)}_{\sig{\Sigma}})^{\ast}_{\gd}(\calg{A})$.
 By the note after Definition~\ref{DTruncDerivor} and Lemma~\ref{LDiscDescription}, its cells of sort $(k,s)$, for $k\leq n$, are the $\min\{k,m\}$-cells of sort $s$ of $\calg{A}$.
 If $m\leq n$, they are the cells of sort $(k,s)$ of $\Ds^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})$; if $n\leq m$, they are the $k$-cells of $\calg{A}$, i.e., the cells of sort $(k,s)$ of $\Tr^{\gl(n,m)}_{\sig{\Sigma}}(\calg{A})$.
 Thus, by Lemma~\ref{LSameCells} and the comparison of the underlying derivors, the globular equality holds, on objects and on morphisms.
@@ -4354,7 +4381,7 @@ This completes the proof.
 \begin{remark}\label{RTruncDiscCompEqual}
 Let $\sig{\Sigma}$ be a many-sorted signature and $n,p\in\mathbb{N}$ with $n\leq p$.
 In Proposition~\ref{PTruncDiscComp}, the two cases overlap when $m=n$.
-In this case both expressions agree, since, by Definitions~\ref{DDiscGlDerivor} and~\ref{DTruncDerivor} and Proposition~\ref{PHepId}, $\Ds^{(n,n)}_{\sig{\Sigma}}=\Tr^{(n,n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$ and $\Ds^{\gl(n,n)}_{\sig{\Sigma}}=\Tr^{\gl(n,n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$.
+In this case both expressions agree, since, by Definitions~\ref{DDiscGlDerivor} and~\ref{DTruncDerivor} and Corollary~\ref{CHepId}, $\Ds^{(n,n)}_{\sig{\Sigma}}=\Tr^{(n,n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$ and $\Ds^{\gl(n,n)}_{\sig{\Sigma}}=\Tr^{\gl(n,n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$.
 Thus, for $m=n$, Proposition~\ref{PTruncDiscComp} states that
 \begin{enumerate}
 	\item
@@ -5684,8 +5711,8 @@ The proof is the same, with Lemma~\ref{LChangeSigTerms}~(1) applied to the terms
 Finally, we prove the equalities between the induced functors.
 Let $\calg{C}$ be an $n$-categorial $\sig{\Omega}$-algebra.
 Since all the domains involved are empty, by Remark~\ref{RDomainSetEmpty}, both $(\mathbf{c}^{(n)})^{\ast}_{\gd}((\mathbf{d}^{(n)})^{\ast}_{\gd}(\calg{C}))$ and $(\mathbf{d}^{(n)}\circ\mathbf{c}^{(n)})^{\ast}_{\gd}(\calg{C})$ have $C_{\psi\circ\varphi}$ as underlying $S$-sorted set and, by Proposition~\ref{PChangeSigDerivor}, applied twice, the former is a $\sig{\Sigma}^{(n)}$-algebra.
-Therefore, by Proposition~\ref{PHepComp}~(2) and the above, $((\mathbf{d}\circ\mathbf{c})^{(n)})^{\ast}_{\gd}(\calg{C})=(\mathbf{c}^{(n)})^{\ast}_{\gd}((\mathbf{d}^{(n)})^{\ast}_{\gd}(\calg{C}))$, and the same holds for the $n$-categorial $\sig{\Omega}$-homomorphisms.
-Finally, by Proposition~\ref{PHepId}, $((\id_{\sig{\Sigma}})^{(n)})^{\ast}_{\gd}$ is the identity.
+Therefore, by Corollary~\ref{CHepComp} and the above, $((\mathbf{d}\circ\mathbf{c})^{(n)})^{\ast}_{\gd}(\calg{C})=(\mathbf{c}^{(n)})^{\ast}_{\gd}((\mathbf{d}^{(n)})^{\ast}_{\gd}(\calg{C}))$, and the same holds for the $n$-categorial $\sig{\Omega}$-homomorphisms.
+Finally, by Corollary~\ref{CHepId}, $((\id_{\sig{\Sigma}})^{(n)})^{\ast}_{\gd}$ is the identity.
 The globular case is similar.
 
 This completes the proof.
@@ -5698,7 +5725,7 @@ For $n=0$, the first one is the split indexed category of~\cite{CVST10b} that se
 
 In this subsection we prove that the functors induced by the generalized hep-derivors $\mathbf{c}^{(n)}$ and $\mathbf{c}^{\gl(n)}$ commute with graduation, unification, discretization and truncation.
 As in Sections~\ref{SGraduation} and~\ref{STruncation}, we compare the composites of the functors involved by means of the compositions of the corresponding generalized hep-derivors.
-We first state, in the form in which we use it, the consequence of Proposition~\ref{PHepComp} that we need.
+We first state, in the form in which we use it, the consequence of Corollary~\ref{CHepComp} that we need.
 
 \begin{lemma}\label{LCommSquare}
 Let $\sig{\Sigma}$, $\sig{\Lambda}$, $\sig{\Omega}$ and $\sig{\Omega}'$ be hep-signatures, $\mathbf{a}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Omega}$, $\mathbf{b}$ a generalized hep-derivor from $\sig{\Omega}$ to $\sig{\Lambda}$, $\mathbf{a}'$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Omega}'$ and $\mathbf{b}'$ a generalized hep-derivor from $\sig{\Omega}'$ to $\sig{\Lambda}$ such that $\mathbf{b}\circ\mathbf{a}=\mathbf{b}'\circ\mathbf{a}'$.
@@ -5710,7 +5737,7 @@ $$
 Moreover, for every homomorphism $f\colon\mathbf{B}\mor\mathbf{B}'$ of partial $\Lambda$-algebras such that $\mathbf{B}'$ satisfies the same hypotheses, $\mathbf{a}^{\ast}_{\gd}(\mathbf{b}^{\ast}_{\gd}(f))=\mathbf{a}'^{\ast}_{\gd}(\mathbf{b}'^{\ast}_{\gd}(f))$.
 \end{lemma}
 \begin{proof}
-By Proposition~\ref{PHepComp}~(2), applied to $\mathbf{a}$ and $\mathbf{b}$, and to $\mathbf{a}'$ and $\mathbf{b}'$, both partial $\Sigma$-algebras are equal to $(\mathbf{b}\circ\mathbf{a})^{\ast}_{\gd}(\mathbf{B})=(\mathbf{b}'\circ\mathbf{a}')^{\ast}_{\gd}(\mathbf{B})$, and both homomorphisms are equal to $(\mathbf{b}\circ\mathbf{a})^{\ast}_{\gd}(f)$.
+By Corollary~\ref{CHepComp}, applied to $\mathbf{a}$ and $\mathbf{b}$, and to $\mathbf{a}'$ and $\mathbf{b}'$, both partial $\Sigma$-algebras are equal to $(\mathbf{b}\circ\mathbf{a})^{\ast}_{\gd}(\mathbf{B})=(\mathbf{b}'\circ\mathbf{a}')^{\ast}_{\gd}(\mathbf{B})$, and both homomorphisms are equal to $(\mathbf{b}\circ\mathbf{a})^{\ast}_{\gd}(f)$.
 \end{proof}
 
 We begin with graduation and unification.
@@ -5852,7 +5879,7 @@ Consequently, the following equalities hold
 \end{enumerate}
 \end{proposition}
 \begin{proof}
-For $m=n$, all the discretization and truncation derivors involved are identities, and the statements follow from Proposition~\ref{PHepId}.
+For $m=n$, all the discretization and truncation derivors involved are identities, and the statements follow from Corollary~\ref{CHepId}.
 Let $m<n$.
 We prove the following claims.
 
