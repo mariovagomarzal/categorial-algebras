@@ -2535,7 +2535,6 @@ In the following proposition we prove that this is impossible.
 \begin{proposition}\label{PFiniteDimNotQE}
 Let $\sig{\Sigma}$ be a many-sorted signature with $S\neq\varnothing$.
 Then there is no set $\mathcal{F}$ of $\QE$-equations for $\Sigma^{(\omega)}$ such that the objects of $\omega\mathsf{CatAlg}(\sig{\Sigma})$, under the above identification, are exactly the partial $\Sigma^{(\omega)}$-algebras in which every $\QE$-equation of $\mathcal{F}$ holds.
-In particular, $\omega\mathsf{CatAlg}(\sig{\Sigma})$ is a proper full subcategory of $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(\omega)}})$.
 \end{proposition}
 \begin{proof}
 Let us assume, towards a contradiction, that such a set $\mathcal{F}$ exists.
@@ -2552,9 +2551,19 @@ Let $\mathbf{A}=\prod_{k\in\omega}\calg{A}_{k}$ be the product of the correspond
 By Definition~\ref{DPAlgProd}, for every $j\in\omega$, $\src^{j\,\mathbf{A}}_{s_{0}}(g)=(\src^{j}(g_{k}))_{k\in\omega}$, which is different from $g$, since $\src^{j}(g_{j})\neq g_{j}$.
 Hence $g$ is not a $j$-cell of $\mathbf{A}$ for any $j\in\omega$, so that $\mathbf{A}$ is not an object of $\omega\mathsf{CatAlg}(\sig{\Sigma})$, a contradiction.
 
-Finally, since $\mathcal{C}^{\sig{\Sigma}^{(\omega)}}$ is a set of $\QE$-equations, by the note after Definition~\ref{DQEEq}, $\mathbf{A}$ is an object of $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(\omega)}})$ which is not an object of $\omega\mathsf{CatAlg}(\sig{\Sigma})$.
-
 This completes the proof.
+\end{proof}
+
+From the proof of the above proposition we obtain the following corollary.
+
+\begin{corollary}\label{CFiniteDimNotQE}
+Let $\sig{\Sigma}$ be a many-sorted signature with $S\neq\varnothing$.
+Then $\omega\mathsf{CatAlg}(\sig{\Sigma})$ is a proper full subcategory of $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(\omega)}})$.
+\end{corollary}
+\begin{proof}
+By Remark~\ref{RSingleSetIdentOmega}, $\omega\mathsf{CatAlg}(\sig{\Sigma})$ is a full subcategory of $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(\omega)}})$.
+Let $\mathbf{A}$ be the product constructed in the proof of Proposition~\ref{PFiniteDimNotQE}.
+Since $\mathcal{C}^{\sig{\Sigma}^{(\omega)}}$ is a set of $\QE$-equations, by the note after Definition~\ref{DQEEq}, $\mathbf{A}$ is an object of $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(\omega)}})$ which, by the proof of Proposition~\ref{PFiniteDimNotQE}, is not an object of $\omega\mathsf{CatAlg}(\sig{\Sigma})$.
 \end{proof}
 
 Let us note that the same argument shows that the condition that every cell has a finite dimension cannot be expressed by any set of axioms whose class of models is closed under products.
@@ -3215,8 +3224,17 @@ The restriction of $\Gd^{(n)}_{\sig{\Sigma}}$ to $\mathsf{EPAlg}(\sig{\Sigma}^{(
 This is why we restrict $\Gd^{(n)}_{\sig{\Sigma}}$ to the category canonically associated to the ep-variety $\mathcal{V}(\spec{C}^{\sig{\Sigma}^{(n)}})$.
 \end{remark}
 
+From Proposition~\ref{PGradDerivor} we obtain the graduation functor between the categories of higher-order categorial algebras.
+
+\begin{corollary}\label{CGradFunctor}
 Let $\sig{\Sigma}$ be a many-sorted signature and $n\in\mathbb{N}$.
-By Proposition~\ref{PGradDerivor} and Remarks~\ref{RSingleSetIdent} and~\ref{RGlobularIdent}, the restriction of $\Gd^{(n)}_{\sig{\Sigma}}$ to $\mathsf{nCatAlg}(\sig{\Sigma})$ corestricts to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$, and, by abuse of notation, we denote the corestriction by
+Then the restriction of $\Gd^{(n)}_{\sig{\Sigma}}$ to $\mathsf{nCatAlg}(\sig{\Sigma})$ corestricts to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$.
+\end{corollary}
+\begin{proof}
+It follows from Proposition~\ref{PGradDerivor} and Remarks~\ref{RSingleSetIdent} and~\ref{RGlobularIdent}.
+\end{proof}
+
+By abuse of notation, we denote the corestriction of Corollary~\ref{CGradFunctor} by
 $$
 \Gd^{(n)}_{\sig{\Sigma}}\colon\mathsf{nCatAlg}(\sig{\Sigma})\mor\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}).
 $$
@@ -3335,8 +3353,17 @@ This is the translation of (AB$^{l,k}$2) for the sources, and the targets are si
 This completes the proof.
 \end{proof}
 
+From Proposition~\ref{PUnifDerivor} we obtain the unification functor between the categories of higher-order categorial algebras.
+
+\begin{corollary}\label{CUnifFunctor}
 Let $\sig{\Sigma}$ be a many-sorted signature and $n\in\mathbb{N}$.
-By Proposition~\ref{PUnifDerivor} and Remarks~\ref{RSingleSetIdent} and~\ref{RGlobularIdent}, the restriction of $\Uf^{(n)}_{\sig{\Sigma}}$ to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ corestricts to $\mathsf{nCatAlg}(\sig{\Sigma})$, and, by abuse of notation, we denote the corestriction by
+Then the restriction of $\Uf^{(n)}_{\sig{\Sigma}}$ to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ corestricts to $\mathsf{nCatAlg}(\sig{\Sigma})$.
+\end{corollary}
+\begin{proof}
+It follows from Proposition~\ref{PUnifDerivor} and Remarks~\ref{RSingleSetIdent} and~\ref{RGlobularIdent}.
+\end{proof}
+
+By abuse of notation, we denote the corestriction of Corollary~\ref{CUnifFunctor} by
 $$
 \Uf^{(n)}_{\sig{\Sigma}}\colon\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})\mor\mathsf{nCatAlg}(\sig{\Sigma}).
 $$
@@ -3375,7 +3402,6 @@ Then the following equality holds in $\mathsf{hepSig}_{\gd}$
 $$
 \bGd^{(n)}_{\sig{\Sigma}}\circ\bUf^{(n)}_{\sig{\Sigma}}=\id_{\sig{\Sigma}^{(n)}}.
 $$
-Consequently, $\Uf^{(n)}_{\sig{\Sigma}}\circ\Gd^{(n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$.
 \end{proposition}
 \begin{proof}
 We prove the following two claims.
@@ -3432,6 +3458,19 @@ Claim~\ref{CUnifGradB} follows.
 
 By Claims~\ref{CUnifGradA} and~\ref{CUnifGradB} and Definition~\ref{DHepComp}, $\bGd^{(n)}_{\sig{\Sigma}}\circ\bUf^{(n)}_{\sig{\Sigma}}=\id_{\sig{\Sigma}^{(n)}}$.
 
+This completes the proof.
+\end{proof}
+
+From the above proposition we obtain that the process of graduation followed by that of unification is the identity.
+
+\begin{corollary}\label{CUnifGrad}
+Let $\sig{\Sigma}$ be a many-sorted signature and $n\in\mathbb{N}$.
+Then the following equality holds
+$$
+\Uf^{(n)}_{\sig{\Sigma}}\circ\Gd^{(n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}.
+$$
+\end{corollary}
+\begin{proof}
 Let $\calg{A}$ be an $n$-categorial $\sig{\Sigma}$-algebra.
 By Lemmas~\ref{LGradDescription} and~\ref{LUnifDescription}, the cells of sort $s$ of $\Uf^{(n)}_{\sig{\Sigma}}(\Gd^{(n)}_{\sig{\Sigma}}(\calg{A}))$ are the cells of sort $(n,s)$ of $\Gd^{(n)}_{\sig{\Sigma}}(\calg{A})$, i.e., all the cells of sort $s$ of $\calg{A}$, which, since the domains of $\id_{\sig{\Sigma}^{(n)}}$ are empty, are the cells of $(\id_{\sig{\Sigma}^{(n)}})^{\ast}_{\gd}(\calg{A})$.
 Moreover, by Propositions~\ref{PGradDerivor} and~\ref{PUnifDerivor}, $\Uf^{(n)}_{\sig{\Sigma}}(\Gd^{(n)}_{\sig{\Sigma}}(\calg{A}))$ is a $\sig{\Sigma}^{(n)}$-algebra.
@@ -3449,8 +3488,8 @@ Therefore, the following chain of equalities holds
 \tag{3}
 \end{align*}
 
-The first equality follows from Corollary~\ref{CHepComp}; the second equality follows from the above; finally, the last equality follows from Proposition~\ref{PHepId}.
-By the same propositions, the equality also holds for the $n$-categorial $\sig{\Sigma}$-homomorphisms.
+The first equality follows from Corollary~\ref{CHepComp}; the second equality follows from Proposition~\ref{PUnifGrad}; finally, the last equality follows from Proposition~\ref{PHepId}.
+By the same results, the equality also holds for the $n$-categorial $\sig{\Sigma}$-homomorphisms.
 Since $\mathsf{nCatAlg}(\sig{\Sigma})=\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$, the stated equality of functors follows.
 
 This completes the proof.
@@ -3665,22 +3704,14 @@ All in all, by Claims~\ref{CGradUnifD} and~\ref{CGradUnifE}, $\theta$ is a natur
 This completes the proof.
 \end{proof}
 
-From Propositions~\ref{PUnifGrad} and~\ref{PGradUnif} we obtain the following corollary.
-
-\begin{corollary}\label{CGdUfEquiv}
-Let $\sig{\Sigma}$ be a many-sorted signature and $n\in\mathbb{N}$.
-Then $\Gd^{(n)}_{\sig{\Sigma}}$ and $\Uf^{(n)}_{\sig{\Sigma}}$ are mutually quasi-inverse equivalences of categories between $\mathsf{nCatAlg}(\sig{\Sigma})$ and $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$.
-\end{corollary}
-
-We will use the following, more precise, form of Corollary~\ref{CGdUfEquiv} in Section~\ref{SAlgSquare}.
+We next prove that graduation is left adjoint to unification, with the identity as unit.
 
 \begin{proposition}\label{PGdUfAdj}
 Let $\sig{\Sigma}$ be a many-sorted signature, $n\in\mathbb{N}$ and $\theta=(\theta_{\calg{A}})_{\calg{A}\in\mathrm{Ob}(\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}))}$ the natural isomorphism from $\Id_{\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$ to $\Gd^{(n)}_{\sig{\Sigma}}\circ\Uf^{(n)}_{\sig{\Sigma}}$ of the proof of Proposition~\ref{PGradUnif}.
 Then $(\Uf^{(n)}_{\sig{\Sigma}},\Gd^{(n)}_{\sig{\Sigma}},\id,\theta^{-1})$ is an adjunction from $\mathsf{nCatAlg}(\sig{\Sigma})$ to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$, see Definition~\ref{DAdj}, i.e., $\Gd^{(n)}_{\sig{\Sigma}}\dashv\Uf^{(n)}_{\sig{\Sigma}}$, with unit the identity and counit $\theta^{-1}=(\theta^{-1}_{\calg{A}})_{\calg{A}\in\mathrm{Ob}(\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma}))}$.
-Thus it is an adjoint equivalence.
 \end{proposition}
 \begin{proof}
-By Proposition~\ref{PUnifGrad}, $\Uf^{(n)}_{\sig{\Sigma}}\circ\Gd^{(n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$, so that the identity $\id=(\id_{\calg{B}})_{\calg{B}\in\mathrm{Ob}(\mathsf{nCatAlg}(\sig{\Sigma}))}$ is a natural transformation from $\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$ to $\Uf^{(n)}_{\sig{\Sigma}}\circ\Gd^{(n)}_{\sig{\Sigma}}$; and, by Proposition~\ref{PGradUnif}, $\theta^{-1}$ is a natural transformation from $\Gd^{(n)}_{\sig{\Sigma}}\circ\Uf^{(n)}_{\sig{\Sigma}}$ to $\Id_{\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$.
+By Corollary~\ref{CUnifGrad}, $\Uf^{(n)}_{\sig{\Sigma}}\circ\Gd^{(n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$, so that the identity $\id=(\id_{\calg{B}})_{\calg{B}\in\mathrm{Ob}(\mathsf{nCatAlg}(\sig{\Sigma}))}$ is a natural transformation from $\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$ to $\Uf^{(n)}_{\sig{\Sigma}}\circ\Gd^{(n)}_{\sig{\Sigma}}$; and, by Proposition~\ref{PGradUnif}, $\theta^{-1}$ is a natural transformation from $\Gd^{(n)}_{\sig{\Sigma}}\circ\Uf^{(n)}_{\sig{\Sigma}}$ to $\Id_{\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$.
 By Definition~\ref{DAdj}, we have to prove the triangular identities
 \begin{enumerate}
 	\item[(TI1)]
@@ -3707,9 +3738,18 @@ These components are inverse to the $(n,n)$-identities, i.e., they are identitie
 Since the cells of sort $(k,s)$ and $(n,s)$ of $\Gd^{(n)}_{\sig{\Sigma}}(\Uf^{(n)}_{\sig{\Sigma}}(\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})))=\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})$ are cells of $\calg{B}$, $\theta_{\Gd^{(n)}_{\sig{\Sigma}}(\calg{B})}$ is the identity.
 Hence so is its inverse.
 
-Finally, since the unit and the counit are natural isomorphisms, the adjunction is an adjoint equivalence.
-
 This completes the proof.
+\end{proof}
+
+From Corollary~\ref{CUnifGrad} and Propositions~\ref{PGradUnif} and~\ref{PGdUfAdj} we obtain the following corollary.
+
+\begin{corollary}\label{CGdUfEquiv}
+Let $\sig{\Sigma}$ be a many-sorted signature and $n\in\mathbb{N}$.
+Then $\Gd^{(n)}_{\sig{\Sigma}}$ and $\Uf^{(n)}_{\sig{\Sigma}}$ are mutually quasi-inverse equivalences of categories between $\mathsf{nCatAlg}(\sig{\Sigma})$ and $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$, and the adjunction of Proposition~\ref{PGdUfAdj} is an adjoint equivalence.
+\end{corollary}
+\begin{proof}
+By Corollary~\ref{CUnifGrad} and Proposition~\ref{PGradUnif}, $\Uf^{(n)}_{\sig{\Sigma}}\circ\Gd^{(n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}$ and $\Gd^{(n)}_{\sig{\Sigma}}\circ\Uf^{(n)}_{\sig{\Sigma}}\cong\Id_{\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})}$.
+Moreover, the unit and the counit of the adjunction of Proposition~\ref{PGdUfAdj} are natural isomorphisms, so that it is an adjoint equivalence.
 \end{proof}
 
 \section{Discretization and Truncation of Higher-Order Categorial Algebras}\label{STruncation}
@@ -3877,8 +3917,17 @@ The remaining axioms involve a dimension $j\geq m$ as lower dimension, and they 
 This completes the proof.
 \end{proof}
 
+From Proposition~\ref{PDiscDerivor} we obtain the discretization functors between the categories of higher-order categorial algebras.
+
+\begin{corollary}\label{CDiscFunctor}
 Let $\sig{\Sigma}$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-By Remarks~\ref{RSingleSetIdent} and~\ref{RGlobularIdent} and Proposition~\ref{PDiscDerivor}, and by abuse of notation, we have the functors
+Then the restriction of $\Ds^{(n,m)}_{\sig{\Sigma}}$ to $\mathsf{mCatAlg}(\sig{\Sigma})$ corestricts to $\mathsf{nCatAlg}(\sig{\Sigma})$, and the restriction of $\Ds^{\gl(n,m)}_{\sig{\Sigma}}$ to $\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ corestricts to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$.
+\end{corollary}
+\begin{proof}
+It follows from Proposition~\ref{PDiscDerivor} and Remarks~\ref{RSingleSetIdent} and~\ref{RGlobularIdent}.
+\end{proof}
+
+By abuse of notation, we denote the corestrictions of Corollary~\ref{CDiscFunctor} by
 \begin{enumerate}
 	\item
 	$\Ds^{(n,m)}_{\sig{\Sigma}}\colon\mathsf{mCatAlg}(\sig{\Sigma})\mor\mathsf{nCatAlg}(\sig{\Sigma})$; and
@@ -3990,8 +4039,17 @@ Moreover, the axioms of $\spec{C}^{\sig{\Sigma}^{\gl(m)}}$ are axioms of $\spec{
 This completes the proof.
 \end{proof}
 
+From Proposition~\ref{PTruncDerivor} we obtain the truncation functors between the categories of higher-order categorial algebras.
+
+\begin{corollary}\label{CTruncFunctor}
 Let $\sig{\Sigma}$ be a many-sorted signature and $m,n\in\mathbb{N}$ with $m\leq n$.
-By Remarks~\ref{RSingleSetIdent} and~\ref{RGlobularIdent} and Proposition~\ref{PTruncDerivor}, and by abuse of notation, we have the functors
+Then the restriction of $\Tr^{(m,n)}_{\sig{\Sigma}}$ to $\mathsf{nCatAlg}(\sig{\Sigma})$ corestricts to $\mathsf{mCatAlg}(\sig{\Sigma})$, and the restriction of $\Tr^{\gl(m,n)}_{\sig{\Sigma}}$ to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ corestricts to $\mathsf{mCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$.
+\end{corollary}
+\begin{proof}
+It follows from Proposition~\ref{PTruncDerivor} and Remarks~\ref{RSingleSetIdent} and~\ref{RGlobularIdent}.
+\end{proof}
+
+By abuse of notation, we denote the corestrictions of Corollary~\ref{CTruncFunctor} by
 \begin{enumerate}
 	\item
 	$\Tr^{(m,n)}_{\sig{\Sigma}}\colon\mathsf{nCatAlg}(\sig{\Sigma})\mor\mathsf{mCatAlg}(\sig{\Sigma})$; and
@@ -4256,17 +4314,9 @@ Then the following equalities hold in $\mathsf{hepSig}_{\gd}$
 	\item
 	$\bDs^{\gl(n,m)}_{\sig{\Sigma}}\circ\bDs^{\gl(p,n)}_{\sig{\Sigma}}=\bDs^{\gl(p,m)}_{\sig{\Sigma}}$.
 \end{enumerate}
-Consequently, the following equalities of functors hold
-\begin{enumerate}
-	\item
-	$\Ds^{(p,n)}_{\sig{\Sigma}}\circ\Ds^{(n,m)}_{\sig{\Sigma}}=\Ds^{(p,m)}_{\sig{\Sigma}}$; and
-
-	\item
-	$\Ds^{\gl(p,n)}_{\sig{\Sigma}}\circ\Ds^{\gl(n,m)}_{\sig{\Sigma}}=\Ds^{\gl(p,m)}_{\sig{\Sigma}}$.
-\end{enumerate}
 \end{proposition}
 \begin{proof}
-If two of the dimensions are equal, the statement follows from Definition~\ref{DDiscGlDerivor}, Proposition~\ref{PHepSigCat} and Corollary~\ref{CHepId}.
+If two of the dimensions are equal, the statement follows from Definition~\ref{DDiscGlDerivor} and Proposition~\ref{PHepSigCat}.
 Let $m<n<p$.
 We compare the underlying derivors and the domains.
 We consider first the single-set case and then the globular case.
@@ -4316,11 +4366,27 @@ Now we compare the domains.
 By Definitions~\ref{DHepComp} and~\ref{DDiscGlDerivor}, the domains of $\bDs^{\gl(n,m)}_{\sig{\Sigma}}\circ\bDs^{\gl(p,n)}_{\sig{\Sigma}}$ are $\varnothing\cup(\Ds^{\gl(n,m)}_{\sig{\Sigma}})^{\sharp}[\varnothing]=\varnothing$, which are the domains of $\bDs^{\gl(p,m)}_{\sig{\Sigma}}$.
 Hence $\bDs^{\gl(n,m)}_{\sig{\Sigma}}\circ\bDs^{\gl(p,n)}_{\sig{\Sigma}}=\bDs^{\gl(p,m)}_{\sig{\Sigma}}$.
 
-Finally, we compare the induced functors.
-Since the domains of the discretization derivors are empty, by Proposition~\ref{PDiscDerivor}, Corollary~\ref{CHepComp} and the note after it, the functors induced by the above compositions are, on categorial algebras, the composites of the induced functors.
-Hence the stated equalities of functors follow from the equalities of generalized hep-derivors.
-
 This completes the proof.
+\end{proof}
+
+From the above proposition we obtain that the discretization functors compose as expected.
+
+\begin{corollary}\label{CDiscComp}
+Let $\sig{\Sigma}$ be a many-sorted signature and $m,n,p\in\mathbb{N}$ with $m\leq n\leq p$.
+Then the following equalities hold
+\begin{enumerate}
+	\item
+	$\Ds^{(p,n)}_{\sig{\Sigma}}\circ\Ds^{(n,m)}_{\sig{\Sigma}}=\Ds^{(p,m)}_{\sig{\Sigma}}$; and
+
+	\item
+	$\Ds^{\gl(p,n)}_{\sig{\Sigma}}\circ\Ds^{\gl(n,m)}_{\sig{\Sigma}}=\Ds^{\gl(p,m)}_{\sig{\Sigma}}$.
+\end{enumerate}
+\end{corollary}
+\begin{proof}
+If two of the dimensions are equal, the statement follows from Corollary~\ref{CHepId}.
+Let $m<n<p$.
+Since the domains of the discretization derivors are empty, by Proposition~\ref{PDiscDerivor}, Corollary~\ref{CHepComp} and the note after it, the functors induced by the compositions of Proposition~\ref{PDiscComp} are, on categorial algebras, the composites of the induced functors.
+Hence the stated equalities follow from Proposition~\ref{PDiscComp}.
 \end{proof}
 
 The composite of a discretization followed by a truncation depends on the relative position of the dimensions.
@@ -5183,7 +5249,7 @@ For every level $p$, the following chain of equalities holds
 \tag{2}
 \end{align*}
 
-The first equality follows from Definition~\ref{DGdOmega}; finally, the last equality follows from Proposition~\ref{PUnifGrad}.
+The first equality follows from Definition~\ref{DGdOmega}; finally, the last equality follows from Corollary~\ref{CUnifGrad}.
 Therefore, by Definition~\ref{DUfOmega}, $\zeta_{\calg{A}}=(\zeta_{\calg{A},s})_{s\in S}$ preserves and reflects the definedness and the values of the operations of $\Sigma^{(p)}$.
 Hence it is an isomorphism from $\Uf^{(\omega)}_{\sig{\Sigma}}(\Gd^{(\omega)}_{\sig{\Sigma}}(\calg{A}))$ onto $\calg{A}$, and $\zeta=(\zeta_{\calg{A}})_{\calg{A}\in\mathrm{Ob}(\omega\mathsf{CatAlg}(\sig{\Sigma}))}$ is a natural transformation from $\Uf^{(\omega)}_{\sig{\Sigma}}\circ\Gd^{(\omega)}_{\sig{\Sigma}}$ to $\Id_{\omega\mathsf{CatAlg}(\sig{\Sigma})}$, since $\Gd^{(\omega)}_{\sig{\Sigma}}$ and $\Uf^{(\omega)}_{\sig{\Sigma}}$ act on homomorphisms by restriction and on representatives, respectively.
 
