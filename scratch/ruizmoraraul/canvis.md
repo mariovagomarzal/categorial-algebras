@@ -1558,3 +1558,51 @@ $\boldsymbol{\mathcal{U}}$-categoria, perquè $S$ i $\Sigma$ són
 $\boldsymbol{\mathcal{U}}$-petits, i per tant és un objecte de $\mathsf{Cat}$.
 No cal cap univers més gran: la preocupació que vaig plantejar no era fundada,
 i l'observació explica per què.
+
+# Reorganització de la secció 3 (`SGenHepDerivors`)
+
+Data: 2026-10-20.
+
+## Ordre nou
+
+1. `SEpSignatures` (sense canvis).
+2. `SGenHepDerivorsDef`. Has escrit «SGenEpDerivorsDef»; he mantingut
+   l'etiqueta que ja hi havia.
+3. `SHepSigCat`: la composició (`DHepComp`, abans a `SHepComp`, etiqueta
+   eliminada perquè ningú no la citava) i `PHepSigCat`.
+4. `SHepCompFunctors`, al final: `LTermComp`, `CTermComp`, `LSameCells`,
+   `PHepId`, `CHepId`, `PHepComp`, `CHepComp`, la nota i `RHepAlgCat`.
+
+La introducció de la secció i el resum de la secció 3 a la introducció del
+document segueixen aquest ordre.
+
+## `PTransformedAlg`
+
+L'enunciat diu ara directament què és l'àlgebra transformada: l'única àlgebra
+parcial sobre les cel·les en què $\sigma$ s'interpreta com la restricció de
+$c(\sigma)^{\mathbf{B}}$ al conjunt
+$$\{\mathbf{b}\mid \mathbf{c}^{\ast}_{\gd}(\mathbf{B})\models\mathrm{def}(\sigma)[\mathbf{b}],\ \mathbf{b}\in\Dom(c(\sigma)^{\mathbf{B}})\text{ i }c(\sigma)^{\mathbf{B}}(\mathbf{b})\text{ és una cel·la}\}.$$
+La prova només explica la recursió al llarg de $\lhd$: la primera condició
+només depèn dels $\tau\lhd\sigma$. Les etiquetes (D1)–(D3) desapareixen: les
+proves diuen «les tres condicions de la Proposició `PTransformedAlg`» o
+«la condició sobre els dominis», «la definició de $c(\sigma)$», «el valor és
+una cel·la».
+
+## Altres canvis de lectura
+
+- **`LDomainSetHom`** (lema nou): els homomorfismes conserven les cel·les.
+  Substitueix el paràgraf de després de `DDomainSet`; $f_{\Dom^{(\varphi,c)}}$
+  es defineix en una sola fórmula.
+- **`CTransformedWeak`** (corol·lari nou): l'àlgebra transformada és una
+  ep-àlgebra feble. Abans era una frase després de la prova; ara la cita
+  `RHepAlgCat`.
+- **`PTransformedEpAlg`**: l'enunciat i la prova, de dues frases, es basen en
+  el nou enunciat de `PTransformedAlg`. Desapareix la inclusió (I).
+- **`PGenHepDerivorHom`, `PHepComp` i `CHepComp`**: les proves anomenen
+  $\mathbf{A}$ i $\mathbf{A}'$ les dues àlgebres transformades, en lloc
+  d'escriure cada vegada $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$.
+  Els rètols (H$_\sigma$1), (H$_\sigma$2) i (D1)–(D3) són ara frases
+  («We first prove…», «Next…», «Finally…»).
+
+Cap enunciat no canvia de contingut, i les etiquetes que citen les altres
+seccions es mantenen.
