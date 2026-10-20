@@ -1538,11 +1538,19 @@ where $\G_{\Lambda}$ is the forgetful functor from $\mathsf{PAlg}(\Lambda)$ to $
 
 We next equip the $S$-sorted set of cells with a structure of partial $\Sigma$-algebra.
 Every operation symbol $\sigma$ is interpreted as the partial term operation $c(\sigma)^{\mathbf{B}}$, restricted to the families of cells that satisfy the domain conditions of $\sigma$ and at which $c(\sigma)^{\mathbf{B}}$ is defined and takes a cell as value.
-Since the domain conditions of $\sigma$ are evaluated in the algebra that we are defining, we define it by well-founded recursion along $\lhd$.
+Since the domain conditions of $\sigma$ are evaluated in the algebra that we are defining, the operations are defined by well-founded recursion along $\lhd$.
 
 \begin{proposition}\label{PTransformedAlg}
 Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra.
-Then there exists a unique partial $\Sigma$-algebra $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ with underlying $S$-sorted set $B_{\Dom^{(\varphi,c)}}$ such that, for every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$, $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ is the restriction of the partial term operation $c(\sigma)^{\mathbf{B}}$ to the set
+Then there exists a partial $\Sigma$-algebra with underlying $S$-sorted set $B_{\Dom^{(\varphi,c)}}$, denoted by $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$, in which every operation symbol $\sigma$ of $\Sigma$ is interpreted as a restriction of the partial term operation $c(\sigma)^{\mathbf{B}}$.
+We will call $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ the \emph{transformed algebra} of $\mathbf{B}$ along $\mathbf{c}$.
+\end{proposition}
+\begin{proof}
+Let us denote by $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ the partial $\Sigma$-algebra defined as follows.
+
+\textsf{(1)} The underlying $S$-sorted set of $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is $B_{\Dom^{(\varphi,c)}}$, see Definition~\ref{DDomainSet}.
+
+\textsf{(2)} For every $(\mathbf{s},s)\in S^{\star}\times S$ and every operation symbol $\sigma\in\Sigma_{\mathbf{s},s}$, the operation $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ is the partial operation from $(B_{\Dom^{(\varphi,c)}})_{\mathbf{s}}$ to $(B_{\Dom^{(\varphi,c)}})_{s}$ with domain
 $$
 \Dom\left(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}\right)
 =
@@ -1554,21 +1562,26 @@ $$
 \mathbf{b}\in\Dom\left(c(\sigma)^{\mathbf{B}}\right)\text{ and}\\
 c(\sigma)^{\mathbf{B}}(\mathbf{b})\in\left(B_{\Dom^{(\varphi,c)}}\right)_{s}
 \end{array}
-\right\rbrace.
+\right\rbrace
 $$
-We will call $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ the \emph{transformed algebra} of $\mathbf{B}$ along $\mathbf{c}$.
-\end{proposition}
-\begin{proof}
-Let $(\mathbf{s},s)\in S^{\star}\times S$ and $\sigma\in\Sigma_{\mathbf{s},s}$.
-The set in the statement depends on $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ only through the condition $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})\models\mathrm{def}^{(S,\Sigma)}(\sigma)[\mathbf{b}]$.
-By Definition~\ref{DHepSignature}, the operation symbols that occur in $\mathrm{def}^{(S,\Sigma)}(\sigma)$ are the $\tau\lhd\sigma$, so that, by Definitions~\ref{DTermOp} and~\ref{DEEq}, this condition only depends on the partial operations $\tau^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ with $\tau\lhd\sigma$.
-Therefore, by well-founded recursion along $\lhd$, see Proposition~\ref{PPWFI} and the note after it, the statement determines a unique partial operation $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ for every operation symbol $\sigma$ of $\Sigma$.
-Finally, since $c(\sigma)^{\mathbf{B}}$ sends every family in $\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})})$ to a cell of sort $s$, $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ is a partial mapping from $(B_{\Dom^{(\varphi,c)}})_{\mathbf{s}}$ to $(B_{\Dom^{(\varphi,c)}})_{s}$.
+which sends every family $\mathbf{b}$ in its domain to $c(\sigma)^{\mathbf{B}}(\mathbf{b})$.
 
-This completes the proof.
+The first condition that defines $\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})})$ refers to the partial $\Sigma$-algebra $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ itself.
+Hence we define the operations of $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ by well-founded recursion along $\lhd$, see Proposition~\ref{PPWFI} and the note after it.
+
+Let $(\mathbf{s},s)\in S^{\star}\times S$ and $\sigma\in\Sigma_{\mathbf{s},s}$, and let us assume that, for every $\tau\lhd\sigma$, the operation $\tau^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ has already been defined.
+By Definition~\ref{DHepSignature}, the operation symbols that occur in $\mathrm{def}^{(S,\Sigma)}(\sigma)$ are the $\tau\lhd\sigma$.
+Therefore, by Definitions~\ref{DTermOp} and~\ref{DEEq}, whether a family $\mathbf{b}\in(B_{\Dom^{(\varphi,c)}})_{\mathbf{s}}$ satisfies $\mathrm{def}^{(S,\Sigma)}(\sigma)$ in $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ only depends on the operations $\tau^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ with $\tau\lhd\sigma$.
+The other two conditions only depend on $\mathbf{B}$ and on $\mathbf{c}$.
+Hence $\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})})$ is well defined.
+Moreover, since $c(\sigma)^{\mathbf{B}}$ sends every family in $\Dom(\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})})$ to a cell of sort $s$, $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ is a well-defined partial operation from $(B_{\Dom^{(\varphi,c)}})_{\mathbf{s}}$ to $(B_{\Dom^{(\varphi,c)}})_{s}$.
+
+Since $\lhd$ is well-founded, this defines $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ for every operation symbol $\sigma$ of $\Sigma$.
+
+This completes the definition of the partial $\Sigma$-algebra $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$.
 \end{proof}
 
-Thus a family of cells $\mathbf{b}$ is in the domain of $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ if, and only if, it satisfies the domain conditions of $\sigma$ in $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$, $c(\sigma)^{\mathbf{B}}$ is defined at $\mathbf{b}$, and its value is a cell; and then $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}(\mathbf{b})=c(\sigma)^{\mathbf{B}}(\mathbf{b})$.
+By the proof of Proposition~\ref{PTransformedAlg}, a family of cells $\mathbf{b}$ is in the domain of $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}$ if, and only if, it satisfies the domain conditions of $\sigma$ in $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$, $c(\sigma)^{\mathbf{B}}$ is defined at $\mathbf{b}$, and its value is a cell; and then $\sigma^{\mathbf{c}^{\ast}_{\gd}(\mathbf{B})}(\mathbf{b})=c(\sigma)^{\mathbf{B}}(\mathbf{b})$.
 In what follows we refer to these three requirements as the three conditions of Proposition~\ref{PTransformedAlg}.
 
 Let us note that, in $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$, the domain of $\sigma$ is not part of the data, and it may be smaller than that of $c(\sigma)^{\mathbf{B}}$.
