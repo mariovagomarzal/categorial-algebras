@@ -1508,3 +1508,17 @@ notació: `CGradFunctor`, `CUnifFunctor`, `CDiscFunctor`, `CTruncFunctor` i
 - Els preliminars, copiats de Curry-Howard, i `article.tex`.
 
 El document compila sense errors ni referències indefinides (97 pàgines).
+
+# Notació $\mathbf{c}^{(n)\ast}_{\gd}$
+
+Data: 2026-10-20. A petició teua, $(\mathbf{c}^{(n)})^{\ast}_{\gd}$ s'escriu ara
+$\mathbf{c}^{(n)\ast}_{\gd}$, i igualment per a $\gl(n)$, $(m)$, $(p)$, $(0)$ i
+$(\omega)$, i per a $\mathbf{d}$ (131 aparicions). Per coherència, també
+$((\mathbf{d}\circ\mathbf{c})^{(n)})^{\ast}_{\gd}$ i
+$((\id_{\sig{\Sigma}})^{(n)})^{\ast}_{\gd}$ passen a
+$(\mathbf{d}\circ\mathbf{c})^{(n)\ast}_{\gd}$ i
+$(\id_{\sig{\Sigma}})^{(n)\ast}_{\gd}$ (a `CChangeSigCat`). La convenció
+s'enuncia a la nota després de `DChangeSigDerivor`. No he tocat
+$(\mathbf{d}^{(n)}\circ\mathbf{c}^{(n)})^{\ast}_{\gd}$, que és el functor
+induït per una composició de derivors generalitzats, com
+$(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}$ a la secció 3.
