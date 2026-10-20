@@ -1628,3 +1628,11 @@ Curry-Howard (Ch1B, Ch1D).
   $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$; desapareix «in which every operation
   symbol … restriction of $c(\sigma)^{\mathbf{B}}$». Les operacions queden
   descrites només a la prova.
+- **Àlgebra feble (2026-10-20):** l'enunciat diu ara que
+  $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ és una $\sig{\Sigma}$-àlgebra feble, i
+  el Corol·lari `CTransformedWeak` desapareix. A la prova, l'apartat (2)
+  dona la hipòtesi de recursió (amb la cita a `PPWFI`) abans del domini;
+  després es comprova que la recursió està ben definida, i un paràgraf final
+  dona la inclusió $\Dom(\sigma)\subseteq A_{\mathrm{def}(\sigma)}$. Les dues
+  cites a `CTransformedWeak` (prova de `PTransformedEpAlg` i Remark
+  `RHepAlgCat`) citen ara `PTransformedAlg`.
