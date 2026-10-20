@@ -1606,3 +1606,20 @@ una cel·la».
 
 Cap enunciat no canvia de contingut, i les etiquetes que citen les altres
 seccions es mantenen.
+
+# `PTransformedAlg` a l'estil de Curry-Howard
+
+Data: 2026-10-20. Segueix el model de `PPthAlg` i `PPthCatAlg` de
+Curry-Howard (Ch1B, Ch1D).
+- **Enunciat:** existeix una àlgebra parcial sobre $B_{\Dom^{(\varphi,c)}}$,
+  denotada $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$, en què cada $\sigma$
+  s'interpreta com una restricció de $c(\sigma)^{\mathbf{B}}$. És la
+  «transformed algebra».
+- **Prova:** «Let us denote by … defined as follows», amb \textsf{(1)} el
+  conjunt subjacent i \textsf{(2)} l'operació $\sigma$, que és l'operació
+  parcial amb el domini donat pel conjunt de les tres condicions i el valor
+  $c(\sigma)^{\mathbf{B}}(\mathbf{b})$. Després ve el pas de la recursió
+  al llarg de $\lhd$, i la prova acaba amb «This completes the definition
+  of …».
+- L'enunciat ja no parla d'unicitat: com a Curry-Howard, és la definició
+  que es fa a la prova.
