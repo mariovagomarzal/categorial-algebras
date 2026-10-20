@@ -1545,3 +1545,16 @@ Data: 2026-10-20.
   $\Ds^{(n,m)}$, $\Tr^{(m,n)}$ i les versions globulars.
 - El paràgraf de les construccions de Grothendieck cita ara aquests dos
   corol·laris.
+
+# Mida de les categories indexades (`RChangeSigIndexedSize`)
+
+Data: 2026-10-20. Observació nova després de `CChangeSigIndexed`. Abans
+d'escriure-la vaig comprovar la definició de $\mathsf{Cat}$ a la introducció:
+és la categoria de les $\boldsymbol{\mathcal{U}}$-categories, és a dir, de les
+que tenen $\mathrm{Ob}\subseteq\boldsymbol{\mathcal{U}}$ i conjunts de
+morfismes $\boldsymbol{\mathcal{U}}$-petits. $\mathsf{nCatAlg}(\sig{\Sigma})$
+no és $\boldsymbol{\mathcal{U}}$-petita, però sí que és una
+$\boldsymbol{\mathcal{U}}$-categoria, perquè $S$ i $\Sigma$ són
+$\boldsymbol{\mathcal{U}}$-petits, i per tant és un objecte de $\mathsf{Cat}$.
+No cal cap univers més gran: la preocupació que vaig plantejar no era fundada,
+i l'observació explica per què.
