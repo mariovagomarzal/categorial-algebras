@@ -5832,6 +5832,7 @@ From Corollaries~\ref{CSigdCat} and~\ref{CChangeSigCat} we obtain the following 
 \begin{corollary}\label{CChangeSigIndexed}
 Let $n\in\mathbb{N}$.
 Then the assignment that sends a many-sorted signature $\sig{\Sigma}$ to $\mathsf{nCatAlg}(\sig{\Sigma})$ and a derivor $\mathbf{c}$ to $\mathbf{c}^{(n)\ast}_{\gd}$ is a split $\mathsf{Sig}_{\mathfrak{d}}$-indexed category, see Definition~\ref{DSplitIndexed}, and so is the assignment that sends $\sig{\Sigma}$ to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ and $\mathbf{c}$ to $\mathbf{c}^{\gl(n)\ast}_{\gd}$.
+We denote these split $\mathsf{Sig}_{\mathfrak{d}}$-indexed categories by $\mathsf{nCatAlg}$ and $\mathsf{nCat}^{\gl}\mathsf{Alg}$, respectively.
 \end{corollary}
 \begin{proof}
 By Corollary~\ref{CSigdCat}, $\mathsf{Sig}_{\mathfrak{d}}$ is a category and, by Corollary~\ref{CChangeSigFunctor}, both assignments send a derivor to a functor in the opposite direction.
@@ -5847,16 +5848,16 @@ As in Sections~\ref{SGraduation} and~\ref{STruncation}, we compare the composite
 We first state, in the form in which we use it, the consequence of Corollary~\ref{CHepComp} that we need.
 
 \begin{lemma}\label{LCommSquare}
-Let $\sig{\Sigma}$, $\sig{\Lambda}$, $\sig{\Omega}$ and $\sig{\Omega}'$ be hep-signatures, $\mathbf{a}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Omega}$, $\mathbf{b}$ a generalized hep-derivor from $\sig{\Omega}$ to $\sig{\Lambda}$, $\mathbf{a}'$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Omega}'$ and $\mathbf{b}'$ a generalized hep-derivor from $\sig{\Omega}'$ to $\sig{\Lambda}$ such that $\mathbf{b}\circ\mathbf{a}=\mathbf{b}'\circ\mathbf{a}'$.
-Let $\mathbf{B}$ be a partial $\Lambda$-algebra such that $\mathbf{a}^{\ast}_{\gd}(\mathbf{b}^{\ast}_{\gd}(\mathbf{B}))$ and $\mathbf{a}'^{\ast}_{\gd}(\mathbf{b}'^{\ast}_{\gd}(\mathbf{B}))$ are $\sig{\Sigma}$-algebras with the same underlying many-sorted set as $(\mathbf{b}\circ\mathbf{a})^{\ast}_{\gd}(\mathbf{B})$.
+Let $\sig{\Sigma}$, $\sig{\Lambda}$, $\sig{\Omega}$ and $\sig{\Omega}'$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Omega}$, $\mathbf{d}$ a generalized hep-derivor from $\sig{\Omega}$ to $\sig{\Lambda}$, $\mathbf{c}'$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Omega}'$ and $\mathbf{d}'$ a generalized hep-derivor from $\sig{\Omega}'$ to $\sig{\Lambda}$ such that $\mathbf{d}\circ\mathbf{c}=\mathbf{d}'\circ\mathbf{c}'$.
+Let $\mathbf{B}$ be a partial $\Lambda$-algebra such that $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{B}))$ and $\mathbf{c}'^{\ast}_{\gd}(\mathbf{d}'^{\ast}_{\gd}(\mathbf{B}))$ are $\sig{\Sigma}$-algebras with the same underlying many-sorted set as $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{B})$.
 Then
 $$
-\mathbf{a}^{\ast}_{\gd}\left(\mathbf{b}^{\ast}_{\gd}(\mathbf{B})\right)=\mathbf{a}'^{\ast}_{\gd}\left(\mathbf{b}'^{\ast}_{\gd}(\mathbf{B})\right).
+\mathbf{c}^{\ast}_{\gd}\left(\mathbf{d}^{\ast}_{\gd}(\mathbf{B})\right)=\mathbf{c}'^{\ast}_{\gd}\left(\mathbf{d}'^{\ast}_{\gd}(\mathbf{B})\right).
 $$
-Moreover, for every homomorphism $f\colon\mathbf{B}\mor\mathbf{B}'$ of partial $\Lambda$-algebras such that $\mathbf{B}'$ satisfies the same hypotheses, $\mathbf{a}^{\ast}_{\gd}(\mathbf{b}^{\ast}_{\gd}(f))=\mathbf{a}'^{\ast}_{\gd}(\mathbf{b}'^{\ast}_{\gd}(f))$.
+Moreover, for every homomorphism $f\colon\mathbf{B}\mor\mathbf{B}'$ of partial $\Lambda$-algebras such that $\mathbf{B}'$ satisfies the same hypotheses, $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(f))=\mathbf{c}'^{\ast}_{\gd}(\mathbf{d}'^{\ast}_{\gd}(f))$.
 \end{lemma}
 \begin{proof}
-By Corollary~\ref{CHepComp}, applied to $\mathbf{a}$ and $\mathbf{b}$, and to $\mathbf{a}'$ and $\mathbf{b}'$, both partial $\Sigma$-algebras are equal to $(\mathbf{b}\circ\mathbf{a})^{\ast}_{\gd}(\mathbf{B})=(\mathbf{b}'\circ\mathbf{a}')^{\ast}_{\gd}(\mathbf{B})$, and both homomorphisms are equal to $(\mathbf{b}\circ\mathbf{a})^{\ast}_{\gd}(f)$.
+By Corollary~\ref{CHepComp}, applied to $\mathbf{c}$ and $\mathbf{d}$, and to $\mathbf{c}'$ and $\mathbf{d}'$, both partial $\Sigma$-algebras are equal to $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{B})=(\mathbf{d}'\circ\mathbf{c}')^{\ast}_{\gd}(\mathbf{B})$, and both homomorphisms are equal to $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(f)$.
 \end{proof}
 
 We begin with graduation and unification.
@@ -5951,7 +5952,7 @@ Then the following equalities hold
 \end{corollary}
 \begin{proof}
 (1) Let $\calg{B}$ be an $n$-categorial $\sig{\Lambda}$-algebra.
-We apply Lemma~\ref{LCommSquare} with $\mathbf{a}=\bGd^{(n)}_{\sig{\Sigma}}$, $\mathbf{b}=\mathbf{c}^{(n)}$, $\mathbf{a}'=\mathbf{c}^{\gl(n)}$ and $\mathbf{b}'=\bGd^{(n)}_{\sig{\Lambda}}$, which is possible by Proposition~\ref{PChangeSigGdUf}~(1).
+We apply Lemma~\ref{LCommSquare} to the compositions $\mathbf{c}^{(n)}\circ\bGd^{(n)}_{\sig{\Sigma}}$ and $\bGd^{(n)}_{\sig{\Lambda}}\circ\mathbf{c}^{\gl(n)}$, which, by Proposition~\ref{PChangeSigGdUf}~(1), are equal.
 By Proposition~\ref{PChangeSigDerivor} and Lemma~\ref{LGradDescription}, the cells of sort $(k,s)$ of both $\Gd^{(n)}_{\sig{\Sigma}}(\mathbf{c}^{(n)\ast}_{\gd}(\calg{B}))$ and $\mathbf{c}^{\gl(n)\ast}_{\gd}(\Gd^{(n)}_{\sig{\Lambda}}(\calg{B}))$ are the $k$-cells of sort $\varphi(s)$ of $\calg{B}$, for $k\in n$, and all the cells of sort $\varphi(s)$ of $\calg{B}$, for $k=n$; by Proposition~\ref{PChangeSigGdUf}~(1), they are also the cells of $(\mathbf{c}^{(n)}\circ\bGd^{(n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\calg{B})$.
 Moreover, by Propositions~\ref{PGradDerivor} and~\ref{PChangeSigDerivor}, both partial algebras are $\sig{\Sigma}^{\gl(n)}$-algebras.
 Hence, by Lemma~\ref{LCommSquare}, they are equal, and the same holds for the $n$-categorial $\sig{\Lambda}$-homomorphisms.
@@ -5961,6 +5962,40 @@ By Proposition~\ref{PChangeSigGdUf}~(2), Lemma~\ref{LUnifDescription} and Propos
 Hence, by Lemma~\ref{LCommSquare}, they are equal, and the same holds for the globular $n$-categorial $\sig{\Lambda}$-homomorphisms.
 
 This completes the proof.
+\end{proof}
+
+From Corollaries~\ref{CChangeSigIndexed} and~\ref{CChangeSigGdUf} we obtain that graduation and unification are natural transformations between split indexed categories.
+
+\begin{corollary}\label{CChangeSigGdUfNat}
+Let $n\in\mathbb{N}$.
+Then the families $\Gd^{(n)}=(\Gd^{(n)}_{\sig{\Sigma}})_{\sig{\Sigma}}$ and $\Uf^{(n)}=(\Uf^{(n)}_{\sig{\Sigma}})_{\sig{\Sigma}}$, indexed by the many-sorted signatures, are natural transformations
+$$
+\Gd^{(n)}\colon\mathsf{nCatAlg}\Longrightarrow\mathsf{nCat}^{\gl}\mathsf{Alg}
+\qquad\text{and}\qquad
+\Uf^{(n)}\colon\mathsf{nCat}^{\gl}\mathsf{Alg}\Longrightarrow\mathsf{nCatAlg}
+$$
+between the split $\mathsf{Sig}_{\mathfrak{d}}$-indexed categories of Corollary~\ref{CChangeSigIndexed}.
+\end{corollary}
+\begin{proof}
+By Corollary~\ref{CChangeSigIndexed}, $\mathsf{nCatAlg}$ and $\mathsf{nCat}^{\gl}\mathsf{Alg}$ are contravariant functors from $\mathsf{Sig}_{\mathfrak{d}}$ to $\mathsf{Cat}$.
+By Corollaries~\ref{CGradFunctor} and~\ref{CUnifFunctor}, for every many-sorted signature $\sig{\Sigma}$, $\Gd^{(n)}_{\sig{\Sigma}}$ is a functor from $\mathsf{nCatAlg}(\sig{\Sigma})$ to $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ and $\Uf^{(n)}_{\sig{\Sigma}}$ is a functor from $\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})$ to $\mathsf{nCatAlg}(\sig{\Sigma})$.
+Finally, for every derivor $\mathbf{c}$ from $\sig{\Sigma}$ to $\sig{\Lambda}$, the naturality conditions at $\mathbf{c}$, i.e., the commutativity of the diagrams
+$$
+\xymatrix@C=40pt@R=35pt{
+\mathsf{nCatAlg}(\sig{\Lambda})\ar[r]^-{\Gd^{(n)}_{\sig{\Lambda}}}\ar[d]_-{\mathbf{c}^{(n)\ast}_{\gd}} &
+\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Lambda})\ar[d]^-{\mathbf{c}^{\gl(n)\ast}_{\gd}}\\
+\mathsf{nCatAlg}(\sig{\Sigma})\ar[r]_-{\Gd^{(n)}_{\sig{\Sigma}}} &
+\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})
+}
+\qquad
+\xymatrix@C=40pt@R=35pt{
+\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Lambda})\ar[r]^-{\Uf^{(n)}_{\sig{\Lambda}}}\ar[d]_-{\mathbf{c}^{\gl(n)\ast}_{\gd}} &
+\mathsf{nCatAlg}(\sig{\Lambda})\ar[d]^-{\mathbf{c}^{(n)\ast}_{\gd}}\\
+\mathsf{nCat}^{\gl}\mathsf{Alg}(\sig{\Sigma})\ar[r]_-{\Uf^{(n)}_{\sig{\Sigma}}} &
+\mathsf{nCatAlg}(\sig{\Sigma})
+}
+$$
+are the equalities of Corollary~\ref{CChangeSigGdUf}.
 \end{proof}
 
 We next consider discretization and truncation.
@@ -6073,6 +6108,28 @@ In the four cases, by Lemma~\ref{LCommSquare}, both algebras are equal, and the 
 This completes the proof.
 \end{proof}
 
+From Corollaries~\ref{CChangeSigIndexed} and~\ref{CChangeSigDsTr} we obtain that discretization and truncation are natural transformations between split indexed categories.
+
+\begin{corollary}\label{CChangeSigDsTrNat}
+Let $m,n\in\mathbb{N}$ with $m\leq n$.
+Then the families $\Ds^{(n,m)}=(\Ds^{(n,m)}_{\sig{\Sigma}})_{\sig{\Sigma}}$, $\Tr^{(m,n)}=(\Tr^{(m,n)}_{\sig{\Sigma}})_{\sig{\Sigma}}$, $\Ds^{\gl(n,m)}=(\Ds^{\gl(n,m)}_{\sig{\Sigma}})_{\sig{\Sigma}}$ and $\Tr^{\gl(m,n)}=(\Tr^{\gl(m,n)}_{\sig{\Sigma}})_{\sig{\Sigma}}$, indexed by the many-sorted signatures, are natural transformations
+\begin{align*}
+\Ds^{(n,m)}&\colon\mathsf{mCatAlg}\Longrightarrow\mathsf{nCatAlg},
+&
+\Tr^{(m,n)}&\colon\mathsf{nCatAlg}\Longrightarrow\mathsf{mCatAlg},
+\\
+\Ds^{\gl(n,m)}&\colon\mathsf{mCat}^{\gl}\mathsf{Alg}\Longrightarrow\mathsf{nCat}^{\gl}\mathsf{Alg},
+&
+\Tr^{\gl(m,n)}&\colon\mathsf{nCat}^{\gl}\mathsf{Alg}\Longrightarrow\mathsf{mCat}^{\gl}\mathsf{Alg}
+\end{align*}
+between the split $\mathsf{Sig}_{\mathfrak{d}}$-indexed categories of Corollary~\ref{CChangeSigIndexed}.
+\end{corollary}
+\begin{proof}
+By Corollary~\ref{CChangeSigIndexed}, the four assignments $\mathsf{mCatAlg}$, $\mathsf{nCatAlg}$, $\mathsf{mCat}^{\gl}\mathsf{Alg}$ and $\mathsf{nCat}^{\gl}\mathsf{Alg}$ are contravariant functors from $\mathsf{Sig}_{\mathfrak{d}}$ to $\mathsf{Cat}$.
+By Corollaries~\ref{CDiscFunctor} and~\ref{CTruncFunctor}, for every many-sorted signature $\sig{\Sigma}$, the components at $\sig{\Sigma}$ of the four families are functors between the corresponding categories.
+Finally, for every derivor $\mathbf{c}$ from $\sig{\Sigma}$ to $\sig{\Lambda}$, the naturality conditions at $\mathbf{c}$ are the equalities of Corollary~\ref{CChangeSigDsTr}.
+\end{proof}
+
 The natural transformations of Sections~\ref{SGraduation} and~\ref{STruncation} are also compatible with the change of signature.
 
 \begin{remark}\label{RChangeSigNat}
@@ -6097,7 +6154,7 @@ For instance, $\beta^{(m,n),\sig{\Sigma}}_{\mathbf{c}^{\gl(n)\ast}_{\gd}(\calg{B
 Thus the adjunctions of Propositions~\ref{PGdUfAdj} and~\ref{PDiscTruncAdj}, and the algebraic square of Proposition~\ref{PAlgSquareFinite}, are compatible with the change of signature.
 \end{remark}
 
-By Corollaries~\ref{CChangeSigGdUf} and~\ref{CChangeSigDsTr}, the families $(\Gd^{(n)}_{\sig{\Sigma}})_{\sig{\Sigma}}$, $(\Uf^{(n)}_{\sig{\Sigma}})_{\sig{\Sigma}}$, $(\Ds^{(n,m)}_{\sig{\Sigma}})_{\sig{\Sigma}}$, $(\Tr^{(m,n)}_{\sig{\Sigma}})_{\sig{\Sigma}}$ and their globular counterparts, indexed by the many-sorted signatures, commute strictly with the functors induced by the derivors.
+By Corollaries~\ref{CChangeSigGdUfNat} and~\ref{CChangeSigDsTrNat}, the families $\Gd^{(n)}$, $\Uf^{(n)}$, $\Ds^{(n,m)}$, $\Tr^{(m,n)}$, $\Ds^{\gl(n,m)}$ and $\Tr^{\gl(m,n)}$ are natural transformations between split $\mathsf{Sig}_{\mathfrak{d}}$-indexed categories.
 Hence they extend to the Grothendieck constructions of the split indexed categories of Corollary~\ref{CChangeSigIndexed}, see Definition~\ref{DGConst}.
 For instance, graduation extends to the functor from $\int^{\mathsf{Sig}_{\mathfrak{d}}}\mathsf{nCatAlg}$ to $\int^{\mathsf{Sig}_{\mathfrak{d}}}\mathsf{nCat}^{\gl}\mathsf{Alg}$ that sends an object $(\sig{\Sigma},\calg{A})$ to $(\sig{\Sigma},\Gd^{(n)}_{\sig{\Sigma}}(\calg{A}))$ and a morphism $(\mathbf{c},F)$ from $(\sig{\Sigma},\calg{A})$ to $(\sig{\Lambda},\calg{B})$, where $F\colon\calg{A}\mor\mathbf{c}^{(n)\ast}_{\gd}(\calg{B})$, to $(\mathbf{c},\Gd^{(n)}_{\sig{\Sigma}}(F))$, which is a morphism from $(\sig{\Sigma},\Gd^{(n)}_{\sig{\Sigma}}(\calg{A}))$ to $(\sig{\Lambda},\Gd^{(n)}_{\sig{\Lambda}}(\calg{B}))$, since, by Corollary~\ref{CChangeSigGdUf}, $\Gd^{(n)}_{\sig{\Sigma}}(F)$ is a homomorphism from $\Gd^{(n)}_{\sig{\Sigma}}(\calg{A})$ to $\Gd^{(n)}_{\sig{\Sigma}}(\mathbf{c}^{(n)\ast}_{\gd}(\calg{B}))=\mathbf{c}^{\gl(n)\ast}_{\gd}(\Gd^{(n)}_{\sig{\Lambda}}(\calg{B}))$.
 
