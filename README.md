@@ -20,8 +20,11 @@ lake build
 scripts/build-docs.sh  # the API documentation, in _site/docs/
 ```
 
-CI builds the library and the documentation on pushes to `main` and on pull
-requests to `main`; a push to `main` also publishes `_site/` to GitHub Pages.
+To compile the paper, run `latexmk -pdf main.tex` in `paper/`.
+
+CI builds the paper, the library and the documentation on pushes to `main` and
+on pull requests to `main`; a push to `main` also publishes the site to GitHub
+Pages, with the PDF of the paper as `paper.pdf`.
 
 ## Layout
 

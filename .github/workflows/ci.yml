@@ -1,4 +1,5 @@
-# Builds the library and its API documentation on pushes to main and on pull requests to main.
+# Builds the paper, the library and its API documentation on pushes to main and on pull requests
+# to main.
 # Only a push to main publishes the site to GitHub Pages.
 name: CI
 
@@ -18,8 +19,29 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  # In a job of its own, so that the TeX Live image and Mathlib do not share the runner's disk.
+  paper:
+    name: Build the paper
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Compile the paper
+        uses: xu-cheng/latex-action@v4
+        with:
+          working_directory: paper
+          root_file: main.tex
+
+      - name: Keep the PDF for the site
+        uses: actions/upload-artifact@v7
+        with:
+          name: paper
+          path: paper/main.pdf
+          if-no-files-found: error
+
   build:
     name: Build the library and the documentation
+    needs: paper
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -63,6 +85,15 @@ jobs:
         with:
           path: ${{ steps.docs-paths.outputs.paths }}
           key: ${{ steps.docs-cache.outputs.cache-primary-key }}
+
+      - name: Add the paper to the site
+        uses: actions/download-artifact@v8
+        with:
+          name: paper
+          path: _site
+
+      - name: Name the PDF of the paper
+        run: mv _site/main.pdf _site/paper.pdf
 
       - name: Upload the site
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
