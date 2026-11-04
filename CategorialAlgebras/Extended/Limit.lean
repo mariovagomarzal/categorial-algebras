@@ -1,23 +1,21 @@
-import Stemma
 import Mathlib.CategoryTheory.EqToHom
 import CategorialAlgebras.Extended.Truncation
 
-open Verso.Genre Manual InlineLean Stemma
+/-!
+# Globular ω-categorial algebras as a projective limit
 
-#doc (Stemma) "Globular ω-categorial algebras as a projective limit" =>
+This file proves Proposition `PUnivPropGlCatAlg` of the draft: the category
+$\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)$, with the truncation functors
+$\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\Sigma}$, is the projective limit of the projective system of the
+categories $\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)$ and the truncation functors
+$\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\Sigma}$.
 
-This document proves Proposition `PUnivPropGlCatAlg` of the draft: the category
-$`\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)`, with the truncation functors
-$`\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\Sigma}`, is the projective limit of the projective system of the
-categories $`\mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)` and the truncation functors
-$`\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\Sigma}`.
+The proof rests on one construction: a family $(\boldsymbol{\mathsf{A}}_n)_{n \in \mathbb{N}}$
+of globular $n$-categorial algebras that is *compatible*, in the sense that
+$\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\Sigma}(\boldsymbol{\mathsf{A}}_n) = \boldsymbol{\mathsf{A}}_m$ for
+$m \leq n$, is the family of truncations of a single globular $\omega$-categorial algebra.
+-/
 
-The proof rests on one construction: a family $`(\boldsymbol{\mathsf{A}}_n)_{n \in \mathbb{N}}`
-of globular $`n`-categorial algebras that is *compatible*, in the sense that
-$`\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\Sigma}(\boldsymbol{\mathsf{A}}_n) = \boldsymbol{\mathsf{A}}_m` for
-$`m \leq n`, is the family of truncations of a single globular $`\omega`-categorial algebra.
-
-```lean
 universe u v w
 
 namespace CategorialAlgebras.Extended
@@ -25,17 +23,17 @@ namespace CategorialAlgebras.Extended
 open CategoryTheory
 
 variable {S : Type u} {Sig : Signature.{u, v} S}
-```
 
-# Transport along a compatibility
+/-!
+## Transport along a compatibility
 
-If $`\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\Sigma}(\boldsymbol{\mathsf{B}}) = \boldsymbol{\mathsf{B}}'`, the
-$`i`-cells of sort $`s` of $`\boldsymbol{\mathsf{B}}'` are the $`i`-cells of sort $`s` of
-$`\boldsymbol{\mathsf{B}}`, for $`i \leq m`. In the Lean this identification is a transport
+If $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\Sigma}(\boldsymbol{\mathsf{B}}) = \boldsymbol{\mathsf{B}}'$, the
+$i$-cells of sort $s$ of $\boldsymbol{\mathsf{B}}'$ are the $i$-cells of sort $s$ of
+$\boldsymbol{\mathsf{B}}$, for $i \leq m$. In the Lean this identification is a transport
 along an equality of types, `tr`, with inverse `trInv`, and the lemmas below say that it
 commutes with all the structure.
+-/
 
-```lean
 namespace CatAlgebra
 
 variable {m n : ℕ} {h : m ≤ n} {B : CatAlgebra.{u, v, w} Sig n} {B' : CatAlgebra.{u, v, w} Sig m}
@@ -238,12 +236,11 @@ theorem Hom.heq_of {A₁ A₂ B₁ B₂ : CatAlgebra.{u, v, w} Sig n} (E₁ : A�
   exact heq_of_eq (Hom.ext fun s => Functor.ext fun a x => eq_of_heq (h s a x x HEq.rfl))
 
 end CatAlgebra
-```
 
+/-!
+## The ω-categorial algebra of a compatible family
+-/
 
-# The ω-categorial algebra of a compatible family
-
-```lean
 lemma comp_eq_comp {I : Type} [Preorder I] {C : TypeFamily.{w} I} [CategoryStruct I C]
     {k j : I} {h : j < k} {g₁ g₂ f₁ f₂ : C k} (eg : g₁ = g₂) (ef : f₁ = f₂)
     (p₁ : sc_is_tg h g₁ f₁) (p₂ : sc_is_tg h g₂ f₂) :
@@ -459,21 +456,21 @@ lemma lim_op_idm {ws : List S} (σ : Sig ws s) {k j : ℕ} (h : j < k)
   rw [trInv_op]
   exact ((A k).op σ).map_idm_eq_idm_map (last_lt h) _
 
-```
+/-!
+### The ω-categorial algebra of a compatible family
 
-:::construction (label := "extended.limit-algebra") (central := false) (title := "The ω-categorial algebra of a compatible family")
-Let $`(\boldsymbol{\mathsf{A}}_n)_{n \in \mathbb{N}}` be a compatible family of globular
-$`n`-categorial $`\Sigma`-algebras. Its *limit* $`\varprojlim_n \boldsymbol{\mathsf{A}}_n` is the
-globular $`\omega`-categorial $`\Sigma`-algebra whose $`k`-cells of sort $`s` are the $`k`-cells of
-sort $`s` of $`\boldsymbol{\mathsf{A}}_k`, its cells of top dimension. For $`j < k`, the
-$`(j,k)`-source of a $`k`-cell $`x` is its $`(j,k)`-source in $`\boldsymbol{\mathsf{A}}_k`,
-which is a $`j`-cell of $`\boldsymbol{\mathsf{A}}_k` and so, by compatibility, a $`j`-cell of
-$`\boldsymbol{\mathsf{A}}_j`; targets, identities and compositions are defined in the same way,
-and an operation symbol acts on $`k`-cells as it does in $`\boldsymbol{\mathsf{A}}_k`. Every
-axiom involves finitely many dimensions $`i < j < k`, and holds because it holds in
-$`\boldsymbol{\mathsf{A}}_k`.
+Let $(\boldsymbol{\mathsf{A}}_n)_{n \in \mathbb{N}}$ be a compatible family of globular
+$n$-categorial $\Sigma$-algebras. Its *limit* $\varprojlim_n \boldsymbol{\mathsf{A}}_n$ is the
+globular $\omega$-categorial $\Sigma$-algebra whose $k$-cells of sort $s$ are the $k$-cells of
+sort $s$ of $\boldsymbol{\mathsf{A}}_k$, its cells of top dimension. For $j < k$, the
+$(j,k)$-source of a $k$-cell $x$ is its $(j,k)$-source in $\boldsymbol{\mathsf{A}}_k$,
+which is a $j$-cell of $\boldsymbol{\mathsf{A}}_k$ and so, by compatibility, a $j$-cell of
+$\boldsymbol{\mathsf{A}}_j$; targets, identities and compositions are defined in the same way,
+and an operation symbol acts on $k$-cells as it does in $\boldsymbol{\mathsf{A}}_k$. Every
+axiom involves finitely many dimensions $i < j < k$, and holds because it holds in
+$\boldsymbol{\mathsf{A}}_k$.
+-/
 
-```lean
 variable (A) in
 /-- The globular `ω`-categorial algebra of a compatible family: its `k`-cells, and the action
 of the operations on them, are those of the `k`-th member of the family. -/
@@ -491,14 +488,8 @@ def lim : OmegaCatAlgebra.{u, v, w} Sig :=
         exact ((A k).op σ).map_comp_eq_comp_map (j_lt_k := last_lt h)
           (funext fun l => lim_sc_is_tg hA h (congrFun p l)) } }
 
-```
-:::
-
-```lean
 end Limit
-```
 
-```lean
 section LimitProps
 
 open CatAlgebra
@@ -532,11 +523,11 @@ theorem lim_congr {A' : ∀ n, CatAlgebra.{u, v, w} Sig n}
   subst e; rfl
 
 end LimitProps
-```
 
-# Homomorphisms between limits
+/-!
+## Homomorphisms between limits
+-/
 
-```lean
 section LimitHom
 
 open CatAlgebra
@@ -547,17 +538,17 @@ variable {A A' : ∀ n, CatAlgebra.{u, v, w} Sig n}
   (H : ∀ n, CatAlgebra.Hom (A n) (A' n))
   (hH : ∀ m n (h : m ≤ n), (H n).truncate h ≍ H m)
 
-```
+/-!
+### The homomorphism of a compatible family
 
-:::construction (label := "extended.limit-hom") (central := false) (title := "The homomorphism of a compatible family")
-Let $`(\boldsymbol{\mathsf{A}}_n)_n` and $`(\boldsymbol{\mathsf{A}}'_n)_n` be compatible families
-and $`(H_n \colon \boldsymbol{\mathsf{A}}_n \to \boldsymbol{\mathsf{A}}'_n)_n` a family of
-homomorphisms such that $`\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\Sigma}(H_n) = H_m` for $`m \leq n`. Then the
-mappings $`H_{k,s,k}`, which send the $`k`-cells of $`\boldsymbol{\mathsf{A}}_k` to those of
-$`\boldsymbol{\mathsf{A}}'_k`, form a homomorphism
-$`\varprojlim_n H_n \colon \varprojlim_n \boldsymbol{\mathsf{A}}_n \to \varprojlim_n \boldsymbol{\mathsf{A}}'_n`.
+Let $(\boldsymbol{\mathsf{A}}_n)_n$ and $(\boldsymbol{\mathsf{A}}'_n)_n$ be compatible families
+and $(H_n \colon \boldsymbol{\mathsf{A}}_n \to \boldsymbol{\mathsf{A}}'_n)_n$ a family of
+homomorphisms such that $\mathrm{Tr}^{\mathrm{gl}(m,n)}_{\Sigma}(H_n) = H_m$ for $m \leq n$. Then the
+mappings $H_{k,s,k}$, which send the $k$-cells of $\boldsymbol{\mathsf{A}}_k$ to those of
+$\boldsymbol{\mathsf{A}}'_k$, form a homomorphism
+$\varprojlim_n H_n \colon \varprojlim_n \boldsymbol{\mathsf{A}}_n \to \varprojlim_n \boldsymbol{\mathsf{A}}'_n$.
+-/
 
-```lean
 /-- The homomorphism between the limits of two compatible families determined by a compatible
 family of homomorphisms: on `k`-cells it is the `k`-th homomorphism of the family. -/
 def limHom : OmegaCatAlgebra.Hom (lim A hA) (lim A' hA') where
@@ -585,13 +576,11 @@ def limHom : OmegaCatAlgebra.Hom (lim A hA) (lim A' hA') where
         exact ((H k).map s).map_comp_eq_comp_map (j_lt_k := last_lt h) (lim_sc_is_tg hA h p) }
   map_op σ k a := (H k).map_op σ (Fin.last k) a
 
-```
-:::
-
-Truncating the limit gives back the family, and every globular $`\omega`-categorial algebra,
+/-!
+Truncating the limit gives back the family, and every globular $\omega$-categorial algebra,
 or homomorphism, is the limit of its truncations.
+-/
 
-```lean
 theorem limHom_truncate (n : ℕ) :
     (limHom (hA := hA) (hA' := hA') H hH).truncate n ≍ H n := by
   refine Hom.heq_of (lim_truncate hA n) (lim_truncate hA' n) ?_
@@ -619,26 +608,25 @@ theorem limHom_congr {A₁ A₂ A₁' A₂' : ∀ n, CatAlgebra.{u, v, w} Sig n}
   subst e e'
   obtain rfl := eq_of_heq eH
   rfl
-```
 
-# The universal property
+/-!
+## The universal property
+-/
 
-:::proposition (label := "extended.omega-cat-alg-limit") (central := true) (title := "ωCatᵉˣᵗAlg(Σ) is the projective limit of the nCatᵉˣᵗAlg(Σ)")
-Let $`\mathsf{L}` be a category and, for every $`n \in \mathbb{N}`, let
-$`F_n \colon \mathsf{L} \to \mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)` be a functor. If
-$`F_m = \mathrm{Tr}^{\mathrm{gl}(m,n)}_{\Sigma} \circ F_n` for all $`m \leq n`, then there exists a
+/-- Let $\mathsf{L}$ be a category and, for every $n \in \mathbb{N}$, let
+$F_n \colon \mathsf{L} \to \mathsf{nCat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)$ be a functor. If
+$F_m = \mathrm{Tr}^{\mathrm{gl}(m,n)}_{\Sigma} \circ F_n$ for all $m \leq n$, then there exists a
 unique functor
-$`\langle F_k \rangle_{k \in \mathbb{N}} \colon \mathsf{L} \to \omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)`
-such that $`F_n = \mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\Sigma} \circ \langle F_k \rangle_{k \in \mathbb{N}}`
-for every $`n \in \mathbb{N}`.
+$\langle F_k \rangle_{k \in \mathbb{N}} \colon \mathsf{L} \to \omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)$
+such that $F_n = \mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\Sigma} \circ \langle F_k \rangle_{k \in \mathbb{N}}$
+for every $n \in \mathbb{N}$.
 
 Together with Remark `RTmnGlCatAlgProjSys`, this says that
-$`(\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma), \mathrm{Tr}^{\mathrm{gl}(\cdot,\omega)}_{\Sigma})`
+$(\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma), \mathrm{Tr}^{\mathrm{gl}(\cdot,\omega)}_{\Sigma})$
 is the projective limit of the projective system
-$`((\cdot)\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma), \mathrm{Tr}^{\mathrm{gl}(\cdot)}_{\Sigma})` in
-$`\mathsf{Cat}`.
-
-```lean
+$((\cdot)\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma), \mathrm{Tr}^{\mathrm{gl}(\cdot)}_{\Sigma})$ in
+$\mathsf{Cat}$.
+-/
 theorem omegaCatAlg_isLimit {L : Type*} [CategoryTheory.Category L] (F : ∀ n, L ⥤ CatAlgebra.{u, v, w} Sig n)
     (hF : ∀ m n (h : m ≤ n), F n ⋙ truncation Sig h = F m) :
     ∃! G : L ⥤ OmegaCatAlgebra.{u, v, w} Sig, ∀ n, G ⋙ truncationω Sig n = F n := by
@@ -673,23 +661,21 @@ theorem omegaCatAlg_isLimit {L : Type*} [CategoryTheory.Category L] (F : ∀ n, 
           (Function.hfunext rfl fun n n' hn => by
             cases hn
             exact Functor.hcongr_hom (hG' n) f))
-```
-:::
 
-:::proof (of := "extended.omega-cat-alg-limit")
-For an object $`X` of $`\mathsf{L}`, the family $`(F_n(X))_{n}` is compatible, and
-$`\langle F_k \rangle_k(X)` is its limit; for a morphism $`f`, the family $`(F_n(f))_n` is
-compatible, and $`\langle F_k \rangle_k(f)` is its limit. This is a functor because each
-$`F_k` is, and $`\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\Sigma}` sends it to $`F_n`, since truncating the
+/-!
+*Proof of “ωCatᵉˣᵗAlg(Σ) is the projective limit of the nCatᵉˣᵗAlg(Σ)”.*
+
+For an object $X$ of $\mathsf{L}$, the family $(F_n(X))_{n}$ is compatible, and
+$\langle F_k \rangle_k(X)$ is its limit; for a morphism $f$, the family $(F_n(f))_n$ is
+compatible, and $\langle F_k \rangle_k(f)$ is its limit. This is a functor because each
+$F_k$ is, and $\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\Sigma}$ sends it to $F_n$, since truncating the
 limit of a compatible family gives back the family.
 
-For uniqueness, let $`G` be another functor with
-$`\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\Sigma} \circ G = F_n` for every $`n`. A globular
-$`\omega`-categorial algebra is the limit of its truncations, so
-$`G(X) = \varprojlim_n \mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\Sigma}(G(X)) = \varprojlim_n F_n(X)`, and in
-the same way $`G(f) = \varprojlim_n F_n(f)`.
-:::
+For uniqueness, let $G$ be another functor with
+$\mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\Sigma} \circ G = F_n$ for every $n$. A globular
+$\omega$-categorial algebra is the limit of its truncations, so
+$G(X) = \varprojlim_n \mathrm{Tr}^{\mathrm{gl}(n,\omega)}_{\Sigma}(G(X)) = \varprojlim_n F_n(X)$, and in
+the same way $G(f) = \varprojlim_n F_n(f)$.
+-/
 
-```lean
 end CategorialAlgebras.Extended
-```

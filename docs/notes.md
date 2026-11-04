@@ -6,9 +6,8 @@ against it. Refer to the draft by its LaTeX labels (such as
 `DManySortedCatAlg` or `SCompact`), never by its numbers, so that new text in
 `main.tex` changes nothing here.
 
-These notes keep what the source plans of stemma 0.4 recorded and the library
-does not: the scope agreed, the conventions, and why some parts of the draft
-were left out. The plans themselves (`*.toml`) are in the history.
+These notes keep what the library itself does not record: the scope agreed,
+the conventions, and why some parts of the draft were left out.
 
 ## Reading the draft
 
@@ -162,7 +161,7 @@ Next:
 ## Left out on 2026-10-08
 
 Why each part of the derivors line was left out at that date. The draft has
-changed since (see `scratch/ruizmoraraul/canvis.md`), so some of these reasons
+changed since (see `canvis.md`), so some of these reasons
 may no longer hold.
 
 - `SDerivors`: out of the first scope, a separate line of work.

@@ -1,27 +1,25 @@
-import Stemma
 import Mathlib.Data.PFun
 import Mathlib.Order.Fin.Basic
 import Mathlib.Tactic.FinCases
 import CategorialAlgebras.Tactic
 
-open Verso.Genre Manual InlineLean Stemma
-
-#doc (Stemma) "Globular higher-order categories" =>
+/-!
+# Globular higher-order categories
 
 In the *globular* presentation of a higher-order category the cells of each dimension form a
-separate set: $`C_k` is the set of $`k`-cells, and for $`j < k` there are mappings sending a
-$`k`-cell to its $`(j,k)`-source and $`(j,k)`-target, a mapping sending a $`j`-cell to its
-$`(k,j)`-identity, and a partial $`j`-composition of $`k`-cells. This is the presentation of
-Section `SGlobular` of the draft (the globular $`\omega`-categories of Definition `DOmegaCatGl`). The formalization
+separate set: $C_k$ is the set of $k$-cells, and for $j < k$ there are mappings sending a
+$k$-cell to its $(j,k)$-source and $(j,k)$-target, a mapping sending a $j$-cell to its
+$(k,j)$-identity, and a partial $j$-composition of $k$-cells. This is the presentation of
+Section `SGlobular` of the draft (the globular $\omega$-categories of Definition `DOmegaCatGl`). The formalization
 is ported from the group's repository
 [`higher_category_theory`](https://github.com/mariovagomarzal/higher_category_theory), where it
 is called *many-sorted*.
 
 As in the single-set case, a single definition covers every preordered set of dimensions: a
-globular $`n`-category has the dimensions $`0, \ldots, n` (so $`n + 1` sets of cells), and a
-globular $`\omega`-category the dimensions $`k \in \mathbb{N}`.
+globular $n$-category has the dimensions $0, \ldots, n$ (so $n + 1$ sets of cells), and a
+globular $\omega$-category the dimensions $k \in \mathbb{N}$.
+-/
 
-```lean
 universe u
 
 namespace CategorialAlgebras.Extended
@@ -40,19 +38,18 @@ abbrev OmegaTypeFamily := TypeFamily.{u} ℕ
 
 /-- Notation for `lt_trans`, to pass composite inequalities to the operations. -/
 scoped infixr:100 "≫" => lt_trans
-```
 
-# The data
+/-!
+## The data
+-/
 
-:::definition (label := "extended.category-struct") (central := false) (title := "Globular categorial structure")
-Let $`I` be a preordered set of dimensions and $`(C_k)_{k \in I}` a family of sets. A *globular
-categorial structure* on it consists, for all $`j < k` in $`I`, of mappings
-$`\mathrm{sc}^{(j,k)}, \mathrm{tg}^{(j,k)} \colon C_k \to C_j`, the $`(j,k)`-*source* and
-*target*, a mapping $`\mathrm{i}^{(k,j)} \colon C_j \to C_k`, the $`(k,j)`-*identity*, and a
-partial operation $`\circ^{(j)}` on $`C_k`, the $`j`-*composition of* $`k`-*cells*, whose
-domain is the set of pairs $`(g, f)` with $`\mathrm{sc}^{(j,k)} g = \mathrm{tg}^{(j,k)} f`.
-
-```lean
+/-- Let $I$ be a preordered set of dimensions and $(C_k)_{k \in I}$ a family of sets. A *globular
+categorial structure* on it consists, for all $j < k$ in $I$, of mappings
+$\mathrm{sc}^{(j,k)}, \mathrm{tg}^{(j,k)} \colon C_k \to C_j$, the $(j,k)$-*source* and
+*target*, a mapping $\mathrm{i}^{(k,j)} \colon C_j \to C_k$, the $(k,j)$-*identity*, and a
+partial operation $\circ^{(j)}$ on $C_k$, the $j$-*composition of* $k$-*cells*, whose
+domain is the set of pairs $(g, f)$ with $\mathrm{sc}^{(j,k)} g = \mathrm{tg}^{(j,k)} f$.
+-/
 class CategoryStruct (Index : Type) [Preorder Index] (C : TypeFamily.{u} Index) where
   /-- Source operation at dimensions `(k, j)`. Maps `k`-morphisms to `j`-morphisms. -/
   sc : {k j : Index} → j < k → C k → C j
@@ -67,10 +64,7 @@ class CategoryStruct (Index : Type) [Preorder Index] (C : TypeFamily.{u} Index) 
   pcomp_dom : ∀ {k j : Index} {j_lt_k : j < k} {f g : C k},
       (pcomp j_lt_k g f).Dom ↔ sc j_lt_k g = tg j_lt_k f := by
     hcat_disch
-```
-:::
 
-```lean
 attribute [simp] CategoryStruct.pcomp_dom
 
 namespace CategoryStruct
@@ -158,23 +152,22 @@ lemma congr_comp₂ (eq_f : f₁ = f₂) (eq_g : g₁ = g₂)
   grind
 
 end Congruence
-```
 
-# Globular categories
+/-!
+## Globular categories
+-/
 
-:::definition (label := "extended.precategory") (central := false) (title := "Globular precategory")
-A globular categorial structure is a *globular precategory* if, for all $`j < k`, the
-$`j`-cells and the $`k`-cells, with $`\mathrm{sc}^{(j,k)}`, $`\mathrm{tg}^{(j,k)}`,
-$`\mathrm{i}^{(k,j)}` and $`\circ^{(j)}`, are the objects and the morphisms of a category:
+/-- A globular categorial structure is a *globular precategory* if, for all $j < k$, the
+$j$-cells and the $k$-cells, with $\mathrm{sc}^{(j,k)}$, $\mathrm{tg}^{(j,k)}$,
+$\mathrm{i}^{(k,j)}$ and $\circ^{(j)}$, are the objects and the morphisms of a category:
 
-1. (MS2) $`\mathrm{sc}^{(j,k)}(g \circ^{(j)} f) = \mathrm{sc}^{(j,k)} f` and
-   $`\mathrm{tg}^{(j,k)}(g \circ^{(j)} f) = \mathrm{tg}^{(j,k)} g` when $`g \circ^{(j)} f`
+1. (MS2) $\mathrm{sc}^{(j,k)}(g \circ^{(j)} f) = \mathrm{sc}^{(j,k)} f$ and
+   $\mathrm{tg}^{(j,k)}(g \circ^{(j)} f) = \mathrm{tg}^{(j,k)} g$ when $g \circ^{(j)} f$
    is defined;
-2. (MS5) $`\mathrm{sc}^{(j,k)}\mathrm{i}^{(k,j)} u = u = \mathrm{tg}^{(j,k)}\mathrm{i}^{(k,j)} u`;
-3. (MS6) $`f \circ^{(j)} \mathrm{i}^{(k,j)}\mathrm{sc}^{(j,k)} f = f = \mathrm{i}^{(k,j)}\mathrm{tg}^{(j,k)} f \circ^{(j)} f`;
-4. (MS7) $`\circ^{(j)}` is associative where defined.
-
-```lean
+2. (MS5) $\mathrm{sc}^{(j,k)}\mathrm{i}^{(k,j)} u = u = \mathrm{tg}^{(j,k)}\mathrm{i}^{(k,j)} u$;
+3. (MS6) $f \circ^{(j)} \mathrm{i}^{(k,j)}\mathrm{sc}^{(j,k)} f = f = \mathrm{i}^{(k,j)}\mathrm{tg}^{(j,k)} f \circ^{(j)} f$;
+4. (MS7) $\circ^{(j)}$ is associative where defined.
+-/
 class PreCategory (Index : Type) [Preorder Index] (C : TypeFamily.{u} Index)
     extends CategoryStruct Index C where
   /-- The source of a composite `g ♯[j_lt_k] f` at dimensions `(k, j)` is the source of `f`. -/
@@ -226,10 +219,7 @@ class PreCategory (Index : Type) [Preorder Index] (C : TypeFamily.{u} Index)
       ((h ♯[j_lt_k] g ← sc_tg_hg) ♯[j_lt_k] f ← (compl_assoc sc_tg_gf sc_tg_hg)) =
       (h ♯[j_lt_k] (g ♯[j_lt_k] f ← sc_tg_gf) ← (compr_assoc sc_tg_gf sc_tg_hg)) := by
     hcat_disch
-```
-:::
 
-```lean
 open PreCategory in
 attribute [simp] sckj_compkj_eq_sckj tgkj_compkj_eq_tgkj sckj_idmkj tgkj_idmkj
   compkj_idmkj_sckj_eq_id compkj_tgkj_idmkj_eq_id assoc
@@ -245,32 +235,31 @@ theorem PreCategory.injetive_idm {Index : Type} [Preorder Index] {C : TypeFamily
     _ = sc j_lt_k (idm j_lt_k f) := (sckj_idmkj j_lt_k f).symm
     _ = sc j_lt_k (idm j_lt_k g) := congrArg (sc j_lt_k) eq_idm
     _ = g := sckj_idmkj j_lt_k g
-```
 
-The conditions that relate three dimensions $`i < j < k` are (MS1), (MS3), (MS4), (MS8) and
+/-!
+The conditions that relate three dimensions $i < j < k$ are (MS1), (MS3), (MS4), (MS8) and
 (MS9) of Definition `DOmegaCatGl` of the draft; in this form they are those of the ported repository.
+-/
 
-:::definition (label := "extended.category") (central := false) (title := "Globular higher-order category")
-A *globular category with dimensions in* $`I` is a globular precategory such that, for all
-$`i < j < k` in $`I`:
+/-- A *globular category with dimensions in* $I$ is a globular precategory such that, for all
+$i < j < k$ in $I$:
 
-1. (MS1) $`\mathrm{sc}^{(i,j)}\mathrm{sc}^{(j,k)} f = \mathrm{sc}^{(i,k)} f = \mathrm{sc}^{(i,j)}\mathrm{tg}^{(j,k)} f`
-   and $`\mathrm{tg}^{(i,j)}\mathrm{tg}^{(j,k)} f = \mathrm{tg}^{(i,k)} f = \mathrm{tg}^{(i,j)}\mathrm{sc}^{(j,k)} f`
-   for $`f \in C_k`;
-2. (MS3) if $`g \circ^{(i)} f` is defined in $`C_k`, then
-   $`\mathrm{sc}^{(j,k)}(g \circ^{(i)} f) = \mathrm{sc}^{(j,k)} g \circ^{(i)} \mathrm{sc}^{(j,k)} f`,
+1. (MS1) $\mathrm{sc}^{(i,j)}\mathrm{sc}^{(j,k)} f = \mathrm{sc}^{(i,k)} f = \mathrm{sc}^{(i,j)}\mathrm{tg}^{(j,k)} f$
+   and $\mathrm{tg}^{(i,j)}\mathrm{tg}^{(j,k)} f = \mathrm{tg}^{(i,k)} f = \mathrm{tg}^{(i,j)}\mathrm{sc}^{(j,k)} f$
+   for $f \in C_k$;
+2. (MS3) if $g \circ^{(i)} f$ is defined in $C_k$, then
+   $\mathrm{sc}^{(j,k)}(g \circ^{(i)} f) = \mathrm{sc}^{(j,k)} g \circ^{(i)} \mathrm{sc}^{(j,k)} f$,
    and likewise for targets;
-3. (MS4) $`\mathrm{i}^{(k,j)}\mathrm{i}^{(j,i)} u = \mathrm{i}^{(k,i)} u` for $`u \in C_i`;
-4. (MS8) if $`g \circ^{(i)} f` is defined in $`C_j`, then
-   $`\mathrm{i}^{(k,j)}(g \circ^{(i)} f) = \mathrm{i}^{(k,j)} g \circ^{(i)} \mathrm{i}^{(k,j)} f`;
-5. (MS9) the interchange law: if $`g' \circ^{(j)} g`, $`f' \circ^{(j)} f`, $`g' \circ^{(i)} f'`
-   and $`g \circ^{(i)} f` are defined in $`C_k`, then
-   $`(g' \circ^{(i)} f') \circ^{(j)} (g \circ^{(i)} f) = (g' \circ^{(j)} g) \circ^{(i)} (f' \circ^{(j)} f)`.
+3. (MS4) $\mathrm{i}^{(k,j)}\mathrm{i}^{(j,i)} u = \mathrm{i}^{(k,i)} u$ for $u \in C_i$;
+4. (MS8) if $g \circ^{(i)} f$ is defined in $C_j$, then
+   $\mathrm{i}^{(k,j)}(g \circ^{(i)} f) = \mathrm{i}^{(k,j)} g \circ^{(i)} \mathrm{i}^{(k,j)} f$;
+5. (MS9) the interchange law: if $g' \circ^{(j)} g$, $f' \circ^{(j)} f$, $g' \circ^{(i)} f'$
+   and $g \circ^{(i)} f$ are defined in $C_k$, then
+   $(g' \circ^{(i)} f') \circ^{(j)} (g \circ^{(i)} f) = (g' \circ^{(j)} g) \circ^{(i)} (f' \circ^{(j)} f)$.
 
-In the Lean, $`g'`, $`g`, $`f'`, $`f` are `g₂`, `g₁`, `f₂`, `f₁`, and the $`i`-composition of
-$`k`-cells is written with the proof `i_lt_j ≫ j_lt_k` of $`i < k`.
-
-```lean
+In the Lean, $g'$, $g$, $f'$, $f$ are `g₂`, `g₁`, `f₂`, `f₁`, and the $i$-composition of
+$k$-cells is written with the proof `i_lt_j ≫ j_lt_k` of $i < k$.
+-/
 class Category (Index : Type) [Preorder Index] (C : TypeFamily.{u} Index)
     extends PreCategory Index C where
   /-- Applying source at `(j, i)` to a source at `(k, j)` yields the source at `(k, i)`. -/
@@ -419,33 +408,27 @@ class Category (Index : Type) [Preorder Index] (C : TypeFamily.{u} Index)
         (sc_tg_ki_interchange i_lt_j sc_tg_kj_g₂g₁ sc_tg_kj_f₂f₁
           sc_tg_ki_g₂f₂) := by
     hcat_disch
-```
-:::
 
-```lean
 open Category in
 attribute [simp] scji_sckj_eq_scki scji_tgkj_eq_scki tgji_tgkj_eq_tgki tgji_sckj_eq_tgki
   sckj_compki_eq_compji_sckj tgkj_compki_eq_compji_tgkj idmkj_idmji_eq_idmki
   idmkj_compji_eq_compki_idmkj interchange
-```
 
-:::definition (label := "extended.n-category") (central := false) (title := "Globular n-category and ω-category")
-A *globular* $`n`-*category* is a globular category with dimensions in
-$`n + 1 = \{0, \ldots, n\}`, and a *globular* $`\omega`-*category* one with dimensions in
-$`\mathbb{N}` (Definition `DOmegaCatGl` of the draft and the paragraph after it).
+/-!
+### Globular n-category and ω-category
 
-```lean
+A *globular* $n$-*category* is a globular category with dimensions in
+$n + 1 = \{0, \ldots, n\}$, and a *globular* $\omega$-*category* one with dimensions in
+$\mathbb{N}$ (Definition `DOmegaCatGl` of the draft and the paragraph after it).
+-/
+
 abbrev NCategory (n : ℕ) (C : NTypeFamily.{u} n) := Category (FinSucc n) C
 
 abbrev OmegaCategory (C : OmegaTypeFamily.{u}) := Category ℕ C
-```
-:::
 
-:::construction (label := "extended.one-category-of-precategory") (central := false) (title := "Globular 1-categories")
-A globular precategory with dimensions $`0, 1` is a globular $`1`-category: there are no
-three dimensions $`i < j < k`, and the conditions relating them hold vacuously.
-
-```lean
+/-- A globular precategory with dimensions $0, 1$ is a globular $1$-category: there are no
+three dimensions $i < j < k$, and the conditions relating them hold vacuously.
+-/
 @[instance_reducible]
 def PreCategory.lift {C : NTypeFamily.{u} 1} [S : PreCategory (FinSucc 1) C] : NCategory 1 C :=
   { S with
@@ -458,9 +441,5 @@ def PreCategory.lift {C : NTypeFamily.{u} 1} [S : PreCategory (FinSucc 1) C] : N
     idmkj_idmji_eq_idmki := by fin_omega
     idmkj_compji_eq_compki_idmkj := by fin_omega
     interchange := by fin_omega }
-```
-:::
 
-```lean
 end CategorialAlgebras.Extended
-```

@@ -1,4 +1,3 @@
-import Stemma
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.CategoryTheory.Equivalence
 import Mathlib.CategoryTheory.EqToHom
@@ -9,25 +8,24 @@ import CategorialAlgebras.Evaluation
 import CategorialAlgebras.Compact.Specification
 import CategorialAlgebras.Compact.OmegaAlgebra
 
-open Verso.Genre Manual InlineLean Stemma
+/-!
+# Compact categorial algebras as models
 
-#doc (Stemma) "Compact categorial algebras as models" =>
-
-Proposition `PCompactIdent` of the draft identifies the compact $`n`-categorial
-$`\Sigma`-algebras with the models of the specification $`\mathcal{C}^{\Sigma^{(n)}}`: a pair
-$`(\mathsf{A}, F)` is read as the partial $`\Sigma^{(n)}`-algebra of its cells, in which the
-$`k`-sources, $`k`-targets and $`k`-compositions of the compact $`n`-categories
-$`\mathsf{A}_s` interpret the symbols $`\mathrm{sc}^{k}_{s}`, $`\mathrm{tg}^{k}_{s}` and
-$`\circ^{k}_{s}`, and the functors $`F_\sigma` the operation symbols of $`\Sigma`. This
-document builds that partial algebra, shows that it is a model of the specification, and shows
+Proposition `PCompactIdent` of the draft identifies the compact $n$-categorial
+$\Sigma$-algebras with the models of the specification $\mathcal{C}^{\Sigma^{(n)}}$: a pair
+$(\mathsf{A}, F)$ is read as the partial $\Sigma^{(n)}$-algebra of its cells, in which the
+$k$-sources, $k$-targets and $k$-compositions of the compact $n$-categories
+$\mathsf{A}_s$ interpret the symbols $\mathrm{sc}^{k}_{s}$, $\mathrm{tg}^{k}_{s}$ and
+$\circ^{k}_{s}$, and the functors $F_\sigma$ the operation symbols of $\Sigma$. This
+file builds that partial algebra, shows that it is a model of the specification, and shows
 that every model of the specification arises in this way, from exactly one algebra. For
-$`I = n`, the homomorphisms correspond as well, and the two categories are isomorphic; for
-$`I = \omega`, the compact $`\omega`-categorial algebras are the models in which every cell has a
+$I = n$, the homomorphisms correspond as well, and the two categories are isomorphic; for
+$I = \omega$, the compact $\omega$-categorial algebras are the models in which every cell has a
 dimension. As the
-specification, it is written once for every preordered set of dimensions $`I`, so that it covers
-$`n \in \mathbb{N}` and $`\omega` at once.
+specification, it is written once for every preordered set of dimensions $I$, so that it covers
+$n \in \mathbb{N}$ and $\omega$ at once.
+-/
 
-```lean
 universe u v w
 
 namespace CategorialAlgebras.Compact
@@ -35,28 +33,31 @@ namespace CategorialAlgebras.Compact
 open Signature Term CTerm CategoryStruct
 
 variable {S : Type u} {Sig : Signature.{u, v} S} {Index : Type} [Preorder Index]
-```
 
-# The partial algebra of cells
+/-!
+## The partial algebra of cells
+-/
 
-:::construction (label := "compact.cell-algebra") (central := false) (title := "The partial algebra of cells")
-Let $`\Sigma` be an $`S`-sorted signature, $`I` a preordered set of dimensions, $`\mathsf{A}`
-an $`S`-sorted compact category with dimensions in $`I`, and $`F` an assignment to every
-operation symbol $`\sigma \in \Sigma_{\mathbf{s}, s}` of a compact functor
-$`F_\sigma \colon \mathsf{A}_{\mathbf{s}} \to \mathsf{A}_s`. The *partial algebra of cells*
-of $`(\mathsf{A}, F)` is the partial algebra of the compact categorial signature with dimensions
-in $`I` whose carrier of sort $`s` is the set $`A_s` of cells of $`\mathsf{A}_s`, and in which,
-for every $`k \in I` and every $`s \in S`,
+/-!
+### The partial algebra of cells
 
-* $`\sigma` is interpreted as the total operation $`F_\sigma`;
-* $`\mathrm{sc}^{k}_{s}` and $`\mathrm{tg}^{k}_{s}` as the total operations $`\mathrm{sc}^{k}`
-  and $`\mathrm{tg}^{k}` of $`\mathsf{A}_s`;
-* $`\circ^{k}_{s}` as the partial operation $`\#^{k}` of $`\mathsf{A}_s`, defined at
-  $`(x, y)` exactly when $`\mathrm{sc}^{k}(x) = \mathrm{tg}^{k}(y)`.
+Let $\Sigma$ be an $S$-sorted signature, $I$ a preordered set of dimensions, $\mathsf{A}$
+an $S$-sorted compact category with dimensions in $I$, and $F$ an assignment to every
+operation symbol $\sigma \in \Sigma_{\mathbf{s}, s}$ of a compact functor
+$F_\sigma \colon \mathsf{A}_{\mathbf{s}} \to \mathsf{A}_s$. The *partial algebra of cells*
+of $(\mathsf{A}, F)$ is the partial algebra of the compact categorial signature with dimensions
+in $I$ whose carrier of sort $s$ is the set $A_s$ of cells of $\mathsf{A}_s$, and in which,
+for every $k \in I$ and every $s \in S$,
 
-For $`I = n` this is the identification of Proposition `PCompactIdent` of the draft.
+* $\sigma$ is interpreted as the total operation $F_\sigma$;
+* $\mathrm{sc}^{k}_{s}$ and $\mathrm{tg}^{k}_{s}$ as the total operations $\mathrm{sc}^{k}$
+  and $\mathrm{tg}^{k}$ of $\mathsf{A}_s$;
+* $\circ^{k}_{s}$ as the partial operation $\#^{k}$ of $\mathsf{A}_s$, defined at
+  $(x, y)$ exactly when $\mathrm{sc}^{k}(x) = \mathrm{tg}^{k}(y)$.
 
-```lean
+For $I = n$ this is the identification of Proposition `PCompactIdent` of the draft.
+-/
+
 /-- The operations of the partial algebra of cells. -/
 def cellOp (C : S → Type w) [∀ s, Category Index (C s)]
     (F : ∀ {ws : List S} {s : S}, Sig ws s → Functor Index (Arity C ws) (C s)) :
@@ -72,15 +73,14 @@ abbrev cellAlgebra (C : S → Type w) [∀ s, Category Index (C s)]
     PartialAlgebra.{u, max u v, w} (CompactSignature Sig Index) where
   carrier := C
   op {ws s} σ := cellOp C F ws s σ
-```
-:::
 
+/-!
 The proof that it is a model evaluates the terms of the specification: a source, a target or an
-operation of $`\Sigma` applied to terms with known values has the expected value, and a
-composite of two terms with known values $`a` and $`b` is defined exactly when
-$`\mathrm{sc}^{k}(a) = \mathrm{tg}^{k}(b)`.
+operation of $\Sigma$ applied to terms with known values has the expected value, and a
+composite of two terms with known values $a$ and $b$ is defined exactly when
+$\mathrm{sc}^{k}(a) = \mathrm{tg}^{k}(b)$.
+-/
 
-```lean
 section CellAlgebra
 
 variable {C : S → Type w} [∀ s, Category Index (C s)]
@@ -124,16 +124,17 @@ lemma cell_comp_dom {k : Index} {s : S} {t t' : CTerm Sig Index s} {a b : C s}
     (hd : (EEq.defined (compT k t t')).Holds M val) : sc_is_tg k a b := by
   rw [EEq.holds_defined_iff, cell_eval_compT h h'] at hd
   exact sc_is_tg_of_dom hd
-```
 
-:::proposition (label := "compact.cell-algebra-model") (central := false) (title := "The partial algebra of cells is a model")
-Let $`(\mathsf{A}, F)` be as in Construction `compact.cell-algebra`. Its partial algebra of
-cells satisfies every $`\mathrm{QE}`$-equation of the specification with dimensions in $`I`.
-In particular, for $`I = n`, the partial algebra of cells of a compact $`n`-categorial
-$`\Sigma`-algebra is a model of $`\mathcal{C}^{\Sigma^{(n)}}`; this is one half of the first
+/-!
+### The partial algebra of cells is a model
+
+Let $(\mathsf{A}, F)$ be as in Construction “The partial algebra of cells”. Its partial algebra of
+cells satisfies every $\mathrm{QE}$-equation of the specification with dimensions in $I$.
+In particular, for $I = n$, the partial algebra of cells of a compact $n$-categorial
+$\Sigma$-algebra is a model of $\mathcal{C}^{\Sigma^{(n)}}$; this is one half of the first
 part of Proposition `PCompactIdent` of the draft.
+-/
 
-```lean
 open PreCategory Category in
 /-- The partial algebra of cells is a model of the compact specification. -/
 theorem cellAlgebra_holds : ∀ q ∈ compactSpec Sig Index, q.Holds (cellAlgebra C F) := by
@@ -287,49 +288,48 @@ theorem cellAlgebra_holds : ∀ q ∈ compactSpec Sig Index, q.Holds (cellAlgebr
       (cell_eval_compT_some (cell_eval_compT_some ha hc h₃) (cell_eval_compT_some hb hd h₄)
         (Category.sc_tg_j_interchange h h₃ h₄ h₁))]
     exact interchange h h₃ h₄ h₁ h₂
-```
-:::
 
-:::proof (of := "compact.cell-algebra-model")
+/-!
+*Proof of “The partial algebra of cells is a model”.*
+
 Take an axiom and a valuation of its variables in the cells for which its premises hold. Every
 variable then has a value, so every term of the axiom built from sources, targets and
-operations of $`\Sigma` has a value, by the totality of these operations; this gives (A0) and
-(A$`^k`1). A premise stating that $`x \circ^{k} y` is defined says that
-$`\mathrm{sc}^{k}(x) = \mathrm{tg}^{k}(y)`, which is (A$`^k`3) in one direction; conversely,
-this equation makes $`x \#^{k} y` defined. Each remaining axiom, once both sides are evaluated,
+operations of $\Sigma$ has a value, by the totality of these operations; this gives (A0) and
+(A$^k$1). A premise stating that $x \circ^{k} y$ is defined says that
+$\mathrm{sc}^{k}(x) = \mathrm{tg}^{k}(y)$, which is (A$^k$3) in one direction; conversely,
+this equation makes $x \#^{k} y$ defined. Each remaining axiom, once both sides are evaluated,
 is a law of compact categories or of compact functors:
 
-* (A$`^k`2), (A$`^k`4), (A$`^k`5) and (A$`^k`6) are the axioms of the compact category
-  $`\mathsf{A}_s` in dimension $`k`; for (A$`^k`6), both composites are defined because
-  $`x \#^{k} y` and $`y \#^{k} z` are;
-* (A$`^k`7) and (A$`^k`8) say that $`F_\sigma` preserves $`k`-sources, $`k`-targets and
-  $`k`-composites; in (A$`^k`8), the composite $`F_\sigma((x_j)_j) \#^{k} F_\sigma((y_j)_j)` is
-  defined because the family $`(x_j)_j` is $`k`-composable with $`(y_j)_j` in the product
-  $`\mathsf{A}_{\mathbf{s}}`, componentwise;
-* (AB$`^{l,k}`1), (AB$`^{l,k}`2) and (AB$`^{l,k}`3) are the laws that relate dimensions
-  $`l < k` in $`\mathsf{A}_s`, the last one being the interchange law.
-:::
+* (A$^k$2), (A$^k$4), (A$^k$5) and (A$^k$6) are the axioms of the compact category
+  $\mathsf{A}_s$ in dimension $k$; for (A$^k$6), both composites are defined because
+  $x \#^{k} y$ and $y \#^{k} z$ are;
+* (A$^k$7) and (A$^k$8) say that $F_\sigma$ preserves $k$-sources, $k$-targets and
+  $k$-composites; in (A$^k$8), the composite $F_\sigma((x_j)_j) \#^{k} F_\sigma((y_j)_j)$ is
+  defined because the family $(x_j)_j$ is $k$-composable with $(y_j)_j$ in the product
+  $\mathsf{A}_{\mathbf{s}}$, componentwise;
+* (AB$^{l,k}$1), (AB$^{l,k}$2) and (AB$^{l,k}$3) are the laws that relate dimensions
+  $l < k$ in $\mathsf{A}_s$, the last one being the interchange law.
+-/
 
-```lean
 end CellAlgebra
-```
 
-# From models to compact categorial algebras
+/-!
+## From models to compact categorial algebras
 
 Conversely, every model of the specification is the partial algebra of cells of a compact
 categorial algebra: the structure of the categorial algebra is read off from the
-operations of the model. Let $`\mathbf{M}` be a model of the specification with dimensions in
-$`I`. By (A$`^k`1) and (A0), the $`k`-sources, the $`k`-targets and the operations of
-$`\Sigma` are total in $`\mathbf{M}`, and by (A$`^k`3) the composite $`x \circ^{k}_{s} y` is
-defined exactly when $`\mathrm{sc}^{k}_{s}(x) = \mathrm{tg}^{k}_{s}(y)`. Each law of compact
+operations of the model. Let $\mathbf{M}$ be a model of the specification with dimensions in
+$I$. By (A$^k$1) and (A0), the $k$-sources, the $k$-targets and the operations of
+$\Sigma$ are total in $\mathbf{M}$, and by (A$^k$3) the composite $x \circ^{k}_{s} y$ is
+defined exactly when $\mathrm{sc}^{k}_{s}(x) = \mathrm{tg}^{k}_{s}(y)$. Each law of compact
 categories and of compact functors is then an axiom of the specification, evaluated at the
 cells it speaks about.
 
-To evaluate an axiom at given cells, the variables $`x_0, \ldots, x_{m-1}` of the axiom are sent
+To evaluate an axiom at given cells, the variables $x_0, \ldots, x_{m-1}$ of the axiom are sent
 to them, and the other variables are left without value: since the valuations of the library
-are partial, this works even when some sort of $`\mathbf{M}` is empty.
+are partial, this works even when some sort of $\mathbf{M}$ is empty.
+-/
 
-```lean
 section Model
 
 variable (M : CompactPAlg.{u, v, w} Sig Index)
@@ -653,18 +653,18 @@ lemma model_interchange {f₁ f₂ g₁ g₂ : M.1 s} (h : l < k)
     (prems holds_defined_compT (ev 0) (ev 1) h₂, holds_defined_compT (ev 2) (ev 3) h₁,
       holds_defined_compT (ev 0) (ev 2) hg, holds_defined_compT (ev 1) (ev 3) hf)
 
-```
+/-!
+### The compact categories of a model
 
-:::construction (label := "compact.model-category") (central := false) (title := "The compact categories of a model")
-Let $`\mathbf{M}` be a model of the specification with dimensions in $`I`. For every sort
-$`s`, the carrier $`M_s` is a compact category with dimensions in $`I` in which
-$`\mathrm{sc}^{k}` and $`\mathrm{tg}^{k}` are the total operations
-$`\mathrm{sc}^{k}_{s}` and $`\mathrm{tg}^{k}_{s}` of $`\mathbf{M}`, and $`\#^{k}` is the partial
-operation $`\circ^{k}_{s}`. Its axioms are (A$`^k`3) for the domain of $`\#^{k}`; (A$`^k`2),
-(A$`^k`4), (A$`^k`5) and (A$`^k`6) for (C1), (C3), (C4) and (C5); and (AB$`^{l,k}`1),
-(AB$`^{l,k}`2) and (AB$`^{l,k}`3) for (2C1), (2C2) and (2C3).
+Let $\mathbf{M}$ be a model of the specification with dimensions in $I$. For every sort
+$s$, the carrier $M_s$ is a compact category with dimensions in $I$ in which
+$\mathrm{sc}^{k}$ and $\mathrm{tg}^{k}$ are the total operations
+$\mathrm{sc}^{k}_{s}$ and $\mathrm{tg}^{k}_{s}$ of $\mathbf{M}$, and $\#^{k}$ is the partial
+operation $\circ^{k}_{s}$. Its axioms are (A$^k$3) for the domain of $\#^{k}$; (A$^k$2),
+(A$^k$4), (A$^k$5) and (A$^k$6) for (C1), (C3), (C4) and (C5); and (AB$^{l,k}$1),
+(AB$^{l,k}$2) and (AB$^{l,k}$3) for (2C1), (2C2) and (2C3).
+-/
 
-```lean
 /-- The compact category of each sort of a model. -/
 instance modelCategory (s : S) : Category Index (M.1 s) where
   sck_scj_eq_scj := model_sc_k_sc_l
@@ -676,19 +676,19 @@ instance modelCategory (s : S) : Category Index (M.1 s) where
   sck_compj_eq_compj_sck h hgf := model_sc_comp_l h hgf _
   tgk_compj_eq_compj_tgk h hgf := model_tg_comp_l h hgf _
   interchange h hg hf h₂ h₁ := model_interchange h hg hf h₂ h₁ _ _
-```
-:::
 
-:::construction (label := "compact.model-algebra") (central := false) (title := "The compact categorial algebra of a model")
-Let $`\mathbf{M}` be as above. For every $`\sigma \in \Sigma_{\mathbf{s}, s}`, the total
-operation $`\sigma^{\mathbf{M}} \colon M_{\mathbf{s}} \to M_s` is a compact functor from the
-product $`\mathsf{M}_{\mathbf{s}}` of the compact categories of Construction
-`compact.model-category` to $`\mathsf{M}_s`: it preserves $`k`-sources and $`k`-targets by
-(A$`^k`7), and $`k`-composites by (A$`^k`8), since two families are $`k`-composable in the
-product exactly when they are componentwise. For $`I = n`, this makes $`\mathbf{M}` a compact
-$`n`-categorial $`\Sigma`-algebra.
+/-!
+### The compact categorial algebra of a model
 
-```lean
+Let $\mathbf{M}$ be as above. For every $\sigma \in \Sigma_{\mathbf{s}, s}$, the total
+operation $\sigma^{\mathbf{M}} \colon M_{\mathbf{s}} \to M_s$ is a compact functor from the
+product $\mathsf{M}_{\mathbf{s}}$ of the compact categories of Construction
+“The compact categories of a model” to $\mathsf{M}_s$: it preserves $k$-sources and $k$-targets by
+(A$^k$7), and $k$-composites by (A$^k$8), since two families are $k$-composable in the
+product exactly when they are componentwise. For $I = n$, this makes $\mathbf{M}$ a compact
+$n$-categorial $\Sigma$-algebra.
+-/
+
 variable (M) in
 /-- The compact functor of an operation symbol of `Σ` in a model. -/
 def modelOp {ws : List S} {s : S} (σ : Sig ws s) : Functor Index (Arity M.1 ws) (M.1 s) where
@@ -745,18 +745,18 @@ def modelCatAlgebra {n : ℕ} (N : CompactPAlg.{u, v, w} Sig (Fin n)) :
     CatAlgebra.{u, v, w} Sig n where
   carrier := N.1.carrier
   op σ := modelOp N σ
-```
-:::
 
-:::proposition (label := "compact.model-cell-algebra") (central := false) (title := "Every model is a partial algebra of cells")
-Every model $`\mathbf{M}` of the specification with dimensions in $`I` is the partial algebra of
-cells (Construction `compact.cell-algebra`) of the compact categorial algebra of Construction
-`compact.model-algebra`. In particular, for $`I = n`, every model of
-$`\mathcal{C}^{\Sigma^{(n)}}` is the partial algebra of cells of a compact $`n`-categorial
-$`\Sigma`-algebra; this is the other half of the identification of objects in the first part of
+/-!
+### Every model is a partial algebra of cells
+
+Every model $\mathbf{M}$ of the specification with dimensions in $I$ is the partial algebra of
+cells (Construction “The partial algebra of cells”) of the compact categorial algebra of Construction
+“The compact categorial algebra of a model”. In particular, for $I = n$, every model of
+$\mathcal{C}^{\Sigma^{(n)}}$ is the partial algebra of cells of a compact $n$-categorial
+$\Sigma$-algebra; this is the other half of the identification of objects in the first part of
 Proposition `PCompactIdent` of the draft.
+-/
 
-```lean
 variable (M) in
 /-- A model is the partial algebra of cells of its compact categorial structure. -/
 theorem cellAlgebra_model : cellAlgebra M.1.carrier (fun σ => modelOp M σ) = M.1 := by
@@ -779,27 +779,28 @@ theorem cellAlgebra_modelCatAlgebra {n : ℕ} (N : CompactPAlg.{u, v, w} Sig (Fi
   cellAlgebra_model N
 
 end Model
-```
-:::
 
-:::proof (of := "compact.model-cell-algebra")
+/-!
+*Proof of “Every model is a partial algebra of cells”.*
+
 Both partial algebras have the same carriers, and their operations agree symbol by symbol: an
-operation $`\sigma` of $`\Sigma`, a $`k`-source or a $`k`-target is interpreted in the partial
-algebra of cells by its value in $`\mathbf{M}`, which is defined, and the $`k`-composition is
-interpreted by $`\circ^{k}_{s}` itself.
-:::
+operation $\sigma$ of $\Sigma$, a $k$-source or a $k$-target is interpreted in the partial
+algebra of cells by its value in $\mathbf{M}$, which is defined, and the $k$-composition is
+interpreted by $\circ^{k}_{s}$ itself.
+-/
 
-# The bijection
+/-!
+## The bijection
 
 The two constructions are inverse to each other. Starting from a model, Proposition
-`compact.model-cell-algebra` says that the partial algebra of cells of its compact categorial
-algebra is the model itself. Starting from a compact categorial algebra $`(\mathsf{A}, F)`,
+“Every model is a partial algebra of cells” says that the partial algebra of cells of its compact categorial
+algebra is the model itself. Starting from a compact categorial algebra $(\mathsf{A}, F)$,
 reading the structure off its partial algebra of cells gives back the same sources, targets and
-compositions, and the same functors $`F_\sigma`, since the partial algebra of cells interprets
+compositions, and the same functors $F_\sigma$, since the partial algebra of cells interprets
 the symbols by them. A compact category is determined by its sources, targets and compositions,
 the rest of its structure being properties.
+-/
 
-```lean
 /-- Two compact categories with dimensions in `I` on the same set are equal when their
 sources, targets and compositions are. -/
 lemma Category.ext' {C : Type w} {i j : Category Index C}
@@ -822,19 +823,20 @@ variable (C : S → Type w) [∀ s, Category Index (C s)]
 /-- The model of the specification of a compact categorial algebra: its partial algebra of
 cells. -/
 def cellModel : CompactPAlg.{u, v, w} Sig Index := ⟨cellAlgebra C F, cellAlgebra_holds⟩
-```
 
-:::proposition (label := "compact.model-of-cell-algebra") (central := false) (title := "The structure of the partial algebra of cells")
-Let $`\mathsf{A}` be an $`S`-sorted compact category with dimensions in $`I` and $`F` an
-assignment of compact functors $`F_\sigma \colon \mathsf{A}_{\mathbf{s}} \to \mathsf{A}_s`
-to the operation symbols of $`\Sigma`. The compact categories of its partial algebra of cells
-(Construction `compact.model-category`) are the compact categories $`\mathsf{A}_s`, and the
-functors of its operation symbols (Construction `compact.model-algebra`) are the functors
-$`F_\sigma`. In particular, for $`I = n`, the compact $`n`-categorial algebra of the partial
-algebra of cells of a compact $`n`-categorial $`\Sigma`-algebra $`\boldsymbol{\mathsf{A}}` is
-$`\boldsymbol{\mathsf{A}}`.
+/-!
+### The structure of the partial algebra of cells
 
-```lean
+Let $\mathsf{A}$ be an $S$-sorted compact category with dimensions in $I$ and $F$ an
+assignment of compact functors $F_\sigma \colon \mathsf{A}_{\mathbf{s}} \to \mathsf{A}_s$
+to the operation symbols of $\Sigma$. The compact categories of its partial algebra of cells
+(Construction “The compact categories of a model”) are the compact categories $\mathsf{A}_s$, and the
+functors of its operation symbols (Construction “The compact categorial algebra of a model”) are the functors
+$F_\sigma$. In particular, for $I = n$, the compact $n$-categorial algebra of the partial
+algebra of cells of a compact $n$-categorial $\Sigma$-algebra $\boldsymbol{\mathsf{A}}$ is
+$\boldsymbol{\mathsf{A}}$.
+-/
+
 theorem modelCategory_cellModel (s : S) :
     modelCategory (M := cellModel C F) s = ‹∀ s, Category Index (C s)› s :=
   Category.ext' (fun _ _ => rfl) (fun _ _ => rfl) (fun _ _ _ => rfl)
@@ -856,26 +858,28 @@ theorem modelCatAlgebra_cellModel {n : ℕ} (A : CatAlgebra.{u, v, w} Sig n) :
     modelCatAlgebra (cellModel A.carrier A.op) = A := by
   cases A with | @mk C str F =>
   exact CatAlgebra.mk_eq_mk (funext (modelCategory_cellModel C F)) fun _ _ => rfl
-```
-:::
 
-:::proof (of := "compact.model-of-cell-algebra")
-In the partial algebra of cells, the symbols $`\mathrm{sc}^{k}_{s}`, $`\mathrm{tg}^{k}_{s}`,
-$`\circ^{k}_{s}` and $`\sigma` are interpreted by $`\mathrm{sc}^{k}`, $`\mathrm{tg}^{k}` and
-$`\#^{k}` of $`\mathsf{A}_s` and by $`F_\sigma`; the constructions of the previous section
+/-!
+*Proof of “The structure of the partial algebra of cells”.*
+
+In the partial algebra of cells, the symbols $\mathrm{sc}^{k}_{s}$, $\mathrm{tg}^{k}_{s}$,
+$\circ^{k}_{s}$ and $\sigma$ are interpreted by $\mathrm{sc}^{k}$, $\mathrm{tg}^{k}$ and
+$\#^{k}$ of $\mathsf{A}_s$ and by $F_\sigma$; the constructions of the previous section
 read them back unchanged. Two compact categories on the same set with the same sources, targets
 and compositions are equal, and two compact functors with the same underlying mapping are equal.
-:::
+-/
 
-:::construction (label := "compact.cat-algebra-equiv-model") (central := false) (title := "Compact n-categorial algebras are the models of C^Σ⁽ⁿ⁾")
-For $`n \in \mathbb{N}`, sending a compact $`n`-categorial $`\Sigma`-algebra to its partial
-algebra of cells is a bijection from the compact $`n`-categorial $`\Sigma`-algebras to the
-models of $`\mathcal{C}^{\Sigma^{(n)}}`, whose inverse sends a model to its compact
-$`n`-categorial algebra (Construction `compact.model-algebra`): the two composites are identities
-by Propositions `compact.model-cell-algebra` and `compact.model-of-cell-algebra`. This is the
+/-!
+### Compact n-categorial algebras are the models of C^Σ⁽ⁿ⁾
+
+For $n \in \mathbb{N}$, sending a compact $n$-categorial $\Sigma$-algebra to its partial
+algebra of cells is a bijection from the compact $n$-categorial $\Sigma$-algebras to the
+models of $\mathcal{C}^{\Sigma^{(n)}}$, whose inverse sends a model to its compact
+$n$-categorial algebra (Construction “The compact categorial algebra of a model”): the two composites are identities
+by Propositions “Every model is a partial algebra of cells” and “The structure of the partial algebra of cells”. This is the
 identification of objects in the first part of Proposition `PCompactIdent` of the draft.
+-/
 
-```lean
 /-- Compact `n`-categorial algebras are in bijection with the models of `C^{Σ^{(n)}}`. -/
 def catAlgebraEquivModel (n : ℕ) :
     CatAlgebra.{u, v, w} Sig n ≃ CompactPAlg.{u, v, w} Sig (Fin n) where
@@ -883,30 +887,32 @@ def catAlgebraEquivModel (n : ℕ) :
   invFun M := modelCatAlgebra M
   left_inv A := modelCatAlgebra_cellModel A
   right_inv M := Subtype.ext (cellAlgebra_modelCatAlgebra M)
-```
-:::
 
-# Homomorphisms and the isomorphism of categories
+/-!
+## Homomorphisms and the isomorphism of categories
 
-A homomorphism of compact $`n`-categorial algebras is a family of compact $`n`-functors that
-commutes with the operations of $`\Sigma`. On the partial algebras of cells, this says exactly
-that the family is a homomorphism of partial algebras: preserving $`k`-sources and $`k`-targets is
-commuting with the total operations $`\mathrm{sc}^{k}_{s}` and $`\mathrm{tg}^{k}_{s}`, and
-preserving $`k`-composites is sending defined composites to defined composites, with the
+A homomorphism of compact $n$-categorial algebras is a family of compact $n$-functors that
+commutes with the operations of $\Sigma$. On the partial algebras of cells, this says exactly
+that the family is a homomorphism of partial algebras: preserving $k$-sources and $k$-targets is
+commuting with the total operations $\mathrm{sc}^{k}_{s}$ and $\mathrm{tg}^{k}_{s}$, and
+preserving $k$-composites is sending defined composites to defined composites, with the
 composite of the images as image. The homomorphisms of partial algebras of the library need not
 reflect definedness, as in the draft; this is what compact functors ask.
+-/
 
-:::construction (label := "compact.hom-cells") (central := false) (title := "Homomorphisms as homomorphisms of cells")
-Let $`\boldsymbol{\mathsf{A}}` and $`\boldsymbol{\mathsf{B}}` be compact $`n`-categorial
-$`\Sigma`-algebras. Every homomorphism $`H \colon \boldsymbol{\mathsf{A}} \to
-\boldsymbol{\mathsf{B}}` is, with the same mappings $`H_s`, a homomorphism between their
-partial algebras of cells; and every homomorphism $`h` between the partial algebras of cells is,
-with the same mappings $`h_s`, a homomorphism $`\boldsymbol{\mathsf{A}} \to
-\boldsymbol{\mathsf{B}}`: each $`h_s` is a compact $`n`-functor because $`h` commutes with
-$`\mathrm{sc}^{k}_{s}`, $`\mathrm{tg}^{k}_{s}` and $`\circ^{k}_{s}`, and the family commutes with
-the operations of $`\Sigma` because $`h` commutes with the symbols $`\sigma`.
+/-!
+### Homomorphisms as homomorphisms of cells
 
-```lean
+Let $\boldsymbol{\mathsf{A}}$ and $\boldsymbol{\mathsf{B}}$ be compact $n$-categorial
+$\Sigma$-algebras. Every homomorphism $H \colon \boldsymbol{\mathsf{A}} \to
+\boldsymbol{\mathsf{B}}$ is, with the same mappings $H_s$, a homomorphism between their
+partial algebras of cells; and every homomorphism $h$ between the partial algebras of cells is,
+with the same mappings $h_s$, a homomorphism $\boldsymbol{\mathsf{A}} \to
+\boldsymbol{\mathsf{B}}$: each $h_s$ is a compact $n$-functor because $h$ commutes with
+$\mathrm{sc}^{k}_{s}$, $\mathrm{tg}^{k}_{s}$ and $\circ^{k}_{s}$, and the family commutes with
+the operations of $\Sigma$ because $h$ commutes with the symbols $\sigma$.
+-/
+
 namespace CatAlgebra
 
 variable {n : ℕ} {A B : CatAlgebra.{u, v, w} Sig n}
@@ -942,18 +948,18 @@ def Hom.ofCells (h : PartialAlgebra.Hom (cellAlgebra A.carrier A.op) (cellAlgebr
   map_op σ a := h.map_op (.op σ) a trivial
 
 end CatAlgebra
-```
-:::
 
-:::construction (label := "compact.cells-functor") (central := false) (title := "The functor of cells")
-For $`n \in \mathbb{N}`, sending a compact $`n`-categorial $`\Sigma`-algebra to its partial
-algebra of cells, a model of $`\mathcal{C}^{\Sigma^{(n)}}` by Proposition
-`compact.cell-algebra-model`, and a homomorphism to itself as a homomorphism of partial algebras
-(Construction `compact.hom-cells`) is a functor
-$`\mathsf{nCatAlg}(\Sigma) \to \mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})`. The two constructions
-of Construction `compact.hom-cells` are inverse to each other, which makes it fully faithful.
+/-!
+### The functor of cells
 
-```lean
+For $n \in \mathbb{N}$, sending a compact $n$-categorial $\Sigma$-algebra to its partial
+algebra of cells, a model of $\mathcal{C}^{\Sigma^{(n)}}$ by Proposition
+“The partial algebra of cells is a model”, and a homomorphism to itself as a homomorphism of partial algebras
+(Construction “Homomorphisms as homomorphisms of cells”) is a functor
+$\mathsf{nCatAlg}(\Sigma) \to \mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})$. The two constructions
+of Construction “Homomorphisms as homomorphisms of cells” are inverse to each other, which makes it fully faithful.
+-/
+
 open CatAlgebra in
 /-- The functor from `nCatAlg(Σ)` to `PAlg(C^{Σ^{(n)}})` that sends a compact `n`-categorial
 algebra to its partial algebra of cells. -/
@@ -970,18 +976,18 @@ def cellsFunctor.fullyFaithful (n : ℕ) : (cellsFunctor.{u, v, w} (Sig := Sig) 
   preimage h := Hom.ofCells h
   map_preimage _ := rfl
   preimage_map _ := rfl
-```
-:::
 
-:::theorem (label := "compact.cat-alg-iso") (central := true) (title := "nCatAlg(Σ) = PAlg(C^Σ⁽ⁿ⁾)")
-For every many-sorted signature $`\Sigma` and every $`n \in \mathbb{N}`, the functor of cells
-$`\mathsf{nCatAlg}(\Sigma) \to \mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})` is full, faithful and
+/-!
+### nCatAlg(Σ) = PAlg(C^Σ⁽ⁿ⁾)
+
+For every many-sorted signature $\Sigma$ and every $n \in \mathbb{N}$, the functor of cells
+$\mathsf{nCatAlg}(\Sigma) \to \mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})$ is full, faithful and
 bijective on objects: it is an isomorphism of categories. This is the first part of
 Proposition `PCompactIdent` of the draft, which writes it
-$`\mathsf{nCatAlg}(\Sigma) = \mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})`. In particular it is an
+$\mathsf{nCatAlg}(\Sigma) = \mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})$. In particular it is an
 equivalence of categories.
+-/
 
-```lean
 theorem cellsFunctor_obj_bijective (n : ℕ) :
     Function.Bijective (cellsFunctor.{u, v, w} (Sig := Sig) n).obj :=
   (catAlgebraEquivModel n).bijective
@@ -997,41 +1003,45 @@ instance (n : ℕ) : (cellsFunctor.{u, v, w} (Sig := Sig) n).IsEquivalence where
   full := (cellsFunctor.fullyFaithful n).full
   essSurj := ⟨fun M => ⟨modelCatAlgebra M,
     ⟨CategoryTheory.eqToIso (Subtype.ext (cellAlgebra_modelCatAlgebra M))⟩⟩⟩
-```
-:::
 
-:::proof (of := "compact.cat-alg-iso")
-The functor is fully faithful by Construction `compact.cells-functor`, and bijective on objects by
-Construction `compact.cat-algebra-equiv-model`, whose bijection is its action on objects. A
+/-!
+*Proof of “nCatAlg(Σ) = PAlg(C^Σ⁽ⁿ⁾)”.*
+
+The functor is fully faithful by Construction “The functor of cells”, and bijective on objects by
+Construction “Compact n-categorial algebras are the models of C^Σ⁽ⁿ⁾”, whose bijection is its action on objects. A
 fully faithful functor that is surjective on objects is an equivalence.
-:::
+-/
 
-# The ω case
+/-!
+## The ω case
 
-For $`I = \omega`, the partial algebra of cells of a compact $`\omega`-categorial algebra is a
-model of $`\mathcal{C}^{\Sigma^{(\omega)}}` in which every cell is a $`k`-cell for some
-$`k \in \mathbb{N}`, and the constructions above restrict to these models. This is the second part
+For $I = \omega$, the partial algebra of cells of a compact $\omega$-categorial algebra is a
+model of $\mathcal{C}^{\Sigma^{(\omega)}}$ in which every cell is a $k$-cell for some
+$k \in \mathbb{N}$, and the constructions above restrict to these models. This is the second part
 of Proposition `PCompactIdent` of the draft.
+-/
 
-:::definition (label := "compact.omega-model") (central := false) (title := "Models whose cells have a dimension")
-A model $`\mathbf{M}` of $`\mathcal{C}^{\Sigma^{(\omega)}}` *has dimensions* if every cell is a
-$`k`-cell for some $`k \in \mathbb{N}`: for every sort $`s` and every $`x \in M_s` there is
-$`k` with $`\mathrm{sc}^{k}_{s}(x) = x`. These models form a full subcategory of
-$`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(\omega)}})`.
+/-!
+### Models whose cells have a dimension
 
-```lean
+A model $\mathbf{M}$ of $\mathcal{C}^{\Sigma^{(\omega)}}$ *has dimensions* if every cell is a
+$k$-cell for some $k \in \mathbb{N}$: for every sort $s$ and every $x \in M_s$ there is
+$k$ with $\mathrm{sc}^{k}_{s}(x) = x$. These models form a full subcategory of
+$\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(\omega)}})$.
+-/
+
 /-- The models of `C^{Σ^{(ω)}}` in which every cell is a `k`-cell for some `k`. -/
 def IsOmegaModel : CategoryTheory.ObjectProperty (CompactPAlg.{u, v, w} Sig ℕ) :=
   fun M => ∀ s (a : M.1 s), ∃ k : ℕ, cell k a
-```
-:::
 
-:::construction (label := "compact.omega-hom-cells") (central := false) (title := "Homomorphisms of ω-categorial algebras as homomorphisms of cells")
-As for $`n \in \mathbb{N}` (Construction `compact.hom-cells`), the homomorphisms of compact
-$`\omega`-categorial $`\Sigma`-algebras are, with the same mappings, the homomorphisms between their
+/-!
+### Homomorphisms of ω-categorial algebras as homomorphisms of cells
+
+As for $n \in \mathbb{N}$ (Construction “Homomorphisms as homomorphisms of cells”), the homomorphisms of compact
+$\omega$-categorial $\Sigma$-algebras are, with the same mappings, the homomorphisms between their
 partial algebras of cells.
+-/
 
-```lean
 namespace OmegaCatAlgebra
 
 variable {A B : OmegaCatAlgebra.{u, v, w} Sig}
@@ -1066,17 +1076,17 @@ def Hom.ofCells
   map_op σ a := h.map_op (.op σ) a trivial
 
 end OmegaCatAlgebra
-```
-:::
 
-:::construction (label := "compact.omega-cells-functor") (central := false) (title := "The functor of cells on ωCatAlg(Σ)")
-Sending a compact $`\omega`-categorial $`\Sigma`-algebra to its partial algebra of cells, and a
+/-!
+### The functor of cells on ωCatAlg(Σ)
+
+Sending a compact $\omega$-categorial $\Sigma$-algebra to its partial algebra of cells, and a
 homomorphism to itself as a homomorphism of cells, is a fully faithful functor
-$`\omega\mathsf{CatAlg}(\Sigma) \to \mathsf{PAlg}(\mathcal{C}^{\Sigma^{(\omega)}})` whose images
-have dimensions, since every cell of a compact $`\omega`-category is a $`k`-cell for some $`k`.
+$\omega\mathsf{CatAlg}(\Sigma) \to \mathsf{PAlg}(\mathcal{C}^{\Sigma^{(\omega)}})$ whose images
+have dimensions, since every cell of a compact $\omega$-category is a $k$-cell for some $k$.
 It thus factors through the full subcategory of the models that have dimensions.
+-/
 
-```lean
 open OmegaCatAlgebra in
 /-- The functor of cells on `ωCatAlg(Σ)`. -/
 def omegaCellsFunctor :
@@ -1104,31 +1114,30 @@ def omegaCellsLift.fullyFaithful : (omegaCellsLift.{u, v, w} (Sig := Sig)).Fully
   preimage h := Hom.ofCells h.hom
   map_preimage _ := rfl
   preimage_map _ := rfl
-```
-:::
 
-:::construction (label := "compact.omega-model-algebra") (central := false) (title := "The compact ω-categorial algebra of a model with dimensions")
-If a model $`\mathbf{M}` of $`\mathcal{C}^{\Sigma^{(\omega)}}` has dimensions, its compact categories
-with dimensions in $`\mathbb{N}` (Construction `compact.model-category`) are compact
-$`\omega`-categories, and with the functors of Construction `compact.model-algebra` it is a compact
-$`\omega`-categorial $`\Sigma`-algebra.
+/-!
+### The compact ω-categorial algebra of a model with dimensions
 
-```lean
+If a model $\mathbf{M}$ of $\mathcal{C}^{\Sigma^{(\omega)}}$ has dimensions, its compact categories
+with dimensions in $\mathbb{N}$ (Construction “The compact categories of a model”) are compact
+$\omega$-categories, and with the functors of Construction “The compact categorial algebra of a model” it is a compact
+$\omega$-categorial $\Sigma$-algebra.
+-/
+
 /-- The compact ω-categorial algebra of a model in which every cell is a `k`-cell. -/
 def omegaModelAlgebra (M : CompactPAlg.{u, v, w} Sig ℕ) (hM : IsOmegaModel M) :
     OmegaCatAlgebra.{u, v, w} Sig where
   carrier := M.1.carrier
   str s := { modelCategory (M := M) s with is_cell := hM s }
   op σ := modelOp M σ
-```
-:::
 
+/-!
 The two constructions are inverse to each other on objects, by Propositions
-`compact.model-cell-algebra` and `compact.model-of-cell-algebra`: a compact $`\omega`-category is
-determined by its compact category with dimensions in $`\mathbb{N}`, the condition on cells being
+“Every model is a partial algebra of cells” and “The structure of the partial algebra of cells”: a compact $\omega$-category is
+determined by its compact category with dimensions in $\mathbb{N}$, the condition on cells being
 a property.
+-/
 
-```lean
 namespace OmegaCatAlgebra
 
 variable {A B : OmegaCatAlgebra.{u, v, w} Sig}
@@ -1157,16 +1166,13 @@ theorem omegaModelAlgebra_cellModel (A : OmegaCatAlgebra.{u, v, w} Sig) (h) :
 theorem cellModel_omegaModelAlgebra (M : CompactPAlg.{u, v, w} Sig ℕ) (hM : IsOmegaModel M) :
     cellModel (omegaModelAlgebra M hM).carrier (omegaModelAlgebra M hM).op = M :=
   Subtype.ext (cellAlgebra_model M)
-```
 
-:::theorem (label := "compact.omega-cat-alg-iso") (central := true) (title := "ωCatAlg(Σ) as a full subcategory of PAlg(C^Σ⁽ω⁾)")
-For every many-sorted signature $`\Sigma`, the functor of cells from
-$`\omega\mathsf{CatAlg}(\Sigma)` to the full subcategory of
-$`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(\omega)}})` of the models that have dimensions is full,
+/-- For every many-sorted signature $\Sigma$, the functor of cells from
+$\omega\mathsf{CatAlg}(\Sigma)$ to the full subcategory of
+$\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(\omega)}})$ of the models that have dimensions is full,
 faithful and bijective on objects: an isomorphism of categories. This is the identification in
 the second part of Proposition `PCompactIdent` of the draft.
-
-```lean
+-/
 theorem omegaCellsLift_isIso :
     (omegaCellsLift.{u, v, w} (Sig := Sig)).Full ∧
       (omegaCellsLift.{u, v, w} (Sig := Sig)).Faithful ∧
@@ -1176,31 +1182,35 @@ theorem omegaCellsLift_isIso :
   · intro A; exact omegaModelAlgebra_cellModel A _
   · intro X
     exact CategoryTheory.ObjectProperty.FullSubcategory.ext (cellModel_omegaModelAlgebra _ _)
-```
-:::
 
-:::proof (of := "compact.omega-cat-alg-iso")
-The functor is fully faithful by Construction `compact.omega-hom-cells`, the two constructions
+/-!
+*Proof of “ωCatAlg(Σ) as a full subcategory of PAlg(C^Σ⁽ω⁾)”.*
+
+The functor is fully faithful by Construction “Homomorphisms of ω-categorial algebras as homomorphisms of cells”, the two constructions
 there being inverse to each other; it is bijective on objects with inverse Construction
-`compact.omega-model-algebra`, by the two equations above.
-:::
+“The compact ω-categorial algebra of a model with dimensions”, by the two equations above.
+-/
 
-# The subcategory is proper
+/-!
+## The subcategory is proper
 
 The draft also says that the full subcategory is proper: not every model of
-$`\mathcal{C}^{\Sigma^{(\omega)}}` has dimensions. This needs a sort: when $`S` is empty, every
-model has dimensions, vacuously, and the two categories are the same. For $`S` nonempty the draft
+$\mathcal{C}^{\Sigma^{(\omega)}}$ has dimensions. This needs a sort: when $S$ is empty, every
+model has dimensions, vacuously, and the two categories are the same. For $S$ nonempty the draft
 argues with products; here an explicit model is given instead.
+-/
 
-:::construction (label := "compact.dim-category") (central := false) (title := "A compact category of dimensions")
-Let $`D` be a linear order and $`e \colon \mathbb{N} \to D` a monotone mapping. Then $`D` is a
-compact category with dimensions in $`\mathbb{N}` with $`\mathrm{sc}^{k}(x) = \mathrm{tg}^{k}(x) =
-\min(x, e(k))` and with $`g \#^{k} f = \max(g, f)`, defined when
-$`\min(g, e(k)) = \min(f, e(k))`. Every axiom is a law of lattices: (C3) and (2C2) are the
-distributivity of $`\min` over $`\max`, (C5) and (2C3) the associativity and commutativity of
-$`\max`, and (2C1) uses that $`e(j) \leq e(k)` for $`j < k`.
+/-!
+### A compact category of dimensions
 
-```lean
+Let $D$ be a linear order and $e \colon \mathbb{N} \to D$ a monotone mapping. Then $D$ is a
+compact category with dimensions in $\mathbb{N}$ with $\mathrm{sc}^{k}(x) = \mathrm{tg}^{k}(x) =
+\min(x, e(k))$ and with $g \#^{k} f = \max(g, f)$, defined when
+$\min(g, e(k)) = \min(f, e(k))$. Every axiom is a law of lattices: (C3) and (2C2) are the
+distributivity of $\min$ over $\max$, (C5) and (2C3) the associativity and commutativity of
+$\max$, and (2C1) uses that $e(j) \leq e(k)$ for $j < k$.
+-/
+
 section Dim
 
 variable {D : Type w} [LinearOrder D] (e : ℕ → D) (he : Monotone e)
@@ -1236,15 +1246,15 @@ def dimCategory : Category ℕ D where
   interchange _ _ _ _ _ := max_max_max_comm _ _ _ _
 
 end Dim
-```
-:::
 
-:::proposition (label := "compact.omega-proper") (central := false) (title := "Models without dimensions")
-If the set of sorts $`S` is nonempty, there is a model of $`\mathcal{C}^{\Sigma^{(\omega)}}` that
-does not have dimensions. Hence, for $`S` nonempty, $`\omega\mathsf{CatAlg}(\Sigma)` is isomorphic to
-a proper full subcategory of $`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(\omega)}})`.
+/-!
+### Models without dimensions
 
-```lean
+If the set of sorts $S$ is nonempty, there is a model of $\mathcal{C}^{\Sigma^{(\omega)}}$ that
+does not have dimensions. Hence, for $S$ nonempty, $\omega\mathsf{CatAlg}(\Sigma)$ is isomorphic to
+a proper full subcategory of $\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(\omega)}})$.
+-/
+
 /-- A model of `C^{Σ^{(ω)}}` with a cell that is not a `k`-cell for any `k`. -/
 theorem exists_not_isOmegaModel [Nonempty S] :
     ∃ M : CompactPAlg.{u, v, w} Sig ℕ, ¬ IsOmegaModel M := by
@@ -1262,14 +1272,14 @@ theorem exists_not_isOmegaModel [Nonempty S] :
   change min (ULift.up ⊤) (e k) = ULift.up ⊤ at hk
   rw [min_eq_right (ULift.up_le.mpr le_top : e k ≤ ULift.up ⊤)] at hk
   exact ENat.natCast_ne_top k (congrArg ULift.down hk)
-```
-:::
 
-:::proof (of := "compact.omega-proper")
-Take $`D = \mathbb{N} \cup \{\infty\}` and $`e(k) = k` in Construction `compact.dim-category`,
-the same compact category for every sort, and interpret every operation symbol of $`\Sigma` as
-the constant functor with value $`0`, which preserves sources, targets and composites since
-$`\min(0, k) = 0 = \max(0, 0)`. By Proposition `compact.cell-algebra-model`, its partial algebra
-of cells is a model; the cell $`\infty` is not a $`k`-cell for any $`k`, since
-$`\mathrm{sc}^{k}(\infty) = k`.
-:::
+/-!
+*Proof of “Models without dimensions”.*
+
+Take $D = \mathbb{N} \cup \{\infty\}$ and $e(k) = k$ in Construction “A compact category of dimensions”,
+the same compact category for every sort, and interpret every operation symbol of $\Sigma$ as
+the constant functor with value $0$, which preserves sources, targets and composites since
+$\min(0, k) = 0 = \max(0, 0)$. By Proposition “The partial algebra of cells is a model”, its partial algebra
+of cells is a model; the cell $\infty$ is not a $k$-cell for any $k$, since
+$\mathrm{sc}^{k}(\infty) = k$.
+-/

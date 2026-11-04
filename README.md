@@ -1,32 +1,30 @@
 # CategorialAlgebras
 
-A [Stemma](https://github.com/stemma-math/stemma) library.
+A Lean 4 formalization, with Mathlib, of the theory of *higher-order categorial
+algebras*: many-sorted algebras whose carriers are higher-order categories and
+whose operations are higher-order functors. It accompanies the draft
+*Higher-order categorial algebras* (J. Climent Vidal, E. Cosme Llópez,
+R. Ruiz Mora and M. Vago Marzal) and checks its results.
 
-## Working with an agent
+The overview, the main results and the reading order are in the module
+docstring of [`CategorialAlgebras.lean`](CategorialAlgebras.lean).
 
-Start an agent in the library through `stemma`, which equips it with the
-instructions, skills and permissions this library needs:
+## Building
 
 ```sh
-stemma agent claude      # Claude Code
-stemma agent codex       # Codex
-stemma agent deepseek    # DeepSeek Harness
-stemma agent opencode    # OpenCode
+lake exe cache get   # download Mathlib's build
+lake build
 ```
 
-An agent started otherwise notices it, through the block at the top of
-`AGENTS.md`, and asks to be started again. What makes an agent "started
-through `stemma`" is two things, so that a harness `stemma` does not support
-can be equipped by hand:
+## Layout
 
-1. its instructions contain the section titled "Working in a Stemma library":
-   `stemma agent <harness> --dry-run` writes it to
-   `.stemma/agent/equipment/instructions.md`, and the skills to
-   `.stemma/agent/equipment/skills/`; give the harness both;
-2. every command it runs has the environment variable `STEMMA_SESSION` set
-   (to `1`), so that `stemma sign` and `stemma key` refuse to run in it.
-
-Agents never sign, never edit `stemma.toml`, `lakefile.toml`,
-`lake-manifest.json`, `lean-toolchain`, `.gitignore`, `.github/` or
-`signatures/`, and never push to `main`. Configure the harness to deny those
-edits and `stemma sign`, `stemma key` and forced pushes where it can.
+- `CategorialAlgebras/`: the library. `Signature`, `PartialAlgebra` and
+  `Evaluation` are the preliminaries; `Compact/` is the compact (single-set)
+  presentation and `Extended/` the extended (globular) one; the rest
+  (ep-signatures, generalized ep-derivors, graduation, discretization) relates
+  the two.
+- `docs/main.tex`, `docs/Biblio.bib`: the draft. The library refers to it by
+  its LaTeX labels (such as `SSingleSet` or `DManySortedCatAlg`), never by its
+  numbering. `docs/article.tex` is a compact version of it.
+- `docs/references.bib`: the works the library's docstrings cite, as `[Rei87]`.
+- `docs/notes.md`: the scope agreed, the conventions and what was left out.

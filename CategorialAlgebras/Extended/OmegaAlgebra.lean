@@ -1,32 +1,27 @@
-import Stemma
 import CategorialAlgebras.Extended.Algebra
 
-open Verso.Genre Manual InlineLean Stemma
-
-#doc (Stemma) "Globular ω-categorial algebras" =>
+/-!
+# Globular ω-categorial algebras
 
 Section `SLimitGlobular` of the draft uses the category
-$`\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)` of globular $`\omega`-categorial algebras,
+$\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)$ of globular $\omega$-categorial algebras,
 defined in Definition `DOmegaGlCatAlg` of the draft exactly as the globular
-$`n`-categorial algebras of Definition `DGlCatAlg`, with globular $`\omega`-categories in place of
-globular $`n`-categories.
+$n$-categorial algebras of Definition `DGlCatAlg`, with globular $\omega$-categories in place of
+globular $n$-categories.
+-/
 
-```lean
 universe u v w
 
 namespace CategorialAlgebras.Extended
 
 variable {S : Type u}
-```
 
-:::definition (label := "extended.omega-cat-algebra") (central := false) (title := "Globular ω-categorial algebra")
-Let $`(S, \Sigma)` be a many-sorted signature. A *globular* $`\omega`-*categorial*
-$`\Sigma`-*algebra* is a pair $`(\mathsf{A}, F)` where $`\mathsf{A}` is an $`S`-sorted globular
-$`\omega`-category and $`F` assigns to every operation symbol
-$`\sigma \in \Sigma_{\mathbf{s}, s}` a globular $`\omega`-functor
-$`F_\sigma = \sigma^{\mathsf{A}} \colon \mathsf{A}_{\mathbf{s}} \to \mathsf{A}_s`.
-
-```lean
+/-- Let $(S, \Sigma)$ be a many-sorted signature. A *globular* $\omega$-*categorial*
+$\Sigma$-*algebra* is a pair $(\mathsf{A}, F)$ where $\mathsf{A}$ is an $S$-sorted globular
+$\omega$-category and $F$ assigns to every operation symbol
+$\sigma \in \Sigma_{\mathbf{s}, s}$ a globular $\omega$-functor
+$F_\sigma = \sigma^{\mathsf{A}} \colon \mathsf{A}_{\mathbf{s}} \to \mathsf{A}_s$.
+-/
 structure OmegaCatAlgebra (Sig : Signature.{u, v} S) where
   /-- The carrier: an `S`-sorted globular `ω`-category. -/
   carrier : S → OmegaTypeFamily.{w}
@@ -34,10 +29,7 @@ structure OmegaCatAlgebra (Sig : Signature.{u, v} S) where
   [str : ∀ s, OmegaCategory (carrier s)]
   /-- The interpretation of each operation symbol, as a globular `ω`-functor. -/
   op : ∀ {w : List S} {s : S}, Sig w s → OmegaFunctor (ExtArity carrier w) (carrier s)
-```
-:::
 
-```lean
 attribute [instance] OmegaCatAlgebra.str
 
 namespace OmegaCatAlgebra
@@ -48,26 +40,20 @@ instance : CoeFun (OmegaCatAlgebra.{u, v, w} Sig) fun _ ↦ S → OmegaTypeFamil
   ⟨OmegaCatAlgebra.carrier⟩
 
 attribute [coe] OmegaCatAlgebra.carrier
-```
 
-:::definition (label := "extended.omega-cat-algebra-hom") (central := false) (title := "Homomorphism of globular ω-categorial algebras")
-A *homomorphism* from $`\boldsymbol{\mathsf{A}}` to $`\boldsymbol{\mathsf{B}}` is an $`S`-sorted
-globular $`\omega`-functor $`H = (H_s)_{s \in S}` from $`\mathsf{A}` to $`\mathsf{B}` such
-that, for every $`\sigma \in \Sigma_{\mathbf{s}, s}`, every dimension $`k \in \mathbb{N}` and
-every family of $`k`-cells $`(a_j)_{j \in |\mathbf{s}|} \in \mathsf{A}_{\mathbf{s}}`,
-$$`H_s\big(\sigma^{\boldsymbol{\mathsf{A}}}((a_j)_{j})\big) = \sigma^{\boldsymbol{\mathsf{B}}}\big((H_{s_j}(a_j))_{j}\big).`
-
-```lean
+/-- A *homomorphism* from $\boldsymbol{\mathsf{A}}$ to $\boldsymbol{\mathsf{B}}$ is an $S$-sorted
+globular $\omega$-functor $H = (H_s)_{s \in S}$ from $\mathsf{A}$ to $\mathsf{B}$ such
+that, for every $\sigma \in \Sigma_{\mathbf{s}, s}$, every dimension $k \in \mathbb{N}$ and
+every family of $k$-cells $(a_j)_{j \in |\mathbf{s}|} \in \mathsf{A}_{\mathbf{s}}$,
+$$H_s\big(\sigma^{\boldsymbol{\mathsf{A}}}((a_j)_{j})\big) = \sigma^{\boldsymbol{\mathsf{B}}}\big((H_{s_j}(a_j))_{j}\big).$$
+-/
 structure Hom (A B : OmegaCatAlgebra.{u, v, w} Sig) where
   /-- The globular `ω`-functor at each sort. -/
   map : ∀ s, OmegaFunctor (A s) (B s)
   /-- The functors commute with the operations, in every dimension. -/
   map_op : ∀ {w : List S} {s : S} (σ : Sig w s) (k : ℕ) (a : ExtArity A w k),
     map s k (A.op σ k a) = B.op σ k (fun j => map (w.get j) k (a j))
-```
-:::
 
-```lean
 attribute [simp] Hom.map_op
 
 namespace Hom
@@ -91,14 +77,11 @@ def comp {A B C : OmegaCatAlgebra.{u, v, w} Sig} (K : Hom B C) (H : Hom A B) : H
     rfl
 
 end Hom
-```
 
-:::definition (label := "extended.omega-cat-alg") (central := false) (title := "The category ωCatᵉˣᵗAlg(Σ)")
-Globular $`\omega`-categorial $`\Sigma`-algebras and their homomorphisms form a category
-$`\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)`, with the sortwise composition and
-identities of globular $`\omega`-functors.
-
-```lean
+/-- Globular $\omega$-categorial $\Sigma$-algebras and their homomorphisms form a category
+$\omega\mathsf{Cat}^{\mathrm{gl}}\mathsf{Alg}(\Sigma)$, with the sortwise composition and
+identities of globular $\omega$-functors.
+-/
 instance category : CategoryTheory.Category.{max u w} (OmegaCatAlgebra.{u, v, w} Sig) where
   Hom A B := Hom A B
   id A := Hom.id A
@@ -106,11 +89,7 @@ instance category : CategoryTheory.Category.{max u w} (OmegaCatAlgebra.{u, v, w}
   id_comp H := by ext s k f; rfl
   comp_id H := by ext s k f; rfl
   assoc H K L := by ext s k f; rfl
-```
-:::
 
-```lean
 end OmegaCatAlgebra
 
 end CategorialAlgebras.Extended
-```

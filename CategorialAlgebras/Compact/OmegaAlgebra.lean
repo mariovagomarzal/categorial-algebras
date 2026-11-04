@@ -1,18 +1,16 @@
-import Stemma
 import Mathlib.Data.Fintype.Lattice
 import CategorialAlgebras.Compact.Restriction
 import CategorialAlgebras.Compact.Algebra
 
-open Verso.Genre Manual InlineLean Stemma
+/-!
+# Single-set ω-categorial algebras
 
-#doc (Stemma) "Single-set ω-categorial algebras" =>
+Section `SLimitSingleSet` of the draft uses the category $\omega\mathsf{CatAlg}(\Sigma)$ of $S$-sorted
+$\omega$-categorial $\Sigma$-algebras, defined (Definitions `DSingleSetOmegaCat` and `DOmegaCatAlg` of the draft) as $\mathsf{nCatAlg}(\Sigma)$ in Definition `DManySortedCatAlg`, with
+single-set $\omega$-categories in place of single-set $n$-categories. Recall that in a single-set $\omega$-category every cell is a
+$k$-cell for some $k \in \mathbb{N}$.
+-/
 
-Section `SLimitSingleSet` of the draft uses the category $`\omega\mathsf{CatAlg}(\Sigma)` of $`S`-sorted
-$`\omega`-categorial $`\Sigma`-algebras, defined (Definitions `DSingleSetOmegaCat` and `DOmegaCatAlg` of the draft) as $`\mathsf{nCatAlg}(\Sigma)` in Definition `DManySortedCatAlg`, with
-single-set $`\omega`-categories in place of single-set $`n`-categories. Recall that in a single-set $`\omega`-category every cell is a
-$`k`-cell for some $`k \in \mathbb{N}`.
-
-```lean
 universe u v w
 
 namespace CategorialAlgebras.Compact
@@ -20,19 +18,18 @@ namespace CategorialAlgebras.Compact
 open Signature
 
 variable {S : Type u}
-```
 
-# Finite products
+/-!
+## Finite products
+-/
 
-:::construction (label := "compact.pi-omega-category") (central := false) (title := "Finite products of single-set ω-categories")
-A finite product $`\prod_{j \in J} C_j` of single-set $`\omega`-categories, with the
-componentwise structure, is a single-set $`\omega`-category: if each $`f_j` is a $`k_j`-cell, the
-family $`(f_j)_{j \in J}` is a $`k`-cell for $`k = \max_j k_j`, since a $`k_j`-cell is a
-$`k`-cell for every $`k \geq k_j`. In particular $`\mathsf{A}_{\mathbf{s}}` is a single-set
-$`\omega`-category for every $`S`-sorted single-set $`\omega`-category $`\mathsf{A}` and every word
-$`\mathbf{s}`.
-
-```lean
+/-- A finite product $\prod_{j \in J} C_j$ of single-set $\omega$-categories, with the
+componentwise structure, is a single-set $\omega$-category: if each $f_j$ is a $k_j$-cell, the
+family $(f_j)_{j \in J}$ is a $k$-cell for $k = \max_j k_j$, since a $k_j$-cell is a
+$k$-cell for every $k \geq k_j$. In particular $\mathsf{A}_{\mathbf{s}}$ is a single-set
+$\omega$-category for every $S$-sorted single-set $\omega$-category $\mathsf{A}$ and every word
+$\mathbf{s}$.
+-/
 instance OmegaCategory.pi {J : Type v} [Fintype J] {C : J → Type w}
     [∀ j, OmegaCategory (C j)] : OmegaCategory ((j : J) → C j) where
   toCategory := Category.pi
@@ -41,24 +38,20 @@ instance OmegaCategory.pi {J : Type v} [Fintype J] {C : J → Type w}
     choose k hk using fun j => OmegaCategory.is_cell (f j)
     refine ⟨Finset.univ.sup k, funext fun j => ?_⟩
     exact cell_of_le (hk j) (Finset.le_sup (Finset.mem_univ j))
-```
-:::
 
-```lean
 example (A : S → Type w) [∀ s, OmegaCategory (A s)] (s : List S) :
     OmegaCategory (Arity A s) := inferInstance
-```
 
-# Algebras
+/-!
+## Algebras
+-/
 
-:::definition (label := "compact.omega-cat-algebra") (central := false) (title := "Single-set ω-categorial algebra")
-Let $`(S, \Sigma)` be a many-sorted signature. A *single-set* $`\omega`-*categorial*
-$`\Sigma`-*algebra* is a pair $`(\mathsf{A}, F)` where $`\mathsf{A}` is an $`S`-sorted single-set
-$`\omega`-category and $`F` assigns to every operation symbol
-$`\sigma \in \Sigma_{\mathbf{s}, s}` a single-set $`\omega`-functor
-$`F_\sigma = \sigma^{\mathsf{A}} \colon \mathsf{A}_{\mathbf{s}} \to \mathsf{A}_s`.
-
-```lean
+/-- Let $(S, \Sigma)$ be a many-sorted signature. A *single-set* $\omega$-*categorial*
+$\Sigma$-*algebra* is a pair $(\mathsf{A}, F)$ where $\mathsf{A}$ is an $S$-sorted single-set
+$\omega$-category and $F$ assigns to every operation symbol
+$\sigma \in \Sigma_{\mathbf{s}, s}$ a single-set $\omega$-functor
+$F_\sigma = \sigma^{\mathsf{A}} \colon \mathsf{A}_{\mathbf{s}} \to \mathsf{A}_s$.
+-/
 structure OmegaCatAlgebra (Sig : Signature.{u, v} S) where
   /-- The carrier: an `S`-sorted single-set `ω`-category. -/
   carrier : S → Type w
@@ -66,10 +59,7 @@ structure OmegaCatAlgebra (Sig : Signature.{u, v} S) where
   [str : ∀ s, OmegaCategory (carrier s)]
   /-- The interpretation of each operation symbol, as a single-set `ω`-functor. -/
   op : ∀ {w : List S} {s : S}, Sig w s → OmegaFunctor (Arity carrier w) (carrier s)
-```
-:::
 
-```lean
 attribute [instance] OmegaCatAlgebra.str
 
 namespace OmegaCatAlgebra
@@ -79,26 +69,20 @@ variable {Sig : Signature.{u, v} S}
 instance : CoeFun (OmegaCatAlgebra.{u, v, w} Sig) fun _ ↦ S → Type w := ⟨OmegaCatAlgebra.carrier⟩
 
 attribute [coe] OmegaCatAlgebra.carrier
-```
 
-:::definition (label := "compact.omega-cat-algebra-hom") (central := false) (title := "Homomorphism of single-set ω-categorial algebras")
-A *homomorphism* from $`\boldsymbol{\mathsf{A}}` to $`\boldsymbol{\mathsf{B}}` is an $`S`-sorted
-single-set $`\omega`-functor $`H = (H_s)_{s \in S}` such that
-$`H_s(\sigma^{\boldsymbol{\mathsf{A}}}((a_j)_{j})) = \sigma^{\boldsymbol{\mathsf{B}}}((H_{s_j}(a_j))_{j})`
-for every $`\sigma \in \Sigma_{\mathbf{s}, s}` and every family of cells
-$`(a_j)_{j} \in \mathsf{A}_{\mathbf{s}}`.
-
-```lean
+/-- A *homomorphism* from $\boldsymbol{\mathsf{A}}$ to $\boldsymbol{\mathsf{B}}$ is an $S$-sorted
+single-set $\omega$-functor $H = (H_s)_{s \in S}$ such that
+$H_s(\sigma^{\boldsymbol{\mathsf{A}}}((a_j)_{j})) = \sigma^{\boldsymbol{\mathsf{B}}}((H_{s_j}(a_j))_{j})$
+for every $\sigma \in \Sigma_{\mathbf{s}, s}$ and every family of cells
+$(a_j)_{j} \in \mathsf{A}_{\mathbf{s}}$.
+-/
 structure Hom (A B : OmegaCatAlgebra.{u, v, w} Sig) where
   /-- The single-set `ω`-functor at each sort. -/
   map : ∀ s, OmegaFunctor (A s) (B s)
   /-- The functors commute with the operations. -/
   map_op : ∀ {w : List S} {s : S} (σ : Sig w s) (a : Arity A w),
     map s (A.op σ a) = B.op σ (fun j => map (w.get j) (a j))
-```
-:::
 
-```lean
 attribute [simp] Hom.map_op
 
 namespace Hom
@@ -122,13 +106,10 @@ def comp {A B C : OmegaCatAlgebra.{u, v, w} Sig} (K : Hom B C) (H : Hom A B) : H
     rfl
 
 end Hom
-```
 
-:::definition (label := "compact.omega-cat-alg") (central := false) (title := "The category ωCatAlg(Σ)")
-Single-set $`\omega`-categorial $`\Sigma`-algebras and their homomorphisms form a category
-$`\omega\mathsf{CatAlg}(\Sigma)`.
-
-```lean
+/-- Single-set $\omega$-categorial $\Sigma$-algebras and their homomorphisms form a category
+$\omega\mathsf{CatAlg}(\Sigma)$.
+-/
 instance category : CategoryTheory.Category.{max u w} (OmegaCatAlgebra.{u, v, w} Sig) where
   Hom A B := Hom A B
   id A := Hom.id A
@@ -136,11 +117,7 @@ instance category : CategoryTheory.Category.{max u w} (OmegaCatAlgebra.{u, v, w}
   id_comp H := by ext s f; rfl
   comp_id H := by ext s f; rfl
   assoc H K L := by ext s f; rfl
-```
-:::
 
-```lean
 end OmegaCatAlgebra
 
 end CategorialAlgebras.Compact
-```

@@ -1,16 +1,14 @@
-import Stemma
 import CategorialAlgebras.Extended.Functor
 
-open Verso.Genre Manual InlineLean Stemma
-
-#doc (Stemma) "Products of globular categories" =>
+/-!
+# Products of globular categories
 
 The operations of a globular categorial algebra are globular functors out of finite products
 of globular categories (Definition `DGlCatAlg` of the draft). The product of a family of globular
 categories has, in each dimension, the product of the sets of cells of that dimension, with
 every operation computed componentwise.
+-/
 
-```lean
 universe u v
 
 namespace CategorialAlgebras.Extended
@@ -18,15 +16,12 @@ namespace CategorialAlgebras.Extended
 open CategoryStruct
 
 variable {Index : Type} [Preorder Index] {J : Type v} {C : J → TypeFamily.{u} Index}
-```
 
-:::construction (label := "extended.pi-category-struct") (central := false) (title := "Componentwise structure")
-Let $`(C^{j})_{j \in J}` be a family of globular categorial structures with dimensions in
-$`I`. Their product has, as $`k`-cells, the families $`(f_j)_{j \in J}` with $`f_j \in C^{j}_k`;
-sources, targets and identities are taken componentwise, and $`g \circ^{(i)} f` is defined
-exactly when every $`g_j \circ^{(i)} f_j` is, and then is their family.
-
-```lean
+/-- Let $(C^{j})_{j \in J}$ be a family of globular categorial structures with dimensions in
+$I$. Their product has, as $k$-cells, the families $(f_j)_{j \in J}$ with $f_j \in C^{j}_k$;
+sources, targets and identities are taken componentwise, and $g \circ^{(i)} f$ is defined
+exactly when every $g_j \circ^{(i)} f_j$ is, and then is their family.
+-/
 instance CategoryStruct.pi [∀ j, CategoryStruct Index (C j)] :
     CategoryStruct Index (fun k => (j : J) → C j k) where
   sc h f j := sc h (f j)
@@ -36,10 +31,7 @@ instance CategoryStruct.pi [∀ j, CategoryStruct Index (C j)] :
   pcomp_dom := by
     intro k j' h f g
     exact ⟨fun hh => funext hh, fun hh j => congrFun hh j⟩
-```
-:::
 
-```lean
 section Pi
 
 variable [∀ j, CategoryStruct Index (C j)]
@@ -49,15 +41,16 @@ lemma pi_sc_is_tg {k i : Index} {h : i < k} {g f : (j : J) → C j k} :
   ⟨fun hh j => congrFun hh j, fun hh => funext hh⟩
 
 end Pi
-```
 
-:::construction (label := "extended.pi-category") (central := false) (title := "Product of globular categories")
-If every $`C^{j}` is a globular category with dimensions in $`I`, so is their product, since
-every axiom holds componentwise. In particular, finite products of globular $`n`-categories are
-globular $`n`-categories, and the empty product is the final one, with a single cell in each
+/-!
+### Product of globular categories
+
+If every $C^{j}$ is a globular category with dimensions in $I$, so is their product, since
+every axiom holds componentwise. In particular, finite products of globular $n$-categories are
+globular $n$-categories, and the empty product is the final one, with a single cell in each
 dimension.
+-/
 
-```lean
 instance PreCategory.pi [∀ j, PreCategory Index (C j)] :
     PreCategory Index (fun k => (j : J) → C j k) where
   sckj_compkj_eq_sckj h :=
@@ -88,9 +81,5 @@ instance Category.pi [∀ j, Category Index (C j)] :
     intro _ _ _ _ i_lt_j _ _ _ _ h₁ h₂ h₃ h₄
     exact funext fun x => Category.interchange (i_lt_j := i_lt_j) (pi_sc_is_tg.mp h₁ x)
       (pi_sc_is_tg.mp h₂ x) (pi_sc_is_tg.mp h₃ x) (pi_sc_is_tg.mp h₄ x)
-```
-:::
 
-```lean
 end CategorialAlgebras.Extended
-```

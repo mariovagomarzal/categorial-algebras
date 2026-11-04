@@ -1,20 +1,18 @@
-import Stemma
 import Mathlib.CategoryTheory.Adjunction.Basic
 import CategorialAlgebras.Graduation
 
-open Verso.Genre Manual InlineLean Stemma
+/-!
+# Discretization and truncation
 
-#doc (Stemma) "Discretization and truncation" =>
-
-Discretization regards an $`m`-categorial algebra as an $`n`-categorial algebra whose cells of
-dimension at least $`m` are identities, and truncation forgets the cells of dimension greater than
-$`m` (Section `STruncation` of the draft). As graduation and unification, both are induced by
+Discretization regards an $m$-categorial algebra as an $n$-categorial algebra whose cells of
+dimension at least $m$ are identities, and truncation forgets the cells of dimension greater than
+$m$ (Section `STruncation` of the draft). As graduation and unification, both are induced by
 generalized ep-derivors, in the compact and in the extended presentations.
 
-The draft takes $`m \leq n`. The compact discretization derivor below is defined, and sends models
-to models, for all $`m` and $`n`; for $`m \geq n` it keeps every dimension of $`n`.
+The draft takes $m \leq n$. The compact discretization derivor below is defined, and sends models
+to models, for all $m$ and $n$; for $m \geq n$ it keeps every dimension of $n$.
+-/
 
-```lean
 universe u v w
 
 namespace CategorialAlgebras
@@ -22,23 +20,26 @@ namespace CategorialAlgebras
 open Signature Term CategoryTheory
 
 variable {S : Type u} (Sig : Signature.{u, v} S) (n m : ℕ)
-```
 
-# Compact discretization
+/-!
+## Compact discretization
+-/
 
-:::definition (label := "discretization-derivor") (central := false) (title := "The compact discretization derivor")
-The *compact discretization derivor* $`\boldsymbol{\delta}^{(n,m)} = (\mathrm{id}_S, D, d)` is the
-generalized ep-derivor from $`\mathbf{\Sigma}^{(n)}` to $`\mathbf{\Sigma}^{(m)}` with $`D_s = \varnothing`,
-$`d(\sigma) = \sigma((v_p)_p)`, and, for $`k \in n`: if $`k < m`,
-$`d(\mathrm{sc}^{k}_{s}) = \mathrm{sc}^{k}_{s}(v_0)`, $`d(\mathrm{tg}^{k}_{s}) = \mathrm{tg}^{k}_{s}(v_0)` and
-$`d(\circ^{k}_{s}) = v_0 \circ^{k}_{s} v_1`; if $`k \geq m`,
-$`d(\mathrm{sc}^{k}_{s}) = d(\mathrm{tg}^{k}_{s}) = d(\circ^{k}_{s}) = v_0`.
+/-!
+### The compact discretization derivor
 
-For $`k \geq m` the derived $`\circ^{k}_{s}` is total, but its domain condition
-$`\mathrm{sc}^{k}_{s}(v_0) \overset{\mathrm{e}}{=} \mathrm{tg}^{k}_{s}(v_1)` becomes $`v_0 \overset{\mathrm{e}}{=} v_1`:
-two cells are $`k`-composable exactly when they are equal.
+The *compact discretization derivor* $\boldsymbol{\delta}^{(n,m)} = (\mathrm{id}_S, D, d)$ is the
+generalized ep-derivor from $\mathbf{\Sigma}^{(n)}$ to $\mathbf{\Sigma}^{(m)}$ with $D_s = \varnothing$,
+$d(\sigma) = \sigma((v_p)_p)$, and, for $k \in n$: if $k < m$,
+$d(\mathrm{sc}^{k}_{s}) = \mathrm{sc}^{k}_{s}(v_0)$, $d(\mathrm{tg}^{k}_{s}) = \mathrm{tg}^{k}_{s}(v_0)$ and
+$d(\circ^{k}_{s}) = v_0 \circ^{k}_{s} v_1$; if $k \geq m$,
+$d(\mathrm{sc}^{k}_{s}) = d(\mathrm{tg}^{k}_{s}) = d(\circ^{k}_{s}) = v_0$.
 
-```lean
+For $k \geq m$ the derived $\circ^{k}_{s}$ is total, but its domain condition
+$\mathrm{sc}^{k}_{s}(v_0) \overset{\mathrm{e}}{=} \mathrm{tg}^{k}_{s}(v_1)$ becomes $v_0 \overset{\mathrm{e}}{=} v_1$:
+two cells are $k$-composable exactly when they are equal.
+-/
+
 /-- The terms of the compact discretization derivor. -/
 def discOp : ∀ {ws : List S} {s : S}, Compact.CompactSignature Sig (Fin n) ws s →
     Term (Compact.CompactSignature Sig (Fin m)) (Vars (id ∘ ws.get)) s
@@ -56,15 +57,14 @@ def disc : GenEpDerivor (compactEpSig Sig (Fin n)) (compactEpSig Sig (Fin m)) wh
   sortMap := id
   sortDom _ := ∅
   op := discOp Sig n m
-```
-:::
 
-The discretized algebra $`(\boldsymbol{\delta}^{(n,m)})^{\ast}_{\mathfrak{gd}}(\mathbf{B})` of a model
-$`\mathbf{B}` has the cells of $`\mathbf{B}`; its operations of dimension $`k < m` are those of
-$`\mathbf{B}`, and for $`k \geq m` its $`k`-sources and $`k`-targets are identities and $`x \circ^{k} y`
-is defined exactly when $`x = y`, and then it is $`x`.
+/-!
+The discretized algebra $(\boldsymbol{\delta}^{(n,m)})^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ of a model
+$\mathbf{B}$ has the cells of $\mathbf{B}$; its operations of dimension $k < m$ are those of
+$\mathbf{B}$, and for $k \geq m$ its $k$-sources and $k$-targets are identities and $x \circ^{k} y$
+is defined exactly when $x = y$, and then it is $x$.
+-/
 
-```lean
 namespace Disc
 
 open Compact.CategoryStruct
@@ -582,15 +582,16 @@ theorem holds : ∀ q ∈ Compact.compactSpec Sig (Fin n), q.Holds (D n M) := by
       (dinterchange h hxy hzt hxz hyt)
 
 end Disc
-```
 
-:::proposition (label := "discretization-models") (central := true) (title := "Compact discretization sends models to models")
-$`(\boldsymbol{\delta}^{(n,m)})^{\ast}_{\mathfrak{gd}}` sends the models of
-$`(\mathbf{\Sigma}^{(m)}, \mathcal{C}^{\Sigma^{(m)}})` to models of
-$`(\mathbf{\Sigma}^{(n)}, \mathcal{C}^{\Sigma^{(n)}})`. Moreover, if $`m < n`, every cell of the
-discretized algebra is an $`m`-cell.
+/-!
+### Compact discretization sends models to models
 
-```lean
+$(\boldsymbol{\delta}^{(n,m)})^{\ast}_{\mathfrak{gd}}$ sends the models of
+$(\mathbf{\Sigma}^{(m)}, \mathcal{C}^{\Sigma^{(m)}})$ to models of
+$(\mathbf{\Sigma}^{(n)}, \mathcal{C}^{\Sigma^{(n)}})$. Moreover, if $m < n$, every cell of the
+discretized algebra is an $m$-cell.
+-/
+
 theorem disc_sendsModels :
     (disc Sig n m).SendsModels.{u, max u v, u, max u v, w}
       (Compact.compactSpec Sig (Fin n)) (Compact.compactSpec Sig (Fin m)) :=
@@ -602,43 +603,47 @@ theorem disc_isCell (hm : m < n) {M : Compact.CompactPAlg.{u, v, w} Sig (Fin m)}
       x :=
   (Part.get_eq_of_mem (Part.eq_some_iff.mp (Disc.op_sc _ x)) _).trans
     (Disc.dsc_ge (lt_irrefl m) x)
-```
-:::
 
-:::proof (of := "discretization-models")
-In the discretized algebra the operations of $`\Sigma`, the sources and the targets are total, and
-two cells satisfy the domain condition of $`\circ^{k}_{s}` if and only if
-$`\mathrm{sc}^{k}_{s}(x) = \mathrm{tg}^{k}_{s}(y)`, for $`k < m`, in which case $`x \circ^{k}_{s} y` is
-defined by (A$`^{k}`3), and if and only if $`x = y`, for $`k \geq m`. Under this description, the
-axioms in which all the dimensions are smaller than $`m` are axioms of $`\mathcal{C}^{\Sigma^{(m)}}`;
-for $`k \geq m`, (A$`^{k}`1)–(A$`^{k}`8) become trivial; for $`l < m \leq k`, (AB$`^{l,k}`1) and
-(AB$`^{l,k}`2) become trivial and the premises $`x = z`, $`y = t` of (AB$`^{l,k}`3) make it trivial;
-and for $`m \leq l < k` every premise is an equality of variables. Every cell $`x` is an
-$`m`-cell, since $`\mathrm{sc}^{m}_{s}(x) = x`.
-:::
+/-!
+*Proof of “Compact discretization sends models to models”.*
 
-:::definition (label := "discretization-functor") (central := false) (title := "The compact discretization functor")
-The *discretization functor* $`\mathrm{D}^{(n,m)}` is the birestriction of
-$`(\boldsymbol{\delta}^{(n,m)})^{\ast}_{\mathfrak{gd}}` to the categories of models.
+In the discretized algebra the operations of $\Sigma$, the sources and the targets are total, and
+two cells satisfy the domain condition of $\circ^{k}_{s}$ if and only if
+$\mathrm{sc}^{k}_{s}(x) = \mathrm{tg}^{k}_{s}(y)$, for $k < m$, in which case $x \circ^{k}_{s} y$ is
+defined by (A$^{k}$3), and if and only if $x = y$, for $k \geq m$. Under this description, the
+axioms in which all the dimensions are smaller than $m$ are axioms of $\mathcal{C}^{\Sigma^{(m)}}$;
+for $k \geq m$, (A$^{k}$1)–(A$^{k}$8) become trivial; for $l < m \leq k$, (AB$^{l,k}$1) and
+(AB$^{l,k}$2) become trivial and the premises $x = z$, $y = t$ of (AB$^{l,k}$3) make it trivial;
+and for $m \leq l < k$ every premise is an equality of variables. Every cell $x$ is an
+$m$-cell, since $\mathrm{sc}^{m}_{s}(x) = x$.
+-/
 
-```lean
+/-!
+### The compact discretization functor
+
+The *discretization functor* $\mathrm{D}^{(n,m)}$ is the birestriction of
+$(\boldsymbol{\delta}^{(n,m)})^{\ast}_{\mathfrak{gd}}$ to the categories of models.
+-/
+
 /-- The discretization functor `D⁽ⁿ'ᵐ⁾`. -/
 noncomputable def discFunctor :
     EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin m)) ⥤
       EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin n)) :=
   (disc Sig n m).restrict (disc_sendsModels Sig n m)
-```
-:::
 
-# Compact truncation
+/-!
+## Compact truncation
+-/
 
-:::definition (label := "truncation-derivor") (central := false) (title := "The compact truncation derivor")
-Let $`m \leq n`. The *compact truncation derivor* $`\boldsymbol{\tau}^{(m,n)} = (\mathrm{id}_S, D, d)` is
-the generalized ep-derivor from $`\mathbf{\Sigma}^{(m)}` to $`\mathbf{\Sigma}^{(n)}` in which $`d` sends
+/-!
+### The compact truncation derivor
+
+Let $m \leq n$. The *compact truncation derivor* $\boldsymbol{\tau}^{(m,n)} = (\mathrm{id}_S, D, d)$ is
+the generalized ep-derivor from $\mathbf{\Sigma}^{(m)}$ to $\mathbf{\Sigma}^{(n)}$ in which $d$ sends
 every operation symbol to itself, applied to variables, and
-$`D_s = \{\mathrm{sc}^{m}_{s}(v) \overset{\mathrm{e}}{=} v\}` if $`m < n`, $`D_s = \varnothing` if $`m = n`.
+$D_s = \{\mathrm{sc}^{m}_{s}(v) \overset{\mathrm{e}}{=} v\}$ if $m < n$, $D_s = \varnothing$ if $m = n$.
+-/
 
-```lean
 section CompactTrunc
 
 variable {n m} (hmn : m ≤ n)
@@ -664,13 +669,12 @@ def trunc : GenEpDerivor (compactEpSig Sig (Fin m)) (compactEpSig Sig (Fin n)) w
   op := truncOp Sig hmn
 
 end CompactTrunc
-```
-:::
 
-The truncated algebra $`(\boldsymbol{\tau}^{(m,n)})^{\ast}_{\mathfrak{gd}}(\mathbf{B})` of a model
-$`\mathbf{B}` is the relative subalgebra of $`\mathbf{B}` on its $`m`-cells.
+/-!
+The truncated algebra $(\boldsymbol{\tau}^{(m,n)})^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ of a model
+$\mathbf{B}$ is the relative subalgebra of $\mathbf{B}$ on its $m$-cells.
+-/
 
-```lean
 section CompactTrunc
 
 variable {n m} (hmn : m ≤ n)
@@ -986,54 +990,55 @@ theorem holds : ∀ q ∈ Compact.compactSpec Sig (Fin m), q.Holds (T hmn M) := 
 end Trunc
 
 end CompactTrunc
-```
 
-:::proposition (label := "truncation-models") (central := true) (title := "Compact truncation sends models to models")
-Let $`m \leq n`. $`(\boldsymbol{\tau}^{(m,n)})^{\ast}_{\mathfrak{gd}}` sends the models of
-$`(\mathbf{\Sigma}^{(n)}, \mathcal{C}^{\Sigma^{(n)}})` to models of
-$`(\mathbf{\Sigma}^{(m)}, \mathcal{C}^{\Sigma^{(m)}})`.
-
-```lean
+/-- Let $m \leq n$. $(\boldsymbol{\tau}^{(m,n)})^{\ast}_{\mathfrak{gd}}$ sends the models of
+$(\mathbf{\Sigma}^{(n)}, \mathcal{C}^{\Sigma^{(n)}})$ to models of
+$(\mathbf{\Sigma}^{(m)}, \mathcal{C}^{\Sigma^{(m)}})$.
+-/
 theorem trunc_sendsModels {m n : ℕ} (hmn : m ≤ n) :
     (trunc Sig hmn).SendsModels.{u, max u v, u, max u v, w}
       (Compact.compactSpec Sig (Fin m)) (Compact.compactSpec Sig (Fin n)) :=
   fun B hB => ⟨Trunc.isAlgebra (M := ⟨B, hB.2⟩), Trunc.holds (M := ⟨B, hB.2⟩)⟩
-```
-:::
 
-:::proof (of := "truncation-models")
-The $`m`-cells are closed under the operations of $`\Sigma^{(m)}`: if every $`x_p` is an $`m`-cell,
-so is $`\sigma((x_p)_p)`, by (A$`^{m}`7); for $`k < m`, $`\mathrm{sc}^{k}_{s}(x)` and
-$`\mathrm{tg}^{k}_{s}(x)` are $`m`-cells, by (A$`^{k}`2) and (AB$`^{k,m}`1); and the $`k`-composite of two
-$`m`-cells is an $`m`-cell, by (AB$`^{k,m}`2). Hence the truncated algebra is the relative subalgebra
-on the $`m`-cells, an ep-algebra in which the values of terms are their values in $`\mathbf{B}`, and
-every axiom of $`\mathcal{C}^{\Sigma^{(m)}}`, which is an axiom of $`\mathcal{C}^{\Sigma^{(n)}}`, holds
+/-!
+*Proof of “Compact truncation sends models to models”.*
+
+The $m$-cells are closed under the operations of $\Sigma^{(m)}$: if every $x_p$ is an $m$-cell,
+so is $\sigma((x_p)_p)$, by (A$^{m}$7); for $k < m$, $\mathrm{sc}^{k}_{s}(x)$ and
+$\mathrm{tg}^{k}_{s}(x)$ are $m$-cells, by (A$^{k}$2) and (AB$^{k,m}$1); and the $k$-composite of two
+$m$-cells is an $m$-cell, by (AB$^{k,m}$2). Hence the truncated algebra is the relative subalgebra
+on the $m$-cells, an ep-algebra in which the values of terms are their values in $\mathbf{B}$, and
+every axiom of $\mathcal{C}^{\Sigma^{(m)}}$, which is an axiom of $\mathcal{C}^{\Sigma^{(n)}}$, holds
 in it.
-:::
+-/
 
-:::definition (label := "truncation-functor") (central := false) (title := "The compact truncation functor")
-Let $`m \leq n`. The *truncation functor* $`T^{(m,n)}` is the birestriction of
-$`(\boldsymbol{\tau}^{(m,n)})^{\ast}_{\mathfrak{gd}}` to the categories of models.
+/-!
+### The compact truncation functor
 
-```lean
+Let $m \leq n$. The *truncation functor* $T^{(m,n)}$ is the birestriction of
+$(\boldsymbol{\tau}^{(m,n)})^{\ast}_{\mathfrak{gd}}$ to the categories of models.
+-/
+
 /-- The truncation functor `T⁽ᵐ'ⁿ⁾`. -/
 noncomputable def truncFunctor {m n : ℕ} (hmn : m ≤ n) :
     EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin n)) ⥤
       EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin m)) :=
   (trunc Sig hmn).restrict (trunc_sendsModels Sig hmn)
-```
-:::
 
-# Extended truncation
+/-!
+## Extended truncation
+-/
 
-:::definition (label := "truncation-ext-derivor") (central := false) (title := "The extended truncation derivor")
-Let $`m \leq n`. The *extended truncation derivor* $`\boldsymbol{\tau}^{\mathrm{ext}(m,n)}` is the
-generalized ep-derivor from $`\mathbf{\Sigma}^{\mathrm{ext}(m)}` to $`\mathbf{\Sigma}^{\mathrm{ext}(n)}`
-determined by the embedding of $`\Sigma^{\mathrm{ext}(m)}` into $`\Sigma^{\mathrm{ext}(n)}`:
-$`\varphi(k, s) = (k, s)`, $`D_{(k,s)} = \varnothing`, and every operation symbol is sent to itself,
+/-!
+### The extended truncation derivor
+
+Let $m \leq n$. The *extended truncation derivor* $\boldsymbol{\tau}^{\mathrm{ext}(m,n)}$ is the
+generalized ep-derivor from $\mathbf{\Sigma}^{\mathrm{ext}(m)}$ to $\mathbf{\Sigma}^{\mathrm{ext}(n)}$
+determined by the embedding of $\Sigma^{\mathrm{ext}(m)}$ into $\Sigma^{\mathrm{ext}(n)}$:
+$\varphi(k, s) = (k, s)$, $D_{(k,s)} = \varnothing$, and every operation symbol is sent to itself,
 applied to variables.
+-/
 
-```lean
 section ExtTrunc
 
 variable {n m}
@@ -1063,10 +1068,7 @@ def truncExt (hmn : m ≤ n) : GenEpDerivor (extendedEpSig Sig (Fin (m + 1))) (e
   op := truncExtOp Sig hmn
 
 end ExtTrunc
-```
-:::
 
-```lean
 section ExtTrunc
 
 variable {n m}
@@ -1399,59 +1401,60 @@ theorem holds : ∀ q ∈ Extended.extendedSpec Sig (Fin (m + 1)), q.Holds (TE h
 end TruncExt
 
 end ExtTrunc
-```
 
-:::proposition (label := "truncation-ext-models") (central := true) (title := "Extended truncation sends models to models")
-Let $`m \leq n`. $`(\boldsymbol{\tau}^{\mathrm{ext}(m,n)})^{\ast}_{\mathfrak{gd}}` sends the models of
-$`(\mathbf{\Sigma}^{\mathrm{ext}(n)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})` to models of
-$`(\mathbf{\Sigma}^{\mathrm{ext}(m)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(m)}})`.
-
-```lean
+/-- Let $m \leq n$. $(\boldsymbol{\tau}^{\mathrm{ext}(m,n)})^{\ast}_{\mathfrak{gd}}$ sends the models of
+$(\mathbf{\Sigma}^{\mathrm{ext}(n)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})$ to models of
+$(\mathbf{\Sigma}^{\mathrm{ext}(m)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(m)}})$.
+-/
 theorem truncExt_sendsModels {m n : ℕ} (hmn : m ≤ n) :
     (truncExt Sig hmn).SendsModels.{u, max u v, u, max u v, w}
       (Extended.extendedSpec Sig (Fin (m + 1))) (Extended.extendedSpec Sig (Fin (n + 1))) :=
   fun B hB => ⟨TruncExt.isAlgebra (M := ⟨B, hB.2⟩), TruncExt.holds (M := ⟨B, hB.2⟩)⟩
-```
-:::
 
-:::proof (of := "truncation-ext-models")
-Every operation symbol is sent to itself, and all the cells of dimension at most $`m` are in the
-domains, so the truncated algebra keeps the cells of dimension at most $`m` with the restrictions of
+/-!
+*Proof of “Extended truncation sends models to models”.*
+
+Every operation symbol is sent to itself, and all the cells of dimension at most $m$ are in the
+domains, so the truncated algebra keeps the cells of dimension at most $m$ with the restrictions of
 the operations, and it is an ep-algebra. Its axioms are axioms of
-$`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}`, with the dimensions renamed, and the values of terms are
-their values in $`\mathbf{B}`.
-:::
+$\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}$, with the dimensions renamed, and the values of terms are
+their values in $\mathbf{B}$.
+-/
 
-:::definition (label := "truncation-ext-functor") (central := false) (title := "The extended truncation functor")
-Let $`m \leq n`. The *extended truncation functor* $`T^{\mathrm{ext}(m,n)}` is the birestriction of
-$`(\boldsymbol{\tau}^{\mathrm{ext}(m,n)})^{\ast}_{\mathfrak{gd}}` to the categories of models.
+/-!
+### The extended truncation functor
 
-```lean
+Let $m \leq n$. The *extended truncation functor* $T^{\mathrm{ext}(m,n)}$ is the birestriction of
+$(\boldsymbol{\tau}^{\mathrm{ext}(m,n)})^{\ast}_{\mathfrak{gd}}$ to the categories of models.
+-/
+
 /-- The extended truncation functor `T^{ext(m,n)}`. -/
 noncomputable def truncExtFunctor {m n : ℕ} (hmn : m ≤ n) :
     EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (n + 1))) ⥤
       EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (m + 1))) :=
   (truncExt Sig hmn).restrict (truncExt_sendsModels Sig hmn)
-```
-:::
 
-# Extended discretization
+/-!
+## Extended discretization
+-/
 
-:::definition (label := "discretization-ext-derivor") (central := false) (title := "The extended discretization derivor")
-Write $`\underline{k} = \min\{k, m\}`. The *extended discretization derivor*
-$`\boldsymbol{\delta}^{\mathrm{ext}(n,m)} = (\varphi, D, d)` is the generalized ep-derivor from
-$`\mathbf{\Sigma}^{\mathrm{ext}(n)}` to $`\mathbf{\Sigma}^{\mathrm{ext}(m)}` with
-$`\varphi(k, s) = (\underline{k}, s)`, $`D_{(k,s)} = \varnothing`,
-$`d(\sigma_k) = \sigma_{\underline{k}}((v_p)_p)`, and, for $`j < k`: if $`j < m`,
-$`d(\mathrm{sc}^{(j,k)}_{s}) = \mathrm{sc}^{(j,\underline{k})}_{s}(v_0)`,
-$`d(\mathrm{tg}^{(j,k)}_{s}) = \mathrm{tg}^{(j,\underline{k})}_{s}(v_0)`,
-$`d(\mathrm{i}^{(k,j)}_{s}) = \mathrm{i}^{(\underline{k},j)}_{s}(v_0)` and
-$`d(\circ^{(j,k)}_{s}) = v_0 \circ^{(j,\underline{k})}_{s} v_1`; if $`j \geq m`, all four are $`v_0`.
+/-!
+### The extended discretization derivor
 
-If $`j \geq m`, then $`\underline{j} = \underline{k} = m`, so that $`v_0` has the right sort; in the
+Write $\underline{k} = \min\{k, m\}$. The *extended discretization derivor*
+$\boldsymbol{\delta}^{\mathrm{ext}(n,m)} = (\varphi, D, d)$ is the generalized ep-derivor from
+$\mathbf{\Sigma}^{\mathrm{ext}(n)}$ to $\mathbf{\Sigma}^{\mathrm{ext}(m)}$ with
+$\varphi(k, s) = (\underline{k}, s)$, $D_{(k,s)} = \varnothing$,
+$d(\sigma_k) = \sigma_{\underline{k}}((v_p)_p)$, and, for $j < k$: if $j < m$,
+$d(\mathrm{sc}^{(j,k)}_{s}) = \mathrm{sc}^{(j,\underline{k})}_{s}(v_0)$,
+$d(\mathrm{tg}^{(j,k)}_{s}) = \mathrm{tg}^{(j,\underline{k})}_{s}(v_0)$,
+$d(\mathrm{i}^{(k,j)}_{s}) = \mathrm{i}^{(\underline{k},j)}_{s}(v_0)$ and
+$d(\circ^{(j,k)}_{s}) = v_0 \circ^{(j,\underline{k})}_{s} v_1$; if $j \geq m$, all four are $v_0$.
+
+If $j \geq m$, then $\underline{j} = \underline{k} = m$, so that $v_0$ has the right sort; in the
 Lean these two sorts are equal but not definitionally, and the variable carries the equality.
+-/
 
-```lean
 /-- The dimension `min(k, m)`. -/
 def lowE {n : ℕ} (m : ℕ) (k : Fin (n + 1)) : Fin (m + 1) := ⟨min k.val m, by omega⟩
 
@@ -1484,16 +1487,15 @@ def discExt (n m : ℕ) : GenEpDerivor (extendedEpSig Sig (Fin (n + 1))) (extend
   sortMap t := (lowE m t.1, t.2)
   sortDom _ := ∅
   op := discExtOp Sig n m
-```
-:::
 
-The discretized algebra $`(\boldsymbol{\delta}^{\mathrm{ext}(n,m)})^{\ast}_{\mathfrak{gd}}(\mathbf{B})`
-has as cells of sort $`(k, s)` the $`\underline{k}`-cells of sort $`s` of $`\mathbf{B}`. Its structure in
-the dimensions $`j < m` is that of $`\mathbf{B}`; for $`j \geq m` its $`(j,k)`-sources, targets and
-identities are transports between two equal sorts, and $`x \circ^{(j,k)} y` is defined exactly when
-$`x = y`, and then it is $`x`.
+/-!
+The discretized algebra $(\boldsymbol{\delta}^{\mathrm{ext}(n,m)})^{\ast}_{\mathfrak{gd}}(\mathbf{B})$
+has as cells of sort $(k, s)$ the $\underline{k}$-cells of sort $s$ of $\mathbf{B}$. Its structure in
+the dimensions $j < m$ is that of $\mathbf{B}$; for $j \geq m$ its $(j,k)$-sources, targets and
+identities are transports between two equal sorts, and $x \circ^{(j,k)} y$ is defined exactly when
+$x = y$, and then it is $x$.
+-/
 
-```lean
 namespace DiscExt
 
 open Extended.Model
@@ -2207,52 +2209,50 @@ theorem holds : ∀ q ∈ Extended.extendedSpec Sig (Fin (n + 1)), q.Holds (DE n
       (ev_compT (h₁.trans h₂) (ev_idmT h₂ hu) (ev_idmT h₂ hv) _)).mpr (eidm_ecomp h₁ h₂ huv)
 
 end DiscExt
-```
 
-:::proposition (label := "discretization-ext-models") (central := true) (title := "Extended discretization sends models to models")
-$`(\boldsymbol{\delta}^{\mathrm{ext}(n,m)})^{\ast}_{\mathfrak{gd}}` sends the models of
-$`(\mathbf{\Sigma}^{\mathrm{ext}(m)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(m)}})` to models of
-$`(\mathbf{\Sigma}^{\mathrm{ext}(n)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})`.
-
-```lean
+/-- $(\boldsymbol{\delta}^{\mathrm{ext}(n,m)})^{\ast}_{\mathfrak{gd}}$ sends the models of
+$(\mathbf{\Sigma}^{\mathrm{ext}(m)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(m)}})$ to models of
+$(\mathbf{\Sigma}^{\mathrm{ext}(n)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})$.
+-/
 theorem discExt_sendsModels :
     (discExt Sig n m).SendsModels.{u, max u v, u, max u v, w}
       (Extended.extendedSpec Sig (Fin (n + 1))) (Extended.extendedSpec Sig (Fin (m + 1))) :=
   fun B hB => ⟨DiscExt.isAlgebra (M := ⟨B, hB.2⟩), DiscExt.holds (M := ⟨B, hB.2⟩)⟩
-```
-:::
 
-:::proof (of := "discretization-ext-models")
-The operations without domain conditions are total, and two $`k`-cells satisfy the domain
-condition of $`\circ^{(j,k)}_{s}` if and only if
-$`\mathrm{sc}^{(j,\underline{k})}_{s}(x) = \mathrm{tg}^{(j,\underline{k})}_{s}(y)`, for $`j < m`, and if
-and only if $`x = y`, for $`j \geq m`. The axioms in which all the dimensions are at most $`m` become
-axioms of $`\mathcal{C}^{\Sigma^{\mathrm{ext}(m)}}`. For $`j < m < k`, (EA$`^{j,k}`1)–(EA$`^{j,k}`8)
-become (EA$`^{j,m}`1)–(EA$`^{j,m}`8), and for $`m \leq j` they become trivial. For $`h < j < k`, the
-axioms (EA$`^{h,j,k}`1)–(EA$`^{h,j,k}`5) become those of $`\mathcal{C}^{\Sigma^{\mathrm{ext}(m)}}` with
-dimensions $`(h, \underline{j}, \underline{k})` when $`j < m`; when $`h < m \leq j` the operations with
-lower dimension $`j` are transports and the axioms become the compatibility of the operations of
-$`\mathbf{B}` with transports; and when $`m \leq h` they become trivial.
-:::
+/-!
+*Proof of “Extended discretization sends models to models”.*
 
-:::definition (label := "discretization-ext-functor") (central := false) (title := "The extended discretization functor")
-The *extended discretization functor* $`\mathrm{D}^{\mathrm{ext}(n,m)}` is the birestriction of
-$`(\boldsymbol{\delta}^{\mathrm{ext}(n,m)})^{\ast}_{\mathfrak{gd}}` to the categories of models.
+The operations without domain conditions are total, and two $k$-cells satisfy the domain
+condition of $\circ^{(j,k)}_{s}$ if and only if
+$\mathrm{sc}^{(j,\underline{k})}_{s}(x) = \mathrm{tg}^{(j,\underline{k})}_{s}(y)$, for $j < m$, and if
+and only if $x = y$, for $j \geq m$. The axioms in which all the dimensions are at most $m$ become
+axioms of $\mathcal{C}^{\Sigma^{\mathrm{ext}(m)}}$. For $j < m < k$, (EA$^{j,k}$1)–(EA$^{j,k}$8)
+become (EA$^{j,m}$1)–(EA$^{j,m}$8), and for $m \leq j$ they become trivial. For $h < j < k$, the
+axioms (EA$^{h,j,k}$1)–(EA$^{h,j,k}$5) become those of $\mathcal{C}^{\Sigma^{\mathrm{ext}(m)}}$ with
+dimensions $(h, \underline{j}, \underline{k})$ when $j < m$; when $h < m \leq j$ the operations with
+lower dimension $j$ are transports and the axioms become the compatibility of the operations of
+$\mathbf{B}$ with transports; and when $m \leq h$ they become trivial.
+-/
 
-```lean
+/-!
+### The extended discretization functor
+
+The *extended discretization functor* $\mathrm{D}^{\mathrm{ext}(n,m)}$ is the birestriction of
+$(\boldsymbol{\delta}^{\mathrm{ext}(n,m)})^{\ast}_{\mathfrak{gd}}$ to the categories of models.
+-/
+
 /-- The extended discretization functor `D^{ext(n,m)}`. -/
 noncomputable def discExtFunctor :
     EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (m + 1))) ⥤
       EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (n + 1))) :=
   (discExt Sig n m).restrict (discExt_sendsModels Sig n m)
-```
-:::
 
-# Discretization and truncation
+/-!
+## Discretization and truncation
 
 The operations of the discretized and truncated algebras of models are those computed above.
+-/
 
-```lean
 namespace Disc
 
 variable {Sig n m} {M : Compact.CompactPAlg.{u, v, w} Sig (Fin m)}
@@ -2393,16 +2393,17 @@ theorem tdEquiv_op (A : EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin m))
         ((Disc.sc_eq (M := Am) _ _).symm.trans (hc.trans (Disc.tg_eq (M := Am) _ _)))
 
 end TruncDisc
-```
 
-:::proposition (label := "truncation-discretization") (central := false) (title := "Truncation after discretization")
-Let $`m \leq n`. $`T^{(m,n)} \circ \mathrm{D}^{(n,m)} \cong \mathrm{Id}`, by isomorphisms that send
+/-!
+### Truncation after discretization
+
+Let $m \leq n$. $T^{(m,n)} \circ \mathrm{D}^{(n,m)} \cong \mathrm{Id}$, by isomorphisms that send
 every cell to itself. In the draft (Proposition `PTruncDisc`) this is an equality of functors, which
-follows from $`\boldsymbol{\delta}^{(n,m)} \circ \boldsymbol{\tau}^{(m,n)} = \mathrm{id}`; here the
-cells of $`T^{(m,n)}(\mathrm{D}^{(n,m)}(\mathbf{A}))` are those of $`\mathbf{A}` seen as elements of a
+follows from $\boldsymbol{\delta}^{(n,m)} \circ \boldsymbol{\tau}^{(m,n)} = \mathrm{id}$; here the
+cells of $T^{(m,n)}(\mathrm{D}^{(n,m)}(\mathbf{A}))$ are those of $\mathbf{A}$ seen as elements of a
 subset.
+-/
 
-```lean
 section TruncDisc
 
 variable {Sig n m} (hmn : m ≤ n)
@@ -2415,16 +2416,15 @@ noncomputable def tdIso :
     (fun _ => PartialAlgebra.Hom.ext fun _ _ => rfl)
 
 end TruncDisc
-```
-:::
 
-:::proof (of := "truncation-discretization")
-Every cell of a discretized algebra is an $`m`-cell, so the cells of
-$`T^{(m,n)}(\mathrm{D}^{(n,m)}(\mathbf{A}))` are those of $`\mathbf{A}`, and in the dimensions $`k < m`
-the operations are those of $`\mathbf{A}`.
-:::
+/-!
+*Proof of “Truncation after discretization”.*
 
-```lean
+Every cell of a discretized algebra is an $m$-cell, so the cells of
+$T^{(m,n)}(\mathrm{D}^{(n,m)}(\mathbf{A}))$ are those of $\mathbf{A}$, and in the dimensions $k < m$
+the operations are those of $\mathbf{A}$.
+-/
+
 section TruncDisc
 
 variable {Sig n m} (hmn : m ≤ n)
@@ -2533,14 +2533,15 @@ lemma tdCounit_map (B : EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin n))
     PartialAlgebra.Hom.map (tdCounit hmn B) s y = y.1.1 := rfl
 
 end TruncDisc
-```
 
-:::proposition (label := "discretization-truncation-adjunction") (central := true) (title := "Discretization is left adjoint to truncation")
-Let $`m \leq n`. $`\mathrm{D}^{(n,m)} \dashv T^{(m,n)}`, with unit the isomorphism of Proposition
-`truncation-discretization` and counit $`\varepsilon_{\mathbf{B}} \colon
-\mathrm{D}^{(n,m)}(T^{(m,n)}(\mathbf{B})) \to \mathbf{B}` the inclusion of the $`m`-cells.
+/-!
+### Discretization is left adjoint to truncation
 
-```lean
+Let $m \leq n$. $\mathrm{D}^{(n,m)} \dashv T^{(m,n)}$, with unit the isomorphism of Proposition
+“Truncation after discretization” and counit $\varepsilon_{\mathbf{B}} \colon
+\mathrm{D}^{(n,m)}(T^{(m,n)}(\mathbf{B})) \to \mathbf{B}$ the inclusion of the $m$-cells.
+-/
+
 section TruncDisc
 
 variable {Sig n m}
@@ -2558,21 +2559,22 @@ noncomputable def discTruncAdj : Adjunction (discFunctor Sig n m) (truncFunctor 
       right_triangle := by ext; rfl }
 
 end TruncDisc
-```
-:::
 
-:::proof (of := "discretization-truncation-adjunction")
-The inclusion $`\varepsilon_{\mathbf{B}}` commutes with the operations of $`\Sigma` and with those of
-dimension $`k < m`, which are restrictions. For $`k \geq m` and an $`m`-cell $`x`,
-$`\mathrm{sc}^{k}_{s}(x) = x = \mathrm{tg}^{k}_{s}(x)` in $`\mathbf{B}`, by (AB$`^{m,k}`1), and
-$`x \circ^{k}_{s} x = x \circ^{k}_{s} \mathrm{sc}^{k}_{s}(x) = x`, by (A$`^{k}`5); hence
-$`\varepsilon_{\mathbf{B}}` is a homomorphism, natural in $`\mathbf{B}`. Both triangle identities hold
+/-!
+*Proof of “Discretization is left adjoint to truncation”.*
+
+The inclusion $\varepsilon_{\mathbf{B}}$ commutes with the operations of $\Sigma$ and with those of
+dimension $k < m$, which are restrictions. For $k \geq m$ and an $m$-cell $x$,
+$\mathrm{sc}^{k}_{s}(x) = x = \mathrm{tg}^{k}_{s}(x)$ in $\mathbf{B}$, by (AB$^{m,k}$1), and
+$x \circ^{k}_{s} x = x \circ^{k}_{s} \mathrm{sc}^{k}_{s}(x) = x$, by (A$^{k}$5); hence
+$\varepsilon_{\mathbf{B}}$ is a homomorphism, natural in $\mathbf{B}$. Both triangle identities hold
 on the cells, since unit and counit send every cell to itself.
-:::
+-/
 
-# Extended discretization and truncation
+/-!
+## Extended discretization and truncation
+-/
 
-```lean
 namespace DiscExt
 
 open Extended.Model
@@ -2782,14 +2784,15 @@ theorem tdExtEquiv_op (A : EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin
         (P.trans (DiscExt.tp2_tg (M := Am) ej ek h hl _).symm))
 
 end ExtTruncDisc
-```
 
-:::proposition (label := "truncation-discretization-ext") (central := false) (title := "Extended truncation after extended discretization")
-Let $`m \leq n`. $`T^{\mathrm{ext}(m,n)} \circ \mathrm{D}^{\mathrm{ext}(n,m)} \cong \mathrm{Id}`, by the
-isomorphisms that send a $`k`-cell to itself; in the Lean, along the transport of the sort
-$`(\min\{k, m\}, s) = (k, s)`.
+/-!
+### Extended truncation after extended discretization
 
-```lean
+Let $m \leq n$. $T^{\mathrm{ext}(m,n)} \circ \mathrm{D}^{\mathrm{ext}(n,m)} \cong \mathrm{Id}$, by the
+isomorphisms that send a $k$-cell to itself; in the Lean, along the transport of the sort
+$(\min\{k, m\}, s) = (k, s)$.
+-/
+
 section ExtTruncDisc
 
 variable {Sig n m} (hmn : m ≤ n)
@@ -2807,16 +2810,14 @@ noncomputable def tdExtIso :
       exact Subtype.ext (Subtype.ext (key _ x)))
 
 end ExtTruncDisc
-```
-:::
 
-:::proof (of := "truncation-discretization-ext")
-On the dimensions $`k \leq m`, $`\boldsymbol{\delta}^{\mathrm{ext}(n,m)}` is the identity, so the cells
-and the operations of $`T^{\mathrm{ext}(m,n)}(\mathrm{D}^{\mathrm{ext}(n,m)}(\mathbf{A}))` are those of
-$`\mathbf{A}`.
-:::
+/-!
+*Proof of “Extended truncation after extended discretization”.*
 
-```lean
+On the dimensions $k \leq m$, $\boldsymbol{\delta}^{\mathrm{ext}(n,m)}$ is the identity, so the cells
+and the operations of $T^{\mathrm{ext}(m,n)}(\mathrm{D}^{\mathrm{ext}(n,m)}(\mathbf{A}))$ are those of
+$\mathbf{A}$.
+-/
 
 section ExtCounit
 
@@ -3190,14 +3191,15 @@ lemma tpD_val {Am : Extended.ExtendedPAlg.{u, v, w} Sig (Fin (m + 1))} {t t' : F
   subst e; rfl
 
 end ExtCounitHom₂
-```
 
-:::proposition (label := "discretization-truncation-ext-adjunction") (central := true) (title := "Extended discretization is left adjoint to extended truncation")
-Let $`m \leq n`. $`\mathrm{D}^{\mathrm{ext}(n,m)} \dashv T^{\mathrm{ext}(m,n)}`, with unit the isomorphism
-of Proposition `truncation-discretization-ext` and counit $`\varepsilon^{\mathrm{ext}}` whose component
-at the sort $`(k, s)` is the identity if $`k \leq m` and $`\mathrm{i}^{(k,m)}_{s}` if $`k > m`.
+/-!
+### Extended discretization is left adjoint to extended truncation
 
-```lean
+Let $m \leq n$. $\mathrm{D}^{\mathrm{ext}(n,m)} \dashv T^{\mathrm{ext}(m,n)}$, with unit the isomorphism
+of Proposition “Extended truncation after extended discretization” and counit $\varepsilon^{\mathrm{ext}}$ whose component
+at the sort $(k, s)$ is the identity if $k \leq m$ and $\mathrm{i}^{(k,m)}_{s}$ if $k > m$.
+-/
+
 section ExtCounitHom₂
 
 variable {Sig n m} (hmn : m ≤ n)
@@ -3238,23 +3240,21 @@ noncomputable def discTruncExtAdj :
           (DiscExt.tp_tp (M := ⟨B.1, B.2.2⟩) e3 e'' y.1)) }
 
 end ExtCounitHom₂
-```
-:::
 
-:::proof (of := "discretization-truncation-ext-adjunction")
-By (EA$`^{m,k}`7), $`\mathrm{i}^{(k,m)}_{s}` commutes with the $`\sigma`'s. Let $`j < k` with $`k > m`. If
-$`j < m`, then $`\mathrm{sc}^{(j,k)}_{s}(\mathrm{i}^{(k,m)}_{s}(x)) = \mathrm{sc}^{(j,m)}_{s}(x)`, by
-(EA$`^{j,m,k}`1) and (EA$`^{m,k}`2), $`\mathrm{i}^{(k,m)}_{s}(\mathrm{i}^{(m,j)}_{s}(u)) = \mathrm{i}^{(k,j)}_{s}(u)`,
-by (EA$`^{j,m,k}`2), and $`\mathrm{i}^{(k,m)}_{s}` preserves the $`j`-compositions, by (EA$`^{j,m,k}`5). If
-$`j \geq m`, then $`\mathrm{i}^{(k,m)}_{s} = \mathrm{i}^{(k,j)}_{s} \circ \mathrm{i}^{(j,m)}_{s}`, so that
-$`\mathrm{sc}^{(j,k)}_{s}(\mathrm{i}^{(k,m)}_{s}(x)) = \mathrm{i}^{(j,m)}_{s}(x)` and
-$`\mathrm{i}^{(k,m)}_{s}(x) \circ^{(j,k)}_{s} \mathrm{i}^{(k,m)}_{s}(x) = \mathrm{i}^{(k,m)}_{s}(x)`, by
-(EA$`^{j,k}`5). Hence $`\varepsilon^{\mathrm{ext}}_{\mathbf{B}}` is a homomorphism, natural because
+/-!
+*Proof of “Extended discretization is left adjoint to extended truncation”.*
+
+By (EA$^{m,k}$7), $\mathrm{i}^{(k,m)}_{s}$ commutes with the $\sigma$'s. Let $j < k$ with $k > m$. If
+$j < m$, then $\mathrm{sc}^{(j,k)}_{s}(\mathrm{i}^{(k,m)}_{s}(x)) = \mathrm{sc}^{(j,m)}_{s}(x)$, by
+(EA$^{j,m,k}$1) and (EA$^{m,k}$2), $\mathrm{i}^{(k,m)}_{s}(\mathrm{i}^{(m,j)}_{s}(u)) = \mathrm{i}^{(k,j)}_{s}(u)$,
+by (EA$^{j,m,k}$2), and $\mathrm{i}^{(k,m)}_{s}$ preserves the $j$-compositions, by (EA$^{j,m,k}$5). If
+$j \geq m$, then $\mathrm{i}^{(k,m)}_{s} = \mathrm{i}^{(k,j)}_{s} \circ \mathrm{i}^{(j,m)}_{s}$, so that
+$\mathrm{sc}^{(j,k)}_{s}(\mathrm{i}^{(k,m)}_{s}(x)) = \mathrm{i}^{(j,m)}_{s}(x)$ and
+$\mathrm{i}^{(k,m)}_{s}(x) \circ^{(j,k)}_{s} \mathrm{i}^{(k,m)}_{s}(x) = \mathrm{i}^{(k,m)}_{s}(x)$, by
+(EA$^{j,k}$5). Hence $\varepsilon^{\mathrm{ext}}_{\mathbf{B}}$ is a homomorphism, natural because
 homomorphisms commute with the identities. The triangle identities hold because
-$`T^{\mathrm{ext}(m,n)}(\varepsilon^{\mathrm{ext}}_{\mathbf{B}})` is the identity and the
-$`(k,m)`-identities of $`\mathrm{D}^{\mathrm{ext}(n,m)}(\mathbf{A})` are transports.
-:::
+$T^{\mathrm{ext}(m,n)}(\varepsilon^{\mathrm{ext}}_{\mathbf{B}})$ is the identity and the
+$(k,m)$-identities of $\mathrm{D}^{\mathrm{ext}(n,m)}(\mathbf{A})$ are transports.
+-/
 
-```lean
 end CategorialAlgebras
-```

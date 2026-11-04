@@ -1,13 +1,7 @@
 # Lean builds and dependencies.
 /.lake/
 
-# The local state of `stemma`.
-/.stemma/
-
-# Each person's copies of material, which are not shared.
-/sources/
-
-# The build output of LaTeX and Typst.
+# The build output of LaTeX.
 *.aux
 *.bbl
 *.bcf
@@ -29,7 +23,7 @@
 *.toc
 *.vrb
 *.xdv
-/scratch/**/*.pdf
+/docs/**/*.pdf
 
 # Files of operating systems.
 .DS_Store

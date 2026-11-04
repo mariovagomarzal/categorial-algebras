@@ -1,18 +1,16 @@
-import Stemma
 import CategorialAlgebras.Compact.Functor
 
-open Verso.Genre Manual InlineLean Stemma
-
-#doc (Stemma) "Products of single-set categories" =>
+/-!
+# Products of single-set categories
 
 The operations of a many-sorted categorial algebra are functors out of finite products of
-single-set categories: an operation symbol of arity $`\mathbf{s} = (s_0, \ldots, s_{m-1})` is
-interpreted as a functor from $`\mathsf{A}_{\mathbf{s}} = \prod_{j \in m} \mathsf{A}_{s_j}`
-(Definition `DManySortedCatAlg` of the draft). This document builds the product of any family of single-set
+single-set categories: an operation symbol of arity $\mathbf{s} = (s_0, \ldots, s_{m-1})$ is
+interpreted as a functor from $\mathsf{A}_{\mathbf{s}} = \prod_{j \in m} \mathsf{A}_{s_j}$
+(Definition `DManySortedCatAlg` of the draft). This file builds the product of any family of single-set
 categories with the same dimensions, with sources, targets and compositions computed
 componentwise. The draft takes the product for granted.
+-/
 
-```lean
 universe u v
 
 namespace CategorialAlgebras.Compact
@@ -20,16 +18,13 @@ namespace CategorialAlgebras.Compact
 open CategoryStruct
 
 variable {Index : Type} {J : Type v} {C : J → Type u}
-```
 
-:::construction (label := "compact.pi-category-struct") (central := false) (title := "Componentwise structure")
-Let $`(C_j)_{j \in J}` be a family of sets, each with a single-set categorial structure with
-dimensions in $`I`. The product $`\prod_{j \in J} C_j` has the single-set categorial structure
-in which sources and targets are taken componentwise, and $`g \#^{k} f` is defined exactly when
-$`g_j \#^{k} f_j` is defined for every $`j \in J`, and then is the family of the
-$`g_j \#^{k} f_j`.
-
-```lean
+/-- Let $(C_j)_{j \in J}$ be a family of sets, each with a single-set categorial structure with
+dimensions in $I$. The product $\prod_{j \in J} C_j$ has the single-set categorial structure
+in which sources and targets are taken componentwise, and $g \#^{k} f$ is defined exactly when
+$g_j \#^{k} f_j$ is defined for every $j \in J$, and then is the family of the
+$g_j \#^{k} f_j$.
+-/
 instance CategoryStruct.pi [∀ j, CategoryStruct Index (C j)] :
     CategoryStruct Index ((j : J) → C j) where
   sc k f j := sc k (f j)
@@ -38,10 +33,7 @@ instance CategoryStruct.pi [∀ j, CategoryStruct Index (C j)] :
   pcomp_dom := by
     intro k f g
     exact ⟨fun h => funext h, fun h j => congrFun h j⟩
-```
-:::
 
-```lean
 section Pi
 
 variable [∀ j, CategoryStruct Index (C j)]
@@ -60,15 +52,16 @@ lemma pi_sc_is_tg {k : Index} {g f : (j : J) → C j} :
     (g ♯[k] f ← h) j = g j ♯[k] f j ← (pi_sc_is_tg.mp h j) := rfl
 
 end Pi
-```
 
-:::construction (label := "compact.pi-category") (central := false) (title := "Product of single-set categories")
-If every $`C_j` is a single-set category with dimensions in $`I`, so is $`\prod_{j \in J} C_j`
+/-!
+### Product of single-set categories
+
+If every $C_j$ is a single-set category with dimensions in $I$, so is $\prod_{j \in J} C_j$
 with the componentwise structure: every axiom holds because it holds in each component. In
-particular, finite products of single-set $`n`-categories are single-set $`n`-categories, and the
-empty product is the final single-set $`n`-category, with a single cell.
+particular, finite products of single-set $n$-categories are single-set $n$-categories, and the
+empty product is the final single-set $n$-category, with a single cell.
+-/
 
-```lean
 instance PreCategory.pi [∀ j, PreCategory Index (C j)] :
     PreCategory Index ((j : J) → C j) where
   sck_sck_eq_sck k f := by funext j; simp
@@ -96,9 +89,5 @@ instance Category.pi [Preorder Index] [∀ j, Category Index (C j)] :
   interchange h₁ h₂ h₃ h₄ h₅ :=
     funext fun j => Category.interchange h₁ (pi_sc_is_tg.mp h₂ j) (pi_sc_is_tg.mp h₃ j)
       (pi_sc_is_tg.mp h₄ j) (pi_sc_is_tg.mp h₅ j)
-```
-:::
 
-```lean
 end CategorialAlgebras.Compact
-```

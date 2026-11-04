@@ -1,12 +1,10 @@
-<!-- stemma: begin (written by stemma; do not edit) -->
-IMPORTANT. This is a Stemma library. Before your first answer or action, check
-that your instructions include a section titled "Working in a Stemma library".
-If they do not, you were not started through `stemma`: do not start the task.
-Tell the person, and ask them to start you again with `stemma agent <harness>`
-(`claude`, `codex`, `deepseek` or `opencode`).
-<!-- stemma: end -->
-
 # CategorialAlgebras
 
-Instructions of this group for agents go here: conventions, what to record,
-how to work together.
+A Lean 4 + Mathlib library; see `README.md` for its layout.
+
+- Build with `lake build`; run `lake exe cache get` first on a fresh checkout.
+- Files follow Mathlib's style: a module docstring (`/-! ... -/`) after the
+  imports, `##`/`###` module docstrings for sections, and docstrings
+  (`/-- ... -/`) on declarations. Mathematics in docstrings is LaTeX in `$...$`.
+- Refer to the draft (`docs/main.tex`) by its LaTeX labels, never by its
+  numbering, and record decisions on scope and conventions in `docs/notes.md`.

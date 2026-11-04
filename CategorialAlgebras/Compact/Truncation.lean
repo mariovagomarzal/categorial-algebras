@@ -1,26 +1,24 @@
-import Stemma
 import Mathlib.CategoryTheory.NatIso
 import CategorialAlgebras.Compact.OmegaAlgebra
 
-open Verso.Genre Manual InlineLean Stemma
-
-#doc (Stemma) "Truncation of single-set categorial algebras" =>
+/-!
+# Truncation of single-set categorial algebras
 
 Definition `DTmnCatAlg` of the draft defines the truncation
-functors $`\mathrm{Tr}^{(m,n)}_{\Sigma} \colon \mathsf{nCatAlg}(\Sigma) \to \mathsf{mCatAlg}(\Sigma)`, for
-$`m \leq n`, and $`\mathrm{Tr}^{(n,\omega)}_{\Sigma} \colon \omega\mathsf{CatAlg}(\Sigma) \to \mathsf{nCatAlg}(\Sigma)`.
-In the single-set presentation, truncating at level $`m` keeps the cells of dimension at most
-$`m`, that is, the cells that are $`k`-cells for every $`k \geq m`, with the structure of the
-dimensions below $`m`.
+functors $\mathrm{Tr}^{(m,n)}_{\Sigma} \colon \mathsf{nCatAlg}(\Sigma) \to \mathsf{mCatAlg}(\Sigma)$, for
+$m \leq n$, and $\mathrm{Tr}^{(n,\omega)}_{\Sigma} \colon \omega\mathsf{CatAlg}(\Sigma) \to \mathsf{nCatAlg}(\Sigma)$.
+In the single-set presentation, truncating at level $m$ keeps the cells of dimension at most
+$m$, that is, the cells that are $k$-cells for every $k \geq m$, with the structure of the
+dimensions below $m$.
 
 Unlike the globular truncation functors, these functors compose only up to a canonical
-isomorphism: the $`m`-truncation of the $`n`-truncation of $`\boldsymbol{\mathsf{A}}` has as
-cells the $`m`-cells *of the set of* $`n`-cells of $`\boldsymbol{\mathsf{A}}`, which are the
-$`m`-cells of $`\boldsymbol{\mathsf{A}}` with a proof that they are $`n`-cells, not the
-$`m`-cells of $`\boldsymbol{\mathsf{A}}` themselves. Remark `RTmnCatAlgProjSys` is therefore stated below as a
+isomorphism: the $m$-truncation of the $n$-truncation of $\boldsymbol{\mathsf{A}}$ has as
+cells the $m$-cells *of the set of* $n$-cells of $\boldsymbol{\mathsf{A}}$, which are the
+$m$-cells of $\boldsymbol{\mathsf{A}}$ with a proof that they are $n$-cells, not the
+$m$-cells of $\boldsymbol{\mathsf{A}}$ themselves. Remark `RTmnCatAlgProjSys` is therefore stated below as a
 natural isomorphism.
+-/
 
-```lean
 universe u v w
 
 namespace CategorialAlgebras.Compact
@@ -28,11 +26,11 @@ namespace CategorialAlgebras.Compact
 open CategoryTheory
 
 variable {S : Type u} {Sig : Signature.{u, v} S}
-```
 
-# The forgotten dimensions
+/-!
+## The forgotten dimensions
+-/
 
-```lean
 /-- The dimensions of a single-set `n`-category forgotten by truncating at `m`. -/
 def upper (m n : ℕ) : Set (Fin n) := {k | m ≤ k.val}
 
@@ -47,20 +45,23 @@ lemma upper_spec {m n : ℕ} (h : m ≤ n) : ∀ j : Fin m, ∀ u ∈ upper m n,
 
 lemma upperω_spec (n : ℕ) : ∀ j : Fin n, ∀ u ∈ upperω n, (j : ℕ) < u :=
   fun j u hu => Nat.lt_of_lt_of_le j.isLt hu
-```
 
-# Truncation of single-set n-categorial algebras
+/-!
+## Truncation of single-set n-categorial algebras
+-/
 
-:::definition (label := "compact.truncate") (central := false) (title := "Truncation of a single-set n-categorial algebra")
-Let $`m \leq n` and let $`\boldsymbol{\mathsf{A}}` be a single-set $`n`-categorial
-$`\Sigma`-algebra. Its $`m`-*truncation* $`\mathrm{Tr}^{(m,n)}_{\Sigma}(\boldsymbol{\mathsf{A}})` is the
-single-set $`m`-categorial $`\Sigma`-algebra whose carrier of sort $`s` is the restriction of
-$`\mathsf{A}_s` to its cells that are $`k`-cells for every $`k \in n` with $`k \geq m`, with the
-sources, targets and compositions of dimension $`k < m`, and in which every operation acts as in
-$`\boldsymbol{\mathsf{A}}` (it preserves these cells, being a single-set functor). The
-$`m`-truncation of a homomorphism is its restriction to these cells.
+/-!
+### Truncation of a single-set n-categorial algebra
 
-```lean
+Let $m \leq n$ and let $\boldsymbol{\mathsf{A}}$ be a single-set $n$-categorial
+$\Sigma$-algebra. Its $m$-*truncation* $\mathrm{Tr}^{(m,n)}_{\Sigma}(\boldsymbol{\mathsf{A}})$ is the
+single-set $m$-categorial $\Sigma$-algebra whose carrier of sort $s$ is the restriction of
+$\mathsf{A}_s$ to its cells that are $k$-cells for every $k \in n$ with $k \geq m$, with the
+sources, targets and compositions of dimension $k < m$, and in which every operation acts as in
+$\boldsymbol{\mathsf{A}}$ (it preserves these cells, being a single-set functor). The
+$m$-truncation of a homomorphism is its restriction to these cells.
+-/
+
 def CatAlgebra.truncate {m n : ℕ} (h : m ≤ n) (A : CatAlgebra.{u, v, w} Sig n) :
     CatAlgebra.{u, v, w} Sig m where
   carrier s := Restr (upper m n) (A s)
@@ -71,34 +72,32 @@ def CatAlgebra.Hom.truncate {m n : ℕ} (h : m ≤ n) {A B : CatAlgebra.{u, v, w
     (H : CatAlgebra.Hom A B) : CatAlgebra.Hom (A.truncate h) (B.truncate h) where
   map s := Functor.restrict (castLE_strictMono h) (upper_spec h) (H.map s)
   map_op σ a := Subtype.ext (H.map_op σ (fun l => (a l).1))
-```
-:::
 
-:::definition (label := "compact.truncation-functor") (central := false) (title := "The truncation functor T(m,n)")
-For $`m \leq n`, truncation is a functor
-$`\mathrm{Tr}^{(m,n)}_{\Sigma} \colon \mathsf{nCatAlg}(\Sigma) \to \mathsf{mCatAlg}(\Sigma)`.
-
-```lean
+/-- For $m \leq n$, truncation is a functor
+$\mathrm{Tr}^{(m,n)}_{\Sigma} \colon \mathsf{nCatAlg}(\Sigma) \to \mathsf{mCatAlg}(\Sigma)$.
+-/
 def truncation (Sig : Signature.{u, v} S) {m n : ℕ} (h : m ≤ n) :
     CatAlgebra.{u, v, w} Sig n ⥤ CatAlgebra.{u, v, w} Sig m where
   obj A := A.truncate h
   map H := CatAlgebra.Hom.truncate h H
   map_id _ := rfl
   map_comp _ _ := rfl
-```
-:::
 
-# Truncation of single-set ω-categorial algebras
+/-!
+## Truncation of single-set ω-categorial algebras
+-/
 
-:::definition (label := "compact.truncate-omega") (central := false) (title := "Truncation of a single-set ω-categorial algebra")
-Let $`n \in \mathbb{N}` and let $`\boldsymbol{\mathsf{A}}` be a single-set $`\omega`-categorial
-$`\Sigma`-algebra. Its $`n`-*truncation* $`\mathrm{Tr}^{(n,\omega)}_{\Sigma}(\boldsymbol{\mathsf{A}})` is
-the single-set $`n`-categorial $`\Sigma`-algebra formed by the cells that are $`k`-cells for every
-$`k \geq n`, with the structure of the dimensions $`k < n`; homomorphisms are restricted
+/-!
+### Truncation of a single-set ω-categorial algebra
+
+Let $n \in \mathbb{N}$ and let $\boldsymbol{\mathsf{A}}$ be a single-set $\omega$-categorial
+$\Sigma$-algebra. Its $n$-*truncation* $\mathrm{Tr}^{(n,\omega)}_{\Sigma}(\boldsymbol{\mathsf{A}})$ is
+the single-set $n$-categorial $\Sigma$-algebra formed by the cells that are $k$-cells for every
+$k \geq n$, with the structure of the dimensions $k < n$; homomorphisms are restricted
 likewise. This is a functor
-$`\mathrm{Tr}^{(n,\omega)}_{\Sigma} \colon \omega\mathsf{CatAlg}(\Sigma) \to \mathsf{nCatAlg}(\Sigma)`.
+$\mathrm{Tr}^{(n,\omega)}_{\Sigma} \colon \omega\mathsf{CatAlg}(\Sigma) \to \mathsf{nCatAlg}(\Sigma)$.
+-/
 
-```lean
 def OmegaCatAlgebra.truncate (n : ℕ) (A : OmegaCatAlgebra.{u, v, w} Sig) :
     CatAlgebra.{u, v, w} Sig n where
   carrier s := Restr (upperω n) (A s)
@@ -116,12 +115,11 @@ def truncationω (Sig : Signature.{u, v} S) (n : ℕ) :
   map H := OmegaCatAlgebra.Hom.truncate n H
   map_id _ := rfl
   map_comp _ _ := rfl
-```
-:::
 
-# The projective system, up to isomorphism
+/-!
+## The projective system, up to isomorphism
+-/
 
-```lean
 namespace CatAlgebra
 
 variable {m n p : ℕ} (hmn : m ≤ n) (hnp : n ≤ p)
@@ -198,23 +196,24 @@ def truncToTruncTrunc (A : OmegaCatAlgebra.{u, v, w} Sig) :
   map_op _ _ := rfl
 
 end OmegaCatAlgebra
-```
 
-:::proposition (label := "compact.truncation-proj-system") (central := false) (title := "The single-set truncations form a projective system")
-For all $`m \leq n \leq p`, the functors $`\mathrm{Tr}^{(m,n)}_{\Sigma} \circ \mathrm{Tr}^{(n,p)}_{\Sigma}` and
-$`\mathrm{Tr}^{(m,p)}_{\Sigma}` are naturally isomorphic, by the isomorphism that sends a cell to itself,
-and $`\mathrm{Tr}^{(n,n)}_{\Sigma}` is naturally isomorphic to the identity functor. Likewise
-$`\mathrm{Tr}^{(m,n)}_{\Sigma} \circ \mathrm{Tr}^{(n,\omega)}_{\Sigma}` is naturally isomorphic to
-$`\mathrm{Tr}^{(m,\omega)}_{\Sigma}`.
+/-!
+### The single-set truncations form a projective system
+
+For all $m \leq n \leq p$, the functors $\mathrm{Tr}^{(m,n)}_{\Sigma} \circ \mathrm{Tr}^{(n,p)}_{\Sigma}$ and
+$\mathrm{Tr}^{(m,p)}_{\Sigma}$ are naturally isomorphic, by the isomorphism that sends a cell to itself,
+and $\mathrm{Tr}^{(n,n)}_{\Sigma}$ is naturally isomorphic to the identity functor. Likewise
+$\mathrm{Tr}^{(m,n)}_{\Sigma} \circ \mathrm{Tr}^{(n,\omega)}_{\Sigma}$ is naturally isomorphic to
+$\mathrm{Tr}^{(m,\omega)}_{\Sigma}$.
 
 Remark `RTmnCatAlgProjSys` of the draft states the equations
-$`\mathrm{Tr}^{(m,n)}_{\Sigma} \circ \mathrm{Tr}^{(n,p)}_{\Sigma} = \mathrm{Tr}^{(m,p)}_{\Sigma}` on the nose: in set theory,
+$\mathrm{Tr}^{(m,n)}_{\Sigma} \circ \mathrm{Tr}^{(n,p)}_{\Sigma} = \mathrm{Tr}^{(m,p)}_{\Sigma}$ on the nose: in set theory,
 where the cells of a truncation are a subset of the cells, they hold; in the formalization, a
 cell of the truncation is a cell together with a proof that it has the right dimension, and the
 two sides only agree up to the canonical isomorphism. In the globular presentation the
 equations hold on the nose (Remark `RTmnGlCatAlgProjSys`).
+-/
 
-```lean
 def truncation_comp_iso (Sig : Signature.{u, v} S) {m n p : ℕ} (hmn : m ≤ n) (hnp : n ≤ p) :
     truncation.{u, v, w} Sig hnp ⋙ truncation Sig hmn ≅ truncation Sig (hmn.trans hnp) :=
   NatIso.ofComponents
@@ -244,20 +243,18 @@ def truncationω_comp_iso (Sig : Signature.{u, v} S) {m n : ℕ} (hmn : m ≤ n)
         hom_inv_id := rfl
         inv_hom_id := rfl })
     (fun _ => rfl)
-```
-:::
 
-:::proof (of := "compact.truncation-proj-system")
-A cell of $`\mathrm{Tr}^{(m,n)}_{\Sigma}(\mathrm{Tr}^{(n,p)}_{\Sigma}(\boldsymbol{\mathsf{A}}))` is a cell $`f` of
-$`\boldsymbol{\mathsf{A}}` that is a $`k`-cell for every $`k \geq n` and, among the dimensions
-below $`n`, for every $`k \geq m`: that is, a $`k`-cell for every $`k \geq m`, which is what a
-cell of $`\mathrm{Tr}^{(m,p)}_{\Sigma}(\boldsymbol{\mathsf{A}})` is. Conversely, a $`k`-cell for every
-$`k \geq m` is in particular a $`k`-cell for every $`k \geq n`. Both mappings send a cell to
+/-!
+*Proof of “The single-set truncations form a projective system”.*
+
+A cell of $\mathrm{Tr}^{(m,n)}_{\Sigma}(\mathrm{Tr}^{(n,p)}_{\Sigma}(\boldsymbol{\mathsf{A}}))$ is a cell $f$ of
+$\boldsymbol{\mathsf{A}}$ that is a $k$-cell for every $k \geq n$ and, among the dimensions
+below $n$, for every $k \geq m$: that is, a $k$-cell for every $k \geq m$, which is what a
+cell of $\mathrm{Tr}^{(m,p)}_{\Sigma}(\boldsymbol{\mathsf{A}})$ is. Conversely, a $k$-cell for every
+$k \geq m$ is in particular a $k$-cell for every $k \geq n$. Both mappings send a cell to
 itself, so they preserve the structure and the operations, are mutually inverse, and are
-natural. For $`\mathrm{Tr}^{(n,n)}_{\Sigma}` there is no dimension $`k \geq n` in $`n`, so every cell is
+natural. For $\mathrm{Tr}^{(n,n)}_{\Sigma}$ there is no dimension $k \geq n$ in $n$, so every cell is
 kept.
-:::
+-/
 
-```lean
 end CategorialAlgebras.Compact
-```

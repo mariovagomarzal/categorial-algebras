@@ -1,30 +1,28 @@
-import Stemma
 import Mathlib.CategoryTheory.Equivalence
 import CategorialAlgebras.Compact.Truncation
 import CategorialAlgebras.Compact.Tower
 
-open Verso.Genre Manual InlineLean Stemma
+/-!
+# Compact ω-categorial algebras as a pseudo-limit
 
-#doc (Stemma) "Compact ω-categorial algebras as a pseudo-limit" =>
-
-Proposition `PUnivPropCatAlg` of the draft states that $`\omega\mathsf{CatAlg}(\Sigma)`, with the
-truncation functors $`T^{(n,\omega)}_{\Sigma}`, is the projective limit of the categories
-$`\mathsf{nCatAlg}(\Sigma)` and the truncation functors $`T^{(m,n)}_{\Sigma}`. In the compact
+Proposition `PUnivPropCatAlg` of the draft states that $\omega\mathsf{CatAlg}(\Sigma)$, with the
+truncation functors $T^{(n,\omega)}_{\Sigma}$, is the projective limit of the categories
+$\mathsf{nCatAlg}(\Sigma)$ and the truncation functors $T^{(m,n)}_{\Sigma}$. In the compact
 presentation these functors compose only up to the canonical isomorphisms of Proposition
-`compact.truncation-proj-system`: a cell of a truncation is a cell together with the proof that it
+“The single-set truncations form a projective system” (in `CategorialAlgebras.Compact.Truncation`): a cell of a truncation is a cell together with the proof that it
 has the right dimension, and truncating twice nests these proofs. The equations
-$`T^{(m,n)}_{\Sigma} \circ T^{(n,\omega)}_{\Sigma} = T^{(m,\omega)}_{\Sigma}` fail already for the
+$T^{(m,n)}_{\Sigma} \circ T^{(n,\omega)}_{\Sigma} = T^{(m,\omega)}_{\Sigma}$ fail already for the
 projections themselves, so the strict universal property cannot be stated faithfully.
 
-This document states it as a *pseudo-limit*: compatible families are compatible up to specified
-isomorphisms, and the universal property says that $`\omega\mathsf{CatAlg}(\Sigma)` is equivalent
+This file states it as a *pseudo-limit*: compatible families are compatible up to specified
+isomorphisms, and the universal property says that $\omega\mathsf{CatAlg}(\Sigma)$ is equivalent
 to the category of these families, through its truncations. This is the form in which the draft
 uses the universal property (Corollary `CLimitNat`), and it agrees with the strict one wherever the
-latter makes sense. For a tower indexed by $`\mathbb{N}`, it is enough to give the isomorphisms
+latter makes sense. For a tower indexed by $\mathbb{N}$, it is enough to give the isomorphisms
 between consecutive levels: those between any two levels are their composites, and no coherence
 condition is needed.
+-/
 
-```lean
 universe u v w
 
 namespace CategorialAlgebras.Compact
@@ -32,31 +30,34 @@ namespace CategorialAlgebras.Compact
 open CategoryTheory
 
 variable {S : Type u} (Sig : Signature.{u, v} S)
-```
 
-# Compatible families
+/-!
+## Compatible families
+-/
 
-:::definition (label := "compact.compatible-family") (central := false) (title := "Compatible families")
-A *compatible family* of compact categorial $`\Sigma`-algebras is a family
-$`(\boldsymbol{\mathsf{A}}_n)_{n \in \mathbb{N}}`, with $`\boldsymbol{\mathsf{A}}_n` a compact
-$`n`-categorial $`\Sigma`-algebra, together with isomorphisms
-$`\varphi_n \colon T^{(n,n+1)}_{\Sigma}(\boldsymbol{\mathsf{A}}_{n+1}) \cong \boldsymbol{\mathsf{A}}_n`.
-A *morphism* of compatible families from $`(\boldsymbol{\mathsf{A}}_n, \varphi_n)` to
-$`(\boldsymbol{\mathsf{B}}_n, \psi_n)` is a family of homomorphisms
-$`H_n \colon \boldsymbol{\mathsf{A}}_n \to \boldsymbol{\mathsf{B}}_n` such that
-$`\psi_n \circ T^{(n,n+1)}_{\Sigma}(H_{n+1}) = H_n \circ \varphi_n` for every $`n`. With the
+/-!
+### Compatible families
+
+A *compatible family* of compact categorial $\Sigma$-algebras is a family
+$(\boldsymbol{\mathsf{A}}_n)_{n \in \mathbb{N}}$, with $\boldsymbol{\mathsf{A}}_n$ a compact
+$n$-categorial $\Sigma$-algebra, together with isomorphisms
+$\varphi_n \colon T^{(n,n+1)}_{\Sigma}(\boldsymbol{\mathsf{A}}_{n+1}) \cong \boldsymbol{\mathsf{A}}_n$.
+A *morphism* of compatible families from $(\boldsymbol{\mathsf{A}}_n, \varphi_n)$ to
+$(\boldsymbol{\mathsf{B}}_n, \psi_n)$ is a family of homomorphisms
+$H_n \colon \boldsymbol{\mathsf{A}}_n \to \boldsymbol{\mathsf{B}}_n$ such that
+$\psi_n \circ T^{(n,n+1)}_{\Sigma}(H_{n+1}) = H_n \circ \varphi_n$ for every $n$. With the
 levelwise composition and identities, compatible families form a category, the pseudo-limit of the
-categories $`\mathsf{nCatAlg}(\Sigma)` along the truncation functors. The index $`n` is the
-*level* of $`\boldsymbol{\mathsf{A}}_n` in the family.
+categories $\mathsf{nCatAlg}(\Sigma)$ along the truncation functors. The index $n$ is the
+*level* of $\boldsymbol{\mathsf{A}}_n$ in the family.
 
 In the draft, a compatible family is one with
-$`T^{(m,n)}_{\Sigma}(\boldsymbol{\mathsf{A}}_n) = \boldsymbol{\mathsf{A}}_m`, and a morphism one with
-$`T^{(m,n)}_{\Sigma}(H_n) = H_m`; here the equalities are replaced by the isomorphisms $`\varphi_n`.
+$T^{(m,n)}_{\Sigma}(\boldsymbol{\mathsf{A}}_n) = \boldsymbol{\mathsf{A}}_m$, and a morphism one with
+$T^{(m,n)}_{\Sigma}(H_n) = H_m$; here the equalities are replaced by the isomorphisms $\varphi_n$.
 In the extended (globular) presentation the truncations compose strictly, and the compatible
-families of the document on extended $`\omega`-categorial algebras as a projective limit keep the
+families of `CategorialAlgebras.Extended.Limit` keep the
 equalities of the draft.
+-/
 
-```lean
 structure CompatibleFamily where
   /-- The compact `n`-categorial algebra at level `n`. -/
   alg : ∀ n, CatAlgebra.{u, v, w} Sig n
@@ -86,21 +87,19 @@ instance category : CategoryTheory.Category.{max u w} (CompatibleFamily.{u, v, w
   assoc _ _ _ := Hom.ext (funext fun _ => CategoryTheory.Category.assoc _ _ _)
 
 end CompatibleFamily
-```
-:::
 
-# The family of truncations
+/-!
+## The family of truncations
+-/
 
-:::definition (label := "compact.trunc-family") (central := false) (title := "The family of truncations")
-The truncations $`(T^{(n,\omega)}_{\Sigma}(\boldsymbol{\mathsf{B}}))_{n \in \mathbb{N}}` of a compact
-$`\omega`-categorial $`\Sigma`-algebra $`\boldsymbol{\mathsf{B}}`, with the canonical isomorphisms
-$`T^{(n,n+1)}_{\Sigma}(T^{(n+1,\omega)}_{\Sigma}(\boldsymbol{\mathsf{B}})) \cong
-T^{(n,\omega)}_{\Sigma}(\boldsymbol{\mathsf{B}})` of Proposition `compact.truncation-proj-system`, are a
+/-- The truncations $(T^{(n,\omega)}_{\Sigma}(\boldsymbol{\mathsf{B}}))_{n \in \mathbb{N}}$ of a compact
+$\omega$-categorial $\Sigma$-algebra $\boldsymbol{\mathsf{B}}$, with the canonical isomorphisms
+$T^{(n,n+1)}_{\Sigma}(T^{(n+1,\omega)}_{\Sigma}(\boldsymbol{\mathsf{B}})) \cong
+T^{(n,\omega)}_{\Sigma}(\boldsymbol{\mathsf{B}})$ of Proposition “The single-set truncations form a projective system” (in `CategorialAlgebras.Compact.Truncation`), are a
 compatible family, and the truncations of a homomorphism are a morphism of compatible families, by
-the naturality of these isomorphisms. This is a functor from $`\omega\mathsf{CatAlg}(\Sigma)` to the
+the naturality of these isomorphisms. This is a functor from $\omega\mathsf{CatAlg}(\Sigma)$ to the
 category of compatible families.
-
-```lean
+-/
 def truncFamilies : OmegaCatAlgebra.{u, v, w} Sig ⥤ CompatibleFamily.{u, v, w} Sig where
   obj B :=
     { alg := fun n => (truncationω Sig n).obj B
@@ -110,20 +109,19 @@ def truncFamilies : OmegaCatAlgebra.{u, v, w} Sig ⥤ CompatibleFamily.{u, v, w}
       comm := fun n => (truncationω_comp_iso Sig (Nat.le_succ n)).hom.naturality H }
   map_id _ := rfl
   map_comp _ _ := rfl
-```
-:::
 
-# Homomorphisms
+/-!
+## Homomorphisms
 
-Every cell of a compact $`\omega`-categorial algebra is a $`k`-cell for some $`k`, and then it lies
-in all the truncations from level $`k` on: in the compact (single-set) presentation, a cell lies at
-level $`n`, that is, in $`T^{(n,\omega)}_{\Sigma}`, exactly when it is an $`n`-cell. A morphism $`(H_n)_n` between the families of
-truncations of $`\boldsymbol{\mathsf{A}}` and $`\boldsymbol{\mathsf{B}}` thus gives a value at every
-cell $`x`, by computing $`H_n(x)` at any level $`n` at which $`x` lies; the compatibility of the
-$`H_n` with the isomorphisms of the families says that $`H_{n+1}(x) = H_n(x)`, so the value does not
+Every cell of a compact $\omega$-categorial algebra is a $k$-cell for some $k$, and then it lies
+in all the truncations from level $k$ on: in the compact (single-set) presentation, a cell lies at
+level $n$, that is, in $T^{(n,\omega)}_{\Sigma}$, exactly when it is an $n$-cell. A morphism $(H_n)_n$ between the families of
+truncations of $\boldsymbol{\mathsf{A}}$ and $\boldsymbol{\mathsf{B}}$ thus gives a value at every
+cell $x$, by computing $H_n(x)$ at any level $n$ at which $x$ lies; the compatibility of the
+$H_n$ with the isomorphisms of the families says that $H_{n+1}(x) = H_n(x)$, so the value does not
 depend on the level.
+-/
 
-```lean
 variable {Sig}
 
 section Cells
@@ -177,18 +175,19 @@ noncomputable def lvl {s : S} (x : A s) : ℕ := Classical.choose (exists_level 
 
 lemma lvl_spec {s : S} (x : A s) : ∀ u ∈ upperω (lvl x), CategoryStruct.sc u x = x :=
   Classical.choose_spec (exists_level x)
-```
 
-:::construction (label := "compact.hom-of-family") (central := false) (title := "The homomorphism of a morphism of families")
-Let $`\boldsymbol{\mathsf{A}}` and $`\boldsymbol{\mathsf{B}}` be compact $`\omega`-categorial
-$`\Sigma`-algebras and $`(H_n)_n` a morphism between their families of truncations. The mapping
-that sends a cell $`x` of $`\boldsymbol{\mathsf{A}}` to $`H_n(x)`, for any level $`n` at which $`x`
-lies, is a homomorphism $`H \colon \boldsymbol{\mathsf{A}} \to \boldsymbol{\mathsf{B}}`: to compare
-$`H` with a $`k`-source, a $`k`-target, a $`k`-composite or an operation of $`\Sigma`, compute every
-value involved at a level above $`k` at which all the cells involved lie, where $`H_n` preserves
-them. Its truncations are the $`H_n`.
+/-!
+### The homomorphism of a morphism of families
 
-```lean
+Let $\boldsymbol{\mathsf{A}}$ and $\boldsymbol{\mathsf{B}}$ be compact $\omega$-categorial
+$\Sigma$-algebras and $(H_n)_n$ a morphism between their families of truncations. The mapping
+that sends a cell $x$ of $\boldsymbol{\mathsf{A}}$ to $H_n(x)$, for any level $n$ at which $x$
+lies, is a homomorphism $H \colon \boldsymbol{\mathsf{A}} \to \boldsymbol{\mathsf{B}}$: to compare
+$H$ with a $k$-source, a $k$-target, a $k$-composite or an operation of $\Sigma$, compute every
+value involved at a level above $k$ at which all the cells involved lie, where $H_n$ preserves
+them. Its truncations are the $H_n$.
+-/
+
 /-- The homomorphism of `ω`-categorial algebras of a morphism of families of truncations. -/
 noncomputable def homOfFamily : Hom A B where
   map s :=
@@ -240,16 +239,16 @@ lemma truncation_homOfFamily (n : ℕ) : (truncationω Sig n).map (homOfFamily �
   exact Subtype.ext (valAt_eq Φ x.1 (lvl_spec x.1) x.2)
 
 end OmegaCatAlgebra
-```
-:::
 
-:::proposition (label := "compact.trunc-families-fully-faithful") (central := false) (title := "The functor of truncations is fully faithful")
-A homomorphism of compact $`\omega`-categorial $`\Sigma`-algebras is determined by its truncations,
+/-!
+### The functor of truncations is fully faithful
+
+A homomorphism of compact $\omega$-categorial $\Sigma$-algebras is determined by its truncations,
 and every morphism between the families of truncations is the family of truncations of a
 homomorphism: the functor of truncations is faithful and full. This is the first part of
 Corollary `CLimitNat` of the draft.
+-/
 
-```lean
 open OmegaCatAlgebra in
 instance truncFamilies_faithful : (truncFamilies.{u, v, w} Sig).Faithful where
   map_injective {A B} {H K} h := by
@@ -265,29 +264,30 @@ open OmegaCatAlgebra in
 instance truncFamilies_full : (truncFamilies.{u, v, w} Sig).Full where
   map_surjective {A B} Φ :=
     ⟨homOfFamily Φ, CompatibleFamily.Hom.ext (funext fun n => truncation_homOfFamily Φ n)⟩
-```
-:::
 
-:::proof (of := "compact.trunc-families-fully-faithful")
+/-!
+*Proof of “The functor of truncations is fully faithful”.*
+
 If two homomorphisms have the same truncations, they agree at every cell, since every cell lies in
 some truncation. A morphism of families is the family of truncations of the homomorphism of
-Construction `compact.hom-of-family`.
-:::
+Construction “The homomorphism of a morphism of families”.
+-/
 
-# The limit of a compatible family
+/-!
+## The limit of a compatible family
 
-Let $`(\boldsymbol{\mathsf{A}}_n, \varphi_n)_n` be a compatible family. For every sort $`s`, the
-inverse of $`\varphi_n` sends the cells of $`\boldsymbol{\mathsf{A}}_n` to cells of
-$`\boldsymbol{\mathsf{A}}_{n+1}`, bijectively onto its $`n`-cells and preserving the structure of
-the dimensions below $`n`. The cells of sort $`s` thus form a chain
-$`A_{0,s} \hookrightarrow A_{1,s} \hookrightarrow \cdots`, a *tower* of compact categories, whose
-limit is a compact $`\omega`-category (the Lean module `CategorialAlgebras.Compact.Tower`): its cells
+Let $(\boldsymbol{\mathsf{A}}_n, \varphi_n)_n$ be a compatible family. For every sort $s$, the
+inverse of $\varphi_n$ sends the cells of $\boldsymbol{\mathsf{A}}_n$ to cells of
+$\boldsymbol{\mathsf{A}}_{n+1}$, bijectively onto its $n$-cells and preserving the structure of
+the dimensions below $n$. The cells of sort $s$ thus form a chain
+$A_{0,s} \hookrightarrow A_{1,s} \hookrightarrow \cdots$, a *tower* of compact categories, whose
+limit is a compact $\omega$-category (the Lean module `CategorialAlgebras.Compact.Tower`): its cells
 are those of all the levels, each identified with its images, and the sources, targets and
-compositions of dimension $`k` are computed at any level above $`k` that contains the cells
-involved. This is the union of the draft, where the $`\boldsymbol{\mathsf{A}}_m` are subsets of the
-$`\boldsymbol{\mathsf{A}}_n`.
+compositions of dimension $k$ are computed at any level above $k$ that contains the cells
+involved. This is the union of the draft, where the $\boldsymbol{\mathsf{A}}_m$ are subsets of the
+$\boldsymbol{\mathsf{A}}_n$.
+-/
 
-```lean
 open CategoryStruct
 
 namespace CompatibleFamily
@@ -306,17 +306,18 @@ lemma inv_hom (s : S) (n : ℕ) (x : (truncation Sig (Nat.le_succ n)).obj (F.alg
     ((F.iso n).inv.map s).map (((F.iso n).hom.map s).map x) = x :=
   congrArg (fun H : (truncation Sig (Nat.le_succ n)).obj (F.alg (n + 1)) ⟶ _ => (H.map s).map x)
     (F.iso n).hom_inv_id
-```
 
-:::construction (label := "compact.family-tower") (central := false) (title := "The tower of a compatible family")
-For every sort $`s`, the cells of sort $`s` of the levels of a compatible family, with the
-embeddings $`A_{n,s} \to A_{n+1,s}` given by the inverses of the isomorphisms $`\varphi_n`, are a
-tower of compact categories: each embedding is injective, preserves the $`k`-sources, $`k`-targets
-and $`k`-compositions for $`k < n`, and its image is the set of $`n`-cells, since the cells of
-$`T^{(n,n+1)}_{\Sigma}(\boldsymbol{\mathsf{A}}_{n+1})` are the $`n`-cells of
-$`\boldsymbol{\mathsf{A}}_{n+1}`.
+/-!
+### The tower of a compatible family
 
-```lean
+For every sort $s$, the cells of sort $s$ of the levels of a compatible family, with the
+embeddings $A_{n,s} \to A_{n+1,s}$ given by the inverses of the isomorphisms $\varphi_n$, are a
+tower of compact categories: each embedding is injective, preserves the $k$-sources, $k$-targets
+and $k$-compositions for $k < n$, and its image is the set of $n$-cells, since the cells of
+$T^{(n,n+1)}_{\Sigma}(\boldsymbol{\mathsf{A}}_{n+1})$ are the $n$-cells of
+$\boldsymbol{\mathsf{A}}_{n+1}$.
+-/
+
 /-- The tower of the cells of sort `s` of a compatible family. -/
 @[reducible]
 def tower (s : S) : Tower.{w} where
@@ -338,14 +339,13 @@ def tower (s : S) : Tower.{w} where
         rw [Fin.val_last]; omega)
       rw [this]; exact hx
     exact ⟨((F.iso n).hom.map s).map ⟨x, hx'⟩, congrArg Subtype.val (F.inv_hom s n ⟨x, hx'⟩)⟩
-```
-:::
 
-The operations of $`\Sigma` commute with the embeddings, since the $`\varphi_n^{-1}` are
+/-!
+The operations of $\Sigma$ commute with the embeddings, since the $\varphi_n^{-1}$ are
 homomorphisms. An operation is therefore computed on finitely many cells of the limit at any level
 that contains them all.
+-/
 
-```lean
 open Signature
 
 lemma emb_op {ws : List S} {s : S} (σ : Sig ws s) (n : ℕ) (b : Arity (F.alg n) ws) :
@@ -408,17 +408,18 @@ lemma exists_cls_arity_ge {ws : List S} (z : Arity F.L ws) :
     ⟨fun j => (F.tower (ws.get j)).rep (z j) N ?_, fun j => (F.tower (ws.get j)).cls_rep _ _ _⟩⟩
   exact le_trans (Finset.le_sup (f := fun j => (F.tower (ws.get j)).lvl (z j))
     (Finset.mem_univ j)) hN
-```
 
-:::construction (label := "compact.limit-algebra") (central := false) (title := "The limit of a compatible family")
-The *limit* of a compatible family is the compact $`\omega`-categorial $`\Sigma`-algebra whose cells
-of sort $`s` are those of the limit of the tower of sort $`s`, and in which every
-$`\sigma \in \Sigma_{\mathbf{s}, s}` acts on a family of cells by acting at a common level. This
-is a compact $`\omega`-functor because, at every level $`n`, $`\sigma` is a compact $`n`-functor. This is the
-limit $`\varprojlim_n \boldsymbol{\mathsf{A}}_n` of the proof of Proposition `PUnivPropCatAlg` of
+/-!
+### The limit of a compatible family
+
+The *limit* of a compatible family is the compact $\omega$-categorial $\Sigma$-algebra whose cells
+of sort $s$ are those of the limit of the tower of sort $s$, and in which every
+$\sigma \in \Sigma_{\mathbf{s}, s}$ acts on a family of cells by acting at a common level. This
+is a compact $\omega$-functor because, at every level $n$, $\sigma$ is a compact $n$-functor. This is the
+limit $\varprojlim_n \boldsymbol{\mathsf{A}}_n$ of the proof of Proposition `PUnivPropCatAlg` of
 the draft.
+-/
 
-```lean
 /-- The compact `ω`-functor of an operation symbol on the limit. -/
 noncomputable def opFunctor {ws : List S} {s : S} (σ : Sig ws s) :
     OmegaFunctor (Arity F.L ws) (F.L s) where
@@ -471,20 +472,19 @@ noncomputable def limAlgebra : OmegaCatAlgebra.{u, v, w} Sig where
   carrier := F.L
   str s := Tower.limOmegaCategory _
   op σ := F.opFunctor σ
-```
-:::
 
-# The family of truncations of the limit
+/-!
+## The family of truncations of the limit
 
-The cells of $`\boldsymbol{\mathsf{A}}_n` are exactly the $`n`-cells of the limit: they are
-$`n`-cells, being $`n`-cells of $`\boldsymbol{\mathsf{A}}_{n+1}`, and an $`n`-cell of a higher
-level comes down to level $`n`. Sending a cell
-of $`\boldsymbol{\mathsf{A}}_n` to itself in the limit is thus a homomorphism from
-$`\boldsymbol{\mathsf{A}}_n` to the $`n`-truncation of the limit, bijective at every sort; and a
-homomorphism of compact $`n`-categorial algebras that is bijective at every sort is an isomorphism,
+The cells of $\boldsymbol{\mathsf{A}}_n$ are exactly the $n$-cells of the limit: they are
+$n$-cells, being $n$-cells of $\boldsymbol{\mathsf{A}}_{n+1}$, and an $n$-cell of a higher
+level comes down to level $n$. Sending a cell
+of $\boldsymbol{\mathsf{A}}_n$ to itself in the limit is thus a homomorphism from
+$\boldsymbol{\mathsf{A}}_n$ to the $n$-truncation of the limit, bijective at every sort; and a
+homomorphism of compact $n$-categorial algebras that is bijective at every sort is an isomorphism,
 its inverse preserving the structure because the homomorphism does and is injective.
+-/
 
-```lean
 end CompatibleFamily
 
 namespace CatAlgebra
@@ -558,18 +558,19 @@ lemma toLim_bijective (n : ℕ) (s : S) : Function.Bijective ((F.toLim n).map s)
     exact ⟨a, Subtype.ext (show (F.tower s).cls n a = z.1 from ha)⟩⟩
 
 instance (n : ℕ) : IsIso (F.toLim n) := CatAlgebra.Hom.isIso_of_bijective _ (F.toLim_bijective n)
-```
 
-:::construction (label := "compact.limit-iso") (central := false) (title := "A compatible family is the family of truncations of its limit")
-The isomorphisms $`\boldsymbol{\mathsf{A}}_n \cong T^{(n,\omega)}_{\Sigma}(\varprojlim_m \boldsymbol{\mathsf{A}}_m)`
-that send a cell to itself are compatible with the isomorphisms $`\varphi_n` of the family and with
+/-!
+### A compatible family is the family of truncations of its limit
+
+The isomorphisms $\boldsymbol{\mathsf{A}}_n \cong T^{(n,\omega)}_{\Sigma}(\varprojlim_m \boldsymbol{\mathsf{A}}_m)$
+that send a cell to itself are compatible with the isomorphisms $\varphi_n$ of the family and with
 the canonical isomorphisms of the family of truncations: they form an isomorphism of compatible
-families from $`(\boldsymbol{\mathsf{A}}_n, \varphi_n)_n` to the family of truncations of its limit.
-Compatibility holds because a cell $`x` of $`T^{(n,n+1)}_{\Sigma}(\boldsymbol{\mathsf{A}}_{n+1})` and its
-image $`\varphi_n(x)` in $`\boldsymbol{\mathsf{A}}_n` are the same cell of the limit, the embedding
-being $`\varphi_n^{-1}`.
+families from $(\boldsymbol{\mathsf{A}}_n, \varphi_n)_n$ to the family of truncations of its limit.
+Compatibility holds because a cell $x$ of $T^{(n,n+1)}_{\Sigma}(\boldsymbol{\mathsf{A}}_{n+1})$ and its
+image $\varphi_n(x)$ in $\boldsymbol{\mathsf{A}}_n$ are the same cell of the limit, the embedding
+being $\varphi_n^{-1}$.
+-/
 
-```lean
 /-- A compatible family is isomorphic to the family of truncations of its limit. -/
 noncomputable def toLimFamily : F ⟶ (truncFamilies Sig).obj F.limAlgebra where
   map := F.toLim
@@ -604,65 +605,61 @@ end CompatibleFamily
 instance (F : CompatibleFamily.{u, v, w} Sig) : IsIso F.toLimFamily :=
   haveI : ∀ n, IsIso (F.toLimFamily.map n) := fun n => inferInstanceAs (IsIso (F.toLim n))
   CompatibleFamily.isIso_of_components _
-```
-:::
 
-:::proposition (label := "compact.trunc-families-ess-surj") (central := false) (title := "Every compatible family comes from an ω-categorial algebra")
-Every compatible family is isomorphic to the family of truncations of a compact
-$`\omega`-categorial $`\Sigma`-algebra, its limit: the functor of truncations is essentially
+/-- Every compatible family is isomorphic to the family of truncations of a compact
+$\omega$-categorial $\Sigma$-algebra, its limit: the functor of truncations is essentially
 surjective.
-
-```lean
+-/
 instance truncFamilies_essSurj : (truncFamilies.{u, v, w} Sig).EssSurj where
   mem_essImage F := ⟨F.limAlgebra, ⟨(asIso F.toLimFamily).symm⟩⟩
-```
-:::
 
-:::proof (of := "compact.trunc-families-ess-surj")
-By Construction `compact.limit-iso`, a compatible family is isomorphic to the family of truncations
-of its limit (Construction `compact.limit-algebra`).
-:::
+/-!
+*Proof of “Every compatible family comes from an ω-categorial algebra”.*
 
-# The universal property
+By Construction “A compatible family is the family of truncations of its limit”, a compatible family is isomorphic to the family of truncations
+of its limit (Construction “The limit of a compatible family”).
+-/
 
-:::theorem (label := "compact.omega-cat-alg-pseudo-limit") (central := true) (title := "ωCatAlg(Σ) is the pseudo-limit of the nCatAlg(Σ)")
-For every many-sorted signature $`\Sigma`, the functor of truncations from
-$`\omega\mathsf{CatAlg}(\Sigma)` to the category of compatible families is an equivalence of
+/-!
+## The universal property
+-/
+
+/-- For every many-sorted signature $\Sigma$, the functor of truncations from
+$\omega\mathsf{CatAlg}(\Sigma)$ to the category of compatible families is an equivalence of
 categories. That is:
 
-1. it is faithful and full: the homomorphisms $`\boldsymbol{\mathsf{A}} \to \boldsymbol{\mathsf{B}}`
-   of compact $`\omega`-categorial $`\Sigma`-algebras correspond bijectively, through their
+1. it is faithful and full: the homomorphisms $\boldsymbol{\mathsf{A}} \to \boldsymbol{\mathsf{B}}$
+   of compact $\omega$-categorial $\Sigma$-algebras correspond bijectively, through their
    truncations, to the morphisms between the families of truncations (Corollary `CLimitNat` of the
    draft, first part);
 2. it is essentially surjective: every compatible family is isomorphic to the family of
-   truncations of a compact $`\omega`-categorial $`\Sigma`-algebra, its limit.
+   truncations of a compact $\omega$-categorial $\Sigma$-algebra, its limit.
 
 This is Proposition `PUnivPropCatAlg` of the draft, with the projective limit replaced by the
 pseudo-limit.
-
-```lean
+-/
 theorem truncFamilies_isEquivalence : (truncFamilies.{u, v, w} Sig).IsEquivalence :=
   { faithful := inferInstance, full := inferInstance, essSurj := inferInstance }
-```
-:::
 
-:::proof (of := "compact.omega-cat-alg-pseudo-limit")
+/-!
+*Proof of “ωCatAlg(Σ) is the pseudo-limit of the nCatAlg(Σ)”.*
+
 The functor of truncations is faithful and full by Proposition
-`compact.trunc-families-fully-faithful`, and essentially surjective by Proposition
-`compact.trunc-families-ess-surj`; a functor with these three properties is an equivalence.
-:::
+“The functor of truncations is fully faithful”, and essentially surjective by Proposition
+“Every compatible family comes from an ω-categorial algebra”; a functor with these three properties is an equivalence.
+-/
 
-:::remark (title := "The universal property for functors")
+/-!
+### The universal property for functors
+
 The form of Proposition `PUnivPropCatAlg` of the draft with functors follows: a family of functors
-$`F_n \colon \mathsf{L} \to \mathsf{nCatAlg}(\Sigma)` with natural isomorphisms
-$`T^{(n,n+1)}_{\Sigma} \circ F_{n+1} \cong F_n` is the same as a functor from $`\mathsf{L}` to the
+$F_n \colon \mathsf{L} \to \mathsf{nCatAlg}(\Sigma)$ with natural isomorphisms
+$T^{(n,n+1)}_{\Sigma} \circ F_{n+1} \cong F_n$ is the same as a functor from $\mathsf{L}$ to the
 category of compatible families, and composing it with an inverse of the equivalence gives a functor
-$`\mathsf{L} \to \omega\mathsf{CatAlg}(\Sigma)` whose truncations are the $`F_n`, up to compatible
+$\mathsf{L} \to \omega\mathsf{CatAlg}(\Sigma)$ whose truncations are the $F_n$, up to compatible
 natural isomorphisms, unique up to a unique natural isomorphism. Likewise, the second part of
 Corollary `CLimitNat` of the draft, on natural transformations, is the full faithfulness of
 composing with an equivalence. These consequences are not formalized here.
-:::
+-/
 
-```lean
 end CategorialAlgebras.Compact
-```

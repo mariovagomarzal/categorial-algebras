@@ -1,17 +1,15 @@
-import Stemma
 import Mathlib.CategoryTheory.Category.Basic
 import CategorialAlgebras.Evaluation
 
-open Verso.Genre Manual InlineLean Stemma
+/-!
+# Substitutions and derivors
 
-#doc (Stemma) "Substitutions and derivors" =>
-
-This document gathers the notions on terms that the generalized ep-derivors of Section
+This file gathers the notions on terms that the generalized ep-derivors of Section
 `SGenEpDerivors` of the draft rest on: the variables of a word, substitutions, the values of
 terms under substitutions and homomorphisms, and the derivors between many-sorted signatures,
-with the category $`\mathsf{Sig}_{\mathfrak{d}}` they form.
+with the category $\mathsf{Sig}_{\mathfrak{d}}$ they form.
+-/
 
-```lean
 universe u v u' v' u'' v'' w
 
 namespace CategorialAlgebras
@@ -19,28 +17,31 @@ namespace CategorialAlgebras
 open Signature
 
 variable {S : Type u} {Sig : Signature.{u, v} S}
-```
 
-# The variables of a word
+/-!
+## The variables of a word
 
-The draft fixes the variables $`v^{s}_{n}`, for $`s \in S` and $`n \in \mathbb{N}`, and lets
-$`\downarrow\mathbf{s}` be the variables $`v^{s}_{i}` for $`i` smaller than the number of
-occurrences of $`s` in the word $`\mathbf{s}`; it then identifies the $`j`-th letter of
-$`\mathbf{s}` with a variable $`v^{\mathbf{s}}_{j}`, and a family $`\mathbf{a} \in A_{\mathbf{s}}`
-with the valuation that sends $`v^{\mathbf{s}}_{j}` to $`a_j`. The library takes this
-identification as the definition: the variables of $`\mathbf{s}` *are* its positions, the
-position $`j` being a variable of sort $`s_j`.
+The draft fixes the variables $v^{s}_{n}$, for $s \in S$ and $n \in \mathbb{N}$, and lets
+$\downarrow\mathbf{s}$ be the variables $v^{s}_{i}$ for $i$ smaller than the number of
+occurrences of $s$ in the word $\mathbf{s}$; it then identifies the $j$-th letter of
+$\mathbf{s}$ with a variable $v^{\mathbf{s}}_{j}$, and a family $\mathbf{a} \in A_{\mathbf{s}}$
+with the valuation that sends $v^{\mathbf{s}}_{j}$ to $a_j$. The library takes this
+identification as the definition: the variables of $\mathbf{s}$ *are* its positions, the
+position $j$ being a variable of sort $s_j$.
+-/
 
-:::definition (label := "word-variables") (central := false) (title := "Variables of a word")
-For a set $`I` and a mapping $`\kappa \colon I \to S`, the $`S`-sorted set of *variables*
-$`\downarrow\kappa` has, as variables of sort $`s`, the $`i \in I` with $`\kappa(i) = s`. For a
-word $`\mathbf{s}`, $`\downarrow\mathbf{s}` is $`\downarrow\kappa` for the mapping
-$`j \mapsto s_j` on $`|\mathbf{s}|`; for a mapping $`\varphi \colon S \to T`,
-$`\downarrow\varphi^{\star}(\mathbf{s})` is $`\downarrow\kappa` for $`j \mapsto \varphi(s_j)`.
-A family $`\mathbf{a} = (a_i)_{i \in I}` with $`a_i \in A_{\kappa(i)}` is identified with the
-valuation of $`\downarrow\kappa` in $`A` that sends $`i` to $`a_i`.
+/-!
+### Variables of a word
 
-```lean
+For a set $I$ and a mapping $\kappa \colon I \to S$, the $S$-sorted set of *variables*
+$\downarrow\kappa$ has, as variables of sort $s$, the $i \in I$ with $\kappa(i) = s$. For a
+word $\mathbf{s}$, $\downarrow\mathbf{s}$ is $\downarrow\kappa$ for the mapping
+$j \mapsto s_j$ on $|\mathbf{s}|$; for a mapping $\varphi \colon S \to T$,
+$\downarrow\varphi^{\star}(\mathbf{s})$ is $\downarrow\kappa$ for $j \mapsto \varphi(s_j)$.
+A family $\mathbf{a} = (a_i)_{i \in I}$ with $a_i \in A_{\kappa(i)}$ is identified with the
+valuation of $\downarrow\kappa$ in $A$ that sends $i$ to $a_i$.
+-/
+
 /-- The variables indexed by `I`, the variable `i` being of sort `κ i`. -/
 def Vars {I : Type} (κ : I → S) : S → Type := fun s => {i : I // κ i = s}
 
@@ -52,28 +53,28 @@ def Vars.mk (i : I) : Vars κ (κ i) := ⟨i, rfl⟩
 /-- The valuation of `↓κ` given by a family. -/
 def famVal {A : S → Type w} (a : ∀ i, A (κ i)) : ∀ s, Vars κ s → Part (A s) :=
   fun _ x => Part.some (x.2 ▸ a x.1)
-```
-:::
 
-```lean
 @[simp] lemma famVal_mk {A : S → Type w} (a : ∀ i, A (κ i)) (i : I) :
     famVal a (κ i) (Vars.mk i) = Part.some (a i) := rfl
-```
 
-# Substitutions
+/-!
+## Substitutions
+-/
 
-:::definition (label := "substitution") (central := false) (title := "Substitutions")
-For $`S`-sorted sets $`X` and $`Y` and an $`S`-sorted mapping
-$`f \colon X \to \mathrm{T}_{\Sigma}(Y)`, the *substitution* $`f^{\sharp}` is the mapping from
-$`\mathrm{T}_{\Sigma}(X)` to $`\mathrm{T}_{\Sigma}(Y)` that replaces every variable $`x` by
-$`f(x)`: $`f^{\sharp}(x) = f(x)` and
-$`f^{\sharp}(\sigma((t_j)_j)) = \sigma((f^{\sharp}(t_j))_j)`. It acts on existence equations
-member by member, and $`f^{\sharp}[\mathcal{H}]` is the image of a set $`\mathcal{H}` of
-existence equations. For a family $`(P_i)_{i \in I}` with $`P_i \in \mathrm{T}_{\Sigma}(Y)_{\kappa(i)}`,
-$`(P_i)^{\sharp}_{i \in I}` is the substitution that sends the variable $`i` of $`\downarrow\kappa`
-to $`P_i`.
+/-!
+### Substitutions
 
-```lean
+For $S$-sorted sets $X$ and $Y$ and an $S$-sorted mapping
+$f \colon X \to \mathrm{T}_{\Sigma}(Y)$, the *substitution* $f^{\sharp}$ is the mapping from
+$\mathrm{T}_{\Sigma}(X)$ to $\mathrm{T}_{\Sigma}(Y)$ that replaces every variable $x$ by
+$f(x)$: $f^{\sharp}(x) = f(x)$ and
+$f^{\sharp}(\sigma((t_j)_j)) = \sigma((f^{\sharp}(t_j))_j)$. It acts on existence equations
+member by member, and $f^{\sharp}[\mathcal{H}]$ is the image of a set $\mathcal{H}$ of
+existence equations. For a family $(P_i)_{i \in I}$ with $P_i \in \mathrm{T}_{\Sigma}(Y)_{\kappa(i)}$,
+$(P_i)^{\sharp}_{i \in I}$ is the substitution that sends the variable $i$ of $\downarrow\kappa$
+to $P_i$.
+-/
+
 /-- The substitution `f♯`. -/
 def Term.subst {X Y : S → Type} (f : ∀ s, X s → Term Sig Y s) : {s : S} → Term Sig X s → Term Sig Y s
   | _, .var x => f _ x
@@ -91,22 +92,19 @@ def EEq.substSet {X Y : S → Type} (f : ∀ s, X s → Term Sig Y s) (H : Set (
 /-- The substitution `(Pᵢ)♯` that sends the variable `i` of `↓κ` to `P i`. -/
 def famSubst {Y : S → Type} (P : ∀ i, Term Sig Y (κ i)) : ∀ s, Vars κ s → Term Sig Y s :=
   fun _ x => x.2 ▸ P x.1
-```
-:::
 
-:::definition (label := "eeq-set-holds") (central := false) (title := "Satisfaction of a set of existence equations")
-For a set $`\mathcal{H}` of existence equations, $`\mathbf{A} \models \mathcal{H}[a]` when every
-equation of $`\mathcal{H}` holds in $`\mathbf{A}` under the valuation $`a`.
+/-!
+### Satisfaction of a set of existence equations
 
-```lean
+For a set $\mathcal{H}$ of existence equations, $\mathbf{A} \models \mathcal{H}[a]$ when every
+equation of $\mathcal{H}$ holds in $\mathbf{A}$ under the valuation $a$.
+-/
+
 /-- `𝐀 ⊨ ℋ[a]`. -/
 def EEq.HoldsAll {X : S → Type} (A : PartialAlgebra.{u, v, w} Sig) (val : ∀ s, X s → Part (A s))
     (H : Set (EEq Sig X)) : Prop :=
   ∀ e ∈ H, e.Holds A val
-```
-:::
 
-```lean
 namespace Term
 
 variable {X Y : S → Type}
@@ -143,25 +141,28 @@ lemma famSubst_subst {I : Type} {κ : I → S} {Y Z : S → Type} (P : ∀ i, Te
     (g : ∀ s, Y s → Term Sig Z s) (s : S) (x : Vars κ s) :
     (famSubst P s x).subst g = famSubst (fun i => (P i).subst g) s x := by
   obtain ⟨i, rfl⟩ := x; rfl
-```
 
-# Values of terms
+/-!
+## Values of terms
 
 The draft states the next fact for total valuations, with the hypothesis that every
-$`f(y)^{\mathbf{A}}[a]` be defined, and observes that it cannot be dropped. Valuations are partial
-in the library, and $`f^{\mathbf{A}}[a]`, the valuation that sends $`y` to
-$`f(y)^{\mathbf{A}}[a]`, is undefined where $`f(y)^{\mathbf{A}}[a]` is; the equality then holds
-with no hypothesis, and the draft's statement is the case in which $`f^{\mathbf{A}}[a]` is total.
+$f(y)^{\mathbf{A}}[a]$ be defined, and observes that it cannot be dropped. Valuations are partial
+in the library, and $f^{\mathbf{A}}[a]$, the valuation that sends $y$ to
+$f(y)^{\mathbf{A}}[a]$, is undefined where $f(y)^{\mathbf{A}}[a]$ is; the equality then holds
+with no hypothesis, and the draft's statement is the case in which $f^{\mathbf{A}}[a]$ is total.
+-/
 
-:::proposition (label := "subst-eval") (central := false) (title := "Values under a substitution")
-Let $`\mathbf{A}` be a partial $`\Sigma`-algebra, $`f \colon X \to \mathrm{T}_{\Sigma}(Y)` and
-$`a` a valuation of $`Y` in $`A`. For every term $`R \in \mathrm{T}_{\Sigma}(X)_t`,
-$`f^{\sharp}(R)^{\mathbf{A}}[a]` is defined if and only if $`R^{\mathbf{A}}[f^{\mathbf{A}}[a]]` is
-defined, and then they are equal. Consequently, for every set $`\mathcal{H}` of existence
-equations with variables in $`X`, $`\mathbf{A} \models f^{\sharp}[\mathcal{H}][a]` if and only if
-$`\mathbf{A} \models \mathcal{H}[f^{\mathbf{A}}[a]]`.
+/-!
+### Values under a substitution
 
-```lean
+Let $\mathbf{A}$ be a partial $\Sigma$-algebra, $f \colon X \to \mathrm{T}_{\Sigma}(Y)$ and
+$a$ a valuation of $Y$ in $A$. For every term $R \in \mathrm{T}_{\Sigma}(X)_t$,
+$f^{\sharp}(R)^{\mathbf{A}}[a]$ is defined if and only if $R^{\mathbf{A}}[f^{\mathbf{A}}[a]]$ is
+defined, and then they are equal. Consequently, for every set $\mathcal{H}$ of existence
+equations with variables in $X$, $\mathbf{A} \models f^{\sharp}[\mathcal{H}][a]$ if and only if
+$\mathbf{A} \models \mathcal{H}[f^{\mathbf{A}}[a]]$.
+-/
+
 theorem Term.eval_subst {X Y : S → Type} (A : PartialAlgebra.{u, v, w} Sig)
     (f : ∀ s, X s → Term Sig Y s) (val : ∀ s, Y s → Part (A s)) {t : S} (R : Term Sig X t) :
     (R.subst f).eval A val = R.eval A (fun s x => (f s x).eval A val) := by
@@ -175,25 +176,27 @@ theorem EEq.holdsAll_substSet {X Y : S → Type} (A : PartialAlgebra.{u, v, w} S
       EEq.HoldsAll A (fun s x => (f s x).eval A val) H := by
   simp only [EEq.HoldsAll, EEq.substSet, Set.forall_mem_image, EEq.Holds, EEq.subst,
     Term.eval_subst]
-```
-:::
 
-:::proof (of := "subst-eval")
-By induction on $`R`. For a variable $`x`, both sides are $`f(x)^{\mathbf{A}}[a]`. For
-$`R = \sigma((R_j)_j)`, $`f^{\sharp}(R) = \sigma((f^{\sharp}(R_j))_j)`, and both sides are defined
-exactly when the values of the $`R_j`, equal by the induction hypothesis, are defined and in the
-domain of $`F_\sigma`, and then both are the value of $`F_\sigma` on them. The second statement
+/-!
+*Proof of “Values under a substitution”.*
+
+By induction on $R$. For a variable $x$, both sides are $f(x)^{\mathbf{A}}[a]$. For
+$R = \sigma((R_j)_j)$, $f^{\sharp}(R) = \sigma((f^{\sharp}(R_j))_j)$, and both sides are defined
+exactly when the values of the $R_j$, equal by the induction hypothesis, are defined and in the
+domain of $F_\sigma$, and then both are the value of $F_\sigma$ on them. The second statement
 follows, an existence equation holding exactly when the values of its members are defined and
 equal.
-:::
+-/
 
-:::proposition (label := "hom-eval") (central := false) (title := "Values under a homomorphism")
-Let $`h \colon \mathbf{A} \to \mathbf{B}` be a homomorphism of partial $`\Sigma`-algebras and
-$`a` a valuation of $`X` in $`A`. If $`P^{\mathbf{A}}[a]` is defined, then
-$`P^{\mathbf{B}}[h \circ a]` is defined and equal to $`h(P^{\mathbf{A}}[a])`. Consequently, if
-$`\mathbf{A} \models \mathcal{H}[a]`, then $`\mathbf{B} \models \mathcal{H}[h \circ a]`.
+/-!
+### Values under a homomorphism
 
-```lean
+Let $h \colon \mathbf{A} \to \mathbf{B}$ be a homomorphism of partial $\Sigma$-algebras and
+$a$ a valuation of $X$ in $A$. If $P^{\mathbf{A}}[a]$ is defined, then
+$P^{\mathbf{B}}[h \circ a]$ is defined and equal to $h(P^{\mathbf{A}}[a])$. Consequently, if
+$\mathbf{A} \models \mathcal{H}[a]$, then $\mathbf{B} \models \mathcal{H}[h \circ a]$.
+-/
+
 theorem Term.eval_hom {X : S → Type} {A B : PartialAlgebra.{u, v, w} Sig}
     (H : PartialAlgebra.Hom A B) (val : ∀ s, X s → Part (A s)) {t : S} (P : Term Sig X t)
     (h : (P.eval A val).Dom) :
@@ -226,45 +229,45 @@ theorem EEq.holdsAll_hom {X : S → Type} {A B : PartialAlgebra.{u, v, w} Sig}
   · rw [Term.eval_hom H val e.lhs h₁]; trivial
   · rw [Term.eval_hom H val e.rhs h₂]; trivial
   · simp only [Term.eval_hom H val e.lhs h₁, Term.eval_hom H val e.rhs h₂, Part.get_some, heq]
-```
-:::
 
-:::proof (of := "hom-eval")
-By induction on $`P`: a homomorphism sends a defined value of $`F_\sigma` to a defined value of
-$`G_\sigma`, its image. An existence equation whose members have defined and equal values in
-$`\mathbf{A}` has, in $`\mathbf{B}`, the images of these values as values.
-:::
+/-!
+*Proof of “Values under a homomorphism”.*
 
-# Derivors
+By induction on $P$: a homomorphism sends a defined value of $F_\sigma$ to a defined value of
+$G_\sigma$, its image. An existence equation whose members have defined and equal values in
+$\mathbf{A}$ has, in $\mathbf{B}$, the images of these values as values.
+-/
 
-:::definition (label := "derivor") (central := false) (title := "Derivors")
-A *derivor* from a many-sorted signature $`(S, \Sigma)` to another $`(T, \Lambda)` is a pair
-$`(\varphi, d)`, where $`\varphi \colon S \to T` and $`d` assigns to every
-$`\sigma \in \Sigma_{\mathbf{s}, s}` a term
-$`d(\sigma) \in \mathrm{T}_{\Lambda}(\downarrow\varphi^{\star}(\mathbf{s}))_{\varphi(s)}`.
+/-!
+## Derivors
+-/
 
-```lean
+/-- A *derivor* from a many-sorted signature $(S, \Sigma)$ to another $(T, \Lambda)$ is a pair
+$(\varphi, d)$, where $\varphi \colon S \to T$ and $d$ assigns to every
+$\sigma \in \Sigma_{\mathbf{s}, s}$ a term
+$d(\sigma) \in \mathrm{T}_{\Lambda}(\downarrow\varphi^{\star}(\mathbf{s}))_{\varphi(s)}$.
+-/
 structure Derivor {T : Type u'} (Sig : Signature.{u, v} S) (Lam : Signature.{u', v'} T) where
   /-- The mapping of sorts `φ`. -/
   sortMap : S → T
   /-- The term `d(σ)` of each operation symbol. -/
   op : ∀ {ws : List S} {s : S}, Sig ws s → Term Lam (Vars (sortMap ∘ ws.get)) (sortMap s)
-```
-:::
 
-:::definition (label := "derivor-lift") (central := false) (title := "The translation of terms along a derivor")
-A derivor $`(\varphi, d)` translates the terms of $`\Sigma` with variables in
-$`\downarrow\kappa` into terms of $`\Lambda` with variables in $`\downarrow(\varphi \circ \kappa)`:
-the mapping $`d^{\sharp}` is defined by recursion on terms as
+/-!
+### The translation of terms along a derivor
 
-1. (H1) $`d^{\sharp}(i) = i` for a variable $`i`;
-2. (H2) $`d^{\sharp}(\sigma((R_j)_j)) = (d^{\sharp}(R_j))^{\sharp}_j(d(\sigma))`, i.e.,
-   $`d(\sigma)` with $`d^{\sharp}(R_j)` substituted for its variable $`j`.
+A derivor $(\varphi, d)$ translates the terms of $\Sigma$ with variables in
+$\downarrow\kappa$ into terms of $\Lambda$ with variables in $\downarrow(\varphi \circ \kappa)$:
+the mapping $d^{\sharp}$ is defined by recursion on terms as
 
-The draft defines $`d^{\sharp}` on the terms with variables in $`\downarrow\mathbf{s}`; it is the
-case of $`\kappa` given by a word.
+1. (H1) $d^{\sharp}(i) = i$ for a variable $i$;
+2. (H2) $d^{\sharp}(\sigma((R_j)_j)) = (d^{\sharp}(R_j))^{\sharp}_j(d(\sigma))$, i.e.,
+   $d(\sigma)$ with $d^{\sharp}(R_j)$ substituted for its variable $j$.
 
-```lean
+The draft defines $d^{\sharp}$ on the terms with variables in $\downarrow\mathbf{s}$; it is the
+case of $\kappa$ given by a word.
+-/
+
 variable {T : Type u'} {Lam : Signature.{u', v'} T}
 
 /-- The translation `d♯` of terms along a derivor. -/
@@ -272,16 +275,16 @@ def Derivor.lift (δ : Derivor Sig Lam) {I : Type} {κ : I → S} :
     {t : S} → Term Sig (Vars κ) t → Term Lam (Vars (δ.sortMap ∘ κ)) (δ.sortMap t)
   | _, .var x => .var ⟨x.1, congrArg δ.sortMap x.2⟩
   | _, .app σ ts => (δ.op σ).subst (famSubst fun j => δ.lift (ts j))
-```
-:::
 
-:::proposition (label := "derivor-lift-subst") (central := false) (title := "Translations commute with substitutions")
-Let $`(\varphi, d)` be a derivor. Then $`d^{\sharp}(\sigma((j)_{j}))= d(\sigma)` for every
-$`\sigma \in \Sigma_{\mathbf{s}, s}`, and, for every term $`Q \in \mathrm{T}_{\Sigma}(\downarrow\kappa')_t`
-and every family $`(P_i)_{i}` with $`P_i \in \mathrm{T}_{\Sigma}(\downarrow\kappa)_{\kappa'(i)}`,
-$`d^{\sharp}((P_i)^{\sharp}_i(Q)) = (d^{\sharp}(P_i))^{\sharp}_i(d^{\sharp}(Q))`.
+/-!
+### Translations commute with substitutions
 
-```lean
+Let $(\varphi, d)$ be a derivor. Then $d^{\sharp}(\sigma((j)_{j}))= d(\sigma)$ for every
+$\sigma \in \Sigma_{\mathbf{s}, s}$, and, for every term $Q \in \mathrm{T}_{\Sigma}(\downarrow\kappa')_t$
+and every family $(P_i)_{i}$ with $P_i \in \mathrm{T}_{\Sigma}(\downarrow\kappa)_{\kappa'(i)}$,
+$d^{\sharp}((P_i)^{\sharp}_i(Q)) = (d^{\sharp}(P_i))^{\sharp}_i(d^{\sharp}(Q))$.
+-/
+
 theorem Derivor.lift_app_vars (δ : Derivor Sig Lam) {ws : List S} {s : S} (σ : Sig ws s) :
     δ.lift (Term.app σ fun j => Term.var (Vars.mk (κ := ws.get) j)) = δ.op σ := by
   simp only [Derivor.lift]
@@ -296,25 +299,29 @@ theorem Derivor.lift_subst (δ : Derivor Sig Lam) {I' : Type} {κ' : I' → S}
   | var x => obtain ⟨i, rfl⟩ := x; rfl
   | app σ ts ih =>
     simp only [Term.subst, Derivor.lift, ih, Term.subst_subst, famSubst_subst]
-```
-:::
 
-:::proof (of := "derivor-lift-subst")
+/-!
+*Proof of “Translations commute with substitutions”.*
+
 The first equation is (H2) together with (H1), the substitution of every variable by itself being
-the identity. The second one is proved by induction on $`Q`: for a variable it is the definition of
-the substitutions, and for $`Q = \sigma((Q_j)_j)` it follows from the induction hypothesis and the
+the identity. The second one is proved by induction on $Q$: for a variable it is the definition of
+the substitutions, and for $Q = \sigma((Q_j)_j)$ it follows from the induction hypothesis and the
 fact that substituting twice is substituting the composite.
-:::
+-/
 
-# The category of signatures and derivors
+/-!
+## The category of signatures and derivors
+-/
 
-:::construction (label := "derivor-id-comp") (central := false) (title := "Identity and composite derivors")
-(H3) The *identity* derivor at $`(S, \Sigma)` is $`(\mathrm{id}_S, \eta^{\Sigma})`, with
-$`\eta^{\Sigma}(\sigma) = \sigma((j)_{j \in |\mathbf{s}|})`. The *composite* of $`(\varphi, d)`
-and a derivor $`(\psi, e)` from $`(T, \Lambda)` to $`(U, \Omega)` is
-$`(\psi \circ \varphi, e^{\sharp} \circ d)`.
+/-!
+### Identity and composite derivors
 
-```lean
+(H3) The *identity* derivor at $(S, \Sigma)$ is $(\mathrm{id}_S, \eta^{\Sigma})$, with
+$\eta^{\Sigma}(\sigma) = \sigma((j)_{j \in |\mathbf{s}|})$. The *composite* of $(\varphi, d)$
+and a derivor $(\psi, e)$ from $(T, \Lambda)$ to $(U, \Omega)$ is
+$(\psi \circ \varphi, e^{\sharp} \circ d)$.
+-/
+
 /-- The identity derivor. -/
 def Derivor.id (Sig : Signature.{u, v} S) : Derivor Sig Sig where
   sortMap := _root_.id
@@ -326,14 +333,14 @@ variable {U : Type u''} {Om : Signature.{u'', v''} U}
 def Derivor.comp (ε : Derivor Lam Om) (δ : Derivor Sig Lam) : Derivor Sig Om where
   sortMap := ε.sortMap ∘ δ.sortMap
   op σ := ε.lift (δ.op σ)
-```
-:::
 
-:::proposition (label := "derivor-lift-id-comp") (central := false) (title := "Translations along identities and composites")
+/-!
+### Translations along identities and composites
+
 The translation along the identity derivor is the identity, and the translation along a composite
-is the composite of the translations: $`(e^{\sharp} \circ d)^{\sharp} = e^{\sharp} \circ d^{\sharp}`.
+is the composite of the translations: $(e^{\sharp} \circ d)^{\sharp} = e^{\sharp} \circ d^{\sharp}$.
+-/
 
-```lean
 theorem Derivor.lift_id {t : S} (R : Term Sig (Vars κ) t) : (Derivor.id Sig).lift R = R := by
   induction R with
   | var x => rfl
@@ -350,20 +357,22 @@ theorem Derivor.lift_comp (ε : Derivor Lam Om) (δ : Derivor Sig Lam) {t : S}
       ε.lift ((δ.op σ).subst (famSubst fun j => δ.lift (ts j)))
     rw [ε.lift_subst, funext ih]
     rfl
-```
-:::
 
-:::proof (of := "derivor-lift-id-comp")
-By induction on terms. For the identity, $`\eta^{\Sigma}(\sigma)` with the translated arguments
-substituted is $`\sigma` applied to them. For the composite, the case of an operation symbol is
-Proposition `derivor-lift-subst` applied to $`e^{\sharp}`.
-:::
+/-!
+*Proof of “Translations along identities and composites”.*
 
-:::definition (label := "sig-d") (central := false) (title := "The category Sig_𝔡")
+By induction on terms. For the identity, $\eta^{\Sigma}(\sigma)$ with the translated arguments
+substituted is $\sigma$ applied to them. For the composite, the case of an operation symbol is
+Proposition “Translations commute with substitutions” applied to $e^{\sharp}$.
+-/
+
+/-!
+### The category Sig_𝔡
+
 The many-sorted signatures and the derivors, with the identities and composites of Construction
-`derivor-id-comp`, form a category $`\mathsf{Sig}_{\mathfrak{d}}`.
+“Identity and composite derivors”, form a category $\mathsf{Sig}_{\mathfrak{d}}$.
+-/
 
-```lean
 /-- The many-sorted signatures, as objects of `Sig_𝔡`. -/
 structure SigD where
   /-- The set of sorts. -/
@@ -395,18 +404,17 @@ instance SigD.category : CategoryTheory.Category.{max u v} SigD.{u, v} where
     congr 1
     funext ws s σ
     exact (Derivor.lift_comp ζ ε _).symm
-```
-:::
 
-:::proof (of := "sig-d")
-The composite of $`(\varphi, d)` with the identity is $`(\varphi, \eta^{\sharp} \circ d) = (\varphi, d)`
-and the composite of the identity with $`(\varphi, d)` is $`(\varphi, d^{\sharp} \circ \eta)`,
-which is $`(\varphi, d)` by Proposition `derivor-lift-subst`. Associativity follows from
-$`(e^{\sharp} \circ d)^{\sharp} = e^{\sharp} \circ d^{\sharp}`, Proposition
-`derivor-lift-id-comp`.
-:::
+/-!
+*Proof of “The category Sig_𝔡”.*
 
-```lean
+The composite of $(\varphi, d)$ with the identity is $(\varphi, \eta^{\sharp} \circ d) = (\varphi, d)$
+and the composite of the identity with $(\varphi, d)$ is $(\varphi, d^{\sharp} \circ \eta)$,
+which is $(\varphi, d)$ by Proposition “Translations commute with substitutions”. Associativity follows from
+$(e^{\sharp} \circ d)^{\sharp} = e^{\sharp} \circ d^{\sharp}$, Proposition
+“Translations along identities and composites”.
+-/
+
 namespace EEq
 
 variable {X : S → Type} {A : PartialAlgebra.{u, v, w} Sig} {val : ∀ s, X s → Part (A s)}
@@ -461,4 +469,3 @@ lemma Term.eval_congr_vars {X : S → Type} {A : PartialAlgebra.{u, v, w} Sig}
       eval_congr_vars (ts j) fun p hp => h p (Set.mem_iUnion.mpr ⟨j, hp⟩)
 
 end CategorialAlgebras
-```

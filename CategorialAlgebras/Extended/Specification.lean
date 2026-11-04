@@ -1,20 +1,18 @@
-import Stemma
 import CategorialAlgebras.PartialAlgebra
 import CategorialAlgebras.Extended.Algebra
 
-open Verso.Genre Manual InlineLean Stemma
+/-!
+# The globular QE-specification
 
-#doc (Stemma) "The globular QE-specification" =>
+Definition `DVarGlobular` of the draft presents the globular $n$-categorial $\Sigma$-algebras as a
+$\mathrm{QE}$-variety of partial $\Sigma^{\mathrm{gl}(n)}$-algebras, where
+$\Sigma^{\mathrm{gl}(n)}$ is the globular $n$-categorial signature of Definition `DSigmaCatGlobular`, with
+sorts $(n+1) \times S$, and the draft defines the same specification for $n = \omega$, with
+sorts $\omega \times S$. This file writes down the specification
+$\mathcal{C}^{\Sigma^{\mathrm{gl}(n)}}$ and the category of its models, once for every
+preordered set of dimensions $I$: $n + 1$ is `FinSucc n` in the Lean, and $\omega$ is `ℕ`.
+-/
 
-Definition `DVarGlobular` of the draft presents the globular $`n`-categorial $`\Sigma`-algebras as a
-$`\mathrm{QE}`$-variety of partial $`\Sigma^{\mathrm{gl}(n)}`-algebras, where
-$`\Sigma^{\mathrm{gl}(n)}` is the globular $`n`-categorial signature of Definition `DSigmaCatGlobular`, with
-sorts $`(n+1) \times S`, and the draft defines the same specification for $`n = \omega`, with
-sorts $`\omega \times S`. This document writes down the specification
-$`\mathcal{C}^{\Sigma^{\mathrm{gl}(n)}}` and the category of its models, once for every
-preordered set of dimensions $`I`: $`n + 1` is `FinSucc n` in the Lean, and $`\omega` is `ℕ`.
-
-```lean
 universe u v w
 
 namespace CategorialAlgebras.Extended
@@ -22,17 +20,17 @@ namespace CategorialAlgebras.Extended
 open Term
 
 variable {S : Type u}
-```
 
-# Terms of the globular signature
+/-!
+## Terms of the globular signature
 
-The variables are countably many of each sort $`(k, s)`. In the Lean, `x i` is the variable
+The variables are countably many of each sort $(k, s)$. In the Lean, `x i` is the variable
 number `i`, and `scT h`, `tgT h`, `idmT h` and `compT h`, for `h : j < k`, build the terms
-$`\mathrm{sc}^{(j,k)}(t)`, $`\mathrm{tg}^{(j,k)}(t)`, $`\mathrm{i}^{(k,j)}(t)` and
-$`t \circ^{(j,k)} t'`; `opT k σ` applies the copy $`\sigma_k` of $`\sigma` to a family of terms
-of sorts $`(k, s_p)`.
+$\mathrm{sc}^{(j,k)}(t)$, $\mathrm{tg}^{(j,k)}(t)$, $\mathrm{i}^{(k,j)}(t)$ and
+$t \circ^{(j,k)} t'$; `opT k σ` applies the copy $\sigma_k$ of $\sigma$ to a family of terms
+of sorts $(k, s_p)$.
+-/
 
-```lean
 /-- The variables: countably many of each sort. -/
 abbrev EVar (S : Type u) (Index : Type) : Index × S → Type := fun _ => ℕ
 
@@ -70,57 +68,60 @@ def opT (k : Index) {ws : List S} {s : S} (σ : Sig ws s)
   .app (ExtendedSignature.op k σ) (liftArgs k ws ts)
 
 end ETerm
-```
 
-# The specification
+/-!
+## The specification
+-/
 
-:::definition (label := "extended.qe-specification") (central := false) (title := "The specification C^Σᵉˣᵗ⁽ⁿ⁾")
-Let $`\Sigma` be an $`S`-sorted signature and $`I` a preordered set of dimensions. The
-specification with dimensions in $`I` is the set of the following $`\mathrm{QE}`$-equations of
-the globular categorial signature with dimensions in $`I`, for all sorts, operation symbols,
-dimensions and variables. For $`I = n + 1` it is the specification
-$`\mathcal{C}^{\Sigma^{\mathrm{gl}(n)}}` of Definition `DVarGlobular` of the draft, and for
-$`I = \omega` the specification $`\mathcal{C}^{\Sigma^{\mathrm{gl}(\omega)}}`:
+/-!
+### The specification C^Σᵉˣᵗ⁽ⁿ⁾
 
-1. (EA0) $`\sigma_k((x_p)_p)` is defined, for every $`k \in I`;
-2. for all $`j < k` in $`I`:
-   (EA$`^{j,k}`1) $`\mathrm{sc}^{(j,k)}(x)`, $`\mathrm{tg}^{(j,k)}(x)` and $`\mathrm{i}^{(k,j)}(u)`
+Let $\Sigma$ be an $S$-sorted signature and $I$ a preordered set of dimensions. The
+specification with dimensions in $I$ is the set of the following $\mathrm{QE}$-equations of
+the globular categorial signature with dimensions in $I$, for all sorts, operation symbols,
+dimensions and variables. For $I = n + 1$ it is the specification
+$\mathcal{C}^{\Sigma^{\mathrm{gl}(n)}}$ of Definition `DVarGlobular` of the draft, and for
+$I = \omega$ the specification $\mathcal{C}^{\Sigma^{\mathrm{gl}(\omega)}}$:
+
+1. (EA0) $\sigma_k((x_p)_p)$ is defined, for every $k \in I$;
+2. for all $j < k$ in $I$:
+   (EA$^{j,k}$1) $\mathrm{sc}^{(j,k)}(x)$, $\mathrm{tg}^{(j,k)}(x)$ and $\mathrm{i}^{(k,j)}(u)$
    are defined;
-   (EA$`^{j,k}`2) $`\mathrm{sc}^{(j,k)}\mathrm{i}^{(k,j)}(u) \overset{\mathrm{e}}{=} u` and
-   $`\mathrm{tg}^{(j,k)}\mathrm{i}^{(k,j)}(u) \overset{\mathrm{e}}{=} u`;
-   (EA$`^{j,k}`3) $`x \circ^{(j,k)} y` is defined if and only if
-   $`\mathrm{sc}^{(j,k)}(x) \overset{\mathrm{e}}{=} \mathrm{tg}^{(j,k)}(y)`;
-   (EA$`^{j,k}`4) if $`x \circ^{(j,k)} y` is defined, its $`(j,k)`-source is
-   $`\mathrm{sc}^{(j,k)}(y)` and its $`(j,k)`-target is $`\mathrm{tg}^{(j,k)}(x)`;
-   (EA$`^{j,k}`5) $`x \circ^{(j,k)} \mathrm{i}^{(k,j)}\mathrm{sc}^{(j,k)}(x) \overset{\mathrm{e}}{=} x`
-   and $`\mathrm{i}^{(k,j)}\mathrm{tg}^{(j,k)}(x) \circ^{(j,k)} x \overset{\mathrm{e}}{=} x`;
-   (EA$`^{j,k}`6) associativity of $`\circ^{(j,k)}` where defined;
-   (EA$`^{j,k}`7) $`\mathrm{sc}^{(j,k)}(\sigma_k((x_p)_p)) \overset{\mathrm{e}}{=} \sigma_j((\mathrm{sc}^{(j,k)}(x_p))_p)`,
-   likewise for $`\mathrm{tg}^{(j,k)}`, and
-   $`\mathrm{i}^{(k,j)}(\sigma_j((u_p)_p)) \overset{\mathrm{e}}{=} \sigma_k((\mathrm{i}^{(k,j)}(u_p))_p)`;
-   (EA$`^{j,k}`8) if every $`x_p \circ^{(j,k)} y_p` is defined, then
-   $`\sigma_k((x_p \circ^{(j,k)} y_p)_p) \overset{\mathrm{e}}{=} \sigma_k((x_p)_p) \circ^{(j,k)} \sigma_k((y_p)_p)`;
-3. for all $`h < j < k` in $`I`:
-   (EA$`^{h,j,k}`1) $`\mathrm{sc}^{(h,j)}\mathrm{sc}^{(j,k)}(x)` and
-   $`\mathrm{sc}^{(h,j)}\mathrm{tg}^{(j,k)}(x)` are equal to $`\mathrm{sc}^{(h,k)}(x)`, and
-   $`\mathrm{tg}^{(h,j)}\mathrm{tg}^{(j,k)}(x)` and $`\mathrm{tg}^{(h,j)}\mathrm{sc}^{(j,k)}(x)`
-   to $`\mathrm{tg}^{(h,k)}(x)`;
-   (EA$`^{h,j,k}`2) $`\mathrm{i}^{(k,j)}\mathrm{i}^{(j,h)}(u) \overset{\mathrm{e}}{=} \mathrm{i}^{(k,h)}(u)`;
-   (EA$`^{h,j,k}`3) if $`x \circ^{(h,k)} y` is defined, then
-   $`\mathrm{sc}^{(j,k)}(x \circ^{(h,k)} y) \overset{\mathrm{e}}{=} \mathrm{sc}^{(j,k)}(x) \circ^{(h,j)} \mathrm{sc}^{(j,k)}(y)`,
+   (EA$^{j,k}$2) $\mathrm{sc}^{(j,k)}\mathrm{i}^{(k,j)}(u) \overset{\mathrm{e}}{=} u$ and
+   $\mathrm{tg}^{(j,k)}\mathrm{i}^{(k,j)}(u) \overset{\mathrm{e}}{=} u$;
+   (EA$^{j,k}$3) $x \circ^{(j,k)} y$ is defined if and only if
+   $\mathrm{sc}^{(j,k)}(x) \overset{\mathrm{e}}{=} \mathrm{tg}^{(j,k)}(y)$;
+   (EA$^{j,k}$4) if $x \circ^{(j,k)} y$ is defined, its $(j,k)$-source is
+   $\mathrm{sc}^{(j,k)}(y)$ and its $(j,k)$-target is $\mathrm{tg}^{(j,k)}(x)$;
+   (EA$^{j,k}$5) $x \circ^{(j,k)} \mathrm{i}^{(k,j)}\mathrm{sc}^{(j,k)}(x) \overset{\mathrm{e}}{=} x$
+   and $\mathrm{i}^{(k,j)}\mathrm{tg}^{(j,k)}(x) \circ^{(j,k)} x \overset{\mathrm{e}}{=} x$;
+   (EA$^{j,k}$6) associativity of $\circ^{(j,k)}$ where defined;
+   (EA$^{j,k}$7) $\mathrm{sc}^{(j,k)}(\sigma_k((x_p)_p)) \overset{\mathrm{e}}{=} \sigma_j((\mathrm{sc}^{(j,k)}(x_p))_p)$,
+   likewise for $\mathrm{tg}^{(j,k)}$, and
+   $\mathrm{i}^{(k,j)}(\sigma_j((u_p)_p)) \overset{\mathrm{e}}{=} \sigma_k((\mathrm{i}^{(k,j)}(u_p))_p)$;
+   (EA$^{j,k}$8) if every $x_p \circ^{(j,k)} y_p$ is defined, then
+   $\sigma_k((x_p \circ^{(j,k)} y_p)_p) \overset{\mathrm{e}}{=} \sigma_k((x_p)_p) \circ^{(j,k)} \sigma_k((y_p)_p)$;
+3. for all $h < j < k$ in $I$:
+   (EA$^{h,j,k}$1) $\mathrm{sc}^{(h,j)}\mathrm{sc}^{(j,k)}(x)$ and
+   $\mathrm{sc}^{(h,j)}\mathrm{tg}^{(j,k)}(x)$ are equal to $\mathrm{sc}^{(h,k)}(x)$, and
+   $\mathrm{tg}^{(h,j)}\mathrm{tg}^{(j,k)}(x)$ and $\mathrm{tg}^{(h,j)}\mathrm{sc}^{(j,k)}(x)$
+   to $\mathrm{tg}^{(h,k)}(x)$;
+   (EA$^{h,j,k}$2) $\mathrm{i}^{(k,j)}\mathrm{i}^{(j,h)}(u) \overset{\mathrm{e}}{=} \mathrm{i}^{(k,h)}(u)$;
+   (EA$^{h,j,k}$3) if $x \circ^{(h,k)} y$ is defined, then
+   $\mathrm{sc}^{(j,k)}(x \circ^{(h,k)} y) \overset{\mathrm{e}}{=} \mathrm{sc}^{(j,k)}(x) \circ^{(h,j)} \mathrm{sc}^{(j,k)}(y)$,
    and likewise for targets;
-   (EA$`^{h,j,k}`4) if $`x \circ^{(j,k)} y`, $`z \circ^{(j,k)} t`, $`x \circ^{(h,k)} z` and
-   $`y \circ^{(h,k)} t` are defined, then
-   $`(x \circ^{(j,k)} y) \circ^{(h,k)} (z \circ^{(j,k)} t) \overset{\mathrm{e}}{=} (x \circ^{(h,k)} z) \circ^{(j,k)} (y \circ^{(h,k)} t)`;
-   (EA$`^{h,j,k}`5) if $`u \circ^{(h,j)} v` is defined, then
-   $`\mathrm{i}^{(k,j)}(u \circ^{(h,j)} v) \overset{\mathrm{e}}{=} \mathrm{i}^{(k,j)}(u) \circ^{(h,k)} \mathrm{i}^{(k,j)}(v)`.
+   (EA$^{h,j,k}$4) if $x \circ^{(j,k)} y$, $z \circ^{(j,k)} t$, $x \circ^{(h,k)} z$ and
+   $y \circ^{(h,k)} t$ are defined, then
+   $(x \circ^{(j,k)} y) \circ^{(h,k)} (z \circ^{(j,k)} t) \overset{\mathrm{e}}{=} (x \circ^{(h,k)} z) \circ^{(j,k)} (y \circ^{(h,k)} t)$;
+   (EA$^{h,j,k}$5) if $u \circ^{(h,j)} v$ is defined, then
+   $\mathrm{i}^{(k,j)}(u \circ^{(h,j)} v) \overset{\mathrm{e}}{=} \mathrm{i}^{(k,j)}(u) \circ^{(h,k)} \mathrm{i}^{(k,j)}(v)$.
 
-The axioms (EA$`^{h,j,k}`1)–(EA$`^{h,j,k}`5) are the counterparts of the conditions (MS1),
+The axioms (EA$^{h,j,k}$1)–(EA$^{h,j,k}$5) are the counterparts of the conditions (MS1),
 (MS4), (MS3), (MS9) and (MS8) of Definition `DOmegaCatExt`, so that the models of the specification are,
-as the draft says, the globular categories with dimensions in $`I` with operations that are
+as the draft says, the globular categories with dimensions in $I$ with operations that are
 globular functors.
+-/
 
-```lean
 open ETerm in
 inductive ExtendedAxiom (Sig : Signature.{u, v} S) (Index : Type) [Preorder Index] :
     QEEq (ExtendedSignature Sig Index) (EVar S Index) → Prop
@@ -223,9 +224,5 @@ def extendedSpec (Sig : Signature.{u, v} S) (Index : Type) [Preorder Index] :
 /-- The category `PAlg(C^{Σ^{ext(n)}})` of models of the globular specification. -/
 abbrev ExtendedPAlg (Sig : Signature.{u, v} S) (Index : Type) [Preorder Index] :=
   PAlg.{u, max u v, w} (extendedSpec Sig Index)
-```
-:::
 
-```lean
 end CategorialAlgebras.Extended
-```

@@ -1,31 +1,26 @@
-import Stemma
 import Mathlib.CategoryTheory.Category.Basic
 import CategorialAlgebras.Extended.Category
 
-open Verso.Genre Manual InlineLean Stemma
-
-#doc (Stemma) "Globular functors" =>
+/-!
+# Globular functors
 
 A globular functor is a family of mappings, one for each dimension, that preserves sources,
-targets, identities and compositions (the globular $`n`-functors after Definition `DOmegaCatGl` of the
+targets, identities and compositions (the globular $n$-functors after Definition `DOmegaCatGl` of the
 draft). Ported from the group's repository `higher_category_theory`.
+-/
 
-```lean
 universe u u₁ u₂ u₃
 
 namespace CategorialAlgebras.Extended
-```
 
-:::definition (label := "extended.functor") (central := false) (title := "Globular functor")
-Let $`C` and $`D` be globular categories with dimensions in $`I`. A *globular functor* from
-$`C` to $`D` is a family $`F = (F_k \colon C_k \to D_k)_{k \in I}` such that, for all
-$`j < k`,
-$`F_j \circ \mathrm{sc}^{(j,k)} = \mathrm{sc}^{(j,k)} \circ F_k`,
-$`F_j \circ \mathrm{tg}^{(j,k)} = \mathrm{tg}^{(j,k)} \circ F_k`,
-$`F_k \circ \mathrm{i}^{(k,j)} = \mathrm{i}^{(k,j)} \circ F_j`, and
-$`F_k(g \circ^{(j)} f) = F_k g \circ^{(j)} F_k f` whenever $`g \circ^{(j)} f` is defined.
-
-```lean
+/-- Let $C$ and $D$ be globular categories with dimensions in $I$. A *globular functor* from
+$C$ to $D$ is a family $F = (F_k \colon C_k \to D_k)_{k \in I}$ such that, for all
+$j < k$,
+$F_j \circ \mathrm{sc}^{(j,k)} = \mathrm{sc}^{(j,k)} \circ F_k$,
+$F_j \circ \mathrm{tg}^{(j,k)} = \mathrm{tg}^{(j,k)} \circ F_k$,
+$F_k \circ \mathrm{i}^{(k,j)} = \mathrm{i}^{(k,j)} \circ F_j$, and
+$F_k(g \circ^{(j)} f) = F_k g \circ^{(j)} F_k f$ whenever $g \circ^{(j)} f$ is defined.
+-/
 structure Functor (Index : Type) [Preorder Index] (C : TypeFamily.{u₁} Index) [Category Index C]
     (D : TypeFamily.{u₂} Index) [Category Index D] where
   /-- The underlying family of functions on morphisms. -/
@@ -57,10 +52,7 @@ structure Functor (Index : Type) [Preorder Index] (C : TypeFamily.{u₁} Index) 
       map k (g ♯[j_lt_k] f ← sc_tg_gf) =
       (map k g) ♯[j_lt_k] (map k f) ← (comp_map sc_tg_gf) := by
     hcat_disch
-```
-:::
 
-```lean
 attribute [simp] Functor.map_sc_eq_sc_map Functor.map_tg_eq_tg_map Functor.map_idm_eq_idm_map
   Functor.map_comp_eq_comp_map
 
@@ -79,12 +71,13 @@ attribute [coe] Functor.map
 @[ext]
 lemma ext {F G : Functor Index C D} (h : ∀ k f, F k f = G k f) : F = G := by
   cases F; cases G; congr; funext k f; exact h k f
-```
 
-:::definition (label := "extended.functor-comp") (central := false) (title := "Composition and identities")
+/-!
+### Composition and identities
+
 Globular functors compose dimensionwise, and the identity mappings form a globular functor.
+-/
 
-```lean
 @[simp]
 def comp (G : Functor Index D E) (F : Functor Index C D) :
     Functor Index C E where
@@ -120,22 +113,20 @@ def comp (G : Functor Index D E) (F : Functor Index C D) :
 @[simp]
 def id (C : TypeFamily.{u₁} Index) [Category Index C] : Functor Index C C where
   map _ f := f
-```
-:::
 
-```lean
 @[inherit_doc] scoped[CategorialAlgebras.Extended] infixr:100 " ⊚ " => Functor.comp
 
 @[inherit_doc] scoped[CategorialAlgebras.Extended] notation "idₘ" => Functor.id
 
 end Functor
-```
 
-:::definition (label := "extended.n-functor") (central := false) (title := "Globular n-functors")
-A *globular* $`n`-*functor* is a globular functor between globular $`n`-categories, and a
-*globular* $`\omega`-*functor* one between globular $`\omega`-categories.
+/-!
+### Globular n-functors
 
-```lean
+A *globular* $n$-*functor* is a globular functor between globular $n$-categories, and a
+*globular* $\omega$-*functor* one between globular $\omega$-categories.
+-/
+
 abbrev NFunctor (n : ℕ)
     (C : NTypeFamily.{u₁} n) [NCategory n C]
     (D : NTypeFamily.{u₂} n) [NCategory n D] :=
@@ -146,12 +137,11 @@ abbrev OmegaFunctor
     (C : OmegaTypeFamily.{u₁}) [OmegaCategory C]
     (D : OmegaTypeFamily.{u₂}) [OmegaCategory D] :=
   Functor ℕ C D
-```
-:::
 
-# The categories of globular categories
+/-!
+## The categories of globular categories
+-/
 
-```lean
 structure Cat (Index : Type) [Preorder Index] where
   /-- Build a `Cat` from a carrier family with a `Category` instance. -/
   of ::
@@ -166,14 +156,15 @@ instance {Index : Type} [Preorder Index] : CoeFun (Cat Index) fun _ ↦ Index �
   ⟨Cat.carrier⟩
 
 attribute [coe] Cat.carrier
-```
 
-:::definition (label := "extended.cat") (central := false) (title := "The category of globular categories")
-Globular categories with dimensions in $`I` and globular functors form a category. For
-$`I = n + 1` this is the category $`\mathsf{nCat}^{\mathrm{gl}}` of globular $`n`-categories
-and globular $`n`-functors.
+/-!
+### The category of globular categories
 
-```lean
+Globular categories with dimensions in $I$ and globular functors form a category. For
+$I = n + 1$ this is the category $\mathsf{nCat}^{\mathrm{gl}}$ of globular $n$-categories
+and globular $n$-functors.
+-/
+
 instance Cat.category {Index : Type} [Preorder Index] :
     CategoryTheory.LargeCategory.{u} (Cat Index) where
   Hom C D := Functor Index C D
@@ -181,9 +172,5 @@ instance Cat.category {Index : Type} [Preorder Index] :
   id C := idₘ C
 
 abbrev NCat (n : ℕ) := Cat.{u} (FinSucc n)
-```
-:::
 
-```lean
 end CategorialAlgebras.Extended
-```

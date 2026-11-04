@@ -1,44 +1,41 @@
-import Stemma
 import Mathlib.Data.PFun
 import Mathlib.Order.Fin.Basic
 import CategorialAlgebras.Tactic
 
-open Verso.Genre Manual InlineLean Stemma
-
-#doc (Stemma) "Single-set higher-order categories" =>
+/-!
+# Single-set higher-order categories
 
 In the *single-set* presentation of a higher-order category all the cells, whatever their
 dimension, live in a single set, and the dimension of a cell is read off from sources and
-targets: a cell is a $`k`-cell when its $`k`-source is itself. This is the presentation of
+targets: a cell is a $k$-cell when its $k$-source is itself. This is the presentation of
 Section `SSingleSet` of the draft on higher-order categorial algebras. The formalization below is ported
 from the group's repository
 [`higher_category_theory`](https://github.com/mariovagomarzal/higher_category_theory) (by Enric
 Cosme Llópez, Raúl Ruiz Mora and Mario Vago Marzal, Apache 2.0), where the single-set presentation
 is called *single-sorted*.
 
-Instead of defining single-set categories, single-set $`2`-categories and single-set $`n`-categories one
+Instead of defining single-set categories, single-set $2$-categories and single-set $n$-categories one
 after the other, the three are instances of a single definition, indexed by a preordered set
-of dimensions: a single-set category has one dimension, a single-set $`n`-category has the
-dimensions $`k \in n = \{0, \ldots, n-1\}`, and a single-set $`\omega`-category has the dimensions
-$`k \in \mathbb{N}`.
+of dimensions: a single-set category has one dimension, a single-set $n$-category has the
+dimensions $k \in n = \{0, \ldots, n-1\}$, and a single-set $\omega$-category has the dimensions
+$k \in \mathbb{N}$.
+-/
 
-```lean
 universe u
 
 namespace CategorialAlgebras.Compact
-```
 
-# The data
+/-!
+## The data
+-/
 
-:::definition (label := "compact.category-struct") (central := false) (title := "Single-set categorial structure")
-Let $`I` be a set of dimensions. A *single-set categorial structure* on a set $`C` indexed by $`I`
-consists, for every $`k \in I`, of two mappings $`\mathrm{sc}^{k}, \mathrm{tg}^{k} \colon C \to C`,
-the $`k`-*source* and the $`k`-*target*, and of a partial binary operation $`\#^{k}` on $`C`,
-the $`k`-*composition*, such that $`g \#^{k} f` is defined if and only if
-$`\mathrm{sc}^{k}(g) = \mathrm{tg}^{k}(f)`. This is condition (C2) of Definition `DSingleSetCat` of the
+/-- Let $I$ be a set of dimensions. A *single-set categorial structure* on a set $C$ indexed by $I$
+consists, for every $k \in I$, of two mappings $\mathrm{sc}^{k}, \mathrm{tg}^{k} \colon C \to C$,
+the $k$-*source* and the $k$-*target*, and of a partial binary operation $\#^{k}$ on $C$,
+the $k$-*composition*, such that $g \#^{k} f$ is defined if and only if
+$\mathrm{sc}^{k}(g) = \mathrm{tg}^{k}(f)$. This is condition (C2) of Definition `DSingleSetCat` of the
 draft, for every dimension.
-
-```lean
+-/
 class CategoryStruct (Index : Type) (C : Type u) where
   /-- Source operation at dimension `k`. -/
   sc : Index → C → C
@@ -49,10 +46,7 @@ class CategoryStruct (Index : Type) (C : Type u) where
   /-- The composition of `g` and `f` at dimension `k` is defined if and only if the source of `g`
   at dimension `k` equals the target of `f` at dimension `k`. -/
   pcomp_dom : ∀ {k : Index} {f g : C}, (pcomp k g f).Dom ↔ sc k g = tg k f := by hcat_disch
-```
-:::
 
-```lean
 attribute [simp] CategoryStruct.pcomp_dom
 
 namespace CategoryStruct
@@ -115,30 +109,29 @@ lemma congr_comp₂ (eq_f : f₁ = f₂) (eq_g : g₁ = g₂)
   simp only [CategoryStruct.comp]
 
 end Congruence
-```
 
-# Single-set categories
+/-!
+## Single-set categories
+-/
 
-:::definition (label := "compact.precategory") (central := false) (title := "Single-set categories, dimensionwise")
-A single-set categorial structure is a *single-set precategory* if, for every dimension $`k`, the
-triple $`(\#^{k}, \mathrm{sc}^{k}, \mathrm{tg}^{k})` is a structure of single-set category on
-$`C` (Definition `DSingleSetCat` of the draft): for all $`f, g, h \in C`,
+/-- A single-set categorial structure is a *single-set precategory* if, for every dimension $k$, the
+triple $(\#^{k}, \mathrm{sc}^{k}, \mathrm{tg}^{k})$ is a structure of single-set category on
+$C$ (Definition `DSingleSetCat` of the draft): for all $f, g, h \in C$,
 
-1. (C1) $`\mathrm{sc}^{k}\mathrm{sc}^{k} f = \mathrm{sc}^{k} f`,
-   $`\mathrm{tg}^{k}\mathrm{sc}^{k} f = \mathrm{sc}^{k} f`,
-   $`\mathrm{sc}^{k}\mathrm{tg}^{k} f = \mathrm{tg}^{k} f` and
-   $`\mathrm{tg}^{k}\mathrm{tg}^{k} f = \mathrm{tg}^{k} f`;
-2. (C3) if $`\mathrm{sc}^{k} g = \mathrm{tg}^{k} f`, then
-   $`\mathrm{sc}^{k}(g \#^{k} f) = \mathrm{sc}^{k} f` and
-   $`\mathrm{tg}^{k}(g \#^{k} f) = \mathrm{tg}^{k} g`;
-3. (C4) $`f \#^{k} \mathrm{sc}^{k} f = f = \mathrm{tg}^{k} f \#^{k} f`;
-4. (C5) if $`\mathrm{sc}^{k} h = \mathrm{tg}^{k} g` and $`\mathrm{sc}^{k} g = \mathrm{tg}^{k} f`,
-   then $`h \#^{k} (g \#^{k} f) = (h \#^{k} g) \#^{k} f`.
+1. (C1) $\mathrm{sc}^{k}\mathrm{sc}^{k} f = \mathrm{sc}^{k} f$,
+   $\mathrm{tg}^{k}\mathrm{sc}^{k} f = \mathrm{sc}^{k} f$,
+   $\mathrm{sc}^{k}\mathrm{tg}^{k} f = \mathrm{tg}^{k} f$ and
+   $\mathrm{tg}^{k}\mathrm{tg}^{k} f = \mathrm{tg}^{k} f$;
+2. (C3) if $\mathrm{sc}^{k} g = \mathrm{tg}^{k} f$, then
+   $\mathrm{sc}^{k}(g \#^{k} f) = \mathrm{sc}^{k} f$ and
+   $\mathrm{tg}^{k}(g \#^{k} f) = \mathrm{tg}^{k} g$;
+3. (C4) $f \#^{k} \mathrm{sc}^{k} f = f = \mathrm{tg}^{k} f \#^{k} f$;
+4. (C5) if $\mathrm{sc}^{k} h = \mathrm{tg}^{k} g$ and $\mathrm{sc}^{k} g = \mathrm{tg}^{k} f$,
+   then $h \#^{k} (g \#^{k} f) = (h \#^{k} g) \#^{k} f$.
 
 A single-set category in the sense of Definition `DSingleSetCat` is a single-set precategory with a single
 dimension.
-
-```lean
+-/
 class PreCategory (Index : Type) (C : Type u)
     extends CategoryStruct Index C where
   /-- Applying source twice at dimension `k` is idempotent. -/
@@ -186,42 +179,38 @@ class PreCategory (Index : Type) (C : Type u)
       ((h ♯[k] g ← sc_tg_hg) ♯[k] f ← (compl_assoc sc_tg_gf sc_tg_hg)) =
       (h ♯[k] (g ♯[k] f ← sc_tg_gf) ← (compr_assoc sc_tg_gf sc_tg_hg)) := by
     hcat_disch
-```
-:::
 
-```lean
 open PreCategory in
 attribute [simp] sck_sck_eq_sck tgk_sck_eq_sck sck_tgk_eq_tgk tgk_tgk_eq_tgk sck_compk_eq_sck
   tgk_compk_eq_tgk compk_sck_eq_id compk_tgk_eq_id assoc
-```
 
-# Single-set higher-order categories
+/-!
+## Single-set higher-order categories
 
-The conditions (2C1)–(2C3) of Definition `DSingleSet2Cat` of the draft relate two dimensions $`j < k`; a
-single-set $`n`-category (Definition `DSingleSetnCat`) asks them for every pair of dimensions $`j < k` in $`n`.
-Here they are asked for every pair $`j < k` of any preordered set of dimensions.
+The conditions (2C1)–(2C3) of Definition `DSingleSet2Cat` of the draft relate two dimensions $j < k$; a
+single-set $n$-category (Definition `DSingleSetnCat`) asks them for every pair of dimensions $j < k$ in $n$.
+Here they are asked for every pair $j < k$ of any preordered set of dimensions.
+-/
 
-:::definition (label := "compact.category") (central := false) (title := "Single-set higher-order category")
-Let $`I` be a preordered set of dimensions. A *single-set category with dimensions in* $`I` is a
-single-set precategory such that, for all dimensions $`j < k` and all $`f, g, f', g' \in C`,
+/-- Let $I$ be a preordered set of dimensions. A *single-set category with dimensions in* $I$ is a
+single-set precategory such that, for all dimensions $j < k$ and all $f, g, f', g' \in C$,
 
-1. (2C1) $`\mathrm{sc}^{k}\mathrm{sc}^{j} f = \mathrm{sc}^{j} f = \mathrm{sc}^{j}\mathrm{sc}^{k} f = \mathrm{sc}^{j}\mathrm{tg}^{k} f`
-   and $`\mathrm{tg}^{k}\mathrm{tg}^{j} f = \mathrm{tg}^{j} f = \mathrm{tg}^{j}\mathrm{tg}^{k} f = \mathrm{tg}^{j}\mathrm{sc}^{k} f`;
-2. (2C2) if $`\mathrm{sc}^{j} g = \mathrm{tg}^{j} f`, then
-   $`\mathrm{sc}^{k}(g \#^{j} f) = \mathrm{sc}^{k} g \#^{j} \mathrm{sc}^{k} f` and
-   $`\mathrm{tg}^{k}(g \#^{j} f) = \mathrm{tg}^{k} g \#^{j} \mathrm{tg}^{k} f`;
-3. (2C3) the *interchange law*: if $`\mathrm{sc}^{k} g' = \mathrm{tg}^{k} g`,
-   $`\mathrm{sc}^{k} f' = \mathrm{tg}^{k} f`, $`\mathrm{sc}^{j} g' = \mathrm{tg}^{j} f'` and
-   $`\mathrm{sc}^{j} g = \mathrm{tg}^{j} f`, then
-   $`(g' \#^{j} f') \#^{k} (g \#^{j} f) = (g' \#^{k} g) \#^{j} (f' \#^{k} f)`.
+1. (2C1) $\mathrm{sc}^{k}\mathrm{sc}^{j} f = \mathrm{sc}^{j} f = \mathrm{sc}^{j}\mathrm{sc}^{k} f = \mathrm{sc}^{j}\mathrm{tg}^{k} f$
+   and $\mathrm{tg}^{k}\mathrm{tg}^{j} f = \mathrm{tg}^{j} f = \mathrm{tg}^{j}\mathrm{tg}^{k} f = \mathrm{tg}^{j}\mathrm{sc}^{k} f$;
+2. (2C2) if $\mathrm{sc}^{j} g = \mathrm{tg}^{j} f$, then
+   $\mathrm{sc}^{k}(g \#^{j} f) = \mathrm{sc}^{k} g \#^{j} \mathrm{sc}^{k} f$ and
+   $\mathrm{tg}^{k}(g \#^{j} f) = \mathrm{tg}^{k} g \#^{j} \mathrm{tg}^{k} f$;
+3. (2C3) the *interchange law*: if $\mathrm{sc}^{k} g' = \mathrm{tg}^{k} g$,
+   $\mathrm{sc}^{k} f' = \mathrm{tg}^{k} f$, $\mathrm{sc}^{j} g' = \mathrm{tg}^{j} f'$ and
+   $\mathrm{sc}^{j} g = \mathrm{tg}^{j} f$, then
+   $(g' \#^{j} f') \#^{k} (g \#^{j} f) = (g' \#^{k} g) \#^{j} (f' \#^{k} f)$.
 
-In the Lean, $`g'`, $`g`, $`f'`, $`f` are `g₂`, `g₁`, `f₂`, `f₁`. That both sides of the
+In the Lean, $g'$, $g$, $f'$, $f$ are `g₂`, `g₁`, `f₂`, `f₁`. That both sides of the
 interchange law are defined is a consequence of the other axioms: the auxiliary fields
 `sc_tg_k_interchange` and `sc_tg_j_interchange` prove it, and the second one shows that one of
-the four hypotheses of the draft, $`\mathrm{sc}^{j} g = \mathrm{tg}^{j} f`, is not needed for
+the four hypotheses of the draft, $\mathrm{sc}^{j} g = \mathrm{tg}^{j} f$, is not needed for
 the right-hand side to be defined.
-
-```lean
+-/
 class Category (Index : Type) [Preorder Index] (C : Type u)
     extends PreCategory Index C where
   /-- (2C1) -/
@@ -293,53 +282,43 @@ class Category (Index : Type) [Preorder Index] (C : Type u)
       (g₂ ♯[k] g₁ ← sc_tg_k_g₂g₁) ♯[j] (f₂ ♯[k] f₁ ← sc_tg_k_f₂f₁) ←
         (sc_tg_j_interchange j_lt_k sc_tg_k_g₂g₁ sc_tg_k_f₂f₁ sc_tg_j_g₂f₂) := by
     hcat_disch
-```
-:::
 
-```lean
 open Category in
 attribute [simp] sck_scj_eq_scj scj_sck_eq_scj scj_tgk_eq_scj tgk_tgj_eq_tgj tgj_tgk_eq_tgj
   tgj_sck_eq_tgj sck_compj_eq_compj_sck tgk_compj_eq_compj_tgk interchange
-```
 
-:::definition (label := "compact.n-category") (central := false) (title := "Single-set n-category")
-For $`n \in \mathbb{N}`, a *single-set* $`n`-*category* is a single-set category with dimensions in
-$`n = \{0, \ldots, n-1\}`.
+/-- For $n \in \mathbb{N}$, a *single-set* $n$-*category* is a single-set category with dimensions in
+$n = \{0, \ldots, n-1\}$.
 
-As in Definition `DSingleSetnCat` of the draft, the definition is made for every $`n`. A single-set $`0`-category is a set, with no structure; a single-set
-$`1`-category is a single-set category in the sense of Definition `DSingleSetCat`, and a single-set
-$`2`-category is one in the sense of Definition `DSingleSet2Cat`.
-
-```lean
+As in Definition `DSingleSetnCat` of the draft, the definition is made for every $n$. A single-set $0$-category is a set, with no structure; a single-set
+$1$-category is a single-set category in the sense of Definition `DSingleSetCat`, and a single-set
+$2$-category is one in the sense of Definition `DSingleSet2Cat`.
+-/
 abbrev NCategory (n : ℕ) (C : Type u) := Category (Fin n) C
-```
-:::
 
-:::construction (label := "compact.one-category-of-precategory") (central := false) (title := "Single-set 1-categories")
-A single-set precategory with a single dimension is a single-set $`1`-category: with one dimension
-there are no pairs $`j < k`, and the axioms (2C1)–(2C3) hold vacuously.
-
-```lean
 set_option hcat.tactic.omega true in
+/-- A single-set precategory with a single dimension is a single-set $1$-category: with one dimension
+there are no pairs $j < k$, and the axioms (2C1)–(2C3) hold vacuously.
+-/
 @[instance_reducible]
 def PreCategory.lift {C : Type u} [S : PreCategory (Fin 1) C] : NCategory 1 C := {S with}
-```
-:::
 
-# Cells
+/-!
+## Cells
+-/
 
-```lean
 section Cells
 
 variable {Index : Type} [Preorder Index] {C : Type u} [Category Index C]
-```
 
-:::definition (label := "compact.cell") (central := false) (title := "k-cells")
-In a single-set category $`C` with dimensions in $`I`, a cell $`f` is a $`k`-*cell*, for
-$`k \in I`, if $`\mathrm{sc}^{k} f = f` (equivalently, by (C1), if $`\mathrm{tg}^{k} f = f`).
-We write $`C_{k}` for the set of $`k`-cells.
+/-!
+### k-cells
 
-```lean
+In a single-set category $C$ with dimensions in $I$, a cell $f$ is a $k$-*cell*, for
+$k \in I$, if $\mathrm{sc}^{k} f = f$ (equivalently, by (C1), if $\mathrm{tg}^{k} f = f$).
+We write $C_{k}$ for the set of $k$-cells.
+-/
+
 @[simp]
 def cell (k : Index) (f : C) : Prop :=
   sc k f = f
@@ -347,27 +326,17 @@ def cell (k : Index) (f : C) : Prop :=
 @[simp]
 def cells (k : Index) (C : Type u) [Category Index C] : Set C :=
   {f : C | cell k f}
-```
-:::
 
-```lean
 end Cells
-```
 
-:::definition (label := "compact.omega-category") (central := false) (title := "Single-set ω-category")
-A *single-set* $`\omega`-*category* is a single-set category with dimensions in $`\mathbb{N}` in which
-every cell is a $`k`-cell for some $`k \in \mathbb{N}`.
-
-```lean
 open Category in
+/-- A *single-set* $\omega$-*category* is a single-set category with dimensions in $\mathbb{N}$ in which
+every cell is a $k$-cell for some $k \in \mathbb{N}$.
+-/
 class OmegaCategory (C : Type u) extends Category ℕ C where
   /-- Every cell is a `k`-cell for some `k : ℕ`. -/
   is_cell : ∀ f : C, ∃ k : ℕ, cell k f
-```
-:::
 
-```lean
 attribute [simp] OmegaCategory.is_cell
 
 end CategorialAlgebras.Compact
-```

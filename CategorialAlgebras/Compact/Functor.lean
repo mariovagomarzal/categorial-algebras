@@ -1,33 +1,28 @@
-import Stemma
 import Mathlib.CategoryTheory.Category.Basic
 import CategorialAlgebras.Compact.Category
 
-open Verso.Genre Manual InlineLean Stemma
-
-#doc (Stemma) "Single-set functors" =>
+/-!
+# Single-set functors
 
 A single-set functor is a mapping between the sets of cells that preserves, at every dimension,
 sources, targets and composition (Definitions `DSingleSetCat`, `DSingleSet2Cat` and `DSingleSetnCat` of the draft). As for the categories,
 the definition is given once for every preordered set of dimensions, and ported from the
 group's repository `higher_category_theory`.
+-/
 
-```lean
 universe u u₁ u₂ u₃
 
 namespace CategorialAlgebras.Compact
-```
 
-:::definition (label := "compact.functor") (central := false) (title := "Single-set functor")
-Let $`C` and $`D` be single-set categories with dimensions in $`I`. A *single-set functor* from $`C`
-to $`D` is a mapping $`F \colon C \to D` such that, for every $`k \in I`,
+/-- Let $C$ and $D$ be single-set categories with dimensions in $I$. A *single-set functor* from $C$
+to $D$ is a mapping $F \colon C \to D$ such that, for every $k \in I$,
 
-1. (Ci) $`F(\mathrm{sc}^{k} f) = \mathrm{sc}^{k}(F f)` and $`F(\mathrm{tg}^{k} f) = \mathrm{tg}^{k}(F f)`
-   for every $`f \in C`;
-2. (Cii) $`F(g \#^{k} f) = F g \#^{k} F f` whenever $`\mathrm{sc}^{k} g = \mathrm{tg}^{k} f`.
+1. (Ci) $F(\mathrm{sc}^{k} f) = \mathrm{sc}^{k}(F f)$ and $F(\mathrm{tg}^{k} f) = \mathrm{tg}^{k}(F f)$
+   for every $f \in C$;
+2. (Cii) $F(g \#^{k} f) = F g \#^{k} F f$ whenever $\mathrm{sc}^{k} g = \mathrm{tg}^{k} f$.
 
 The right-hand side of (Cii) is defined by (Ci).
-
-```lean
+-/
 structure Functor (Index : Type) [Preorder Index] (C : Type u₁) [Category Index C]
     (D : Type u₂) [Category Index D] where
   /-- The underlying mapping on cells. -/
@@ -47,10 +42,7 @@ structure Functor (Index : Type) [Preorder Index] (C : Type u₁) [Category Inde
   map_comp_eq_comp_map : ∀ {k : Index} {f g : C} (sc_tg_gf : sc_is_tg k g f),
       map (g ♯[k] f ← sc_tg_gf) = (map g) ♯[k] (map f) ← (comp_map sc_tg_gf) := by
     hcat_disch
-```
-:::
 
-```lean
 attribute [simp] Functor.map_sc_eq_sc_map Functor.map_tg_eq_tg_map Functor.map_comp_eq_comp_map
 
 namespace Functor
@@ -68,13 +60,14 @@ attribute [coe] Functor.map
 @[ext]
 lemma ext {F G : Functor Index C D} (h : ∀ f, F f = G f) : F = G := by
   cases F; cases G; congr; funext f; exact h f
-```
 
-:::definition (label := "compact.functor-comp") (central := false) (title := "Composition and identities")
+/-!
+### Composition and identities
+
 Single-set functors compose as mappings, and the identity mapping of a single-set category is a
 single-set functor.
+-/
 
-```lean
 @[simp]
 def comp (G : Functor Index D E) (F : Functor Index C D) :
     Functor Index C E where
@@ -102,22 +95,20 @@ def comp (G : Functor Index D E) (F : Functor Index C D) :
 @[simp]
 def id (C : Type u₁) [Category Index C] : Functor Index C C where
   map f := f
-```
-:::
 
-```lean
 @[inherit_doc] scoped[CategorialAlgebras.Compact] infixr:100 " ⊚ " => Functor.comp
 
 @[inherit_doc] scoped[CategorialAlgebras.Compact] notation "idₛ" => Functor.id
 
 end Functor
-```
 
-:::definition (label := "compact.n-functor") (central := false) (title := "Single-set n-functors")
-A *single-set* $`n`-*functor* is a single-set functor between single-set $`n`-categories, and a
-*single-set* $`\omega`-*functor* one between single-set $`\omega`-categories.
+/-!
+### Single-set n-functors
 
-```lean
+A *single-set* $n$-*functor* is a single-set functor between single-set $n$-categories, and a
+*single-set* $\omega$-*functor* one between single-set $\omega$-categories.
+-/
+
 abbrev NFunctor (n : ℕ)
     (C : Type u₁) [NCategory n C]
     (D : Type u₂) [NCategory n D] :=
@@ -127,12 +118,11 @@ abbrev OmegaFunctor
     (C : Type u₁) [OmegaCategory C]
     (D : Type u₂) [OmegaCategory D] :=
   Functor ℕ C D
-```
-:::
 
-# The categories of single-set categories
+/-!
+## The categories of single-set categories
+-/
 
-```lean
 structure Cat (Index : Type) [Preorder Index] where
   /-- Build a `Cat` from a carrier type with a `Category` instance. -/
   of ::
@@ -146,15 +136,16 @@ attribute [instance] Cat.str
 instance {Index : Type} [Preorder Index] : CoeSort (Cat Index) (Type u) := ⟨Cat.carrier⟩
 
 attribute [coe] Cat.carrier
-```
 
-:::definition (label := "compact.cat") (central := false) (title := "The category of single-set categories")
-Single-set categories with dimensions in $`I` and single-set functors form a category, with the
-composition and identities defined above. For $`I = n` this is
-the category $`\mathsf{nCat}` of single-set $`n`-categories and single-set $`n`-functors
+/-!
+### The category of single-set categories
+
+Single-set categories with dimensions in $I$ and single-set functors form a category, with the
+composition and identities defined above. For $I = n$ this is
+the category $\mathsf{nCat}$ of single-set $n$-categories and single-set $n$-functors
 (Definition `DSingleSetnCat` of the draft).
+-/
 
-```lean
 instance Cat.category {Index : Type} [Preorder Index] :
     CategoryTheory.LargeCategory.{u} (Cat Index) where
   Hom C D := Functor Index C D
@@ -162,9 +153,5 @@ instance Cat.category {Index : Type} [Preorder Index] :
   id C := idₛ C
 
 abbrev NCat (n : ℕ) := Cat.{u} (Fin n)
-```
-:::
 
-```lean
 end CategorialAlgebras.Compact
-```

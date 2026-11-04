@@ -1,26 +1,24 @@
-import Stemma
 import CategorialAlgebras.CategorialEp
 import CategorialAlgebras.GenEpComposition
 import CategorialAlgebras.DerivedEval
 
-open Verso.Genre Manual InlineLean Stemma
+/-!
+# Graduation and unification
 
-#doc (Stemma) "Graduation and unification" =>
-
-A compact $`n`-categorial algebra keeps all its cells in a single set for every sort, whatever
-their dimension; an extended one keeps the $`k`-cells in a sort of their own, for every
-$`k \leq n`. Graduation distributes the cells of a compact algebra into sorts according to their
-dimension, and unification keeps only the $`n`-cells of an extended algebra, in which every
-$`k`-cell has been replaced by its identity $`n`-cell (Section `SGraduation` of the draft). Both
-are induced by generalized ep-derivors between the ep-specifications of Document
-`compact.ep-specification` and `extended.ep-specification`, and they are mutually quasi-inverse
+A compact $n$-categorial algebra keeps all its cells in a single set for every sort, whatever
+their dimension; an extended one keeps the $k$-cells in a sort of their own, for every
+$k \leq n$. Graduation distributes the cells of a compact algebra into sorts according to their
+dimension, and unification keeps only the $n$-cells of an extended algebra, in which every
+$k$-cell has been replaced by its identity $n$-cell (Section `SGraduation` of the draft). Both
+are induced by generalized ep-derivors between the ep-specifications
+“The compact ep-specification” (in `CategorialAlgebras.CategorialEp`) and “The extended ep-specification” (in `CategorialAlgebras.CategorialEp`), and they are mutually quasi-inverse
 equivalences of categories.
 
-Throughout, $`\Sigma` is an $`S`-sorted signature and $`n \in \mathbb{N}`; the dimensions of the
-compact presentation are the elements of $`n`, `Fin n` in the Lean, and those of the extended
-presentation the elements of $`n + 1`, `Fin (n + 1)`.
+Throughout, $\Sigma$ is an $S$-sorted signature and $n \in \mathbb{N}$; the dimensions of the
+compact presentation are the elements of $n$, `Fin n` in the Lean, and those of the extended
+presentation the elements of $n + 1$, `Fin (n + 1)`.
+-/
 
-```lean
 universe u v w
 
 namespace CategorialAlgebras
@@ -32,27 +30,30 @@ variable {S : Type u} (Sig : Signature.{u, v} S) (n : ℕ)
 /-- The dimension `j ∈ n` of a `(j,k)`-source, for `j < k` in `n + 1`. -/
 def lowDim {n : ℕ} {j k : Fin (n + 1)} (h : j < k) : Fin n :=
   ⟨j.val, by have := Fin.lt_def.mp h; have := k.isLt; omega⟩
-```
 
-# Graduation
+/-!
+## Graduation
 
-Graduating a compact $`n`-categorial algebra $`\mathbf{B}` gives the extended algebra whose cells
-of sort $`(k, s)`, for $`k \in n`, are the $`k`-cells of sort $`s` of $`\mathbf{B}`, the cells $`x`
-with $`\mathrm{sc}^{k}_{s}(x) = x`, and whose cells of sort $`(n, s)` are all the cells of sort
-$`s`. The $`(j,k)`-source and the $`(j,k)`-target of a $`k`-cell are its $`j`-source and its
-$`j`-target, the $`(k,j)`-identity of a $`j`-cell is the cell itself, the $`j`-composition of two
-$`k`-cells is their $`j`-composition, and $`\sigma_k` acts on $`k`-cells as $`\sigma`.
+Graduating a compact $n$-categorial algebra $\mathbf{B}$ gives the extended algebra whose cells
+of sort $(k, s)$, for $k \in n$, are the $k$-cells of sort $s$ of $\mathbf{B}$, the cells $x$
+with $\mathrm{sc}^{k}_{s}(x) = x$, and whose cells of sort $(n, s)$ are all the cells of sort
+$s$. The $(j,k)$-source and the $(j,k)$-target of a $k$-cell are its $j$-source and its
+$j$-target, the $(k,j)$-identity of a $j$-cell is the cell itself, the $j$-composition of two
+$k$-cells is their $j$-composition, and $\sigma_k$ acts on $k$-cells as $\sigma$.
+-/
 
-:::definition (label := "graduation-derivor") (central := false) (title := "The graduation derivor")
-The *graduation derivor* $`\mathbf{g}^{(n)} = (\varphi, D, d)` is the generalized ep-derivor from
-$`\mathbf{\Sigma}^{\mathrm{ext}(n)}` to $`\mathbf{\Sigma}^{(n)}` with $`\varphi(k, s) = s`,
-$`D_{(k,s)} = \{\mathrm{sc}^{k}_{s}(v) \overset{\mathrm{e}}{=} v\}` for $`k \in n` and
-$`D_{(n,s)} = \varnothing`, and, for $`j < k`,
-$`d(\sigma_k) = \sigma((v_p)_p)`, $`d(\mathrm{sc}^{(j,k)}_{s}) = \mathrm{sc}^{j}_{s}(v_0)`,
-$`d(\mathrm{tg}^{(j,k)}_{s}) = \mathrm{tg}^{j}_{s}(v_0)`, $`d(\mathrm{i}^{(k,j)}_{s}) = v_0` and
-$`d(\circ^{(j,k)}_{s}) = v_0 \circ^{j}_{s} v_1`.
+/-!
+### The graduation derivor
 
-```lean
+The *graduation derivor* $\mathbf{g}^{(n)} = (\varphi, D, d)$ is the generalized ep-derivor from
+$\mathbf{\Sigma}^{\mathrm{ext}(n)}$ to $\mathbf{\Sigma}^{(n)}$ with $\varphi(k, s) = s$,
+$D_{(k,s)} = \{\mathrm{sc}^{k}_{s}(v) \overset{\mathrm{e}}{=} v\}$ for $k \in n$ and
+$D_{(n,s)} = \varnothing$, and, for $j < k$,
+$d(\sigma_k) = \sigma((v_p)_p)$, $d(\mathrm{sc}^{(j,k)}_{s}) = \mathrm{sc}^{j}_{s}(v_0)$,
+$d(\mathrm{tg}^{(j,k)}_{s}) = \mathrm{tg}^{j}_{s}(v_0)$, $d(\mathrm{i}^{(k,j)}_{s}) = v_0$ and
+$d(\circ^{(j,k)}_{s}) = v_0 \circ^{j}_{s} v_1$.
+-/
+
 /-- The domains of the graduation derivor. -/
 def gradDom (t : Fin (n + 1) × S) :
     Set (EEq (Compact.CompactSignature Sig (Fin n)) (Vars fun _ : Unit => t.2)) :=
@@ -76,14 +77,13 @@ def grad : GenEpDerivor (extendedEpSig Sig (Fin (n + 1))) (compactEpSig Sig (Fin
   sortMap := Prod.snd
   sortDom := gradDom Sig n
   op := gradOp Sig n
-```
-:::
 
-The graduated algebra $`(\mathbf{g}^{(n)})^{\ast}_{\mathfrak{gd}}(\mathbf{B})` of a model
-$`\mathbf{B}` is computed below: its operations are those described at the beginning of this
+/-!
+The graduated algebra $(\mathbf{g}^{(n)})^{\ast}_{\mathfrak{gd}}(\mathbf{B})$ of a model
+$\mathbf{B}$ is computed below: its operations are those described at the beginning of this
 section, and its domains are those of an ep-algebra.
+-/
 
-```lean
 namespace Grad
 
 open Compact.CategoryStruct
@@ -448,68 +448,69 @@ theorem holds : ∀ q ∈ Extended.extendedSpec Sig (Fin (n + 1)), q.Holds (D M)
       (ev_compT (h₁.trans h₂) (ev_idmT h₂ hu) (ev_idmT h₂ hv) huv)).mpr (Subtype.ext rfl)
 
 end Grad
-```
 
-:::proposition (label := "graduation-models") (central := true) (title := "Graduation sends models to models")
-$`(\mathbf{g}^{(n)})^{\ast}_{\mathfrak{gd}}` sends the models of
-$`(\mathbf{\Sigma}^{(n)}, \mathcal{C}^{\Sigma^{(n)}})` to models of
-$`(\mathbf{\Sigma}^{\mathrm{ext}(n)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})`.
-
-```lean
+/-- $(\mathbf{g}^{(n)})^{\ast}_{\mathfrak{gd}}$ sends the models of
+$(\mathbf{\Sigma}^{(n)}, \mathcal{C}^{\Sigma^{(n)}})$ to models of
+$(\mathbf{\Sigma}^{\mathrm{ext}(n)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})$.
+-/
 theorem grad_sendsModels :
     (grad Sig n).SendsModels.{u, max u v, u, max u v, w}
       (Extended.extendedSpec Sig (Fin (n + 1))) (Compact.compactSpec Sig (Fin n)) :=
   fun B hB => ⟨Grad.isAlgebra (M := ⟨B, hB.2⟩), Grad.holds (M := ⟨B, hB.2⟩)⟩
-```
-:::
 
-:::proof (of := "graduation-models")
-Let $`\mathbf{B}` be a model and $`\mathbf{A} = (\mathbf{g}^{(n)})^{\ast}_{\mathfrak{gd}}(\mathbf{B})`.
-The terms $`d(\sigma_k)`, $`d(\mathrm{sc}^{(j,k)}_{s})`, $`d(\mathrm{tg}^{(j,k)}_{s})` and
-$`d(\mathrm{i}^{(k,j)}_{s})` are defined in $`\mathbf{B}`, and their values are cells of the right
-sort: if the $`x_p` are $`k`-cells, so is $`\sigma((x_p)_p)`, by (A$`^{k}`7); the $`j`-source and
-the $`j`-target of a cell are $`j`-cells, by (A$`^{j}`2); and a $`j`-cell is a $`k`-cell, for
-$`j < k`, by (AB$`^{j,k}`1). Hence these operations are total in $`\mathbf{A}`, and two $`k`-cells
-satisfy the domain condition of $`\circ^{(j,k)}_{s}` in $`\mathbf{A}` if and only if
-$`\mathrm{sc}^{j}_{s}(x) = \mathrm{tg}^{j}_{s}(y)`; then $`x \circ^{j}_{s} y` is defined, by
-(A$`^{j}`3), and it is a $`k`-cell, by (AB$`^{j,k}`2). So $`\mathbf{A}` is an ep-algebra. Under this
-description, every axiom of $`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}` becomes an axiom of
-$`\mathcal{C}^{\Sigma^{(n)}}`, or a trivial equation: (EA$`^{j,k}`2) becomes
-$`\mathrm{sc}^{j}_{s}(u) = u = \mathrm{tg}^{j}_{s}(u)` for a $`j`-cell $`u`, (EA$`^{j,k}`3)–(EA$`^{j,k}`8)
-become (A$`^{j}`3)–(A$`^{j}`8), (EA$`^{h,j,k}`1), (EA$`^{h,j,k}`3) and (EA$`^{h,j,k}`4) become
-(AB$`^{h,j}`1), (AB$`^{h,j}`2) and (AB$`^{h,j}`3), and (EA$`^{h,j,k}`2), (EA$`^{h,j,k}`5) and the last
-equation of (EA$`^{j,k}`7) become trivial.
-:::
+/-!
+*Proof of “Graduation sends models to models”.*
 
-:::definition (label := "graduation-functor") (central := false) (title := "The graduation functor")
-The *graduation functor* $`\mathrm{Gd}^{(n)}` is the birestriction of
-$`(\mathbf{g}^{(n)})^{\ast}_{\mathfrak{gd}}` to the categories of models, from
-$`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})` to $`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})`.
+Let $\mathbf{B}$ be a model and $\mathbf{A} = (\mathbf{g}^{(n)})^{\ast}_{\mathfrak{gd}}(\mathbf{B})$.
+The terms $d(\sigma_k)$, $d(\mathrm{sc}^{(j,k)}_{s})$, $d(\mathrm{tg}^{(j,k)}_{s})$ and
+$d(\mathrm{i}^{(k,j)}_{s})$ are defined in $\mathbf{B}$, and their values are cells of the right
+sort: if the $x_p$ are $k$-cells, so is $\sigma((x_p)_p)$, by (A$^{k}$7); the $j$-source and
+the $j$-target of a cell are $j$-cells, by (A$^{j}$2); and a $j$-cell is a $k$-cell, for
+$j < k$, by (AB$^{j,k}$1). Hence these operations are total in $\mathbf{A}$, and two $k$-cells
+satisfy the domain condition of $\circ^{(j,k)}_{s}$ in $\mathbf{A}$ if and only if
+$\mathrm{sc}^{j}_{s}(x) = \mathrm{tg}^{j}_{s}(y)$; then $x \circ^{j}_{s} y$ is defined, by
+(A$^{j}$3), and it is a $k$-cell, by (AB$^{j,k}$2). So $\mathbf{A}$ is an ep-algebra. Under this
+description, every axiom of $\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}$ becomes an axiom of
+$\mathcal{C}^{\Sigma^{(n)}}$, or a trivial equation: (EA$^{j,k}$2) becomes
+$\mathrm{sc}^{j}_{s}(u) = u = \mathrm{tg}^{j}_{s}(u)$ for a $j$-cell $u$, (EA$^{j,k}$3)–(EA$^{j,k}$8)
+become (A$^{j}$3)–(A$^{j}$8), (EA$^{h,j,k}$1), (EA$^{h,j,k}$3) and (EA$^{h,j,k}$4) become
+(AB$^{h,j}$1), (AB$^{h,j}$2) and (AB$^{h,j}$3), and (EA$^{h,j,k}$2), (EA$^{h,j,k}$5) and the last
+equation of (EA$^{j,k}$7) become trivial.
+-/
 
-```lean
+/-!
+### The graduation functor
+
+The *graduation functor* $\mathrm{Gd}^{(n)}$ is the birestriction of
+$(\mathbf{g}^{(n)})^{\ast}_{\mathfrak{gd}}$ to the categories of models, from
+$\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})$ to $\mathsf{PAlg}(\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})$.
+-/
+
 /-- The graduation functor `Gd⁽ⁿ⁾`. -/
 noncomputable def gradFunctor :
     EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin n)) ⥤
       EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (n + 1))) :=
   (grad Sig n).restrict (grad_sendsModels Sig n)
-```
-:::
 
-# Unification
+/-!
+## Unification
 
-Unifying an extended $`n`-categorial algebra $`\mathbf{A}` keeps only its $`n`-cells: the
-$`k`-source of an $`n`-cell is the $`(n,k)`-identity of its $`(k,n)`-source, the $`k`-composition
-is the $`k`-composition of $`n`-cells, and $`\sigma` acts as $`\sigma_n`.
+Unifying an extended $n$-categorial algebra $\mathbf{A}$ keeps only its $n$-cells: the
+$k$-source of an $n$-cell is the $(n,k)$-identity of its $(k,n)$-source, the $k$-composition
+is the $k$-composition of $n$-cells, and $\sigma$ acts as $\sigma_n$.
+-/
 
-:::definition (label := "unification-derivor") (central := false) (title := "The unification derivor")
-The *unification derivor* $`\mathbf{u}^{(n)} = (\varphi, D, d)` is the generalized ep-derivor from
-$`\mathbf{\Sigma}^{(n)}` to $`\mathbf{\Sigma}^{\mathrm{ext}(n)}` with $`\varphi(s) = (n, s)`,
-$`D_s = \varnothing`, and, for $`k \in n`, $`d(\sigma) = \sigma_n((v_p)_p)`,
-$`d(\mathrm{sc}^{k}_{s}) = \mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(v_0))`,
-$`d(\mathrm{tg}^{k}_{s}) = \mathrm{i}^{(n,k)}_{s}(\mathrm{tg}^{(k,n)}_{s}(v_0))` and
-$`d(\circ^{k}_{s}) = v_0 \circ^{(k,n)}_{s} v_1`.
+/-!
+### The unification derivor
 
-```lean
+The *unification derivor* $\mathbf{u}^{(n)} = (\varphi, D, d)$ is the generalized ep-derivor from
+$\mathbf{\Sigma}^{(n)}$ to $\mathbf{\Sigma}^{\mathrm{ext}(n)}$ with $\varphi(s) = (n, s)$,
+$D_s = \varnothing$, and, for $k \in n$, $d(\sigma) = \sigma_n((v_p)_p)$,
+$d(\mathrm{sc}^{k}_{s}) = \mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(v_0))$,
+$d(\mathrm{tg}^{k}_{s}) = \mathrm{i}^{(n,k)}_{s}(\mathrm{tg}^{(k,n)}_{s}(v_0))$ and
+$d(\circ^{k}_{s}) = v_0 \circ^{(k,n)}_{s} v_1$.
+-/
+
 /-- The terms of the unification derivor. -/
 def unifOp : ∀ {ws : List S} {s : S}, Compact.CompactSignature Sig (Fin n) ws s →
     Term (Extended.ExtendedSignature Sig (Fin (n + 1)))
@@ -527,16 +528,15 @@ def unif : GenEpDerivor (compactEpSig Sig (Fin n)) (extendedEpSig Sig (Fin (n + 
   sortMap s := (Fin.last n, s)
   sortDom _ := ∅
   op := unifOp Sig n
-```
-:::
 
-The unified algebra $`(\mathbf{u}^{(n)})^{\ast}_{\mathfrak{gd}}(\mathbf{A})` of a model
-$`\mathbf{A}` is computed below. Its cells of sort $`s` are the $`n`-cells of sort $`s` of
-$`\mathbf{A}`, and we write $`\overline{\mathrm{sc}}^{k}_{s}(x)` and $`\overline{\mathrm{tg}}^{k}_{s}(x)`
-for $`\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x))` and
-$`\mathrm{i}^{(n,k)}_{s}(\mathrm{tg}^{(k,n)}_{s}(x))`.
+/-!
+The unified algebra $(\mathbf{u}^{(n)})^{\ast}_{\mathfrak{gd}}(\mathbf{A})$ of a model
+$\mathbf{A}$ is computed below. Its cells of sort $s$ are the $n$-cells of sort $s$ of
+$\mathbf{A}$, and we write $\overline{\mathrm{sc}}^{k}_{s}(x)$ and $\overline{\mathrm{tg}}^{k}_{s}(x)$
+for $\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x))$ and
+$\mathrm{i}^{(n,k)}_{s}(\mathrm{tg}^{(k,n)}_{s}(x))$.
+-/
 
-```lean
 namespace Unif
 
 open Extended.Model
@@ -884,62 +884,58 @@ theorem holds : ∀ q ∈ Compact.compactSpec Sig (Fin n), q.Holds (U M) := by
       (Subtype.ext (interchange (h₁ := ll h) (h₂ := top k) hxz hyt hxy hzt).symm)
 
 end Unif
-```
 
-:::proposition (label := "unification-models") (central := true) (title := "Unification sends models to models")
-$`(\mathbf{u}^{(n)})^{\ast}_{\mathfrak{gd}}` sends the models of
-$`(\mathbf{\Sigma}^{\mathrm{ext}(n)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})` to models of
-$`(\mathbf{\Sigma}^{(n)}, \mathcal{C}^{\Sigma^{(n)}})`.
-
-```lean
+/-- $(\mathbf{u}^{(n)})^{\ast}_{\mathfrak{gd}}$ sends the models of
+$(\mathbf{\Sigma}^{\mathrm{ext}(n)}, \mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})$ to models of
+$(\mathbf{\Sigma}^{(n)}, \mathcal{C}^{\Sigma^{(n)}})$.
+-/
 theorem unif_sendsModels :
     (unif Sig n).SendsModels.{u, max u v, u, max u v, w}
       (Compact.compactSpec Sig (Fin n)) (Extended.extendedSpec Sig (Fin (n + 1))) :=
   fun A hA => ⟨Unif.isAlgebra (M := ⟨A, hA.2⟩), Unif.holds (M := ⟨A, hA.2⟩)⟩
-```
-:::
 
-:::proof (of := "unification-models")
-Let $`\mathbf{A}` be a model and $`\mathbf{B} = (\mathbf{u}^{(n)})^{\ast}_{\mathfrak{gd}}(\mathbf{A})`.
-By (EA$`^{k,n}`2), $`\mathrm{sc}^{(k,n)}_{s}(\mathrm{i}^{(n,k)}_{s}(u)) = u` for every $`k`-cell
-$`u`, so $`\mathrm{i}^{(n,k)}_{s}` is injective. The derived operations of $`\sigma`,
-$`\mathrm{sc}^{k}_{s}` and $`\mathrm{tg}^{k}_{s}` are total, and two $`n`-cells satisfy the domain
-condition of $`\circ^{k}_{s}` in $`\mathbf{B}` if and only if
-$`\overline{\mathrm{sc}}^{k}_{s}(x) = \overline{\mathrm{tg}}^{k}_{s}(y)`, that is, by injectivity, if
-and only if $`\mathrm{sc}^{(k,n)}_{s}(x) = \mathrm{tg}^{(k,n)}_{s}(y)`; then $`x \circ^{(k,n)}_{s} y`
-is defined, by (EA$`^{k,n}`3). So $`\mathbf{B}` is an ep-algebra, in which $`\sigma`,
-$`\mathrm{sc}^{k}_{s}`, $`\mathrm{tg}^{k}_{s}` and $`\circ^{k}_{s}` act as $`\sigma_n`,
-$`\overline{\mathrm{sc}}^{k}_{s}`, $`\overline{\mathrm{tg}}^{k}_{s}` and $`\circ^{(k,n)}_{s}`. Every
-axiom of $`\mathcal{C}^{\Sigma^{(n)}}` follows from the extended axioms: (A$`^{k}`2) from
-(EA$`^{k,n}`2); (A$`^{k}`3)–(A$`^{k}`6) and (A$`^{k}`8) from (EA$`^{k,n}`3)–(EA$`^{k,n}`6) and
-(EA$`^{k,n}`8); (A$`^{k}`7) from the first and the third equations of (EA$`^{k,n}`7); and, for
-$`l < k`, (AB$`^{l,k}`1) from (EA$`^{l,k,n}`1), (EA$`^{l,k,n}`2) and (EA$`^{k,n}`2), (AB$`^{l,k}`2) from
-(EA$`^{l,k,n}`3) and (EA$`^{l,k,n}`5), and (AB$`^{l,k}`3) from (EA$`^{l,k,n}`4), after exchanging the
-variables $`y` and $`z`.
-:::
+/-!
+*Proof of “Unification sends models to models”.*
 
-:::definition (label := "unification-functor") (central := false) (title := "The unification functor")
-The *unification functor* $`\mathrm{Uf}^{(n)}` is the birestriction of
-$`(\mathbf{u}^{(n)})^{\ast}_{\mathfrak{gd}}` to the categories of models.
+Let $\mathbf{A}$ be a model and $\mathbf{B} = (\mathbf{u}^{(n)})^{\ast}_{\mathfrak{gd}}(\mathbf{A})$.
+By (EA$^{k,n}$2), $\mathrm{sc}^{(k,n)}_{s}(\mathrm{i}^{(n,k)}_{s}(u)) = u$ for every $k$-cell
+$u$, so $\mathrm{i}^{(n,k)}_{s}$ is injective. The derived operations of $\sigma$,
+$\mathrm{sc}^{k}_{s}$ and $\mathrm{tg}^{k}_{s}$ are total, and two $n$-cells satisfy the domain
+condition of $\circ^{k}_{s}$ in $\mathbf{B}$ if and only if
+$\overline{\mathrm{sc}}^{k}_{s}(x) = \overline{\mathrm{tg}}^{k}_{s}(y)$, that is, by injectivity, if
+and only if $\mathrm{sc}^{(k,n)}_{s}(x) = \mathrm{tg}^{(k,n)}_{s}(y)$; then $x \circ^{(k,n)}_{s} y$
+is defined, by (EA$^{k,n}$3). So $\mathbf{B}$ is an ep-algebra, in which $\sigma$,
+$\mathrm{sc}^{k}_{s}$, $\mathrm{tg}^{k}_{s}$ and $\circ^{k}_{s}$ act as $\sigma_n$,
+$\overline{\mathrm{sc}}^{k}_{s}$, $\overline{\mathrm{tg}}^{k}_{s}$ and $\circ^{(k,n)}_{s}$. Every
+axiom of $\mathcal{C}^{\Sigma^{(n)}}$ follows from the extended axioms: (A$^{k}$2) from
+(EA$^{k,n}$2); (A$^{k}$3)–(A$^{k}$6) and (A$^{k}$8) from (EA$^{k,n}$3)–(EA$^{k,n}$6) and
+(EA$^{k,n}$8); (A$^{k}$7) from the first and the third equations of (EA$^{k,n}$7); and, for
+$l < k$, (AB$^{l,k}$1) from (EA$^{l,k,n}$1), (EA$^{l,k,n}$2) and (EA$^{k,n}$2), (AB$^{l,k}$2) from
+(EA$^{l,k,n}$3) and (EA$^{l,k,n}$5), and (AB$^{l,k}$3) from (EA$^{l,k,n}$4), after exchanging the
+variables $y$ and $z$.
+-/
 
-```lean
+/-!
+### The unification functor
+
+The *unification functor* $\mathrm{Uf}^{(n)}$ is the birestriction of
+$(\mathbf{u}^{(n)})^{\ast}_{\mathfrak{gd}}$ to the categories of models.
+-/
+
 /-- The unification functor `Uf⁽ⁿ⁾`. -/
 noncomputable def unifFunctor :
     EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (n + 1))) ⥤
       EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin n)) :=
   (unif Sig n).restrict (unif_sendsModels Sig n)
-```
-:::
 
-# Graduation and unification
+/-!
+## Graduation and unification
 
 Graduation followed by unification gives nothing new: the composite of the two derivors is the
 identity.
+-/
 
-:::proposition (label := "unification-graduation-derivor") (central := false) (title := "Unification after graduation")
-$`\mathbf{g}^{(n)} \circ \mathbf{u}^{(n)} = \mathrm{id}_{\mathbf{\Sigma}^{(n)}}`.
-
-```lean
+/-- $\mathbf{g}^{(n)} \circ \mathbf{u}^{(n)} = \mathrm{id}_{\mathbf{\Sigma}^{(n)}}$. -/
 theorem grad_comp_unif :
     (grad Sig n).comp.{u, max u v, w} (unif Sig n) =
       GenEpDerivor.id.{u, max u v, w} (compactEpSig Sig (Fin n)) := by
@@ -970,26 +966,26 @@ theorem grad_comp_unif :
     | comp k s =>
       show Term.app _ _ = Term.app _ _
       congr 1; funext j; match j with | ⟨0, _⟩ => rfl | ⟨1, _⟩ => rfl
-```
-:::
 
-:::proof (of := "unification-graduation-derivor")
-The composite has the mapping of sorts $`s \mapsto s`. Its domains are
-$`\mathrm{Cn}(D_{(n,s)} \cup \mathrm{tr}_{\mathbf{g}}[\varnothing]) = \mathrm{Cn}(\varnothing)`,
-since $`D_{(n,s)}` and the domains of $`\mathbf{u}^{(n)}` are empty, and its terms are
-$`d_{\mathbf{g}}^{\sharp}(\sigma_n((v_p)_p)) = \sigma((v_p)_p)`,
-$`d_{\mathbf{g}}^{\sharp}(\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(v_0))) = \mathrm{sc}^{k}_{s}(v_0)`,
-likewise for the targets, and $`d_{\mathbf{g}}^{\sharp}(v_0 \circ^{(k,n)}_{s} v_1) = v_0 \circ^{k}_{s} v_1`:
+/-!
+*Proof of “Unification after graduation”.*
+
+The composite has the mapping of sorts $s \mapsto s$. Its domains are
+$\mathrm{Cn}(D_{(n,s)} \cup \mathrm{tr}_{\mathbf{g}}[\varnothing]) = \mathrm{Cn}(\varnothing)$,
+since $D_{(n,s)}$ and the domains of $\mathbf{u}^{(n)}$ are empty, and its terms are
+$d_{\mathbf{g}}^{\sharp}(\sigma_n((v_p)_p)) = \sigma((v_p)_p)$,
+$d_{\mathbf{g}}^{\sharp}(\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(v_0))) = \mathrm{sc}^{k}_{s}(v_0)$,
+likewise for the targets, and $d_{\mathbf{g}}^{\sharp}(v_0 \circ^{(k,n)}_{s} v_1) = v_0 \circ^{k}_{s} v_1$:
 those of the identity.
-:::
+-/
 
-
-# Unification after graduation
+/-!
+## Unification after graduation
 
 The functors are computed on the cells: the operations of the algebras derived along
-$`\mathbf{g}^{(n)}` and $`\mathbf{u}^{(n)}` are those described above.
+$\mathbf{g}^{(n)}$ and $\mathbf{u}^{(n)}$ are those described above.
+-/
 
-```lean
 namespace Grad
 
 variable {Sig n} {M : Compact.CompactPAlg.{u, v, w} Sig (Fin n)}
@@ -1119,15 +1115,16 @@ theorem unitEquiv_op (B : EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fin n
         ((Grad.sc_eq (M := Bm) _ _).symm.trans (this.trans (Grad.tg_eq (M := Bm) _ _)))
 
 end Unit
-```
 
-:::proposition (label := "unification-graduation") (central := false) (title := "Unification after graduation")
-$`\mathrm{Uf}^{(n)} \circ \mathrm{Gd}^{(n)} \cong \mathrm{Id}`, by isomorphisms that send every cell
+/-!
+### Unification after graduation
+
+$\mathrm{Uf}^{(n)} \circ \mathrm{Gd}^{(n)} \cong \mathrm{Id}$, by isomorphisms that send every cell
 to itself. In the draft, Proposition `PUnifGrad` states an equality of functors: here the cells of
-$`\mathrm{Uf}^{(n)}(\mathrm{Gd}^{(n)}(\mathbf{B}))` are the cells of $`\mathbf{B}` seen twice as
+$\mathrm{Uf}^{(n)}(\mathrm{Gd}^{(n)}(\mathbf{B}))$ are the cells of $\mathbf{B}$ seen twice as
 elements of a subset, the same elements but not the same set.
+-/
 
-```lean
 section Unit
 
 variable {Sig n}
@@ -1145,27 +1142,28 @@ theorem unitIso_inv_map (B : EpSpec.EpAlg.{u, max u v, w} (compactEpSpec Sig (Fi
   rfl
 
 end Unit
-```
-:::
 
-:::proof (of := "unification-graduation")
-The cells of sort $`s` of $`\mathrm{Uf}^{(n)}(\mathrm{Gd}^{(n)}(\mathbf{B}))` are the $`n`-cells of
-$`\mathrm{Gd}^{(n)}(\mathbf{B})` of sort $`s`, that is, the cells of $`\mathbf{B}` of sort $`s`. Under
-this bijection, $`\sigma` acts as $`\sigma_n`, that is, as $`\sigma`; $`\mathrm{sc}^{k}_{s}` acts as
-$`\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x)) = \mathrm{sc}^{k}_{s}(x)`, since the identities of
-$`\mathrm{Gd}^{(n)}(\mathbf{B})` are inclusions; likewise for the targets; and $`\circ^{k}_{s}` acts as
-$`\circ^{(k,n)}_{s}`, that is, as $`\circ^{k}_{s}`, with the same domain. Hence the bijection is an
-isomorphism, natural in $`\mathbf{B}`.
-:::
+/-!
+*Proof of “Unification after graduation”.*
 
-# Graduation after unification
+The cells of sort $s$ of $\mathrm{Uf}^{(n)}(\mathrm{Gd}^{(n)}(\mathbf{B}))$ are the $n$-cells of
+$\mathrm{Gd}^{(n)}(\mathbf{B})$ of sort $s$, that is, the cells of $\mathbf{B}$ of sort $s$. Under
+this bijection, $\sigma$ acts as $\sigma_n$, that is, as $\sigma$; $\mathrm{sc}^{k}_{s}$ acts as
+$\mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x)) = \mathrm{sc}^{k}_{s}(x)$, since the identities of
+$\mathrm{Gd}^{(n)}(\mathbf{B})$ are inclusions; likewise for the targets; and $\circ^{k}_{s}$ acts as
+$\circ^{(k,n)}_{s}$, that is, as $\circ^{k}_{s}$, with the same domain. Hence the bijection is an
+isomorphism, natural in $\mathbf{B}$.
+-/
 
-Unification followed by graduation does not give the identity: the $`k`-cells of
-$`\mathrm{Gd}^{(n)}(\mathrm{Uf}^{(n)}(\mathbf{A}))` are the $`(n,k)`-identities of the $`k`-cells of
-$`\mathbf{A}`. Sending a $`k`-cell $`u` to $`\mathrm{i}^{(n,k)}_{s}(u)`, and an $`n`-cell to itself,
-is an isomorphism $`\theta_{\mathbf{A}}`.
+/-!
+## Graduation after unification
 
-```lean
+Unification followed by graduation does not give the identity: the $k$-cells of
+$\mathrm{Gd}^{(n)}(\mathrm{Uf}^{(n)}(\mathbf{A}))$ are the $(n,k)$-identities of the $k$-cells of
+$\mathbf{A}$. Sending a $k$-cell $u$ to $\mathrm{i}^{(n,k)}_{s}(u)$, and an $n$-cell to itself,
+is an isomorphism $\theta_{\mathbf{A}}$.
+-/
+
 section Counit
 
 variable {Sig n} (A : EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (n + 1))))
@@ -1387,13 +1385,14 @@ lemma map_up {A' : EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec Sig (Fin (n + 1)
     exact congrArg _ (by funext i; match i with | ⟨0, _⟩ => rfl)
 
 end Counit
-```
 
-:::proposition (label := "graduation-unification") (central := false) (title := "Graduation after unification")
-$`\mathrm{Gd}^{(n)} \circ \mathrm{Uf}^{(n)} \cong \mathrm{Id}`, by the isomorphisms
-$`\theta_{\mathbf{A}}` that send a $`k`-cell $`u` of sort $`s` to $`\mathrm{i}^{(n,k)}_{s}(u)`.
+/-!
+### Graduation after unification
 
-```lean
+$\mathrm{Gd}^{(n)} \circ \mathrm{Uf}^{(n)} \cong \mathrm{Id}$, by the isomorphisms
+$\theta_{\mathbf{A}}$ that send a $k$-cell $u$ of sort $s$ to $\mathrm{i}^{(n,k)}_{s}(u)$.
+-/
+
 section Counit
 
 /-- `Id ≅ Gd ∘ Uf`, by the isomorphisms `θ` that send a `k`-cell to its `(n,k)`-identity. -/
@@ -1410,31 +1409,35 @@ theorem counitIsoInv_hom_map (A : EpSpec.EpAlg.{u, max u v, w} (extendedEpSpec S
   up_castSucc k u
 
 end Counit
-```
-:::
 
-:::proof (of := "graduation-unification")
-The cells of sort $`(k, s)` of $`\mathrm{Gd}^{(n)}(\mathrm{Uf}^{(n)}(\mathbf{A}))` are the $`n`-cells
-$`x` with $`x = \mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x))`. By (EA$`^{k,n}`2),
-$`\theta_{\mathbf{A}}` is a bijection onto them, whose inverse sends $`x` to
-$`\mathrm{sc}^{(k,n)}_{s}(x)`. It commutes with the $`\sigma_k`, by (EA$`^{k,n}`7); with the
-$`(j,k)`-sources and targets, since
-$`\mathrm{sc}^{(j,n)}_{s}(\mathrm{i}^{(n,k)}_{s}(u)) = \mathrm{sc}^{(j,k)}_{s}(u)` by (EA$`^{j,k,n}`1)
-and (EA$`^{k,n}`2); with the identities, by (EA$`^{j,k,n}`2); and with the compositions, by
-(EA$`^{j,k,n}`5), with the same domains, since $`\mathrm{i}^{(n,j)}_{s}` is injective. It is natural
+/-!
+*Proof of “Graduation after unification”.*
+
+The cells of sort $(k, s)$ of $\mathrm{Gd}^{(n)}(\mathrm{Uf}^{(n)}(\mathbf{A}))$ are the $n$-cells
+$x$ with $x = \mathrm{i}^{(n,k)}_{s}(\mathrm{sc}^{(k,n)}_{s}(x))$. By (EA$^{k,n}$2),
+$\theta_{\mathbf{A}}$ is a bijection onto them, whose inverse sends $x$ to
+$\mathrm{sc}^{(k,n)}_{s}(x)$. It commutes with the $\sigma_k$, by (EA$^{k,n}$7); with the
+$(j,k)$-sources and targets, since
+$\mathrm{sc}^{(j,n)}_{s}(\mathrm{i}^{(n,k)}_{s}(u)) = \mathrm{sc}^{(j,k)}_{s}(u)$ by (EA$^{j,k,n}$1)
+and (EA$^{k,n}$2); with the identities, by (EA$^{j,k,n}$2); and with the compositions, by
+(EA$^{j,k,n}$5), with the same domains, since $\mathrm{i}^{(n,j)}_{s}$ is injective. It is natural
 because homomorphisms commute with the identities.
-:::
+-/
 
-# The equivalence
+/-!
+## The equivalence
+-/
 
-:::theorem (label := "graduation-equivalence") (central := true) (title := "Graduation and unification are equivalences")
-$`\mathrm{Gd}^{(n)}` and $`\mathrm{Uf}^{(n)}` are mutually quasi-inverse equivalences between
-$`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})` and $`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})`.
+/-!
+### Graduation and unification are equivalences
+
+$\mathrm{Gd}^{(n)}$ and $\mathrm{Uf}^{(n)}$ are mutually quasi-inverse equivalences between
+$\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})$ and $\mathsf{PAlg}(\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}})$.
 More precisely (Proposition `PGdUfAdj` of the draft), they form an adjoint equivalence whose unit is
-the isomorphism of Proposition `unification-graduation`, which sends every cell to itself, and whose
-counit is $`\theta^{-1}`.
+the isomorphism of Proposition “Unification after graduation”, which sends every cell to itself, and whose
+counit is $\theta^{-1}$.
+-/
 
-```lean
 section Equivalence
 
 /-- Graduation and unification are mutually quasi-inverse equivalences. -/
@@ -1456,38 +1459,38 @@ noncomputable def gradEquivalence :
           (Subtype.ext (Grad.isCell (M := ⟨B.1, B.2.2⟩) (k := k.castSucc) x k.isLt)))
 
 end Equivalence
-```
-:::
 
-:::proof (of := "graduation-equivalence")
-By Propositions `unification-graduation` and `graduation-unification`, it remains to check the
-triangle identity: for a compact model $`\mathbf{B}` and a $`k`-cell $`x` of
-$`\mathrm{Gd}^{(n)}(\mathbf{B})`, the image of $`x` under $`\mathrm{Gd}^{(n)}` of the unit is $`x`,
-seen as an $`n`-cell, and $`\theta^{-1}` sends it to its $`(k,n)`-source $`\mathrm{sc}^{k}(x) = x`.
-:::
+/-!
+*Proof of “Graduation and unification are equivalences”.*
 
-:::corollary (label := "cat-alg-extended-equiv") (central := true) (title := "nCatAlg(Σ) ≃ PAlg(C^Σᵉˣᵗ⁽ⁿ⁾)")
-The category $`\mathsf{nCatAlg}(\Sigma)` of compact $`n`-categorial $`\Sigma`-algebras is
+By Propositions “Unification after graduation” and “Graduation after unification”, it remains to check the
+triangle identity: for a compact model $\mathbf{B}$ and a $k$-cell $x$ of
+$\mathrm{Gd}^{(n)}(\mathbf{B})$, the image of $x$ under $\mathrm{Gd}^{(n)}$ of the unit is $x$,
+seen as an $n$-cell, and $\theta^{-1}$ sends it to its $(k,n)$-source $\mathrm{sc}^{k}(x) = x$.
+-/
+
+/-!
+### nCatAlg(Σ) ≃ PAlg(C^Σᵉˣᵗ⁽ⁿ⁾)
+
+The category $\mathsf{nCatAlg}(\Sigma)$ of compact $n$-categorial $\Sigma$-algebras is
 equivalent to the category of models of the extended specification
-$`\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}`.
+$\mathcal{C}^{\Sigma^{\mathrm{ext}(n)}}$.
+-/
 
-```lean
 /-- `nCatAlg(Σ) ≌ PAlg(𝒞^{Σ^{ext(n)}})`. -/
 noncomputable def catAlgebraEquivExtended :
     Compact.CatAlgebra.{u, v, w} Sig n ≌ Extended.ExtendedPAlg.{u, v, w} Sig (Fin (n + 1)) :=
   (Compact.cellsFunctor n).asEquivalence.trans
     ((compactEpAlgEquiv Sig (Fin n)).trans
       ((gradEquivalence Sig n).trans (extendedEpAlgEquiv Sig (Fin (n + 1)))))
-```
-:::
 
-:::proof (of := "cat-alg-extended-equiv")
-Compose the isomorphism of Theorem `compact.cat-alg-iso`, the identifications of the categories of
+/-!
+*Proof of “nCatAlg(Σ) ≃ PAlg(C^Σᵉˣᵗ⁽ⁿ⁾)”.*
+
+Compose the isomorphism of Theorem “nCatAlg(Σ) = PAlg(C^Σ⁽ⁿ⁾)” (in `CategorialAlgebras.Compact.Identification`), the identifications of the categories of
 models of the specifications with those of the ep-specifications (Constructions
-`compact.ep-alg-equiv` and `extended.ep-alg-equiv`), and the equivalence of Theorem
-`graduation-equivalence`.
-:::
+“PAlg(C^Σ⁽ⁿ⁾) = epAlg(Σ⁽ⁿ⁾, C^Σ⁽ⁿ⁾)” (in `CategorialAlgebras.CategorialEp`) and “PAlg(C^Σᵉˣᵗ⁽ⁿ⁾) = epAlg(Σᵉˣᵗ⁽ⁿ⁾, C^Σᵉˣᵗ⁽ⁿ⁾)” (in `CategorialAlgebras.CategorialEp`)), and the equivalence of Theorem
+“Graduation and unification are equivalences”.
+-/
 
-```lean
 end CategorialAlgebras
-```

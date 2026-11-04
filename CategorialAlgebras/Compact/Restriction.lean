@@ -1,20 +1,18 @@
-import Stemma
 import CategorialAlgebras.Compact.Product
 
-open Verso.Genre Manual InlineLean Stemma
-
-#doc (Stemma) "Restriction of single-set categories" =>
+/-!
+# Restriction of single-set categories
 
 In the single-set presentation all the cells live in one set, so truncating a single-set category
 at some level means keeping a *subset* of its cells: those whose dimension is low enough, that
-is, those that are $`u`-cells for every dimension $`u` that is forgotten. On these cells the
+is, those that are $u$-cells for every dimension $u$ that is forgotten. On these cells the
 sources, targets and compositions of the remaining dimensions are again a single-set category.
 
 As for globular categories, the construction is done once, for a strictly monotone mapping
-$`e \colon J \to I` that says which dimension of $`I` each dimension of $`J` becomes, and a set
-$`U \subseteq I` of forgotten dimensions, each of them above every dimension $`e(j)`.
+$e \colon J \to I$ that says which dimension of $I$ each dimension of $J$ becomes, and a set
+$U \subseteq I$ of forgotten dimensions, each of them above every dimension $e(j)$.
+-/
 
-```lean
 universe u u₁ u₂
 
 namespace CategorialAlgebras.Compact
@@ -22,11 +20,11 @@ namespace CategorialAlgebras.Compact
 variable {I J : Type} [Preorder I] [Preorder J]
 
 open CategoryStruct
-```
 
-# Lemmas on cells
+/-!
+## Lemmas on cells
+-/
 
-```lean
 section Cells
 
 variable {C : Type u} [Category I C]
@@ -54,23 +52,26 @@ lemma tg_eq_of_cell {k : I} {f : C} (hf : cell k f) : tg k f = f := by
     _ = f := hf
 
 end Cells
-```
 
-# The restriction
+/-!
+## The restriction
+-/
 
-:::construction (label := "compact.restrict-category") (central := false) (title := "Restriction to the cells of low dimension")
-Let $`C` be a single-set category with dimensions in $`I`, let $`e \colon J \to I` be strictly
-monotone and let $`U \subseteq I` be a set of dimensions with $`e(j) < u` for every $`j \in J`
-and $`u \in U`. The *restriction* of $`C` along $`e` and $`U` is the set
-$$`C|_{e,U} = \{ f \in C \mid \mathrm{sc}^{u}(f) = f \text{ for every } u \in U \}`
-of the cells that are $`u`-cells for every $`u \in U`, with the single-set categorial structure
-with dimensions in $`J` given, for $`j \in J`, by $`\mathrm{sc}^{e(j)}`, $`\mathrm{tg}^{e(j)}`
-and $`\#^{e(j)}`. These operations do not leave $`C|_{e,U}`: for $`u \in U`, the $`e(j)`-source
-and $`e(j)`-target of any cell are $`u`-cells by (2C1), since $`e(j) < u`, and
-$`\mathrm{sc}^{u}(g \#^{e(j)} f) = \mathrm{sc}^{u} g \#^{e(j)} \mathrm{sc}^{u} f = g \#^{e(j)} f`
-by (2C2). Every axiom of the restriction is an axiom of $`C`.
+/-!
+### Restriction to the cells of low dimension
 
-```lean
+Let $C$ be a single-set category with dimensions in $I$, let $e \colon J \to I$ be strictly
+monotone and let $U \subseteq I$ be a set of dimensions with $e(j) < u$ for every $j \in J$
+and $u \in U$. The *restriction* of $C$ along $e$ and $U$ is the set
+$$C|_{e,U} = \{ f \in C \mid \mathrm{sc}^{u}(f) = f \text{ for every } u \in U \}$$
+of the cells that are $u$-cells for every $u \in U$, with the single-set categorial structure
+with dimensions in $J$ given, for $j \in J$, by $\mathrm{sc}^{e(j)}$, $\mathrm{tg}^{e(j)}$
+and $\#^{e(j)}$. These operations do not leave $C|_{e,U}$: for $u \in U$, the $e(j)$-source
+and $e(j)$-target of any cell are $u$-cells by (2C1), since $e(j) < u$, and
+$\mathrm{sc}^{u}(g \#^{e(j)} f) = \mathrm{sc}^{u} g \#^{e(j)} \mathrm{sc}^{u} f = g \#^{e(j)} f$
+by (2C2). Every axiom of the restriction is an axiom of $C$.
+-/
+
 /-- The cells of `C` that are `u`-cells for every `u ∈ U`. -/
 def Restr (U : Set I) (C : Type u) [CategoryStruct I C] : Type u :=
   {f : C // ∀ u ∈ U, sc u f = f}
@@ -130,17 +131,17 @@ def Category.restrict (he : StrictMono e) (hU : ∀ j, ∀ u ∈ U, e j < u) (C 
   interchange h p₁ p₂ p₃ p₄ :=
     Subtype.ext (Category.interchange (he h) (restrict_sc_is_tg hU p₁)
       (restrict_sc_is_tg hU p₂) (restrict_sc_is_tg hU p₃) (restrict_sc_is_tg hU p₄))
-```
-:::
 
-:::construction (label := "compact.restrict-functor") (central := false) (title := "Restriction of single-set functors")
-A single-set functor $`F \colon C \to D` sends $`C|_{e,U}` into $`D|_{e,U}`, since it preserves
-$`u`-sources, and restricts to a single-set functor between the restrictions. More generally, a
-single-set functor $`F \colon \prod_{l \in L} C_l \to D` restricts to a single-set functor
-$`\prod_{l \in L} C_l|_{e,U} \to D|_{e,U}`; this is the form needed for the operations of an
+/-!
+### Restriction of single-set functors
+
+A single-set functor $F \colon C \to D$ sends $C|_{e,U}$ into $D|_{e,U}$, since it preserves
+$u$-sources, and restricts to a single-set functor between the restrictions. More generally, a
+single-set functor $F \colon \prod_{l \in L} C_l \to D$ restricts to a single-set functor
+$\prod_{l \in L} C_l|_{e,U} \to D|_{e,U}$; this is the form needed for the operations of an
 algebra.
+-/
 
-```lean
 variable {e : J → I} {U : Set I}
 
 def Functor.restrict (he : StrictMono e) (hU : ∀ j, ∀ u ∈ U, e j < u)
@@ -172,9 +173,5 @@ def Functor.restrictPi (he : StrictMono e) (hU : ∀ j, ∀ u ∈ U, e j < u)
       Subtype.ext (F.map_comp_eq_comp_map (k := e k) (f := fun l => (f l).1)
         (g := fun l => (g l).1)
         (funext fun l => restrict_sc_is_tg hU (pi_sc_is_tg.mp p l))) }
-```
-:::
 
-```lean
 end CategorialAlgebras.Compact
-```

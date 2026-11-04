@@ -1,20 +1,18 @@
-import Stemma
 import CategorialAlgebras.PartialAlgebra
 import CategorialAlgebras.Compact.Algebra
 
-open Verso.Genre Manual InlineLean Stemma
+/-!
+# The single-set QE-specification
 
-#doc (Stemma) "The single-set QE-specification" =>
-
-Definition `DVarSingleSet` of the draft presents the single-set $`n`-categorial $`\Sigma`-algebras as a
-$`\mathrm{QE}`$-variety of partial $`\Sigma^{(n)}`-algebras, where $`\Sigma^{(n)}` is the
-single-set $`n`-categorial signature of Definition `DSigmaCatSingleSet`, for $`n \in \mathbb{N}`, and
-defines the same specification for $`n = \omega`. This document writes down the specification
-$`\mathcal{C}^{\Sigma^{(n)}}` and the category $`\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})` of
+Definition `DVarSingleSet` of the draft presents the single-set $n$-categorial $\Sigma$-algebras as a
+$\mathrm{QE}$-variety of partial $\Sigma^{(n)}$-algebras, where $\Sigma^{(n)}$ is the
+single-set $n$-categorial signature of Definition `DSigmaCatSingleSet`, for $n \in \mathbb{N}$, and
+defines the same specification for $n = \omega$. This file writes down the specification
+$\mathcal{C}^{\Sigma^{(n)}}$ and the category $\mathsf{PAlg}(\mathcal{C}^{\Sigma^{(n)}})$ of
 its models. As the categories of the library, it is written once for every preordered set of
-dimensions $`I`: $`n \in \mathbb{N}` is `Fin n` in the Lean, and $`\omega` is `ℕ`.
+dimensions $I$: $n \in \mathbb{N}$ is `Fin n` in the Lean, and $\omega$ is `ℕ`.
+-/
 
-```lean
 universe u v w
 
 namespace CategorialAlgebras.Compact
@@ -22,17 +20,17 @@ namespace CategorialAlgebras.Compact
 open Term
 
 variable {S : Type u}
-```
 
-# Terms of the single-set signature
+/-!
+## Terms of the single-set signature
 
-The variables $`V^{S}` are a fixed $`S`-sorted set with countably many variables of each sort;
-we take $`V^{S}_s = \mathbb{N}`. We write $`\mathrm{sc}^{k}(t)`, $`\mathrm{tg}^{k}(t)` and
-$`t \circ^{k} t'` for the terms built with the symbols of Definition `DSigmaCatSingleSet`, and
-$`\sigma((t_j)_j)` for an operation symbol of $`\Sigma`; in the Lean they are `scT`, `tgT`,
+The variables $V^{S}$ are a fixed $S$-sorted set with countably many variables of each sort;
+we take $V^{S}_s = \mathbb{N}$. We write $\mathrm{sc}^{k}(t)$, $\mathrm{tg}^{k}(t)$ and
+$t \circ^{k} t'$ for the terms built with the symbols of Definition `DSigmaCatSingleSet`, and
+$\sigma((t_j)_j)$ for an operation symbol of $\Sigma$; in the Lean they are `scT`, `tgT`,
 `compT` and `opT`, and `x i` is the variable number `i`.
+-/
 
-```lean
 /-- The variables: countably many of each sort. -/
 abbrev Var (S : Type u) : S → Type := fun _ => ℕ
 
@@ -59,53 +57,56 @@ def opT {ws : List S} {s : S} (σ : Sig ws s) (ts : (j : Fin ws.length) → CTer
   .app (CompactSignature.op σ) ts
 
 end CTerm
-```
 
-# The specification
+/-!
+## The specification
+-/
 
-:::definition (label := "compact.qe-specification") (central := false) (title := "The specification C^Σ⁽ⁿ⁾")
-Let $`\Sigma` be an $`S`-sorted signature and $`I` a preordered set of dimensions. The
-specification with dimensions in $`I` is the set of the following $`\mathrm{QE}`$-equations of
-the single-set categorial signature with dimensions in $`I`, with variables in $`V^{S}`, for all
-sorts, operation symbols, dimensions and variables. For $`I = n`, with
-$`n \in \mathbb{N} \cup \{\omega\}`, it is the specification $`\mathcal{C}^{\Sigma^{(n)}}` of
+/-!
+### The specification C^Σ⁽ⁿ⁾
+
+Let $\Sigma$ be an $S$-sorted signature and $I$ a preordered set of dimensions. The
+specification with dimensions in $I$ is the set of the following $\mathrm{QE}$-equations of
+the single-set categorial signature with dimensions in $I$, with variables in $V^{S}$, for all
+sorts, operation symbols, dimensions and variables. For $I = n$, with
+$n \in \mathbb{N} \cup \{\omega\}$, it is the specification $\mathcal{C}^{\Sigma^{(n)}}$ of
 Definition `DVarSingleSet` of the draft:
 
-1. (A0) $`\sigma((x_j)_j) \overset{\mathrm{e}}{=} \sigma((x_j)_j)`;
-2. for every $`k \in I`:
-   (A$`^k`1) $`\mathrm{sc}^{k}(x)` and $`\mathrm{tg}^{k}(x)` are defined;
-   (A$`^k`2) $`\mathrm{sc}^{k}\mathrm{sc}^{k}(x) \overset{\mathrm{e}}{=} \mathrm{sc}^{k}(x)`,
-   $`\mathrm{sc}^{k}\mathrm{tg}^{k}(x) \overset{\mathrm{e}}{=} \mathrm{tg}^{k}(x)`,
-   $`\mathrm{tg}^{k}\mathrm{sc}^{k}(x) \overset{\mathrm{e}}{=} \mathrm{sc}^{k}(x)`,
-   $`\mathrm{tg}^{k}\mathrm{tg}^{k}(x) \overset{\mathrm{e}}{=} \mathrm{tg}^{k}(x)`;
-   (A$`^k`3) $`x \circ^{k} y` is defined if and only if
-   $`\mathrm{sc}^{k}(x) \overset{\mathrm{e}}{=} \mathrm{tg}^{k}(y)`;
-   (A$`^k`4) if $`x \circ^{k} y` is defined, its $`k`-source is $`\mathrm{sc}^{k}(y)` and its
-   $`k`-target is $`\mathrm{tg}^{k}(x)`;
-   (A$`^k`5) $`x \circ^{k} \mathrm{sc}^{k}(x) \overset{\mathrm{e}}{=} x` and
-   $`\mathrm{tg}^{k}(x) \circ^{k} x \overset{\mathrm{e}}{=} x`;
-   (A$`^k`6) if $`x \circ^{k} y` and $`y \circ^{k} z` are defined, then
-   $`(x \circ^{k} y) \circ^{k} z \overset{\mathrm{e}}{=} x \circ^{k} (y \circ^{k} z)`;
-   (A$`^k`7) $`\mathrm{sc}^{k}(\sigma((x_j)_j)) \overset{\mathrm{e}}{=} \sigma((\mathrm{sc}^{k}(x_j))_j)`
-   and likewise for $`\mathrm{tg}^{k}`;
-   (A$`^k`8) if every $`x_j \circ^{k} y_j` is defined, then
-   $`\sigma((x_j \circ^{k} y_j)_j) \overset{\mathrm{e}}{=} \sigma((x_j)_j) \circ^{k} \sigma((y_j)_j)`;
-3. for all $`l < k` in $`I`:
-   (AB$`^{l,k}`1) $`\mathrm{sc}^{k}\mathrm{sc}^{l}(x)`, $`\mathrm{sc}^{l}\mathrm{sc}^{k}(x)` and
-   $`\mathrm{sc}^{l}\mathrm{tg}^{k}(x)` are equal to $`\mathrm{sc}^{l}(x)`, and
-   $`\mathrm{tg}^{k}\mathrm{tg}^{l}(x)`, $`\mathrm{tg}^{l}\mathrm{tg}^{k}(x)` and
-   $`\mathrm{tg}^{l}\mathrm{sc}^{k}(x)` are equal to $`\mathrm{tg}^{l}(x)`;
-   (AB$`^{l,k}`2) if $`x \circ^{l} y` is defined, then
-   $`\mathrm{sc}^{k}(x \circ^{l} y) \overset{\mathrm{e}}{=} \mathrm{sc}^{k}(x) \circ^{l} \mathrm{sc}^{k}(y)`,
-   and likewise for $`\mathrm{tg}^{k}`;
-   (AB$`^{l,k}`3) if $`x \circ^{l} y`, $`z \circ^{l} t`, $`x \circ^{k} z` and $`y \circ^{k} t` are
+1. (A0) $\sigma((x_j)_j) \overset{\mathrm{e}}{=} \sigma((x_j)_j)$;
+2. for every $k \in I$:
+   (A$^k$1) $\mathrm{sc}^{k}(x)$ and $\mathrm{tg}^{k}(x)$ are defined;
+   (A$^k$2) $\mathrm{sc}^{k}\mathrm{sc}^{k}(x) \overset{\mathrm{e}}{=} \mathrm{sc}^{k}(x)$,
+   $\mathrm{sc}^{k}\mathrm{tg}^{k}(x) \overset{\mathrm{e}}{=} \mathrm{tg}^{k}(x)$,
+   $\mathrm{tg}^{k}\mathrm{sc}^{k}(x) \overset{\mathrm{e}}{=} \mathrm{sc}^{k}(x)$,
+   $\mathrm{tg}^{k}\mathrm{tg}^{k}(x) \overset{\mathrm{e}}{=} \mathrm{tg}^{k}(x)$;
+   (A$^k$3) $x \circ^{k} y$ is defined if and only if
+   $\mathrm{sc}^{k}(x) \overset{\mathrm{e}}{=} \mathrm{tg}^{k}(y)$;
+   (A$^k$4) if $x \circ^{k} y$ is defined, its $k$-source is $\mathrm{sc}^{k}(y)$ and its
+   $k$-target is $\mathrm{tg}^{k}(x)$;
+   (A$^k$5) $x \circ^{k} \mathrm{sc}^{k}(x) \overset{\mathrm{e}}{=} x$ and
+   $\mathrm{tg}^{k}(x) \circ^{k} x \overset{\mathrm{e}}{=} x$;
+   (A$^k$6) if $x \circ^{k} y$ and $y \circ^{k} z$ are defined, then
+   $(x \circ^{k} y) \circ^{k} z \overset{\mathrm{e}}{=} x \circ^{k} (y \circ^{k} z)$;
+   (A$^k$7) $\mathrm{sc}^{k}(\sigma((x_j)_j)) \overset{\mathrm{e}}{=} \sigma((\mathrm{sc}^{k}(x_j))_j)$
+   and likewise for $\mathrm{tg}^{k}$;
+   (A$^k$8) if every $x_j \circ^{k} y_j$ is defined, then
+   $\sigma((x_j \circ^{k} y_j)_j) \overset{\mathrm{e}}{=} \sigma((x_j)_j) \circ^{k} \sigma((y_j)_j)$;
+3. for all $l < k$ in $I$:
+   (AB$^{l,k}$1) $\mathrm{sc}^{k}\mathrm{sc}^{l}(x)$, $\mathrm{sc}^{l}\mathrm{sc}^{k}(x)$ and
+   $\mathrm{sc}^{l}\mathrm{tg}^{k}(x)$ are equal to $\mathrm{sc}^{l}(x)$, and
+   $\mathrm{tg}^{k}\mathrm{tg}^{l}(x)$, $\mathrm{tg}^{l}\mathrm{tg}^{k}(x)$ and
+   $\mathrm{tg}^{l}\mathrm{sc}^{k}(x)$ are equal to $\mathrm{tg}^{l}(x)$;
+   (AB$^{l,k}$2) if $x \circ^{l} y$ is defined, then
+   $\mathrm{sc}^{k}(x \circ^{l} y) \overset{\mathrm{e}}{=} \mathrm{sc}^{k}(x) \circ^{l} \mathrm{sc}^{k}(y)$,
+   and likewise for $\mathrm{tg}^{k}$;
+   (AB$^{l,k}$3) if $x \circ^{l} y$, $z \circ^{l} t$, $x \circ^{k} z$ and $y \circ^{k} t$ are
    defined, then
-   $`(x \circ^{l} y) \circ^{k} (z \circ^{l} t) \overset{\mathrm{e}}{=} (x \circ^{k} z) \circ^{l} (y \circ^{k} t)`.
+   $(x \circ^{l} y) \circ^{k} (z \circ^{l} t) \overset{\mathrm{e}}{=} (x \circ^{k} z) \circ^{l} (y \circ^{k} t)$.
 
-The variables $`x, y, z, t` are $`x_0, x_1, x_2, x_3` of the relevant sort, and the families
-$`(x_j)_j`, $`(y_j)_j` are any families of variables.
+The variables $x, y, z, t$ are $x_0, x_1, x_2, x_3$ of the relevant sort, and the families
+$(x_j)_j$, $(y_j)_j$ are any families of variables.
+-/
 
-```lean
 open CTerm in
 inductive CompactAxiom (Sig : Signature.{u, v} S) (Index : Type) [Preorder Index] :
     QEEq (CompactSignature Sig Index) (Var S) → Prop
@@ -188,9 +189,5 @@ def compactSpec (Sig : Signature.{u, v} S) (Index : Type) [Preorder Index] :
 /-- The category `PAlg(C^{Σ^{(n)}})` of models of the single-set specification. -/
 abbrev CompactPAlg (Sig : Signature.{u, v} S) (Index : Type) [Preorder Index] :=
   PAlg.{u, max u v, w} (compactSpec Sig Index)
-```
-:::
 
-```lean
 end CategorialAlgebras.Compact
-```
