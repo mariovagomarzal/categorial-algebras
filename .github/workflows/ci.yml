@@ -17,18 +17,6 @@ concurrency:
   # A run on main always finishes, so that it saves its caches and publishes.
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
-env:
-  # The documentation of the dependencies (Mathlib's, above all) and the build of doc-gen4. They
-  # only change with the toolchain and the manifest; the pages of the library are written again
-  # on every run.
-  DOCS_CACHE_PATHS: |
-    docbuild/.lake/build
-    .lake/packages/doc-gen4
-    .lake/packages/leansqlite
-    .lake/packages/UnicodeBasic
-    .lake/packages/BibtexQuery
-    .lake/packages/MD4Lean
-
 jobs:
   build:
     name: Build the library and the documentation
@@ -46,11 +34,14 @@ jobs:
       - name: Build the library
         uses: leanprover/lean-action@v1
 
+      # The documentation of the dependencies (Mathlib's, above all), which only changes with the
+      # toolchain and the manifest. The pages of the library are written again on every run, and
+      # doc-gen4 itself is built on every run (about a minute), as in docgen-action.
       - name: Restore the documentation of the dependencies
         id: docs-cache
         uses: actions/cache/restore@v5
         with:
-          path: ${{ env.DOCS_CACHE_PATHS }}
+          path: docbuild/.lake/build
           key: docs-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
 
       - name: Build the documentation
@@ -61,7 +52,7 @@ jobs:
         if: github.event_name == 'push' && steps.docs-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v5
         with:
-          path: ${{ env.DOCS_CACHE_PATHS }}
+          path: docbuild/.lake/build
           key: ${{ steps.docs-cache.outputs.cache-primary-key }}
 
       - name: Upload the site
