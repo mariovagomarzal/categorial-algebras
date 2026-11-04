@@ -2,9 +2,10 @@
 # Build the API documentation of the library with doc-gen4 and assemble the site in `_site/`:
 # the contents of `site/` at the root and the API documentation in `_site/docs/`.
 #
-# doc-gen4 runs from an auxiliary package in `docbuild/`, so that it is not a dependency of the
-# library. It shares `.lake/packages` with the library, and uses the doc-gen4 tag that matches
-# `lean-toolchain`.
+# doc-gen4 runs from the auxiliary package `docbuild/`, so that it is not a dependency of the
+# library. It shares `.lake/packages` with the library. Its manifest pins doc-gen4 and its
+# dependencies; when `lean-toolchain` changes, set the doc-gen4 tag in `docbuild/lakefile.toml`
+# to the new toolchain and run `lake update` in `docbuild/`.
 #
 # The pages link every declaration to its source on GitHub. doc-gen4 finds these links by running
 # `git` in every package, from jobs that block Lake's workers; on a graph as large as Mathlib's,
@@ -23,26 +24,19 @@ if [[ ! "$toolchain" =~ ^v4\.[0-9]+\.[0-9]+(-rc[0-9]+)?$ ]]; then
   exit 1
 fi
 
+docgen=$(sed -n 's/^rev = "\(.*\)"$/\1/p' docbuild/lakefile.toml)
+if [[ "$docgen" != "$toolchain" ]]; then
+  echo "error: docbuild/lakefile.toml asks for doc-gen4 $docgen, but lean-toolchain is $toolchain" >&2
+  exit 1
+fi
+
 mkdir -p docbuild/docs
-cat > docbuild/lakefile.toml <<EOF
-name = "docbuild"
-reservoir = false
-packagesDir = "../.lake/packages"
-
-[[require]]
-scope = "leanprover"
-name = "doc-gen4"
-rev = "$toolchain"
-
-[[require]]
-name = "categorialalgebras"
-path = "../"
-EOF
-
 # doc-gen4 reads the bibliography of the citations `[key]` from `docs/references.bib`.
 cp docs/references.bib docbuild/docs/references.bib
 
 cd docbuild
+# Bring the library's dependencies in the manifest of `docbuild/` to those of the library, so
+# that building here never checks out other revisions in the shared `.lake/packages`.
 MATHLIB_NO_CACHE_ON_UPDATE=1 lake update categorialalgebras
 
 # The HTML pass of doc-gen4 is skipped while its markers are up to date, and a restored cache

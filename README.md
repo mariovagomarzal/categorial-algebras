@@ -36,5 +36,7 @@ requests to `main`; a push to `main` also publishes `_site/` to GitHub Pages.
 - `docs/notes.md`: the scope agreed, the conventions and what was left out.
 - `site/`: the root of the published site; the API documentation goes under
   `docs/` in it.
-- `scripts/build-docs.sh`: builds the API documentation with doc-gen4 from an
-  auxiliary package in `docbuild/`, and assembles the site in `_site/`.
+- `docbuild/`: the auxiliary package that builds the API documentation with
+  doc-gen4; its doc-gen4 tag must match `lean-toolchain`.
+- `scripts/build-docs.sh`: builds the API documentation from `docbuild/` and
+  assembles the site in `_site/`.

@@ -1,0 +1,14 @@
+# The package that builds the API documentation of the library with doc-gen4; see
+# scripts/build-docs.sh. The doc-gen4 tag must match the library's lean-toolchain.
+name = "docbuild"
+reservoir = false
+packagesDir = "../.lake/packages"
+
+[[require]]
+scope = "leanprover"
+name = "doc-gen4"
+rev = "v4.34.1"
+
+[[require]]
+name = "categorialalgebras"
+path = "../"

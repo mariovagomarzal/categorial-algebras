@@ -27,15 +27,30 @@ jobs:
       - name: Build the library
         uses: leanprover/lean-action@v1
 
-      # The documentation of the dependencies (Mathlib's, above all), which only changes with the
-      # toolchain and the manifest. The pages of the library are written again on every run, and
-      # doc-gen4 itself is built on every run (about a minute), as in docgen-action.
+      # The documentation of the dependencies (Mathlib's, above all) and the packages that only
+      # doc-gen4 needs, with their builds: rebuilding them, which compiles C code, would make Lake
+      # document every module again. These packages are those of docbuild's manifest that are
+      # not in the library's. The pages of the library are written again on every run.
+      - name: Find the packages of doc-gen4
+        id: docs-paths
+        run: |
+          {
+            echo "paths<<EOF"
+            echo docbuild/.lake/build
+            jq -r --slurpfile lib lake-manifest.json \
+              '[$lib[0].packages[].name] as $own | .packages[]
+               | select(.type == "git" and (.name as $n | $own | index($n) | not))
+               | ".lake/packages/" + (.name | ltrimstr("«") | rtrimstr("»"))' \
+              docbuild/lake-manifest.json
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+
       - name: Restore the documentation of the dependencies
         id: docs-cache
         uses: actions/cache/restore@v5
         with:
-          path: docbuild/.lake/build
-          key: docs-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
+          path: ${{ steps.docs-paths.outputs.paths }}
+          key: docs-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'docbuild/lake-manifest.json') }}
 
       - name: Build the documentation
         run: scripts/build-docs.sh
@@ -45,7 +60,7 @@ jobs:
         if: github.event_name == 'push' && steps.docs-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v5
         with:
-          path: docbuild/.lake/build
+          path: ${{ steps.docs-paths.outputs.paths }}
           key: ${{ steps.docs-cache.outputs.cache-primary-key }}
 
       - name: Upload the site
