@@ -95,6 +95,14 @@
   .btn svg { width: 1.05em; height: 1.05em; flex: none; }
   .btn[aria-disabled="true"] { color: var(--muted); box-shadow: none; cursor: default; }
   .btn[aria-disabled="true"]:hover { border-color: var(--rule); color: var(--muted); transform: none; }
+  /* The versions published elsewhere, which may lag behind the ones built from this repository. */
+  .elsewhere {
+    display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .75rem;
+    margin-top: 1.1rem; padding-top: 1rem; border-top: 1px dashed var(--rule);
+    font: 400 .84rem/1.4 var(--sans); color: var(--muted);
+  }
+  .elsewhere .btn { padding: .42rem .7rem; font-size: .82rem; box-shadow: none; background: transparent; color: var(--muted); }
+  .elsewhere .btn:hover { color: var(--accent); }
   .btn:focus-visible, .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   main.column { display: block; }
@@ -117,17 +125,11 @@
   }
   /* In narrow pages the video is only reached through its button. */
   @media (max-width: 900px) { .hero-video { display: none; } }
-  .video iframe, .video button { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .video button {
-    padding: 0; cursor: pointer; display: grid; place-items: center; color: #fff;
-    background: center / cover no-repeat #000; font: 500 .95rem var(--sans);
-  }
-  .video button span { background: rgba(0, 0, 0, .7); padding: .65rem 1.1rem; border-radius: 8px; }
+  .video video { position: absolute; inset: 0; width: 100%; height: 100%; }
   .video .soon {
     position: absolute; inset: 0; display: grid; place-items: center;
     color: var(--muted); font: 400 .95rem var(--sans);
   }
-  .download { font: 400 .9rem var(--sans); margin-top: .7rem; }
 
   .cite { position: relative; }
   pre {
@@ -141,7 +143,6 @@
   }
   .copy { transition: border-color .15s, color .15s; }
   .copy:hover { border-color: var(--accent); color: var(--accent); }
-  [hidden] { display: none !important; }
 </style>
 </head>
 <body>
@@ -162,19 +163,23 @@
       <li><sup>4</sup>Màster en Investigació Matemàtica, Universitat de València</li>
     </ul>
     <nav class="links" aria-label="Resources">
-      <a class="btn" id="paper-link" href="paper.pdf">
+      <a class="btn" href="paper.pdf">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>Paper</a>
       <a class="btn" href="docs/">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>Lean docs</a>
-      <a class="btn" id="video-link" aria-disabled="true" title="Coming soon">
+      <a class="btn" aria-disabled="true" title="Coming soon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>Video</a>
       <a class="btn" href="https://github.com/mariovagomarzal/categorial-algebras">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>Source</a>
     </nav>
+    <nav class="elsewhere" aria-label="Versions published elsewhere">
+      <span>Published elsewhere:</span>
+      <a class="btn" href="https://arxiv.org/abs/2611.03553"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>arXiv</a>
+      <a class="btn" href="https://www.youtube.com/watch?v=yFD3TaKQ5fY"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>YouTube</a>
+    </nav>
     </div>
     <div class="hero-video">
-      <div class="video" id="video-frame"><div class="soon">Video coming soon</div></div>
-      <p class="download" id="video-download" hidden><a href="#">Download the video</a></p>
+      <div class="video"><div class="soon">Video coming soon</div></div>
     </div>
   </div>
 </header>
@@ -206,7 +211,14 @@
   <section aria-labelledby="cite-title">
     <h2 id="cite-title">Cite</h2>
     <div class="cite">
-      <pre id="bibtex"><code></code></pre>
+      <pre id="bibtex"><code>@misc{ClimentEtAl2026,
+  title         = {Higher-order many-sorted categorial algebras via generalized hep-derivors},
+  author        = {Climent Vidal, J. and Cosme Ll{\'o}pez, E. and Ruiz Mora, R. and Vago Marzal, M.},
+  year          = {2026},
+  eprint        = {2611.03553},
+  archivePrefix = {arXiv},
+  primaryClass  = {math.CT},
+}</code></pre>
       <button class="copy" type="button" id="copy">Copy</button>
     </div>
   </section>
@@ -220,55 +232,11 @@
 </footer>
 
 <script>
-  // What is not published yet. An empty value keeps the fallback: the PDF built from paper/, the
-  // "Coming soon" placeholder, and no download link.
-  const LINKS = {
-    arxiv: "",      // the arXiv identifier, e.g. "2611.01234"
-    youtube: "",    // the id of the video on YouTube
-    videoFile: "",  // the download URL of the video, e.g. an asset of a GitHub release
-  };
-
-  if (LINKS.arxiv) document.getElementById("paper-link").href = `https://arxiv.org/abs/${LINKS.arxiv}`;
-
-  if (LINKS.videoFile) {
-    const download = document.getElementById("video-download");
-    download.querySelector("a").href = LINKS.videoFile;
-    download.hidden = false;
-  }
-
-  // The button opens the video on YouTube. Next to the title, in wide pages, the player loads only
-  // once clicked, so that the page sets no third-party cookies.
-  if (LINKS.youtube) {
-    const videoLink = document.getElementById("video-link");
-    videoLink.href = `https://www.youtube.com/watch?v=${LINKS.youtube}`;
-    videoLink.removeAttribute("aria-disabled");
-    videoLink.removeAttribute("title");
-    const poster = document.createElement("button");
-    poster.type = "button";
-    poster.style.backgroundImage = `url(https://i.ytimg.com/vi/${LINKS.youtube}/hqdefault.jpg)`;
-    poster.innerHTML = "<span>Play on YouTube</span>";
-    poster.addEventListener("click", () => {
-      const player = document.createElement("iframe");
-      player.src = `https://www.youtube-nocookie.com/embed/${LINKS.youtube}?autoplay=1`;
-      player.title = "Higher-order many-sorted categorial algebras: video";
-      player.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
-      poster.replaceWith(player);
-    });
-    document.getElementById("video-frame").replaceChildren(poster);
-  }
-
-  const bibtex = [
-    "@misc{CategorialAlgebras2026,",
-    "  title         = {Higher-order many-sorted categorial algebras via generalized hep-derivors},",
-    "  author        = {Climent Vidal, J. and Cosme Ll{\\'o}pez, E. and Ruiz Mora, R. and Vago Marzal, M.},",
-    "  year          = {2026},",
-    ...(LINKS.arxiv ? [`  eprint        = {${LINKS.arxiv}},`, "  archivePrefix = {arXiv},"] : []),
-    "}",
-  ].join("\n");
-  document.querySelector("#bibtex code").textContent = bibtex;
   document.getElementById("copy").addEventListener("click", async e => {
-    try { await navigator.clipboard.writeText(bibtex); e.target.textContent = "Copied"; }
-    catch { e.target.textContent = "Select to copy"; }
+    try {
+      await navigator.clipboard.writeText(document.getElementById("bibtex").textContent);
+      e.target.textContent = "Copied";
+    } catch { e.target.textContent = "Select to copy"; }
     setTimeout(() => (e.target.textContent = "Copy"), 1600);
   });
 </script>
