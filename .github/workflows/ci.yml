@@ -22,13 +22,6 @@ jobs:
     name: Build the library and the documentation
     runs-on: ubuntu-latest
     steps:
-      # Mathlib fills most of the runner's disk. The toolchains of Android, .NET and Haskell,
-      # which nothing here uses, are removed in the background while the job goes on.
-      - name: Make room on the disk
-        run: |
-          sudo nohup rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /usr/local/.ghcup \
-            > /dev/null 2>&1 &
-
       - uses: actions/checkout@v5
 
       - name: Build the library

@@ -7,10 +7,12 @@
 # `lean-toolchain`.
 #
 # The pages link every declaration to its source on GitHub. doc-gen4 finds these links by running
-# `git` in every package, which fails on the GitHub runners (ENOMEM on every call, whatever the
-# memory) and with remotes rewritten to SSH. So doc-gen4 links to the local files
-# (`DOCGEN_SRC=file`), and this script rewrites the links to GitHub: the packages at the
-# revisions of `lake-manifest.json`, and the library at the current commit.
+# `git` in every package, from jobs that block Lake's workers; on a graph as large as Mathlib's,
+# the GitHub runners then fail to start these processes (errno 12, ENOMEM), whatever the memory
+# and the number of threads: https://github.com/leanprover/doc-gen4/issues/434. So doc-gen4
+# links to the local files (`DOCGEN_SRC=file`), and this script rewrites the links to GitHub: the
+# packages at the revisions of `lake-manifest.json`, and the library at the current commit. Once
+# that issue is fixed, drop `DOCGEN_SRC=file` and the rewriting.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
