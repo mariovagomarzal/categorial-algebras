@@ -34,9 +34,20 @@ requests to `main`; a push to `main` also publishes `_site/` to GitHub Pages.
   `references.bib`, and its BibTeX style. The library refers to the paper by its
   LaTeX labels, never by its numbering, and its docstrings cite the
   bibliography by key, as `[Reichel1987]`; the API documentation lists it.
+- `video/`: the video that explains the paper (to come).
 - `site/`: the root of the published site; the API documentation goes under
   `docs/` in it.
 - `docbuild/`: the auxiliary package that builds the API documentation with
   doc-gen4; its doc-gen4 tag must match `lean-toolchain`.
 - `scripts/build-docs.sh`: builds the API documentation from `docbuild/` and
   assembles the site in `_site/`.
+
+## License
+
+The code of the library, of the documentation and of the site is released under
+the Apache License 2.0; see [`LICENSE`](LICENSE).
+
+The paper (`paper/`) and the video (`video/`) are not covered by that license:
+all rights are reserved by their authors. The BibTeX style
+`paper/amsplain-initials.bst` is derived from the AMS style `amsplain.bst` and
+keeps the license stated in its header.
