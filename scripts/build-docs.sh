@@ -6,9 +6,11 @@
 # library. It shares `.lake/packages` with the library, and uses the doc-gen4 tag that matches
 # `lean-toolchain`.
 #
-# The pages link every declaration to its source on GitHub, read from the Git remotes of the
-# packages. When Git rewrites GitHub URLs to SSH (`url.git@github.com:.insteadOf`), doc-gen4
-# cannot read them: run with `DOCGEN_SRC=file` to link to the local files instead.
+# The pages link every declaration to its source on GitHub. doc-gen4 finds these links by running
+# `git` in every package, which fails on the GitHub runners (ENOMEM on every call, whatever the
+# memory) and with remotes rewritten to SSH. So doc-gen4 links to the local files
+# (`DOCGEN_SRC=file`), and this script rewrites the links to GitHub: the packages at the
+# revisions of `lake-manifest.json`, and the library at the current commit.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -47,10 +49,44 @@ MATHLIB_NO_CACHE_ON_UPDATE=1 lake update categorialalgebras
 rm -f .lake/build/doc-data/*.docs_built
 rm -rf .lake/build/doc/CategorialAlgebras .lake/build/doc/CategorialAlgebras.html
 
-lake build CategorialAlgebras:docs
+DOCGEN_SRC=file lake build CategorialAlgebras:docs
 
 cd ..
 rm -rf _site
 mkdir -p _site
 cp -R site/. _site/
 cp -R docbuild/.lake/build/doc _site/docs
+
+python3 - <<'PY'
+import json, os, pathlib, re, subprocess
+
+def https(url):
+    url = re.sub(r'^git@([^:]+):', r'https://\1/', url)
+    return url[:-len('.git')] if url.endswith('.git') else url
+
+def git(*args):
+    return subprocess.check_output(['git', *args], text=True).strip()
+
+links = []
+for pkg in json.load(open('lake-manifest.json'))['packages']:
+    local = os.path.realpath(os.path.join('.lake/packages', pkg['name']))
+    remote = f"{https(pkg['url'])}/blob/{pkg['rev']}/"
+    if pkg.get('subDir'):
+        remote += pkg['subDir'].strip('/') + '/'
+    links.append((f'file://{local}/', remote))
+# The library last, since the packages live inside it.
+links.append((f"file://{os.path.realpath('.')}/",
+              f"{https(git('remote', 'get-url', 'origin'))}/blob/{git('rev-parse', 'HEAD')}/"))
+
+pattern = re.compile('|'.join(re.escape(local) for local, _ in links))
+remote_of = dict(links)
+left = 0
+for page in pathlib.Path('_site/docs').rglob('*.html'):
+    text = page.read_text(encoding='utf-8')
+    new = pattern.sub(lambda m: remote_of[m.group(0)], text)
+    if new != text:
+        page.write_text(new, encoding='utf-8')
+    left += new.count(f"file://{os.path.realpath('.')}")
+if left:
+    raise SystemExit(f'error: {left} links to local files are left in the site')
+PY

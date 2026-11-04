@@ -19,9 +19,6 @@ lake build
 scripts/build-docs.sh  # the API documentation, in _site/docs/
 ```
 
-If Git rewrites GitHub URLs to SSH on your machine, build the documentation with
-`DOCGEN_SRC=file scripts/build-docs.sh`.
-
 CI builds the library and the documentation on pushes to `main` and on pull
 requests to `main`; a push to `main` also publishes `_site/` to GitHub Pages.
 
