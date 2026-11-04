@@ -1,11 +1,36 @@
 # CategorialAlgebras
 
-A Lean 4 + Mathlib library; see `README.md` for its layout.
+A Lean 4 formalization, with Mathlib, of the paper in `paper/main.tex`: the
+theory of higher-order many-sorted categorial algebras and of the generalized
+hep-derivors that relate their presentations and dimensions. See `README.md`
+for the layout of the repository.
 
-- Build with `lake build`; run `lake exe cache get` first on a fresh checkout.
-- Files follow Mathlib's style: a module docstring (`/-! ... -/`) after the
-  imports, `##`/`###` module docstrings for sections, and docstrings
-  (`/-- ... -/`) on declarations. Mathematics in docstrings is LaTeX in `$...$`.
-- Refer to the paper (`paper/main.tex`) by its LaTeX labels, never by its
-  numbering, and cite its bibliography (`paper/references.bib`) by key, as
+## Building
+
+- `lake exe cache get` once on a fresh checkout, then `lake build`.
+- `scripts/build-docs.sh` builds the API documentation; run it when a change
+  touches docstrings.
+
+## The library
+
+- The paper is the mathematical reference, but the library does not refer to
+  it: no labels, numbers or names of its chapters, sections or results, in code
+  or in docstrings. Docstrings explain the mathematics on their own.
+- Works of the bibliography (`paper/references.bib`) may be cited by key, as
   `[Reichel1987]`.
+- Everything lives in the namespace `CategorialAlgebras`. Modules follow the
+  parts of the theory, under `CategorialAlgebras/`, and `CategorialAlgebras.lean`
+  imports all of them.
+- Use what Mathlib already has (categories, functors, adjunctions, limits,
+  partial values) instead of redefining it.
+
+## Style
+
+- Mathlib's style: a module docstring (`/-! ... -/`) after the imports, `##`
+  and `###` module docstrings for sections, and a docstring (`/-- ... -/`) on
+  every definition and on every theorem that is a result of the theory.
+  Mathematics in docstrings is LaTeX in `$...$`.
+- Mathlib's naming conventions: `UpperCamelCase` for types and structures,
+  `lowerCamelCase` for definitions, `snake_case` for theorems.
+- No new axioms. `sorry` only where a task allows it, and every one listed in
+  the report of that task.
