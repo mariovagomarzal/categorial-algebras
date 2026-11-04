@@ -3,11 +3,274 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CategorialAlgebras</title>
-<meta http-equiv="refresh" content="0; url=docs/">
-<link rel="canonical" href="docs/">
+<title>Higher-order many-sorted categorial algebras</title>
+<meta name="description" content="Higher-order many-sorted categorial algebras via generalized hep-derivors: the paper, a video that explains it, and its formalization in Lean 4 with Mathlib.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [{left: '$', right: '$', display: false}], ignoredTags: ['script', 'style', 'pre', 'code']})"></script>
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --ink: #1c1b22;
+    --muted: #6b6974;
+    --rule: #dedbd2;
+    --code-bg: #f2f0ea;
+    --raised: #fffdf9;
+    --accent: #3d3a9e;
+    --shadow: 0 1px 2px rgba(28, 27, 34, .04), 0 8px 24px -12px rgba(28, 27, 34, .12);
+    --serif: "Newsreader", Charter, Georgia, serif;
+    --sans: "Instrument Sans", system-ui, -apple-system, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141417; --ink: #ecebef; --muted: #9c9aa6; --rule: #32323a; --code-bg: #1e1e23;
+      --raised: #1c1c22; --accent: #a3a0ff;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px -12px rgba(0, 0, 0, .5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141417; --ink: #ecebef; --muted: #9c9aa6; --rule: #32323a; --code-bg: #1e1e23;
+    --raised: #1c1c22; --accent: #a3a0ff;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px -12px rgba(0, 0, 0, .5);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 400 18px/1.6 var(--serif); font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+  .column {
+    max-width: 76rem; margin: 0 auto; padding: 0 32px;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3.5rem; align-items: start;
+  }
+  .hero .column { align-items: center; }
+  @media (max-width: 900px) { .column { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0 24px; } }
+  @media (max-width: 600px) { .column { padding: 0 16px; } body { font-size: 17px; } }
+
+  .hero {
+    padding: 5rem 0 3.5rem; border-bottom: 1px solid var(--rule);
+    background: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--ink) 9%, transparent) 1px, transparent 0) 0 0 / 22px 22px;
+  }
+  @media (max-width: 600px) { .hero { padding: 2.5rem 0; } }
+  footer {
+    margin-top: 4.5rem; border-top: 1px solid var(--rule); padding: 1.8rem 0 2.5rem;
+    font: 400 .86rem/1.6 var(--sans); color: var(--muted);
+  }
+  footer .bar {
+    max-width: 76rem; margin: 0 auto; padding: 0 32px;
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem;
+  }
+  @media (max-width: 900px) { footer .bar { padding: 0 24px; } }
+  @media (max-width: 600px) { footer .bar { padding: 0 16px; } }
+
+  h1 {
+    font: 500 clamp(2rem, 3.6vw, 2.9rem)/1.12 var(--serif); letter-spacing: -.012em;
+    margin: 0 0 1.5rem; text-wrap: balance;
+  }
+  .authors { font-size: 1.08rem; margin: 0 0 .6rem; }
+  .authors span { white-space: nowrap; margin-right: 1.1rem; }
+  sup { font: 400 .68rem/0 var(--sans); color: var(--muted); }
+  .authors sup { margin-left: .1rem; }
+  .affiliations {
+    list-style: none; padding: 0; margin: 0 0 1.9rem;
+    font: 400 .86rem/1.55 var(--sans); color: var(--muted);
+  }
+  .affiliations sup { margin-right: .3rem; }
+
+  .links { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .btn {
+    display: inline-flex; align-items: center; gap: .5rem; padding: .62rem 1.05rem;
+    border: 1px solid var(--rule); border-radius: 10px; background: var(--raised);
+    color: var(--ink); text-decoration: none; font: 500 .92rem/1 var(--sans);
+    box-shadow: var(--shadow); transition: border-color .15s, transform .15s, color .15s;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+  .btn svg { width: 1.05em; height: 1.05em; flex: none; }
+  .btn[aria-disabled="true"] { color: var(--muted); box-shadow: none; cursor: default; }
+  .btn[aria-disabled="true"]:hover { border-color: var(--rule); color: var(--muted); transform: none; }
+  .btn:focus-visible, .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  main.column { display: block; }
+  section { margin-top: 3.25rem; min-width: 0; }
+  #abstract-text { columns: 2; column-gap: 3.5rem; text-align: justify; hyphens: auto; }
+  @media (max-width: 900px) { #abstract-text { columns: 1; } }
+  h2 {
+    display: flex; align-items: center; gap: .9rem; margin: 0 0 1.2rem;
+    font: 600 .78rem/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  }
+  h2::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+  p { margin: 0 0 1rem; }
+  section > p:last-child { margin-bottom: 0; }
+  a { color: inherit; text-underline-offset: 3px; }
+
+  .video {
+    position: relative; aspect-ratio: 16 / 9; overflow: hidden;
+    border: 1px solid var(--rule); border-radius: 10px; background: var(--code-bg);
+    box-shadow: var(--shadow);
+  }
+  /* In narrow pages the video is only reached through its button. */
+  @media (max-width: 900px) { .hero-video { display: none; } }
+  .video iframe, .video button { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .video button {
+    padding: 0; cursor: pointer; display: grid; place-items: center; color: #fff;
+    background: center / cover no-repeat #000; font: 500 .95rem var(--sans);
+  }
+  .video button span { background: rgba(0, 0, 0, .7); padding: .65rem 1.1rem; border-radius: 8px; }
+  .video .soon {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    color: var(--muted); font: 400 .95rem var(--sans);
+  }
+  .download { font: 400 .9rem var(--sans); margin-top: .7rem; }
+
+  .cite { position: relative; }
+  pre {
+    margin: 0; padding: 1rem 1.1rem; overflow-x: auto; border-radius: 8px;
+    background: var(--code-bg); font: 400 .78rem/1.65 var(--mono);
+  }
+  .copy {
+    position: absolute; top: .6rem; right: .6rem; padding: .35rem .65rem; cursor: pointer;
+    border: 1px solid var(--rule); border-radius: 6px; background: var(--bg);
+    color: var(--ink); font: 500 .76rem var(--sans);
+  }
+  .copy { transition: border-color .15s, color .15s; }
+  .copy:hover { border-color: var(--accent); color: var(--accent); }
+  [hidden] { display: none !important; }
+</style>
 </head>
 <body>
-<p><a href="docs/">CategorialAlgebras: API documentation</a></p>
+<header class="hero">
+  <div class="column">
+    <div>
+    <h1>Higher-order many-sorted categorial algebras via generalized hep-derivors</h1>
+    <p class="authors">
+      <span>J. Climent Vidal<sup>1</sup></span>
+      <span>E. Cosme Llópez<sup>2,3</sup></span>
+      <span>R. Ruiz Mora<sup>2</sup></span>
+      <span>M. Vago Marzal<sup>4</sup></span>
+    </p>
+    <ul class="affiliations">
+      <li><sup>1</sup>Departament de Lògica i Filosofia de la Ciència, Universitat de València</li>
+      <li><sup>2</sup>Departament de Matemàtiques, Universitat de València</li>
+      <li><sup>3</sup>School of Mathematics and Statistics, Nantong University</li>
+      <li><sup>4</sup>Màster en Investigació Matemàtica, Universitat de València</li>
+    </ul>
+    <nav class="links" aria-label="Resources">
+      <a class="btn" id="paper-link" href="paper.pdf">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>Paper</a>
+      <a class="btn" href="docs/">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>Lean docs</a>
+      <a class="btn" id="video-link" aria-disabled="true" title="Coming soon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>Video</a>
+      <a class="btn" href="https://github.com/mariovagomarzal/categorial-algebras">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>Source</a>
+    </nav>
+    </div>
+    <div class="hero-video">
+      <div class="video" id="video-frame"><div class="soon">Video coming soon</div></div>
+      <p class="download" id="video-download" hidden><a href="#">Download the video</a></p>
+    </div>
+  </div>
+</header>
+
+<main class="column">
+  <section aria-labelledby="abstract-title">
+    <h2 id="abstract-title">Abstract</h2>
+    <p id="abstract-text">Higher-order many-sorted categorial algebras are many-sorted algebras whose carriers are strict
+    higher-order categories and whose operations are higher-order functors. They admit a homogeneous
+    and a heterogeneous presentation, both by partial algebras whose operation domains are given by
+    existence equations. To relate these presentations and their dimensions, we introduce generalized
+    hep-derivors between hierarchical equationally partial signatures. A generalized hep-derivor
+    selects carriers by existence equations in one variable and interprets operation symbols by terms,
+    with operation domains evaluated recursively in the transformed algebra. Every generalized
+    hep-derivor induces a functor between categories of many-sorted partial algebras. The values of
+    this functor satisfy the domain conditions wherever their operations are defined, and we
+    characterize when the operations are defined exactly where these conditions hold. The functor
+    induced by a composite receives a natural inclusion from the composite of the induced functors;
+    this inclusion, which can be strict, makes the induced functors a normal lax indexed category. In
+    finite dimensions, generalized hep-derivors realize graduation and unification as an equivalence
+    between the homogeneous and heterogeneous presentations, and discretization as a left adjoint to
+    truncation. In dimension $\omega$, we reconstruct the categories of $\omega$-categorial algebras
+    as projective limits of their finite-dimensional truncations and obtain unification by a quotient
+    construction; we also establish algebraic squares and compatibility with change of signature.
+    Finally, for nonempty sets of sorts, we show that the finite-dimension condition in the homogeneous
+    $\omega$-presentation is not axiomatizable by quasi-existence equations on its fixed signature.</p>
+  </section>
+
+  <section aria-labelledby="cite-title">
+    <h2 id="cite-title">Cite</h2>
+    <div class="cite">
+      <pre id="bibtex"><code></code></pre>
+      <button class="copy" type="button" id="copy">Copy</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="bar">
+    <span>© 2026 J. Climent Vidal, E. Cosme Llópez, R. Ruiz Mora, M. Vago Marzal</span>
+    <span>The code is released under the Apache License 2.0. <a href="https://github.com/mariovagomarzal/categorial-algebras">Repository</a></span>
+  </div>
+</footer>
+
+<script>
+  // What is not published yet. An empty value keeps the fallback: the PDF built from paper/, the
+  // "Coming soon" placeholder, and no download link.
+  const LINKS = {
+    arxiv: "",      // the arXiv identifier, e.g. "2611.01234"
+    youtube: "",    // the id of the video on YouTube
+    videoFile: "",  // the download URL of the video, e.g. an asset of a GitHub release
+  };
+
+  if (LINKS.arxiv) document.getElementById("paper-link").href = `https://arxiv.org/abs/${LINKS.arxiv}`;
+
+  if (LINKS.videoFile) {
+    const download = document.getElementById("video-download");
+    download.querySelector("a").href = LINKS.videoFile;
+    download.hidden = false;
+  }
+
+  // The button opens the video on YouTube. Next to the title, in wide pages, the player loads only
+  // once clicked, so that the page sets no third-party cookies.
+  if (LINKS.youtube) {
+    const videoLink = document.getElementById("video-link");
+    videoLink.href = `https://www.youtube.com/watch?v=${LINKS.youtube}`;
+    videoLink.removeAttribute("aria-disabled");
+    videoLink.removeAttribute("title");
+    const poster = document.createElement("button");
+    poster.type = "button";
+    poster.style.backgroundImage = `url(https://i.ytimg.com/vi/${LINKS.youtube}/hqdefault.jpg)`;
+    poster.innerHTML = "<span>Play on YouTube</span>";
+    poster.addEventListener("click", () => {
+      const player = document.createElement("iframe");
+      player.src = `https://www.youtube-nocookie.com/embed/${LINKS.youtube}?autoplay=1`;
+      player.title = "Higher-order many-sorted categorial algebras: video";
+      player.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+      poster.replaceWith(player);
+    });
+    document.getElementById("video-frame").replaceChildren(poster);
+  }
+
+  const bibtex = [
+    "@misc{CategorialAlgebras2026,",
+    "  title         = {Higher-order many-sorted categorial algebras via generalized hep-derivors},",
+    "  author        = {Climent Vidal, J. and Cosme Ll{\\'o}pez, E. and Ruiz Mora, R. and Vago Marzal, M.},",
+    "  year          = {2026},",
+    ...(LINKS.arxiv ? [`  eprint        = {${LINKS.arxiv}},`, "  archivePrefix = {arXiv},"] : []),
+    "}",
+  ].join("\n");
+  document.querySelector("#bibtex code").textContent = bibtex;
+  document.getElementById("copy").addEventListener("click", async e => {
+    try { await navigator.clipboard.writeText(bibtex); e.target.textContent = "Copied"; }
+    catch { e.target.textContent = "Select to copy"; }
+    setTimeout(() => (e.target.textContent = "Copy"), 1600);
+  });
+</script>
 </body>
 </html>
