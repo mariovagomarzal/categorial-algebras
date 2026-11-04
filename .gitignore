@@ -27,3 +27,7 @@
 
 # Files of operating systems.
 .DS_Store
+
+# The API documentation and the site, built by scripts/build-docs.sh.
+/docbuild/
+/_site/
