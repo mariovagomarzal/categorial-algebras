@@ -65,8 +65,20 @@ jobs:
           sudo swapon "$dir/docs.swap"
           free -h
 
+      # One worker for Lake, so that it runs one doc-gen4 process at a time: with several, the
+      # runner of a private repository (7 GB) cannot start new processes. The memory is logged
+      # every 20 seconds, to diagnose it if it runs out again.
       - name: Build the documentation
-        run: scripts/build-docs.sh
+        env:
+          LEAN_NUM_THREADS: 1
+        run: |
+          (while sleep 20; do
+             echo "::group::memory $(date +%T)"
+             free -m | sed -n 2,3p
+             ps -eo rss=,comm= --sort=-rss | head -5
+             echo "::endgroup::"
+           done) &
+          scripts/build-docs.sh
 
       # Only main saves it, so that pull requests never evict main's caches.
       - name: Save the documentation of the dependencies
