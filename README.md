@@ -2,9 +2,10 @@
 
 A Lean 4 formalization, with Mathlib, of the theory of *higher-order categorial
 algebras*: many-sorted algebras whose carriers are higher-order categories and
-whose operations are higher-order functors. It accompanies the draft
-*Higher-order categorial algebras* (J. Climent Vidal, E. Cosme Llópez,
-R. Ruiz Mora and M. Vago Marzal) and checks its results.
+whose operations are higher-order functors. It accompanies the paper
+*Higher-order many-sorted categorial algebras via generalized hep-derivors*
+(J. Climent Vidal, E. Cosme Llópez, R. Ruiz Mora and M. Vago Marzal), whose
+source is in [`paper/`](paper/).
 
 The overview, the main results and the reading order are in the module
 docstring of [`CategorialAlgebras.lean`](CategorialAlgebras.lean). The API
@@ -29,11 +30,10 @@ requests to `main`; a push to `main` also publishes `_site/` to GitHub Pages.
   presentation and `Extended/` the extended (globular) one; the rest
   (ep-signatures, generalized ep-derivors, graduation, discretization) relates
   the two.
-- `docs/main.tex`, `docs/Biblio.bib`: the draft. The library refers to it by
-  its LaTeX labels (such as `SSingleSet` or `DManySortedCatAlg`), never by its
-  numbering. `docs/article.tex` is a compact version of it.
-- `docs/references.bib`: the works the library's docstrings cite, as `[Rei87]`.
-- `docs/notes.md`: the scope agreed, the conventions and what was left out.
+- `paper/`: the source of the paper, `main.tex`, with its bibliography,
+  `references.bib`, and its BibTeX style. The library refers to the paper by its
+  LaTeX labels, never by its numbering, and its docstrings cite the
+  bibliography by key, as `[Reichel1987]`; the API documentation lists it.
 - `site/`: the root of the published site; the API documentation goes under
   `docs/` in it.
 - `docbuild/`: the auxiliary package that builds the API documentation with

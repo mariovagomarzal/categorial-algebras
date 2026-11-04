@@ -6,7 +6,7 @@ import CategorialAlgebras.Derivor
 # ep-signatures and ep-specifications
 
 An *equationally partial signature* (Subsection `SEpSignatures` of the draft, after
-[Rei87]) is a many-sorted signature in which every operation symbol carries a set of
+[Reichel1987]) is a many-sorted signature in which every operation symbol carries a set of
 existence equations, its *domain conditions*, that describes where the operation is defined. Its
 algebras are the partial algebras in which every operation is defined exactly where its domain
 conditions hold. This file defines them, the ep-specifications, and the semantic consequence

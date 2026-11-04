@@ -8,10 +8,10 @@ import CategorialAlgebras.EpSignature
 /-!
 # Generalized ep-derivors
 
-The general derivors of [LG18] are morphisms between order-sorted signatures with
+The general derivors of [LucasGutierrez2018] are morphisms between order-sorted signatures with
 predicates that send every sort to a formula delimiting, inside the interpretation of the image
 sort, the elements that interpret it, and every operation symbol to a formula. The equationally
-partial signatures of [Rei87] carry, for every operation symbol, a set of existence
+partial signatures of [Reichel1987] carry, for every operation symbol, a set of existence
 equations that describes its domain. A *generalized ep-derivor* (Section `SGenEpDerivors` of the
 draft) combines both ideas, with existence equations in place of formulas: it sends every sort to
 a set of existence equations in one variable, which delimits the elements that interpret the sort,
@@ -950,13 +950,13 @@ indexed by their numbering.
    not part of the data: it is the translation of its domain conditions, which, by (GEP1), are
    only required to guarantee that the derived operation is defined. It may therefore be smaller
    than the domain of $d(\sigma)^{\mathbf{B}}$, as in the discretization functors. In
-   [Rei87] the morphisms of ep-signatures are required, moreover, to translate the domain
+   [Reichel1987] the morphisms of ep-signatures are required, moreover, to translate the domain
    conditions of $\sigma$ into a set of equations equivalent to the definedness of $d(\sigma)$.
 2. If $\mathbf{\Sigma}$ and $\mathbf{\Lambda}$ are many-sorted signatures, regarded as
    ep-signatures with empty sets of domain conditions, then for every derivor $(\varphi, d)$ the
    generalized ep-derivor $(\varphi, \varnothing, d)$ sends total $\Lambda$-algebras to
    $\Sigma$-algebras, in which every $\sigma$ is interpreted as the derived operation
-   $d(\sigma)^{\mathbf{B}}$ [CVST10b].
+   $d(\sigma)^{\mathbf{B}}$ [ClimentSoliveres2010b].
 3. The functor $\mathbf{d}^{\ast}_{\mathfrak{gd}}$ is defined on all the partial
    $\Lambda$-algebras, but it may only send the models of some ep-specification to models of
    another one: the domains of the sorts of the graduation derivor, for instance, are only

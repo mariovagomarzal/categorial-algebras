@@ -29,8 +29,9 @@ jobs:
 
       # The documentation of the dependencies (Mathlib's, above all) and the packages that only
       # doc-gen4 needs, with their builds: rebuilding them, which compiles C code, would make Lake
-      # document every module again. These packages are those of docbuild's manifest that are
-      # not in the library's. The pages of the library are written again on every run.
+      # document every module again, and so would a change of the bibliography, which is part of
+      # the key. These packages are those of docbuild's manifest that are not in the library's.
+      # The pages of the library are written again on every run.
       - name: Find the packages of doc-gen4
         id: docs-paths
         run: |
@@ -50,7 +51,7 @@ jobs:
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.docs-paths.outputs.paths }}
-          key: docs-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'docbuild/lake-manifest.json') }}
+          key: docs-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'docbuild/lake-manifest.json', 'paper/references.bib') }}
 
       - name: Build the documentation
         run: scripts/build-docs.sh

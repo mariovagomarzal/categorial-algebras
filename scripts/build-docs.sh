@@ -31,8 +31,9 @@ if [[ "$docgen" != "$toolchain" ]]; then
 fi
 
 mkdir -p docbuild/docs
-# doc-gen4 reads the bibliography of the citations `[key]` from `docs/references.bib`.
-cp docs/references.bib docbuild/docs/references.bib
+# doc-gen4 reads the bibliography of the citations `[key]` from `docs/references.bib` of its
+# root package: the bibliography of the paper.
+cp paper/references.bib docbuild/docs/references.bib
 
 cd docbuild
 # Bring the library's dependencies in the manifest of `docbuild/` to those of the library, so

@@ -771,7 +771,7 @@ $\mathsf{epSig}_{\mathfrak{gd}}$ by sending $(S, \Sigma)$ to $(S, \Sigma, \varno
 derivor $(\varphi, d)$ to the closed generalized ep-derivor
 $(\varphi, (\mathrm{Cn}^{\mathbf{\Lambda}}(\varnothing))_{s \in S}, d)$, and
 $\mathrm{Alg}_{\mathfrak{gd}}$ extends the contravariant functor that sends a many-sorted signature
-$(S, \Sigma)$ to $\mathsf{Alg}(\Sigma)$ [CVST10b].
+$(S, \Sigma)$ to $\mathsf{Alg}(\Sigma)$ [ClimentSoliveres2010b].
 -/
 
 end CategorialAlgebras

@@ -23,7 +23,7 @@
 *.toc
 *.vrb
 *.xdv
-/docs/**/*.pdf
+/paper/*.pdf
 
 # Files of operating systems.
 .DS_Store
