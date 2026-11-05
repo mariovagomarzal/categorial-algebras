@@ -6,6 +6,9 @@ import CategorialAlgebras.Preliminaries.Substitution
 import CategorialAlgebras.Preliminaries.Derivor
 import CategorialAlgebras.Preliminaries.PartialAlgebra
 import CategorialAlgebras.Preliminaries.Equation
+import CategorialAlgebras.Preliminaries.AlgebraicSquare
+import CategorialAlgebras.Preliminaries.Corestriction
+import CategorialAlgebras.Preliminaries.Grothendieck
 
 /-!
 # Higher-order many-sorted categorial algebras
