@@ -1,3 +1,10 @@
+import CategorialAlgebras.Preliminaries.SortedSet
+import CategorialAlgebras.Preliminaries.Word
+import CategorialAlgebras.Preliminaries.Algebra
+import CategorialAlgebras.Preliminaries.Term
+import CategorialAlgebras.Preliminaries.Substitution
+import CategorialAlgebras.Preliminaries.Derivor
+
 /-!
 # Higher-order many-sorted categorial algebras
 
