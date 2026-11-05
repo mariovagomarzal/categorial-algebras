@@ -1,0 +1,33 @@
+{
+  "duration": 33.809,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "To compare them, we need four functors."
+    },
+    {
+      "start": 2.577,
+      "text": "Graduation and unification change the presentation."
+    },
+    {
+      "start": 5.793,
+      "text": "Discretization and truncation change the dimension, between M and N."
+    },
+    {
+      "start": 10.751,
+      "text": "Each of them depends on the signature and on the dimensions; from now on we leave the signature out of the notation."
+    },
+    {
+      "start": 17.311,
+      "text": "So far we have two categorial extensions of the signature, two categories of algebras, and four functors between them."
+    },
+    {
+      "start": 24.37,
+      "text": "We would like to obtain all four functors from a single mechanism, which works for every signature at once."
+    },
+    {
+      "start": 30.338,
+      "text": "The natural candidate is a translation between signatures."
+    }
+  ]
+}

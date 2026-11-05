@@ -1,0 +1,41 @@
+{
+  "duration": 35.062,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "Here is the first key idea."
+    },
+    {
+      "start": 1.997,
+      "text": "A category can be seen as a partial algebra."
+    },
+    {
+      "start": 5.143,
+      "text": "Take a single set of cells."
+    },
+    {
+      "start": 7.001,
+      "text": "Each cell has a source and a target, given by two unary operations."
+    },
+    {
+      "start": 12.527,
+      "text": "Objects are identified with their identities, so the source of an arrow is itself a cell."
+    },
+    {
+      "start": 17.845,
+      "text": "Composition is a partial operation:"
+    },
+    {
+      "start": 20.318,
+      "text": "g composed with f exists exactly when the source of g equals the target of f."
+    },
+    {
+      "start": 26.459,
+      "text": "This domain condition is an existence equation."
+    },
+    {
+      "start": 29.664,
+      "text": "The category laws become quasi-existence equations, or Q E equations."
+    }
+  ]
+}

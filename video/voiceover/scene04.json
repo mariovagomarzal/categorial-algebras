@@ -1,0 +1,25 @@
+{
+  "duration": 28.05,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "A homogeneous N category carries N such structures of category on the same set of cells, one for each dimension K below N, each with its own sources, targets and composition."
+    },
+    {
+      "start": 11.935,
+      "text": "A cell is a K cell when it is its own K source."
+    },
+    {
+      "start": 15.673,
+      "text": "For two dimensions j below K, the structures must be compatible."
+    },
+    {
+      "start": 20.201,
+      "text": "Given a grid of four cells, composing rows first or columns first gives the same result."
+    },
+    {
+      "start": 26.285,
+      "text": "This is the interchange law."
+    }
+  ]
+}

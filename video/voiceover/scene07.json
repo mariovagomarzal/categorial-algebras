@@ -1,0 +1,41 @@
+{
+  "duration": 55.356,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "The heterogeneous presentation separates the cells by dimension; here, heterogeneous refers to the dimensions, not to the sorts."
+    },
+    {
+      "start": 8.789,
+      "text": "Its categorial extension has a sort for every pair made of a dimension up to N and a sort of Sigma:"
+    },
+    {
+      "start": 15.314,
+      "text": "a grid of drawers."
+    },
+    {
+      "start": 17.299,
+      "text": "Each operation symbol gets one copy in every dimension, acting on the cells of that dimension."
+    },
+    {
+      "start": 23.057,
+      "text": "Sources and targets go down to every lower dimension, identities go up, and every composition has its domain condition."
+    },
+    {
+      "start": 30.232,
+      "text": "For instance, in dimension one, the copy of sigma takes an arrow of sort s and an arrow of sort t, and returns an arrow of sort s, whose source is computed by the copy of sigma in dimension zero."
+    },
+    {
+      "start": 42.863,
+      "text": "Again, the heterogeneous N categorial algebras are the E P algebras that satisfy a set of Q E equations."
+    },
+    {
+      "start": 50.723,
+      "text": "So we have two categories of algebras for the same signature."
+    },
+    {
+      "start": 54.241,
+      "text": "Are they the same?"
+    }
+  ]
+}

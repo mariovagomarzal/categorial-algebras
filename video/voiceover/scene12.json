@@ -1,0 +1,41 @@
+{
+  "duration": 48.112,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "The transformed algebra is always a weak algebra:"
+    },
+    {
+      "start": 3.646,
+      "text": "its operations are defined at most where their domain conditions hold."
+    },
+    {
+      "start": 8.162,
+      "text": "There is a simple criterion for it to be an E P algebra."
+    },
+    {
+      "start": 12.376,
+      "text": "Composition, however, is subtle."
+    },
+    {
+      "start": 14.593,
+      "text": "Take an algebra with a single sort and two constants, zero and one."
+    },
+    {
+      "start": 19.296,
+      "text": "A first derivor selects only zero, and interprets a unary operation u by the constant one."
+    },
+    {
+      "start": 25.646,
+      "text": "Then u is nowhere defined, because one is not a cell."
+    },
+    {
+      "start": 29.28,
+      "text": "A second derivor selects the points where u is defined, and nothing is left; but the composite derivor still keeps zero."
+    },
+    {
+      "start": 37.256,
+      "text": "So there is only a natural inclusion of the composite of the induced functors into the functor induced by the composite, and the induced functors form a normal lax indexed category."
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "duration": 58.886,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "All this structure can be written as a signature."
+    },
+    {
+      "start": 3.019,
+      "text": "The homogeneous categorial extension of Sigma adds, for every sort and every dimension K below N, a K source, a K target and a K composition."
+    },
+    {
+      "start": 13.909,
+      "text": "Each composition comes with a domain condition, an existence equation:"
+    },
+    {
+      "start": 18.646,
+      "text": "the composite of two cells is defined exactly when the K source of the first equals the K target of the second."
+    },
+    {
+      "start": 25.519,
+      "text": "These conditions only use sources and targets, which have none, so they form a well-founded hierarchy."
+    },
+    {
+      "start": 31.985,
+      "text": "This makes it a hierarchical equationally partial signature, or H E P signature."
+    },
+    {
+      "start": 38.046,
+      "text": "Over such a signature, an E P algebra is a partial algebra in which every operation is defined exactly where its domain conditions hold:"
+    },
+    {
+      "start": 46.544,
+      "text": "composition, exactly at the composable pairs."
+    },
+    {
+      "start": 49.981,
+      "text": "And the N categorial algebras are exactly the E P algebras over this signature that satisfy a set of Q E equations."
+    }
+  ]
+}

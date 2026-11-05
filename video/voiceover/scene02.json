@@ -1,0 +1,29 @@
+{
+  "duration": 39.428,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "A many-sorted signature has a set of sorts, and operation symbols, each with an arity, which is a word of sorts, and a sort."
+    },
+    {
+      "start": 8.707,
+      "text": "Our running example has two sorts, s and t, and two symbols:"
+    },
+    {
+      "start": 13.677,
+      "text": "sigma, with arity s t and sort s, and tau, with arity s and sort t."
+    },
+    {
+      "start": 20.086,
+      "text": "An algebra for this signature has a set for each sort."
+    },
+    {
+      "start": 23.58,
+      "text": "It interprets sigma as a function that takes an element of sort s and one of sort t, and returns one of sort s; and tau as a function from sort s to sort t."
+    },
+    {
+      "start": 34.842,
+      "text": "In a partial algebra, an operation may be undefined at some arguments."
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "duration": 30.465,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "Categories have objects and arrows."
+    },
+    {
+      "start": 2.694,
+      "text": "Higher-order categories also have arrows between arrows, and arrows between those."
+    },
+    {
+      "start": 8.243,
+      "text": "Many-sorted algebras, in turn, have one set of elements for each sort, and operations between them."
+    },
+    {
+      "start": 14.559,
+      "text": "A higher-order many-sorted categorial algebra puts both together."
+    },
+    {
+      "start": 19.308,
+      "text": "This video shows how to relate its presentations and its dimensions with a single tool:"
+    },
+    {
+      "start": 24.741,
+      "text": "generalized H E P derivors."
+    },
+    {
+      "start": 27.458,
+      "text": "By the end, we will be able to read the whole picture."
+    }
+  ]
+}
