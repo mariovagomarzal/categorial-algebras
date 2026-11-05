@@ -87,6 +87,34 @@ import CategorialAlgebras.Dimensions.SquareTransport
 import CategorialAlgebras.Dimensions.UnificationCompatibility
 import CategorialAlgebras.Dimensions.UnificationDerivors
 
+import CategorialAlgebras.Dimensions.OmegaComposition
+import CategorialAlgebras.Dimensions.OmegaDerivors
+import CategorialAlgebras.Dimensions.OmegaDescriptions
+import CategorialAlgebras.Dimensions.OmegaFunctors
+import CategorialAlgebras.Dimensions.OmegaModels
+import CategorialAlgebras.Dimensions.OmegaStructure
+import CategorialAlgebras.Limits.Assembly
+import CategorialAlgebras.Limits.Corollaries
+import CategorialAlgebras.Limits.Faithful
+import CategorialAlgebras.Limits.HeterogeneousCarrier
+import CategorialAlgebras.Limits.HeterogeneousGluing
+import CategorialAlgebras.Limits.HeterogeneousMorphisms
+import CategorialAlgebras.Limits.HeterogeneousReconstruction
+import CategorialAlgebras.Limits.HeterogeneousStages
+import CategorialAlgebras.Limits.HomogeneousCarrier
+import CategorialAlgebras.Limits.HomogeneousGluing
+import CategorialAlgebras.Limits.HomogeneousMorphisms
+import CategorialAlgebras.Limits.HomogeneousReconstruction
+import CategorialAlgebras.Limits.HomogeneousStages
+import CategorialAlgebras.Limits.HomogeneousUnionLaws
+import CategorialAlgebras.Limits.ModelTransport
+import CategorialAlgebras.Limits.PresentedFamilies
+import CategorialAlgebras.Limits.ProjectiveSystem
+import CategorialAlgebras.Limits.Reconstruction
+import CategorialAlgebras.Limits.StageCoherence
+import CategorialAlgebras.Limits.Truncations
+import CategorialAlgebras.Limits.Universal
+
 /-!
 # Higher-order many-sorted categorial algebras
 
