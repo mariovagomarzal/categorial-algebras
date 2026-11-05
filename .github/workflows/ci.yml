@@ -1,6 +1,7 @@
 # Builds the paper, the library and its API documentation on pushes to main and on pull requests
 # to main.
-# Only a push to main publishes the site to GitHub Pages.
+# A push to main, or a run started by hand or by the workflow of the video, publishes the site to
+# GitHub Pages, with the video of its latest release.
 name: CI
 
 on:
@@ -80,7 +81,7 @@ jobs:
 
       # Only main saves it, so that pull requests never evict main's caches.
       - name: Save the documentation of the dependencies
-        if: github.event_name == 'push' && steps.docs-cache.outputs.cache-hit != 'true'
+        if: github.event_name != 'pull_request' && steps.docs-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v5
         with:
           path: ${{ steps.docs-paths.outputs.paths }}
@@ -95,15 +96,29 @@ jobs:
       - name: Name the PDF of the paper
         run: mv _site/main.pdf _site/paper.pdf
 
+      # The video, its subtitles and its poster, from the latest release of the video.
+      - name: Add the video to the site
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag=$(gh release list --repo "$GITHUB_REPOSITORY" --limit 100 --json tagName,createdAt \
+            --jq '[.[] | select(.tagName | startswith("video-"))] | sort_by(.createdAt) | last | .tagName // ""')
+          if [ -z "$tag" ]; then
+            echo "::warning::There is no release of the video yet."
+          else
+            gh release download "$tag" --repo "$GITHUB_REPOSITORY" --dir _site/video
+          fi
+
       - name: Upload the site
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
   deploy:
     name: Publish the site
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     permissions:

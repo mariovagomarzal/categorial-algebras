@@ -93,8 +93,6 @@
   }
   .btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
   .btn svg { width: 1.05em; height: 1.05em; flex: none; }
-  .btn[aria-disabled="true"] { color: var(--muted); box-shadow: none; cursor: default; }
-  .btn[aria-disabled="true"]:hover { border-color: var(--rule); color: var(--muted); transform: none; }
   /* The versions published elsewhere, which may lag behind the ones built from this repository. */
   .elsewhere {
     display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .75rem;
@@ -126,10 +124,6 @@
   /* In narrow pages the video is only reached through its button. */
   @media (max-width: 900px) { .hero-video { display: none; } }
   .video video { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .video .soon {
-    position: absolute; inset: 0; display: grid; place-items: center;
-    color: var(--muted); font: 400 .95rem var(--sans);
-  }
 
   .cite { position: relative; }
   pre {
@@ -167,7 +161,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>Paper</a>
       <a class="btn" href="docs/">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>Lean docs</a>
-      <a class="btn" aria-disabled="true" title="Coming soon">
+      <a class="btn" href="video/categorial-algebras.mp4">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>Video</a>
       <a class="btn" href="https://github.com/mariovagomarzal/categorial-algebras">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>Source</a>
@@ -179,7 +173,12 @@
     </nav>
     </div>
     <div class="hero-video">
-      <div class="video"><div class="soon">Video coming soon</div></div>
+      <div class="video">
+        <video controls preload="metadata" poster="video/categorial-algebras.png">
+          <source src="video/categorial-algebras.mp4" type="video/mp4">
+          <track kind="subtitles" src="video/categorial-algebras.vtt" srclang="en" label="English">
+        </video>
+      </div>
     </div>
   </div>
 </header>

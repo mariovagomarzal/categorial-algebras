@@ -15,19 +15,28 @@ This is the structure of the repository:
 
 - `CategorialAlgebras/`: the Lean library.
 - `paper/`: the source of the paper.
-- `video/`: the video.
+- `video/`: the sources of the video, animated with Manim.
 - `site/`: the front page of the website.
 
 ## Development
 
-The library is built with Lake, the API documentation with doc-gen4, and the
-paper with `latexmk`. These are the commands for each of them:
+The library is built with Lake, the API documentation with doc-gen4, the paper
+with `latexmk` and the video with Manim, through the recipes of
+[`just`](https://just.systems/):
 
 ```sh
-lake exe cache get && lake build    # the library
-scripts/build-docs.sh               # the API documentation, in _site/docs/
-cd paper && latexmk -pdf main.tex   # the paper
+just build                 # the library
+just docs                  # the API documentation and the site, in _site/
+just paper                 # the paper
+just video::render         # the video, in video/build/
+just                       # every recipe, with what it does
 ```
+
+The video needs [uv](https://docs.astral.sh/uv/), FFmpeg, LaTeX, Cairo and
+Pango; `nix-shell video/shell.nix` provides them. Its narration was generated
+with ElevenLabs, and is generated again only when its text changes. Every change
+to the video that reaches `main` publishes it as a release, and the website shows
+the latest one.
 
 ## License
 

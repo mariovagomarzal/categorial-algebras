@@ -1,18 +1,25 @@
 """Shared building blocks for the higher-order categorial algebras video."""
 
 import json
+import os
 import subprocess
 from pathlib import Path
 
 from manim import *
 
+import notation as N
+
 ROOT = Path(__file__).resolve().parent
+VOICEOVER = ROOT / "voiceover"
+BUILD = ROOT / "build"
 
 # Macros of the paper used in formulas (main.tex: \calg for categorial algebras).
 _template = TexTemplate()
 _template.add_to_preamble(r"\newcommand{\calg}[1]{\boldsymbol{\mathsf{#1}}}")
 config.tex_template = _template
-VOICEOVER = ROOT / "voiceover"
+# Scenes rendered in parallel would race on a shared LaTeX cache, so the build gives each its own.
+if "VIDEO_TEX_DIR" in os.environ:
+    config.tex_dir = os.environ["VIDEO_TEX_DIR"]
 
 DIM_COLORS = [WHITE, BLUE, YELLOW]
 OP_COLOR = GREEN
@@ -39,10 +46,10 @@ class VoiceScene(Scene):
         self.voice_duration = meta["duration"]
         # Manim cuts the video to the length of its audio, so pad the narration
         # with silence to cover the tail.
-        padded = VOICEOVER / "padded" / f"scene{self.scene_id:02d}.wav"
+        padded = BUILD / "padded" / f"scene{self.scene_id:02d}.wav"
         source = VOICEOVER / f"scene{self.scene_id:02d}.mp3"
         if not padded.exists() or padded.stat().st_mtime < source.stat().st_mtime:
-            padded.parent.mkdir(exist_ok=True)
+            padded.parent.mkdir(parents=True, exist_ok=True)
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(source), "-af",
                             f"apad=pad_dur={self.tail}", str(padded)], check=True)
         self.add_sound(str(padded))
@@ -356,3 +363,97 @@ def two_levels(derivor, functor, width=5.0, center=ORIGIN, left_to_right=True):
 
 def framed(mob, color=GREEN, buff=0.2):
     return VGroup(SurroundingRectangle(mob, color=color, buff=buff, corner_radius=0.08), mob)
+
+
+# Figures shared by several scenes.
+
+TITLE = r"Higher-order many-sorted categorial algebras"
+SUBTITLE = r"via generalized hep-derivors"
+AUTHORS = r"J. Climent Vidal \quad E. Cosme Llópez \quad R. Ruiz Mora \quad M. Vago Marzal"
+S_, T_ = SORT_COLORS["s"], SORT_COLORS["t"]
+SIG = N.sig()
+LAM = N.sig(r"\Lambda")
+BB = r"\mathbf{B}"
+
+
+class PartScene(VoiceScene):
+    """A scene of the video: its narration, and the progress bar of its part."""
+
+    part = 0
+    show_progress = True
+
+    def setup(self):
+        super().setup()
+        if self.show_progress:
+            self.add(progress_bar(self.part))
+
+    def head(self, text):
+        h = heading(text)
+        self.play(Write(h), run_time=0.8)
+        return h
+
+
+def title_block(scale=1.0):
+    title = Tex(TITLE).scale(1.05 * scale)
+    sub = Tex(SUBTITLE, color=DERIV_COLOR).scale(0.85 * scale).next_to(title, DOWN, buff=0.25)
+    return VGroup(title, sub)
+
+
+def globe(p, q, f="f", g="g", alpha=r"\alpha", bend=TAU / 7, labels=True):
+    X = Dot(p, radius=0.07)
+    Y = Dot(q, radius=0.07)
+    top = mor(p, q, f if labels else None, angle=-bend, label_dir=UP)
+    bot = mor(p, q, g if labels else None, angle=bend, label_dir=DOWN)
+    cell = two_cell(top, bot, alpha if labels else None)
+    return VGroup(X, Y, top, bot, cell)
+
+
+def summary_cube():
+    """The summary figure of the paper: front face for Σ, back face for Λ, arrows in depth."""
+    rows = [("m", 2.0), ("n", -0.1), ("omega", -2.2)]
+    xs = [-3.9, 1.3]
+    shift = np.array([1.5, 0.75, 0])
+    front, back = {}, {}
+    for d, y in rows:
+        for col in range(2):
+            p = np.array([xs[col], y, 0])
+            front[(d, col)] = MathTex(N.cat(d, htg=bool(col))).scale(0.55).move_to(p)
+            front[(d, col)].add_background_rectangle(opacity=1, buff=0.05)
+            back[(d, col)] = MathTex(N.cat(d, htg=bool(col), s=N.sig(r"\Lambda")), color=GREY_C).scale(0.45).move_to(p + shift)
+
+    def pair(a, b, horizontal, color=FUNCTOR_COLOR, width=3):
+        side = UP if horizontal else RIGHT
+        s = a.get_right() + RIGHT * 0.1 if horizontal else a.get_bottom() + DOWN * 0.08
+        e = b.get_left() + LEFT * 0.1 if horizontal else b.get_top() + UP * 0.08
+        kw = dict(buff=0, color=color, stroke_width=width, max_tip_length_to_length_ratio=0.06)
+        return VGroup(Arrow(s + side * 0.09, e + side * 0.09, **kw), Arrow(e - side * 0.09, s - side * 0.09, **kw))
+
+    horiz, vert, depth, back_arrows = VGroup(), VGroup(), VGroup(), VGroup()
+    for d, _ in rows:
+        horiz.add(pair(front[(d, 0)], front[(d, 1)], True))
+        back_arrows.add(pair(back[(d, 0)], back[(d, 1)], True, GREY_D, 2))
+    for (d1, _), (d2, _) in zip(rows, rows[1:]):
+        for col in range(2):
+            vert.add(pair(front[(d1, col)], front[(d2, col)], False))
+            back_arrows.add(pair(back[(d1, col)], back[(d2, col)], False, GREY_D, 2))
+    for key in front:
+        depth.add(DashedLine(back[key].get_bottom(), front[key].get_top(), buff=0.06, color=DERIV_COLOR,
+                             stroke_width=2.5, dash_length=0.07).add_tip(tip_length=0.12))
+    return VGroup(*front.values()), VGroup(*back.values()), horiz, vert, depth, back_arrows
+
+
+def square_labels(m="m", n="n", w=3.4, h=1.5, center=UP * 0.4, scale=0.7):
+    return cat_square(N.cat(m), N.cat(m, htg=True), N.cat(n), N.cat(n, htg=True), w=w, h=h, scale=scale, center=center)
+
+
+def functor_square(labels, m="m", n="n", s=None, symbol=True, scale=0.6):
+    return square_arrows(labels, gd=N.functor("Gd", m, s=s), uf=N.functor("Uf", m, s=s),
+                         ds=N.functor("Ds", n, m, s=s), tr=N.functor("Tr", m, n, s=s), symbol=symbol, scale=scale)
+
+
+def fix_square(top, bot, left, right, m="m", n="n", s=None, scale=0.6):
+    """Bottom and right labels of a square: Gd^{(n)}, Uf^{(n)} and the heterogeneous Ds, Tr."""
+    bot[2].become(MathTex(N.functor("Gd", n, s=s), color=FUNCTOR_COLOR).scale(scale).move_to(bot[2]))
+    bot[3].become(MathTex(N.functor("Uf", n, s=s), color=FUNCTOR_COLOR).scale(scale).move_to(bot[3]))
+    right[2].become(MathTex(N.functor("Ds", n, m, htg=True, s=s), color=FUNCTOR_COLOR).scale(scale).next_to(right[0], RIGHT, buff=0.08))
+    right[3].become(MathTex(N.functor("Tr", m, n, htg=True, s=s), color=FUNCTOR_COLOR).scale(scale).next_to(right[1], LEFT, buff=0.08))

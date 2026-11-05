@@ -1,24 +1,33 @@
-"""Contact sheet of a rendered scene: one frame just before each voice cue and before the fade-out."""
+"""A contact sheet of a rendered scene, for reviewing it: one frame just before each sentence of
+the narration, and one before the fade-out.
 
-import json
+Usage: python -m tools.contact <scene number> [quality]   (l by default)
+Writes build/contact/sceneNN.png.
+"""
+
 import subprocess
 import sys
-from pathlib import Path
 
 from PIL import Image
 
-ROOT = Path(__file__).resolve().parent.parent
+from tools.common import BUILD, ROOT, narration, scene_video, scenes
 
 
-def main(scene_id, video, out):
-    meta = json.loads((ROOT / "voiceover" / f"scene{scene_id:02d}.json").read_text())
-    cues = [s["start"] for s in meta["sentences"]][1:] + [meta["duration"] + 0.2]
+def main(number, quality="l"):
+    number = int(number)
+    (_, name, path), = [s for s in scenes() if s[0] == number]
+    video = scene_video(name, path, quality)
+    meta = narration(number)
+    times = [s["start"] for s in meta["sentences"]][1:] + [meta["duration"] + 0.2]
+    out = BUILD / "contact" / f"scene{number:02d}.png"
+    out.parent.mkdir(parents=True, exist_ok=True)
     frames = []
-    for i, t in enumerate(cues):
-        path = Path(out).with_suffix(f".{i}.png")
-        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{max(t - 0.1, 0):.2f}", "-i", video,
-                        "-frames:v", "1", str(path)], check=True)
-        frames.append(Image.open(path))
+    for i, t in enumerate(times):
+        frame = out.with_suffix(f".{i}.png")
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{max(t - 0.1, 0):.2f}", "-i", str(video),
+                        "-frames:v", "1", str(frame)], check=True)
+        frames.append(Image.open(frame))
+        frame.unlink()
     w, h = frames[0].size
     cols = 2 if len(frames) > 1 else 1
     rows = (len(frames) + cols - 1) // cols
@@ -26,9 +35,8 @@ def main(scene_id, video, out):
     for i, f in enumerate(frames):
         sheet.paste(f, ((i % cols) * w, (i // cols) * h))
     sheet.save(out)
-    for p in Path(out).parent.glob(Path(out).stem + ".*.png"):
-        p.unlink()
+    print("wrote", out.relative_to(ROOT))
 
 
 if __name__ == "__main__":
-    main(int(sys.argv[1]), sys.argv[2], sys.argv[3])
+    main(*sys.argv[1:])

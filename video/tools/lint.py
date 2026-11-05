@@ -1,14 +1,13 @@
 """Check the script (and, optionally, the scenes) for notation that differs from the paper.
 
-Usage: uv run python tools/lint_notation.py [files...]   (default: script.md)
+Usage: python -m tools.lint [files...]   (script.md by default)
 Exit status 1 if any problem is found.
 """
 
 import re
 import sys
-from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+from tools.common import ROOT
 
 # (pattern, message, where): where is "all", "voice" (lines starting with "> ") or "visual" (the rest).
 RULES = [

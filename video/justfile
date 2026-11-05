@@ -1,0 +1,31 @@
+# The video, animated with Manim. Its system dependencies (FFmpeg, LaTeX, Cairo and Pango) are
+# those of shell.nix; the Python ones, those of uv.lock.
+
+# Render the video at quality l, m, h or k (1080p60 by default), with its subtitles, in build/.
+render quality="h":
+    uv run python -m tools.build {{quality}}
+
+# Render some scenes by number, at 480p15 unless QUALITY says otherwise: `just video::scene 3 7`.
+scene +numbers:
+    uv run python -m tools.build ${QUALITY:-l} {{numbers}}
+
+# Render the poster of the video, in build/.
+poster:
+    uv run python -m manim -s -qh --progress_bar none --media_dir build/media -o poster poster.py Poster
+    cp build/media/images/poster/poster.png build/categorial-algebras.png
+
+# Make a contact sheet of a rendered scene, one frame per sentence, for reviewing it.
+contact number quality="l":
+    uv run python -m tools.contact {{number}} {{quality}}
+
+# Check that the script follows the notation of the paper.
+lint:
+    uv run python -m tools.lint
+
+# Generate the narration of some scenes again, with ElevenLabs (all of them by default).
+tts *numbers:
+    uv run python -m tools.tts {{numbers}}
+
+# Remove everything built.
+clean:
+    rm -rf build

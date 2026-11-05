@@ -1,11 +1,3 @@
-# Everything that the commands of README.md build.
-media/
-__pycache__/
+build/
 .venv/
-voiceover/padded/
-voiceover/texts.json
-logs_*.txt
-*.mp4
-*.srt
-thumbnail.png
-contact/
+__pycache__/

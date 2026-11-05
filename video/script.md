@@ -123,7 +123,7 @@ Every formula on screen uses exactly these forms. They are generated from a sing
 5. Homomorphisms: two algebras $\calg{A}$, $\calg{B}$ side by side and $H=(H_s,H_t)$, one $n$-functor per sort (orange arrows between the bags of the same colour). A commuting square:
    - $H_s(\sigma^{\calg{A}}(f,a))=\sigma^{\calg{B}}(H_s(f),H_t(a))$;
    - the category $\mathsf{nCatAlg}(\mathbf{\Sigma})$.
-6. **Recap of Part I** (small card, bottom right): "signature $\mathbf{\Sigma}$ with sorts · partial algebras · $n$-categories · $n$-categorial $\mathbf{\Sigma}$-algebras".
+6. **Recap of Part I** (small card, bottom right): "signature $\mathbf{\Sigma}$ with sorts; partial algebras; $n$-categories; $n$-categorial $\mathbf{\Sigma}$-algebras".
 
 **Voice-over.**
 > A many-sorted n-categorial algebra has a homogeneous n-category for every sort, and interprets every operation symbol as an n-functor, defined on the product of the categories of its arity. So sigma takes a pair of cells, one of sort s and one of sort t, and preserves sources, targets and compositions in every dimension. For n equal to zero we recover ordinary many-sorted algebras. A homomorphism between two such algebras is an n-functor for every sort, and these functors commute with the operations. Together, they form the category of n-categorial Sigma-algebras.
@@ -177,7 +177,7 @@ Every formula on screen uses exactly these forms. They are generated from a sing
 3. Vertical pairs: $\mathrm{Ds}^{(n,m)}_{\mathbf{\Sigma}}$ / $\mathrm{Tr}^{(m,n)}_{\mathbf{\Sigma}}$ on the left and $\mathrm{Ds}^{\mathrm{htg}(n,m)}_{\mathbf{\Sigma}}$ / $\mathrm{Tr}^{\mathrm{htg}(m,n)}_{\mathbf{\Sigma}}$ on the right, labelled "change the dimension".
 4. Note (grey box): "from now on we drop $\mathbf{\Sigma}$: $\mathrm{Gd}^{(n)}$, $\mathrm{Ds}^{(n,m)}$, …; heterogeneous symbols carry $\mathrm{htg}$, homogeneous ones no marker"; the labels lose their subscript $\mathbf{\Sigma}$ (`TransformMatchingTex`).
 5. Below: "one mechanism, for every signature?" and a teal dashed arrow $\mathbf{\Sigma}\dashrightarrow\mathbf{\Lambda}$, "a translation of signatures?".
-6. **Recap of Part II** (small card): "two categorial extensions $\mathbf{\Sigma}^{(n)}$, $\mathbf{\Sigma}^{\mathrm{htg}(n)}$ · two categories of algebras · four functors".
+6. **Recap of Part II** (small card): "two categorial extensions $\mathbf{\Sigma}^{(n)}$, $\mathbf{\Sigma}^{\mathrm{htg}(n)}$; two categories of algebras; four functors".
 
 **Voice-over.**
 > To compare them, we need four functors. Graduation and unification change the presentation. Discretization and truncation change the dimension, between m and n. Each of them depends on the signature and on the dimensions; from now on we leave the signature out of the notation. So far we have two categorial extensions of the signature, two categories of algebras, and four functors between them. We would like to obtain all four functors from a single mechanism, which works for every signature at once. The natural candidate is a translation between signatures.
@@ -254,7 +254,7 @@ Every formula on screen uses exactly these forms. They are generated from a sing
 6. Conclusion:
    - $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}\colon\mathbf{c}^{\ast}_{\mathfrak{gd}}(\mathbf{d}^{\ast}_{\mathfrak{gd}}(\mathbf{C}))\hookrightarrow(\mathbf{d}\circ\mathbf{c})^{\ast}_{\mathfrak{gd}}(\mathbf{C})$, here $\varnothing\subsetneq\{0\}$;
    - "a normal lax indexed category".
-7. **Recap of Part III** (small card): "generalized hep-derivor = sorts with domains + symbols with terms · transformed algebra by recursion · lax under composition".
+7. **Recap of Part III** (small card): "generalized hep-derivor = sorts with domains + symbols with terms; transformed algebra by recursion; lax under composition".
 
 **Voice-over.**
 > The transformed algebra is always a weak algebra: its operations are defined at most where their domain conditions hold. There is a simple criterion for it to be an ep-algebra. Composition, however, is subtle. Take an algebra with a single sort and two constants, zero and one. A first derivor selects only zero, and interprets a unary operation u by the constant one. Then u is nowhere defined, because one is not a cell. A second derivor selects the points where u is defined, and nothing is left; but the composite derivor still keeps zero. So there is only a natural inclusion of the composite of the induced functors into the functor induced by the composite, and the induced functors form a normal lax indexed category.
@@ -364,7 +364,7 @@ Every formula on screen uses exactly these forms. They are generated from a sing
    - each cell $x$ is linked by grey lines to its identities $\mathrm{i}^{(k,j)}_{s}(x)$, giving one class $[x]_j$;
    - the same for $t$.
 3. $\mathrm{Gd}^{(\omega)}\dashv\mathrm{Uf}^{(\omega)}$, an adjoint equivalence; the square between $m$ and $\omega$.
-4. **Recap of Part IV** (small card): "presentation: an equivalence · dimension: an adjunction · together: algebraic squares · ω: limits and one quotient".
+4. **Recap of Part IV** (small card): "presentation: an equivalence; dimension: an adjunction; together: algebraic squares; ω: limits and one quotient".
 
 **Voice-over.**
 > Unification is different too. When there is at least one sort, no generalized hep-derivor can produce it: a derivor takes all the cells of a sort from a single carrier, but an omega-dimensional cell may come from any drawer. Instead, for every sort, we take the cells of all dimensions and glue each cell to its identities. With it, graduation and unification are again an adjoint equivalence, and the algebraic square holds between a finite dimension and omega.

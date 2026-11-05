@@ -1,7 +1,9 @@
 """Generate the voice-over for every scene of script.md with ElevenLabs.
 
-Usage: uv run python tools/tts.py [scene numbers...]
-The API key is read from ~/.config/elevenlabs/api_key.
+Usage: python -m tools.tts [scene numbers...]   (all of them by default)
+The API key is read from ~/.config/elevenlabs/api_key. The narration is generated again only after
+its text changes in script.md, since it never comes out the same twice; then check the `cue(i)`
+calls of the scene, which refer to the sentences by number.
 """
 
 import base64
@@ -11,8 +13,8 @@ import sys
 import urllib.request
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "voiceover"
+from tools.common import BUILD, ROOT, VOICEOVER as OUT
+
 VOICE_ID = "JBFqnCBsd6RMkjVDRZzb"  # George: warm, calm narrator
 MODEL_ID = "eleven_multilingual_v2"
 
@@ -96,7 +98,8 @@ def main():
     texts = scene_texts()
     wanted = [int(a) for a in sys.argv[1:]] or sorted(texts)
     OUT.mkdir(exist_ok=True)
-    (OUT / "texts.json").write_text(json.dumps(texts, indent=2, ensure_ascii=False))
+    BUILD.mkdir(exist_ok=True)
+    (BUILD / "tts-texts.json").write_text(json.dumps(texts, indent=2, ensure_ascii=False))
     for k in wanted:
         path = OUT / f"scene{k:02d}.mp3"
         synthesize(texts[k], texts.get(k - 1, ""), texts.get(k + 1, ""), path)

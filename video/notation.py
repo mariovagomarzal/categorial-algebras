@@ -1,7 +1,7 @@
 """Notation of the paper (../paper/main.tex), as LaTeX strings for MathTex.
 
 Every formula of the video is built from these helpers, so that the notation is
-written in one place only; tools/lint_notation.py checks the forbidden forms.
+written in one place only; tools/lint.py checks the forbidden forms.
 """
 
 EEQ = r"\overset{\mathrm e}{=}"

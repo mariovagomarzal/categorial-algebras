@@ -1,0 +1,110 @@
+# Renders the video. A pull request to main that changes it gets a draft, as a check. A push to
+# main that changes it publishes it as a release, tagged with the date (video-YYYY-MM-DD, with .1,
+# .2, ... after the first of a day), and then publishes the site again with it.
+name: Video
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - video/**
+      - .github/workflows/video.yml
+  # Only the files that change the rendered video, not the script, the tools or the recipes.
+  push:
+    branches: [main]
+    paths:
+      - video/scenes/**
+      - video/components.py
+      - video/notation.py
+      - video/poster.py
+      - video/voiceover/**
+      - video/pyproject.toml
+      - video/uv.lock
+      - video/.python-version
+      - .github/workflows/video.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: video-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  render:
+    name: Render the video
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: video
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install FFmpeg, LaTeX, Cairo and Pango
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ffmpeg dvisvgm libcairo2-dev libpango1.0-dev \
+            texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended
+
+      - uses: astral-sh/setup-uv@v10
+        with:
+          enable-cache: true
+          cache-dependency-glob: video/uv.lock
+
+      - uses: extractions/setup-just@v4
+
+      - name: Check the notation of the script
+        run: just lint
+
+      # A draft for pull requests; the published video otherwise.
+      - name: Render the video
+        run: just render ${{ github.event_name == 'pull_request' && 'l' || 'h' }}
+
+      - name: Render the poster
+        run: just poster
+
+      - name: Keep the video for its release
+        uses: actions/upload-artifact@v7
+        with:
+          name: video
+          path: |
+            video/build/categorial-algebras.mp4
+            video/build/categorial-algebras.srt
+            video/build/categorial-algebras.vtt
+            video/build/categorial-algebras.png
+          if-no-files-found: error
+          retention-days: 1
+
+  release:
+    name: Publish the video
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: render
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: video
+          path: video
+
+      - name: Publish the release
+        run: |
+          base="video-$(date -u +%F)"
+          tag="$base"
+          i=1
+          while gh release view "$tag" >/dev/null 2>&1; do
+            tag="$base.$i"
+            i=$((i + 1))
+          done
+          gh release create "$tag" video/* --target "$GITHUB_SHA" --title "Video ${tag#video-}" \
+            --notes "The video, its subtitles (SRT and WebVTT) and its poster, rendered from $GITHUB_SHA."
+
+      # A run started with the token of a workflow can only start another one by hand.
+      - name: Publish the site with the new video
+        run: gh workflow run ci.yml --ref main

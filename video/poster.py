@@ -1,9 +1,9 @@
-"""Thumbnail of the video: uv run python -m manim -s -qh thumbnail.py Thumbnail"""
+"""The poster of the video, the frame shown before it plays: `just video::poster`."""
 
-from scenes import *
+from components import *
 
 
-class Thumbnail(Scene):
+class Poster(Scene):
     def construct(self):
         front, back, horiz, vert, depth, back_arrows = summary_cube()
         cube = VGroup(back, back_arrows, horiz, vert, depth, front)
