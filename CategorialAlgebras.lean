@@ -4,6 +4,8 @@ import CategorialAlgebras.Preliminaries.Algebra
 import CategorialAlgebras.Preliminaries.Term
 import CategorialAlgebras.Preliminaries.Substitution
 import CategorialAlgebras.Preliminaries.Derivor
+import CategorialAlgebras.Preliminaries.PartialAlgebra
+import CategorialAlgebras.Preliminaries.Equation
 
 /-!
 # Higher-order many-sorted categorial algebras
