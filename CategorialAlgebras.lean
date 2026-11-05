@@ -37,6 +37,23 @@ import CategorialAlgebras.Heterogeneous.Recovery
 import CategorialAlgebras.Heterogeneous.Models
 import CategorialAlgebras.Heterogeneous.Identification
 
+import CategorialAlgebras.Presentations.Dimensions
+import CategorialAlgebras.Presentations.Realization
+import CategorialAlgebras.Presentations.Graduation
+import CategorialAlgebras.Presentations.GraduatedStructure
+import CategorialAlgebras.Presentations.GraduationModels
+import CategorialAlgebras.Presentations.Unification
+import CategorialAlgebras.Presentations.UnifiedStructure
+import CategorialAlgebras.Presentations.UnificationModels
+import CategorialAlgebras.Presentations.Descriptions
+import CategorialAlgebras.Presentations.CompositeDerivors
+import CategorialAlgebras.Presentations.IdentityImage
+import CategorialAlgebras.Presentations.CompositeCells
+import CategorialAlgebras.Presentations.Relation
+import CategorialAlgebras.Presentations.Theta
+import CategorialAlgebras.Presentations.Equivalence
+import CategorialAlgebras.Presentations.Counterexample
+
 /-!
 # Higher-order many-sorted categorial algebras
 
