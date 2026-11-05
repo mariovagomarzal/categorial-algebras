@@ -1,0 +1,25 @@
+{
+  "duration": 37.71,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "A many-sorted N categorial algebra has a homogeneous N category for every sort, and interprets every operation symbol as an N functor, defined on the product of the categories of its arity."
+    },
+    {
+      "start": 12.585,
+      "text": "So sigma takes a pair of cells, one of sort s and one of sort t, and preserves sources, targets and compositions in every dimension."
+    },
+    {
+      "start": 20.875,
+      "text": "For N equal to zero we recover ordinary many-sorted algebras."
+    },
+    {
+      "start": 25.67,
+      "text": "A homomorphism between two such algebras is an N functor for every sort, and these functors commute with the operations."
+    },
+    {
+      "start": 33.217,
+      "text": "Together, they form the category of N categorial Sigma-algebras."
+    }
+  ]
+}

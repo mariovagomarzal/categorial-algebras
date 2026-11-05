@@ -1,0 +1,33 @@
+{
+  "duration": 37.57,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "But ordinary derivors are not enough, for two reasons."
+    },
+    {
+      "start": 3.553,
+      "text": "First, some functors keep only part of the elements, whereas a derivor keeps the whole carrier:"
+    },
+    {
+      "start": 9.369,
+      "text": "graduation keeps, as cells of dimension K and sort s, only the cells that are their own K source."
+    },
+    {
+      "start": 16.254,
+      "text": "Second, some domains cannot be expressed by any term."
+    },
+    {
+      "start": 19.969,
+      "text": "Discretization interprets a higher composition by its first argument, which is always defined."
+    },
+    {
+      "start": 26.064,
+      "text": "And yet, in the discretized algebra, two cells must be composable only when they are equal:"
+    },
+    {
+      "start": 32.079,
+      "text": "a set becomes a discrete category, in which a cell can only be composed with itself."
+    }
+  ]
+}

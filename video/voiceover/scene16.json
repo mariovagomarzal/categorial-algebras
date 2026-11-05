@@ -1,0 +1,21 @@
+{
+  "duration": 26.053,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "These adjunctions fit together."
+    },
+    {
+      "start": 2.31,
+      "text": "An algebraic square is made of four adjunctions arranged in a square, such that the left adjoints commute up to a natural isomorphism, and so do the right adjoints."
+    },
+    {
+      "start": 12.422,
+      "text": "Here, discretizing and then graduating is exactly the same as graduating and then discretizing in the heterogeneous presentation."
+    },
+    {
+      "start": 20.515,
+      "text": "And unifying and truncating, in either order, agree up to a natural isomorphism."
+    }
+  ]
+}

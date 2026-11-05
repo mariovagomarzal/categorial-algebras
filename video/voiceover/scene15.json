@@ -1,0 +1,41 @@
+{
+  "duration": 51.409,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "Truncation from N to M is induced by the inclusion of the extension of dimension M into that of dimension N, with the domain:"
+    },
+    {
+      "start": 7.953,
+      "text": "v zero equals its M source, which keeps only the M cells."
+    },
+    {
+      "start": 12.899,
+      "text": "Discretization goes the other way."
+    },
+    {
+      "start": 15.151,
+      "text": "It interprets the sources, targets and compositions of the dimensions from M up to N by a variable, and the domain conditions alone make two cells composable only when they are equal."
+    },
+    {
+      "start": 26.563,
+      "text": "These two functors are not inverse to each other, since truncation forgets the higher cells."
+    },
+    {
+      "start": 31.939,
+      "text": "But they form an adjunction:"
+    },
+    {
+      "start": 33.576,
+      "text": "a homomorphism from a discretized algebra to an N dimensional algebra is the same as a homomorphism into its truncation."
+    },
+    {
+      "start": 41.75,
+      "text": "So discretization is left adjoint to truncation, and truncating what was just discretized changes nothing."
+    },
+    {
+      "start": 48.274,
+      "text": "The same holds in the heterogeneous presentation."
+    }
+  ]
+}

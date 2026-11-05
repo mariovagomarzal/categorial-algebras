@@ -1,0 +1,29 @@
+{
+  "duration": 43.143,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "In dimension omega, the categories of omega-categorial algebras, in both presentations, are projective limits of their finite truncations:"
+    },
+    {
+      "start": 9.067,
+      "text": "an omega-dimensional algebra is the same as a compatible family of finite ones."
+    },
+    {
+      "start": 14.419,
+      "text": "Truncation and discretization to and from omega are still induced by generalized H E P derivors, and graduation follows from the universal property of the limit."
+    },
+    {
+      "start": 25.089,
+      "text": "But the two presentations now behave differently."
+    },
+    {
+      "start": 28.189,
+      "text": "When there is at least one sort, the homogeneous omega-categorial algebras are not defined by Q E equations, because a product of cells of ever higher dimension has no finite dimension."
+    },
+    {
+      "start": 40.554,
+      "text": "The heterogeneous ones still are."
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "duration": 43.561,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "The solution adds domains to derivors."
+    },
+    {
+      "start": 2.81,
+      "text": "A generalized H E P derivor between H E P signatures sends every sort to a sort together with a domain, a set of existence equations in one variable, and every operation symbol to a term."
+    },
+    {
+      "start": 16.08,
+      "text": "The transformed algebra keeps, as cells, the elements that satisfy the domains."
+    },
+    {
+      "start": 21.815,
+      "text": "An operation is defined at some cells when three conditions hold:"
+    },
+    {
+      "start": 26.099,
+      "text": "its domain conditions hold in the transformed algebra itself, its term is defined, and the value is again a cell."
+    },
+    {
+      "start": 33.832,
+      "text": "The domains solve the first obstacle, and the first condition solves the second."
+    },
+    {
+      "start": 38.743,
+      "text": "Since the hierarchy is well-founded, this is a valid definition by recursion."
+    }
+  ]
+}

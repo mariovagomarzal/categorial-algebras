@@ -1,0 +1,33 @@
+{
+  "duration": 41.982,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "Unification goes the other way."
+    },
+    {
+      "start": 2.206,
+      "text": "It sends every sort s to the top drawer of s, each symbol to its copy in the top dimension, each K composition to the composition of top cells along dimension K, and each K source to the identity of the heterogeneous source."
+    },
+    {
+      "start": 17.021,
+      "text": "Unifying after graduating gives back exactly what we started with."
+    },
+    {
+      "start": 21.514,
+      "text": "Graduating after unifying gives a naturally isomorphic algebra:"
+    },
+    {
+      "start": 26.216,
+      "text": "each lower cell is replaced by its identity in the top dimension."
+    },
+    {
+      "start": 30.302,
+      "text": "So graduation is left adjoint to unification, in an adjoint equivalence whose unit is the identity:"
+    },
+    {
+      "start": 36.421,
+      "text": "the two presentations give equivalent categories, and nothing is lost by choosing either of them."
+    }
+  ]
+}

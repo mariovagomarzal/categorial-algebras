@@ -1,0 +1,33 @@
+{
+  "duration": 53.266,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "Finally, the signature itself can change."
+    },
+    {
+      "start": 2.972,
+      "text": "A derivor from Sigma to Lambda may even identify sorts, for instance by sending both s and t to a single sort."
+    },
+    {
+      "start": 11.111,
+      "text": "It determines generalized H E P derivors between the categorial extensions, in every dimension and in both presentations, and they turn categorial Lambda-algebras into categorial Sigma-algebras."
+    },
+    {
+      "start": 24.485,
+      "text": "These functors form split indexed categories over the category of signatures and derivors:"
+    },
+    {
+      "start": 30.139,
+      "text": "a category of algebras for every signature, and a functor for every derivor, compatible with composition."
+    },
+    {
+      "start": 36.931,
+      "text": "Graduation, unification, discretization and truncation all commute with them."
+    },
+    {
+      "start": 42.503,
+      "text": "So they are natural transformations between indexed categories, and they extend to the Grothendieck constructions, which gather the algebras of all signatures in a single category."
+    }
+  ]
+}

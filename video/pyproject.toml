@@ -1,0 +1,9 @@
+[project]
+name = "categorial-algebras-video"
+version = "0.1.0"
+description = "The video that explains the paper, animated with Manim."
+requires-python = ">=3.13"
+dependencies = [
+    "manim>=0.22.0",
+    "pillow",
+]

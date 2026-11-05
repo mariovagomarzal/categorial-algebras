@@ -1,0 +1,25 @@
+{
+  "duration": 42.446,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "A derivor from Sigma to Lambda sends every sort to a sort, and every operation symbol to a term of the matching sort, in variables of the matching sorts."
+    },
+    {
+      "start": 9.903,
+      "text": "For instance, a derivor from Sigma to itself may send sigma to the term sigma of v zero and tau of v zero, where v zero is a variable of sort s."
+    },
+    {
+      "start": 20.794,
+      "text": "A derivor induces a functor in the opposite direction, from Lambda-algebras to Sigma-algebras."
+    },
+    {
+      "start": 27.411,
+      "text": "It takes a Lambda-algebra, uses its carrier of the image sort as the carrier of each sort, and interprets each symbol as its term."
+    },
+    {
+      "start": 35.991,
+      "text": "The translation goes from Sigma to Lambda, so the algebras go from Lambda back to Sigma."
+    }
+  ]
+}

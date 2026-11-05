@@ -1,0 +1,33 @@
+{
+  "duration": 55.171,
+  "sentences": [
+    {
+      "start": 0.0,
+      "text": "Graduation is induced by a generalized H E P derivor from the heterogeneous extension to the homogeneous one."
+    },
+    {
+      "start": 7.488,
+      "text": "As always, the functor goes the other way:"
+    },
+    {
+      "start": 10.019,
+      "text": "the derivor translates heterogeneous symbols into homogeneous terms, so it turns homogeneous algebras into heterogeneous ones."
+    },
+    {
+      "start": 18.483,
+      "text": "The derivor sends the sort of dimension K and sort s to s, with the domain:"
+    },
+    {
+      "start": 24.218,
+      "text": "v zero equals its K source."
+    },
+    {
+      "start": 26.668,
+      "text": "So the drawer of dimension K receives the K cells of the right sort; a cell of low dimension is a K cell for every larger K, and lands in each of those drawers."
+    },
+    {
+      "start": 38.057,
+      "text": "Every copy of sigma goes to sigma itself, every heterogeneous source to the homogeneous source, every composition to the homogeneous composition, and every identity to the variable itself, because in the homogeneous presentation a lower cell is already its own identity."
+    }
+  ]
+}
