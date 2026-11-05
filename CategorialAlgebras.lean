@@ -77,6 +77,16 @@ import CategorialAlgebras.Dimensions.Indices
 import CategorialAlgebras.Dimensions.Relation
 import CategorialAlgebras.Dimensions.Transport
 
+import CategorialAlgebras.Dimensions.AlgebraicSquare
+import CategorialAlgebras.Dimensions.CompatibilityComparison
+import CategorialAlgebras.Dimensions.DiscretizationUnification
+import CategorialAlgebras.Dimensions.GraduationCells
+import CategorialAlgebras.Dimensions.GraduationCompatibility
+import CategorialAlgebras.Dimensions.GraduationDerivors
+import CategorialAlgebras.Dimensions.SquareTransport
+import CategorialAlgebras.Dimensions.UnificationCompatibility
+import CategorialAlgebras.Dimensions.UnificationDerivors
+
 /-!
 # Higher-order many-sorted categorial algebras
 
