@@ -28,6 +28,15 @@ import CategorialAlgebras.Homogeneous.Identification
 import CategorialAlgebras.Homogeneous.Chain
 import CategorialAlgebras.Homogeneous.Omega
 
+import CategorialAlgebras.Heterogeneous.Category
+import CategorialAlgebras.Heterogeneous.Algebra
+import CategorialAlgebras.Heterogeneous.Signature
+import CategorialAlgebras.Heterogeneous.Specification
+import CategorialAlgebras.Heterogeneous.Evaluation
+import CategorialAlgebras.Heterogeneous.Recovery
+import CategorialAlgebras.Heterogeneous.Models
+import CategorialAlgebras.Heterogeneous.Identification
+
 /-!
 # Higher-order many-sorted categorial algebras
 
