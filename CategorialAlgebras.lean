@@ -9,6 +9,9 @@ import CategorialAlgebras.Preliminaries.Equation
 import CategorialAlgebras.Preliminaries.AlgebraicSquare
 import CategorialAlgebras.Preliminaries.Corestriction
 import CategorialAlgebras.Preliminaries.Grothendieck
+import CategorialAlgebras.HepDerivor.Symbols
+import CategorialAlgebras.HepDerivor.Signature
+import CategorialAlgebras.HepDerivor.Transformed
 
 /-!
 # Higher-order many-sorted categorial algebras
