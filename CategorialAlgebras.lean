@@ -17,6 +17,17 @@ import CategorialAlgebras.HepDerivor.Comparison
 import CategorialAlgebras.HepDerivor.StrictComparison
 import CategorialAlgebras.HepDerivor.AlgebraCategory
 
+import CategorialAlgebras.Homogeneous.Category
+import CategorialAlgebras.Homogeneous.Algebra
+import CategorialAlgebras.Homogeneous.Signature
+import CategorialAlgebras.Homogeneous.Specification
+import CategorialAlgebras.Homogeneous.Evaluation
+import CategorialAlgebras.Homogeneous.Recovery
+import CategorialAlgebras.Homogeneous.Models
+import CategorialAlgebras.Homogeneous.Identification
+import CategorialAlgebras.Homogeneous.Chain
+import CategorialAlgebras.Homogeneous.Omega
+
 /-!
 # Higher-order many-sorted categorial algebras
 
