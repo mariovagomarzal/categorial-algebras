@@ -54,6 +54,29 @@ import CategorialAlgebras.Presentations.Theta
 import CategorialAlgebras.Presentations.Equivalence
 import CategorialAlgebras.Presentations.Counterexample
 
+import CategorialAlgebras.Dimensions.Adjunctions
+import CategorialAlgebras.Dimensions.Comparison
+import CategorialAlgebras.Dimensions.Compositions
+import CategorialAlgebras.Dimensions.Descriptions
+import CategorialAlgebras.Dimensions.Diagonal
+import CategorialAlgebras.Dimensions.Functors
+import CategorialAlgebras.Dimensions.HeterogeneousComposition
+import CategorialAlgebras.Dimensions.HeterogeneousCounit
+import CategorialAlgebras.Dimensions.HeterogeneousCounitStructure
+import CategorialAlgebras.Dimensions.HeterogeneousDerivors
+import CategorialAlgebras.Dimensions.HeterogeneousModels
+import CategorialAlgebras.Dimensions.HeterogeneousStructure
+import CategorialAlgebras.Dimensions.HomogeneousCells
+import CategorialAlgebras.Dimensions.HomogeneousComposition
+import CategorialAlgebras.Dimensions.HomogeneousCounit
+import CategorialAlgebras.Dimensions.HomogeneousDerivors
+import CategorialAlgebras.Dimensions.HomogeneousDomains
+import CategorialAlgebras.Dimensions.HomogeneousModels
+import CategorialAlgebras.Dimensions.HomogeneousStructure
+import CategorialAlgebras.Dimensions.Indices
+import CategorialAlgebras.Dimensions.Relation
+import CategorialAlgebras.Dimensions.Transport
+
 /-!
 # Higher-order many-sorted categorial algebras
 
