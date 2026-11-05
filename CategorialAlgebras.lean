@@ -12,6 +12,10 @@ import CategorialAlgebras.Preliminaries.Grothendieck
 import CategorialAlgebras.HepDerivor.Symbols
 import CategorialAlgebras.HepDerivor.Signature
 import CategorialAlgebras.HepDerivor.Transformed
+import CategorialAlgebras.HepDerivor.Category
+import CategorialAlgebras.HepDerivor.Comparison
+import CategorialAlgebras.HepDerivor.StrictComparison
+import CategorialAlgebras.HepDerivor.AlgebraCategory
 
 /-!
 # Higher-order many-sorted categorial algebras
