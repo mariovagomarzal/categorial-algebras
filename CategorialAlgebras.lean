@@ -141,6 +141,16 @@ import CategorialAlgebras.Omega.Unification
 import CategorialAlgebras.Omega.UnificationCompatibility
 import CategorialAlgebras.Omega.UnifiedStructure
 import CategorialAlgebras.Omega.Zeta
+import CategorialAlgebras.ChangeOfSignature.Compatibility
+import CategorialAlgebras.ChangeOfSignature.CompatibilityDerivors
+import CategorialAlgebras.ChangeOfSignature.Derivors
+import CategorialAlgebras.ChangeOfSignature.HeterogeneousTerms
+import CategorialAlgebras.ChangeOfSignature.HomogeneousTerms
+import CategorialAlgebras.ChangeOfSignature.Models
+import CategorialAlgebras.ChangeOfSignature.Omega
+import CategorialAlgebras.ChangeOfSignature.OmegaCompatibility
+import CategorialAlgebras.ChangeOfSignature.OmegaPresentations
+import CategorialAlgebras.ChangeOfSignature.Reducts
 
 /-!
 # Higher-order many-sorted categorial algebras
