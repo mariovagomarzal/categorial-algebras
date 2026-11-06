@@ -6,7 +6,7 @@ import CategorialAlgebras.Presentations.GraduationModels
 /-!
 # Finite restrictions of explicit graduation
 
-Graduating the algebra of cutoff cells and restricting natural-dimensional
+Graduating the algebra of cutoff cells and restricting $\omega$-dimensional
 graduation have the same elements. The comparison flattens the two subtypes.
 -/
 
@@ -36,7 +36,7 @@ theorem cutoff_target_val (k : Fin n) (s : S) (x : (omegaTruncatedAlgebra A n).c
       ((A.sort s).str.dim k.val).target x.val :=
   truncated_target_val sig (Nat.le_succ n) (omegaRestrictedAlgebra A (n+1)) k s x
 
-/-- Restrict explicit natural-dimensional graduation to the first $n+1$ carriers. -/
+/-- Restrict explicit $\omega$-dimensional graduation to the first $n+1$ carriers. -/
 noncomputable def finiteGraduatedAlgebra : Heterogeneous.NCategorialAlgebra.{u, v, w} n sig where
   sort s := ⟨fun k => GraduatedCell A k.val s,
     (graduatedSort A s).str.restrict (omegaInclusion (n+1))⟩

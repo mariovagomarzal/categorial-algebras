@@ -2,7 +2,7 @@ import CategorialAlgebras.Dimensions.HomogeneousComposition
 import CategorialAlgebras.Dimensions.HeterogeneousComposition
 
 /-!
-# Dimension changes between finite dimensions and natural dimensions
+# Dimension changes between finite dimensions and dimension $\omega$
 
 Truncation includes dimensions, selecting the fixed points of the cutoff source
 in the homogeneous presentation. Discretization retains the lower dimensions
@@ -15,7 +15,7 @@ namespace CategorialAlgebras.Dimensions
 
 variable {S : Type u} (sig : Signature.{u, v} S)
 
-/-- Inclusion of a finite initial segment into the natural dimensions. -/
+/-- Inclusion of a finite initial segment into dimension $\omega$. -/
 def omegaInclusion (n : ℕ) : Fin n ↪o ℕ where
   toFun := Fin.val
   inj' := Fin.val_injective
@@ -43,7 +43,7 @@ def omegaTruncationEquation (n : ℕ) (s : S) :
   ⟨.var (Word.position _ 0),
     Homogeneous.unary (.source n s) (.var (Word.position _ 0))⟩
 
-/-- Homogeneous truncation from natural dimensions selects precisely the cutoff cells. -/
+/-- Homogeneous truncation from dimension $\omega$ selects precisely the cutoff cells. -/
 def homogeneousOmegaTruncation (n : ℕ) :
     GeneralizedHepDerivor (Homogeneous.hepSignature (Fin n) sig)
       (Homogeneous.hepSignature ℕ sig) where

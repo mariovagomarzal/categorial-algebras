@@ -3,7 +3,7 @@ import CategorialAlgebras.Dimensions.HomogeneousModels
 import CategorialAlgebras.Dimensions.HeterogeneousModels
 
 /-!
-# Realizations and models of natural-dimensional changes
+# Realizations and models of $\omega$-dimensional changes
 
 Explicit discrete extensions and algebras of cutoff cells realize the induced
 transformations. In the homogeneous extension every cell is a cutoff cell.
@@ -253,7 +253,7 @@ theorem homogeneousOmegaDiscretization_finite
     Homogeneous.FiniteCells ((homogeneousOmegaDiscretization sig n).transformed B) :=
   fun s x => ⟨n, homogeneousOmegaDiscretization_cutoff sig n B hB s x⟩
 
-/-- Clamping natural dimensions is saturating. -/
+/-- Clamping dimensions indexed by the natural numbers is saturating. -/
 theorem omegaClamp_saturating : Saturating (omegaClamp n) := by
   intro i j k hij hjk he
   apply Fin.ext

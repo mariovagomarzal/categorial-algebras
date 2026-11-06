@@ -1,7 +1,7 @@
 import CategorialAlgebras.Omega.GraduatedStructure
 
 /-!
-# Graduation in natural dimensions
+# Graduation in dimension $\omega$
 
 Graduation takes fixed-source subtypes in each dimension. Homomorphisms
 restrict to these subtypes, preserving all the heterogeneous operations.

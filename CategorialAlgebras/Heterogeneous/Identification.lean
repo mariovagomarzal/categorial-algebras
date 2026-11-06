@@ -104,7 +104,7 @@ noncomputable def modelEquivalence : CategorialAlgebra.{i, u, v, w} I sig ≌
 @[simp] theorem modelFunctor_carrier (A : CategorialAlgebra.{i, u, v, w} I sig) :
     (modelFunctor.obj A).obj.obj.carrier = A.carrier := rfl
 
-/-! ## Finite and natural dimensions -/
+/-! ## Finite dimensions and dimension $\omega$ -/
 
 /-- The finite-dimensional identification includes dimensions $0,\ldots,n$. -/
 noncomputable abbrev nModelIsomorphism (n : ℕ) {S : Type u} (sig : Signature.{u, v} S) :

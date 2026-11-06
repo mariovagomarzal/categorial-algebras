@@ -3,7 +3,7 @@ import CategorialAlgebras.Dimensions.HomogeneousStructure
 import CategorialAlgebras.Homogeneous.Omega
 
 /-!
-# Explicit structures in natural dimensions
+# Explicit structures in dimension $\omega$
 
 Discretization adds discrete structures above a finite cutoff. Restriction
 retains the carrier and the selected structures, while truncation restricts
@@ -88,7 +88,7 @@ theorem omegaDiscretizedAlgebra_finite {n : ℕ} {S : Type u} {sig : Signature.{
     (omegaDiscretizedAlgebra B).FiniteDimensional :=
   fun s x => ⟨n, omegaDiscretizedAlgebra_isCell B s x⟩
 
-/-- Restrict a natural-dimensional homogeneous algebra without changing its carrier. -/
+/-- Restrict an $\omega$-dimensional homogeneous algebra without changing its carrier. -/
 def omegaRestrictedAlgebra {S : Type u} {sig : Signature.{u, v} S}
     (B : Homogeneous.CategorialAlgebra.{0, u, v, w} ℕ sig) (n : ℕ) :
     Homogeneous.NCategorialAlgebra n sig where

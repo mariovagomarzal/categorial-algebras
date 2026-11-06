@@ -118,7 +118,7 @@ theorem homogeneousDimensionDerivor_comp {I : Type i} {J : Type j} (f : I → Op
 
 /-! ## The derivors in dimension $\omega$ -/
 
-/-- The homogeneous derivor of a change of signature translates the natural-dimensional
+/-- The homogeneous derivor of a change of signature translates the $\omega$-dimensional
 fixed-source equation of sort $s$ to that of sort $\varphi(s)$. -/
 theorem homogeneous_translate_omegaEquation (n : ℕ) (c : Derivor sig tau) (s : S) :
     (homogeneousDerivor ℕ c).translateSingletonSet s
@@ -167,7 +167,7 @@ theorem homogeneousOmegaDiscretization_comp (n : ℕ) (c : Derivor sig tau) :
 
 /-! ## Cells -/
 
-/-- In a transformed natural-dimensional model, the recovered boundaries of a cell of sort
+/-- In a transformed $\omega$-dimensional model, the recovered boundaries of a cell of sort
 $s$ are those of the original model at the sort $\varphi(s)$. -/
 theorem homogeneous_omega_boundary_val (c : Derivor sig tau)
     (B : PartialAlgebra.{u, max v u, w} (Homogeneous.Symbol ℕ tau))
@@ -214,7 +214,7 @@ theorem omegaTruncation_homogeneous_comparison_surjective (n : ℕ) (c : Derivor
 /-! ## The compatibility squares -/
 
 /-- Homogeneous truncation from $\omega$ commutes with change of signature on all
-natural-dimensional models. -/
+$\omega$-dimensional models. -/
 noncomputable def homogeneousOmegaTruncationAllModelsChange (n : ℕ) (c : Derivor sig tau) :
     homogeneousModels.{0, u, v, w} ℕ c ⋙ homogeneousOmegaTruncationAllModels sig n ≅
       homogeneousOmegaTruncationAllModels tau n ⋙ homogeneousModels (Fin n) c :=
@@ -234,7 +234,7 @@ noncomputable def homogeneousOmegaTruncationModelsChange (n : ℕ) (c : Derivor 
     (homogeneousOmegaTruncationAllModelsChange n c)
 
 /-- Homogeneous discretization to $\omega$ commutes with change of signature on all
-natural-dimensional models. -/
+$\omega$-dimensional models. -/
 noncomputable def homogeneousOmegaDiscretizationAllModelsChange (n : ℕ) (c : Derivor sig tau) :
     homogeneousModels.{0, u, v, w} (Fin n) c ⋙ homogeneousOmegaDiscretizationAllModels sig n ≅
       homogeneousOmegaDiscretizationAllModels tau n ⋙ homogeneousModels ℕ c :=

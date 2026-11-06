@@ -4,7 +4,7 @@ import CategorialAlgebras.Omega.UnificationCompatibility
 import CategorialAlgebras.Preliminaries.AlgebraicSquare
 
 /-!
-# The algebraic square between finite and natural dimensions
+# The algebraic square between finite dimensions and dimension $\omega$
 
 The comparison on right adjoints is the dimensional injection into classes.
 Conjugation is a bijection of natural isomorphisms, so it determines the

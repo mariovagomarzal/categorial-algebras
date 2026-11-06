@@ -2,7 +2,7 @@ import CategorialAlgebras.Dimensions.OmegaComposition
 import CategorialAlgebras.Dimensions.Descriptions
 
 /-!
-# Operations and elements of the natural-dimensional functors
+# Operations and elements of the $\omega$-dimensional functors
 
 Realizations identify the selected elements and every defined operation value,
 including the domains of partial composition. Discarded homogeneous compositions
@@ -55,13 +55,13 @@ theorem omegaDiscretization_comp_diagonal
   rw [dite_eq_right (not_lt_of_ge hk)]
   exact ⟨fun ⟨he, hz⟩ => ⟨he, hz⟩, fun ⟨he, hz⟩ => ⟨he, hz⟩⟩
 
-/-- The natural-dimensional truncation realization retains the original element. -/
+/-- The $\omega$-dimensional truncation realization retains the original element. -/
 @[simp] theorem homogeneousOmegaTruncationRealization_hom_val
     (B : Homogeneous.CategorialAlgebra.{0, u, v, w} ℕ sig) (s)
     (x : (omegaTruncatedAlgebra B n).carrier s) :
     ((homogeneousOmegaTruncationRealization sig n B).hom.toMap s x).val = x.val := rfl
 
-/-- The inverse natural-dimensional truncation realization also retains the element. -/
+/-- The inverse $\omega$-dimensional truncation realization also retains the element. -/
 @[simp] theorem homogeneousOmegaTruncationRealization_inv_val
     (B : Homogeneous.CategorialAlgebra.{0, u, v, w} ℕ sig) (s)
     (x : (homogeneousOmegaTruncation sig n).Cell B.toPartialAlgebra s) :

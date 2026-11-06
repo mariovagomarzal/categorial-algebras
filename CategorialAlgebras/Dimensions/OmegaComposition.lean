@@ -2,7 +2,7 @@ import CategorialAlgebras.Dimensions.OmegaFunctors
 import CategorialAlgebras.Dimensions.Transport
 
 /-!
-# Composition with natural-dimensional truncations
+# Composition with $\omega$-dimensional truncations
 
 Inclusions and clamps give the expected compositions. Homogeneous cell domains
 are compared semantically: redundant cutoff equations select the same cells.
@@ -67,7 +67,7 @@ theorem homogeneousOmegaMixed_lower_derivor {m n : ℕ} (h : n ≤ m) :
   rw [dite_eq_left (lt_of_lt_of_le k.isLt h)]
   rfl
 
-/-- Inclusion translates a finite cutoff equation to the corresponding natural dimension. -/
+/-- Inclusion translates a finite cutoff equation to dimension $\omega$. -/
 theorem omegaTruncation_translate_equation (n : ℕ) (k : Fin n) (s : S) :
     (homogeneousOmegaTruncationDerivor sig n).translateSingletonSet s
         (Homogeneous.singletonEquation (truncationEquation sig k s)) =
@@ -99,7 +99,7 @@ theorem omegaDiscretization_translate_equation_of_lt (m n : ℕ) (h : n < m) (s 
     fin_cases q
     rfl
 
-/-- A discarded natural-dimensional cutoff equation becomes reflexive. -/
+/-- A discarded $\omega$-dimensional cutoff equation becomes reflexive. -/
 theorem omegaDiscretization_translate_equation_of_le (m n : ℕ) (h : m ≤ n) (s : S) :
     (homogeneousOmegaDiscretizationDerivor sig m).translateSingletonSet s
         (Homogeneous.singletonEquation (omegaTruncationEquation sig n s)) =
@@ -124,14 +124,14 @@ theorem homogeneousOmegaMixed_lower {m n : ℕ} (h : n < m) :
   erw [omegaDiscretization_translate_equation_of_lt sig m n h,
     bot_sup_eq, homogeneousTruncation_domain_of_lt sig h]
 
-/-- Recover a natural-dimensional homogeneous model on its exact carrier. -/
+/-- Recover an $\omega$-dimensional homogeneous model on its exact carrier. -/
 noncomputable def omegaRecoveredAlgebra
     (B : PartialAlgebra.{u, max v u, w} (Homogeneous.Symbol ℕ sig))
     (hB : (Homogeneous.specification ℕ sig).IsModel B) :
     Homogeneous.CategorialAlgebra ℕ sig :=
   Homogeneous.ofEquations B (fun e => hB.2 _ ⟨e, rfl⟩)
 
-/-- A natural-dimensional fixed-source equation is equivalent to being a cutoff cell. -/
+/-- An $\omega$-dimensional fixed-source equation is equivalent to being a cutoff cell. -/
 theorem satisfies_omegaTruncationEquation_iff
     (B : PartialAlgebra.{u, max v u, w} (Homogeneous.Symbol ℕ sig))
     (hB : (Homogeneous.specification ℕ sig).IsModel B) (n : ℕ) (s : S) (x : B.carrier s) :
@@ -181,7 +181,7 @@ theorem omegaTruncation_boundary_val (n : ℕ)
       Homogeneous.boundary_op (fun e => hB.2 _ ⟨e, rfl⟩) _ true] at hv
     exact Part.mem_some_iff.mp hv
 
-/-- Successive truncations from natural dimensions select the same cells as the direct one. -/
+/-- Successive truncations from dimension $\omega$ select the same cells as the direct one. -/
 theorem homogeneousOmegaTruncation_sameCells {m n : ℕ} (h : m ≤ n)
     (B : PartialAlgebra.{u, max v u, w} (Homogeneous.Symbol ℕ sig))
     (hB : (Homogeneous.specification ℕ sig).IsModel B) (s : S) (x : B.carrier s) :
@@ -324,7 +324,7 @@ theorem homogeneousOmegaMixed_comparison_surjective (m n : ℕ)
   · erw [dite_eq_right hn] at hv
     exact hv
 
-/-- Natural-dimensional homogeneous truncation followed by finite truncation
+/-- $\omega$-dimensional homogeneous truncation followed by finite truncation
 is naturally the direct truncation on all models. -/
 noncomputable def homogeneousOmegaTruncationAllModelsComp {m n : ℕ} (h : m ≤ n) :
     homogeneousOmegaTruncationAllModels.{u, v, w} sig n ⋙ homogeneousTruncationModels sig h ≅

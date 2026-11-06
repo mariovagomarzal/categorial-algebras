@@ -4,7 +4,7 @@ import CategorialAlgebras.Limits.HomogeneousMorphisms
 import CategorialAlgebras.Limits.HeterogeneousMorphisms
 
 /-!
-# Reconstruction of natural-dimensional models
+# Reconstruction of $\omega$-dimensional models
 
 The reconstruction carriers and operations are the explicit increasing union
 and diagonal constructions. The comparison with each finite stage is required
@@ -21,7 +21,7 @@ variable {S : Type u} (sig : Signature.{u, v} S)
 
 /-- Model and comparison data for the explicit homogeneous union construction. -/
 structure HomogeneousReconstruction (A : (homogeneousSystem.{u, v, w} sig).Family) where
-  /-- The union operations satisfy the natural-dimensional specification. -/
+  /-- The union operations satisfy the $\omega$-dimensional specification. -/
   isModel : (Homogeneous.specification ℕ sig).IsModel (homogeneousUnionPartial A)
   /-- Every union cell is fixed by some source. -/
   finiteCells : Homogeneous.FiniteCells (homogeneousUnionPartial A)
@@ -43,7 +43,7 @@ theorem homogeneous_reconstruction (A : (homogeneousSystem.{u, v, w} sig).Family
 
 /-- Model and comparison data for the explicit heterogeneous diagonal construction. -/
 structure HeterogeneousReconstruction (A : (heterogeneousSystem.{u, v, w} sig).Family) where
-  /-- The diagonal operations satisfy the natural-dimensional specification. -/
+  /-- The diagonal operations satisfy the $\omega$-dimensional specification. -/
   isModel : (Heterogeneous.specification ℕ sig).IsModel (heterogeneousDiagonalPartial A)
   /-- The compatible finite restrictions of the diagonal are the given family. -/
   comparison : (heterogeneousCone sig).obj
@@ -91,11 +91,11 @@ instance heterogeneousCone_essSurj : (heterogeneousCone.{u, v, w} sig).EssSurj w
     let r := heterogeneousReconstruction sig A
     ⟨⟨⟨heterogeneousDiagonalPartial A, r.isModel.1⟩, r.isModel.2⟩, ⟨r.comparison⟩⟩
 
-/-- The homogeneous cone identifies natural-dimensional models with compatible families. -/
+/-- The homogeneous cone identifies $\omega$-dimensional models with compatible families. -/
 instance homogeneousCone_isEquivalence : (homogeneousCone.{u, v, w} sig).IsEquivalence :=
   ⟨inferInstance, homogeneousCone_full sig, inferInstance⟩
 
-/-- The heterogeneous cone identifies natural-dimensional models with compatible families. -/
+/-- The heterogeneous cone identifies $\omega$-dimensional models with compatible families. -/
 instance heterogeneousCone_isEquivalence : (heterogeneousCone.{u, v, w} sig).IsEquivalence :=
   ⟨inferInstance, heterogeneousCone_full sig, inferInstance⟩
 

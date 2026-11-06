@@ -2,7 +2,7 @@ import CategorialAlgebras.Dimensions.OmegaModels
 import CategorialAlgebras.Dimensions.Functors
 
 /-!
-# Truncation and discretization functors in natural dimensions
+# Truncation and discretization functors in dimension $\omega$
 
 The four functors are induced by generalized hep-derivors. The homogeneous
 infinite model category retains the additional finite-dimensional-cell condition.
@@ -16,7 +16,7 @@ open CategoryTheory
 
 variable {S : Type u} (sig : Signature.{u, v} S) (n : ℕ)
 
-/-- Truncation on all natural-dimensional homogeneous models. -/
+/-- Truncation on all $\omega$-dimensional homogeneous models. -/
 noncomputable def homogeneousOmegaTruncationAllModels :
     (Homogeneous.specification ℕ sig).Models ⥤
       (Homogeneous.specification (Fin n) sig).Models :=
@@ -29,7 +29,7 @@ noncomputable def homogeneousOmegaTruncationModels :
       (Homogeneous.specification (Fin n) sig).Models :=
   Homogeneous.omegaInclusion sig ⋙ homogeneousOmegaTruncationAllModels sig n
 
-/-- Discretization into all natural-dimensional homogeneous models. -/
+/-- Discretization into all $\omega$-dimensional homogeneous models. -/
 noncomputable def homogeneousOmegaDiscretizationAllModels :
     (Homogeneous.specification (Fin n) sig).Models ⥤
       (Homogeneous.specification ℕ sig).Models :=

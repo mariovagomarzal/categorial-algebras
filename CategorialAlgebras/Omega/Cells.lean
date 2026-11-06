@@ -1,7 +1,8 @@
 import CategorialAlgebras.Dimensions.HeterogeneousCounitStructure
 import Mathlib.Order.DirectedInverseSystem
 
-/-!+# Cells identified along dimensional identities
+/-!
+# Cells identified along dimensional identities
 
 The quotient of the disjoint union of dimensional carriers identifies cells
 with their identities. Equality can be checked in every common higher dimension.

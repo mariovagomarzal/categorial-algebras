@@ -202,7 +202,7 @@ theorem heterogeneousDiagonalAlgebra_expansion :
   funext a s σ x
   cases σ <;> rfl
 
-/-- The explicit diagonal partial algebra satisfies all natural-dimensional model laws. -/
+/-- The explicit diagonal partial algebra satisfies all $\omega$-dimensional model laws. -/
 theorem heterogeneousDiagonal_isModel :
     (Heterogeneous.specification ℕ sig).IsModel (heterogeneousDiagonalPartial A) := by
   rw [← heterogeneousDiagonalAlgebra_expansion]

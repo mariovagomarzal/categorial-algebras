@@ -230,7 +230,7 @@ def HigherCategory.productIsLimit {J : Type u} (C : J → HigherCategory.{i, u} 
     funext k x j
     exact congrArg (fun f : c.pt ⟶ C j => f.toFun k x) (hm j))
 
-/-! ## Finite and natural dimensions -/
+/-! ## Finite dimensions and dimension $\omega$ -/
 
 /-- A heterogeneous $n$-category has dimensions $0,\ldots,n$. -/
 abbrev NCategory (n : ℕ) := HigherCategory (Fin (n + 1))

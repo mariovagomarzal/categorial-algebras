@@ -16,7 +16,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 variable {S : Type u} (sig : Signature.{u, v} S)
 
-/-- Finite graduation after natural-dimensional truncation, as a generalized hep-derivor. -/
+/-- Finite graduation after $\omega$-dimensional truncation, as a generalized hep-derivor. -/
 def graduationComposite (n : ℕ) :
     GeneralizedHepDerivor (Heterogeneous.hepSignature (Fin (n+1)) sig)
       (Homogeneous.hepSignature ℕ sig) :=
@@ -58,7 +58,7 @@ theorem graduationRestricted_domain {m n : ℕ} (h : m ≤ n) (k : Fin (m+1)) (s
   rw [Derivor.translateSingletonSet_empty, sup_bot_eq]
   rfl
 
-/-- Natural-dimensional fixed-source equations in distinct dimensions are distinct terms. -/
+/-- $\omega$-dimensional fixed-source equations in distinct dimensions are distinct terms. -/
 theorem omegaTruncationEquation_ne {j k : ℕ} (h : j ≠ k) (s : S) :
     omegaTruncationEquation sig j s ≠ omegaTruncationEquation sig k s := by
   intro he

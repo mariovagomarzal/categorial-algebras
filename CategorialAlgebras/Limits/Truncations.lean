@@ -6,7 +6,7 @@ import CategorialAlgebras.Limits.ProjectiveSystem
 
 Canonical truncation comparisons flatten nested cell subtypes without changing
 the underlying element. This proves the associativity and unit coherences of
-the projective systems and of the cones in natural dimensions.
+the projective systems and of the cones in dimension $\omega$.
 -/
 
 universe u v w
@@ -169,7 +169,7 @@ noncomputable def heterogeneousSystem :
     exact eq_of_heq ((heterogeneousComposition_heq sig h (le_refl _) A s x).trans
       (heterogeneousIdentity_heq sig _ A _ x.val).symm)
 
-/-- The homogeneous natural-dimensional models give a coherent cone of truncations. -/
+/-- The homogeneous $\omega$-dimensional models give a coherent cone of truncations. -/
 noncomputable def homogeneousCone : Homogeneous.OmegaModels.{u, v, w} sig ⥤
     (homogeneousSystem.{u, v, w} sig).Family where
   obj A :=
@@ -206,7 +206,7 @@ noncomputable def homogeneousCone : Homogeneous.OmegaModels.{u, v, w} sig ⥤
     funext n
     exact (homogeneousOmegaTruncationModels sig n).map_comp f g
 
-/-- The heterogeneous natural-dimensional models give a coherent cone of truncations. -/
+/-- The heterogeneous $\omega$-dimensional models give a coherent cone of truncations. -/
 noncomputable def heterogeneousCone : (Heterogeneous.specification ℕ sig).Models.{u, max v u, w, 0} ⥤
     (heterogeneousSystem.{u, v, w} sig).Family where
   obj A :=

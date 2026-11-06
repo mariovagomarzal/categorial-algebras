@@ -2,7 +2,7 @@ import CategorialAlgebras.Omega.Zeta
 import Mathlib.CategoryTheory.Adjunction.Basic
 
 /-!
-# The adjoint equivalence of natural-dimensional presentations
+# The adjoint equivalence of $\omega$-dimensional presentations
 
 Graduation and unification are mutually inverse up to their explicit natural
 isomorphisms. The adjunction uses exactly $\zeta^{-1}$ as unit and

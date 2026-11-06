@@ -136,11 +136,11 @@ abbrev HeterogeneousFunctorFamily (L : Type x) [Category.{y} L] :=
   PresentedFunctorFamily (heterogeneousSystem.{u, v, w} sig)
     (fun n => Heterogeneous.NCategorialAlgebra.{u, v, w} n sig) (fun _ => Heterogeneous.modelIsomorphism) L
 
-/-- Assemble a coherent family of homogeneous algebra functors into natural dimensions. -/
+/-- Assemble a coherent family of homogeneous algebra functors into dimension $\omega$. -/
 noncomputable def homogeneousPresentedLift (F : HomogeneousFunctorFamily.{u, v, w} sig L) :
     L ⥤ Homogeneous.OmegaCategorialAlgebra.{u, v, w} sig := homogeneousLift sig F.toModels
 
-/-- Assemble a coherent family of heterogeneous algebra functors into natural dimensions. -/
+/-- Assemble a coherent family of heterogeneous algebra functors into dimension $\omega$. -/
 noncomputable def heterogeneousPresentedLift (F : HeterogeneousFunctorFamily.{u, v, w} sig L) :
     L ⥤ Heterogeneous.OmegaCategorialAlgebra.{u, v, w} sig := heterogeneousLift sig F.toModels
 

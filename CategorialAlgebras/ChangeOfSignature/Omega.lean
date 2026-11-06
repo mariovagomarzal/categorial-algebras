@@ -6,12 +6,13 @@ import CategorialAlgebras.Dimensions.OmegaComposition
 
 The derivors of a change of signature in dimension $\omega$ are the derivors
 $\mathbf{c}^{(\omega)}$ and $\mathbf{c}^{\mathrm{htg}(\omega)}$ of the general construction
-with natural dimensions; their translation of terms and their compositions and identities
-are covered by the general results. In the heterogeneous presentation the categories of
-$\omega$-categorial algebras are those of all categorial algebras with natural dimensions,
-so the functors are those of the general construction. In the homogeneous presentation the
-functor induced by $\mathbf{c}^{(\omega)}$ also preserves the condition that every cell has
-a finite dimension, since the cells of sort $s$ are those of sort $\varphi(s)$ with the same
+for dimensions indexed by the natural numbers; their translation of terms and their
+compositions and identities are covered by the general results. In the heterogeneous
+presentation the categories of $\omega$-categorial algebras are those of all categorial
+algebras with dimensions indexed by the natural numbers, so the
+functors are those of the general construction. In the homogeneous presentation the functor
+induced by $\mathbf{c}^{(\omega)}$ also preserves the condition that every cell has a finite
+dimension, since the cells of sort $s$ are those of sort $\varphi(s)$ with the same
 sources, and so does the reduct; this gives the functor between homogeneous
 $\omega$-categorial algebras and the split indexed category of these algebras.
 -/
@@ -36,7 +37,7 @@ noncomputable def liftIso {C : Type*} {D : Type*} [Category C] [Category D]
 
 /-! ## Finite-dimensional cells -/
 
-/-- The homogeneous derivor of a change of signature in natural dimensions preserves the
+/-- The homogeneous derivor of a change of signature in dimension $\omega$ preserves the
 condition that every cell has a finite dimension. -/
 theorem homogeneous_finiteCells (c : Derivor sig tau)
     (B : PartialAlgebra.{u, max v u, w} (Homogeneous.Symbol ℕ tau))
