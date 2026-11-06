@@ -114,6 +114,33 @@ import CategorialAlgebras.Limits.Reconstruction
 import CategorialAlgebras.Limits.StageCoherence
 import CategorialAlgebras.Limits.Truncations
 import CategorialAlgebras.Limits.Universal
+import CategorialAlgebras.Omega.Adjunctions
+import CategorialAlgebras.Omega.AlgebraicSquare
+import CategorialAlgebras.Omega.Cells
+import CategorialAlgebras.Omega.Counterexample
+import CategorialAlgebras.Omega.Descriptions
+import CategorialAlgebras.Omega.DimensionRetractions
+import CategorialAlgebras.Omega.Equivalence
+import CategorialAlgebras.Omega.FamilyTransport
+import CategorialAlgebras.Omega.FiniteGraduation
+import CategorialAlgebras.Omega.FiniteUnification
+import CategorialAlgebras.Omega.GraduatedStructure
+import CategorialAlgebras.Omega.Graduation
+import CategorialAlgebras.Omega.GraduationDerivors
+import CategorialAlgebras.Omega.GraduationFamily
+import CategorialAlgebras.Omega.GraduationLimit
+import CategorialAlgebras.Omega.HeterogeneousCounit
+import CategorialAlgebras.Omega.HomogeneousCounit
+import CategorialAlgebras.Omega.Isomorphisms
+import CategorialAlgebras.Omega.OperationLaws
+import CategorialAlgebras.Omega.Operations
+import CategorialAlgebras.Omega.PresentedGraduation
+import CategorialAlgebras.Omega.Stages
+import CategorialAlgebras.Omega.Theta
+import CategorialAlgebras.Omega.Unification
+import CategorialAlgebras.Omega.UnificationCompatibility
+import CategorialAlgebras.Omega.UnifiedStructure
+import CategorialAlgebras.Omega.Zeta
 
 /-!
 # Higher-order many-sorted categorial algebras
