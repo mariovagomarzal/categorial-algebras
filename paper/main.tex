@@ -120,6 +120,37 @@
 \newtheorem{example}[theorem]{Example}
 \newtheorem*{convention}{Convention}
 
+% Links to the Lean formalization. \lean{N1,N2,...}, right after the \label of a
+% theorem-like environment, puts in the right margin, next to its head, a small mark
+% that links to the API documentation of the declaration N1, followed by small
+% numerals that link to N2, N3, ...
+\newcommand*{\leandocs}{https://mariovagomarzal.github.io/categorial-algebras/docs/find/?pattern=}
+\definecolor{leanmark}{gray}{0.55}
+\makeatletter
+\newcommand*{\CA@leanpending}{}
+\newcommand*{\lean}[1]{\gdef\CA@leanpending{#1}}
+\newcount\CA@leancount
+\newcommand*{\CA@leanlink}[2]{{\hypersetup{pdfborder={0 0 0}}\href{\leandocs#1\#doc}{#2}}}
+\newcommand*{\CA@leanlinks}{%
+  \global\CA@leancount=0
+  \@for\CA@leanname:=\CA@leanpending\do{%
+    \global\advance\CA@leancount by 1
+    \ifnum\CA@leancount=1
+      \expandafter\CA@leanlink\expandafter{\CA@leanname}{L$\exists\forall$N}%
+    \else
+      \hspace{0.3em}\expandafter\CA@leanlink\expandafter{\CA@leanname}{\the\CA@leancount}%
+    \fi}}
+\newcommand*{\CA@leanmark}{%
+  \ifx\CA@leanpending\@empty\else
+    \rlap{\kern\dimexpr\linewidth-\parindent+1.2em\relax\normalfont\fontsize{6}{7}\sffamily
+      \color{leanmark}\CA@leanlinks}%
+    \global\let\CA@leanpending\@empty
+  \fi}
+\let\CA@thmhead@plain\thmhead@plain
+\def\thmhead@plain#1#2#3{\CA@leanmark\CA@thmhead@plain{#1}{#2}{#3}}
+\let\thmhead\thmhead@plain
+\makeatother
+
 % Label convention. Prefix: S chapter or section, D definition, P proposition, L lemma,
 % C corollary, Cl claim (inside a proof), R remark, E example, A axiom, F figure.
 % Body: CamelCase description of the content. Gd, Uf, Ds, Tr name the graduation,
@@ -401,7 +432,7 @@ Finally, Section~\ref{SAdjGrothendieck} recalls the categorical notions that we 
 \section{Many-sorted sets}\label{SManySortedSets}
 
 \begin{definition}
-\label{DSortedSet}
+\label{DSortedSet}\lean{CategorialAlgebras.SortedSet}
 Let $S$ be a set of sorts in $\boldsymbol{\mathcal{U}}$.
 An $S$-\emph{sorted set} is a mapping $A = (A_{s})_{s\in S}$ from $S$ to $\boldsymbol{\mathcal{U}}$.
 If $A$ and $X$ are $S$-sorted sets, then we say that $X$ is an $S$-\emph{sorted subset} or, to abbreviate, a \emph{subset} of $A$, denoted by $X\subseteq A$, if, for every $s\in S$, $X_{s}\subseteq A_{s}$.
@@ -409,7 +440,7 @@ We denote by $\mathrm{Sub}(A)$ the set of all $S$-sorted sets $X$ such that $X\s
 \end{definition}
 
 \begin{definition}
-\label{DSortedMapping}
+\label{DSortedMapping}\lean{CategorialAlgebras.SortedSet.Map}
 Let $S$ be a set of sorts and $A$ and $B$ $S$-sorted sets.
 The \emph{cartesian product of} $A$ \emph{and} $B$, denoted by $A\times B$, is the $S$-sorted set $\left(A_{s}\times B_{s}\right)_{s\in S}$.
 An $S$-\emph{sorted function from} $A$ \emph{to} $B$ is an $S$-sorted set $F\subseteq A\times B$ such that, for every $s\in S$, $F_{s}$ is a function from $A_{s}$ to $B_{s}$, and an $S$-\emph{sorted mapping from} $A$ \emph{to} $B$ is a triple $f = (A,F,B)$ in which $F$ is an $S$-sorted function from $A$ to $B$.
@@ -423,7 +454,7 @@ If $X\subseteq A$, then the \emph{restriction of} $f$ \emph{to} $X$, denoted by 
 Every mapping between sets of sorts induces a functor between the corresponding categories of many-sorted sets.
 
 \begin{proposition}[\cite{Soliveres2000}, Proposition~1.3.5]
-\label{PDeltaFunctor}
+\label{PDeltaFunctor}\lean{CategorialAlgebras.SortedSet.delta}
 Let $S$ and $T$ be sets and $\varphi \colon S \mor T$ a mapping.
 We let $\Delta_{\varphi}$ stand for the assignment from $\mathsf{Set}^{T}$ to $\mathsf{Set}^{S}$ that sends a $T$-sorted set $A = (A_{t})_{t \in T}$ to the $S$-sorted set $A_{\varphi} = (A_{\varphi(s)})_{s \in S}$, and a $T$-sorted mapping $f \colon A \mor B$ to the $S$-sorted mapping $f_{\varphi} = (f_{\varphi(s)})_{s \in S}$.
 Then $\Delta_{\varphi}$ is a functor from $\mathsf{Set}^{T}$ to $\mathsf{Set}^{S}$.
@@ -442,7 +473,7 @@ with the canonical projections $\mathrm{pr}^{i}\colon\prod_{i\in I}A^{i}\mor A^{
 The remaining set-theoretic operations on $S$-sorted sets, such as $\amalg$ (binary coproduct), $\bigcup$, $\cup$, $\bigcap$, $\cap$, $-$ and $\complement_{A}$, are defined componentwise.
 \end{definition}
 
-\begin{proposition}\label{PImFactorization}
+\begin{proposition}\label{PImFactorization}\lean{CategorialAlgebras.SortedSet.range_subset_iff_exists_unique}
 Let $S$ be a set of sorts, $A$ and $B$ $S$-sorted sets, $Y$ a subset of $B$, and $f$ an $S$-sorted mapping from $A$ to $B$.
 Then $\mathrm{Im}(f)\subseteq Y$ if, and only if, there exists an $S$-sorted mapping $h$ from $A$ to $Y$ such that $\mathrm{in}^{Y,B}\circ h=f$.
 In this case $h$ is unique, and we call it the \emph{corestriction of} $f$ \emph{to} $Y$ and denote it by $f|^{Y}$.
@@ -465,7 +496,7 @@ The insertion $\eta^{A}\colon A\mor A^{\star}$ sends $a$ to the one-letter word 
 In particular, the length $\bb{\,\cdot\,}\colon\mathbf{A}^{\star}\mor(\mathbb{N},+,0)$ is the unique monoid homomorphism taking every letter to $1$, i.e., the monoid homomorphism for the constant mapping with value $1$.
 \end{definition}
 
-\begin{definition}\label{DSubword}
+\begin{definition}\label{DSubword}\lean{CategorialAlgebras.Word.position}
 For a word $\mathbf{a}\in A^{\star}$ and $a\in A$, put
 \[
 \bb{\mathbf{a}}_{a}=\bigl|\{i\in\bb{\mathbf{a}}\mid a_i=a\}\bigr|.
@@ -486,13 +517,13 @@ Thus, for every $\mathbf{s}\in S^{\star}$, $\varphi^{\star}(\mathbf{s})=(\varphi
 
 We next recall the notions of many-sorted signature, many-sorted algebra and homomorphism between many-sorted algebras.
 
-\begin{definition}\label{DSig}
+\begin{definition}\label{DSig}\lean{CategorialAlgebras.Signature}
 Let $S$ be a set of sorts.
 An $S$-\emph{sorted signature} is a mapping $\Sigma$ from $S^{\star}\times S$ to $\boldsymbol{\mathcal{U}}$ which sends a pair $(\mathbf{s},s)\in S^{\star}\times S$ to the set $\Sigma_{\mathbf{s},s}$ of the \emph{formal operations} of \emph{arity} $\mathbf{s}$, \emph{sort} (or \emph{coarity}) $s$, and \emph{rank} (or \emph{biarity}) $(\mathbf{s},s)$.
 A \emph{many-sorted signature} is an ordered pair $\sig{\Sigma}=(S,\Sigma)$, where $S$ is a set of sorts and $\Sigma$ an $S$-sorted signature.
 \end{definition}
 
-\begin{definition}\label{DAlg}
+\begin{definition}\label{DAlg}\lean{CategorialAlgebras.Algebra}
 Let $S$ be a set of sorts and $\Sigma$ an $S$-sorted signature.
 The $S^{\star}\times S$-sorted set of the \emph{finitary operations on} an $S$-sorted set $A$ is $(\mathrm{Hom}(A_{\mathbf{s}},A_{s}))_{(\mathbf{s},s)\in S^{\star}\times S}$, where, for every $\mathbf{s}\in S^{\star}$, $A_{\mathbf{s}} = \prod_{j\in \bb{\mathbf{s}}}A_{s_{j}}$, with $\bb{\mathbf{s}}$ denoting the length of the word $\mathbf{s}$ (if $\mathbf{s} = \lambda$, then $A_{\lambda}$ is a final set).
 A \emph{structure of} $\Sigma$-\emph{algebra on} an $S$-sorted set $A$ is a family $(F_{\mathbf{s},s})_{(\mathbf{s},s)\in S^{\star}\times S}$, denoted by $F$, where, for $(\mathbf{s},s)\in S^{\star}\times S$, $F_{\mathbf{s},s}$ is a mapping from $\Sigma_{\mathbf{s},s}$ to $\mathrm{Hom}(A_{\mathbf{s}},A_{s})$ (if $(\mathbf{s},s) = (\lambda,s)$ and $\sigma\in \Sigma_{\lambda,s}$, then $F_{\lambda,s}(\sigma)$ picks out an element of $A_{s}$).
@@ -528,7 +559,7 @@ $$
 \end{enumerate}
 \end{definition}
 
-\begin{definition}\label{DTermAlg}
+\begin{definition}\label{DTermAlg}\lean{CategorialAlgebras.Term.algebra}
 The \emph{free} $\Sigma$-\emph{algebra on} $X$, denoted by $\mathbf{T}_{\Sigma}(X)$, is the $\Sigma$-algebra determined by the subalgebra of $\mathbf{W}_{\Sigma}(X)$ generated by $(\{(x)\mid x\in X_{s}\})_{s\in S}$, where, for every $s\in S$ and every $x\in X_{s}$, $(x)$ stands for $(((x,s),1))$, which is the value at $x$ of the canonical mapping from $X_{s}$ to $(\coprod\Sigma\amalg\coprod X)^{\star}$.
 We denote by $\mathrm{T}_{\Sigma}(X)$ the underlying $S$-sorted set of $\mathbf{T}_{\Sigma}(X)$ and, for $s\in S$, we call the elements of $\mathrm{T}_{\Sigma}(X)_{s}$ \emph{terms of type} $s$ \emph{with variables in} $X$ or $(X,s)$-\emph{terms}.
 \end{definition}
@@ -536,7 +567,7 @@ We denote by $\mathrm{T}_{\Sigma}(X)$ the underlying $S$-sorted set of $\mathbf{
 When no confusion can arise, we write $x$ for $(x)$ and $\sigma((P_{j})_{j\in\bb{\mathbf{s}}})$ for $\sigma^{\mathbf{T}_{\Sigma}(X)}((P_{j})_{j\in\bb{\mathbf{s}}})$, which is the word $(\sigma)\bconcat\concat_{j\in\bb{\mathbf{s}}}P_{j}$.
 The terms have the unique readability property, which allows definitions by recursion and proofs by induction on terms.
 
-\begin{proposition}\label{PTermChar}
+\begin{proposition}\label{PTermChar}\lean{CategorialAlgebras.Term}
 Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature and $X$ an $S$-sorted set.
 Then, for every $s\in S$, every term $P\in \mathrm{T}_{\Sigma}(X)_{s}$ is either a variable $x\in X_{s}$, or $\sigma^{\mathbf{T}_{\Sigma}(X)}((P_{j})_{j\in\bb{\mathbf{s}}})$ for a unique $\mathbf{s}\in S^{\star}$, a unique $\sigma\in\Sigma_{\mathbf{s},s}$ and a unique family $(P_{j})_{j\in\bb{\mathbf{s}}}\in\mathrm{T}_{\Sigma}(X)_{\mathbf{s}}$, and these possibilities are mutually exclusive.
 \end{proposition}
@@ -544,7 +575,7 @@ Then, for every $s\in S$, every term $P\in \mathrm{T}_{\Sigma}(X)_{s}$ is either
 
 The universal property of the free $\Sigma$-algebra on an $S$-sorted set $X$, stated in the following proposition, follows immediately from Proposition~\ref{PTermChar}.
 
-\begin{proposition}\label{PTermAlgUniv}
+\begin{proposition}\label{PTermAlgUniv}\lean{CategorialAlgebras.Term.exists_unique_lift}
 Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature and $X$ an $S$-sorted set.
 Then the pair $(\eta^{X},\mathbf{T}_{\Sigma}(X))$, where $\eta^{X}\colon X\mor\mathrm{T}_{\Sigma}(X)$ is the \emph{insertion of the generators}, has the following universal property: for every $\Sigma$-algebra $\mathbf{A}$ and every $S$-sorted mapping $f\colon X\mor A$, there exists a unique homomorphism $f^{\sharp}\colon\mathbf{T}_{\Sigma}(X)\mor\mathbf{A}$ such that $f^{\sharp}\circ \eta^{X} = f$.
 \end{proposition}
@@ -560,19 +591,19 @@ Unique readability makes this well defined, and induction on terms proves unique
 
 Proposition~\ref{PTermAlgUniv} allows us to carry out definitions by algebraic recursion on terms, as we do throughout this work.
 
-\begin{corollary}\label{CTermAlgAdj}
+\begin{corollary}\label{CTermAlgAdj}\lean{CategorialAlgebras.Term.adjunction}
 Let $S$ be a set of sorts and $\Sigma$ an $S$-sorted signature.
 Then the functor $\mathbf{T}_{\Sigma}$, which sends an $S$-sorted set $X$ to $\mathbf{T}_{\Sigma}(X)$ and an $S$-sorted mapping $f$ from $X$ to $Y$ to $f^{@} (= (\eta^{Y}\circ f)^{\sharp})$, the unique homomorphism from $\mathbf{T}_{\Sigma}(X)$ to $\mathbf{T}_{\Sigma}(Y)$ such that $f^{@}\circ\eta^{X} = \eta^{Y}\circ f$, is left adjoint for the forgetful functor $\mathrm{G}_{\Sigma}$ from $\mathsf{Alg}(\Sigma)$ to $\mathsf{Set}^{S}$.
 \end{corollary}
 
 The following two consequences of Proposition~\ref{PTermAlgUniv} are used in the treatment of substitutions and derivors.
 
-\begin{proposition}\label{PTermAlgUnivId}
+\begin{proposition}\label{PTermAlgUnivId}\lean{CategorialAlgebras.Term.lift_var}
 Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature and $X$ an $S$-sorted set.
 Then $(\eta^{X})^{\sharp} = \id^{\mathbf{T}_{\Sigma}(X)}$.
 \end{proposition}
 
-\begin{proposition}\label{PTermAlgUnivComp}
+\begin{proposition}\label{PTermAlgUnivComp}\lean{CategorialAlgebras.Term.lift_comp}
 Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature, $X$ an $S$-sorted set, $\mathbf{A}$ and $\mathbf{B}$ $\Sigma$-algebras, $f$ a mapping from $X$ to $A$ and $g$ a $\Sigma$-homomorphism from $\mathbf{A}$ to $\mathbf{B}$.
 Then $(g \circ f)^{\sharp} = g \circ f^{\sharp}$.
 \end{proposition}
@@ -581,7 +612,7 @@ Then $(g \circ f)^{\sharp} = g \circ f^{\sharp}$.
 
 We next recall the $S$-sorted sets of variables that we associate to the words on $S$, and the identifications of the families of elements indexed by a word with the valuations of these variables.
 
-\begin{definition}\label{DVariables}
+\begin{definition}\label{DVariables}\lean{CategorialAlgebras.Word.Variables}
 Let $S$ be a set of sorts.
 For every word $\mathbf{s}\in S^{\star}$, we let $\vs{\mathbf{s}}$ stand for the $S$-sorted set defined, for every $s\in S$, as $(\vs{\mathbf{s}})_{s} = \mathbf{s}^{-1}[\{s\}]$, i.e., the set of the positions at which $s$ occurs in $\mathbf{s}$.
 
@@ -593,7 +624,7 @@ $$
 (observe that $V^{S}_{\mathbf{s},s}$ is empty for those sorts $s$ that do not occur in the word $\mathbf{s}$).
 \end{definition}
 
-\begin{proposition}\label{PVariablesIso}
+\begin{proposition}\label{PVariablesIso}\lean{CategorialAlgebras.Word.valuationEquiv,CategorialAlgebras.Word.valuation_equiv_natural}
 Let $S$ be a set of sorts and $\mathbf{s}$ a word of $S^{\star}$.
 Then the following statements hold:
 \begin{enumerate}
@@ -609,7 +640,7 @@ Accordingly, for $j\in\bb{\mathbf{s}}$, we let $v^{\mathbf{s}}_{j}$ stand for th
 
 We next define the substitutions, which are the homomorphisms between free algebras determined by assigning terms to variables, see~\cite{ClimentCosme2020}, Subsection~3.2, for a description of substitutions in terms of the occurrences of the variables.
 
-\begin{definition}[cf.~\cite{ClimentCosme2020}, Definition~3.4]\label{DSubst}
+\begin{definition}[cf.~\cite{ClimentCosme2020}, Definition~3.4]\label{DSubst}\lean{CategorialAlgebras.Term.subst}
 Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature, $X$ and $Y$ $S$-sorted sets and $f\colon Y\mor\mathrm{T}_{\Sigma}(X)$ an $S$-sorted mapping.
 The \emph{substitution determined by} $f$ is the unique homomorphism $f^{\sharp}\colon\mathbf{T}_{\Sigma}(Y)\mor\mathbf{T}_{\Sigma}(X)$ such that $f^{\sharp}\circ\eta^{Y}=f$, see Proposition~\ref{PTermAlgUniv}.
 That is, for every $s\in S$ and every $P\in\mathrm{T}_{\Sigma}(Y)_{s}$, $f^{\sharp}_{s}(P)$ is the term of sort $s$ obtained from $P$ by substituting, for every $t\in S$ and every $y\in Y_{t}$, the term $f_{t}(y)$ for every occurrence of $y$ in $P$.
@@ -620,7 +651,7 @@ In this case we denote $f^{\sharp}$ by $(Q_{j})^{\sharp}_{j\in\bb{\mathbf{t}}}$,
 
 For substitutions determined by families of terms, Proposition~\ref{PTermAlgUnivComp} takes the following form.
 
-\begin{corollary}\label{CSubstComp}
+\begin{corollary}\label{CSubstComp}\lean{CategorialAlgebras.Term.subst_family_comp}
 Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature, $Z$ an $S$-sorted set, $\mathbf{r},\mathbf{t}\in S^{\star}$, $\mathcal{Q}=(Q_{j})_{j\in\bb{\mathbf{t}}}\in\mathrm{T}_{\Sigma}(\vs{\mathbf{r}})_{\mathbf{t}}$ and $\mathcal{R}\in\mathrm{T}_{\Sigma}(Z)_{\mathbf{r}}$.
 Then $\mathcal{R}^{\sharp}\circ\mathcal{Q}^{\sharp}=(\mathcal{R}^{\sharp}(Q_{j}))^{\sharp}_{j\in\bb{\mathbf{t}}}$.
 \end{corollary}
@@ -630,7 +661,7 @@ Then $\mathcal{R}^{\sharp}\circ\mathcal{Q}^{\sharp}=(\mathcal{R}^{\sharp}(Q_{j})
 In this section we recall the derivors between many-sorted signatures and the category $\mathsf{Sig}_{\mathfrak{d}}$ of many-sorted signatures and derivors, see~\cite{ClimentSoliveres2010b} and~\cite{Soliveres2000}, Section~3.5.
 A derivor sends the sorts of a signature to sorts of another one, and its operation symbols to terms of the other one.
 
-\begin{definition}\label{DDerivor}
+\begin{definition}\label{DDerivor}\lean{CategorialAlgebras.Derivor}
 Let $\sig{\Sigma} = (S,\Sigma)$ and $\sig{\Lambda} = (T,\Lambda)$ be many-sorted signatures.
 A \emph{derivor} from $\sig{\Sigma}$ to $\sig{\Lambda}$ is an ordered pair $\mathbf{c} = (\varphi,c)$, where $\varphi\colon S\mor T$ is a mapping and $c=(c_{\mathbf{s},s})_{(\mathbf{s},s)\in S^{\star}\times S}$ is a family of mappings
 $$
@@ -643,14 +674,14 @@ We write $c(\sigma)$ instead of $c_{\mathbf{s},s}(\sigma)$ when this is unlikely
 A derivor translates terms into terms, see~\cite{Soliveres2000}, Section~3.5.
 To define this translation by the universal property of the free algebra, we first transform the free algebras of the target signature along a derivor.
 
-\begin{definition}\label{DTermAlgTransformed}
+\begin{definition}\label{DTermAlgTransformed}\lean{CategorialAlgebras.Derivor.transformed}
 Let $\mathbf{c}=(\varphi,c)$ be a derivor from $\sig{\Sigma}=(S,\Sigma)$ to $\sig{\Lambda}=(T,\Lambda)$ and $X$ a $T$-sorted set.
 We denote by $\mathbf{T}_{\Lambda}(X)^{\mathbf{c}}$ the $\Sigma$-algebra whose underlying $S$-sorted set is $\mathrm{T}_{\Lambda}(X)_{\varphi}$ and in which, for every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$, the operation $\sigma^{\mathbf{T}_{\Lambda}(X)^{\mathbf{c}}}$ sends $\mathcal{Q}=(Q_{j})_{j\in\bb{\mathbf{s}}}\in(\mathrm{T}_{\Lambda}(X)_{\varphi})_{\mathbf{s}}=\mathrm{T}_{\Lambda}(X)_{\varphi^{\star}(\mathbf{s})}$ to $\mathcal{Q}^{\sharp}(c(\sigma))\in\mathrm{T}_{\Lambda}(X)_{\varphi(s)}$, i.e., to the term $c(\sigma)$ with $Q_{j}$ substituted for $v^{\varphi^{\star}(\mathbf{s})}_{j}$, for every $j\in\bb{\mathbf{s}}$.
 \end{definition}
 
 The substitutions of the target signature are homomorphisms between the transformed algebras.
 
-\begin{lemma}\label{LSubstTransformedHom}
+\begin{lemma}\label{LSubstTransformedHom}\lean{CategorialAlgebras.Derivor.substHom}
 Let $\mathbf{d}=(\psi,d)$ be a derivor from $\sig{\Lambda}=(T,\Lambda)$ to $\sig{\Omega}=(U,\Omega)$, $\mathbf{t}\in T^{\star}$, $Z$ a $U$-sorted set and $\mathcal{R}\in\mathrm{T}_{\Omega}(Z)_{\psi^{\star}(\mathbf{t})}$.
 Then $(\mathcal{R}^{\sharp})_{\psi}$ is a $\Lambda$-homomorphism from $\mathbf{T}_{\Omega}(\vs{\psi^{\star}(\mathbf{t})})^{\mathbf{d}}$ to $\mathbf{T}_{\Omega}(Z)^{\mathbf{d}}$.
 \end{lemma}
@@ -667,7 +698,7 @@ By Definition~\ref{DTermAlgTransformed} and Corollary~\ref{CSubstComp},
 
 We next define the translation of terms along a derivor.
 
-\begin{definition}\label{DDerivorExtension}
+\begin{definition}\label{DDerivorExtension}\lean{CategorialAlgebras.Derivor.translateWord}
 Let $\mathbf{c}=(\varphi,c)$ be a derivor from $\sig{\Sigma}=(S,\Sigma)$ to $\sig{\Lambda}=(T,\Lambda)$ and $\mathbf{s}\in S^{\star}$.
 We let $c^{\sharp}$ stand for the unique $\Sigma$-homomorphism from $\mathbf{T}_{\Sigma}(\vs{\mathbf{s}})$ to $\mathbf{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})^{\mathbf{c}}$ that sends $v^{\mathbf{s}}_{j}$ to $v^{\varphi^{\star}(\mathbf{s})}_{j}$, for every $j\in\bb{\mathbf{s}}$, see Proposition~\ref{PTermAlgUniv}.
 Thus $c^{\sharp}$ is the $S$-sorted mapping from $\mathrm{T}_{\Sigma}(\vs{\mathbf{s}})$ to $\mathrm{T}_{\Lambda}(\vs{\varphi^{\star}(\mathbf{s})})_{\varphi}$ determined by the following conditions:
@@ -682,7 +713,7 @@ Equivalently, $c^{\sharp}$ is the underlying mapping of the extension of $c$ to 
 
 We next define the composition and the identities of derivors.
 
-\begin{definition}\label{DDerivorCompId}
+\begin{definition}\label{DDerivorCompId}\lean{CategorialAlgebras.Derivor.comp,CategorialAlgebras.Derivor.identity}
 Let $\mathbf{c}=(\varphi,c)\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{d}=(\psi,d)\colon\sig{\Lambda}\mor\sig{\Omega}$ be derivors, where $\sig{\Omega}=(U,\Omega)$ is a many-sorted signature.
 The \emph{composition} of $\mathbf{c}$ and $\mathbf{d}$ is the derivor $\mathbf{d}\circ \mathbf{c}=(\psi\circ\varphi,d^{\sharp}\circ c)$ from $\sig{\Sigma}$ to $\sig{\Omega}$.
 The \emph{identity} at $\sig{\Sigma}=(S,\Sigma)$ is the derivor $(\id_{S},\eta^{\Sigma})$, where $\eta^{\Sigma}(\sigma)=\sigma^{\mathbf{T}_{\Sigma}(\vs{\mathbf{s}})}((v^{\mathbf{s}}_{j})_{j\in\bb{\mathbf{s}}})$, for every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$.
@@ -690,7 +721,7 @@ The \emph{identity} at $\sig{\Sigma}=(S,\Sigma)$ is the derivor $(\id_{S},\eta^{
 
 In the following lemma we prove that the translation of terms along a derivor commutes with substitutions.
 
-\begin{lemma}[cf.~\cite{Soliveres2000}, Section~3.5]\label{LDerivorSubst}
+\begin{lemma}[cf.~\cite{Soliveres2000}, Section~3.5]\label{LDerivorSubst}\lean{CategorialAlgebras.Derivor.translate_word_subst_family}
 Let $\mathbf{d}=(\psi,d)$ be a derivor from $\sig{\Lambda}=(T,\Lambda)$ to $\sig{\Omega}=(U,\Omega)$, $\mathbf{r},\mathbf{t}\in T^{\star}$, $t\in T$, $P\in\mathrm{T}_{\Lambda}(\vs{\mathbf{t}})_{t}$ and $(Q_{j})_{j\in\bb{\mathbf{t}}}\in\mathrm{T}_{\Lambda}(\vs{\mathbf{r}})_{\mathbf{t}}$.
 Then the following equality holds
 $$
@@ -706,7 +737,7 @@ Hence they are equal, by Proposition~\ref{PTermAlgUniv}.
 
 As a consequence, the translation of terms is compatible with the composition and the identities of derivors.
 
-\begin{corollary}\label{CDerivorCatLaws}
+\begin{corollary}\label{CDerivorCatLaws}\lean{CategorialAlgebras.Derivor.comp_assoc,CategorialAlgebras.Derivor.identity_comp,CategorialAlgebras.Derivor.comp_identity}
 Let $\mathbf{c}=(\varphi,c)\colon\sig{\Sigma}\mor\sig{\Lambda}$, $\mathbf{d}=(\psi,d)\colon\sig{\Lambda}\mor\sig{\Omega}$ and $\mathbf{e}=(\chi,e)\colon\sig{\Omega}\mor\sig{\Xi}$ be derivors.
 Then the following statements hold:
 \begin{enumerate}
@@ -730,7 +761,7 @@ Hence $(\eta^{\Lambda})^{\sharp}$ is the endomorphism of $\mathbf{T}_{\Lambda}(\
 
 From the above corollary we obtain that the derivors form a category.
 
-\begin{corollary}\label{CSigdCat}
+\begin{corollary}\label{CSigdCat}\lean{CategorialAlgebras.instCategoryManySortedSignature}
 The many-sorted signatures together with the derivors, the composition and the identities of Definition~\ref{DDerivorCompId} constitute a category, denoted by $\mathsf{Sig}_{\mathfrak{d}}$.
 \end{corollary}
 \begin{proof}
@@ -741,7 +772,7 @@ By Corollary~\ref{CDerivorCatLaws}~(1), the composition is associative, since $(
 
 We next recall the notions of many-sorted partial algebra and homomorphism between many-sorted partial algebras.
 
-\begin{definition}\label{DPartialAlg}
+\begin{definition}\label{DPartialAlg}\lean{CategorialAlgebras.PartialAlgebra}
 Let $S$ be a set of sorts and $\Sigma$ an $S$-sorted signature.
 A \emph{structure of partial} $\Sigma$-\emph{algebra on} an $S$-sorted set $A$ is a family $(F_{\mathbf{s},s})_{(\mathbf{s},s)\in S^{\star}\times S}$, denoted by $F$, where, for $(\mathbf{s},s)\in S^{\star}\times S$, $F_{\mathbf{s},s}$ is a mapping from $\Sigma_{\mathbf{s},s}$ to $\mathrm{Hom}_{\mathrm{p}}(A_{\mathbf{s}},A_{s})$.
 If $\Dom(F_{\mathbf{s},s}(\sigma)) = A_{\mathbf{s}}$, then $F_{\mathbf{s},s}(\sigma)$ is a \emph{total operation} from $A_{\mathbf{s}}$ to $A_{s}$.
@@ -763,7 +794,7 @@ Let us note that homomorphisms preserve, but need not reflect, definedness.
 The category $\mathsf{Alg}(\Sigma)$ is a full subcategory of the category $\mathsf{PAlg}(\Sigma)$.
 In the following proposition we recall a characterization of the isomorphisms of partial algebras.
 
-\begin{proposition}\label{PPartialAlgIso}
+\begin{proposition}\label{PPartialAlgIso}\lean{CategorialAlgebras.PartialAlgebra.Hom.isIso_iff_bijective_reflects}
 Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature and $f$ a homomorphism from a partial $\Sigma$-algebra $\mathbf{A}$ to a partial $\Sigma$-algebra $\mathbf{B}$.
 Then the following statements are equivalent:
 \begin{enumerate}
@@ -776,7 +807,7 @@ In particular, a bijective homomorphism $f\colon\mathbf{A}\mor\mathbf{B}$ is an 
 
 We next recall the product of a family of many-sorted partial algebras.
 
-\begin{definition}\label{DPartialAlgProd}
+\begin{definition}\label{DPartialAlgProd}\lean{CategorialAlgebras.PartialAlgebra.product}
 Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature and $(\mathbf{A}^{i})_{i\in I}$ a family of partial $\Sigma$-algebras.
 Then
 \begin{enumerate}
@@ -810,7 +841,7 @@ Then
 \end{enumerate}
 \end{definition}
 
-\begin{proposition}\label{PPartialAlgProd}
+\begin{proposition}\label{PPartialAlgProd}\lean{CategorialAlgebras.PartialAlgebra.productIsLimit}
 Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature and $(\mathbf{A}^{i})_{i\in I}$ a family of partial $\Sigma$-algebras.
 Then the pair $(\prod_{i\in I}\mathbf{A}^{i},(\pr^{i})_{i\in I})$ is a product in $\mathsf{PAlg}(\Sigma)$.
 \end{proposition}
@@ -820,7 +851,7 @@ Then the pair $(\prod_{i\in I}\mathbf{A}^{i},(\pr^{i})_{i\in I})$ is a product i
 We next recall the partial term operations of a partial algebra.
 The value of a term at a valuation in a partial algebra can be defined by means of the Schmidt construction, see~\cite{Schmidt1970, ClimentCosme2023}; for the purposes of this work, the following equivalent recursive description suffices.
 
-\begin{definition}\label{DTermOp}
+\begin{definition}\label{DTermOp}\lean{CategorialAlgebras.Term.partialEval}
 Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature and $X$ an $S$-sorted set.
 For an $S$-sorted set $A$, we let $A_{X}=\mathrm{Hom}(X,A)$ stand for the set of the valuations of $X$ in $A$.
 For a partial $\Sigma$-algebra $\mathbf{A}$, $s\in S$ and $P\in\mathrm{T}_{\Sigma}(X)_{s}$, the \emph{partial term operation} $P^{\mathbf{A}}$ induced by $P$ is the partial mapping from $A_{X}=\mathrm{Hom}(X,A)$ to $A_{s}$ defined by recursion on $P$ as follows:
@@ -835,7 +866,7 @@ $$
 
 We next define the notion of existence equation.
 
-\begin{definition}\label{DExistenceEq}
+\begin{definition}\label{DExistenceEq}\lean{CategorialAlgebras.EEquation}
 Let $S$ be a set of sorts and $\Sigma$ an $S$-sorted signature.
 \begin{enumerate}
 \item If $(X,s)\in\boldsymbol{\mathcal{U}}^{S}\times S$, then an \emph{existence equation} (briefly $\mathrm{E}$-\emph{equation} or $\mathrm{Eeqt}$) of type $(X,s)$ is a pair $(P,Q)$, also denoted by $P\eeq Q$, where $P$ and $Q$ are $\Sigma$-terms of type $(X,s)$, i.e., elements of $\mathrm{T}_{\Sigma}(X)_{s}$.
@@ -854,7 +885,7 @@ $$
 
 For $(X,s)\in\boldsymbol{\mathcal{U}}^{S}\times S$, we next define the ternary relation of satisfiability $\cdot \models^{\Sigma}_{X,s}\!\!\cdot\, [\cdot]$ between a partial $\Sigma$-algebra, an $\mathrm{E}$-equation of type $(X,s)$, and a valuation of $X$ in the underlying $S$-sorted set of the partial $\Sigma$-algebra, and the derived binary relation of validity.
 
-\begin{definition}\label{DExistenceEqSat}
+\begin{definition}\label{DExistenceEqSat}\lean{CategorialAlgebras.EEquation.Satisfies}
 Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature, $\mathbf{A}$ a partial $\Sigma$-algebra, $(X,s)\in\boldsymbol{\mathcal{U}}^{S}\times S$, $(P,Q)\in \mathrm{Eeqt}(\Sigma)_{X,s}$, $\mathcal{E}\subseteq \mathrm{Eeqt}(\Sigma)_{X}$, and $a\in A_{X} = \mathrm{Hom}(X,A)$.
 \begin{enumerate}
 \item We say that $\mathbf{A}$ \emph{satisfies the $\mathrm{E}$-equation} $(P,Q)$ \emph{with respect to the valuation} $a$, denoted by
@@ -872,7 +903,7 @@ Let us note that $\mathbf{A}\models^{\Sigma}_{X,s}(P,P)[a]$ if, and only if, $a\
 
 For $(X,(\mathbf{s},s))$ in $\boldsymbol{\mathcal{U}}^{S}\times (S^{\star}\times S)$, we next define the notion of quasi-existence equation of type $(X,(\mathbf{s},s))$, its satisfaction and the varieties determined by sets of them.
 
-\begin{definition}\label{DQEEq}
+\begin{definition}\label{DQEEq}\lean{CategorialAlgebras.QEEquation,CategorialAlgebras.QESpecification,CategorialAlgebras.IsQEVariety}
 Let $S$ be a set of sorts and $\Sigma$ an $S$-sorted signature.
 \begin{enumerate}
 \item If $(X,(\mathbf{s},s))\in\boldsymbol{\mathcal{U}}^{S}\times (S^{\star}\times S)$, then a \emph{quasi-existence equation} (briefly $\QE$-\emph{equation} or $\mathrm{QEeqt}$) of type $(X,(\mathbf{s},s))$ is a pair
@@ -911,14 +942,14 @@ In fact, if $(\mathbf{A}^{i})_{i\in I}$ is a family of partial $\Sigma$-algebras
 
 The following two facts on the partial term operations are proved by induction on terms.
 
-\begin{remark}\label{RTermOpSubst}
+\begin{remark}\label{RTermOpSubst}\lean{CategorialAlgebras.Term.partialEval_subst}
 Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature, $\mathbf{A}$ a partial $\Sigma$-algebra, $X$ and $Y$ $S$-sorted sets, $f\colon Y\mor\mathrm{T}_{\Sigma}(X)$ an $S$-sorted mapping and $a\in A_{X}$ a valuation such that, for every $s\in S$ and every $y\in Y_{s}$, $a\in\Dom(f_{s}(y)^{\mathbf{A}})$.
 Let $f^{\mathbf{A}}(a)\in A_{Y}$ be the valuation that sends $y\in Y_{s}$ to $f_{s}(y)^{\mathbf{A}}(a)$.
 Then, for every $s\in S$ and every $R\in\mathrm{T}_{\Sigma}(Y)_{s}$, $a\in\Dom(f^{\sharp}_{s}(R)^{\mathbf{A}})$ if, and only if, $f^{\mathbf{A}}(a)\in\Dom(R^{\mathbf{A}})$, and then $f^{\sharp}_{s}(R)^{\mathbf{A}}(a)=R^{\mathbf{A}}(f^{\mathbf{A}}(a))$.
 Consequently, for every $\mathcal{E}\subseteq\mathrm{Eeqt}(\Sigma)_{Y}$, $\mathbf{A}\models f^{\sharp}[\mathcal{E}][a]$ if, and only if, $\mathbf{A}\models\mathcal{E}[f^{\mathbf{A}}(a)]$.
 \end{remark}
 
-\begin{remark}\label{RTermOpHom}
+\begin{remark}\label{RTermOpHom}\lean{CategorialAlgebras.Term.partialEval_hom}
 Let $S$ be a set of sorts, $\Sigma$ an $S$-sorted signature, $h\colon\mathbf{A}\mor\mathbf{B}$ a homomorphism of partial $\Sigma$-algebras, $X$ an $S$-sorted set, $a\in A_{X}$ a valuation, $s\in S$ and $P\in\mathrm{T}_{\Sigma}(X)_{s}$.
 If $a\in\Dom(P^{\mathbf{A}})$, then $h\circ a\in\Dom(P^{\mathbf{B}})$ and $P^{\mathbf{B}}(h\circ a)=h_{s}(P^{\mathbf{A}}(a))$.
 Consequently, for every $\mathcal{E}\subseteq\mathrm{Eeqt}(\Sigma)_{X}$, if $\mathbf{A}\models\mathcal{E}[a]$, then $\mathbf{B}\models\mathcal{E}[h\circ a]$.
@@ -929,7 +960,7 @@ Consequently, for every $\mathcal{E}\subseteq\mathrm{Eeqt}(\Sigma)_{X}$, if $\ma
 We let ``$\ast$'' and ``$\circ$'' stand for the horizontal and vertical composition of natural transformations, respectively; we denote by $\Id_{\mathsf{X}}$ the identity functor at $\mathsf{X}$; and we denote by $\id_{G}$ the identity natural transformation at $G\colon \mathsf{A}\mor \mathsf{X}$.
 Moreover, for categories $\mathsf{A}$ and $\mathsf{X}$, functors $F,G\colon\mathsf{A}\mor\mathsf{X}$ and a natural transformation $\theta$ from $F$ to $G$, we write $\theta=(\theta_{a})_{a\in\mathrm{Ob}(\mathsf{A})}$, where, for every object $a$ of $\mathsf{A}$, $\theta_{a}\colon F(a)\mor G(a)$ is the component of $\theta$ at $a$.
 
-\begin{definition}\label{DAdj}
+\begin{definition}\label{DAdj}\lean{CategoryTheory.Adjunction}
 An \emph{adjunction} $F\dashv G$, from $\mathsf{X}$ to $\mathsf{A}$, consists of functors $F\colon\mathsf{X}\mor\mathsf{A}$ and $G\colon\mathsf{A}\mor\mathsf{X}$, a \emph{unit} $\eta\colon\Id_{\mathsf{X}}\Longrightarrow G\circ F$ and a \emph{counit} $\varepsilon\colon F\circ G\Longrightarrow\Id_{\mathsf{A}}$ satisfying
 \begin{enumerate}
 \item[(TI1)] $(G\ast\varepsilon)\circ(\eta\ast G)=\id_G$;
@@ -940,7 +971,7 @@ We also denote it by $(G,F,\eta,\varepsilon)$; $F$ is the left adjoint and $G$ t
 
 Four adjunctions form an \emph{algebraic square} when there exist natural isomorphisms between the appropriate composites, as described in the following definition.
 
-\begin{definition}[\cite{Soliveres2000}, Definition~4.3.60]\label{DAlgSquare}
+\begin{definition}[\cite{Soliveres2000}, Definition~4.3.60]\label{DAlgSquare}\lean{CategorialAlgebras.AlgebraicSquare}
 Let $\mathsf{C}$, $\mathsf{C}'$, $\mathsf{D}$ and $\mathsf{D}'$ be four categories.
 Moreover let
 \begin{enumerate}
@@ -999,7 +1030,7 @@ We say that these adjunctions form an \emph{algebraic square} if there exists a 
 Informally, an algebraic square states that the two ways of going around the square agree up to natural isomorphism.
 The two natural isomorphisms of an algebraic square are related as follows.
 
-\begin{remark}\label{RAlgSquareMate}
+\begin{remark}\label{RAlgSquareMate}\lean{CategorialAlgebras.AlgebraicSquare.conjugateIso}
 Given the four adjunctions of Definition~\ref{DAlgSquare}, the existence of $\alpha$ implies that of $\beta$.
 In fact, $F'\circ J$ is left adjoint to $K\circ G'$ and $H\circ F$ is left adjoint to $G\circ I$, with the composite units and counits, and, if $F'\circ J\cong H\circ F$, then their right adjoints are isomorphic, by the uniqueness of right adjoints up to natural isomorphism, see~\cite{MacLane1998}, Section~IV.1, Corollary~1, p.~85, applied by duality.
 Explicitly, if $\eta^{\circ}$ is the unit of $F'\circ J\dashv K\circ G'$ and $\varepsilon^{\circ}$ is the counit of $H\circ F\dashv G\circ I$, then
@@ -1010,7 +1041,7 @@ is a natural isomorphism from $G\circ I$ to $K\circ G'$.
 Thus the content of an algebraic square lies in the explicit description of $\alpha$ and $\beta$, and in the compatibility between them, rather than in their existence.
 \end{remark}
 
-\begin{definition}\label{DCorestriction}
+\begin{definition}\label{DCorestriction}\lean{CategorialAlgebras.corestrict,CategorialAlgebras.restrict}
 Let $F$ be a functor from a category $\mathsf{A}$ to a category $\mathsf{X}$, $\mathsf{A}'$ a full subcategory of $\mathsf{A}$ and $\mathsf{X}'$ a full subcategory of $\mathsf{X}$.
 The \emph{restriction} of $F$ to $\mathsf{A}'$ is the functor $F\circ\mathrm{In}_{\mathsf{A}'}$ from $\mathsf{A}'$ to $\mathsf{X}$, where $\mathrm{In}_{\mathsf{A}'}$ is the inclusion functor of $\mathsf{A}'$ into $\mathsf{A}$.
 We say that $F$ \emph{corestricts} to $\mathsf{X}'$ if, for every object $a$ of $\mathsf{A}$, $F(a)$ is an object of $\mathsf{X}'$.
@@ -1028,7 +1059,7 @@ Given an object $i\in \mathrm{Ob}(\mathsf{I})$, we write $\mathsf{F}_{i}$ for th
 A \emph{split indexed category} is an ordered pair $(\mathsf{I},F)$ in which $\mathsf{I}$ is a category and $F$ a split $\mathsf{I}$-indexed category.
 \end{definition}
 
-\begin{definition}[cf.~\cite{Soliveres2000}, Definitions~3.1.2, 3.2.2 and~3.5.8]\label{DGrothendieck}
+\begin{definition}[cf.~\cite{Soliveres2000}, Definitions~3.1.2, 3.2.2 and~3.5.8]\label{DGrothendieck}\lean{CategorialAlgebras.SplitIndexedCategory.Grothendieck}
 Let $(\mathsf{I},F)$ be a split indexed category.
 Then the \emph{Grothen\-dieck construction} at $(\mathsf{I},F)$ is $(\int^{\mathsf{I}}F,\pi_{F})$, where $\int^{\mathsf{I}}F$ is the category defined as follows:
 \begin{enumerate}
@@ -1048,7 +1079,7 @@ The functor $\pi_{F}$ is a split fibration, the \emph{canonical split fibration}
 The Grothendieck construction is functorial in the split indexed category, see~\cite{JohnsonYau2021}, Chapter~10.
 We only use the following particular case.
 
-\begin{remark}\label{RGrothendieckNat}
+\begin{remark}\label{RGrothendieckNat}\lean{CategorialAlgebras.SplitIndexedCategory.map}
 Let $(\mathsf{I},F)$ and $(\mathsf{I},G)$ be split indexed categories and $\alpha=(\alpha_{i})_{i\in\mathrm{Ob}(\mathsf{I})}\colon F\Longrightarrow G$ a natural transformation, i.e., a family of functors $\alpha_{i}\colon\mathsf{F}_{i}\mor\mathsf{G}_{i}$ such that, for every morphism $\varphi\colon i\mor j$ of $\mathsf{I}$, $\alpha_{i}\circ F_{\varphi}=G_{\varphi}\circ\alpha_{j}$.
 Then the assignment $\int^{\mathsf{I}}\alpha$ that sends an object $(i,x)$ of $\int^{\mathsf{I}}F$ to $(i,\alpha_{i}(x))$ and a morphism $(\varphi,f)\colon(i,x)\mor(j,y)$ to $(\varphi,\alpha_{i}(f))$ is a functor from $\int^{\mathsf{I}}F$ to $\int^{\mathsf{I}}G$ such that $\pi_{G}\circ\int^{\mathsf{I}}\alpha=\pi_{F}$.
 In fact, $\alpha_{i}(f)$ is a morphism from $\alpha_{i}(x)$ to $\alpha_{i}(F_{\varphi}(y))=G_{\varphi}(\alpha_{j}(y))$; $\int^{\mathsf{I}}\alpha$ preserves identities, since every $\alpha_{i}$ does; and, for $(\psi,g)\colon(j,y)\mor(k,z)$, the following equality holds
@@ -1061,7 +1092,7 @@ so that $\int^{\mathsf{I}}\alpha$ preserves composites, see Definition~\ref{DGro
 In Chapter~\ref{SGenHepDerivors} we will need the Grothendieck construction for assignments that preserve identities, but only preserve composites up to a coherent family of natural transformations, which need not be isomorphisms.
 We next state the corresponding notion and the corresponding construction.
 
-\begin{definition}\label{DLaxIndexed}
+\begin{definition}\label{DLaxIndexed}\lean{CategorialAlgebras.NormalLaxIndexedCategory,CategorialAlgebras.LaxIndexedCategory}
 Let $\mathsf{I}$ be a category.
 A \emph{normal lax} $\mathsf{I}$-\emph{indexed category} is an ordered pair $(F,\kappa)$ in which
 \begin{enumerate}
@@ -1085,7 +1116,7 @@ i.e., for every object $w$ of $\mathsf{F}_{l}$, $\kappa^{\varphi,\chi\circ\psi}_
 Let us note that, if every $\kappa^{\varphi,\psi}$ is an identity, then $F$ is a split $\mathsf{I}$-indexed category, see Definition~\ref{DSplitIndexed}.
 \end{definition}
 
-\begin{definition}[cf.~\cite{Soliveres2000}, Definition~3.5.26, for pseudo-functors]\label{DLaxGrothendieck}
+\begin{definition}[cf.~\cite{Soliveres2000}, Definition~3.5.26, for pseudo-functors]\label{DLaxGrothendieck}\lean{CategorialAlgebras.NormalLaxIndexedCategory.Grothendieck}
 Let $\mathsf{I}$ be a category and $(F,\kappa)$ a normal lax $\mathsf{I}$-indexed category.
 Then $\int^{\mathsf{I}}(F,\kappa)$ stands for the following data:
 \begin{enumerate}
@@ -1103,7 +1134,7 @@ Moreover, $\pi_{(F,\kappa)}$ stands for the assignment that sends an object $(i,
 Let us note that, since $f\colon x\mor F_{\varphi}(y)$ and $g\colon y\mor F_{\psi}(z)$, the composite $\kappa^{\varphi,\psi}_{z}\circ F_{\varphi}(g)\circ f$ is a morphism of $\mathsf{F}_{i}$ from $x$ to $F_{\psi\circ\varphi}(z)$, so that the above definition is correct.
 If every $\kappa^{\varphi,\psi}$ is an identity, then $\int^{\mathsf{I}}(F,\kappa)$ is the Grothendieck construction of Definition~\ref{DGrothendieck}.
 
-\begin{proposition}\label{PLaxGrothendieck}
+\begin{proposition}\label{PLaxGrothendieck}\lean{CategorialAlgebras.NormalLaxIndexedCategory.Grothendieck.instCategory,CategorialAlgebras.NormalLaxIndexedCategory.Grothendieck.projection}
 Let $\mathsf{I}$ be a category and $(F,\kappa)$ a normal lax $\mathsf{I}$-indexed category.
 Then $\int^{\mathsf{I}}(F,\kappa)$ is a category and $\pi_{(F,\kappa)}$ is a functor from $\int^{\mathsf{I}}(F,\kappa)$ to $\mathsf{I}$.
 \end{proposition}
@@ -1164,7 +1195,7 @@ We use the notions concerning terms, substitutions and derivors recalled in Sect
 
 We begin by defining the notion of ep-signature.
 
-\begin{definition}\label{DEpSig}
+\begin{definition}\label{DEpSig}\lean{CategorialAlgebras.EPSignature}
 An \emph{equationally partial signature}, or \emph{ep-signature}, is an ordered triple $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ in which $(S,\Sigma)$ is a many-sorted signature and $\mathrm{def}^{(S,\Sigma)}$ assigns to every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$ a set
 $$
 \mathrm{def}^{(S,\Sigma)}(\sigma)\subseteq\mathrm{Eeqt}(\Sigma)_{\vs{\mathbf{s}}}
@@ -1175,7 +1206,7 @@ We call $\mathrm{def}^{(S,\Sigma)}(\sigma)$ the set of \emph{domain conditions} 
 
 In the following definition we introduce the partial algebras whose operations are defined exactly on the families that satisfy the corresponding domain conditions.
 
-\begin{definition}\label{DEpAlg}
+\begin{definition}\label{DEpAlg}\lean{CategorialAlgebras.EPSignature.IsEPAlgebra}
 Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ be an ep-signature and $\mathbf{A}$ a partial $\Sigma$-algebra, see Definition~\ref{DPartialAlg}.
 For every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$, we let $A_{\mathrm{def}^{(S,\Sigma)}(\sigma)}$ stand for the subset of $A_{\mathbf{s}}$ defined as
 $$
@@ -1188,7 +1219,7 @@ $$
 We denote by $\mathsf{EPAlg}(\sig{\Sigma})$ the full subcategory of $\mathsf{PAlg}(\Sigma)$, the category of partial $\Sigma$-algebras and their homomorphisms, see Definition~\ref{DPartialAlg}, whose objects are the ep-algebras of type $\sig{\Sigma}$.
 \end{definition}
 
-\begin{remark}\label{REpAlg}
+\begin{remark}\label{REpAlg}\lean{CategorialAlgebras.EPSignature.ofSignature_isEPAlgebra_iff}
 Let us note that the domain conditions of an operation symbol $\sigma$ are evaluated in $\mathbf{A}$ itself, so they may involve the other partial operations of $\mathbf{A}$, and even $\sigma$ itself.
 Let us also note that a many-sorted signature $(S,\Sigma)$ is identified with the ep-signature $(S,\Sigma,\varnothing)$, in which every operation symbol has an empty set of domain conditions.
 Its ep-algebras are exactly the (total) $\Sigma$-algebras, so that
@@ -1199,7 +1230,7 @@ $$
 
 We also need the following weakening of the notion of ep-algebra, in which an operation may be defined only on families that satisfy the corresponding domain conditions, but need not be defined on all of them.
 
-\begin{definition}\label{DWeakEpAlg}
+\begin{definition}\label{DWeakEpAlg}\lean{CategorialAlgebras.EPSignature.IsWeakEPAlgebra}
 Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ be an ep-signature and $\mathbf{A}$ a partial $\Sigma$-algebra.
 We say that $\mathbf{A}$ is a \emph{weak ep-algebra of type $\sig{\Sigma}$}, or a \emph{weak $\sig{\Sigma}$-algebra}, if, for every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$, the following inclusion holds
 $$
@@ -1213,7 +1244,7 @@ Let us note that every $\sig{\Sigma}$-algebra is a weak $\sig{\Sigma}$-algebra, 
 In order to define the algebras transformed along a generalized hep-derivor by recursion, we need the domain conditions to be organized hierarchically.
 To this end, we first assign to every term the set of the operation symbols that occur in it.
 
-\begin{definition}\label{DOpSymbols}
+\begin{definition}\label{DOpSymbols}\lean{CategorialAlgebras.Term.symbols}
 Let $\Sigma$ be an $S$-sorted signature and $X$ an $S$-sorted set.
 We let $\mathrm{Op}$ stand for the mapping that assigns to every $s\in S$ and every term $P\in\mathrm{T}_{\Sigma}(X)_{s}$ the set $\mathrm{Op}(P)$ of the \emph{operation symbols that occur in $P$}, defined by recursion on $P$ as follows:
 \begin{enumerate}
@@ -1228,7 +1259,7 @@ Moreover, for every $s\in S$ and every $\mathrm{E}$-equation $(P,Q)\in\mathrm{Ee
 
 We are now in a position to introduce the hierarchical ep-signatures.
 
-\begin{definition}\label{DHepSig}
+\begin{definition}\label{DHepSig}\lean{CategorialAlgebras.HepSignature}
 Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ be an ep-signature.
 We let $\lhd$ stand for the binary relation on the set of the operation symbols of $\Sigma$ defined, for every pair of operation symbols $\tau$ and $\sigma$ of $\Sigma$, as follows:
 \begin{align*}
@@ -1244,7 +1275,7 @@ Let us note that, in a hep-signature, no operation symbol occurs in its own doma
 
 Since $\lhd$ is well-founded, the operation symbols of a hep-signature admit proofs by induction and definitions by recursion along $\lhd$.
 
-\begin{proposition}[Principle of Proof by Well-Founded Induction]\label{PWellFoundedInduction}
+\begin{proposition}[Principle of Proof by Well-Founded Induction]\label{PWellFoundedInduction}\lean{CategorialAlgebras.HepSignature.symbol_induction}
 Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ be a hep-signature.
 Then to prove that every operation symbol of $\Sigma$ has a property $\mathcal{P}$ it suffices to show that, for every operation symbol $\sigma$ of $\Sigma$, if every $\tau\lhd\sigma$ has $\mathcal{P}$, then $\sigma$ has $\mathcal{P}$ (well-founded induction step).
 \end{proposition}
@@ -1255,7 +1286,7 @@ Likewise, by well-founded recursion along $\lhd$, an assignment of a datum to ev
 
 We next introduce the specifications on ep-signatures.
 
-\begin{definition}\label{DEpSpec}
+\begin{definition}\label{DEpSpec}\lean{CategorialAlgebras.EPSpecification}
 An \emph{ep-specification} is an ordered pair $(\sig{\Sigma},\mathcal{E})$, where $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ is an ep-signature and $\mathcal{E}$ is a set of \emph{contextual $\QE$-equations}, i.e., of ordered pairs $(X,e)$ in which $X$ is a finite $S$-sorted subset of $V^{S}$, the \emph{context} of $e$, and $e\in\mathrm{QEeqt}(\Sigma)_{X}$ is a $\QE$-equation with variables in $X$, see Definition~\ref{DQEEq}.
 A contextual $\QE$-equation $(X,e)$ \emph{holds} in a partial $\Sigma$-algebra $\mathbf{A}$ if $e$ holds in $\mathbf{A}$ in the sense of Definition~\ref{DQEEq}, i.e., if $\mathbf{A}$ satisfies $e$ with respect to every valuation $a\in A_{X}$.
 When we display the axioms of an ep-specification we only write the $\QE$-equation $e$; unless otherwise stated, its context is the $S$-sorted set of the variables that occur in $e$.
@@ -1269,7 +1300,7 @@ For this reason the axioms of an ep-specification are not evaluated in the whole
 
 Following the case of the $\QE$-specifications, see Definition~\ref{DQEEq}, an ep-specification determines a class of ep-algebras, its ep-variety, and a category canonically associated with it.
 
-\begin{definition}\label{DEpVariety}
+\begin{definition}\label{DEpVariety}\lean{CategorialAlgebras.EPSpecification.IsModel,CategorialAlgebras.EPSpecification.variety}
 Let $\spec{E}=(\sig{\Sigma},\mathcal{E})$ be an ep-specification.
 We say that a $\sig{\Sigma}$-algebra $\mathbf{A}$ is a \emph{model} of $\spec{E}$ if every contextual $\QE$-equation of $\mathcal{E}$ holds in $\mathbf{A}$, see Definition~\ref{DEpSpec}.
 We let $\mathcal{V}(\spec{E})$ stand for the \emph{ep-variety} determined by the ep-specification $\spec{E}$, i.e., the class of all the models of $\spec{E}$, and $\mathsf{EPAlg}(\spec{E})$ for the category canonically associated with $\mathcal{V}(\spec{E})$, i.e., the full subcategory of $\mathsf{EPAlg}(\sig{\Sigma})$ whose objects are the $\sig{\Sigma}$-algebras in $\mathcal{V}(\spec{E})$.
@@ -1281,7 +1312,7 @@ Let us note that $\mathcal{V}(\sig{\Sigma},\varnothing)$ is the class of all the
 
 We next define the notion of generalized hep-derivor.
 
-\begin{definition}\label{DGenHepDerivor}
+\begin{definition}\label{DGenHepDerivor}\lean{CategorialAlgebras.GeneralizedHepDerivor}
 Let $\sig{\Sigma}=(S,\Sigma,\mathrm{def}^{(S,\Sigma)})$ and $\sig{\Lambda}=(T,\Lambda,\mathrm{def}^{(T,\Lambda)})$ be hep-signatures, see Definition~\ref{DHepSig}.
 A \emph{generalized hep-derivor} from $\sig{\Sigma}$ to $\sig{\Lambda}$ is an ordered triple $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ such that
 \begin{enumerate}
@@ -1303,7 +1334,7 @@ We next associate to $\mathbf{B}$ the $S$-sorted set of the elements that satisf
 Since it is obtained from the $S$-sorted set $B_{\varphi}=(B_{\varphi(s)})_{s\in S}$ by restricting every $B_{\varphi(s)}$ to the elements that satisfy $\Dom^{(\varphi,c)}_{s}$, we denote it, as the sets $A_{\mathrm{def}^{(S,\Sigma)}(\sigma)}$ of Definition~\ref{DEpAlg}, by subscripting the domains.
 Let us recall that, by the identifications of Section~\ref{SVariables}, for every $s\in S$, an element $b\in B_{\varphi(s)}$ is identified with the valuation of $\vs{(\varphi(s))}$ in $B$ that sends $v^{\varphi(s)}_{0}$ to $b$.
 
-\begin{definition}\label{DDomainSet}
+\begin{definition}\label{DDomainSet}\lean{CategorialAlgebras.GeneralizedHepDerivor.Cell}
 Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra.
 We let $B_{\Dom^{(\varphi,c)}}$ stand for the $S$-sorted subset of $B_{\varphi}$ defined, for every $s\in S$, as
 $$
@@ -1316,7 +1347,7 @@ The terminology anticipates the generalized hep-derivors of Chapters~\ref{SGdUf}
 
 In the following lemma we prove that the homomorphisms preserve the cells.
 
-\begin{lemma}\label{LDomainSetHom}
+\begin{lemma}\label{LDomainSetHom}\lean{CategorialAlgebras.GeneralizedHepDerivor.isCell_map}
 Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $f\colon\mathbf{B}\mor\mathbf{B}'$ a homomorphism of partial $\Lambda$-algebras.
 Then, for every $s\in S$, $f_{\varphi(s)}$ sends the cells of sort $s$ of $\mathbf{B}$ to cells of sort $s$ of $\mathbf{B}'$.
 \end{lemma}
@@ -1334,7 +1365,7 @@ $$
 i.e., the family of the birestrictions of the mappings $f_{\varphi(s)}$ to the cells.
 In the following proposition we prove that this construction is functorial.
 
-\begin{proposition}\label{PDomainSetFunctor}
+\begin{proposition}\label{PDomainSetFunctor}\lean{CategorialAlgebras.GeneralizedHepDerivor.cellsFunctor}
 Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures and $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$.
 Then $\G_{\mathbf{c}}$, the assignment from $\mathsf{PAlg}(\Lambda)$ to $\mathsf{Set}^{S}$ defined as follows:
 \begin{enumerate}
@@ -1351,7 +1382,7 @@ Since, for homomorphisms $f\colon\mathbf{B}\mor\mathbf{B}'$ and $g\colon\mathbf{
 
 When all the domains of a generalized hep-derivor are empty, every element is a cell, and the functor $\G_{\mathbf{c}}$ reduces to the usual reindexing along $\varphi$ of the underlying sorted sets.
 
-\begin{remark}\label{RDomainSetEmpty}
+\begin{remark}\label{RDomainSetEmpty}\lean{CategorialAlgebras.GeneralizedHepDerivor.cellsFunctorIsoDelta}
 Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures and $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ such that $\Dom^{(\varphi,c)}_{s}=\varnothing$, for every $s\in S$.
 Then, for every partial $\Lambda$-algebra $\mathbf{B}$, $B_{\Dom^{(\varphi,c)}}=B_{\varphi}$, and, for every homomorphism $f$, $f_{\Dom^{(\varphi,c)}}=f_{\varphi}$.
 Therefore
@@ -1365,7 +1396,7 @@ We next equip the $S$-sorted set of cells with a structure of partial $\Sigma$-a
 Every operation symbol $\sigma$ is interpreted as the partial term operation $c(\sigma)^{\mathbf{B}}$, restricted to the families of cells that satisfy the domain conditions of $\sigma$ and at which $c(\sigma)^{\mathbf{B}}$ is defined and takes a cell as value.
 Since the domain conditions of $\sigma$ are evaluated in the algebra that we are defining, the operations are defined by well-founded recursion along $\lhd$.
 
-\begin{proposition}\label{PTransformedAlg}
+\begin{proposition}\label{PTransformedAlg}\lean{CategorialAlgebras.GeneralizedHepDerivor.transformed,CategorialAlgebras.GeneralizedHepDerivor.mem_transformed_op}
 Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra.
 Then the construction below, by well-founded recursion along $\lhd$, defines a weak $\sig{\Sigma}$-algebra, see Definition~\ref{DWeakEpAlg}, with underlying $S$-sorted set $B_{\Dom^{(\varphi,c)}}$, which we denote by $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$.
 We call $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ the \emph{transformed algebra} of $\mathbf{B}$ along $\mathbf{c}$.
@@ -1418,7 +1449,7 @@ In~\cite{Reichel1987}, the morphisms of ep-signatures are required, moreover, to
 
 In the following proposition we characterize when the transformed algebra is a $\sig{\Sigma}$-algebra.
 
-\begin{proposition}\label{PTransformedEpAlg}
+\begin{proposition}\label{PTransformedEpAlg}\lean{CategorialAlgebras.GeneralizedHepDerivor.transformed_isEPAlgebra_iff}
 Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{B}$ a partial $\Lambda$-algebra.
 Then the following statements are equivalent:
 \begin{enumerate}
@@ -1433,7 +1464,7 @@ By Proposition~\ref{PTransformedAlg}, such a family is in this domain if, and on
 
 In the following proposition we prove that the birestrictions of homomorphisms introduced after Lemma~\ref{LDomainSetHom} are homomorphisms between the transformed algebras.
 
-\begin{proposition}\label{PGenHepDerivorHom}
+\begin{proposition}\label{PGenHepDerivorHom}\lean{CategorialAlgebras.GeneralizedHepDerivor.transformedHom}
 Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $f\colon\mathbf{B}\mor\mathbf{B}'$ a homomorphism of partial $\Lambda$-algebras.
 Then $f_{\Dom^{(\varphi,c)}}$ is a homomorphism of partial $\Sigma$-algebras from $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ to $\mathbf{c}^{\ast}_{\gd}(\mathbf{B}')$.
 \end{proposition}
@@ -1478,7 +1509,7 @@ We are now in a position to prove that every generalized hep-derivor induces a f
 Let us note that, in general, the transformed algebra of a $\sig{\Lambda}$-algebra need not be a $\sig{\Sigma}$-algebra, see Proposition~\ref{PTransformedEpAlg} and Remark~\ref{RGdNotEpAlg}.
 Hence a generalized hep-derivor does not induce, in general, a functor from $\mathsf{EPAlg}(\sig{\Lambda})$ to $\mathsf{EPAlg}(\sig{\Sigma})$, and we define the induced functor on all the partial $\Lambda$-algebras.
 
-\begin{proposition}\label{PGenHepDerivorFunctor}
+\begin{proposition}\label{PGenHepDerivorFunctor}\lean{CategorialAlgebras.GeneralizedHepDerivor.transformedFunctor}
 Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures and $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$.
 Then $\mathbf{c}^{\ast}_{\gd}$, the assignment from $\mathsf{PAlg}(\Lambda)$ to $\mathsf{PAlg}(\Sigma)$ defined as follows:
 \begin{enumerate}
@@ -1494,7 +1525,7 @@ Since $\mathbf{c}^{\ast}_{\gd}$ and $\G_{\mathbf{c}}$ act in the same way on hom
 
 From Propositions~\ref{PDomainSetFunctor} and~\ref{PGenHepDerivorFunctor} we obtain the following corollary.
 
-\begin{corollary}\label{CGenHepDerivorForgetful}
+\begin{corollary}\label{CGenHepDerivorForgetful}\lean{CategorialAlgebras.GeneralizedHepDerivor.transformedFunctor_comp_forget}
 Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures and $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$.
 Then the following diagram commutes
 $$
@@ -1516,7 +1547,7 @@ It follows from Propositions~\ref{PDomainSetFunctor}, \ref{PTransformedAlg} and~
 In this section we define the composition of generalized hep-derivors and we prove that the hep-signatures and the generalized hep-derivors form a category.
 We use the notation $d^{\sharp}[\mathcal{H}]$ introduced after Definition~\ref{DExistenceEq} for the translation of a set of $\mathrm{E}$-equations $\mathcal{H}$ along a derivor $(\psi,d)$.
 
-\begin{definition}\label{DGenHepDerivorCompId}
+\begin{definition}\label{DGenHepDerivorCompId}\lean{CategorialAlgebras.GeneralizedHepDerivor.comp,CategorialAlgebras.GeneralizedHepDerivor.identity}
 Let $\sig{\Sigma}$, $\sig{\Lambda}$ and $\sig{\Omega}$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ and $\mathbf{d}$ a generalized hep-derivor from $\sig{\Lambda}$ to $\sig{\Omega}$.
 The \emph{composition} of $\mathbf{c}$ and $\mathbf{d}$ is the generalized hep-derivor
 $$
@@ -1533,7 +1564,7 @@ Let us note that $\Dom^{(\psi,d)}_{\varphi(s)}$ and $d^{\sharp}[\Dom^{(\varphi,c
 
 We are now in a position to prove that the hep-signatures and the generalized hep-derivors form a category.
 
-\begin{proposition}\label{PHepSigCat}
+\begin{proposition}\label{PHepSigCat}\lean{CategorialAlgebras.instCategoryBundledHepSignature}
 The hep-signatures, together with the generalized hep-derivors, the composition and the identities of Definition~\ref{DGenHepDerivorCompId}, form a category, which we denote by $\mathsf{HSig}_{\gd}$.
 \end{proposition}
 \begin{proof}
@@ -1583,7 +1614,7 @@ The composition of Definition~\ref{DGenHepDerivorCompId} translates the domains 
 Therefore the two functors need not coincide; we prove that the second one is always included in the first one, and that they coincide under a condition that we will check in Chapters~\ref{SGdUf} and~\ref{SDsTr}.
 We begin by relating the partial term operations of $\mathbf{d}^{\ast}_{\gd}(\mathbf{C})$ with those of $\mathbf{C}$.
 
-\begin{lemma}\label{LGenHepDerivorTermOp}
+\begin{lemma}\label{LGenHepDerivorTermOp}\lean{CategorialAlgebras.GeneralizedHepDerivor.partialEval_translate}
 Let $\sig{\Lambda}$ and $\sig{\Omega}$ be hep-signatures, $\mathbf{d}$ a generalized hep-derivor from $\sig{\Lambda}$ to $\sig{\Omega}$ and $\mathbf{C}$ a partial $\Omega$-algebra.
 Let $\mathbf{t}\in T^{\star}$, $t\in T$, $P\in\mathrm{T}_{\Lambda}(\vs{\mathbf{t}})_{t}$ and $\mathbf{x}\in(C_{\Dom^{(\psi,d)}})_{\mathbf{t}}$.
 If $\mathbf{x}\in\Dom(P^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})})$, then $\mathbf{x}\in\Dom(d^{\sharp}(P)^{\mathbf{C}})$ and
@@ -1628,7 +1659,7 @@ This completes the proof.
 
 From the above lemma we obtain the corresponding fact on the $\mathrm{E}$-equations.
 
-\begin{corollary}\label{CGenHepDerivorEq}
+\begin{corollary}\label{CGenHepDerivorEq}\lean{CategorialAlgebras.GeneralizedHepDerivor.satisfies_translateWord}
 Let $\sig{\Lambda}$ and $\sig{\Omega}$ be hep-signatures, $\mathbf{d}$ a generalized hep-derivor from $\sig{\Lambda}$ to $\sig{\Omega}$, $\mathbf{C}$ a partial $\Omega$-algebra, $\mathbf{t}\in T^{\star}$, $\mathbf{x}\in(C_{\Dom^{(\psi,d)}})_{\mathbf{t}}$ and $\mathcal{H}\subseteq\mathrm{Eeqt}(\Lambda)_{\vs{\mathbf{t}}}$.
 If $\mathbf{d}^{\ast}_{\gd}(\mathbf{C})\models\mathcal{H}[\mathbf{x}]$, then $\mathbf{C}\models d^{\sharp}[\mathcal{H}][\mathbf{x}]$.
 \end{corollary}
@@ -1639,7 +1670,7 @@ Then $P^{\mathbf{d}^{\ast}_{\gd}(\mathbf{C})}(\mathbf{x})$ and $Q^{\mathbf{d}^{\
 
 In the following lemma we prove that the transformed algebra only depends on the domains through the cells they determine.
 
-\begin{lemma}\label{LGenHepDerivorSameCells}
+\begin{lemma}\label{LGenHepDerivorSameCells}\lean{CategorialAlgebras.GeneralizedHepDerivor.sameDerivorIso}
 Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures, $\mathbf{c}=(\varphi,c,\Dom)$ and $\mathbf{c}'=(\varphi,c,\Dom')$ generalized hep-derivors from $\sig{\Sigma}$ to $\sig{\Lambda}$ with the same underlying derivor, and $\mathbf{B}$ a partial $\Lambda$-algebra such that $B_{\Dom}=B_{\Dom'}$.
 Then $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})=\mathbf{c}'^{\ast}_{\gd}(\mathbf{B})$.
 Moreover, for every homomorphism $f\colon\mathbf{B}\mor\mathbf{B}'$ of partial $\Lambda$-algebras such that $B'_{\Dom}=B'_{\Dom'}$, $\mathbf{c}^{\ast}_{\gd}(f)=\mathbf{c}'^{\ast}_{\gd}(f)$.
@@ -1658,7 +1689,7 @@ This completes the proof.
 
 In the following proposition we prove that the identity generalized hep-derivor leaves the weak $\sig{\Sigma}$-algebras and their homomorphisms unchanged.
 
-\begin{proposition}\label{PGenHepDerivorId}
+\begin{proposition}\label{PGenHepDerivorId}\lean{CategorialAlgebras.GeneralizedHepDerivor.identityIso}
 Let $\sig{\Sigma}$ be a hep-signature.
 Then, for every weak $\sig{\Sigma}$-algebra $\mathbf{A}$ and every homomorphism $f$ between weak $\sig{\Sigma}$-algebras, see Definition~\ref{DWeakEpAlg}, $(\id_{\sig{\Sigma}})^{\ast}_{\gd}(\mathbf{A})=\mathbf{A}$ and $(\id_{\sig{\Sigma}})^{\ast}_{\gd}(f)=f$.
 \end{proposition}
@@ -1692,7 +1723,7 @@ This completes the proof.
 
 From the above proposition we obtain that the identity generalized hep-derivor induces, on the weak $\sig{\Sigma}$-algebras, and, in particular, on the $\sig{\Sigma}$-algebras, the identity functor.
 
-\begin{corollary}\label{CGenHepDerivorIdFunctor}
+\begin{corollary}\label{CGenHepDerivorIdFunctor}\lean{CategorialAlgebras.GeneralizedHepDerivor.epIdentityIso}
 Let $\sig{\Sigma}$ be a hep-signature.
 Then the restriction of $(\id_{\sig{\Sigma}})^{\ast}_{\gd}$ to $\mathsf{WEPAlg}(\sig{\Sigma})$ is $\Id_{\mathsf{WEPAlg}(\sig{\Sigma})}$ and its restriction to $\mathsf{EPAlg}(\sig{\Sigma})$ is $\Id_{\mathsf{EPAlg}(\sig{\Sigma})}$.
 \end{corollary}
@@ -1702,7 +1733,7 @@ It follows from Proposition~\ref{PGenHepDerivorId}, since $\mathsf{WEPAlg}(\sig{
 
 We are now in a position to compare the functor induced by a composition with the composite of the induced functors.
 
-\begin{proposition}\label{PGenHepDerivorComp}
+\begin{proposition}\label{PGenHepDerivorComp}\lean{CategorialAlgebras.GeneralizedHepDerivor.comparison,CategorialAlgebras.GeneralizedHepDerivor.comparison_naturality}
 Let $\sig{\Sigma}$, $\sig{\Lambda}$ and $\sig{\Omega}$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$, $\mathbf{d}$ a generalized hep-derivor from $\sig{\Lambda}$ to $\sig{\Omega}$ and $\mathbf{C}$ a partial $\Omega$-algebra.
 Then the underlying $S$-sorted set of $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ is an $S$-sorted subset of that of $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$, and the inclusion $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ of the former into the latter is a homomorphism of partial $\Sigma$-algebras
 $$
@@ -1751,7 +1782,7 @@ By Proposition~\ref{PGenHepDerivorFunctor}, for every $s\in S$, both $((\mathbf{
 
 From the above proposition we obtain a sufficient condition for the functor induced by a composition to agree with the composite of the induced functors.
 
-\begin{corollary}\label{CGenHepDerivorCompEqual}
+\begin{corollary}\label{CGenHepDerivorCompEqual}\lean{CategorialAlgebras.GeneralizedHepDerivor.comparison_surjective_of_empty}
 Let $\sig{\Sigma}$, $\sig{\Lambda}$ and $\sig{\Omega}$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$, $\mathbf{d}$ a generalized hep-derivor from $\sig{\Lambda}$ to $\sig{\Omega}$ and $\mathbf{C}$ a partial $\Omega$-algebra such that $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ and $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$ have the same underlying $S$-sorted set and $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$ is a $\sig{\Sigma}$-algebra.
 Then
 $$
@@ -1776,7 +1807,7 @@ It trivially holds when the domains of $\mathbf{c}$ are empty.
 
 The following example shows that the inclusion $\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}$ of Proposition~\ref{PGenHepDerivorComp} can be strict, even for very small hep-signatures.
 
-\begin{example}\label{EStrictComparison}
+\begin{example}\label{EStrictComparison}\lean{CategorialAlgebras.exists_noninvertible_comparison}
 Let $\sig{\Sigma}$ be the hep-signature with a single sort $s$ and no operation symbols, $\sig{\Lambda}$ the hep-signature with a single sort $t$ and a single unary operation symbol $u\in\Lambda_{(t),t}$ with $\mathrm{def}^{(T,\Lambda)}(u)=\varnothing$, and $\sig{\Omega}$ the hep-signature with a single sort $w$ and two constants $z,o\in\Omega_{\lambda,w}$ with empty sets of domain conditions.
 Let $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ be the generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$ with $\varphi(s)=t$ and $\Dom^{(\varphi,c)}_{s}=\{(u(v^{t}_{0}),u(v^{t}_{0}))\}$, which selects the elements at which $u$ is defined, and let $\mathbf{d}=(\psi,d,\Dom^{(\psi,d)})$ be the generalized hep-derivor from $\sig{\Lambda}$ to $\sig{\Omega}$ with $\psi(t)=w$, $d(u)=o$ and $\Dom^{(\psi,d)}_{t}=\{(v^{w}_{0},z)\}$.
 Let $\mathbf{C}$ be the $\Omega$-algebra with $C_{w}=\{0,1\}$, $z^{\mathbf{C}}=0$ and $o^{\mathbf{C}}=1$.
@@ -1789,7 +1820,7 @@ This is why, in Section~\ref{SHepAlgCat}, the induced functors form a lax, and n
 
 In the following lemma we combine Corollary~\ref{CGenHepDerivorCompEqual} and Lemma~\ref{LGenHepDerivorSameCells} in the form in which they are used to compare the two composites of a square of induced functors.
 
-\begin{lemma}\label{LGenHepDerivorCommSquare}
+\begin{lemma}\label{LGenHepDerivorCommSquare}\lean{CategorialAlgebras.GeneralizedHepDerivor.squareNatIso}
 Let $\sig{\Sigma}$, $\sig{\Lambda}$, $\sig{\Lambda}'$ and $\sig{\Omega}$ be hep-signatures, $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$, $\mathbf{d}$ a generalized hep-derivor from $\sig{\Lambda}$ to $\sig{\Omega}$, $\mathbf{c}'$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}'$ and $\mathbf{d}'$ a generalized hep-derivor from $\sig{\Lambda}'$ to $\sig{\Omega}$ such that $\mathbf{d}\circ\mathbf{c}$ and $\mathbf{d}'\circ\mathbf{c}'$ have the same underlying derivor.
 Let $\mathbf{C}$ be a partial $\Omega$-algebra such that $\mathbf{c}^{\ast}_{\gd}(\mathbf{d}^{\ast}_{\gd}(\mathbf{C}))$, $\mathbf{c}'^{\ast}_{\gd}(\mathbf{d}'^{\ast}_{\gd}(\mathbf{C}))$, $(\mathbf{d}\circ\mathbf{c})^{\ast}_{\gd}(\mathbf{C})$ and $(\mathbf{d}'\circ\mathbf{c}')^{\ast}_{\gd}(\mathbf{C})$ have the same underlying $S$-sorted set and the first two are $\sig{\Sigma}$-algebras.
 Then
@@ -1810,7 +1841,7 @@ The general form, in which the two composites need only have the same underlying
 
 The situation of the general form of Lemma~\ref{LGenHepDerivorCommSquare} recurs in the applications.
 
-\begin{remark}\label{RSameCellsPattern}
+\begin{remark}\label{RSameCellsPattern}\lean{CategorialAlgebras.GeneralizedHepDerivor.sameCellsNatIso}
 In Chapters~\ref{SDsTr} and~\ref{SFunctorsOmega}, it often happens that two generalized hep-derivors between the same hep-signatures, a composite and a single generalized hep-derivor, or two composites, have the same underlying derivor but different domains, so that they are different morphisms of $\mathsf{HSig}_{\gd}$.
 On the higher-order categorial algebras, however, both domains select the same cells, so that, by Lemma~\ref{LGenHepDerivorSameCells}, together with Corollary~\ref{CGenHepDerivorCompEqual} or Lemma~\ref{LGenHepDerivorCommSquare}, both induce the same functor.
 This is the reason why several equalities of functors hold without a corresponding equality in $\mathsf{HSig}_{\gd}$, see Remarks~\ref{RTrCompHomogeneous}, \ref{RTrDsIdHomogeneous}, \ref{RTrDsCompHomogeneous}, \ref{RCompatGdTrDerivors}, \ref{RCompatGdDsDerivors} and~\ref{RCompatGdTrOmegaDerivors}.
@@ -1824,7 +1855,7 @@ However, by Proposition~\ref{PGenHepDerivorComp}, the composite $\mathbf{c}^{\as
 Therefore the induced functors do not constitute a split, nor even a pseudo, indexed category, but a normal lax indexed category, see Definition~\ref{DLaxIndexed}, provided that we take as fibres the categories of weak ep-algebras, see Definition~\ref{DWeakEpAlg}, on which, by Proposition~\ref{PGenHepDerivorId}, the identity generalized hep-derivors induce identity functors.
 We begin by proving that the transformed algebras are weak ep-algebras.
 
-\begin{lemma}\label{LTransformedWeakEpAlg}
+\begin{lemma}\label{LTransformedWeakEpAlg}\lean{CategorialAlgebras.GeneralizedHepDerivor.transformed_isWeak}
 Let $\sig{\Sigma}$ and $\sig{\Lambda}$ be hep-signatures and $\mathbf{c}$ a generalized hep-derivor from $\sig{\Sigma}$ to $\sig{\Lambda}$.
 Then, for every partial $\Lambda$-algebra $\mathbf{B}$, $\mathbf{c}^{\ast}_{\gd}(\mathbf{B})$ is a weak $\sig{\Sigma}$-algebra.
 Consequently, the restriction of $\mathbf{c}^{\ast}_{\gd}$ to $\mathsf{WEPAlg}(\sig{\Lambda})$ corestricts to $\mathsf{WEPAlg}(\sig{\Sigma})$, see Definition~\ref{DCorestriction}, and we denote the corestriction by
@@ -1839,7 +1870,7 @@ The last statement follows from Definition~\ref{DCorestriction}, since $\mathsf{
 
 In the following proposition we prove that the categories of weak ep-algebras, together with the functors induced by the generalized hep-derivors and the inclusions of Proposition~\ref{PGenHepDerivorComp}, constitute a normal lax indexed category.
 
-\begin{proposition}\label{PHepLaxIndexed}
+\begin{proposition}\label{PHepLaxIndexed}\lean{CategorialAlgebras.BundledHepSignature.weakAlgebras}
 Let $\mathrm{WEPAlg}$ stand for the assignment that sends every hep-signature $\sig{\Sigma}$ to the category $\mathsf{WEPAlg}(\sig{\Sigma})$ and every generalized hep-derivor $\mathbf{c}$ from $\sig{\Sigma}$ to $\sig{\Lambda}$ to the functor $\mathbf{c}^{\ast}_{\gd}\colon\mathsf{WEPAlg}(\sig{\Lambda})\mor\mathsf{WEPAlg}(\sig{\Sigma})$ of Lemma~\ref{LTransformedWeakEpAlg}, and let $\kappa$ stand for the assignment that sends every pair of generalized hep-derivors $\mathbf{c}\colon\sig{\Sigma}\mor\sig{\Lambda}$ and $\mathbf{d}\colon\sig{\Lambda}\mor\sig{\Omega}$ to the family
 $$
 \kappa^{\mathbf{c},\mathbf{d}}=\left(\kappa^{\mathbf{c},\mathbf{d}}_{\mathbf{C}}\right)_{\mathbf{C}\in\mathrm{Ob}(\mathsf{WEPAlg}(\sig{\Omega}))}
@@ -1876,7 +1907,7 @@ Hence both homomorphisms are equal. This completes the proof.
 
 We are now in a position to define the category of the ep-algebras of all the hep-signatures.
 
-\begin{definition}\label{DHepAlgCat}
+\begin{definition}\label{DHepAlgCat}\lean{CategorialAlgebras.HepAlgebra}
 We let $\mathsf{HAlg}_{\gd}$ stand for the full subcategory of
 $$
 \int^{\mathsf{HSig}_{\gd}}(\mathrm{WEPAlg},\kappa),
@@ -1898,7 +1929,7 @@ see Definition~\ref{DGenHepDerivorCompId} and Proposition~\ref{PGenHepDerivorCom
 
 Let us note that, since every $\sig{\Sigma}$-algebra is a weak $\sig{\Sigma}$-algebra and $\mathsf{WEPAlg}(\sig{\Sigma})$ is a full subcategory of $\mathsf{PAlg}(\Sigma)$, the morphisms of $\int^{\mathsf{HSig}_{\gd}}(\mathrm{WEPAlg},\kappa)$ between objects of $\mathsf{HAlg}_{\gd}$ are exactly the pairs described in the second item of the above definition, so that both descriptions of $\mathsf{HAlg}_{\gd}$ agree.
 
-\begin{proposition}\label{PHepAlgCat}
+\begin{proposition}\label{PHepAlgCat}\lean{CategorialAlgebras.HepAlgebra.projection}
 $\mathsf{HAlg}_{\gd}$ is a category.
 Moreover, the assignment that sends every object $(\sig{\Sigma},\mathbf{A})$ to $\sig{\Sigma}$ and every morphism $(\mathbf{c},f)$ to $\mathbf{c}$ is a functor from $\mathsf{HAlg}_{\gd}$ to $\mathsf{HSig}_{\gd}$.
 \end{proposition}
@@ -1926,7 +1957,7 @@ We end this chapter by showing that, in dimension $\omega$, the condition that e
 
 We begin by recalling the notion of homogeneous category.
 
-\begin{definition}\label{DHomogeneousCat}
+\begin{definition}\label{DHomogeneousCat}\lean{CategorialAlgebras.Homogeneous.CategoryStructure}
 A \emph{homogeneous category} is an ordered pair $\mathsf{C} = (C,\xi)$ where $C$ is a set and $\xi = (\circ,\src,\tgt)$ a structure of category on $C$, i.e., $\circ\colon C\times C\dmor C$ is a partial operation of \emph{composition}, and $\src$, $\tgt$ are unary operations on $C$ which assign, to every morphism in $C$, its \emph{source} and its \emph{target}, respectively, subject to the following conditions:
 \begin{enumerate}
 \item[(C1)] For every $f\in C$,
@@ -1994,7 +2025,7 @@ Thus $\mathsf{1Cat}$ and $\mathsf{Cat}$ are different categories.
 
 We next recall the notion of homogeneous $2$-category, in which two structures of homogeneous category on the same set interact as in a $2$-category.
 
-\begin{definition}\label{DHomogeneous2Cat}
+\begin{definition}\label{DHomogeneous2Cat}\lean{CategorialAlgebras.Homogeneous.HigherCategory}
 A \emph{homogeneous $2$-category} is an ordered pair $\mathsf{C} = (C,(\xi_{k})_{k\in 2})$
 where $C$ is a set and, for every $k\in 2$, $\xi_{k}= (\circ^{k},\src^{k},\tgt^{k})$ a structure of homogeneous category on $C$, such that the following conditions are satisfied:
 \begin{enumerate}
@@ -2044,7 +2075,7 @@ $2$-categories and homogeneous $2$-functors.
 
 We next recall the notion of homogeneous $n$-category, for $n\in\mathbb{N}$, in which every pair of the $n$ structures of homogeneous category forms a homogeneous $2$-category.
 
-\begin{definition}\label{DHomogeneousnCat}
+\begin{definition}\label{DHomogeneousnCat}\lean{CategorialAlgebras.Homogeneous.NCategory,CategorialAlgebras.Homogeneous.HigherCategory}
 A \emph{homogeneous $n$-category}, for $n\in\mathbb{N}$, is an ordered pair $\mathsf{C} = (C,(\xi_{k})_{k\in n})$ where $C$ is a set and, for every $k\in n$, $\xi_{k}$ a structure of homogeneous category on $C$ such that, for every $j,k\in n$ with $j<k$, the ordered pair $(C,(\xi_{i})_{i\in\{j,k\}})$ is a homogeneous $2$-category.
 For $j<k$, we identify $(\xi_{i})_{i\in \{j,k\}}$ with $(\xi_{j},\xi_{k})$.
 Thus a homogeneous $0$-category is just a set, a homogeneous $1$-category is a homogeneous category in the sense of Definition~\ref{DHomogeneousCat}, and a homogeneous $2$-category is one in the sense of Definition~\ref{DHomogeneous2Cat}.
@@ -2069,7 +2100,7 @@ We denote by $\mathsf{nCat}$ the category consisting of homogeneous $n$-categori
 
 In the following definition we introduce the many-sorted $n$-categorial algebras, i.e., the many-sorted algebras whose carriers are homogeneous $n$-categories and whose operations are homogeneous $n$-functors.
 
-\begin{definition}\label{DCatAlg}
+\begin{definition}\label{DCatAlg}\lean{CategorialAlgebras.Homogeneous.NCategorialAlgebra,CategorialAlgebras.Homogeneous.CategorialAlgebra}
 Let $S$ be a set of sorts and $n\in\mathbb{N}$.
 We call the objects of the functor category $\mathsf{nCat}^{S}$ \emph{$S$-sorted homogeneous $n$-categories}.
 Thus, an $S$-sorted homogeneous $n$-category is an $S$-indexed family $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ such that, for every sort $s\in S$, $\mathsf{A}_{s}$ is a homogeneous $n$-category.
@@ -2109,7 +2140,7 @@ We denote by $\mathsf{nCatAlg}(\sig{\Sigma})$ the category of $n$-categorial $\s
 
 We next state the $\omega$-dimensional counterparts of these notions, which are used in Chapters~\ref{SDsTr} and~\ref{SProjLimits}.
 
-\begin{definition}\label{DHomogeneousOmegaCat}
+\begin{definition}\label{DHomogeneousOmegaCat}\lean{CategorialAlgebras.Homogeneous.OmegaCategory}
 A \emph{homogeneous $\omega$-category} is an ordered pair $\mathsf{C} = (C,(\xi_{k})_{k\in\omega})$ where $C$ is a set and, for every $k\in\omega$, $\xi_{k}$ a structure of homogeneous category on $C$ such that, for every $j,k\in\omega$ with $j<k$, the ordered pair $(C,(\xi_{j},\xi_{k}))$ is a homogeneous $2$-category, and such that every $f\in C$ is a $k$-cell, i.e., $\src^{k}(f)=f$, for some $k\in\omega$.
 By~(2C1), a $j$-cell is a $k$-cell for every $k\geq j$.
 
@@ -2120,7 +2151,7 @@ We denote by $\omega\mathsf{Cat}$ the category of homogeneous $\omega$-categorie
 
 We next introduce the $\omega$-dimensional counterpart of Definition~\ref{DCatAlg}.
 
-\begin{definition}\label{DCatAlgOmega}
+\begin{definition}\label{DCatAlgOmega}\lean{CategorialAlgebras.Homogeneous.OmegaCategorialAlgebra}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature.
 An \emph{$\omega$-categorial $\sig{\Sigma}$-algebra} is a pair $\calg{A}=(\mathsf{A},F)$ where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted homogeneous $\omega$-category and $F$ assigns to every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$ a homogeneous $\omega$-functor $\sigma^{\calg{A}}\colon\mathsf{A}_{\mathbf{s}}\mor\mathsf{A}_{s}$.
 Here $\mathsf{A}_{\mathbf{s}}$ is a homogeneous $\omega$-category: if each $\mathsf{a}_{j}$ is a $k_{j}$-cell, then $(\mathsf{a}_{j})_{j\in\bb{\mathbf{s}}}$ is a $k$-cell for $k=\max_{j}k_{j}$ (and, for $\mathbf{s}=\lambda$, the unique cell of $\mathsf{A}_{\lambda}$ is a $0$-cell).
@@ -2130,7 +2161,7 @@ We denote by $\omega\mathsf{CatAlg}(\sig{\Sigma})$ the category of $\omega$-cate
 
 In the homogeneous presentation, an $n$-categorial $\sig{\Sigma}$-algebra is regarded as a partial algebra on a single $S$-sorted set of cells, for a signature that enlarges $\Sigma$ with sources, targets and compositions of every dimension below $n$.
 
-\begin{definition}\label{DCatSig}
+\begin{definition}\label{DCatSig}\lean{CategorialAlgebras.Homogeneous.epSignature,CategorialAlgebras.Homogeneous.hepSignature}
 Let $\Sigma$ be an $S$-sorted signature and $n\in\mathbb{N}$.
 The \emph{homogeneous $n$-categorial signature determined by $\Sigma$}, denoted by $\Sigma^{(n)}$, is the $S$-sorted signature defined, for every $(\mathbf{s},s)\in S^{\star}\times S$, as follows:
 $$
@@ -2160,7 +2191,7 @@ Let us note that $\Sigma^{(0)}=\Sigma$ and that, for every $n,m\in\mathbb{N}$ wi
 
 In the following definition we introduce the $\omega$-dimensional counterpart of the homogeneous $n$-categorial signature.
 
-\begin{definition}\label{DCatSigOmega}
+\begin{definition}\label{DCatSigOmega}\lean{CategorialAlgebras.Homogeneous.epSignature}
 Let $\Sigma$ be an $S$-sorted signature.
 The \emph{homogeneous $\omega$-categorial signature determined by $\Sigma$} is the $S$-sorted signature $\Sigma^{(\omega)}=\bigcup_{n\in\mathbb{N}}\Sigma^{(n)}$, and $\sig{\Sigma}^{(\omega)}=(S,\Sigma^{(\omega)},\mathrm{def}^{(S,\Sigma^{(\omega)})})$ is the hep-signature in which $\mathrm{def}^{(S,\Sigma^{(\omega)})}$ is the union of the $\mathrm{def}^{(S,\Sigma^{(n)})}$, for $n\in\mathbb{N}$.
 Thus $\Sigma^{(\omega)}$ has the operation symbols $\src^{k}_{s}$, $\tgt^{k}_{s}$ and $\circ^{k}_{s}$ for every $k\in\omega$, with the same domain conditions as in Definition~\ref{DCatSig}.
@@ -2170,7 +2201,7 @@ We next present the $n$-categorial $\sig{\Sigma}$-algebras as a $\QE$-variety of
 The axiom (A0) states that the operations of $\Sigma$ are total, the axioms (A$^{k}$1)--(A$^{k}$8), stated for every dimension $k\in n$, describe the $k$-dimensional structure, and the axioms (AB$^{l,k}$1)--(AB$^{l,k}$3), stated for every pair of dimensions $l<k$ in $n$, relate the $l$-dimensional and the $k$-dimensional structures.
 Informally, these equations state that, for every sort $s\in S$, the sources, targets and compositions of sort $s$ of every dimension behave as in an $n$-category, and that the operations of $\Sigma$ are compatible with them.
 
-\begin{definition}\label{DCatSpec}
+\begin{definition}\label{DCatSpec}\lean{CategorialAlgebras.Homogeneous.specification}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $n\in\mathbb{N}$.
 We denote by $\spec{C}^{\sig{\Sigma}^{(n)}}=(\sig{\Sigma}^{(n)},\mathcal{C}^{\sig{\Sigma}^{(n)}})$ the ep-specification in which $\sig{\Sigma}^{(n)}$ is the homogeneous $n$-categorial hep-signature introduced in Definition~\ref{DCatSig} and $\mathcal{C}^{\sig{\Sigma}^{(n)}}$ is the set of contextual $\QE$-equations, see Definition~\ref{DEpSpec}, listed below, each of them with the variables that occur in it as context.
 The variables are taken from the $S$-sorted set $V^{S}$ of Section~\ref{SVariables}.
@@ -2320,7 +2351,7 @@ We next relate the many-sorted $n$-categorial $\sig{\Sigma}$-algebras with the $
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $n\in\mathbb{N}$.
 In what follows, a pair $(\mathsf{A},F)$, where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted homogeneous $n$-category, with $\mathsf{A}_{s}=(A_{s},(\circ^{k}_{s},\src^{k}_{s},\tgt^{k}_{s})_{k\in n})$, and $F$ assigns to every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$ a mapping $F_{\sigma}\colon A_{\mathbf{s}}\mor A_{s}$, is identified with the partial $\Sigma^{(n)}$-algebra with underlying $S$-sorted set $A=(A_{s})_{s\in S}$ in which, for every $k\in n$ and every $s\in S$, the operation symbols $\src^{k}_{s}$, $\tgt^{k}_{s}$ and $\circ^{k}_{s}$ are interpreted as $\src^{k}_{s}$, $\tgt^{k}_{s}$ and $\circ^{k}_{s}$, respectively, and every $\sigma\in\Sigma$ is interpreted as $F_{\sigma}$.
 
-\begin{remark}\label{RCatAlgAsEpAlg}
+\begin{remark}\label{RCatAlgAsEpAlg}\lean{CategorialAlgebras.Homogeneous.modelIsomorphism}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $n\in\mathbb{N}$.
 Then, under the above identification,
 $$
@@ -2336,7 +2367,7 @@ For instance, for $n=1$ and $S=\{s,t\}$, a partial $\Sigma^{(1)}$-algebra with $
 
 In dimension $\omega$, a pair $(\mathsf{A},F)$, where $\mathsf{A}$ is an $S$-sorted homogeneous $\omega$-category, is identified in the same way, with $\omega$ in place of $n$, with a partial $\Sigma^{(\omega)}$-algebra, and the identification works as in Remark~\ref{RCatAlgAsEpAlg}, except for the condition that every cell has a finite dimension.
 
-\begin{remark}\label{RCatAlgAsEpAlgOmega}
+\begin{remark}\label{RCatAlgAsEpAlgOmega}\lean{CategorialAlgebras.Homogeneous.omegaModelIsomorphism}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature.
 Then, under the above identification, and by the same arguments as in Remark~\ref{RCatAlgAsEpAlg}, applied for every $k\in\omega$ and every $l<k$ in $\omega$, $\omega\mathsf{CatAlg}(\sig{\Sigma})$ is the full subcategory of $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(\omega)}})$ whose objects are the $\sig{\Sigma}^{(\omega)}$-algebras in which, for every $s\in S$, every cell $x$ of sort $s$ is a $k$-cell, i.e., satisfies $\src^{k}_{s}(x)=x$, for some $k\in\omega$, see Definitions~\ref{DHomogeneousOmegaCat} and~\ref{DCatAlgOmega}.
 \end{remark}
@@ -2344,7 +2375,7 @@ Then, under the above identification, and by the same arguments as in Remark~\re
 One could try to add to $\mathcal{C}^{\sig{\Sigma}^{(\omega)}}$ some axioms expressing that every cell has a finite dimension, in order to present $\omega\mathsf{CatAlg}(\sig{\Sigma})$ as the category canonically associated with an ep-variety, as in the finite-dimensional case.
 In the following proposition we prove that this is impossible.
 
-\begin{proposition}\label{PFiniteDimNotQE}
+\begin{proposition}\label{PFiniteDimNotQE}\lean{CategorialAlgebras.Homogeneous.not_qe_axiomatizable}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature with $S\neq\varnothing$.
 Then there is no set $\mathcal{F}$ of $\QE$-equations for $\Sigma^{(\omega)}$ such that the objects of $\omega\mathsf{CatAlg}(\sig{\Sigma})$, under the above identification, are exactly the partial $\Sigma^{(\omega)}$-algebras in which every $\QE$-equation of $\mathcal{F}$ holds.
 \end{proposition}
@@ -2366,7 +2397,7 @@ Hence $g$ is not a $j$-cell of $\mathbf{A}$ for any $j\in\omega$, so that $\math
 
 From the proof of the above proposition we obtain the following corollary.
 
-\begin{corollary}\label{CProperSubCatAlgOmega}
+\begin{corollary}\label{CProperSubCatAlgOmega}\lean{CategorialAlgebras.Homogeneous.omegaModels_proper}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature with $S\neq\varnothing$.
 Then $\omega\mathsf{CatAlg}(\sig{\Sigma})$ is a proper full subcategory of $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(\omega)}})$.
 \end{corollary}
@@ -2391,7 +2422,7 @@ We end this chapter by showing that the heterogeneous $n$-categorial algebras ar
 We begin by defining heterogeneous $\omega$-categories, which present $\omega$-categories with separate sorts for each dimension, together with sources, targets and identities between dimensions, as in~\cite{AraEtAl2025}.
 A heterogeneous $n$-category is then a heterogeneous $\omega$-category truncated at level $n$.
 
-\begin{definition}\label{DHeterogeneousOmegaCat}
+\begin{definition}\label{DHeterogeneousOmegaCat}\lean{CategorialAlgebras.Heterogeneous.OmegaCategory,CategorialAlgebras.Heterogeneous.HigherCategory}
 A \emph{heterogeneous $\omega$-category} is an ordered pair $\mathsf{C} = ((C_{k})_{k\in\omega},\zeta)$ consisting of an $\omega$-sorted set $(C_{k})_{k\in\omega}$ and a $\coprod_{k\in \omega}k$-indexed family
 \[
 \zeta = (\zeta_{j,k})_{(j,k)\in \coprod_{k\in \omega}k},
@@ -2507,7 +2538,7 @@ We denote by $\mathsf{nCat}^{\htg}$ the category of heterogeneous $n$-categories
 
 We next define the $S$-sorted heterogeneous $n$-categories and the $S$-sorted heterogeneous $n$-functors.
 
-\begin{definition}\label{DSortedHeterogeneousnCat}
+\begin{definition}\label{DSortedHeterogeneousnCat}\lean{CategorialAlgebras.Heterogeneous.SortedCategory}
 Let $S$ be a set of sorts and $n\in\mathbb{N}$.
 We call the objects of the functor category $(\mathsf{nCat}^{\htg})^{S}$ \emph{$S$-sorted heterogeneous $n$-categories}.
 Thus, an $S$-sorted heterogeneous $n$-category is an $S$-indexed family $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ such that, for every sort $s\in S$, $\mathsf{A}_{s}$ is a heterogeneous $n$-category.
@@ -2522,7 +2553,7 @@ Let us recall that, for $F\colon \mathsf{A}\mor\mathsf{B}$ and $G\colon \mathsf{
 
 Next we define the heterogeneous $n$-categorial algebras as in Definition~\ref{DCatAlg}.
 
-\begin{definition}\label{DCatAlgHtg}
+\begin{definition}\label{DCatAlgHtg}\lean{CategorialAlgebras.Heterogeneous.NCategorialAlgebra,CategorialAlgebras.Heterogeneous.CategorialAlgebra}
 Let $S$ be a set of sorts and $n\in\mathbb{N}$.
 For an $S$-sorted heterogeneous $n$-category $\mathsf{A}$, the $S^{\star}\times S$-sorted set of finitary operations on $\mathsf{A}$ is $(\mathrm{nFunc}^{\htg}(\mathsf{A}_{\mathbf{s}},\mathsf{A}_{s}))_{(\mathbf{s},s)\in S^{\star}\times S}$, where, for every $\mathbf{s}\in S^{\star}$, $\mathsf{A}_{\mathbf{s}}=\prod_{j\in\bb{\mathbf{s}}}\mathsf{A}_{s_{j}}$, with $\bb{\mathbf{s}}$ denoting the length of the word $\mathbf{s}$.
 The finite products $\mathsf{A}_{\mathbf{s}}$ are taken dimensionwise: the $k$-cells of $\mathsf{A}_{\mathbf{s}}$ are the families of $k$-cells, and all the operations are computed componentwise; for $\mathbf{s}=\lambda$, $\mathsf{A}_{\lambda}$ is a final heterogeneous $n$-category, with a single cell in each dimension.
@@ -2553,7 +2584,7 @@ We denote by $\mathsf{nCat}^{\htg}\mathsf{Alg}(\sig{\Sigma})$ the category of he
 
 We next introduce the $\omega$-dimensional counterpart of Definition~\ref{DCatAlgHtg}.
 
-\begin{definition}\label{DCatAlgOmegaHtg}
+\begin{definition}\label{DCatAlgOmegaHtg}\lean{CategorialAlgebras.Heterogeneous.OmegaCategorialAlgebra}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature.
 A \emph{heterogeneous $\omega$-categorial $\sig{\Sigma}$-algebra} is a pair $\calg{A}=(\mathsf{A},F)$ where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted heterogeneous $\omega$-category and $F$ assigns to every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$ a heterogeneous $\omega$-functor $\sigma^{\calg{A}}\colon\mathsf{A}_{\mathbf{s}}\mor\mathsf{A}_{s}$.
 A \emph{heterogeneous $\omega$-categorial $\sig{\Sigma}$-homomorphism} is an $S$-sorted heterogeneous $\omega$-functor satisfying the equation of Definition~\ref{DCatAlgHtg} for every $k\in\omega$.
@@ -2562,7 +2593,7 @@ We denote by $\omega\mathsf{Cat}^{\htg}\mathsf{Alg}(\sig{\Sigma})$ the category 
 
 In the heterogeneous presentation, a heterogeneous $n$-categorial $\sig{\Sigma}$-algebra is regarded as a partial algebra on an $(n+1)\times S$-sorted set of cells, for a signature that enlarges $\Sigma$ with a copy of every operation symbol for every dimension, and with sources, targets, identities and compositions between dimensions.
 
-\begin{definition}\label{DCatSigHtg}
+\begin{definition}\label{DCatSigHtg}\lean{CategorialAlgebras.Heterogeneous.epSignature,CategorialAlgebras.Heterogeneous.hepSignature}
 Let $\Sigma$ be an $S$-sorted signature and $n\in\mathbb{N}$.
 For every $k\in n+1$ and every $\mathbf{s}\in S^{\star}$, we let $(k,\mathbf{s})$ stand for the word $((k,s_{j}))_{j\in\lvert\mathbf{s}\rvert}$ in $((n+1)\times S)^{\star}$; in particular, $(k,\lambda)=\lambda$.
 The \emph{heterogeneous $n$-categorial signature determined by $\Sigma$}, denoted by $\Sigma^{\htg(n)}$, is the $(n+1)\times S$-sorted signature defined, for every $(\mathbf{w},(k,s))\in((n+1)\times S)^{\star}\times((n+1)\times S)$, as follows:
@@ -2602,7 +2633,7 @@ The specification of the heterogeneous presentation follows the pattern of that 
 Now, however, the role played in the homogeneous case by a dimension $k\in n$ is played by a pair of dimensions $j<k$ in $n+1$, since the $j$-composition acts on the $k$-cells and the $(k,j)$-identities take the place of the $k$-sources and $k$-targets as unit elements; and the role played by a pair of dimensions $l<k$ in $n$ is played by a triple of dimensions $h<j<k$ in $n+1$.
 Informally, the equations state that the operations of $\Sigma$ are always defined, that, for every sort $s\in S$ and every pair $j<k$, the $j$-cells and the $k$-cells of sort $s$ are the objects and the morphisms of a category, that these categories fit together as in an $n$-category, and that the operations of $\Sigma$ are compatible with them.
 
-\begin{definition}\label{DCatSpecHtg}
+\begin{definition}\label{DCatSpecHtg}\lean{CategorialAlgebras.Heterogeneous.specification}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $n\in\mathbb{N}$.
 We denote by $\spec{C}^{\sig{\Sigma}^{\htg(n)}}=(\sig{\Sigma}^{\htg(n)},\mathcal{C}^{\sig{\Sigma}^{\htg(n)}})$ the ep-specification in which $\sig{\Sigma}^{\htg(n)}$ is the heterogeneous $n$-categorial hep-signature introduced in Definition~\ref{DCatSigHtg} and $\mathcal{C}^{\sig{\Sigma}^{\htg(n)}}$ is the set of contextual $\QE$-equations, see Definition~\ref{DEpSpec}, listed below, each of them with the variables that occur in it as context.
 The variables are taken from the $(n+1)\times S$-sorted set $V^{(n+1)\times S}$ of Section~\ref{SVariables}, which we abbreviate to $V$.
@@ -2765,7 +2796,7 @@ Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature and $n\in\mathbb{N}$.
 In what follows, a pair $(\mathsf{A},F)$, where $\mathsf{A}=(\mathsf{A}_{s})_{s\in S}$ is an $S$-sorted heterogeneous $n$-category and $F$ assigns to every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$ a family of mappings $(F_{\sigma,k})_{k\in n+1}$, one for each dimension, is identified with the partial $\Sigma^{\htg(n)}$-algebra whose underlying set of sort $(k,s)$ is the set of $k$-cells of $\mathsf{A}_{s}$, in which $\src^{(j,k)}_{s}$, $\tgt^{(j,k)}_{s}$, $\mathrm{i}^{(k,j)}_{s}$ and $\circ^{(j,k)}_{s}$ are interpreted as the corresponding operations of $\mathsf{A}_{s}$, and $\sigma_{k}$ is interpreted as $F_{\sigma,k}$.
 In dimension $\omega$, the heterogeneous $\omega$-categorial $\sig{\Sigma}$-algebras are identified in the same way, with $\omega$ in place of $n+1$, with partial $\Sigma^{\htg(\omega)}$-algebras.
 
-\begin{remark}\label{RCatAlgAsEpAlgHtg}
+\begin{remark}\label{RCatAlgAsEpAlgHtg}\lean{CategorialAlgebras.Heterogeneous.nModelIsomorphism,CategorialAlgebras.Heterogeneous.omegaModelIsomorphism}
 Let $\sig{\Sigma}=(S,\Sigma)$ be a many-sorted signature.
 Then, under the above identification, the following equalities hold:
 \begin{enumerate}
@@ -2839,7 +2870,7 @@ Graduating a homogeneous $n$-categorial $\sig{\Sigma}$-algebra $\calg{A}$ consis
 The $(j,k)$-source and the $(j,k)$-target of a $k$-cell are its $j$-source and its $j$-target, the $(k,j)$-identity of a $j$-cell is the cell itself, the $j$-composition of two $k$-cells is their $j$-composition, and $\sigma_{k}$ acts on $k$-cells as $\sigma$.
 All these data are given by a single generalized hep-derivor, which we define next.
 
-\begin{definition}\label{DGdDerivor}
+\begin{definition}\label{DGdDerivor}\lean{CategorialAlgebras.Presentations.graduation}
 The \emph{graduation derivor} is the generalized hep-derivor
 $$
 \bGd^{(n)}_{\sig{\Sigma}}=\left(\varphi^{\Gd^{(n)}_{\sig{\Sigma}}},\Gd^{(n)}_{\sig{\Sigma}},\Dom^{\Gd^{(n)}_{\sig{\Sigma}}}\right)
@@ -2871,13 +2902,13 @@ Moreover, by Definition~\ref{DExistenceEq}, for every partial $\Sigma^{(n)}$-alg
 
 We next define the graduation functor.
 
-\begin{definition}\label{DGdFunctor}
+\begin{definition}\label{DGdFunctor}\lean{CategorialAlgebras.Presentations.graduationPartialFunctor}
 The \emph{graduation functor} $\Gd^{(n)}_{\sig{\Sigma}}$ is the functor $(\bGd^{(n)}_{\sig{\Sigma}})^{\ast}_{\gd}$ induced by the generalized hep-derivor $\bGd^{(n)}_{\sig{\Sigma}}$ from $\mathsf{PAlg}(\Sigma^{(n)})$ to $\mathsf{PAlg}(\Sigma^{\htg(n)})$, see Proposition~\ref{PGenHepDerivorFunctor}.
 \end{definition}
 
 In the following lemma we collect the facts about cells of a homogeneous $n$-categorial $\sig{\Sigma}$-algebra that we need to graduate it.
 
-\begin{lemma}\label{LGdCells}
+\begin{lemma}\label{LGdCells}\lean{CategorialAlgebras.Presentations.graduation_isCell_iff}
 Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$.
 Then the following statements hold:
 \begin{enumerate}
@@ -2946,7 +2977,7 @@ The first equality follows from~(AB$^{j,k}$2); the second equality follows from 
 
 In the following lemma we describe the transformed algebra along the graduation derivor.
 
-\begin{lemma}\label{LGdDescription}
+\begin{lemma}\label{LGdDescription}\lean{CategorialAlgebras.Presentations.graduation_transformed,CategorialAlgebras.Presentations.graduatedAlgebra}
 Let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$.
 Then $\Gd^{(n)}_{\sig{\Sigma}}(\mathbf{B})$ is a $\sig{\Sigma}^{\htg(n)}$-algebra whose cells of sort $(k,s)$ are the $k$-cells of sort $s$ of $\mathbf{B}$, for $k\in n$, and all the cells of sort $s$ of $\mathbf{B}$, for $k=n$.
 For every $(\mathbf{s},s)\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{s},s}$ and every $k\in n+1$, $\sigma_k$ is total in $\Gd^{(n)}_{\sig{\Sigma}}(\mathbf{B})$ and acts as the restriction of $\sigma^{\mathbf{B}}$ to the $k$-cells.
@@ -2988,7 +3019,7 @@ All in all, by Proposition~\ref{PTransformedEpAlg}, $\Gd^{(n)}_{\sig{\Sigma}}(\m
 
 We next prove that the graduation of a homogeneous $n$-categorial $\sig{\Sigma}$-algebra is a heterogeneous $n$-categorial $\sig{\Sigma}$-algebra.
 
-\begin{proposition}\label{PGdEpVariety}
+\begin{proposition}\label{PGdEpVariety}\lean{CategorialAlgebras.Presentations.graduation_isModel,CategorialAlgebras.Presentations.graduationModels}
 The restriction of $\Gd^{(n)}_{\sig{\Sigma}}$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$ corestricts to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\htg(n)}})$.
 \end{proposition}
 \begin{proof}
@@ -3029,7 +3060,7 @@ For instance, for $k$-cells $x$, $y$ of sort $s$ such that $x\circ^{(h,k)\,\Gd^{
 The first and the last equalities follow from Lemma~\ref{LGdDescription}; the second equality follows from~(AB$^{h,j}$2). This completes the proof.
 \end{proof}
 
-\begin{remark}\label{RGdNotEpAlg}
+\begin{remark}\label{RGdNotEpAlg}\lean{CategorialAlgebras.Presentations.GraduationCounterexample.graduation_not_isEPAlgebra}
 Assume that $S\neq\varnothing$ and $n\geq 1$.
 The restriction of $\Gd^{(n)}_{\sig{\Sigma}}$ to $\mathsf{EPAlg}(\sig{\Sigma}^{(n)})$ does not corestrict to $\mathsf{EPAlg}(\sig{\Sigma}^{\htg(n)})$.
 Indeed, let $\mathbf{B}$ be a $\sig{\Sigma}^{(n)}$-algebra, $j<k$ in $n+1$ and $s\in S$.
@@ -3045,7 +3076,7 @@ This is why we restrict $\Gd^{(n)}_{\sig{\Sigma}}$ to the category canonically a
 
 From Proposition~\ref{PGdEpVariety} we obtain the graduation functor between the categories of higher-order categorial algebras.
 
-\begin{corollary}\label{CGdFunctor}
+\begin{corollary}\label{CGdFunctor}\lean{CategorialAlgebras.Presentations.graduationFunctor}
 The restriction of $\Gd^{(n)}_{\sig{\Sigma}}$ to $\mathsf{nCatAlg}(\sig{\Sigma})$ corestricts to $\mathsf{nCat}^{\htg}\mathsf{Alg}(\sig{\Sigma})$.
 \end{corollary}
 \begin{proof}
@@ -3063,7 +3094,7 @@ Explicitly, by Lemma~\ref{LGdDescription}, $\Gd^{(n)}_{\sig{\Sigma}}(\calg{A})$ 
 Unifying a heterogeneous $n$-categorial $\sig{\Sigma}$-algebra $\calg{A}$ consists in keeping only its $n$-cells, every $k$-cell being represented by its $(n,k)$-identity: the $k$-source of an $n$-cell is the $(n,k)$-identity of its $(k,n)$-source, the $k$-composition is the $k$-composition of $n$-cells, and $\sigma$ acts as $\sigma_{n}$.
 These data are given by the following generalized hep-derivor.
 
-\begin{definition}\label{DUfDerivor}
+\begin{definition}\label{DUfDerivor}\lean{CategorialAlgebras.Presentations.unification}
 The \emph{unification derivor} is the generalized hep-derivor
 $$
 \bUf^{(n)}_{\sig{\Sigma}}=\left(\varphi^{\Uf^{(n)}_{\sig{\Sigma}}},\Uf^{(n)}_{\sig{\Sigma}},\Dom^{\Uf^{(n)}_{\sig{\Sigma}}}\right)
@@ -3087,13 +3118,13 @@ When $\Sigma$ is empty, only the clauses for the sources, targets, identities an
 
 We next define the unification functor.
 
-\begin{definition}\label{DUfFunctor}
+\begin{definition}\label{DUfFunctor}\lean{CategorialAlgebras.Presentations.unificationPartialFunctor}
 The \emph{unification functor} $\Uf^{(n)}_{\sig{\Sigma}}$ is the functor $(\bUf^{(n)}_{\sig{\Sigma}})^{\ast}_{\gd}$ induced by the generalized hep-derivor $\bUf^{(n)}_{\sig{\Sigma}}$ from $\mathsf{PAlg}(\Sigma^{\htg(n)})$ to $\mathsf{PAlg}(\Sigma^{(n)})$, see Proposition~\ref{PGenHepDerivorFunctor}.
 \end{definition}
 
 In the following lemma we prove that the identities of a heterogeneous $n$-categorial $\sig{\Sigma}$-algebra are injective.
 
-\begin{lemma}\label{LUfIdInj}
+\begin{lemma}\label{LUfIdInj}\lean{CategorialAlgebras.Presentations.identity_injective}
 Let $\mathbf{A}$ be an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\htg(n)}})$, $j<k$ in $n+1$ and $s\in S$.
 Then, for every $j$-cell $u$ of sort $s$, the following equalities hold:
 $$
@@ -3108,7 +3139,7 @@ Hence $\mathrm{i}^{(k,j)\,\mathbf{A}}_{s}$ has a left inverse, so that it is inj
 
 In the following lemma we describe the transformed algebra along the unification derivor.
 
-\begin{lemma}\label{LUfDescription}
+\begin{lemma}\label{LUfDescription}\lean{CategorialAlgebras.Presentations.unificationRealization,CategorialAlgebras.Presentations.unifiedAlgebra}
 Let $\mathbf{A}$ be an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\htg(n)}})$.
 Then $\Uf^{(n)}_{\sig{\Sigma}}(\mathbf{A})$ is a $\sig{\Sigma}^{(n)}$-algebra whose cells of sort $s$ are the $n$-cells of sort $s$ of $\mathbf{A}$.
 For every $(\mathbf{s},s)\in S^{\star}\times S$ and every $\sigma\in\Sigma_{\mathbf{s},s}$, the operation $\sigma$ is total in $\Uf^{(n)}_{\sig{\Sigma}}(\mathbf{A})$ and acts as $\sigma_n^{\mathbf{A}}$.
@@ -3139,7 +3170,7 @@ All in all, by Proposition~\ref{PTransformedEpAlg}, $\Uf^{(n)}_{\sig{\Sigma}}(\m
 
 We next prove that the unification of a heterogeneous $n$-categorial $\sig{\Sigma}$-algebra is a homogeneous $n$-categorial $\sig{\Sigma}$-algebra.
 
-\begin{proposition}\label{PUfEpVariety}
+\begin{proposition}\label{PUfEpVariety}\lean{CategorialAlgebras.Presentations.unification_isModel,CategorialAlgebras.Presentations.unificationModels}
 The restriction of $\Uf^{(n)}_{\sig{\Sigma}}$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{\htg(n)}})$ corestricts to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$.
 \end{proposition}
 \begin{proof}
@@ -3181,7 +3212,7 @@ This completes the proof.
 
 From Proposition~\ref{PUfEpVariety} we obtain the unification functor between the categories of higher-order categorial algebras.
 
-\begin{corollary}\label{CUfFunctor}
+\begin{corollary}\label{CUfFunctor}\lean{CategorialAlgebras.Presentations.unificationFunctor}
 The restriction of $\Uf^{(n)}_{\sig{\Sigma}}$ to $\mathsf{nCat}^{\htg}\mathsf{Alg}(\sig{\Sigma})$ corestricts to $\mathsf{nCatAlg}(\sig{\Sigma})$.
 \end{corollary}
 \begin{proof}
@@ -3217,7 +3248,7 @@ Both functors are induced by generalized hep-derivors.
 Therefore we compute their composites by means of the compositions $\bGd^{(n)}_{\sig{\Sigma}}\circ\bUf^{(n)}_{\sig{\Sigma}}$ and $\bUf^{(n)}_{\sig{\Sigma}}\circ\bGd^{(n)}_{\sig{\Sigma}}$, see Definition~\ref{DGenHepDerivorCompId}, Proposition~\ref{PGenHepDerivorComp} and Corollary~\ref{CGenHepDerivorCompEqual}.
 We start by proving that the composite of the unification derivor and the graduation derivor is the identity.
 
-\begin{proposition}\label{PGdUfDerivorId}
+\begin{proposition}\label{PGdUfDerivorId}\lean{CategorialAlgebras.Presentations.unification_comp_graduation}
 The following equality holds in $\mathsf{HSig}_{\gd}$
 $$
 \bGd^{(n)}_{\sig{\Sigma}}\circ\bUf^{(n)}_{\sig{\Sigma}}=\id_{\sig{\Sigma}^{(n)}}.
@@ -3255,7 +3286,7 @@ Since the domains of $\id_{\sig{\Sigma}^{(n)}}$ are also empty, the two claims g
 
 From the above proposition we obtain that graduation followed by unification is the identity functor.
 
-\begin{corollary}\label{CUfGdId}
+\begin{corollary}\label{CUfGdId}\lean{CategorialAlgebras.Presentations.homogeneousPresentationRoundTrip}
 The following equality holds
 $$
 \Uf^{(n)}_{\sig{\Sigma}}\circ\Gd^{(n)}_{\sig{\Sigma}}=\Id_{\mathsf{nCatAlg}(\sig{\Sigma})}.
@@ -3279,7 +3310,7 @@ and, by the same results, $\Uf^{(n)}_{\sig{\Sigma}}(\Gd^{(n)}_{\sig{\Sigma}}(F))
 In contrast to the previous result, the process of unification followed by that of graduation does not give rise to the identity functor on the category of heterogeneous $n$-categorial algebras, since the $k$-cells of $\Gd^{(n)}_{\sig{\Sigma}}(\Uf^{(n)}_{\sig{\Sigma}}(\calg{A}))$ are the $(n,k)$-identities of the $k$-cells of $\calg{A}$.
 However, $\Gd^{(n)}_{\sig{\Sigma}}\circ\Uf^{(n)}_{\sig{\Sigma}}$ is naturally isomorphic to the identity functor.
 
-\begin{proposition}\label{PGdUfIso}
+\begin{proposition}\label{PGdUfIso}\lean{CategorialAlgebras.Presentations.theta,CategorialAlgebras.Presentations.heterogeneousPresentationTheta}
 For every heterogeneous $n$-categorial $\sig{\Sigma}$-algebra $\calg{A}$, let $\theta_{\calg{A}}$ be the family whose component at the sort $(k,s)\in(n+1)\times S$ sends $u\in A_{(k,s)}$ to $\mathrm{i}^{(n,k)\,\calg{A}}_{s}(u)$, where $\mathrm{i}^{(n,n)\,\calg{A}}_{s}$ is the identity of $A_{(n,s)}$.
 Then $\theta=(\theta_{\calg{A}})_{\calg{A}\in\mathrm{Ob}(\mathsf{nCat}^{\htg}\mathsf{Alg}(\sig{\Sigma}))}$ is a natural isomorphism from $\Id_{\mathsf{nCat}^{\htg}\mathsf{Alg}(\sig{\Sigma})}$ to $\Gd^{(n)}_{\sig{\Sigma}}\circ\Uf^{(n)}_{\sig{\Sigma}}$.
 Thus
@@ -3360,7 +3391,7 @@ By Claims~\ref{ClGdUfIsoD} and~\ref{ClGdUfIsoE}, $\theta$ is a natural isomorphi
 
 We prove that graduation is left adjoint to unification, with the identity as unit.
 
-\begin{proposition}\label{PGdUfAdj}
+\begin{proposition}\label{PGdUfAdj}\lean{CategorialAlgebras.Presentations.presentationAdjunction}
 Let $\theta$ be the natural isomorphism from $\Id_{\mathsf{nCat}^{\htg}\mathsf{Alg}(\sig{\Sigma})}$ to $\Gd^{(n)}_{\sig{\Sigma}}\circ\Uf^{(n)}_{\sig{\Sigma}}$ of Proposition~\ref{PGdUfIso}.
 Then $(\Uf^{(n)}_{\sig{\Sigma}},\Gd^{(n)}_{\sig{\Sigma}},\id,\theta^{-1})$ is an adjunction from $\mathsf{nCatAlg}(\sig{\Sigma})$ to $\mathsf{nCat}^{\htg}\mathsf{Alg}(\sig{\Sigma})$, see Definition~\ref{DAdj}, i.e., $\Gd^{(n)}_{\sig{\Sigma}}\dashv\Uf^{(n)}_{\sig{\Sigma}}$, with unit the identity and counit $\theta^{-1}=(\theta^{-1}_{\calg{A}})_{\calg{A}\in\mathrm{Ob}(\mathsf{nCat}^{\htg}\mathsf{Alg}(\sig{\Sigma}))}$.
 \end{proposition}
@@ -3395,7 +3426,7 @@ Hence so is its inverse. This completes the proof.
 
 From Corollary~\ref{CUfGdId} and Propositions~\ref{PGdUfIso} and~\ref{PGdUfAdj} we obtain the following corollary.
 
-\begin{corollary}\label{CGdUfEquiv}
+\begin{corollary}\label{CGdUfEquiv}\lean{CategorialAlgebras.Presentations.presentationEquivalence}
 The functors $\Gd^{(n)}_{\sig{\Sigma}}$ and $\Uf^{(n)}_{\sig{\Sigma}}$ are mutually quasi-inverse equivalences of categories between $\mathsf{nCatAlg}(\sig{\Sigma})$ and $\mathsf{nCat}^{\htg}\mathsf{Alg}(\sig{\Sigma})$, and the adjunction of Proposition~\ref{PGdUfAdj} is an adjoint equivalence.
 \end{corollary}
 \begin{proof}
@@ -3420,7 +3451,7 @@ We begin by defining the discretization derivors, in the homogeneous and in the 
 In the heterogeneous presentation, a cell of dimension $k$ of the discretization is a cell of dimension $k$ of the given algebra if $k\leq m$, and a cell of dimension $m$ if $k>m$.
 Accordingly, every dimension $k\in n+1$ of $\Sigma^{\htg(n)}$ is sent to the dimension $\min\{k,m\}\in m+1$ of $\Sigma^{\htg(m)}$.
 
-\begin{definition}\label{DDsDerivor}
+\begin{definition}\label{DDsDerivor}\lean{CategorialAlgebras.Dimensions.homogeneousDiscretization,CategorialAlgebras.Dimensions.heterogeneousDiscretization}
 If $m<n$, we define the following generalized hep-derivors.
 \begin{enumerate}
 \item The \emph{homogeneous discretization derivor} is the generalized hep-derivor
@@ -3490,7 +3521,7 @@ Let us note that, in the homogeneous case, for every $k\in n$ with $k\geq m$ and
 Thus the $k$-composition of two cells is defined if, and only if, they are equal.
 The next example shows that this restriction cannot in general be represented by a term operation alone.
 
-\begin{example}\label{EDiscretizationDiagonal}
+\begin{example}\label{EDiscretizationDiagonal}\lean{CategorialAlgebras.Dimensions.Diagonal.no_term_domain}
 Suppose that $S=\{s\}$, $\Sigma=\varnothing$, $m=0$ and $n=1$, so that a partial $\Sigma^{(0)}$-algebra is just a set $B$.
 By Definition~\ref{DDsDerivor}, $\bDs^{(1,0)}_{\sig{\Sigma}}$ sends $\src^{0}_{s}$, $\tgt^{0}_{s}$ and $\circ^{0}_{s}$ to the variable $v^{s}_{0}$, and its domains are empty, so that every element of $B$ is a cell.
 By Proposition~\ref{PTransformedAlg}, in $\Ds^{(1,0)}_{\sig{\Sigma}}(B)$ the source and the target are the identity of $B$, and the composition is defined at a pair $(x,y)$ if, and only if, $(x,y)$ satisfies the domain condition $\src^{0}_{s}(v^{(s,s)}_{0})\eeq\tgt^{0}_{s}(v^{(s,s)}_{1})$ of $\circ^{0}_{s}$ in the transformed algebra, i.e., if, and only if, $x=y$, and then $x\circ^{0}_{s}x=x$.
@@ -3500,13 +3531,13 @@ The term $v^{s}_{0}$ that interprets $\circ^{0}_{s}$ is defined at every pair, a
 
 In the heterogeneous case, on the dimensions $k\leq m$, $\bDs^{\htg(n,m)}_{\sig{\Sigma}}$ is the identity, and, for every $s\in S$, every source, target, identity and composition of sort $s$ whose lower dimension $j$ satisfies $j\geq m$ is sent to a variable of sort $(m,s)$.
 
-\begin{definition}\label{DDsFunctor}
+\begin{definition}\label{DDsFunctor}\lean{CategorialAlgebras.Dimensions.homogeneousDiscretizationPartialFunctor,CategorialAlgebras.Dimensions.heterogeneousDiscretizationPartialFunctor}
 The \emph{homogeneous discretization functor} $\Ds^{(n,m)}_{\sig{\Sigma}}$ is the functor $(\bDs^{(n,m)}_{\sig{\Sigma}})^{\ast}_{\gd}$ from $\mathsf{PAlg}(\Sigma^{(m)})$ to $\mathsf{PAlg}(\Sigma^{(n)})$, and the \emph{heterogeneous discretization functor} $\Ds^{\htg(n,m)}_{\sig{\Sigma}}$ is the functor $(\bDs^{\htg(n,m)}_{\sig{\Sigma}})^{\ast}_{\gd}$ from $\mathsf{PAlg}(\Sigma^{\htg(m)})$ to $\mathsf{PAlg}(\Sigma^{\htg(n)})$, see Definition~\ref{DDsDerivor} and Proposition~\ref{PGenHepDerivorFunctor}.
 \end{definition}
 
 In the following lemma we describe the transformed algebras along the discretization derivors.
 
-\begin{lemma}\label{LDsDescription}
+\begin{lemma}\label{LDsDescription}\lean{CategorialAlgebras.Dimensions.homogeneousDiscretizationRealization,CategorialAlgebras.Dimensions.heterogeneousDimensionRealization}
 Assume that $m<n$.
 Then the following statements hold:
 \begin{enumerate}
@@ -3563,7 +3594,7 @@ All in all, by Proposition~\ref{PTransformedEpAlg}, $\Ds^{\htg(n,m)}_{\sig{\Sigm
 
 We next prove that discretization sends categorial algebras to categorial algebras.
 
-\begin{proposition}\label{PDsEpVariety}
+\begin{proposition}\label{PDsEpVariety}\lean{CategorialAlgebras.Dimensions.homogeneousDiscretization_isModel,CategorialAlgebras.Dimensions.heterogeneousDiscretization_isModel}
 The following statements hold:
 \begin{enumerate}
 \item the restriction of $\Ds^{(n,m)}_{\sig{\Sigma}}$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(m)}})$ corestricts to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$; and
@@ -3600,7 +3631,7 @@ For instance, if $h<m\leq j$, then both sides of (EA$^{h,j,k}$4) are $x\circ^{(h
 
 From Proposition~\ref{PDsEpVariety} we obtain the discretization functors between the categories of higher-order categorial algebras.
 
-\begin{corollary}\label{CDsFunctor}
+\begin{corollary}\label{CDsFunctor}\lean{CategorialAlgebras.Dimensions.homogeneousDiscretizationFunctor,CategorialAlgebras.Dimensions.heterogeneousDiscretizationFunctor}
 The restriction of $\Ds^{(n,m)}_{\sig{\Sigma}}$ to $\mathsf{mCatAlg}(\sig{\Sigma})$ corestricts to $\mathsf{nCatAlg}(\sig{\Sigma})$, and the restriction of $\Ds^{\htg(n,m)}_{\sig{\Sigma}}$ to $\mathsf{mCat}^{\htg}\mathsf{Alg}(\sig{\Sigma})$ corestricts to $\mathsf{nCat}^{\htg}\mathsf{Alg}(\sig{\Sigma})$.
 \end{corollary}
 \begin{proof}
@@ -3622,7 +3653,7 @@ By Corollary~\ref{CGenHepDerivorIdFunctor}, $\Ds^{(n,n)}_{\sig{\Sigma}}$ and $\D
 
 We end this section by proving that the discretization derivors and functors compose as expected.
 
-\begin{proposition}\label{PDsDerivorComp}
+\begin{proposition}\label{PDsDerivorComp}\lean{CategorialAlgebras.Dimensions.homogeneousDiscretization_comp,CategorialAlgebras.Dimensions.heterogeneousDiscretization_comp}
 Let $p\in\mathbb{N}$ with $n\leq p$.
 Then the following equalities hold in $\mathsf{HSig}_{\gd}$
 \begin{align*}
@@ -3669,7 +3700,7 @@ Hence, by Corollary~\ref{CGenHepDerivorCompEqual}, the functors induced by the a
 
 We next define the truncation derivors, in the homogeneous and in the heterogeneous presentations.
 
-\begin{definition}\label{DTrDerivor}
+\begin{definition}\label{DTrDerivor}\lean{CategorialAlgebras.Dimensions.homogeneousTruncation,CategorialAlgebras.Dimensions.heterogeneousTruncation}
 If $m<n$, we define the following generalized hep-derivors.
 \begin{enumerate}
 \item The \emph{homogeneous truncation derivor} is the generalized hep-derivor
@@ -3709,13 +3740,13 @@ For $m=n$, we let $\bTr^{(n,n)}_{\sig{\Sigma}}$ and $\bTr^{\htg(n,n)}_{\sig{\Sig
 
 Let us note that, by Definition~\ref{DDomainSet}, for every partial $\Sigma^{(n)}$-algebra $\mathbf{B}$ and every $s\in S$, the cells of sort $s$ of $\mathbf{B}$ relative to $\bTr^{(m,n)}_{\sig{\Sigma}}$ are its $m$-cells of sort $s$, i.e., the elements $x$ of $B_{s}$ such that $x=\src^{m\,\mathbf{B}}_{s}(x)$, and that, for every partial $\Sigma^{\htg(n)}$-algebra $\mathbf{B}$, the cells of sort $(k,s)$ of $\mathbf{B}$ relative to $\bTr^{\htg(m,n)}_{\sig{\Sigma}}$ are all the elements of $B_{(k,s)}$.
 
-\begin{definition}\label{DTrFunctor}
+\begin{definition}\label{DTrFunctor}\lean{CategorialAlgebras.Dimensions.homogeneousTruncationPartialFunctor,CategorialAlgebras.Dimensions.heterogeneousTruncationPartialFunctor}
 The \emph{homogeneous truncation functor} $\Tr^{(m,n)}_{\sig{\Sigma}}$ is the functor $(\bTr^{(m,n)}_{\sig{\Sigma}})^{\ast}_{\gd}$ from $\mathsf{PAlg}(\Sigma^{(n)})$ to $\mathsf{PAlg}(\Sigma^{(m)})$, and the \emph{heterogeneous truncation functor} $\Tr^{\htg(m,n)}_{\sig{\Sigma}}$ is the functor $(\bTr^{\htg(m,n)}_{\sig{\Sigma}})^{\ast}_{\gd}$ from $\mathsf{PAlg}(\Sigma^{\htg(n)})$ to $\mathsf{PAlg}(\Sigma^{\htg(m)})$, see Definition~\ref{DTrDerivor} and Proposition~\ref{PGenHepDerivorFunctor}.
 \end{definition}
 
 In the following lemma we prove that the $m$-cells of a homogeneous $n$-categorial $\sig{\Sigma}$-algebra are closed under the operations of $\Sigma^{(m)}$.
 
-\begin{lemma}\label{LTrCells}
+\begin{lemma}\label{LTrCells}\lean{CategorialAlgebras.Dimensions.homogeneousTruncation_transformed}
 Assume that $m<n$ and let $\mathbf{B}$ be an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$.
 Then the following statements hold:
 \begin{enumerate}
@@ -3734,7 +3765,7 @@ Then the following statements hold:
 
 We next prove that truncation sends categorial algebras to categorial algebras.
 
-\begin{proposition}\label{PTrEpVariety}
+\begin{proposition}\label{PTrEpVariety}\lean{CategorialAlgebras.Dimensions.homogeneousTruncation_isModel,CategorialAlgebras.Dimensions.heterogeneousTruncation_isModel}
 The following statements hold:
 \begin{enumerate}
 \item the restriction of $\Tr^{(m,n)}_{\sig{\Sigma}}$ to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$ corestricts to $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(m)}})$; and
@@ -3763,7 +3794,7 @@ Moreover, the axioms of $\spec{C}^{\sig{\Sigma}^{\htg(m)}}$ are axioms of $\spec
 
 From Proposition~\ref{PTrEpVariety} we obtain the truncation functors between the categories of higher-order categorial algebras.
 
-\begin{corollary}\label{CTrFunctor}
+\begin{corollary}\label{CTrFunctor}\lean{CategorialAlgebras.Dimensions.homogeneousTruncationFunctor,CategorialAlgebras.Dimensions.heterogeneousTruncationFunctor}
 The restriction of $\Tr^{(m,n)}_{\sig{\Sigma}}$ to $\mathsf{nCatAlg}(\sig{\Sigma})$ corestricts to $\mathsf{mCatAlg}(\sig{\Sigma})$, and the restriction of $\Tr^{\htg(m,n)}_{\sig{\Sigma}}$ to $\mathsf{nCat}^{\htg}\mathsf{Alg}(\sig{\Sigma})$ corestricts to $\mathsf{mCat}^{\htg}\mathsf{Alg}(\sig{\Sigma})$.
 \end{corollary}
 \begin{proof}
@@ -3784,7 +3815,7 @@ By Corollary~\ref{CGenHepDerivorIdFunctor}, $\Tr^{(n,n)}_{\sig{\Sigma}}$ and $\T
 
 We end this section by proving that the truncation derivors and functors compose as expected; this is the fact used in Chapter~\ref{SProjLimits} to form the projective systems of categorial algebras.
 
-\begin{proposition}\label{PTrComp}
+\begin{proposition}\label{PTrComp}\lean{CategorialAlgebras.Dimensions.heterogeneousTruncation_comp,CategorialAlgebras.Dimensions.homogeneousTruncationModelsComp}
 Let $p\in\mathbb{N}$ with $n\leq p$.
 Then the following equality holds in $\mathsf{HSig}_{\gd}$
 $$
@@ -3834,7 +3865,7 @@ By the note after Definition~\ref{DTrDerivor}, $\Tr^{\htg(m,n)}_{\sig{\Sigma}}(\
 Therefore, by Corollary~\ref{CGenHepDerivorCompEqual} and the above equality in $\mathsf{HSig}_{\gd}$, the stated equality holds on objects and on homomorphisms. This completes the proof.
 \end{proof}
 
-\begin{remark}\label{RTrCompHomogeneous}
+\begin{remark}\label{RTrCompHomogeneous}\lean{CategorialAlgebras.Dimensions.homogeneousTruncation_comp_derivor}
 In Proposition~\ref{PTrComp}, the equality in $\mathsf{HSig}_{\gd}$ is stated only for the heterogeneous truncation derivors, since its homogeneous analogue fails in general.
 In fact, if $m<n<p$, then $\bTr^{(n,p)}_{\sig{\Sigma}}\circ\bTr^{(m,n)}_{\sig{\Sigma}}$ and $\bTr^{(m,p)}_{\sig{\Sigma}}$ have the same underlying derivor but different domains: for every $s\in S$, the domain of sort $s$ of the first one is $\{(v^s_0,\src^n_s(v^s_0)),(v^s_0,\src^m_s(v^s_0))\}$, whereas that of the second one is $\{(v^s_0,\src^m_s(v^s_0))\}$.
 On every $p$-categorial $\sig{\Sigma}$-algebra both domains select the $m$-cells, see Remark~\ref{RSameCellsPattern}.
@@ -3845,7 +3876,7 @@ On every $p$-categorial $\sig{\Sigma}$-algebra both domains select the $m$-cells
 In this section we prove that discretization is left adjoint to truncation and we compute the composite of a discretization followed by a truncation.
 As in Section~\ref{SGdUfRel}, we compute the composites of these functors by composing the corresponding generalized hep-derivors, by means of Corollary~\ref{CGenHepDerivorCompEqual} and Lemma~\ref{LGenHepDerivorSameCells}.
 
-\begin{proposition}\label{PTrDsId}
+\begin{proposition}\label{PTrDsId}\lean{CategorialAlgebras.Dimensions.heterogeneousTruncation_discretization,CategorialAlgebras.Dimensions.homogeneousRoundTripModels}
 The following equality holds in $\mathsf{HSig}_{\gd}$
 $$
 \bDs^{\htg(n,m)}_{\sig{\Sigma}}\circ\bTr^{\htg(m,n)}_{\sig{\Sigma}}=\id_{\sig{\Sigma}^{\htg(m)}},
@@ -3903,7 +3934,7 @@ By Propositions~\ref{PDsEpVariety} and~\ref{PTrEpVariety}, $\Tr^{\htg(m,n)}_{\si
 Hence the equality follows, as in~(1), from Corollary~\ref{CGenHepDerivorCompEqual} and Proposition~\ref{PGenHepDerivorId}. This completes the proof.
 \end{proof}
 
-\begin{remark}\label{RTrDsIdHomogeneous}
+\begin{remark}\label{RTrDsIdHomogeneous}\lean{CategorialAlgebras.Dimensions.homogeneousTruncation_discretization_derivor}
 In Proposition~\ref{PTrDsId}, the equality in $\mathsf{HSig}_{\gd}$ is stated only for the heterogeneous derivors, since its homogeneous analogue fails.
 In fact, if $m<n$, then $\bDs^{(n,m)}_{\sig{\Sigma}}\circ\bTr^{(m,n)}_{\sig{\Sigma}}$ and $\id_{\sig{\Sigma}^{(m)}}$ have the same underlying derivor, the identity derivor, but different domains: for every $s\in S$, the domain of sort $s$ of the first one is $\{(v^s_0,v^s_0)\}$, whereas that of the second one is empty.
 Both domains are satisfied by every element of every partial $\Sigma^{(m)}$-algebra, see Remark~\ref{RSameCellsPattern}.
@@ -3911,7 +3942,7 @@ Both domains are satisfied by every element of every partial $\Sigma^{(m)}$-alge
 
 In the following lemma we introduce the counits of the adjunctions between discretization and truncation.
 
-\begin{lemma}\label{LDsTrCounit}
+\begin{lemma}\label{LDsTrCounit}\lean{CategorialAlgebras.Dimensions.homogeneousCounit,CategorialAlgebras.Dimensions.heterogeneousCounit}
 The following statements hold:
 \begin{enumerate}
 \item for every $n$-categorial $\sig{\Sigma}$-algebra $\calg{B}$, the inclusion $\varepsilon_{\calg{B}}$ of the $m$-cells of $\calg{B}$ into $\calg{B}$ is a homomorphism from $\Ds^{(n,m)}_{\sig{\Sigma}}(\Tr^{(m,n)}_{\sig{\Sigma}}(\calg{B}))$ to $\calg{B}$, natural in $\calg{B}$; and
@@ -3987,7 +4018,7 @@ Since $H$ commutes with the identities, for every $k>m$ and every $s\in S$, $H_{
 
 We are now in a position to prove that discretization is left adjoint to truncation.
 
-\begin{proposition}\label{PDsTrAdj}
+\begin{proposition}\label{PDsTrAdj}\lean{CategorialAlgebras.Dimensions.homogeneousAdjunction,CategorialAlgebras.Dimensions.heterogeneousAdjunction}
 The following statements hold:
 \begin{enumerate}
 \item $(\Tr^{(m,n)}_{\sig{\Sigma}},\Ds^{(n,m)}_{\sig{\Sigma}},\id,\varepsilon)$ is an adjunction from $\mathsf{mCatAlg}(\sig{\Sigma})$ to $\mathsf{nCatAlg}(\sig{\Sigma})$; and
@@ -4025,7 +4056,7 @@ In the heterogeneous case, the components of $\varepsilon^{\htg}_{\Ds^{\htg(n,m)
 
 The composite of a discretization followed by a truncation is a discretization or a truncation, depending on the relative position of the dimensions.
 
-\begin{proposition}\label{PTrDsComp}
+\begin{proposition}\label{PTrDsComp}\lean{CategorialAlgebras.Dimensions.heterogeneousMixed_lower,CategorialAlgebras.Dimensions.heterogeneousMixed_upper}
 Let $p\in\mathbb{N}$ with $n\leq p$.
 Then the following equalities hold in $\mathsf{HSig}_{\gd}$
 \begin{align*}
@@ -4088,7 +4119,7 @@ For every heterogeneous $n$-categorial $\sig{\Sigma}$-algebra $\calg{A}$, by Lem
 Hence the equality follows from Corollary~\ref{CGenHepDerivorCompEqual}. This completes the proof.
 \end{proof}
 
-\begin{remark}\label{RTrDsCompHomogeneous}
+\begin{remark}\label{RTrDsCompHomogeneous}\lean{CategorialAlgebras.Dimensions.homogeneousMixedLowerModels,CategorialAlgebras.Dimensions.homogeneousMixedUpperModels}
 Let $p\in\mathbb{N}$ with $n\leq p$.
 In Proposition~\ref{PTrDsComp}, no equality in $\mathsf{HSig}_{\gd}$ is stated for the homogeneous derivors of item~(1), and the homogeneous equality of item~(2) is stated only for $m<n$, since otherwise they fail.
 In fact, if $n<p$, then $\bDs^{(p,m)}_{\sig{\Sigma}}\circ\bTr^{(n,p)}_{\sig{\Sigma}}$ and $\bDs^{(n,m)}_{\sig{\Sigma}}$ have the same underlying derivor but different domains: for every $s\in S$, the domain of sort $s$ of the first one is $\{(v^s_0,v^s_0)\}$, whereas that of the second one is empty.
@@ -4096,7 +4127,7 @@ For $m=n<p$, the homogeneous equality of item~(2) would state that $\bDs^{(p,n)}
 In both cases the domains are satisfied by every element of every partial algebra, see Remark~\ref{RSameCellsPattern}.
 \end{remark}
 
-\begin{remark}\label{RTrDsCompOverlap}
+\begin{remark}\label{RTrDsCompOverlap}\lean{CategorialAlgebras.Dimensions.homogeneousMixed_upper_derivor}
 Let $p\in\mathbb{N}$ with $n\leq p$.
 In Proposition~\ref{PTrDsComp}, item~(1) describes a discretization followed by a truncation to a dimension at least as large as the initial one, and item~(2) a discretization followed by a truncation to a dimension at most as large as the initial one.
 For $m=n$, both items coincide and recover Proposition~\ref{PTrDsId}, with $n$ and $p$ in place of $m$ and $n$, respectively.
@@ -4112,7 +4143,7 @@ Moreover, for $m=n$ all the statements are trivial, since all the truncation and
 
 We begin with the compatibility of truncation with graduation.
 
-\begin{proposition}\label{PCompatGdTr}
+\begin{proposition}\label{PCompatGdTr}\lean{CategorialAlgebras.Dimensions.truncationGraduationFunctor}
 The following equality holds
 $$
 \Tr^{\htg(m,n)}_{\sig{\Sigma}}\circ\Gd^{(n)}_{\sig{\Sigma}}=\Gd^{(m)}_{\sig{\Sigma}}\circ \Tr^{(m,n)}_{\sig{\Sigma}}.
@@ -4129,7 +4160,7 @@ By Lemma~\ref{LGdDescription} and the note after Definition~\ref{DTrDerivor}, th
 Therefore, by Lemma~\ref{LGenHepDerivorCommSquare}, both are equal, and the same holds for the homomorphisms. This completes the proof.
 \end{proof}
 
-\begin{remark}\label{RCompatGdTrDerivors}
+\begin{remark}\label{RCompatGdTrDerivors}\lean{CategorialAlgebras.Dimensions.truncation_graduation_derivor}
 The equality of Proposition~\ref{PCompatGdTr} does not, in general, come from an equality in $\mathsf{HSig}_{\gd}$.
 By the computation of the domains in its proof, the generalized hep-derivors $\bGd^{(n)}_{\sig{\Sigma}}\circ\bTr^{\htg(m,n)}_{\sig{\Sigma}}$ and $\bTr^{(m,n)}_{\sig{\Sigma}}\circ\bGd^{(m)}_{\sig{\Sigma}}$ are equal if $m=0$ or $m=n$, but not if $0<m<n$.
 Both domains select the same cells of every $n$-categorial $\sig{\Sigma}$-algebra, see Remark~\ref{RSameCellsPattern}.
@@ -4137,7 +4168,7 @@ Both domains select the same cells of every $n$-categorial $\sig{\Sigma}$-algebr
 
 We next consider the compatibility of discretization with graduation.
 
-\begin{proposition}\label{PCompatGdDs}
+\begin{proposition}\label{PCompatGdDs}\lean{CategorialAlgebras.Dimensions.discretizationGraduationFunctor}
 The following equality holds
 $$
 \Gd^{(n)}_{\sig{\Sigma}}\circ\Ds^{(n,m)}_{\sig{\Sigma}}=\Ds^{\htg(n,m)}_{\sig{\Sigma}}\circ\Gd^{(m)}_{\sig{\Sigma}}.
@@ -4154,7 +4185,7 @@ By Lemmas~\ref{LGdDescription} and~\ref{LDsDescription}, these are also the cell
 Therefore, by Lemma~\ref{LGenHepDerivorCommSquare}, both are equal, and the same holds for the homomorphisms. This completes the proof.
 \end{proof}
 
-\begin{remark}\label{RCompatGdDsDerivors}
+\begin{remark}\label{RCompatGdDsDerivors}\lean{CategorialAlgebras.Dimensions.discretization_graduation_derivor}
 The equality of Proposition~\ref{PCompatGdDs} does not, in general, come from an equality in $\mathsf{HSig}_{\gd}$.
 By the computation of the domains in its proof, the generalized hep-derivors $\bDs^{(n,m)}_{\sig{\Sigma}}\circ\bGd^{(n)}_{\sig{\Sigma}}$ and $\bGd^{(m)}_{\sig{\Sigma}}\circ\bDs^{\htg(n,m)}_{\sig{\Sigma}}$ are equal if $m=n$, but not if $m<n$.
 Both domains select the same cells of every $m$-categorial $\sig{\Sigma}$-algebra, see Remark~\ref{RSameCellsPattern}.
@@ -4162,7 +4193,7 @@ Both domains select the same cells of every $m$-categorial $\sig{\Sigma}$-algebr
 
 We next consider the compatibility of discretization with unification.
 
-\begin{proposition}\label{PCompatUfDs}
+\begin{proposition}\label{PCompatUfDs}\lean{CategorialAlgebras.Dimensions.discretization_unification}
 The following equality holds in $\mathsf{HSig}_{\gd}$
 $$
 \bDs^{\htg(n,m)}_{\sig{\Sigma}}\circ\bUf^{(n)}_{\sig{\Sigma}}=\bUf^{(m)}_{\sig{\Sigma}}\circ\bDs^{(n,m)}_{\sig{\Sigma}},
@@ -4200,7 +4231,7 @@ Therefore, by Lemma~\ref{LGenHepDerivorCommSquare}, they are equal, and the same
 
 Finally, truncation commutes with unification only up to a natural isomorphism.
 
-\begin{proposition}\label{PCompatUfTr}
+\begin{proposition}\label{PCompatUfTr}\lean{CategorialAlgebras.Dimensions.truncationUnificationFunctor}
 For every heterogeneous $n$-categorial $\sig{\Sigma}$-algebra $\calg{B}$, let $\beta^{(m,n)}_{\calg{B}}$ stand for the family $(\mathrm{i}^{(n,m)\,\calg{B}}_{s})_{s\in S}$, where $\mathrm{i}^{(n,n)\,\calg{B}}_{s}$ is the identity of $B_{(n,s)}$.
 Then $\beta^{(m,n)}_{\calg{B}}$ is an isomorphism from $\Uf^{(m)}_{\sig{\Sigma}}(\Tr^{\htg(m,n)}_{\sig{\Sigma}}(\calg{B}))$ to $\Tr^{(m,n)}_{\sig{\Sigma}}(\Uf^{(n)}_{\sig{\Sigma}}(\calg{B}))$, and $\beta^{(m,n)}=(\beta^{(m,n)}_{\calg{B}})_{\calg{B}\in\mathrm{Ob}(\mathsf{nCat}^{\htg}\mathsf{Alg}(\sig{\Sigma}))}$ is a natural isomorphism from $\Uf^{(m)}_{\sig{\Sigma}}\circ \Tr^{\htg(m,n)}_{\sig{\Sigma}}$ to $\Tr^{(m,n)}_{\sig{\Sigma}}\circ\Uf^{(n)}_{\sig{\Sigma}}$.
 Thus
@@ -4274,7 +4305,7 @@ In this section we show that graduation, unification, discretization and truncat
 In other words, graduating a discretization gives the same result as discretizing a graduation, and unifying a truncation gives, up to a natural isomorphism, the same result as truncating a unification; that is, changing the dimension and changing the presentation commute.
 The horizontal adjunctions relate the homogeneous and the heterogeneous presentations and the vertical ones relate the dimensions.
 
-\begin{proposition}\label{PAlgSquareFinite}
+\begin{proposition}\label{PAlgSquareFinite}\lean{CategorialAlgebras.Dimensions.dimensionAlgebraicSquare}
 Let
 $$
 \begin{aligned}
@@ -4335,7 +4366,7 @@ By Proposition~\ref{PCompatUfTr}, $\beta^{(m,n)}$ is a natural isomorphism from 
 
 Let us note that the remaining composites of the square also commute, strictly: by Proposition~\ref{PCompatUfDs}, $\Uf^{(n)}_{\sig{\Sigma}}\circ\Ds^{\htg(n,m)}_{\sig{\Sigma}}=\Ds^{(n,m)}_{\sig{\Sigma}}\circ\Uf^{(m)}_{\sig{\Sigma}}$ and, by Proposition~\ref{PCompatGdTr}, $\Tr^{\htg(m,n)}_{\sig{\Sigma}}\circ\Gd^{(n)}_{\sig{\Sigma}}=\Gd^{(m)}_{\sig{\Sigma}}\circ\Tr^{(m,n)}_{\sig{\Sigma}}$.
 
-\begin{remark}\label{RAlgSquareFiniteMate}
+\begin{remark}\label{RAlgSquareFiniteMate}\lean{CategorialAlgebras.Dimensions.truncationUnificationFunctor_eq_conjugate}
 In Proposition~\ref{PAlgSquareFinite}, $\beta^{(m,n)}$ is the natural isomorphism $\beta^{\alpha}$ of Remark~\ref{RAlgSquareMate}.
 In fact, the units of the four adjunctions are identities, see Propositions~\ref{PGdUfAdj} and~\ref{PDsTrAdj}, and $\alpha$ is an identity, so that $\beta^{\alpha}=K\circ G'\ast\varepsilon^{\circ}$, where $\varepsilon^{\circ}=\varepsilon^{\htg}\circ(\Ds^{\htg(n,m)}_{\sig{\Sigma}}\ast\theta^{-1}\ast\Tr^{\htg(m,n)}_{\sig{\Sigma}})$, with $\theta$ the natural isomorphism of Proposition~\ref{PGdUfAdj} in dimension $m$ and $\varepsilon^{\htg}$ the counit of Lemma~\ref{LDsTrCounit}.
 Let $\calg{B}$ be a heterogeneous $n$-categorial $\sig{\Sigma}$-algebra, $s\in S$ and $x$ a cell of sort $s$ of $\Uf^{(m)}_{\sig{\Sigma}}(\Tr^{\htg(m,n)}_{\sig{\Sigma}}(\calg{B}))$, i.e., an element of $B_{(m,s)}$.
@@ -4354,7 +4385,7 @@ Let us recall that, by Remarks~\ref{RCatAlgAsEpAlgOmega} and~\ref{RCatAlgAsEpAlg
 
 We begin by defining the truncation derivors in dimension $\omega$.
 
-\begin{definition}\label{DTrDerivorOmega}
+\begin{definition}\label{DTrDerivorOmega}\lean{CategorialAlgebras.Dimensions.homogeneousOmegaTruncation,CategorialAlgebras.Dimensions.heterogeneousOmegaTruncation}
 Let $n\in\mathbb{N}$.
 \begin{enumerate}
 \item The \emph{homogeneous truncation derivor} in dimension $\omega$ is the generalized hep-derivor
@@ -4395,7 +4426,7 @@ As in the note after Definition~\ref{DTrDerivor}, the cells of a partial $\Sigma
 
 In the following proposition we prove that the truncation derivors in dimension $\omega$ send categorial algebras to categorial algebras.
 
-\begin{proposition}\label{PTrEpVarietyOmega}
+\begin{proposition}\label{PTrEpVarietyOmega}\lean{CategorialAlgebras.Dimensions.homogeneousOmegaTruncation_isModel,CategorialAlgebras.Dimensions.heterogeneousOmegaTruncation_isModel}
 Let $n\in\mathbb{N}$.
 Then the following statements hold, see Definition~\ref{DCorestriction}:
 \begin{enumerate}
@@ -4418,7 +4449,7 @@ Their domain conditions are unchanged, so this reduct is an ep-algebra; the fini
 
 We are now in a position to define the truncation functors in dimension $\omega$.
 
-\begin{definition}\label{DTrFunctorOmega}
+\begin{definition}\label{DTrFunctorOmega}\lean{CategorialAlgebras.Dimensions.homogeneousOmegaTruncationFunctor,CategorialAlgebras.Dimensions.heterogeneousOmegaTruncationFunctor}
 Let $n\in\mathbb{N}$.
 \begin{enumerate}
 \item The \emph{homogeneous truncation functor}
@@ -4440,7 +4471,7 @@ By the proof of Proposition~\ref{PTrEpVarietyOmega}, $\Tr^{\htg(n,\omega)}_{\sig
 
 We next define the discretization derivors in dimension $\omega$.
 
-\begin{definition}\label{DDsDerivorOmega}
+\begin{definition}\label{DDsDerivorOmega}\lean{CategorialAlgebras.Dimensions.homogeneousOmegaDiscretization,CategorialAlgebras.Dimensions.heterogeneousOmegaDiscretization}
 Let $n\in\mathbb{N}$.
 \begin{enumerate}
 \item The \emph{homogeneous discretization derivor} in dimension $\omega$ is the generalized hep-derivor
@@ -4513,7 +4544,7 @@ In fact, by Proposition~\ref{PTransformedAlg}, in both algebras the cells are th
 
 In the following proposition we prove that the discretization derivors in dimension $\omega$ send categorial algebras to categorial algebras.
 
-\begin{proposition}\label{PDsEpVarietyOmega}
+\begin{proposition}\label{PDsEpVarietyOmega}\lean{CategorialAlgebras.Dimensions.homogeneousOmegaDiscretization_isModel,CategorialAlgebras.Dimensions.heterogeneousOmegaDiscretization_isModel}
 Let $n\in\mathbb{N}$.
 Then the following statements hold, see Definition~\ref{DCorestriction}:
 \begin{enumerate}
@@ -4537,7 +4568,7 @@ It holds in the reduct by Proposition~\ref{PDsEpVariety}, and therefore in the t
 
 In the homogeneous case, the transformed algebras have, moreover, finite-dimensional cells.
 
-\begin{corollary}\label{CDsCellsOmega}
+\begin{corollary}\label{CDsCellsOmega}\lean{CategorialAlgebras.Dimensions.homogeneousOmegaDiscretization_finite}
 Let $n\in\mathbb{N}$ and $\mathbf{B}$ an object in $\mathsf{EPAlg}(\spec{C}^{\sig{\Sigma}^{(n)}})$.
 Then every cell of $(\bDs^{(\omega,n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\mathbf{B})$ is an $n$-cell, so that $(\bDs^{(\omega,n)}_{\sig{\Sigma}})^{\ast}_{\gd}(\mathbf{B})$ is an object in $\omega\mathsf{CatAlg}(\sig{\Sigma})$.
 \end{corollary}
@@ -4548,7 +4579,7 @@ Therefore, by Proposition~\ref{PDsEpVarietyOmega} and Remark~\ref{RCatAlgAsEpAlg
 
 We are now in a position to define the discretization functors in dimension $\omega$.
 
-\begin{definition}\label{DDsFunctorOmega}
+\begin{definition}\label{DDsFunctorOmega}\lean{CategorialAlgebras.Dimensions.homogeneousOmegaDiscretizationFunctor,CategorialAlgebras.Dimensions.heterogeneousOmegaDiscretizationFunctor}
 Let $n\in\mathbb{N}$.
 \begin{enumerate}
 \item The \emph{homogeneous discretization functor}
@@ -4570,7 +4601,7 @@ By the above note, Lemma~\ref{LDsDescription} and Proposition~\ref{PGenHepDerivo
 
 In the following remark we collect the relations between these functors and the finite-dimensional ones.
 
-\begin{remark}\label{RDsTrCompOmega}
+\begin{remark}\label{RDsTrCompOmega}\lean{CategorialAlgebras.Dimensions.homogeneousOmegaMixedLowerFunctor,CategorialAlgebras.Dimensions.homogeneousOmegaMixedUpperFunctor}
 Let $m\in\mathbb{N}$.
 For $n\in\mathbb{N}$, let $F_{n}=\Ds^{(n,m)}_{\sig{\Sigma}}$, if $m\leq n$, and $F_{n}=\Tr^{(n,m)}_{\sig{\Sigma}}$, if $n\leq m$, and let $F^{\htg}_{n}$ be defined in the same way with the heterogeneous functors.
 Then the following statements hold:
@@ -4589,7 +4620,7 @@ This gives a common description in dimension $\omega$, including the homogeneous
 Moreover, the universal property of the projective limit is the tool that we use in Chapter~\ref{SFunctorsOmega} to obtain the graduation functor in dimension $\omega$ from the finite-dimensional ones.
 We begin by introducing the projective systems, and we then prove the universal property of the projective limits and the form in which we use it.
 
-\begin{remark}\label{RTrProjSystem}
+\begin{remark}\label{RTrProjSystem}\lean{CategorialAlgebras.Limits.homogeneousSystem,CategorialAlgebras.Limits.heterogeneousSystem}
 By Definition~\ref{DTrDerivor} and Corollary~\ref{CGenHepDerivorIdFunctor}, for every $n\in\omega$, $\Tr^{(n,n)}_{\sig{\Sigma}}$ and $\Tr^{\htg(n,n)}_{\sig{\Sigma}}$ are identities and, by Proposition~\ref{PTrComp}, for all $m,n,p\in\omega$ with $m\leq n\leq p$, $\Tr^{(m,n)}_{\sig{\Sigma}}\circ \Tr^{(n,p)}_{\sig{\Sigma}}=\Tr^{(m,p)}_{\sig{\Sigma}}$ and $\Tr^{\htg(m,n)}_{\sig{\Sigma}}\circ \Tr^{\htg(n,p)}_{\sig{\Sigma}}=\Tr^{\htg(m,p)}_{\sig{\Sigma}}$.
 Therefore we obtain two projective systems of categories, $((\mathsf{nCatAlg}(\sig{\Sigma}))_{n\in\omega},(\Tr^{(m,n)}_{\sig{\Sigma}})_{m\leq n})$ and $((\mathsf{nCat}^{\htg}\mathsf{Alg}(\sig{\Sigma}))_{n\in\omega},(\Tr^{\htg(m,n)}_{\sig{\Sigma}})_{m\leq n})$.
 By Remark~\ref{RDsTrCompOmega}, the truncation functors from dimension $\omega$ form cones over them.
@@ -4597,7 +4628,7 @@ By Remark~\ref{RDsTrCompOmega}, the truncation functors from dimension $\omega$ 
 
 It remains to prove that these cones satisfy the universal property.
 
-\begin{proposition}\label{PProjLimit}
+\begin{proposition}\label{PProjLimit}\lean{CategorialAlgebras.Limits.homogeneousProjectiveLimit,CategorialAlgebras.Limits.heterogeneousProjectiveLimit}
 Let $\mathsf{L}$ be a category.
 Then the following statements hold:
 \begin{enumerate}
@@ -4707,7 +4738,7 @@ Then, as in~(1), the functor $\langle F_{k}\rangle_{k\in\omega}$ is defined by $
 
 We use the universal property in the following form.
 
-\begin{corollary}\label{CProjLimitNat}
+\begin{corollary}\label{CProjLimitNat}\lean{CategorialAlgebras.Limits.homogeneousHomEquiv,CategorialAlgebras.Limits.homogeneousNatTransEquiv}
 Let $\mathsf{L}$ be a category.
 Then the following statements hold:
 \begin{enumerate}
@@ -4731,7 +4762,7 @@ If every $\varphi^{n}_{X}$ is an isomorphism, then the inverses $(\varphi^{n}_{X
 
 The same holds in the heterogeneous presentation.
 
-\begin{corollary}\label{CProjLimitNatHtg}
+\begin{corollary}\label{CProjLimitNatHtg}\lean{CategorialAlgebras.Limits.heterogeneousHomEquiv,CategorialAlgebras.Limits.heterogeneousNatTransEquiv}
 Let $\mathsf{L}$ be a category.
 Then the following statements hold:
 \begin{enumerate}
@@ -4757,7 +4788,7 @@ We end this chapter by showing that these adjunctions form an algebraic square b
 
 In the following lemma we prove that the finite-dimensional graduation functors give rise to a compatible family.
 
-\begin{lemma}\label{LCompatGdTrOmega}
+\begin{lemma}\label{LCompatGdTrOmega}\lean{CategorialAlgebras.Omega.graduationFamily}
 For all $m,n\in\mathbb{N}$ with $m\leq n$, the following equality holds
 $$
 \Tr^{\htg(m,n)}_{\sig{\Sigma}}\circ\Gd^{(n)}_{\sig{\Sigma}}\circ \Tr^{(n,\omega)}_{\sig{\Sigma}}=\Gd^{(m)}_{\sig{\Sigma}}\circ \Tr^{(m,\omega)}_{\sig{\Sigma}}.
@@ -4777,7 +4808,7 @@ The following chain of equalities holds
 The equality~(1) follows from Proposition~\ref{PCompatGdTr}, and the equality~(2) follows from Remark~\ref{RDsTrCompOmega}~(1).
 \end{proof}
 
-\begin{remark}\label{RCompatGdTrOmegaDerivors}
+\begin{remark}\label{RCompatGdTrOmegaDerivors}\lean{CategorialAlgebras.Omega.graduation_compatibility_derivor,CategorialAlgebras.Omega.graduation_compatibility_ne}
 The equality of Lemma~\ref{LCompatGdTrOmega} does not, in general, come from an equality in $\mathsf{HSig}_{\gd}$.
 Its two sides are induced by the generalized hep-derivors $\bTr^{(n,\omega)}_{\sig{\Sigma}}\circ\bGd^{(n)}_{\sig{\Sigma}}\circ\bTr^{\htg(m,n)}_{\sig{\Sigma}}$ and $\bTr^{(m,\omega)}_{\sig{\Sigma}}\circ\bGd^{(m)}_{\sig{\Sigma}}$ from $\sig{\Sigma}^{\htg(m)}$ to $\sig{\Sigma}^{(\omega)}$, which have the same underlying derivor: both mappings on sorts send $(k,s)$ to $s$, and, since the truncation derivors are inclusions, both send every operation symbol of $\Sigma^{\htg(m)}$ to the term assigned to it in Definition~\ref{DGdDerivor}, which does not depend on the dimension of the graduation derivor.
 However, if $m<n$, then, by Definitions~\ref{DGenHepDerivorCompId}, \ref{DGdDerivor}, \ref{DTrDerivor} and~\ref{DTrDerivorOmega}, for every $s\in S$, the domain of sort $(k,s)$ of the first one is $\{(v^s_0,\src^n_s(v^s_0)),(v^s_0,\src^k_s(v^s_0))\}$, for every $k\leq m$, whereas that of the second one is $\{(v^s_0,\src^m_s(v^s_0)),(v^s_0,\src^k_s(v^s_0))\}$, if $k<m$, and $\{(v^s_0,\src^m_s(v^s_0))\}$, if $k=m$.
@@ -4787,7 +4818,7 @@ On every $\omega$-categorial $\sig{\Sigma}$-algebra both domains of sort $(k,s)$
 
 We are now in a position to define the graduation functor in dimension $\omega$.
 
-\begin{definition}\label{DGdFunctorOmega}
+\begin{definition}\label{DGdFunctorOmega}\lean{CategorialAlgebras.Omega.graduationFunctor,CategorialAlgebras.Omega.graduation_unique_induced}
 The \emph{graduation functor}
 $$
 \Gd^{(\omega)}_{\sig{\Sigma}}\colon\omega\mathsf{CatAlg}(\sig{\Sigma})\mor\omega\mathsf{Cat}^{\htg}\mathsf{Alg}(\sig{\Sigma})
@@ -4804,7 +4835,7 @@ Explicitly, by Claim~\ref{ClProjLimitHtgA} in the proof of Proposition~\ref{PPro
 We next consider unification.
 In contrast with graduation, it cannot be obtained in the same way.
 
-\begin{remark}\label{RUfNotDerivorOmega}
+\begin{remark}\label{RUfNotDerivorOmega}\lean{CategorialAlgebras.Omega.unification_not_induced}
 If $S\neq\varnothing$, the unification functor cannot be obtained as the functor induced by a generalized hep-derivor.
 In fact, let $\mathbf{c}=(\varphi,c,\Dom^{(\varphi,c)})$ be a generalized hep-derivor from $\sig{\Sigma}^{(\omega)}$ to $\sig{\Sigma}^{\htg(\omega)}$; then, for every heterogeneous $\omega$-categorial $\sig{\Sigma}$-algebra $\calg{A}$ and every $s\in S$, the cells of sort $s$ of $\mathbf{c}^{\ast}_{\gd}(\calg{A})$ are elements of the single carrier $A_{\varphi(s)}$ of $\calg{A}$.
 Let $s\in S$ and $\varphi(s)=(k,s')$, and let $\mathsf{M}$ be the heterogeneous $\omega$-category with exactly one cell in every dimension up to $k$, whose $(k+1)$-cells form the two-element monoid $\{e,f\}$, with $f\circ f=f$, for all the compositions, and whose cells of dimension greater than $k+1$ are the identities of the $(k+1)$-cells.
@@ -4818,7 +4849,7 @@ These isomorphisms, however, are the inclusions of an inductive system of sets o
 
 We begin by defining the $\omega$-cells of a heterogeneous $\omega$-categorial $\sig{\Sigma}$-algebra.
 
-\begin{definition}\label{DUfCellsOmega}
+\begin{definition}\label{DUfCellsOmega}\lean{CategorialAlgebras.Omega.Cell,CategorialAlgebras.Omega.cellSetoid}
 Let $\calg{B}$ be a heterogeneous $\omega$-categorial $\sig{\Sigma}$-algebra and $s\in S$.
 The set of \emph{$\omega$-cells} of sort $s$ of $\calg{B}$ is $\coprod_{k\in\omega}B_{(k,s)}$, whose elements are the pairs $(x,k)$ with $k\in\omega$ and $x\in B_{(k,s)}$.
 We let $\Theta_{s}$ be the binary relation on $\coprod_{k\in\omega}B_{(k,s)}$ defined by $((x,j),(y,k))\in\Theta_{s}$ if
@@ -4833,7 +4864,7 @@ We let $[B]_{s}$ stand for the quotient set $\coprod_{k\in\omega}B_{(k,s)}/\Thet
 
 In the following lemma we collect the properties of the $\omega$-cells that we need.
 
-\begin{lemma}\label{LUfCellsOmega}
+\begin{lemma}\label{LUfCellsOmega}\lean{CategorialAlgebras.Omega.cell_inductive_limit,CategorialAlgebras.Omega.cellIn_injective}
 Let $\calg{B}$ be a heterogeneous $\omega$-categorial $\sig{\Sigma}$-algebra and $s\in S$.
 Then the following statements hold:
 \begin{enumerate}
@@ -4860,7 +4891,7 @@ $$
 that is, $\Uf^{(n)}_{\sig{\Sigma}}(\Tr^{\htg(n,\omega)}_{\sig{\Sigma}}(\calg{B}))$ is, up to $\mathrm{i}^{(n',n)}$, the algebra of the $n$-cells of $\Uf^{(n')}_{\sig{\Sigma}}(\Tr^{\htg(n',\omega)}_{\sig{\Sigma}}(\calg{B}))$.
 We next define the unification of $\calg{B}$.
 
-\begin{definition}\label{DUfFunctorOmega}
+\begin{definition}\label{DUfFunctorOmega}\lean{CategorialAlgebras.Omega.unifiedAlgebra}
 Let $\calg{B}$ be a heterogeneous $\omega$-categorial $\sig{\Sigma}$-algebra.
 The \emph{unification} of $\calg{B}$ is the partial $\Sigma^{(\omega)}$-algebra $\Uf^{(\omega)}_{\sig{\Sigma}}(\calg{B})$ with underlying $S$-sorted set $[B]=([B]_{s})_{s\in S}$ in which, for every operation symbol $\tau$ of $\Sigma^{(\omega)}$, of arity $\mathbf{s}$ and coarity $s$, and every family $([x_{j}]_{p})_{j\in\bb{\mathbf{s}}}$ of $\omega$-cell classes represented in a common level $p$ such that $\tau$ is an operation symbol of $\Sigma^{(p)}$, $([x_{j}]_{p})_{j\in\bb{\mathbf{s}}}\in\Dom(\tau^{\Uf^{(\omega)}_{\sig{\Sigma}}(\calg{B})})$ if, and only if, $(x_{j})_{j\in\bb{\mathbf{s}}}\in\Dom(\tau^{\Uf^{(p)}_{\sig{\Sigma}}(\Tr^{\htg(p,\omega)}_{\sig{\Sigma}}(\calg{B}))})$, and then
 $$
@@ -4871,7 +4902,7 @@ For a heterogeneous $\omega$-categorial $\sig{\Sigma}$-homomorphism $F\colon\cal
 
 In the following lemma we prove that the above definition is correct.
 
-\begin{lemma}\label{LUfWellDefOmega}
+\begin{lemma}\label{LUfWellDefOmega}\lean{CategorialAlgebras.Omega.unifiedHom}
 Let $\calg{B}$ be a heterogeneous $\omega$-categorial $\sig{\Sigma}$-algebra and $F$ a heterogeneous $\omega$-categorial $\sig{\Sigma}$-homomorphism.
 Then $\Uf^{(\omega)}_{\sig{\Sigma}}(\calg{B})$ and $\Uf^{(\omega)}_{\sig{\Sigma}}(F)$ are well defined.
 \end{lemma}
@@ -4890,7 +4921,7 @@ In other words, the underlying $S$-sorted set of $\Uf^{(\omega)}_{\sig{\Sigma}}(
 Since these algebras live in categories of different dimensions, we do not claim a universal property of $\Uf^{(\omega)}_{\sig{\Sigma}}(\calg{B})$ in a category of categorial algebras; the term inductive limit refers only to the sets of cells.
 In the following proposition we prove that it is an $\omega$-categorial $\sig{\Sigma}$-algebra.
 
-\begin{proposition}\label{PUfFunctorOmega}
+\begin{proposition}\label{PUfFunctorOmega}\lean{CategorialAlgebras.Omega.unified_isModel,CategorialAlgebras.Omega.unificationFunctor}
 Let $\calg{B}$ be a heterogeneous $\omega$-categorial $\sig{\Sigma}$-algebra.
 Then $\Uf^{(\omega)}_{\sig{\Sigma}}(\calg{B})$ is an $\omega$-categorial $\sig{\Sigma}$-algebra whose $k$-cells of sort $s$ are the classes $[x]_{k}$, with $x\in B_{(k,s)}$, and, for every $n\in\omega$, $\mathrm{in}^{[n]}=(\mathrm{in}^{[n]}_{s})_{s\in S}$ is an isomorphism, natural in $\calg{B}$, from $\Uf^{(n)}_{\sig{\Sigma}}(\Tr^{\htg(n,\omega)}_{\sig{\Sigma}}(\calg{B}))$ onto $\Tr^{(n,\omega)}_{\sig{\Sigma}}(\Uf^{(\omega)}_{\sig{\Sigma}}(\calg{B}))$.
 Moreover, $\Uf^{(\omega)}_{\sig{\Sigma}}$ is a functor from $\omega\mathsf{Cat}^{\htg}\mathsf{Alg}(\sig{\Sigma})$ to $\omega\mathsf{CatAlg}(\sig{\Sigma})$, the \emph{unification functor}.
@@ -4958,7 +4989,7 @@ Explicitly, for every $s\in S$, every $p\in\omega$ and every $x,y\in B_{(p,s)}$,
 In this section we prove that the $\omega$-dimensional functors are related as the finite-dimensional ones.
 We begin with graduation and unification.
 
-\begin{proposition}\label{PGdUfIsoOmega}
+\begin{proposition}\label{PGdUfIsoOmega}\lean{CategorialAlgebras.Omega.zeta,CategorialAlgebras.Omega.theta}
 For every $\omega$-categorial $\sig{\Sigma}$-algebra $\calg{A}$, let $\zeta_{\calg{A}}$ be the family whose component at the sort $s\in S$ sends a class $[x]_{k}$ of $\Uf^{(\omega)}_{\sig{\Sigma}}(\Gd^{(\omega)}_{\sig{\Sigma}}(\calg{A}))$ to $x$; and, for every heterogeneous $\omega$-categorial $\sig{\Sigma}$-algebra $\calg{B}$, let $\theta_{\calg{B}}$ be the family $(\mathrm{in}^{[k]}_{s})_{(k,s)\in\omega\times S}$, which sends $x\in B_{(k,s)}$ to $[x]_{k}$, see Definition~\ref{DUfCellsOmega}.
 Then $\zeta=(\zeta_{\calg{A}})_{\calg{A}}$ is a natural isomorphism from $\Uf^{(\omega)}_{\sig{\Sigma}}\circ\Gd^{(\omega)}_{\sig{\Sigma}}$ to $\Id_{\omega\mathsf{CatAlg}(\sig{\Sigma})}$ and $\theta=(\theta_{\calg{B}})_{\calg{B}}$ is a natural isomorphism from $\Id_{\omega\mathsf{Cat}^{\htg}\mathsf{Alg}(\sig{\Sigma})}$ to $\Gd^{(\omega)}_{\sig{\Sigma}}\circ\Uf^{(\omega)}_{\sig{\Sigma}}$.
 In particular, the following natural isomorphisms hold
@@ -5018,7 +5049,7 @@ All in all, the statement follows from Claims~\ref{ClGdUfIsoOmegaA} and~\ref{ClG
 
 From the above proposition we obtain that graduation and unification are equivalences also in dimension $\omega$.
 
-\begin{corollary}\label{CGdUfEquivOmega}
+\begin{corollary}\label{CGdUfEquivOmega}\lean{CategorialAlgebras.Omega.presentationEquivalence}
 The functors $\Gd^{(\omega)}_{\sig{\Sigma}}$ and $\Uf^{(\omega)}_{\sig{\Sigma}}$ are mutually quasi-inverse equivalences of categories.
 More precisely, let $\zeta$ and $\theta$ be the natural isomorphisms of Proposition~\ref{PGdUfIsoOmega}.
 Then $(\Uf^{(\omega)}_{\sig{\Sigma}},\Gd^{(\omega)}_{\sig{\Sigma}},\zeta^{-1},\theta^{-1})$ is an adjoint equivalence, i.e., $\Gd^{(\omega)}_{\sig{\Sigma}}$ is left adjoint to $\Uf^{(\omega)}_{\sig{\Sigma}}$ with unit $\zeta^{-1}$ and counit $\theta^{-1}$.
@@ -5047,7 +5078,7 @@ This completes the proof.
 
 We next consider discretization and truncation.
 
-\begin{proposition}\label{PDsTrAdjOmega}
+\begin{proposition}\label{PDsTrAdjOmega}\lean{CategorialAlgebras.Omega.homogeneousRoundTripFunctor,CategorialAlgebras.Omega.homogeneousAdjunction,CategorialAlgebras.Omega.heterogeneousAdjunction}
 Let $m\in\mathbb{N}$.
 Then $\Tr^{(m,\omega)}_{\sig{\Sigma}}\circ\Ds^{(\omega,m)}_{\sig{\Sigma}}=\Id_{\mathsf{mCatAlg}(\sig{\Sigma})}$ and $\Ds^{(\omega,m)}_{\sig{\Sigma}}$ is left adjoint to $\Tr^{(m,\omega)}_{\sig{\Sigma}}$, with the identity as unit and, as counit, the natural transformation $\varepsilon$ whose component at an $\omega$-categorial $\sig{\Sigma}$-algebra $\calg{B}$ is the inclusion of the $m$-cells.
 The same holds for $\Ds^{\htg(\omega,m)}_{\sig{\Sigma}}$ and $\Tr^{\htg(m,\omega)}_{\sig{\Sigma}}$, the component of the counit at a heterogeneous $\omega$-categorial $\sig{\Sigma}$-algebra $\calg{B}$ and at the sort $(k,s)$ being the identity of $B_{(k,s)}$, if $k\leq m$, and $\mathrm{i}^{(k,m)\,\calg{B}}_{s}$, if $k>m$.
@@ -5080,7 +5111,7 @@ And the components of $\varepsilon^{\htg}_{\Ds^{\htg(\omega,m)}_{\sig{\Sigma}}(\
 
 In this section we show that the algebraic square of Proposition~\ref{PAlgSquareFinite} also exists between a finite dimension and $\omega$.
 
-\begin{proposition}\label{PAlgSquareOmega}
+\begin{proposition}\label{PAlgSquareOmega}\lean{CategorialAlgebras.Omega.dimensionAlgebraicSquare}
 Let $m\in\mathbb{N}$, and let
 $$
 \begin{aligned}
@@ -5117,7 +5148,7 @@ Finally, we prove that $\beta$ is a natural isomorphism.
 By Proposition~\ref{PUfFunctorOmega}, $\mathrm{in}^{[m]}$ is a natural isomorphism from $\Uf^{(m)}_{\sig{\Sigma}}\circ \Tr^{\htg(m,\omega)}_{\sig{\Sigma}}$ to $\Tr^{(m,\omega)}_{\sig{\Sigma}}\circ\Uf^{(\omega)}_{\sig{\Sigma}}$. This completes the proof.
 \end{proof}
 
-\begin{remark}\label{RAlgSquareOmegaMate}
+\begin{remark}\label{RAlgSquareOmegaMate}\lean{CategorialAlgebras.Omega.truncationUnificationFunctor_eq_conjugate}
 Also in Proposition~\ref{PAlgSquareOmega}, $\beta=\mathrm{in}^{[m]}$ is the natural isomorphism $\beta^{\alpha}$ of Remark~\ref{RAlgSquareMate}.
 In fact, $\alpha$ is an identity and the unit of $\Ds^{(\omega,m)}_{\sig{\Sigma}}\dashv\Tr^{(m,\omega)}_{\sig{\Sigma}}$ is the identity, so that the unit of the composite adjunction is $\eta^{\circ}=\Tr^{(m,\omega)}_{\sig{\Sigma}}\ast\zeta^{-1}\ast\Ds^{(\omega,m)}_{\sig{\Sigma}}$, and
 $$
@@ -5152,7 +5183,7 @@ We first consider the finite dimensions and then the dimension $\omega$.
 We first fix the notation for the terms of $\Lambda$ inside the categorial signatures determined by $\Lambda$.
 Since, for every $n\in\mathbb{N}$, $\Lambda\subseteq\Lambda^{(n)}$ and every operation symbol $\tau$ of $\Lambda$ has a copy $\tau_{k}$ in $\Lambda^{\htg(n)}$, for every $k\in n+1$, the terms of $\Lambda$ can be regarded as terms of these signatures by means of the following derivors.
 
-\begin{definition}\label{DInclusionDerivors}
+\begin{definition}\label{DInclusionDerivors}\lean{CategorialAlgebras.ChangeOfSignature.homogeneousInclusion,CategorialAlgebras.ChangeOfSignature.heterogeneousInclusion}
 Let $n\in\mathbb{N}$.
 \begin{enumerate}
 \item The \emph{homogeneous inclusion derivor} is the derivor $\boldsymbol{\iota}^{(n)}=(\id_{T},\iota^{(n)})$ from $(T,\Lambda)$ to $(T,\Lambda^{(n)})$ that sends every $\tau\in\Lambda_{\mathbf{t},t}$ to $\tau((v^{\mathbf{t}}_{p})_{p\in\bb{\mathbf{t}}})$.
@@ -5172,7 +5203,7 @@ Since $\Lambda^{\htg(n)}$ embeds canonically into $\Lambda^{\htg(m)}$, for $n\le
 
 We next define the generalized hep-derivors determined by a derivor.
 
-\begin{definition}\label{DChangeSigDerivor}
+\begin{definition}\label{DChangeSigDerivor}\lean{CategorialAlgebras.ChangeOfSignature.homogeneous,CategorialAlgebras.ChangeOfSignature.heterogeneous}
 Let $n\in\mathbb{N}$.
 \begin{enumerate}
 \item The \emph{homogeneous $n$-categorial derivor determined by $\mathbf{c}$} is the generalized hep-derivor
@@ -5208,7 +5239,7 @@ For $n=0$, since $\Sigma^{(0)}=\Sigma$ and $\Lambda^{(0)}=\Lambda$, $\mathbf{c}^
 In the following lemma we prove that, in a higher-order categorial algebra, the term operations of the terms of the base signature $\Lambda$, which are total, are higher-order functors.
 This does not extend to arbitrary terms of $\Lambda^{(n)}$, which may contain partial compositions.
 
-\begin{lemma}\label{LTermOpCatAlg}
+\begin{lemma}\label{LTermOpCatAlg}\lean{CategorialAlgebras.Homogeneous.CategorialAlgebra.termFunctor,CategorialAlgebras.Heterogeneous.CategorialAlgebra.termFunctor}
 Let $n\in\mathbb{N}$, $\mathbf{t}\in T^{\star}$, $t\in T$ and $P\in\mathrm{T}_{\Lambda}(\vs{\mathbf{t}})_{t}$.
 Then the following statements hold:
 \begin{enumerate}
@@ -5303,7 +5334,7 @@ Hence the proof is the same as that of~(1), by induction on $P$, with the operat
 
 We next prove that the generalized hep-derivors of Definition~\ref{DChangeSigDerivor} send categorial algebras to categorial algebras.
 
-\begin{proposition}\label{PChangeSigEpVariety}
+\begin{proposition}\label{PChangeSigEpVariety}\lean{CategorialAlgebras.ChangeOfSignature.homogeneous_isModel,CategorialAlgebras.ChangeOfSignature.heterogeneous_isModel}
 Let $n\in\mathbb{N}$.
 Then the following statements hold:
 \begin{enumerate}
@@ -5345,7 +5376,7 @@ As for the axioms, (EA0) holds by Lemma~\ref{LTermOpCatAlg}~(2); the axioms (EA$
 
 From Proposition~\ref{PChangeSigEpVariety} we obtain the functors induced by a derivor between the categories of higher-order categorial algebras.
 
-\begin{corollary}\label{CChangeSigFunctor}
+\begin{corollary}\label{CChangeSigFunctor}\lean{CategorialAlgebras.ChangeOfSignature.homogeneousFunctor,CategorialAlgebras.ChangeOfSignature.heterogeneousFunctor}
 Let $n\in\mathbb{N}$.
 Then the restriction of $\mathbf{c}^{(n)\ast}_{\gd}$ to $\mathsf{nCatAlg}(\sig{\Lambda})$ corestricts to $\mathsf{nCatAlg}(\sig{\Sigma})$, and the restriction of $\mathbf{c}^{\htg(n)\ast}_{\gd}$ to $\mathsf{nCat}^{\htg}\mathsf{Alg}(\sig{\Lambda})$ corestricts to $\mathsf{nCat}^{\htg}\mathsf{Alg}(\sig{\Sigma})$.
 \end{corollary}
@@ -5369,7 +5400,7 @@ In the following lemma we collect the translations of the terms $P$ and $P_{k}$ 
 By Corollary~\ref{CDerivorCatLaws}, for every pair of derivors $\mathbf{d}=(\psi,d)$ from $(T,\Lambda)$ to $(U,\Omega)$ and $\mathbf{e}=(\chi,e)$ from $(U,\Omega)$ to $(W,\Xi)$, $(e^{\sharp}\circ d)^{\sharp}=e^{\sharp}\circ d^{\sharp}$, so that $e^{\sharp}\circ d^{\sharp}$ only depends on the composite derivor $(\chi\circ\psi,e^{\sharp}\circ d)$, see Definition~\ref{DDerivorCompId}.
 Hence, in order to prove an equality of the form $e^{\sharp}\circ d^{\sharp}=e'^{\sharp}\circ d'^{\sharp}$, it suffices to prove that the composite derivors have the same mapping on sorts and that $e^{\sharp}(d(\tau))=e'^{\sharp}(d'(\tau))$, for every operation symbol $\tau$ of $\Lambda$.
 
-\begin{lemma}\label{LChangeSigTerms}
+\begin{lemma}\label{LChangeSigTerms}\lean{CategorialAlgebras.ChangeOfSignature.homogeneousInclusion_comp,CategorialAlgebras.ChangeOfSignature.heterogeneousInclusion_comp}
 Let $\sig{\Omega}=(U,\Omega)$ be a many-sorted signature, $\mathbf{d}=(\psi,d)$ a derivor from $\sig{\Lambda}$ to $\sig{\Omega}$, $m,n\in\mathbb{N}$ with $m\leq n$, $\mathbf{t}\in T^{\star}$, $t\in T$ and $P\in\mathrm{T}_{\Lambda}(\vs{\mathbf{t}})_{t}$.
 Then the following statements hold:
 \begin{enumerate}
@@ -5408,7 +5439,7 @@ For $m=n$, the statements~(3) and~(4) are trivial, since the derivors involved a
 
 In the following proposition we prove that the assignments $\mathbf{c}\mapsto\mathbf{c}^{(n)}$ and $\mathbf{c}\mapsto\mathbf{c}^{\htg(n)}$ preserve compositions and identities.
 
-\begin{proposition}\label{PChangeSigDerivorComp}
+\begin{proposition}\label{PChangeSigDerivorComp}\lean{CategorialAlgebras.ChangeOfSignature.homogeneous_comp,CategorialAlgebras.ChangeOfSignature.homogeneous_identity,CategorialAlgebras.ChangeOfSignature.heterogeneous_comp,CategorialAlgebras.ChangeOfSignature.heterogeneous_identity}
 Let $\sig{\Omega}=(U,\Omega)$ be a many-sorted signature, $\mathbf{d}=(\psi,d)$ a derivor from $\sig{\Lambda}$ to $\sig{\Omega}$ and $n\in\mathbb{N}$.
 Then the following equalities hold in $\mathsf{HSig}_{\gd}$
 \begin{align*}
@@ -5457,7 +5488,7 @@ The proof is the same, with Lemma~\ref{LChangeSigTerms}~(1) applied to the terms
 
 From the above proposition we obtain that the assignments $\mathbf{c}\mapsto\mathbf{c}^{(n)\ast}_{\gd}$ and $\mathbf{c}\mapsto\mathbf{c}^{\htg(n)\ast}_{\gd}$ preserve compositions and identities.
 
-\begin{corollary}\label{CChangeSigFunctorComp}
+\begin{corollary}\label{CChangeSigFunctorComp}\lean{CategorialAlgebras.ChangeOfSignature.homogeneousFunctorComp,CategorialAlgebras.ChangeOfSignature.heterogeneousFunctorComp}
 Let $\sig{\Omega}=(U,\Omega)$ be a many-sorted signature, $\mathbf{d}=(\psi,d)$ a derivor from $\sig{\Lambda}$ to $\sig{\Omega}$ and $n\in\mathbb{N}$.
 Then the following equalities hold
 \begin{align*}
@@ -5480,7 +5511,7 @@ The heterogeneous case is proved in the same way, with $\mathbf{c}^{\htg(n)}$, $
 
 From Corollaries~\ref{CSigdCat} and~\ref{CChangeSigFunctorComp} we obtain the following split indexed categories.
 
-\begin{corollary}\label{CChangeSigIndexed}
+\begin{corollary}\label{CChangeSigIndexed}\lean{CategorialAlgebras.ChangeOfSignature.homogeneousIndexed,CategorialAlgebras.ChangeOfSignature.heterogeneousIndexed}
 Let $n\in\mathbb{N}$.
 Then the assignment that sends a many-sorted signature $\sig{\Sigma}$ to $\mathsf{nCatAlg}(\sig{\Sigma})$ and a derivor $\mathbf{c}$ to $\mathbf{c}^{(n)\ast}_{\gd}$ is a split $\mathsf{Sig}_{\mathfrak{d}}$-indexed category, see Definition~\ref{DSplitIndexed}, and so is the assignment that sends $\sig{\Sigma}$ to $\mathsf{nCat}^{\htg}\mathsf{Alg}(\sig{\Sigma})$ and $\mathbf{c}$ to $\mathbf{c}^{\htg(n)\ast}_{\gd}$.
 We denote these split $\mathsf{Sig}_{\mathfrak{d}}$-indexed categories by $\mathsf{nCatAlg}$ and $\mathsf{nCat}^{\htg}\mathsf{Alg}$, respectively.
@@ -5508,7 +5539,7 @@ As in Chapters~\ref{SGdUf} and~\ref{SDsTr}, we compare the composites of the fun
 
 We begin with graduation and unification.
 
-\begin{proposition}\label{PChangeSigGdUf}
+\begin{proposition}\label{PChangeSigGdUf}\lean{CategorialAlgebras.ChangeOfSignature.graduation_comp,CategorialAlgebras.ChangeOfSignature.unification_comp}
 Let $n\in\mathbb{N}$.
 Then the following equalities hold in $\mathsf{HSig}_{\gd}$
 \begin{enumerate}
@@ -5595,7 +5626,7 @@ by Definitions~\ref{DUfDerivor} and~\ref{DChangeSigDerivor}, (Der1) and~(Der2). 
 
 From the above proposition we obtain that the functors induced by $\mathbf{c}^{(n)}$ and $\mathbf{c}^{\htg(n)}$ commute with graduation and unification.
 
-\begin{corollary}\label{CChangeSigGdUf}
+\begin{corollary}\label{CChangeSigGdUf}\lean{CategorialAlgebras.ChangeOfSignature.graduationFunctorChange,CategorialAlgebras.ChangeOfSignature.unificationFunctorChange}
 Let $n\in\mathbb{N}$.
 Then the following equalities hold
 \begin{enumerate}
@@ -5620,7 +5651,7 @@ Hence, by Lemma~\ref{LGenHepDerivorCommSquare}, they are equal, and the same hol
 
 From Corollaries~\ref{CChangeSigIndexed} and~\ref{CChangeSigGdUf} we obtain that graduation and unification are natural transformations between split indexed categories.
 
-\begin{corollary}\label{CChangeSigGdUfNat}
+\begin{corollary}\label{CChangeSigGdUfNat}\lean{CategorialAlgebras.ChangeOfSignature.graduationNaturality,CategorialAlgebras.ChangeOfSignature.unificationNaturality}
 Let $n\in\mathbb{N}$.
 Then the families
 \begin{enumerate}
@@ -5656,7 +5687,7 @@ are the equalities of Corollary~\ref{CChangeSigGdUf}.
 
 We next consider discretization and truncation.
 
-\begin{proposition}\label{PChangeSigDsTr}
+\begin{proposition}\label{PChangeSigDsTr}\lean{CategorialAlgebras.ChangeOfSignature.homogeneousDiscretization_comp,CategorialAlgebras.ChangeOfSignature.homogeneousTruncation_comp,CategorialAlgebras.ChangeOfSignature.heterogeneousDimension_comp}
 Let $m,n\in\mathbb{N}$ with $m\leq n$.
 Then the following equalities hold in $\mathsf{HSig}_{\gd}$
 \begin{align*}
@@ -5756,7 +5787,7 @@ All the domains are empty. This completes the proof.
 
 From the above proposition we obtain that the functors induced by $\mathbf{c}^{(n)}$ and $\mathbf{c}^{\htg(n)}$ commute with discretization and truncation.
 
-\begin{corollary}\label{CChangeSigDsTr}
+\begin{corollary}\label{CChangeSigDsTr}\lean{CategorialAlgebras.ChangeOfSignature.homogeneousDiscretizationFunctorChange,CategorialAlgebras.ChangeOfSignature.homogeneousTruncationFunctorChange,CategorialAlgebras.ChangeOfSignature.heterogeneousDiscretizationFunctorChange,CategorialAlgebras.ChangeOfSignature.heterogeneousTruncationFunctorChange}
 Let $m,n\in\mathbb{N}$ with $m\leq n$.
 The following equalities hold
 \begin{enumerate}
@@ -5796,7 +5827,7 @@ In the four cases, by Lemma~\ref{LGenHepDerivorCommSquare}, both algebras are eq
 
 From Corollaries~\ref{CChangeSigIndexed} and~\ref{CChangeSigDsTr} we obtain that discretization and truncation are natural transformations between split indexed categories.
 
-\begin{corollary}\label{CChangeSigDsTrNat}
+\begin{corollary}\label{CChangeSigDsTrNat}\lean{CategorialAlgebras.ChangeOfSignature.homogeneousDiscretizationNaturality,CategorialAlgebras.ChangeOfSignature.homogeneousTruncationNaturality,CategorialAlgebras.ChangeOfSignature.heterogeneousDiscretizationNaturality,CategorialAlgebras.ChangeOfSignature.heterogeneousTruncationNaturality}
 Let $m,n\in\mathbb{N}$ with $m\leq n$.
 Then the families
 \begin{enumerate}
@@ -5866,7 +5897,7 @@ Graduation and unification in dimension $\omega$ are treated by means of the uni
 
 We begin by extending the generalized hep-derivors of Definition~\ref{DChangeSigDerivor} to the dimension $\omega$: they are given by the same formulas, now for all the dimensions in $\omega$, and they translate the operation symbols of $\Sigma$ by means of $c$ and leave the categorial structure unchanged.
 
-\begin{definition}\label{DChangeSigDerivorOmega}
+\begin{definition}\label{DChangeSigDerivorOmega}\lean{CategorialAlgebras.ChangeOfSignature.homogeneous,CategorialAlgebras.ChangeOfSignature.heterogeneous}
 \begin{enumerate}
 \item The \emph{homogeneous $\omega$-categorial derivor determined by $\mathbf{c}$} is the generalized hep-derivor
 $$
@@ -5887,7 +5918,7 @@ In fact, in both algebras the cells are the same and every operation symbol is i
 
 In the following proposition we prove that these generalized hep-derivors send categorial algebras to categorial algebras.
 
-\begin{proposition}\label{PChangeSigEpVarietyOmega}
+\begin{proposition}\label{PChangeSigEpVarietyOmega}\lean{CategorialAlgebras.ChangeOfSignature.homogeneousReduct_finiteDimensional,CategorialAlgebras.ChangeOfSignature.homogeneousOmegaFunctor}
 The following statements hold:
 \begin{enumerate}
 \item the restriction of $\mathbf{c}^{(\omega)\ast}_{\gd}$ to $\omega\mathsf{CatAlg}(\sig{\Lambda})$ corestricts to $\omega\mathsf{CatAlg}(\sig{\Sigma})$; moreover, for every $\omega$-categorial $\sig{\Lambda}$-algebra $\calg{B}$, for every $s\in S$, the cells of sort $s$ of $\mathbf{c}^{(\omega)\ast}_{\gd}(\calg{B})$ are the elements of $B_{\varphi(s)}$, for every $(\mathbf{s},s)\in S^{\star}\times S$, every $\sigma\in\Sigma_{\mathbf{s},s}$ acts as $c(\sigma)^{\calg{B}}$ and, for every $k\in\omega$ and every $s\in S$, $\src^{k}_{s}$, $\tgt^{k}_{s}$ and $\circ^{k}_{s}$ act as $\src^{k\,\calg{B}}_{\varphi(s)}$, $\tgt^{k\,\calg{B}}_{\varphi(s)}$ and $\circ^{k\,\calg{B}}_{\varphi(s)}$, respectively; and
@@ -5933,7 +5964,7 @@ By Proposition~\ref{PGenHepDerivorFunctor}, they send a homomorphism $F$ to $F_{
 
 The assignments $\mathbf{c}\mapsto\mathbf{c}^{(\omega)}$ and $\mathbf{c}\mapsto\mathbf{c}^{\htg(\omega)}$ preserve compositions and identities.
 
-\begin{proposition}\label{PChangeSigDerivorCompOmega}
+\begin{proposition}\label{PChangeSigDerivorCompOmega}\lean{CategorialAlgebras.ChangeOfSignature.homogeneousOmegaFunctorComp,CategorialAlgebras.ChangeOfSignature.homogeneousOmegaFunctorIdentity}
 Let $\sig{\Omega}=(U,\Omega)$ be a many-sorted signature and $\mathbf{d}=(\psi,d)$ a derivor from $\sig{\Lambda}$ to $\sig{\Omega}$.
 Then the following equalities hold in $\mathsf{HSig}_{\gd}$
 \begin{align*}
@@ -5953,7 +5984,7 @@ In fact, it compares the mappings on sorts, the domains, which are empty, and th
 
 From the above proposition we obtain the corresponding split indexed categories.
 
-\begin{corollary}\label{CChangeSigIndexedOmega}
+\begin{corollary}\label{CChangeSigIndexedOmega}\lean{CategorialAlgebras.ChangeOfSignature.homogeneousOmegaIndexed,CategorialAlgebras.ChangeOfSignature.heterogeneousIndexed}
 Let $\sig{\Omega}=(U,\Omega)$ be a many-sorted signature and $\mathbf{d}=(\psi,d)$ a derivor from $\sig{\Lambda}$ to $\sig{\Omega}$.
 Then the following equalities hold
 \begin{align*}
@@ -5979,7 +6010,7 @@ Finally, as in the proof of Corollary~\ref{CChangeSigIndexed}, by Corollary~\ref
 
 We next prove that the change of signature commutes with truncation and discretization in dimension $\omega$.
 
-\begin{proposition}\label{PChangeSigDsTrOmega}
+\begin{proposition}\label{PChangeSigDsTrOmega}\lean{CategorialAlgebras.ChangeOfSignature.homogeneousOmegaTruncation_comp,CategorialAlgebras.ChangeOfSignature.homogeneousOmegaDiscretization_comp}
 Let $n\in\mathbb{N}$.
 Then the following equalities hold in $\mathsf{HSig}_{\gd}$
 \begin{align*}
@@ -6017,7 +6048,7 @@ This completes the proof.
 
 From the above proposition we obtain that the functors induced by $\mathbf{c}^{(\omega)}$ and $\mathbf{c}^{\htg(\omega)}$ commute with truncation and discretization.
 
-\begin{corollary}\label{CChangeSigDsTrOmega}
+\begin{corollary}\label{CChangeSigDsTrOmega}\lean{CategorialAlgebras.ChangeOfSignature.homogeneousOmegaTruncationFunctorChange,CategorialAlgebras.ChangeOfSignature.homogeneousOmegaDiscretizationFunctorChange,CategorialAlgebras.ChangeOfSignature.heterogeneousOmegaTruncationFunctorChange,CategorialAlgebras.ChangeOfSignature.heterogeneousOmegaDiscretizationFunctorChange}
 Let $n\in\mathbb{N}$.
 The following equalities hold
 \begin{enumerate}
@@ -6051,7 +6082,7 @@ In the four cases, by Lemma~\ref{LGenHepDerivorCommSquare}, both algebras are eq
 
 Graduation and unification in dimension $\omega$ are not induced by generalized hep-derivors, see Remark~\ref{RUfNotDerivorOmega}; we prove their compatibility with the change of signature by means of their definitions.
 
-\begin{corollary}\label{CChangeSigGdUfOmega}
+\begin{corollary}\label{CChangeSigGdUfOmega}\lean{CategorialAlgebras.ChangeOfSignature.omegaGraduationFunctorChange,CategorialAlgebras.ChangeOfSignature.omegaUnificationFunctorChange}
 The following equalities hold
 \begin{enumerate}
 	\item
@@ -6115,7 +6146,7 @@ By Definition~\ref{DUfFunctorOmega} and Proposition~\ref{PGenHepDerivorFunctor},
 
 From Corollaries~\ref{CChangeSigIndexed}, \ref{CChangeSigIndexedOmega}, \ref{CChangeSigDsTrOmega} and~\ref{CChangeSigGdUfOmega} we obtain that the functors in dimension $\omega$ are natural transformations between split indexed categories.
 
-\begin{corollary}\label{CChangeSigNatOmega}
+\begin{corollary}\label{CChangeSigNatOmega}\lean{CategorialAlgebras.ChangeOfSignature.omegaGraduationIndexed,CategorialAlgebras.ChangeOfSignature.omegaUnificationIndexed,CategorialAlgebras.ChangeOfSignature.homogeneousOmegaTruncationNaturality}
 Let $n\in\mathbb{N}$.
 Then the families
 \begin{enumerate}
