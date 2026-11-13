@@ -59,7 +59,11 @@ def valuation {S : Type u} {T : Type v} {φ : S → T} {w : List S} {A : T → T
     {w : List S} {A : T → Type z} (a : Family (fun s => A (φ s)) w)
     (j : Fin w.length) : valuation a _ (mappedVariable φ w j) = a j := rfl
 
-/-- Valuations of the positions are equivalent to families indexed by the word. -/
+/-- Valuations of the positions are equivalent to families indexed by the word.
+
+**Formally weaker** than the informal statement. Informally, the positional variables of a word are
+also identified with standard variables; the library uses positional variables throughout and does
+not need that identification. -/
 def valuationEquiv {S : Type u} {T : Type v} (φ : S → T) (w : List S) (A : T → Type z) :
     SortedSet.Map (MappedVariables φ w) A ≃ Family (fun s => A (φ s)) w where
   toFun f j := f _ (mappedVariable φ w j)

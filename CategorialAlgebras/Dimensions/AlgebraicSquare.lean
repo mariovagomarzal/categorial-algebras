@@ -31,7 +31,11 @@ theorem truncationUnificationFunctor_eq_conjugate :
     (homogeneousModelAdjunction sig h) (heterogeneousModelAdjunction sig h)
     (discretizationGraduationModels sig h)
 
-/-- The four finite-dimensional adjunctions, with their specified natural comparisons. -/
+/-- The four finite-dimensional adjunctions, with their specified natural comparisons.
+
+**Formally weaker** than the informal statement. Informally, the natural isomorphism $\alpha$ of
+this square and the units of its adjunctions are identities; here they are natural isomorphisms that
+are the identity on elements, since the carriers of transformed algebras are subtypes of cells. -/
 noncomputable def dimensionAlgebraicSquare :
     AlgebraicSquare (presentationAdjunction.{u, v, w} m sig) (presentationAdjunction n sig)
       (homogeneousAdjunction sig h) (heterogeneousAdjunction sig h) where

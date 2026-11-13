@@ -42,12 +42,20 @@ noncomputable def heterogeneousRestrictionsFullyFaithful :
   exact Heterogeneous.modelFunctorFullyFaithful.comp
     (Functor.FullyFaithful.ofFullyFaithful (heterogeneousCone sig))
 
-/-- Homogeneous homomorphisms are exactly compatible families of finite truncations. -/
+/-- Homogeneous homomorphisms are exactly compatible families of finite truncations.
+
+**Formally weaker** than the informal statement. Informally, the truncation functors compose
+strictly; here they compose up to natural isomorphisms that are the identity on elements, so
+compatibility is stated up to these isomorphisms. -/
 noncomputable def homogeneousHomEquiv (A B : Homogeneous.OmegaCategorialAlgebra.{u, v, w} sig) :
     (A ⟶ B) ≃ ((homogeneousRestrictions sig).obj A ⟶ (homogeneousRestrictions sig).obj B) :=
   (homogeneousRestrictionsFullyFaithful sig).homEquiv
 
-/-- Heterogeneous homomorphisms are exactly compatible families of finite truncations. -/
+/-- Heterogeneous homomorphisms are exactly compatible families of finite truncations.
+
+**Formally weaker** than the informal statement. Informally, the truncation functors compose
+strictly; here they compose up to natural isomorphisms that are the identity on elements, so
+compatibility is stated up to these isomorphisms. -/
 noncomputable def heterogeneousHomEquiv (A B : Heterogeneous.OmegaCategorialAlgebra.{u, v, w} sig) :
     (A ⟶ B) ≃ ((heterogeneousRestrictions sig).obj A ⟶ (heterogeneousRestrictions sig).obj B) :=
   (heterogeneousRestrictionsFullyFaithful sig).homEquiv
@@ -93,7 +101,11 @@ end ProjectiveSystem
 
 variable {L : Type x} [Category.{y} L]
 
-/-- Homogeneous transformations are exactly coherent families of finite natural transformations. -/
+/-- Homogeneous transformations are exactly coherent families of finite natural transformations.
+
+**Formally weaker** than the informal statement. Informally, the truncation functors compose
+strictly; here they compose up to natural isomorphisms that are the identity on elements, so
+compatibility is stated up to these isomorphisms. -/
 noncomputable def homogeneousNatTransEquiv
     (F G : L ⥤ Homogeneous.OmegaCategorialAlgebra.{u, v, w} sig) :
     (F ⟶ G) ≃ ProjectiveSystem.LevelTransformation
@@ -101,7 +113,11 @@ noncomputable def homogeneousNatTransEquiv
   ((homogeneousRestrictionsFullyFaithful sig).whiskeringRight L).homEquiv.trans
     (ProjectiveSystem.levelTransformationEquiv _ _)
 
-/-- Heterogeneous transformations are exactly coherent families of finite natural transformations. -/
+/-- Heterogeneous transformations are exactly coherent families of finite natural transformations.
+
+**Formally weaker** than the informal statement. Informally, the truncation functors compose
+strictly; here they compose up to natural isomorphisms that are the identity on elements, so
+compatibility is stated up to these isomorphisms. -/
 noncomputable def heterogeneousNatTransEquiv
     (F G : L ⥤ Heterogeneous.OmegaCategorialAlgebra.{u, v, w} sig) :
     (F ⟶ G) ≃ ProjectiveSystem.LevelTransformation

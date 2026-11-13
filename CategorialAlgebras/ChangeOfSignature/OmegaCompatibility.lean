@@ -285,7 +285,11 @@ noncomputable def heterogeneousOmegaDiscretizationModelsChange (n : ℕ) (c : De
 
 /-- Homogeneous truncation from $\omega$ commutes with change of signature:
 $\mathrm{Tr}^{(n,\omega)}_{\Sigma}\circ\mathbf{c}^{(\omega)\ast}_{\mathfrak{gd}}\cong
-\mathbf{c}^{(n)\ast}_{\mathfrak{gd}}\circ\mathrm{Tr}^{(n,\omega)}_{\Lambda}$. -/
+\mathbf{c}^{(n)\ast}_{\mathfrak{gd}}\circ\mathrm{Tr}^{(n,\omega)}_{\Lambda}$.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousOmegaTruncationFunctorChange (n : ℕ) (c : Derivor sig tau) :
     homogeneousOmegaFunctor.{u, v, w} c ⋙ homogeneousOmegaTruncationFunctor sig n ≅
       homogeneousOmegaTruncationFunctor tau n ⋙ homogeneousFunctor (Fin n) c :=
@@ -295,7 +299,11 @@ noncomputable def homogeneousOmegaTruncationFunctorChange (n : ℕ) (c : Derivor
 
 /-- Homogeneous discretization to $\omega$ commutes with change of signature:
 $\mathrm{Ds}^{(\omega,n)}_{\Sigma}\circ\mathbf{c}^{(n)\ast}_{\mathfrak{gd}}\cong
-\mathbf{c}^{(\omega)\ast}_{\mathfrak{gd}}\circ\mathrm{Ds}^{(\omega,n)}_{\Lambda}$. -/
+\mathbf{c}^{(\omega)\ast}_{\mathfrak{gd}}\circ\mathrm{Ds}^{(\omega,n)}_{\Lambda}$.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousOmegaDiscretizationFunctorChange (n : ℕ) (c : Derivor sig tau) :
     homogeneousFunctor.{0, u, v, w} (Fin n) c ⋙ homogeneousOmegaDiscretizationFunctor sig n ≅
       homogeneousOmegaDiscretizationFunctor tau n ⋙ homogeneousOmegaFunctor c :=
@@ -306,7 +314,11 @@ noncomputable def homogeneousOmegaDiscretizationFunctorChange (n : ℕ) (c : Der
 /-- Heterogeneous truncation from $\omega$ commutes with change of signature:
 $\mathrm{Tr}^{\mathrm{htg}(n,\omega)}_{\Sigma}\circ\mathbf{c}^{\mathrm{htg}(\omega)\ast}_{\mathfrak{gd}}
 \cong\mathbf{c}^{\mathrm{htg}(n)\ast}_{\mathfrak{gd}}\circ
-\mathrm{Tr}^{\mathrm{htg}(n,\omega)}_{\Lambda}$. -/
+\mathrm{Tr}^{\mathrm{htg}(n,\omega)}_{\Lambda}$.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousOmegaTruncationFunctorChange (n : ℕ) (c : Derivor sig tau) :
     heterogeneousFunctor.{0, u, v, w} ℕ c ⋙ heterogeneousOmegaTruncationFunctor sig n ≅
       heterogeneousOmegaTruncationFunctor tau n ⋙ heterogeneousFunctor (Fin (n + 1)) c :=
@@ -317,7 +329,11 @@ noncomputable def heterogeneousOmegaTruncationFunctorChange (n : ℕ) (c : Deriv
 /-- Heterogeneous discretization to $\omega$ commutes with change of signature:
 $\mathrm{Ds}^{\mathrm{htg}(\omega,n)}_{\Sigma}\circ\mathbf{c}^{\mathrm{htg}(n)\ast}_{\mathfrak{gd}}
 \cong\mathbf{c}^{\mathrm{htg}(\omega)\ast}_{\mathfrak{gd}}\circ
-\mathrm{Ds}^{\mathrm{htg}(\omega,n)}_{\Lambda}$. -/
+\mathrm{Ds}^{\mathrm{htg}(\omega,n)}_{\Lambda}$.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousOmegaDiscretizationFunctorChange (n : ℕ) (c : Derivor sig tau) :
     heterogeneousFunctor.{0, u, v, w} (Fin (n + 1)) c ⋙
         heterogeneousOmegaDiscretizationFunctor sig n ≅
@@ -328,25 +344,41 @@ noncomputable def heterogeneousOmegaDiscretizationFunctorChange (n : ℕ) (c : D
 
 /-! ## Naturality with respect to reducts -/
 
-/-- Homogeneous truncation from $\omega$ is natural with respect to reducts. -/
+/-- Homogeneous truncation from $\omega$ is natural with respect to reducts.
+
+**Formally weaker** than the informal statement. Informally, the square of functors commutes, so
+that the family is a natural transformation between split indexed categories; here it commutes up to
+a natural isomorphism that is the identity on elements. -/
 noncomputable def homogeneousOmegaTruncationNaturality (n : ℕ) (c : Derivor sig tau) :
     homogeneousOmegaReductFunctor.{u, v, w} c ⋙ homogeneousOmegaTruncationFunctor sig n ≅ homogeneousOmegaTruncationFunctor tau n ⋙ homogeneousReductFunctor (Fin n) c :=
   Functor.isoWhiskerRight (homogeneousOmegaFunctorReductIso c).symm _ ≪≫ homogeneousOmegaTruncationFunctorChange n c ≪≫
     Functor.isoWhiskerLeft _ (homogeneousFunctorReductIso (Fin n) c)
 
-/-- Homogeneous discretization to $\omega$ is natural with respect to reducts. -/
+/-- Homogeneous discretization to $\omega$ is natural with respect to reducts.
+
+**Formally weaker** than the informal statement. Informally, the square of functors commutes, so
+that the family is a natural transformation between split indexed categories; here it commutes up to
+a natural isomorphism that is the identity on elements. -/
 noncomputable def homogeneousOmegaDiscretizationNaturality (n : ℕ) (c : Derivor sig tau) :
     homogeneousReductFunctor.{0, u, u, v, v, w} (Fin n) c ⋙ homogeneousOmegaDiscretizationFunctor sig n ≅ homogeneousOmegaDiscretizationFunctor tau n ⋙ homogeneousOmegaReductFunctor c :=
   Functor.isoWhiskerRight (homogeneousFunctorReductIso (Fin n) c).symm _ ≪≫ homogeneousOmegaDiscretizationFunctorChange n c ≪≫
     Functor.isoWhiskerLeft _ (homogeneousOmegaFunctorReductIso c)
 
-/-- Heterogeneous truncation from $\omega$ is natural with respect to reducts. -/
+/-- Heterogeneous truncation from $\omega$ is natural with respect to reducts.
+
+**Formally weaker** than the informal statement. Informally, the square of functors commutes, so
+that the family is a natural transformation between split indexed categories; here it commutes up to
+a natural isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousOmegaTruncationNaturality (n : ℕ) (c : Derivor sig tau) :
     heterogeneousReductFunctor.{0, u, u, v, v, w} ℕ c ⋙ heterogeneousOmegaTruncationFunctor sig n ≅ heterogeneousOmegaTruncationFunctor tau n ⋙ heterogeneousReductFunctor (Fin (n + 1)) c :=
   Functor.isoWhiskerRight (heterogeneousFunctorReductIso ℕ c).symm _ ≪≫ heterogeneousOmegaTruncationFunctorChange n c ≪≫
     Functor.isoWhiskerLeft _ (heterogeneousFunctorReductIso (Fin (n + 1)) c)
 
-/-- Heterogeneous discretization to $\omega$ is natural with respect to reducts. -/
+/-- Heterogeneous discretization to $\omega$ is natural with respect to reducts.
+
+**Formally weaker** than the informal statement. Informally, the square of functors commutes, so
+that the family is a natural transformation between split indexed categories; here it commutes up to
+a natural isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousOmegaDiscretizationNaturality (n : ℕ) (c : Derivor sig tau) :
     heterogeneousReductFunctor.{0, u, u, v, v, w} (Fin (n + 1)) c ⋙ heterogeneousOmegaDiscretizationFunctor sig n ≅ heterogeneousOmegaDiscretizationFunctor tau n ⋙ heterogeneousReductFunctor ℕ c :=
   Functor.isoWhiskerRight (heterogeneousFunctorReductIso (Fin (n + 1)) c).symm _ ≪≫ heterogeneousOmegaDiscretizationFunctorChange n c ≪≫

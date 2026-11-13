@@ -111,7 +111,11 @@ theorem modelPresentationAdjunction_isIso :
     IsIso (modelPresentationEquivalence n sig).counitIso.hom
   constructor <;> infer_instance
 
-/-- The adjoint equivalence between finite categorial algebras in the two presentations. -/
+/-- The adjoint equivalence between finite categorial algebras in the two presentations.
+
+**Formally weaker** than the informal statement. Informally, the unit of this equivalence is the
+identity; here it is the inverse of a natural isomorphism that is the identity on elements, since
+the carriers of transformed algebras are subtypes of cells. -/
 noncomputable def presentationEquivalence : Homogeneous.NCategorialAlgebra.{u, v, w} n sig ≌
     Heterogeneous.NCategorialAlgebra.{u, v, w} n sig :=
   Homogeneous.modelIsomorphism.toEquivalence.trans
@@ -125,7 +129,11 @@ theorem presentationEquivalence_functor :
 theorem presentationEquivalence_inverse :
     (presentationEquivalence.{u, v, w} n sig).inverse = unificationFunctor n sig := rfl
 
-/-- Graduation is left adjoint to unification between categorial algebras. -/
+/-- Graduation is left adjoint to unification between categorial algebras.
+
+**Formally weaker** than the informal statement. Informally, the unit of this adjunction is the
+identity; here it is the inverse of a natural isomorphism that is the identity on elements, since
+the carriers of transformed algebras are subtypes of cells. -/
 noncomputable def presentationAdjunction :
     graduationFunctor.{u, v, w} n sig ⊣ unificationFunctor n sig :=
   (presentationEquivalence n sig).toAdjunction
@@ -139,7 +147,11 @@ theorem presentationAdjunction_isIso :
   constructor <;> infer_instance
 
 /-- Graduation followed by unification is naturally isomorphic to identity
-on categorial algebras. -/
+on categorial algebras.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousPresentationRoundTrip :
     graduationFunctor.{u, v, w} n sig ⋙ unificationFunctor n sig ≅ 𝟭 _ :=
   (presentationEquivalence n sig).unitIso.symm

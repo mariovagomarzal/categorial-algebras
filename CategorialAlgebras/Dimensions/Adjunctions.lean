@@ -96,7 +96,11 @@ theorem homogeneousModelAdjunction_unit_val
 theorem homogeneousModelAdjunction_counit :
     (homogeneousModelAdjunction.{u, v, w} sig h).counit = homogeneousCounit h := rfl
 
-/-- The homogeneous adjunction transported to categorial algebras. -/
+/-- The homogeneous adjunction transported to categorial algebras.
+
+**Formally weaker** than the informal statement. Informally, the unit of this adjunction is the
+identity; here it is the inverse of a natural isomorphism that is the identity on elements, since
+the carriers of transformed algebras are subtypes of cells. -/
 noncomputable def homogeneousAdjunction :
     homogeneousDiscretizationFunctor.{u, v, w} sig h ⊣ homogeneousTruncationFunctor sig h :=
   Homogeneous.modelIsomorphism.toEquivalence.toAdjunction.comp
@@ -153,7 +157,11 @@ theorem heterogeneousModelAdjunction_unit_val
 theorem heterogeneousModelAdjunction_counit :
     (heterogeneousModelAdjunction.{u, v, w} sig h).counit = heterogeneousCounit h := rfl
 
-/-- The heterogeneous adjunction transported to categorial algebras. -/
+/-- The heterogeneous adjunction transported to categorial algebras.
+
+**Formally weaker** than the informal statement. Informally, the unit of this adjunction is the
+identity; here it is the inverse of a natural isomorphism that is the identity on elements, since
+the carriers of transformed algebras are subtypes of cells. -/
 noncomputable def heterogeneousAdjunction :
     heterogeneousDiscretizationFunctor.{u, v, w} sig h ⊣ heterogeneousTruncationFunctor sig h :=
   Heterogeneous.modelIsomorphism.toEquivalence.toAdjunction.comp

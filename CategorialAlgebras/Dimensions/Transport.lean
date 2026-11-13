@@ -47,68 +47,108 @@ noncomputable def conjugateIdentityIso {C C' : Type*} [Category C] [Category C']
 variable {S : Type u} (sig : Signature.{u, v} S)
 
 /-- The corresponding composite of homogeneous algebra functors is naturally identified
-with the direct induced functor. -/
+with the direct induced functor.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousDiscretizationFunctorComp {m n p : ℕ} (hmn : m ≤ n) (hnp : n ≤ p) :
     homogeneousDiscretizationFunctor.{u, v, w} sig hmn ⋙ homogeneousDiscretizationFunctor sig hnp ≅ homogeneousDiscretizationFunctor sig (le_trans hmn hnp) :=
   conjugateCompositeIso Homogeneous.modelIsomorphism Homogeneous.modelIsomorphism
     Homogeneous.modelIsomorphism (homogeneousDiscretizationModelsComp sig hmn hnp)
 
 /-- The corresponding composite of homogeneous algebra functors is naturally identified
-with the direct induced functor. -/
+with the direct induced functor.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousTruncationFunctorComp {m n p : ℕ} (hmn : m ≤ n) (hnp : n ≤ p) :
     homogeneousTruncationFunctor.{u, v, w} sig hnp ⋙ homogeneousTruncationFunctor sig hmn ≅ homogeneousTruncationFunctor sig (le_trans hmn hnp) :=
   conjugateCompositeIso Homogeneous.modelIsomorphism Homogeneous.modelIsomorphism
     Homogeneous.modelIsomorphism (homogeneousTruncationModelsComp sig hmn hnp)
 
 /-- The corresponding composite of homogeneous algebra functors is naturally identified
-with the direct induced functor. -/
+with the direct induced functor.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousMixedUpperFunctor {m n p : ℕ} (hmn : m ≤ n) (hnp : n ≤ p) :
     homogeneousDiscretizationFunctor.{u, v, w} sig (le_trans hmn hnp) ⋙ homogeneousTruncationFunctor sig hnp ≅ homogeneousDiscretizationFunctor sig hmn :=
   conjugateCompositeIso Homogeneous.modelIsomorphism Homogeneous.modelIsomorphism
     Homogeneous.modelIsomorphism (homogeneousMixedUpperModels sig hmn hnp)
 
 /-- The corresponding composite of homogeneous algebra functors is naturally identified
-with the direct induced functor. -/
+with the direct induced functor.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousMixedLowerFunctor {m n p : ℕ} (hmn : m ≤ n) (hnp : n ≤ p) :
     homogeneousDiscretizationFunctor.{u, v, w} sig hnp ⋙ homogeneousTruncationFunctor sig (le_trans hmn hnp) ≅ homogeneousTruncationFunctor sig hmn :=
   conjugateCompositeIso Homogeneous.modelIsomorphism Homogeneous.modelIsomorphism
     Homogeneous.modelIsomorphism (homogeneousMixedLowerModels sig hmn hnp)
 
-/-- Truncation retracts homogeneous discretization on categorial algebras. -/
+/-- Truncation retracts homogeneous discretization on categorial algebras.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousRoundTripFunctor {m n : ℕ} (h : m ≤ n) :
     homogeneousDiscretizationFunctor.{u, v, w} sig h ⋙ homogeneousTruncationFunctor sig h ≅ 𝟭 _ :=
   conjugateRoundTripIso Homogeneous.modelIsomorphism Homogeneous.modelIsomorphism
     (homogeneousRoundTripModels sig h)
 
 /-- The corresponding composite of heterogeneous algebra functors is naturally identified
-with the direct induced functor. -/
+with the direct induced functor.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousDiscretizationFunctorComp {m n p : ℕ} (hmn : m ≤ n) (hnp : n ≤ p) :
     heterogeneousDiscretizationFunctor.{u, v, w} sig hmn ⋙ heterogeneousDiscretizationFunctor sig hnp ≅ heterogeneousDiscretizationFunctor sig (le_trans hmn hnp) :=
   conjugateCompositeIso Heterogeneous.modelIsomorphism Heterogeneous.modelIsomorphism
     Heterogeneous.modelIsomorphism (heterogeneousDiscretizationModelsComp sig hmn hnp)
 
 /-- The corresponding composite of heterogeneous algebra functors is naturally identified
-with the direct induced functor. -/
+with the direct induced functor.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousTruncationFunctorComp {m n p : ℕ} (hmn : m ≤ n) (hnp : n ≤ p) :
     heterogeneousTruncationFunctor.{u, v, w} sig hnp ⋙ heterogeneousTruncationFunctor sig hmn ≅ heterogeneousTruncationFunctor sig (le_trans hmn hnp) :=
   conjugateCompositeIso Heterogeneous.modelIsomorphism Heterogeneous.modelIsomorphism
     Heterogeneous.modelIsomorphism (heterogeneousTruncationModelsComp sig hmn hnp)
 
 /-- The corresponding composite of heterogeneous algebra functors is naturally identified
-with the direct induced functor. -/
+with the direct induced functor.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousMixedUpperFunctor {m n p : ℕ} (hmn : m ≤ n) (hnp : n ≤ p) :
     heterogeneousDiscretizationFunctor.{u, v, w} sig (le_trans hmn hnp) ⋙ heterogeneousTruncationFunctor sig hnp ≅ heterogeneousDiscretizationFunctor sig hmn :=
   conjugateCompositeIso Heterogeneous.modelIsomorphism Heterogeneous.modelIsomorphism
     Heterogeneous.modelIsomorphism (heterogeneousMixedUpperModels sig hmn hnp)
 
 /-- The corresponding composite of heterogeneous algebra functors is naturally identified
-with the direct induced functor. -/
+with the direct induced functor.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousMixedLowerFunctor {m n p : ℕ} (hmn : m ≤ n) (hnp : n ≤ p) :
     heterogeneousDiscretizationFunctor.{u, v, w} sig hnp ⋙ heterogeneousTruncationFunctor sig (le_trans hmn hnp) ≅ heterogeneousTruncationFunctor sig hmn :=
   conjugateCompositeIso Heterogeneous.modelIsomorphism Heterogeneous.modelIsomorphism
     Heterogeneous.modelIsomorphism (heterogeneousMixedLowerModels sig hmn hnp)
 
-/-- Truncation retracts heterogeneous discretization on categorial algebras. -/
+/-- Truncation retracts heterogeneous discretization on categorial algebras.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousRoundTripFunctor {m n : ℕ} (h : m ≤ n) :
     heterogeneousDiscretizationFunctor.{u, v, w} sig h ⋙ heterogeneousTruncationFunctor sig h ≅ 𝟭 _ :=
   conjugateRoundTripIso Heterogeneous.modelIsomorphism Heterogeneous.modelIsomorphism

@@ -75,7 +75,11 @@ theorem omegaTruncationEquation_ne {j k : ℕ} (h : j ≠ k) (s : S) :
   · fin_cases q
     exact hq.elim
 
-/-- Proper restriction changes the generalized hep-derivor, even at lower cutoff zero. -/
+/-- Proper restriction changes the generalized hep-derivor, even at lower cutoff zero.
+
+**Formally weaker** than the informal statement. Informally, the two derivors are different for
+every set of sorts; here the set of sorts must be nonempty, since with no sorts the two derivors
+coincide. -/
 theorem graduation_compatibility_ne [Nonempty S] {m n : ℕ} (h : m < n) :
     (heterogeneousTruncation sig h.le).comp (graduationComposite sig n) ≠
       graduationComposite sig m := by

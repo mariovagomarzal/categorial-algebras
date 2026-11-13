@@ -42,7 +42,12 @@ end GeneralizedHepDerivor
 namespace BundledHepSignature
 
 /-- Weak ep-algebras indexed by hierarchical signatures. The unit is the canonical
-identity on elements, realized as an isomorphism because carriers are cell subtypes. -/
+identity on elements, realized as an isomorphism because carriers are cell subtypes.
+
+**Formally weaker** than the informal statement. Informally, the induced functors form a normal lax
+indexed category, whose functors at identities are identities; here they are only isomorphic to
+identities, by isomorphisms that are the identity on elements, so this is a lax indexed category
+with an invertible unit. -/
 noncomputable def weakAlgebras : LaxIndexedCategory (BundledHepSignature.{u, v}) where
   fiber sig := Cat.of (EPSignature.WEPAlg.{u, v, w} sig.signature.toEPSignature)
   map c := c.weakFunctor

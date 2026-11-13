@@ -126,7 +126,11 @@ theorem reindexed_imageValue (hf : Saturating f)
       erw [dimensionLE_comp_of_eq _ _ he] at hq
       exact Part.mem_some_iff.mpr hq.2.symm
 
-/-- Reindexing realizes the induced transformation, inserting only the empty-domain subtype. -/
+/-- Reindexing realizes the induced transformation, inserting only the empty-domain subtype.
+
+**Formally weaker** than the informal statement. Informally, the two algebras are equal; here the
+carrier of a transformed algebra is a subtype of cells, so the equality becomes an isomorphism that
+is the identity on elements. -/
 noncomputable def heterogeneousDimensionRealization (hf : Saturating f)
     (B : Heterogeneous.CategorialAlgebra.{0, u, v, w} J sig) :
     (reindexedAlgebra B f hf).toPartialAlgebra ≅

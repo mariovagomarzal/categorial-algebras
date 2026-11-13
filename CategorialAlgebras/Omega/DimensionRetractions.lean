@@ -62,7 +62,11 @@ theorem heterogeneousRoundTripModels_inv_val
   exact h.symm.trans (heq_of_eq (congrArg (fun f : B ⟶ B => f.hom.hom.toMap s x)
     ((heterogeneousRoundTripModels sig m).inv_hom_id_app B)))
 
-/-- The homogeneous finite-to-infinite round trip is naturally the identity. -/
+/-- The homogeneous finite-to-infinite round trip is naturally the identity.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousRoundTripFunctor :
     homogeneousOmegaDiscretizationFunctor.{u, v, w} sig m ⋙
       homogeneousOmegaTruncationFunctor sig m ≅ 𝟭 _ :=

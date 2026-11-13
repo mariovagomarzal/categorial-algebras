@@ -44,7 +44,11 @@ theorem graduationTransition_val {m n : ℕ} (h : m ≤ n)
   have hv := homogeneousCone_val sig h (Homogeneous.omegaModelFunctor.obj A) p.2 y.val
   exact hv.trans (congrArg Subtype.val hy)
 
-/-- The family of finite graduations satisfies all projective coherences. -/
+/-- The family of finite graduations satisfies all projective coherences.
+
+**Formally weaker** than the informal statement. Informally, these functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equalities become natural
+isomorphisms that are the identity on elements. -/
 noncomputable def graduationFamily :
     (heterogeneousSystem.{u, v, w} sig).FunctorFamily
       (Homogeneous.OmegaCategorialAlgebra.{u, v, w} sig) where

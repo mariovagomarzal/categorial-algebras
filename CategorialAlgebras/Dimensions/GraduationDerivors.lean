@@ -306,7 +306,11 @@ theorem discretization_graduation_ne [Nonempty S] {m n : ℕ} (h : m < n) :
   exact heq.elim
 
 /-- With a nonempty sort set, truncation commutes strictly with graduation precisely
-at dimension zero or when the dimensions agree. -/
+at dimension zero or when the dimensions agree.
+
+**Formally weaker** than the informal statement. Informally, the two derivors are different for
+every set of sorts; here the set of sorts must be nonempty, since with no sorts the two derivors
+coincide. -/
 theorem truncation_graduation_eq_iff [Nonempty S] {m n : ℕ} (h : m ≤ n) :
     (heterogeneousTruncation sig h).comp (graduation n sig) =
       (graduation m sig).comp (homogeneousTruncation sig h) ↔ m = 0 ∨ m = n := by
@@ -322,7 +326,11 @@ theorem truncation_graduation_eq_iff [Nonempty S] {m n : ℕ} (h : m ≤ n) :
     · exact truncation_graduation_self sig m
 
 /-- With a nonempty sort set, discretization commutes strictly with graduation precisely
-when the dimensions agree. -/
+when the dimensions agree.
+
+**Formally weaker** than the informal statement. Informally, the two derivors are different for
+every set of sorts; here the set of sorts must be nonempty, since with no sorts the two derivors
+coincide. -/
 theorem discretization_graduation_eq_iff [Nonempty S] {m n : ℕ} (h : m ≤ n) :
     (graduation n sig).comp (homogeneousDiscretization sig h) =
       (heterogeneousDiscretization sig h).comp (graduation m sig) ↔ m = n := by

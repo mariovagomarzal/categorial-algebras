@@ -65,13 +65,25 @@ noncomputable def heterogeneousLimitEquivalence :
     (Functor.FullyFaithful.ofFullyFaithful (heterogeneousCone sig))
     (heterogeneousLimitModel sig) (fun A => (heterogeneousReconstruction sig A).comparison)
 
-/-- Homogeneous $\omega$-categorial algebras are a projective limit up to isomorphism. -/
+/-- Homogeneous $\omega$-categorial algebras are a projective limit up to isomorphism.
+
+**Formally weaker** than the informal statement. Informally, the category is the projective limit of
+the truncation functors, which compose strictly; here they compose up to natural isomorphisms that
+are the identity on elements, so the universal property is stated up to these isomorphisms:
+compatible families factor up to isomorphism, through a functor that is unique up to a unique
+compatible isomorphism. -/
 noncomputable def homogeneousProjectiveLimit :
     ProjectiveLimit (homogeneousSystem.{u, v, w} sig) (Homogeneous.OmegaCategorialAlgebra.{u, v, w} sig) where
   equivalence := Homogeneous.omegaModelIsomorphism.toEquivalence.trans
     (homogeneousLimitEquivalence sig)
 
-/-- Heterogeneous $\omega$-categorial algebras are a projective limit up to isomorphism. -/
+/-- Heterogeneous $\omega$-categorial algebras are a projective limit up to isomorphism.
+
+**Formally weaker** than the informal statement. Informally, the category is the projective limit of
+the truncation functors, which compose strictly; here they compose up to natural isomorphisms that
+are the identity on elements, so the universal property is stated up to these isomorphisms:
+compatible families factor up to isomorphism, through a functor that is unique up to a unique
+compatible isomorphism. -/
 noncomputable def heterogeneousProjectiveLimit :
     ProjectiveLimit (heterogeneousSystem.{u, v, w} sig) (Heterogeneous.OmegaCategorialAlgebra.{u, v, w} sig) where
   equivalence := Heterogeneous.modelIsomorphism.toEquivalence.trans

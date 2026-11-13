@@ -70,7 +70,11 @@ theorem graduation_reduct (c : Derivor sig tau) :
 
 /-- Graduation in dimension $\omega$ commutes with change of signature:
 $\mathrm{Gd}^{(\omega)}_{\Sigma}\circ\mathbf{c}^{(\omega)\ast}_{\mathfrak{gd}}\cong
-\mathbf{c}^{\mathrm{htg}(\omega)\ast}_{\mathfrak{gd}}\circ\mathrm{Gd}^{(\omega)}_{\Lambda}$. -/
+\mathbf{c}^{\mathrm{htg}(\omega)\ast}_{\mathfrak{gd}}\circ\mathrm{Gd}^{(\omega)}_{\Lambda}$.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def omegaGraduationFunctorChange (c : Derivor sig tau) :
     homogeneousOmegaFunctor.{u, v, w} c ⋙ graduationFunctor sig ≅
       graduationFunctor tau ⋙ heterogeneousFunctor ℕ c :=
@@ -140,7 +144,11 @@ theorem unification_reduct (c : Derivor sig tau) :
 
 /-- Unification in dimension $\omega$ commutes with change of signature:
 $\mathrm{Uf}^{(\omega)}_{\Sigma}\circ\mathbf{c}^{\mathrm{htg}(\omega)\ast}_{\mathfrak{gd}}\cong
-\mathbf{c}^{(\omega)\ast}_{\mathfrak{gd}}\circ\mathrm{Uf}^{(\omega)}_{\Lambda}$. -/
+\mathbf{c}^{(\omega)\ast}_{\mathfrak{gd}}\circ\mathrm{Uf}^{(\omega)}_{\Lambda}$.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def omegaUnificationFunctorChange (c : Derivor sig tau) :
     heterogeneousFunctor.{0, u, v, w} ℕ c ⋙ unificationFunctor sig ≅
       unificationFunctor tau ⋙ homogeneousOmegaFunctor c :=

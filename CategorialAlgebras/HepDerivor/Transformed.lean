@@ -95,7 +95,11 @@ theorem isCell_of_empty (c : GeneralizedHepDerivor sig tau)
   exact he.elim
 
 /-- With empty domains, forgetting the subtype of cells gives the usual change of sorts.
-Both directions act identically on the underlying elements. -/
+Both directions act identically on the underlying elements.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 def cellsFunctorIsoDelta (c : GeneralizedHepDerivor sig tau) (h : ∀ s, c.domain s = ⊥) :
     cellsFunctor.{u, v, u', v', w} c ≅
       PartialAlgebra.forget tau.symbol ⋙ SortedSet.delta c.sortMap :=

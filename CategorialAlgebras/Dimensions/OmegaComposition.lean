@@ -391,42 +391,66 @@ noncomputable def heterogeneousOmegaMixedLowerModels {m n : ℕ} (h : n ≤ m) :
     (fun B _ => (heterogeneousOmegaTruncation sig n).comparison_surjective_of_empty _ B (fun _ => rfl))
     (heterogeneousOmegaMixed_lower sig h)
 
-/-- Homogeneous truncations from $\omega$ compose by the canonical elementwise identification. -/
+/-- Homogeneous truncations from $\omega$ compose by the canonical elementwise identification.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousOmegaTruncationFunctorComp {m n : ℕ} (h : m ≤ n) :
     homogeneousOmegaTruncationFunctor.{u, v, w} sig n ⋙ homogeneousTruncationFunctor sig h ≅
       homogeneousOmegaTruncationFunctor sig m :=
   conjugateCompositeIso Homogeneous.omegaModelIsomorphism Homogeneous.modelIsomorphism
     Homogeneous.modelIsomorphism (homogeneousOmegaTruncationModelsComp sig h)
 
-/-- Heterogeneous truncations from $\omega$ compose by the canonical elementwise identification. -/
+/-- Heterogeneous truncations from $\omega$ compose by the canonical elementwise identification.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousOmegaTruncationFunctorComp {m n : ℕ} (h : m ≤ n) :
     heterogeneousOmegaTruncationFunctor.{u, v, w} sig n ⋙ heterogeneousTruncationFunctor sig h ≅
       heterogeneousOmegaTruncationFunctor sig m :=
   conjugateCompositeIso Heterogeneous.modelIsomorphism Heterogeneous.modelIsomorphism
     Heterogeneous.modelIsomorphism (heterogeneousOmegaTruncationModelsComp sig h)
 
-/-- Homogeneous discretization followed by truncation above the initial dimension. -/
+/-- Homogeneous discretization followed by truncation above the initial dimension.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousOmegaMixedUpperFunctor {m n : ℕ} (h : m ≤ n) :
     homogeneousOmegaDiscretizationFunctor.{u, v, w} sig m ⋙ homogeneousOmegaTruncationFunctor sig n ≅
       homogeneousDiscretizationFunctor sig h :=
   conjugateCompositeIso Homogeneous.modelIsomorphism Homogeneous.omegaModelIsomorphism
     Homogeneous.modelIsomorphism (homogeneousOmegaMixedUpperModels sig h)
 
-/-- Homogeneous discretization followed by truncation below the initial dimension. -/
+/-- Homogeneous discretization followed by truncation below the initial dimension.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousOmegaMixedLowerFunctor {m n : ℕ} (h : n ≤ m) :
     homogeneousOmegaDiscretizationFunctor.{u, v, w} sig m ⋙ homogeneousOmegaTruncationFunctor sig n ≅
       homogeneousTruncationFunctor sig h :=
   conjugateCompositeIso Homogeneous.modelIsomorphism Homogeneous.omegaModelIsomorphism
     Homogeneous.modelIsomorphism (homogeneousOmegaMixedLowerModels sig h)
 
-/-- Heterogeneous discretization followed by truncation above the initial dimension. -/
+/-- Heterogeneous discretization followed by truncation above the initial dimension.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousOmegaMixedUpperFunctor {m n : ℕ} (h : m ≤ n) :
     heterogeneousOmegaDiscretizationFunctor.{u, v, w} sig m ⋙ heterogeneousOmegaTruncationFunctor sig n ≅
       heterogeneousDiscretizationFunctor sig h :=
   conjugateCompositeIso Heterogeneous.modelIsomorphism Heterogeneous.modelIsomorphism
     Heterogeneous.modelIsomorphism (heterogeneousOmegaMixedUpperModels sig h)
 
-/-- Heterogeneous discretization followed by truncation below the initial dimension. -/
+/-- Heterogeneous discretization followed by truncation below the initial dimension.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousOmegaMixedLowerFunctor {m n : ℕ} (h : n ≤ m) :
     heterogeneousOmegaDiscretizationFunctor.{u, v, w} sig m ⋙ heterogeneousOmegaTruncationFunctor sig n ≅
       heterogeneousTruncationFunctor sig h :=

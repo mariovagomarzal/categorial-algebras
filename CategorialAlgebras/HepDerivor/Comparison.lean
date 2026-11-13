@@ -117,7 +117,11 @@ variable {ups : HepSignature.{u'', v''} U}
 /-! ## Translation of defined values and equations -/
 
 /-- Every defined transformed term value is a value of its translated term.
-The variable assignment may itself consist of arbitrary defined target terms. -/
+The variable assignment may itself consist of arbitrary defined target terms.
+
+**Formally stronger** than the informal statement. Informally, it is stated for terms in the
+positional variables of a word and families of cells; here it holds for any sorted set of variables
+and any assignment compatible with the translation. -/
 theorem partialEval_translate (c : GeneralizedHepDerivor sig tau)
     (B : PartialAlgebra.{u', v', w} tau.symbol) {X : S → Type x} {Y : T → Type y}
     (a : SortedSet.Map X (c.Cell B)) (b : SortedSet.Map Y B.carrier)
@@ -251,7 +255,10 @@ noncomputable def sameCellsIso (c : Derivor sig.symbol tau.symbol)
   hom_inv_id := rfl
   inv_hom_id := rfl
 
-/-- The identification of equal cells commutes with transformed homomorphisms. -/
+/-- The identification of equal cells commutes with transformed homomorphisms.
+
+**Formally weaker** than the informal statement. Informally, the two induced homomorphisms are
+equal; here they commute with the isomorphisms that identify the two algebras. -/
 theorem sameCellsIso_naturality (c : Derivor sig.symbol tau.symbol)
     (D D' : ∀ s, EEquationSet tau.symbol (Word.Variables [c.sortMap s]))
     {B B' : PartialAlgebra.{u', v', w} tau.symbol} (f : B ⟶ B')
@@ -261,7 +268,11 @@ theorem sameCellsIso_naturality (c : Derivor sig.symbol tau.symbol)
       (sameCellsIso c D D' B h).hom ≫ (withDomains c D').transformedHom f := rfl
 
 /-- Equal cell sets throughout a subcategory give a natural identification of
-its two transformed-algebra functors. -/
+its two transformed-algebra functors.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def sameCellsNatIso (c : Derivor sig.symbol tau.symbol)
     (D D' : ∀ s, EEquationSet tau.symbol (Word.Variables [c.sortMap s]))
     (P : ObjectProperty (PartialAlgebra.{u', v', w} tau.symbol))
@@ -273,7 +284,11 @@ noncomputable def sameCellsNatIso (c : Derivor sig.symbol tau.symbol)
     (fun f => sameCellsIso_naturality c D D' f.hom _ _)
 
 /-- Equal underlying derivors and equal selected cells identify transformed algebras.
-The cast only changes the sort index along the equality of underlying derivors. -/
+The cast only changes the sort index along the equality of underlying derivors.
+
+**Formally weaker** than the informal statement. Informally, the two algebras are equal; here the
+carrier of a transformed algebra is a subtype of cells, so the equality becomes an isomorphism that
+is the identity on elements. -/
 noncomputable def sameDerivorIso (c c' : GeneralizedHepDerivor sig tau)
     (h : c.toDerivor = c'.toDerivor) (B : PartialAlgebra.{u', v', w} tau.symbol)
     (hc : ∀ s b, c.IsCell B s b ↔ c'.IsCell B s
@@ -351,7 +366,11 @@ noncomputable def identityLift (A : PartialAlgebra.{u, v, w} sig.symbol)
       exact hq) σ b hq
 
 /-- Identity reindexing is isomorphic to the original weak ep-algebra by adding
-and removing cell proofs. These maps are identities on underlying elements. -/
+and removing cell proofs. These maps are identities on underlying elements.
+
+**Formally weaker** than the informal statement. Informally, the two algebras are equal; here the
+carrier of a transformed algebra is a subtype of cells, so the equality becomes an isomorphism that
+is the identity on elements. -/
 noncomputable def identityIso (A : PartialAlgebra.{u, v, w} sig.symbol)
     (hA : sig.IsWeakEPAlgebra A) : A ≅ (identity sig).transformed A where
   hom := identityLift A hA
@@ -360,7 +379,11 @@ noncomputable def identityIso (A : PartialAlgebra.{u, v, w} sig.symbol)
   inv_hom_id := rfl
 
 /-- The invertible unit of reindexing on weak ep-algebras.
-It expresses strict normality after identifying cell subtypes with their elements. -/
+It expresses strict normality after identifying cell subtypes with their elements.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def weakIdentityIso (sig : HepSignature.{u, v} S) :
     𝟭 (EPSignature.WEPAlg.{u, v, w} sig.toEPSignature) ≅ (identity sig).weakFunctor :=
   NatIso.ofComponents (fun A => ObjectProperty.isoMk _ (identityIso A.obj A.property))
@@ -377,7 +400,11 @@ noncomputable def epIdentityFunctor (sig : HepSignature.{u, v} S) :
     sig.IsEPAlgebra (fun A => identity_isEPAlgebra A.obj A.property)
 
 /-- The identity transformation induces the identity on ep-algebras up to the
-canonical identification of cell subtypes. -/
+canonical identification of cell subtypes.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def epIdentityIso (sig : HepSignature.{u, v} S) :
     𝟭 (EPSignature.EPAlg.{u, v, w} sig.toEPSignature) ≅ epIdentityFunctor sig :=
   NatIso.ofComponents (fun A => ObjectProperty.isoMk _ (identityIso A.obj
@@ -441,7 +468,12 @@ theorem comparisonMap_mem_op (c : GeneralizedHepDerivor sig tau)
       (Word.valuation_map (φ := id) (c.comparisonMap d C) b)) h
   exact hall ⟨a, s, σ⟩ b q hq
 
-/-- The natural comparison homomorphism $\kappa$ from successive to composite transformation. -/
+/-- The natural comparison homomorphism $\kappa$ from successive to composite transformation.
+
+**Formally weaker** than the informal statement. Informally, the carrier of the first algebra is a
+subset of that of the second one and the comparison is the inclusion; here the carrier of a
+transformed algebra is a subtype of cells, so the comparison is an injective homomorphism that is
+the identity on elements. -/
 noncomputable def comparison (c : GeneralizedHepDerivor sig tau)
     (d : GeneralizedHepDerivor tau ups) (C : PartialAlgebra.{u'', v'', w} ups.symbol) :
     c.transformed (d.transformed C) ⟶ (c.comp d).transformed C where
@@ -484,7 +516,11 @@ theorem comparison_isIso (c : GeneralizedHepDerivor sig tau)
     (fun s => ⟨c.comparison_injective d C s, hc s⟩)
 
 /-- Canonical isomorphism when successive and composite transformations have the
-same cells and the successive transformation is an ep-algebra. -/
+same cells and the successive transformation is an ep-algebra.
+
+**Formally weaker** than the informal statement. Informally, the two algebras are equal; here the
+carrier of a transformed algebra is a subtype of cells, so the equality becomes an isomorphism that
+is the identity on elements. -/
 noncomputable def comparisonIso (c : GeneralizedHepDerivor sig tau)
     (d : GeneralizedHepDerivor tau ups) (C : PartialAlgebra.{u'', v'', w} ups.symbol)
     (hc : ∀ s, Function.Surjective ((c.comparison d C).toMap s))
@@ -553,7 +589,11 @@ noncomputable def comparisonNatIso (c : GeneralizedHepDerivor sig tau)
 
 /-- A square of induced functors commutes up to a natural isomorphism when both
 successive transformations are ep-algebras with the composite cells, and the
-composite derivors agree and select the same cells. -/
+composite derivors agree and select the same cells.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def squareNatIso {T' : Type u'''} {tau' : HepSignature.{u''', v'''} T'}
     (c : GeneralizedHepDerivor sig tau) (d : GeneralizedHepDerivor tau ups)
     (c' : GeneralizedHepDerivor sig tau') (d' : GeneralizedHepDerivor tau' ups)

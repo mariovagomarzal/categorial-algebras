@@ -77,7 +77,11 @@ noncomputable def inducedGraduationFunctor :
     Homogeneous.OmegaCategorialAlgebra.{u, v, w} sig ⥤ Heterogeneous.OmegaCategorialAlgebra sig :=
   heterogeneousLift sig (graduationFamily sig)
 
-/-- The explicit graduation is the induced graduation up to the unique compatible isomorphism. -/
+/-- The explicit graduation is the induced graduation up to the unique compatible isomorphism.
+
+**Formally weaker** than the informal statement. Informally, the graduation functor is the unique
+functor whose truncations are the finite graduations; here it is unique up to a unique compatible
+isomorphism, since the truncation functors compose only up to isomorphism. -/
 theorem graduation_unique_induced :
     ∃! i : graduationFunctor.{u, v, w} sig ≅ inducedGraduationFunctor sig,
       Functor.isoWhiskerRight i (heterogeneousRestrictions sig) ≪≫

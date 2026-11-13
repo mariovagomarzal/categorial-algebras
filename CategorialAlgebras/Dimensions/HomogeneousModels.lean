@@ -80,7 +80,11 @@ theorem discretized_imageValue (B : Homogeneous.NCategorialAlgebra.{u, v, w} m s
       exact Part.mem_some_iff.mpr hq.2.symm
 
 /-- The explicit discretization realizes the induced transformation by inserting only
-the empty-domain subtype. -/
+the empty-domain subtype.
+
+**Formally weaker** than the informal statement. Informally, the two algebras are equal; here the
+carrier of a transformed algebra is a subtype of cells, so the equality becomes an isomorphism that
+is the identity on elements. -/
 noncomputable def homogeneousDiscretizationRealization
     (B : Homogeneous.NCategorialAlgebra.{u, v, w} m sig) :
     (discretizedAlgebra B n).toPartialAlgebra ≅

@@ -50,7 +50,11 @@ theorem discretizationUnificationModels_inv_heq
   inducedSquareModelsNatIso_inv_heq (unification n sig) (heterogeneousDiscretization sig h)
     (homogeneousDiscretization sig h) (unification m sig) _ _ _ _ _ _ _ _ _ _ _ _ B s x
 
-/-- Discretization commutes with unification between categorial algebras. -/
+/-- Discretization commutes with unification between categorial algebras.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def discretizationUnificationFunctor :
     heterogeneousDiscretizationFunctor.{u, v, w} sig h ⋙ unificationFunctor n sig ≅
       unificationFunctor m sig ⋙ homogeneousDiscretizationFunctor sig h :=

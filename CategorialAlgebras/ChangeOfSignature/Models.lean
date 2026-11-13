@@ -105,7 +105,11 @@ theorem homogeneousReduct_imageValue (c : Derivor sig tau)
     exact hq
 
 /-- The reduct realizes the transformation along the homogeneous derivor of a change of
-signature, by inserting only the trivial cell proofs. -/
+signature, by inserting only the trivial cell proofs.
+
+**Formally weaker** than the informal statement. Informally, the two algebras are equal; here the
+carrier of a transformed algebra is a subtype of cells, so the equality becomes an isomorphism that
+is the identity on elements. -/
 noncomputable def homogeneousRealization (c : Derivor sig tau)
     (B : Homogeneous.CategorialAlgebra.{i, u, v, w} I tau) :
     (homogeneousReduct c B).toPartialAlgebra ≅ (homogeneous I c).transformed B.toPartialAlgebra :=
@@ -195,7 +199,11 @@ noncomputable def homogeneousModelsIdentity (I : Type i) [LT I] (sig : Signature
   inducedIdentityModelsIsoOfEq (homogeneous_identity I sig) _ _
 
 /-- On categorial algebras, the functor of a composite derivor is the composite of the
-functors, up to a natural isomorphism. -/
+functors, up to a natural isomorphism.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousFunctorComp (I : Type i) [LT I] (c : Derivor sig tau)
     (d : Derivor tau ups) :
     homogeneousFunctor.{i, u, v, w} I d ⋙ homogeneousFunctor I c ≅
@@ -204,7 +212,11 @@ noncomputable def homogeneousFunctorComp (I : Type i) [LT I] (c : Derivor sig ta
     Homogeneous.modelIsomorphism (homogeneousModelsComp I c d)
 
 /-- On categorial algebras, the functor of an identity derivor is the identity, up to a
-natural isomorphism. -/
+natural isomorphism.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousFunctorIdentity (I : Type i) [LT I] (sig : Signature.{u, v} S) :
     homogeneousFunctor.{i, u, v, w} I (Derivor.identity sig) ≅ 𝟭 _ :=
   conjugateIdentityIso Homogeneous.modelIsomorphism (homogeneousModelsIdentity I sig)
@@ -308,7 +320,11 @@ theorem heterogeneousReduct_imageValue (c : Derivor sig tau)
     exact hq
 
 /-- The reduct realizes the transformation along the heterogeneous derivor of a change of
-signature, by inserting only the trivial cell proofs. -/
+signature, by inserting only the trivial cell proofs.
+
+**Formally weaker** than the informal statement. Informally, the two algebras are equal; here the
+carrier of a transformed algebra is a subtype of cells, so the equality becomes an isomorphism that
+is the identity on elements. -/
 noncomputable def heterogeneousRealization (c : Derivor sig tau)
     (B : Heterogeneous.CategorialAlgebra.{i, u, v, w} I tau) :
     (heterogeneousReduct c B).toPartialAlgebra ≅
@@ -401,7 +417,11 @@ noncomputable def heterogeneousModelsIdentity (I : Type i) [Preorder I]
   inducedIdentityModelsIsoOfEq (heterogeneous_identity I sig) _ _
 
 /-- On categorial algebras, the functor of a composite derivor is the composite of the
-functors, up to a natural isomorphism. -/
+functors, up to a natural isomorphism.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousFunctorComp (I : Type i) [Preorder I] (c : Derivor sig tau)
     (d : Derivor tau ups) :
     heterogeneousFunctor.{i, u, v, w} I d ⋙ heterogeneousFunctor I c ≅
@@ -410,7 +430,11 @@ noncomputable def heterogeneousFunctorComp (I : Type i) [Preorder I] (c : Derivo
     Heterogeneous.modelIsomorphism (heterogeneousModelsComp I c d)
 
 /-- On categorial algebras, the functor of an identity derivor is the identity, up to a
-natural isomorphism. -/
+natural isomorphism.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousFunctorIdentity (I : Type i) [Preorder I]
     (sig : Signature.{u, v} S) :
     heterogeneousFunctor.{i, u, v, w} I (Derivor.identity sig) ≅ 𝟭 _ :=

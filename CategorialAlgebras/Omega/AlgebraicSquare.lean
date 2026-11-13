@@ -62,7 +62,11 @@ theorem truncationUnificationFunctor_eq_conjugate :
     ((Presentations.presentationAdjunction m sig).comp (heterogeneousAdjunction sig m))
     ((homogeneousAdjunction sig m).comp (presentationAdjunction sig))).apply_symm_apply _).symm
 
-/-- The four specified adjunctions and their natural comparisons form an algebraic square. -/
+/-- The four specified adjunctions and their natural comparisons form an algebraic square.
+
+**Formally weaker** than the informal statement. Informally, the natural isomorphism $\alpha$ of
+this square and the units of its adjunctions are identities; here they are natural isomorphisms that
+are the identity on elements, since the carriers of transformed algebras are subtypes of cells. -/
 noncomputable def dimensionAlgebraicSquare :
     AlgebraicSquare (Presentations.presentationAdjunction.{u, v, w} m sig) (presentationAdjunction sig)
       (homogeneousAdjunction sig m) (heterogeneousAdjunction sig m) where

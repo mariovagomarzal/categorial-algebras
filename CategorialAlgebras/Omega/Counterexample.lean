@@ -74,7 +74,11 @@ theorem low_unique (k : ℕ) (s : S) (x y : GraduatedCell (algebra.{u, v, w} sig
 end UnificationCounterexample
 
 /-- For nonempty sorts, no generalized hep-derivor realizes unification on every algebra,
-even if arbitrary objectwise isomorphisms of partial algebras are allowed. -/
+even if arbitrary objectwise isomorphisms of partial algebras are allowed.
+
+**Formally stronger** than the informal statement. Informally, no generalized hep-derivor induces
+the unification functor; here no generalized hep-derivor gives, at every algebra, even a transformed
+algebra isomorphic to the unification. -/
 theorem unification_not_induced [Nonempty S]
     (c : GeneralizedHepDerivor (Homogeneous.hepSignature ℕ sig)
       (Heterogeneous.hepSignature ℕ sig)) :

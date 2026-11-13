@@ -103,7 +103,11 @@ theorem heterogeneousIdentity_heq (n : ℕ)
   exact inducedIdentityModelsIsoOfEq_hom_heq (heterogeneousTruncation_self sig n)
     (Heterogeneous.specification (Fin (n + 1)) sig) (heterogeneousTruncation_isModel sig (le_refl n)) A s x
 
-/-- The projective system of homogeneous finite-dimensional models. -/
+/-- The projective system of homogeneous finite-dimensional models.
+
+**Formally weaker** than the informal statement. Informally, the truncation functors compose
+strictly; here they compose up to natural isomorphisms that are the identity on elements, so
+compatibility is stated up to these isomorphisms. -/
 noncomputable def homogeneousSystem :
     ProjectiveSystem (fun n => (Homogeneous.specification (Fin n) sig).Models.{u, max v u, w, 0}) where
   truncation h := homogeneousTruncationModels sig h
@@ -131,7 +135,11 @@ noncomputable def homogeneousSystem :
     apply Subtype.ext
     rw [homogeneousComposition_val, homogeneousTruncationModels_map_val]
     exact (homogeneousIdentity_val sig _ _ _ _).symm
-/-- The projective system of heterogeneous finite-dimensional models. -/
+/-- The projective system of heterogeneous finite-dimensional models.
+
+**Formally weaker** than the informal statement. Informally, the truncation functors compose
+strictly; here they compose up to natural isomorphisms that are the identity on elements, so
+compatibility is stated up to these isomorphisms. -/
 noncomputable def heterogeneousSystem :
     ProjectiveSystem (fun n => (Heterogeneous.specification (Fin (n + 1)) sig).Models.{u, max v u, w, 0}) where
   truncation h := heterogeneousTruncationModels sig h

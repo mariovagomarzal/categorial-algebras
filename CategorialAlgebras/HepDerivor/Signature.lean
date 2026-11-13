@@ -89,7 +89,11 @@ def toWeakFullyFaithful (sig : EPSignature.{u, v} S) :
 abbrev ofSignature (sig : Signature.{u, v} S) : EPSignature S :=
   ⟨sig, fun _ _ => ∅⟩
 
-/-- Empty domain conditions characterize precisely everywhere defined operations. -/
+/-- Empty domain conditions characterize precisely everywhere defined operations.
+
+**Formally weaker** than the informal statement. Informally, the category of ep-algebras of a
+signature without domain conditions is the category of total algebras; here only their objects are
+identified: an ep-algebra is a partial algebra whose operations are all total. -/
 theorem ofSignature_isEPAlgebra_iff (sig : Signature.{u, v} S)
     (A : PartialAlgebra.{u, v, w} sig) :
     (ofSignature sig).IsEPAlgebra A ↔ ∀ {a s} (σ : sig a s) z, (A.op σ z).Dom := by

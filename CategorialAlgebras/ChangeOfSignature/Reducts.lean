@@ -225,7 +225,12 @@ end Heterogeneous
 /-! ## Split indexed categories -/
 
 /-- Homogeneous categorial algebras, with dimensions in $I$, form a split indexed category
-over many-sorted signatures and derivors, with reindexing given by reducts. -/
+over many-sorted signatures and derivors, with reindexing given by reducts.
+
+**Formally weaker** than the informal statement. Informally, the induced functors themselves form a
+split indexed category; they compose only up to isomorphism here, since the carriers of transformed
+algebras are subtypes of cells, so the split indexed category is built from the explicit reducts,
+which compose strictly and are isomorphic to the induced functors. -/
 def homogeneousIndexed (I : Type i) [LT I] :
     ManySortedSignature.{u, v}ᵒᵖ ⥤ Cat.{max u w, max i u v (w + 1)} where
   obj sig := Cat.of (Homogeneous.CategorialAlgebra.{i, u, v, w} I sig.unop.symbol)
@@ -234,7 +239,12 @@ def homogeneousIndexed (I : Type i) [LT I] :
   map_comp c d := congrArg Functor.toCatHom (homogeneousReductFunctor_comp d.unop c.unop)
 
 /-- Heterogeneous categorial algebras, with dimensions in $I$, form a split indexed category
-over many-sorted signatures and derivors, with reindexing given by reducts. -/
+over many-sorted signatures and derivors, with reindexing given by reducts.
+
+**Formally weaker** than the informal statement. Informally, the induced functors themselves form a
+split indexed category; they compose only up to isomorphism here, since the carriers of transformed
+algebras are subtypes of cells, so the split indexed category is built from the explicit reducts,
+which compose strictly and are isomorphic to the induced functors. -/
 def heterogeneousIndexed (I : Type i) [Preorder I] :
     ManySortedSignature.{u, v}ᵒᵖ ⥤ Cat.{max i u w, max i u v (w + 1)} where
   obj sig := Cat.of (Heterogeneous.CategorialAlgebra.{i, u, v, w} I sig.unop.symbol)

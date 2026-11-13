@@ -18,6 +18,14 @@ for the layout of the repository.
   or in docstrings. Docstrings explain the mathematics on their own.
 - Works of the bibliography (`paper/references.bib`) may be cited by key, as
   `[Reichel1987]`.
+- The paper links its definitions and results to their declarations with
+  `\lean{relation}{names}`, where the relation is `equivalent`, `weaker` or
+  `stronger` and the names are relative to `CategorialAlgebras`. When a linked
+  declaration is renamed, moved or changed, update its mark. A linked
+  declaration whose relation is not `equivalent` ends its docstring with a
+  paragraph that starts with `**Formally weaker** than the informal statement.`
+  or `**Formally stronger** than the informal statement.` and says briefly how
+  it differs.
 - Everything lives in the namespace `CategorialAlgebras`. Modules follow the
   parts of the theory, under `CategorialAlgebras/`, and `CategorialAlgebras.lean`
   imports all of them.

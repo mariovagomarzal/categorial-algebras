@@ -26,7 +26,11 @@ noncomputable def graduatedHom
         ((f.sort s).map_comp _ _ _ _ ((mem_graduatedComp A h x y z).mp hz)) }
   map_op σ _ x := Subtype.ext (f.map_op σ (fun j => (x j).val))
 
-/-- The explicit graduation functor from homogeneous to heterogeneous $\omega$-algebras. -/
+/-- The explicit graduation functor from homogeneous to heterogeneous $\omega$-algebras.
+
+**Formally weaker** than the informal statement. Informally, this functor is defined as the unique
+one whose truncations are the finite graduations; here it is defined explicitly, and identified with
+the functor given by the projective limit by a unique compatible isomorphism. -/
 noncomputable def graduationFunctor (sig : Signature.{u, v} S) :
     Homogeneous.OmegaCategorialAlgebra.{u, v, w} sig ⥤
       Heterogeneous.OmegaCategorialAlgebra sig where

@@ -121,7 +121,11 @@ noncomputable def homogeneousOmegaModelsIdentity (sig : Signature.{u, v} S) :
     (homogeneousModelsIdentity ℕ sig))
 
 /-- On homogeneous $\omega$-categorial algebras, the functor of a composite derivor is the
-composite of the functors, up to a natural isomorphism. -/
+composite of the functors, up to a natural isomorphism.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousOmegaFunctorComp (c : Derivor sig tau) (d : Derivor tau ups) :
     homogeneousOmegaFunctor.{u, v, w} d ⋙ homogeneousOmegaFunctor c ≅
       homogeneousOmegaFunctor (c.comp d) :=
@@ -129,7 +133,11 @@ noncomputable def homogeneousOmegaFunctorComp (c : Derivor sig tau) (d : Derivor
     Homogeneous.omegaModelIsomorphism (homogeneousOmegaModelsComp c d)
 
 /-- On homogeneous $\omega$-categorial algebras, the functor of an identity derivor is the
-identity, up to a natural isomorphism. -/
+identity, up to a natural isomorphism.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousOmegaFunctorIdentity (sig : Signature.{u, v} S) :
     homogeneousOmegaFunctor.{u, v, w} (Derivor.identity sig) ≅ 𝟭 _ :=
   conjugateIdentityIso Homogeneous.omegaModelIsomorphism (homogeneousOmegaModelsIdentity sig)
@@ -155,7 +163,12 @@ theorem homogeneousOmegaReductFunctor_identity (sig : Signature.{u, v} S) :
   rfl
 
 /-- Homogeneous $\omega$-categorial algebras form a split indexed category over many-sorted
-signatures and derivors, with reindexing given by reducts. -/
+signatures and derivors, with reindexing given by reducts.
+
+**Formally weaker** than the informal statement. Informally, the induced functors themselves form a
+split indexed category; they compose only up to isomorphism here, since the carriers of transformed
+algebras are subtypes of cells, so the split indexed category is built from the explicit reducts,
+which compose strictly and are isomorphic to the induced functors. -/
 def homogeneousOmegaIndexed :
     ManySortedSignature.{u, v}ᵒᵖ ⥤ Cat.{max u w, max u v (w + 1)} where
   obj sig := Cat.of (Homogeneous.OmegaCategorialAlgebra.{u, v, w} sig.unop.symbol)

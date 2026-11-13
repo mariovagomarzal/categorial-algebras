@@ -44,7 +44,11 @@ def transformed (c : Derivor sig tau) (X : T → Type w) : Algebra sig where
   carrier s := Term tau X (c.sortMap s)
   op σ q := Term.substFamily q (c.image σ)
 
-/-- Substitution is a homomorphism between the transformed free algebras. -/
+/-- Substitution is a homomorphism between the transformed free algebras.
+
+**Formally stronger** than the informal statement. Informally, it is stated for the substitution of
+a family of terms for the positional variables of a word; here it holds for every substitution
+between sorted sets of variables. -/
 def substHom (c : Derivor sig tau) {X : T → Type w} {Y : T → Type x}
     (f : SortedSet.Map X (Term tau Y)) :
     Algebra.Hom (c.transformed X) (c.transformed Y) where

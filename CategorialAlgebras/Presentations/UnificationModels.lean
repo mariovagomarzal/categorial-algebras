@@ -73,7 +73,11 @@ theorem unified_imageValue (A : Heterogeneous.NCategorialAlgebra.{u, v, w} n sig
     exact hq
 
 /-- The explicit top-carrier algebra is isomorphic to the induced transformation.
-The forward map inserts the empty-domain subtype and keeps every underlying element. -/
+The forward map inserts the empty-domain subtype and keeps every underlying element.
+
+**Formally weaker** than the informal statement. Informally, the two algebras are equal; here the
+carrier of a transformed algebra is a subtype of cells, so the equality becomes an isomorphism that
+is the identity on elements. -/
 noncomputable def unificationRealization
     (A : Heterogeneous.NCategorialAlgebra.{u, v, w} n sig) :
     (unifiedAlgebra A).toPartialAlgebra ≅ (unification n sig).transformed A.toPartialAlgebra :=

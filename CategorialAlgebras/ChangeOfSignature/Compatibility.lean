@@ -292,7 +292,11 @@ theorem heterogeneousTruncationModelsComp_hom_val {m n : ℕ} (h : m ≤ n)
 
 /-- Graduation commutes with change of signature:
 $\mathrm{Gd}^{(n)}_{\Sigma}\circ\mathbf{c}^{(n)\ast}_{\mathfrak{gd}}\cong
-\mathbf{c}^{\mathrm{htg}(n)\ast}_{\mathfrak{gd}}\circ\mathrm{Gd}^{(n)}_{\Lambda}$. -/
+\mathbf{c}^{\mathrm{htg}(n)\ast}_{\mathfrak{gd}}\circ\mathrm{Gd}^{(n)}_{\Lambda}$.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def graduationFunctorChange (n : ℕ) (c : Derivor sig tau) :
     homogeneousFunctor.{0, u, v, w} (Fin n) c ⋙ graduationFunctor n sig ≅
       graduationFunctor n tau ⋙ heterogeneousFunctor (Fin (n + 1)) c :=
@@ -301,7 +305,11 @@ noncomputable def graduationFunctorChange (n : ℕ) (c : Derivor sig tau) :
 
 /-- Unification commutes with change of signature:
 $\mathrm{Uf}^{(n)}_{\Sigma}\circ\mathbf{c}^{\mathrm{htg}(n)\ast}_{\mathfrak{gd}}\cong
-\mathbf{c}^{(n)\ast}_{\mathfrak{gd}}\circ\mathrm{Uf}^{(n)}_{\Lambda}$. -/
+\mathbf{c}^{(n)\ast}_{\mathfrak{gd}}\circ\mathrm{Uf}^{(n)}_{\Lambda}$.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def unificationFunctorChange (n : ℕ) (c : Derivor sig tau) :
     heterogeneousFunctor.{0, u, v, w} (Fin (n + 1)) c ⋙ unificationFunctor n sig ≅
       unificationFunctor n tau ⋙ homogeneousFunctor (Fin n) c :=
@@ -310,7 +318,11 @@ noncomputable def unificationFunctorChange (n : ℕ) (c : Derivor sig tau) :
 
 /-- Homogeneous discretization commutes with change of signature:
 $\mathrm{Ds}^{(n,m)}_{\Sigma}\circ\mathbf{c}^{(m)\ast}_{\mathfrak{gd}}\cong
-\mathbf{c}^{(n)\ast}_{\mathfrak{gd}}\circ\mathrm{Ds}^{(n,m)}_{\Lambda}$. -/
+\mathbf{c}^{(n)\ast}_{\mathfrak{gd}}\circ\mathrm{Ds}^{(n,m)}_{\Lambda}$.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousDiscretizationFunctorChange {m n : ℕ} (h : m ≤ n)
     (c : Derivor sig tau) :
     homogeneousFunctor.{0, u, v, w} (Fin m) c ⋙ homogeneousDiscretizationFunctor sig h ≅
@@ -321,7 +333,11 @@ noncomputable def homogeneousDiscretizationFunctorChange {m n : ℕ} (h : m ≤ 
 
 /-- Homogeneous truncation commutes with change of signature:
 $\mathrm{Tr}^{(m,n)}_{\Sigma}\circ\mathbf{c}^{(n)\ast}_{\mathfrak{gd}}\cong
-\mathbf{c}^{(m)\ast}_{\mathfrak{gd}}\circ\mathrm{Tr}^{(m,n)}_{\Lambda}$. -/
+\mathbf{c}^{(m)\ast}_{\mathfrak{gd}}\circ\mathrm{Tr}^{(m,n)}_{\Lambda}$.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def homogeneousTruncationFunctorChange {m n : ℕ} (h : m ≤ n)
     (c : Derivor sig tau) :
     homogeneousFunctor.{0, u, v, w} (Fin n) c ⋙ homogeneousTruncationFunctor sig h ≅
@@ -333,7 +349,11 @@ noncomputable def homogeneousTruncationFunctorChange {m n : ℕ} (h : m ≤ n)
 /-- Heterogeneous discretization commutes with change of signature:
 $\mathrm{Ds}^{\mathrm{htg}(n,m)}_{\Sigma}\circ\mathbf{c}^{\mathrm{htg}(m)\ast}_{\mathfrak{gd}}
 \cong\mathbf{c}^{\mathrm{htg}(n)\ast}_{\mathfrak{gd}}\circ
-\mathrm{Ds}^{\mathrm{htg}(n,m)}_{\Lambda}$. -/
+\mathrm{Ds}^{\mathrm{htg}(n,m)}_{\Lambda}$.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousDiscretizationFunctorChange {m n : ℕ} (h : m ≤ n)
     (c : Derivor sig tau) :
     heterogeneousFunctor.{0, u, v, w} (Fin (m + 1)) c ⋙ heterogeneousDiscretizationFunctor sig h ≅
@@ -345,7 +365,11 @@ noncomputable def heterogeneousDiscretizationFunctorChange {m n : ℕ} (h : m �
 /-- Heterogeneous truncation commutes with change of signature:
 $\mathrm{Tr}^{\mathrm{htg}(m,n)}_{\Sigma}\circ\mathbf{c}^{\mathrm{htg}(n)\ast}_{\mathfrak{gd}}
 \cong\mathbf{c}^{\mathrm{htg}(m)\ast}_{\mathfrak{gd}}\circ
-\mathrm{Tr}^{\mathrm{htg}(m,n)}_{\Lambda}$. -/
+\mathrm{Tr}^{\mathrm{htg}(m,n)}_{\Lambda}$.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousTruncationFunctorChange {m n : ℕ} (h : m ≤ n)
     (c : Derivor sig tau) :
     heterogeneousFunctor.{0, u, v, w} (Fin (n + 1)) c ⋙ heterogeneousTruncationFunctor sig h ≅
@@ -356,37 +380,63 @@ noncomputable def heterogeneousTruncationFunctorChange {m n : ℕ} (h : m ≤ n)
 
 /-! ## Naturality with respect to reducts -/
 
-/-- Graduation is natural with respect to the reducts of the split indexed categories of categorial algebras, up to the natural isomorphisms above. -/
+/-- Graduation is natural with respect to the reducts of the split indexed categories of categorial
+algebras, up to the natural isomorphisms above.
+
+**Formally weaker** than the informal statement. Informally, the square of functors commutes, so
+that the family is a natural transformation between split indexed categories; here it commutes up to
+a natural isomorphism that is the identity on elements. -/
 noncomputable def graduationNaturality (n : ℕ) (c : Derivor sig tau) :
     homogeneousReductFunctor.{0, u, u, v, v, w} (Fin n) c ⋙ graduationFunctor n sig ≅ graduationFunctor n tau ⋙ heterogeneousReductFunctor (Fin (n + 1)) c :=
   Functor.isoWhiskerRight (homogeneousFunctorReductIso (Fin n) c).symm _ ≪≫ graduationFunctorChange n c ≪≫
     Functor.isoWhiskerLeft _ (heterogeneousFunctorReductIso (Fin (n + 1)) c)
 
-/-- Unification is natural with respect to the reducts of the split indexed categories of categorial algebras, up to the natural isomorphisms above. -/
+/-- Unification is natural with respect to the reducts of the split indexed categories of categorial
+algebras, up to the natural isomorphisms above.
+
+**Formally weaker** than the informal statement. Informally, the square of functors commutes, so
+that the family is a natural transformation between split indexed categories; here it commutes up to
+a natural isomorphism that is the identity on elements. -/
 noncomputable def unificationNaturality (n : ℕ) (c : Derivor sig tau) :
     heterogeneousReductFunctor.{0, u, u, v, v, w} (Fin (n + 1)) c ⋙ unificationFunctor n sig ≅ unificationFunctor n tau ⋙ homogeneousReductFunctor (Fin n) c :=
   Functor.isoWhiskerRight (heterogeneousFunctorReductIso (Fin (n + 1)) c).symm _ ≪≫ unificationFunctorChange n c ≪≫
     Functor.isoWhiskerLeft _ (homogeneousFunctorReductIso (Fin n) c)
 
-/-- Homogeneous discretization is natural with respect to reducts. -/
+/-- Homogeneous discretization is natural with respect to reducts.
+
+**Formally weaker** than the informal statement. Informally, the square of functors commutes, so
+that the family is a natural transformation between split indexed categories; here it commutes up to
+a natural isomorphism that is the identity on elements. -/
 noncomputable def homogeneousDiscretizationNaturality {m n : ℕ} (h : m ≤ n) (c : Derivor sig tau) :
     homogeneousReductFunctor.{0, u, u, v, v, w} (Fin m) c ⋙ homogeneousDiscretizationFunctor sig h ≅ homogeneousDiscretizationFunctor tau h ⋙ homogeneousReductFunctor (Fin n) c :=
   Functor.isoWhiskerRight (homogeneousFunctorReductIso (Fin m) c).symm _ ≪≫ homogeneousDiscretizationFunctorChange h c ≪≫
     Functor.isoWhiskerLeft _ (homogeneousFunctorReductIso (Fin n) c)
 
-/-- Homogeneous truncation is natural with respect to reducts. -/
+/-- Homogeneous truncation is natural with respect to reducts.
+
+**Formally weaker** than the informal statement. Informally, the square of functors commutes, so
+that the family is a natural transformation between split indexed categories; here it commutes up to
+a natural isomorphism that is the identity on elements. -/
 noncomputable def homogeneousTruncationNaturality {m n : ℕ} (h : m ≤ n) (c : Derivor sig tau) :
     homogeneousReductFunctor.{0, u, u, v, v, w} (Fin n) c ⋙ homogeneousTruncationFunctor sig h ≅ homogeneousTruncationFunctor tau h ⋙ homogeneousReductFunctor (Fin m) c :=
   Functor.isoWhiskerRight (homogeneousFunctorReductIso (Fin n) c).symm _ ≪≫ homogeneousTruncationFunctorChange h c ≪≫
     Functor.isoWhiskerLeft _ (homogeneousFunctorReductIso (Fin m) c)
 
-/-- Heterogeneous discretization is natural with respect to reducts. -/
+/-- Heterogeneous discretization is natural with respect to reducts.
+
+**Formally weaker** than the informal statement. Informally, the square of functors commutes, so
+that the family is a natural transformation between split indexed categories; here it commutes up to
+a natural isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousDiscretizationNaturality {m n : ℕ} (h : m ≤ n) (c : Derivor sig tau) :
     heterogeneousReductFunctor.{0, u, u, v, v, w} (Fin (m + 1)) c ⋙ heterogeneousDiscretizationFunctor sig h ≅ heterogeneousDiscretizationFunctor tau h ⋙ heterogeneousReductFunctor (Fin (n + 1)) c :=
   Functor.isoWhiskerRight (heterogeneousFunctorReductIso (Fin (m + 1)) c).symm _ ≪≫ heterogeneousDiscretizationFunctorChange h c ≪≫
     Functor.isoWhiskerLeft _ (heterogeneousFunctorReductIso (Fin (n + 1)) c)
 
-/-- Heterogeneous truncation is natural with respect to reducts. -/
+/-- Heterogeneous truncation is natural with respect to reducts.
+
+**Formally weaker** than the informal statement. Informally, the square of functors commutes, so
+that the family is a natural transformation between split indexed categories; here it commutes up to
+a natural isomorphism that is the identity on elements. -/
 noncomputable def heterogeneousTruncationNaturality {m n : ℕ} (h : m ≤ n) (c : Derivor sig tau) :
     heterogeneousReductFunctor.{0, u, u, v, v, w} (Fin (n + 1)) c ⋙ heterogeneousTruncationFunctor sig h ≅ heterogeneousTruncationFunctor tau h ⋙ heterogeneousReductFunctor (Fin (m + 1)) c :=
   Functor.isoWhiskerRight (heterogeneousFunctorReductIso (Fin (n + 1)) c).symm _ ≪≫ heterogeneousTruncationFunctorChange h c ≪≫

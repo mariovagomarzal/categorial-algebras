@@ -80,14 +80,22 @@ theorem discretizationGraduationModels_inv_val
   eq_of_heq (inducedSquareModelsNatIso_inv_heq (graduation n sig) (homogeneousDiscretization sig h) (heterogeneousDiscretization sig h) (graduation m sig)
     _ _ _ _ _ _ _ _ _ _ _ _ B p x)
 
-/-- Truncation commutes with graduation between categorial algebras. -/
+/-- Truncation commutes with graduation between categorial algebras.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def truncationGraduationFunctor :
     graduationFunctor.{u, v, w} n sig ⋙ heterogeneousTruncationFunctor sig h ≅
       homogeneousTruncationFunctor sig h ⋙ graduationFunctor m sig :=
   conjugateSquareIso Homogeneous.modelIsomorphism Heterogeneous.modelIsomorphism
     Homogeneous.modelIsomorphism Heterogeneous.modelIsomorphism (truncationGraduationModels sig h)
 
-/-- Discretization commutes with graduation between categorial algebras. -/
+/-- Discretization commutes with graduation between categorial algebras.
+
+**Formally weaker** than the informal statement. Informally, the two functors are equal; here the
+carriers of transformed algebras are subtypes of cells, so the equality becomes a natural
+isomorphism that is the identity on elements. -/
 noncomputable def discretizationGraduationFunctor :
     homogeneousDiscretizationFunctor.{u, v, w} sig h ⋙ graduationFunctor n sig ≅
       graduationFunctor m sig ⋙ heterogeneousDiscretizationFunctor sig h :=

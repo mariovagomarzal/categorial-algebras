@@ -150,7 +150,11 @@ theorem truncationEquation_ne {n : ℕ} {j k : Fin n} (h : j ≠ k) (s : S) :
     exact hq.elim
 
 /-- Successive proper homogeneous truncations are unequal generalized hep-derivors
-when there is at least one sort. -/
+when there is at least one sort.
+
+**Formally weaker** than the informal statement. Informally, the two derivors are different for
+every set of sorts; here the set of sorts must be nonempty, since with no sorts the two derivors
+coincide. -/
 theorem homogeneousTruncation_comp_ne [Nonempty S] {m n p : ℕ}
     (hmn : m < n) (hnp : n < p) :
     (homogeneousTruncation sig hmn.le).comp (homogeneousTruncation sig hnp.le) ≠
@@ -175,7 +179,11 @@ theorem homogeneousTruncation_comp_ne [Nonempty S] {m n p : ℕ}
     (by intro h; have hv : n = m := congrArg Fin.val h; omega) s heq
 
 /-- The homogeneous mixed upper composite is unequal to discretization when the
-intermediate truncation is proper and there is at least one sort. -/
+intermediate truncation is proper and there is at least one sort.
+
+**Formally weaker** than the informal statement. Informally, the two derivors are different for
+every set of sorts; here the set of sorts must be nonempty, since with no sorts the two derivors
+coincide. -/
 theorem homogeneousMixed_upper_ne [Nonempty S] {m n p : ℕ}
     (hmn : m ≤ n) (hnp : n < p) :
     (homogeneousTruncation sig hnp.le).comp
@@ -194,7 +202,11 @@ theorem homogeneousMixed_upper_ne [Nonempty S] {m n p : ℕ}
   rw [hd] at hm
   exact hm.elim
 
-/-- A proper homogeneous round trip is unequal to the identity generalized derivor. -/
+/-- A proper homogeneous round trip is unequal to the identity generalized derivor.
+
+**Formally weaker** than the informal statement. Informally, the two derivors are different for
+every set of sorts; here the set of sorts must be nonempty, since with no sorts the two derivors
+coincide. -/
 theorem homogeneousTruncation_discretization_ne [Nonempty S] {m n : ℕ} (h : m < n) :
     (homogeneousTruncation sig h.le).comp (homogeneousDiscretization sig h.le) ≠
       GeneralizedHepDerivor.identity (Homogeneous.hepSignature (Fin m) sig) := by
