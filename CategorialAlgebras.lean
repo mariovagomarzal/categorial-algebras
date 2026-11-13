@@ -1,121 +1,294 @@
-import CategorialAlgebras.Init
-import CategorialAlgebras.Tactic
-import CategorialAlgebras.Signature
-import CategorialAlgebras.PartialAlgebra
-import CategorialAlgebras.Evaluation
-import CategorialAlgebras.Derivor
-import CategorialAlgebras.EpSignature
-import CategorialAlgebras.GenEpDerivor
-import CategorialAlgebras.GenEpComposition
-import CategorialAlgebras.Compact.Category
-import CategorialAlgebras.Compact.Functor
-import CategorialAlgebras.Compact.Product
-import CategorialAlgebras.Compact.Algebra
-import CategorialAlgebras.Compact.Specification
-import CategorialAlgebras.Compact.Restriction
-import CategorialAlgebras.Compact.OmegaAlgebra
-import CategorialAlgebras.Compact.Identification
-import CategorialAlgebras.Compact.Truncation
-import CategorialAlgebras.Compact.Tower
-import CategorialAlgebras.Compact.Limit
-import CategorialAlgebras.Extended.Category
-import CategorialAlgebras.Extended.Functor
-import CategorialAlgebras.Extended.Product
-import CategorialAlgebras.Extended.Algebra
-import CategorialAlgebras.Extended.Specification
-import CategorialAlgebras.Extended.Restriction
-import CategorialAlgebras.Extended.OmegaAlgebra
-import CategorialAlgebras.Extended.Truncation
-import CategorialAlgebras.Extended.Limit
-import CategorialAlgebras.Extended.Model
-import CategorialAlgebras.CategorialEp
-import CategorialAlgebras.DerivedEval
-import CategorialAlgebras.Graduation
-import CategorialAlgebras.Discretization
+import CategorialAlgebras.Preliminaries.Algebra
+import CategorialAlgebras.Preliminaries.AlgebraicSquare
+import CategorialAlgebras.Preliminaries.Corestriction
+import CategorialAlgebras.Preliminaries.Derivor
+import CategorialAlgebras.Preliminaries.Equation
+import CategorialAlgebras.Preliminaries.Grothendieck
+import CategorialAlgebras.Preliminaries.PartialAlgebra
+import CategorialAlgebras.Preliminaries.SortedSet
+import CategorialAlgebras.Preliminaries.Substitution
+import CategorialAlgebras.Preliminaries.Term
+import CategorialAlgebras.Preliminaries.Word
+
+import CategorialAlgebras.HepDerivor.AlgebraCategory
+import CategorialAlgebras.HepDerivor.Category
+import CategorialAlgebras.HepDerivor.Comparison
+import CategorialAlgebras.HepDerivor.Signature
+import CategorialAlgebras.HepDerivor.StrictComparison
+import CategorialAlgebras.HepDerivor.Symbols
+import CategorialAlgebras.HepDerivor.Transformed
+
+import CategorialAlgebras.Homogeneous.Algebra
+import CategorialAlgebras.Homogeneous.Category
+import CategorialAlgebras.Homogeneous.Chain
+import CategorialAlgebras.Homogeneous.Evaluation
+import CategorialAlgebras.Homogeneous.Identification
+import CategorialAlgebras.Homogeneous.Models
+import CategorialAlgebras.Homogeneous.Omega
+import CategorialAlgebras.Homogeneous.Recovery
+import CategorialAlgebras.Homogeneous.Signature
+import CategorialAlgebras.Homogeneous.Specification
+
+import CategorialAlgebras.Heterogeneous.Algebra
+import CategorialAlgebras.Heterogeneous.Category
+import CategorialAlgebras.Heterogeneous.Evaluation
+import CategorialAlgebras.Heterogeneous.Identification
+import CategorialAlgebras.Heterogeneous.Models
+import CategorialAlgebras.Heterogeneous.Recovery
+import CategorialAlgebras.Heterogeneous.Signature
+import CategorialAlgebras.Heterogeneous.Specification
+
+import CategorialAlgebras.Presentations.CompositeCells
+import CategorialAlgebras.Presentations.CompositeDerivors
+import CategorialAlgebras.Presentations.Counterexample
+import CategorialAlgebras.Presentations.Descriptions
+import CategorialAlgebras.Presentations.Dimensions
+import CategorialAlgebras.Presentations.Equivalence
+import CategorialAlgebras.Presentations.GraduatedStructure
+import CategorialAlgebras.Presentations.Graduation
+import CategorialAlgebras.Presentations.GraduationModels
+import CategorialAlgebras.Presentations.IdentityImage
+import CategorialAlgebras.Presentations.Realization
+import CategorialAlgebras.Presentations.Relation
+import CategorialAlgebras.Presentations.Theta
+import CategorialAlgebras.Presentations.Unification
+import CategorialAlgebras.Presentations.UnificationModels
+import CategorialAlgebras.Presentations.UnifiedStructure
+
+import CategorialAlgebras.Dimensions.Adjunctions
+import CategorialAlgebras.Dimensions.AlgebraicSquare
+import CategorialAlgebras.Dimensions.Comparison
+import CategorialAlgebras.Dimensions.CompatibilityComparison
+import CategorialAlgebras.Dimensions.Compositions
+import CategorialAlgebras.Dimensions.Descriptions
+import CategorialAlgebras.Dimensions.Diagonal
+import CategorialAlgebras.Dimensions.DiscretizationUnification
+import CategorialAlgebras.Dimensions.Functors
+import CategorialAlgebras.Dimensions.GraduationCells
+import CategorialAlgebras.Dimensions.GraduationCompatibility
+import CategorialAlgebras.Dimensions.GraduationDerivors
+import CategorialAlgebras.Dimensions.HeterogeneousComposition
+import CategorialAlgebras.Dimensions.HeterogeneousCounit
+import CategorialAlgebras.Dimensions.HeterogeneousCounitStructure
+import CategorialAlgebras.Dimensions.HeterogeneousDerivors
+import CategorialAlgebras.Dimensions.HeterogeneousModels
+import CategorialAlgebras.Dimensions.HeterogeneousStructure
+import CategorialAlgebras.Dimensions.HomogeneousCells
+import CategorialAlgebras.Dimensions.HomogeneousComposition
+import CategorialAlgebras.Dimensions.HomogeneousCounit
+import CategorialAlgebras.Dimensions.HomogeneousDerivors
+import CategorialAlgebras.Dimensions.HomogeneousDomains
+import CategorialAlgebras.Dimensions.HomogeneousModels
+import CategorialAlgebras.Dimensions.HomogeneousStructure
+import CategorialAlgebras.Dimensions.Indices
+import CategorialAlgebras.Dimensions.OmegaComposition
+import CategorialAlgebras.Dimensions.OmegaDerivors
+import CategorialAlgebras.Dimensions.OmegaDescriptions
+import CategorialAlgebras.Dimensions.OmegaFunctors
+import CategorialAlgebras.Dimensions.OmegaModels
+import CategorialAlgebras.Dimensions.OmegaStructure
+import CategorialAlgebras.Dimensions.Relation
+import CategorialAlgebras.Dimensions.SquareTransport
+import CategorialAlgebras.Dimensions.Transport
+import CategorialAlgebras.Dimensions.UnificationCompatibility
+import CategorialAlgebras.Dimensions.UnificationDerivors
+
+import CategorialAlgebras.Limits.Assembly
+import CategorialAlgebras.Limits.Corollaries
+import CategorialAlgebras.Limits.Faithful
+import CategorialAlgebras.Limits.HeterogeneousCarrier
+import CategorialAlgebras.Limits.HeterogeneousGluing
+import CategorialAlgebras.Limits.HeterogeneousMorphisms
+import CategorialAlgebras.Limits.HeterogeneousReconstruction
+import CategorialAlgebras.Limits.HeterogeneousStages
+import CategorialAlgebras.Limits.HomogeneousCarrier
+import CategorialAlgebras.Limits.HomogeneousGluing
+import CategorialAlgebras.Limits.HomogeneousMorphisms
+import CategorialAlgebras.Limits.HomogeneousReconstruction
+import CategorialAlgebras.Limits.HomogeneousStages
+import CategorialAlgebras.Limits.HomogeneousUnionLaws
+import CategorialAlgebras.Limits.ModelTransport
+import CategorialAlgebras.Limits.PresentedFamilies
+import CategorialAlgebras.Limits.ProjectiveSystem
+import CategorialAlgebras.Limits.Reconstruction
+import CategorialAlgebras.Limits.StageCoherence
+import CategorialAlgebras.Limits.Truncations
+import CategorialAlgebras.Limits.Universal
+
+import CategorialAlgebras.Omega.Adjunctions
+import CategorialAlgebras.Omega.AlgebraicSquare
+import CategorialAlgebras.Omega.Cells
+import CategorialAlgebras.Omega.Counterexample
+import CategorialAlgebras.Omega.Descriptions
+import CategorialAlgebras.Omega.DimensionRetractions
+import CategorialAlgebras.Omega.Equivalence
+import CategorialAlgebras.Omega.FamilyTransport
+import CategorialAlgebras.Omega.FiniteGraduation
+import CategorialAlgebras.Omega.FiniteUnification
+import CategorialAlgebras.Omega.GraduatedStructure
+import CategorialAlgebras.Omega.Graduation
+import CategorialAlgebras.Omega.GraduationDerivors
+import CategorialAlgebras.Omega.GraduationFamily
+import CategorialAlgebras.Omega.GraduationLimit
+import CategorialAlgebras.Omega.HeterogeneousCounit
+import CategorialAlgebras.Omega.HomogeneousCounit
+import CategorialAlgebras.Omega.Isomorphisms
+import CategorialAlgebras.Omega.OperationLaws
+import CategorialAlgebras.Omega.Operations
+import CategorialAlgebras.Omega.PresentedGraduation
+import CategorialAlgebras.Omega.Stages
+import CategorialAlgebras.Omega.Theta
+import CategorialAlgebras.Omega.Unification
+import CategorialAlgebras.Omega.UnificationCompatibility
+import CategorialAlgebras.Omega.UnifiedStructure
+import CategorialAlgebras.Omega.Zeta
+
+import CategorialAlgebras.ChangeOfSignature.Compatibility
+import CategorialAlgebras.ChangeOfSignature.CompatibilityDerivors
+import CategorialAlgebras.ChangeOfSignature.Derivors
+import CategorialAlgebras.ChangeOfSignature.HeterogeneousTerms
+import CategorialAlgebras.ChangeOfSignature.HomogeneousTerms
+import CategorialAlgebras.ChangeOfSignature.Models
+import CategorialAlgebras.ChangeOfSignature.Omega
+import CategorialAlgebras.ChangeOfSignature.OmegaCompatibility
+import CategorialAlgebras.ChangeOfSignature.OmegaPresentations
+import CategorialAlgebras.ChangeOfSignature.Reducts
 
 /-!
-# CategorialAlgebras
+# Higher-order many-sorted categorial algebras
 
-This library formalizes, in Lean and with Mathlib, the theory of *higher-order categorial
-algebras*: many-sorted algebras whose carriers are higher-order categories and whose operations
-are higher-order functors. It accompanies the group's draft *Higher-order categorial algebras*
-(J. Climent Vidal, E. Cosme Llópez, R. Ruiz Mora and M. Vago Marzal) and checks its results.
+A many-sorted algebra is *categorial* when the carrier of each sort is a strict higher-order
+category and each operation is a higher-order functor from the product of the carriers of its
+input word to the carrier of its output sort. This library develops the theory of these
+algebras, in finite dimensions and in dimension $\omega$, together with the functors that
+relate their presentations, their dimensions and their signatures.
 
-## Higher-order categorial algebras
+The guiding idea is that all these functors are instances of one construction. Categorial
+algebras are the models of an equationally partial specification: source, target and identity
+are total operations, composition is defined exactly when the boundaries match, and the
+categorical laws are existence equations, as in the equationally partial signatures of
+[Reichel1987], here organized hierarchically. A *generalized hep-derivor* between two such
+hierarchical equationally partial signatures maps sorts to sorts, interprets every operation
+symbol as a term, and selects in every sort the cells satisfying a family of existence
+equations in one variable. It transforms
+partial algebras of its target signature into partial algebras of its source signature, by
+restricting to the selected cells and evaluating the interpreting terms; when it sends models
+to models, it induces a functor between the categories of models. Graduation, unification,
+discretization, truncation and change of signature in finite dimensions are all induced in
+this way.
 
-Let $(S, \Sigma)$ be a many-sorted signature and $n \in \mathbb{N}$. An $n$-*categorial*
-$\Sigma$-*algebra* interprets every sort $s \in S$ as a strict $n$-category
-$\mathsf{A}_s$ and every operation symbol $\sigma \in \Sigma_{\mathbf{s}, s}$ as an
-$n$-functor $\sigma^{\mathsf{A}} \colon \mathsf{A}_{\mathbf{s}} \to \mathsf{A}_s$, where
-$\mathsf{A}_{\mathbf{s}}$ is the product of the categories of the sorts of $\mathbf{s}$. For
-$n = 0$ these are ordinary many-sorted algebras; for $n = 1$, algebras in the category of
-small categories. Letting $n$ grow without bound gives the $\omega$-categorial algebras.
+## The parts of the library
 
-Categorial algebras are, at the same time, partial algebras: compositions are defined only on
-composable cells. The draft presents the categorial $\Sigma$-algebras of dimension $n$ as the
-models of a specification by QE-equations (implications between existence equations) in a
-signature $\Sigma^{(n)}$ that adds the categorial operations to $\Sigma$. The library writes
-down this specification for both presentations; that its models are exactly the categorial
-algebras is not formalized yet.
+### Preliminaries
 
-## Two presentations
+Sorted sets, words and valuations, many-sorted signatures and algebras, terms, free algebras
+and substitutions, and derivors with their category of signatures (`CategorialAlgebras.Derivor`).
+Partial algebras (`CategorialAlgebras.PartialAlgebra`), partial term operations,
+existence and quasi-existence equations, and their categories of models, closed under
+products. Algebraic squares of adjunctions (`CategorialAlgebras.AlgebraicSquare`),
+corestriction of functors to full subcategories, and lax and split indexed categories with
+their Grothendieck constructions (`CategorialAlgebras.LaxIndexedCategory`,
+`CategorialAlgebras.SplitIndexedCategory.Grothendieck`). These are the modules under
+`CategorialAlgebras.Preliminaries`.
 
-A higher-order category can be presented in two ways, and the library formalizes both.
+### Generalized hep-derivors
 
-- In the *compact* presentation all cells, whatever their dimension, live in a single set; a
-  cell is a $k$-cell when its $k$-source is itself. An $n$-category has the dimensions
-  $0, \ldots, n - 1$.
-- In the *extended* presentation the $k$-cells form a separate set $C_k$ for every dimension
-  $k$, with sources, targets, identities and partial compositions between them. An
-  $n$-category has the dimensions $0, \ldots, n$.
+Equationally partial and hierarchical signatures, generalized hep-derivors
+(`CategorialAlgebras.GeneralizedHepDerivor`), the transformed algebras and the induced
+functors (`CategorialAlgebras.GeneralizedHepDerivor.transformedFunctor`), and their
+composition. Transforming successively includes in transforming by the composite, and this
+comparison need not be invertible (`CategorialAlgebras.exists_noninvertible_comparison`); so
+weak ep-algebras form a lax indexed category over hierarchical signatures, whose
+Grothendieck construction contains the category of ep-algebras and generalized hep-derivor
+homomorphisms (`CategorialAlgebras.HepAlgebra`). These are the modules under
+`CategorialAlgebras.HepDerivor`.
 
-The compact presentation is closer to the classical definition of a category as a set of
-arrows; the extended one makes dimensions explicit, and it is the one in which the passage to
-dimension $\omega$ is strict.
+### The homogeneous and the heterogeneous presentations
 
-## Main results
+In the homogeneous presentation all the cells of a sort lie in one carrier, with a source, a
+target and a partial composition in each dimension, and identities are cells of the carrier
+(`CategorialAlgebras.Homogeneous.CategorialAlgebra`). In the heterogeneous presentation the
+cells of each dimension form their own carrier, with boundaries, identities and partial
+compositions between every pair of increasing dimensions
+(`CategorialAlgebras.Heterogeneous.CategorialAlgebra`). In both, the categorial algebras of a
+signature are identified with the models of a categorial specification by an isomorphism of
+categories that is the identity on carriers (`CategorialAlgebras.Homogeneous.modelIsomorphism`,
+`CategorialAlgebras.Heterogeneous.modelIsomorphism`). In dimension $\omega$ the homogeneous
+algebras are those in which every cell has a finite dimension, a condition that no
+quasi-existence axioms on the homogeneous signature express
+(`CategorialAlgebras.Homogeneous.not_qe_axiomatizable`). These are the modules under
+`CategorialAlgebras.Homogeneous` and `CategorialAlgebras.Heterogeneous`.
 
-The main results of the library are:
+### Graduation and unification
 
-- the definition of a compact $n$-categorial algebra, `CategorialAlgebras.Compact.CatAlgebra`;
-- the definition of an extended $n$-categorial algebra, `CategorialAlgebras.Extended.CatAlgebra`;
-- that the category $\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)$ of extended
-  $\omega$-categorial $\Sigma$-algebras is the projective limit, in $\mathsf{Cat}$, of the
-  categories $\mathsf{nCat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)$ along the truncation functors,
-  `CategorialAlgebras.Extended.omegaCatAlg_isLimit`.
+Graduation sends a homogeneous algebra to the heterogeneous algebra of its cells of each
+dimension, and unification sends a heterogeneous algebra to its top-dimensional carrier. Both
+are induced by generalized hep-derivors (`CategorialAlgebras.Presentations.graduation`,
+`CategorialAlgebras.Presentations.unification`), and they form an adjoint equivalence
+between the two presentations in each finite dimension
+(`CategorialAlgebras.Presentations.presentationEquivalence`). Graduation needs the categorical
+equations: on arbitrary ep-algebras of the homogeneous signature it may fail to produce an
+ep-algebra
+(`CategorialAlgebras.Presentations.GraduationCounterexample.exists_epAlgebra_graduation_failure`).
+These are the modules under `CategorialAlgebras.Presentations`.
 
-In the compact presentation the truncation functors compose only up to canonical isomorphism,
-so the corresponding universal property of $\omega\mathsf{Cat}\mathsf{Alg}(\Sigma)$ does not
-hold strictly as stated in the draft; how to formulate it is still open.
+### Discretization and truncation
 
-## Reading order
+Truncation forgets the cells above a dimension and discretization adds identities as the cells
+of the missing dimensions. In both presentations both are induced by generalized
+hep-derivors, truncation retracts discretization, and discretization is left adjoint to
+truncation (`CategorialAlgebras.Dimensions.homogeneousAdjunction`,
+`CategorialAlgebras.Dimensions.heterogeneousAdjunction`). They commute with graduation and
+unification, and the four adjunctions form an algebraic square
+(`CategorialAlgebras.Dimensions.dimensionAlgebraicSquare`). These are the modules under
+`CategorialAlgebras.Dimensions`, which also hold the truncation and discretization functors
+between finite dimensions and dimension $\omega$.
 
-The modules are best read in this order.
+### Dimension $\omega$ as a projective limit
 
-1. *Preliminaries*: many-sorted signatures, partial algebras and QE-equations.
-2. *The compact presentation*: compact higher-order categories, functors and finite products;
-   compact $n$-categorial algebras and their QE-specification; restriction of dimensions,
-   compact $\omega$-categorial algebras, and truncation.
-3. *The extended presentation*: the same sequence for extended categories, ending with
-   $\omega\mathsf{Cat}^{\mathrm{ext}}\mathsf{Alg}(\Sigma)$ as a projective limit.
+The categories of $\omega$-categorial algebras, in both presentations, are projective limits
+of the categories of finite-dimensional ones along truncation
+(`CategorialAlgebras.Limits.ProjectiveLimit`,
+`CategorialAlgebras.Limits.homogeneousCone_isEquivalence`,
+`CategorialAlgebras.Limits.heterogeneousCone_isEquivalence`): an $\omega$-categorial algebra is
+reconstructed from its finite truncations, as an increasing union in the homogeneous
+presentation and as a diagonal in the heterogeneous one, and so are its homomorphisms. These
+are the modules under `CategorialAlgebras.Limits`.
 
-The two presentations are developed independently, so the extended one can be read without the
-compact one, after the preliminaries.
+### Graduation and unification in dimension $\omega$
 
-## The draft and the ported repository
+Graduation in dimension $\omega$ is the functor determined by the compatible family of finite
+graduations (`CategorialAlgebras.Omega.graduationFunctor`). Unification identifies every cell
+with its identities in higher dimensions (`CategorialAlgebras.Omega.unificationFunctor`), and is
+not induced by any generalized hep-derivor (`CategorialAlgebras.Omega.unification_not_induced`).
+They form an adjoint equivalence (`CategorialAlgebras.Omega.presentationEquivalence`),
+discretization from finite dimensions is left adjoint to truncation, and the adjunctions form
+an algebraic square (`CategorialAlgebras.Omega.dimensionAlgebraicSquare`). These are the
+modules under `CategorialAlgebras.Omega`.
 
-The library follows the group's draft, but it is not a transcription of it: definitions are
-refined where the draft is incomplete, and the prose says so where it happens. The modules
-refer to the draft by its LaTeX labels (such as `SSingleSet` or `DManySortedCatAlg`), never by
-its numbering, so that they stay valid as the draft changes.
+### Change of signature
 
-Not every part of the draft is formalized yet. Graduation and unification, discretization,
-derivors and their generalizations, the functors in dimension $\omega$, and the algebraic
-square are later lines of work.
+A derivor between many-sorted signatures induces generalized hep-derivors between their
+homogeneous and their heterogeneous categorial signatures, in every dimension
+(`CategorialAlgebras.ChangeOfSignature.homogeneous`,
+`CategorialAlgebras.ChangeOfSignature.heterogeneous`), functorially. The induced functors are
+the reducts of categorial algebras up to an isomorphism that is the identity on elements
+(`CategorialAlgebras.ChangeOfSignature.homogeneousFunctorReductIso`), and the reducts make the
+categories of categorial algebras split indexed categories over signatures
+(`CategorialAlgebras.ChangeOfSignature.homogeneousIndexed`,
+`CategorialAlgebras.ChangeOfSignature.heterogeneousIndexed`). Change of signature commutes with
+graduation, unification, discretization and truncation; in dimension $\omega$, graduation and
+unification commute strictly with the reducts and extend to the Grothendieck constructions
+(`CategorialAlgebras.ChangeOfSignature.omegaGraduationGrothendieck`). These are the modules
+under `CategorialAlgebras.ChangeOfSignature`.
 
-The categorial core (compact and extended higher-order categories and their functors) is ported
-from the group's repository
-[`higher_category_theory`](https://github.com/mariovagomarzal/higher_category_theory) (by Enric
-Cosme Llópez, Raúl Ruiz Mora and Mario Vago Marzal, Apache 2.0). There the compact presentation
-is called *single-sorted* and the extended one *many-sorted*.
+## Conventions
+
+* Dimensions are a type: `Fin n` for finite dimensions and `ℕ` for dimension $\omega$, so that
+  most constructions are stated once for every type of dimensions.
+* The carriers of a transformed algebra are subtypes of selected cells. Equalities between
+  transformed algebras therefore become isomorphisms that are the identity on the underlying
+  elements, and functors induced by generalized hep-derivors are compared up to such
+  isomorphisms, with lemmas stating that their components act as the identity.
+* Composition in a higher category is written with the later arrow first.
 -/
