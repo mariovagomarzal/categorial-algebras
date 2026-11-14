@@ -448,7 +448,6 @@ Many constructions are stated for an arbitrary type of dimensions, of which $n$,
 \item \leansample{weaker}\enspace\emph{Formally weaker}: the declarations follow from the statement in the text, but not conversely.
 In most cases, an equality between algebras, functors or natural transformations becomes an isomorphism that is the identity on the elements.
 In Lean, the carrier of a transformed algebra is the type of its cells, a subtype of the carrier of the given algebra, so two algebras with the same cells are isomorphic rather than equal, and so are the functors and the categories built from them.
-A few statements also need the set of sorts to be nonempty.
 \item \leansample{stronger}\enspace\emph{Formally stronger}: the declarations imply the statement in the text, for instance because they hold in greater generality.
 \end{itemize}
 When the relation is not an equivalence, the documentation of the declarations explains the difference briefly.
@@ -3917,9 +3916,9 @@ By the note after Definition~\ref{DTrDerivor}, $\Tr^{\htg(m,n)}_{\sig{\Sigma}}(\
 Therefore, by Corollary~\ref{CGenHepDerivorCompEqual} and the above equality in $\mathsf{HSig}_{\gd}$, the stated equality holds on objects and on homomorphisms. This completes the proof.
 \end{proof}
 
-\begin{remark}\label{RTrCompHomogeneous}\lean{weaker}{Dimensions.homogeneousTruncation_comp_derivor,Dimensions.homogeneousTruncation_comp_ne,Dimensions.homogeneousTruncation_comp_sameCells}
+\begin{remark}\label{RTrCompHomogeneous}\lean{equivalent}{Dimensions.homogeneousTruncation_comp_derivor,Dimensions.homogeneousTruncation_comp_ne,Dimensions.homogeneousTruncation_comp_sameCells}
 In Proposition~\ref{PTrComp}, the equality in $\mathsf{HSig}_{\gd}$ is stated only for the heterogeneous truncation derivors, since its homogeneous analogue fails in general.
-In fact, if $m<n<p$, then $\bTr^{(n,p)}_{\sig{\Sigma}}\circ\bTr^{(m,n)}_{\sig{\Sigma}}$ and $\bTr^{(m,p)}_{\sig{\Sigma}}$ have the same underlying derivor but different domains: for every $s\in S$, the domain of sort $s$ of the first one is $\{(v^s_0,\src^n_s(v^s_0)),(v^s_0,\src^m_s(v^s_0))\}$, whereas that of the second one is $\{(v^s_0,\src^m_s(v^s_0))\}$.
+In fact, if $m<n<p$ and $S\neq\emptyset$, then $\bTr^{(n,p)}_{\sig{\Sigma}}\circ\bTr^{(m,n)}_{\sig{\Sigma}}$ and $\bTr^{(m,p)}_{\sig{\Sigma}}$ have the same underlying derivor but different domains: for every $s\in S$, the domain of sort $s$ of the first one is $\{(v^s_0,\src^n_s(v^s_0)),(v^s_0,\src^m_s(v^s_0))\}$, whereas that of the second one is $\{(v^s_0,\src^m_s(v^s_0))\}$.
 On every $p$-categorial $\sig{\Sigma}$-algebra both domains select the $m$-cells, see Remark~\ref{RSameCellsPattern}.
 \end{remark}
 
@@ -3986,9 +3985,9 @@ By Propositions~\ref{PDsEpVariety} and~\ref{PTrEpVariety}, $\Tr^{\htg(m,n)}_{\si
 Hence the equality follows, as in~(1), from Corollary~\ref{CGenHepDerivorCompEqual} and Proposition~\ref{PGenHepDerivorId}. This completes the proof.
 \end{proof}
 
-\begin{remark}\label{RTrDsIdHomogeneous}\lean{weaker}{Dimensions.homogeneousTruncation_discretization_derivor,Dimensions.homogeneousTruncation_discretization_ne}
-In Proposition~\ref{PTrDsId}, the equality in $\mathsf{HSig}_{\gd}$ is stated only for the heterogeneous derivors, since its homogeneous analogue fails.
-In fact, if $m<n$, then $\bDs^{(n,m)}_{\sig{\Sigma}}\circ\bTr^{(m,n)}_{\sig{\Sigma}}$ and $\id_{\sig{\Sigma}^{(m)}}$ have the same underlying derivor, the identity derivor, but different domains: for every $s\in S$, the domain of sort $s$ of the first one is $\{(v^s_0,v^s_0)\}$, whereas that of the second one is empty.
+\begin{remark}\label{RTrDsIdHomogeneous}\lean{equivalent}{Dimensions.homogeneousTruncation_discretization_derivor,Dimensions.homogeneousTruncation_discretization_ne}
+In Proposition~\ref{PTrDsId}, the equality in $\mathsf{HSig}_{\gd}$ is stated only for the heterogeneous derivors, since its homogeneous analogue fails in general.
+In fact, if $m<n$ and $S\neq\emptyset$, then $\bDs^{(n,m)}_{\sig{\Sigma}}\circ\bTr^{(m,n)}_{\sig{\Sigma}}$ and $\id_{\sig{\Sigma}^{(m)}}$ have the same underlying derivor, the identity derivor, but different domains: for every $s\in S$, the domain of sort $s$ of the first one is $\{(v^s_0,v^s_0)\}$, whereas that of the second one is empty.
 Both domains are satisfied by every element of every partial $\Sigma^{(m)}$-algebra, see Remark~\ref{RSameCellsPattern}.
 \end{remark}
 
@@ -4171,11 +4170,11 @@ For every heterogeneous $n$-categorial $\sig{\Sigma}$-algebra $\calg{A}$, by Lem
 Hence the equality follows from Corollary~\ref{CGenHepDerivorCompEqual}. This completes the proof.
 \end{proof}
 
-\begin{remark}\label{RTrDsCompHomogeneous}\lean{weaker}{Dimensions.homogeneousMixed_upper_derivor,Dimensions.homogeneousMixed_upper_ne,Dimensions.homogeneousTruncation_discretization_ne}
+\begin{remark}\label{RTrDsCompHomogeneous}\lean{equivalent}{Dimensions.homogeneousMixed_upper_derivor,Dimensions.homogeneousMixed_upper_ne,Dimensions.homogeneousTruncation_discretization_ne}
 Let $p\in\mathbb{N}$ with $n\leq p$.
-In Proposition~\ref{PTrDsComp}, no equality in $\mathsf{HSig}_{\gd}$ is stated for the homogeneous derivors of item~(1), and the homogeneous equality of item~(2) is stated only for $m<n$, since otherwise they fail.
-In fact, if $n<p$, then $\bDs^{(p,m)}_{\sig{\Sigma}}\circ\bTr^{(n,p)}_{\sig{\Sigma}}$ and $\bDs^{(n,m)}_{\sig{\Sigma}}$ have the same underlying derivor but different domains: for every $s\in S$, the domain of sort $s$ of the first one is $\{(v^s_0,v^s_0)\}$, whereas that of the second one is empty.
-For $m=n<p$, the homogeneous equality of item~(2) would state that $\bDs^{(p,n)}_{\sig{\Sigma}}\circ\bTr^{(n,p)}_{\sig{\Sigma}}=\id_{\sig{\Sigma}^{(n)}}$, which fails for the same reason, see Remark~\ref{RTrDsIdHomogeneous}.
+In Proposition~\ref{PTrDsComp}, no equality in $\mathsf{HSig}_{\gd}$ is stated for the homogeneous derivors of item~(1), and the homogeneous equality of item~(2) is stated only for $m<n$, since otherwise they fail in general.
+In fact, if $n<p$ and $S\neq\emptyset$, then $\bDs^{(p,m)}_{\sig{\Sigma}}\circ\bTr^{(n,p)}_{\sig{\Sigma}}$ and $\bDs^{(n,m)}_{\sig{\Sigma}}$ have the same underlying derivor but different domains: for every $s\in S$, the domain of sort $s$ of the first one is $\{(v^s_0,v^s_0)\}$, whereas that of the second one is empty.
+For $m=n<p$, the homogeneous equality of item~(2) would state that $\bDs^{(p,n)}_{\sig{\Sigma}}\circ\bTr^{(n,p)}_{\sig{\Sigma}}=\id_{\sig{\Sigma}^{(n)}}$, which fails for the same reason if $S\neq\emptyset$, see Remark~\ref{RTrDsIdHomogeneous}.
 In both cases the domains are satisfied by every element of every partial algebra, see Remark~\ref{RSameCellsPattern}.
 \end{remark}
 
@@ -4212,9 +4211,9 @@ By Lemma~\ref{LGdDescription} and the note after Definition~\ref{DTrDerivor}, th
 Therefore, by Lemma~\ref{LGenHepDerivorCommSquare}, both are equal, and the same holds for the homomorphisms. This completes the proof.
 \end{proof}
 
-\begin{remark}\label{RCompatGdTrDerivors}\lean{weaker}{Dimensions.truncation_graduation_derivor,Dimensions.truncation_graduation_eq_iff,Dimensions.truncation_graduation_sameCells}
+\begin{remark}\label{RCompatGdTrDerivors}\lean{equivalent}{Dimensions.truncation_graduation_derivor,Dimensions.truncation_graduation_eq_iff,Dimensions.truncation_graduation_sameCells}
 The equality of Proposition~\ref{PCompatGdTr} does not, in general, come from an equality in $\mathsf{HSig}_{\gd}$.
-By the computation of the domains in its proof, the generalized hep-derivors $\bGd^{(n)}_{\sig{\Sigma}}\circ\bTr^{\htg(m,n)}_{\sig{\Sigma}}$ and $\bTr^{(m,n)}_{\sig{\Sigma}}\circ\bGd^{(m)}_{\sig{\Sigma}}$ are equal if $m=0$ or $m=n$, but not if $0<m<n$.
+By the computation of the domains in its proof, the generalized hep-derivors $\bGd^{(n)}_{\sig{\Sigma}}\circ\bTr^{\htg(m,n)}_{\sig{\Sigma}}$ and $\bTr^{(m,n)}_{\sig{\Sigma}}\circ\bGd^{(m)}_{\sig{\Sigma}}$ are equal if $m=0$ or $m=n$, but not if $0<m<n$ and $S\neq\emptyset$.
 Both domains select the same cells of every $n$-categorial $\sig{\Sigma}$-algebra, see Remark~\ref{RSameCellsPattern}.
 \end{remark}
 
@@ -4237,9 +4236,9 @@ By Lemmas~\ref{LGdDescription} and~\ref{LDsDescription}, these are also the cell
 Therefore, by Lemma~\ref{LGenHepDerivorCommSquare}, both are equal, and the same holds for the homomorphisms. This completes the proof.
 \end{proof}
 
-\begin{remark}\label{RCompatGdDsDerivors}\lean{weaker}{Dimensions.discretization_graduation_derivor,Dimensions.discretization_graduation_eq_iff,Dimensions.discretization_graduation_sameCells}
+\begin{remark}\label{RCompatGdDsDerivors}\lean{equivalent}{Dimensions.discretization_graduation_derivor,Dimensions.discretization_graduation_eq_iff,Dimensions.discretization_graduation_sameCells}
 The equality of Proposition~\ref{PCompatGdDs} does not, in general, come from an equality in $\mathsf{HSig}_{\gd}$.
-By the computation of the domains in its proof, the generalized hep-derivors $\bDs^{(n,m)}_{\sig{\Sigma}}\circ\bGd^{(n)}_{\sig{\Sigma}}$ and $\bGd^{(m)}_{\sig{\Sigma}}\circ\bDs^{\htg(n,m)}_{\sig{\Sigma}}$ are equal if $m=n$, but not if $m<n$.
+By the computation of the domains in its proof, the generalized hep-derivors $\bDs^{(n,m)}_{\sig{\Sigma}}\circ\bGd^{(n)}_{\sig{\Sigma}}$ and $\bGd^{(m)}_{\sig{\Sigma}}\circ\bDs^{\htg(n,m)}_{\sig{\Sigma}}$ are equal if $m=n$, but not if $m<n$ and $S\neq\emptyset$.
 Both domains select the same cells of every $m$-categorial $\sig{\Sigma}$-algebra, see Remark~\ref{RSameCellsPattern}.
 \end{remark}
 
@@ -4860,11 +4859,11 @@ The following chain of equalities holds
 The equality~(1) follows from Proposition~\ref{PCompatGdTr}, and the equality~(2) follows from Remark~\ref{RDsTrCompOmega}~(1).
 \end{proof}
 
-\begin{remark}\label{RCompatGdTrOmegaDerivors}\lean{weaker}{Omega.graduation_compatibility_derivor,Omega.graduation_compatibility_ne,Omega.graduation_compatibility_sameCells}
+\begin{remark}\label{RCompatGdTrOmegaDerivors}\lean{equivalent}{Omega.graduation_compatibility_derivor,Omega.graduation_compatibility_ne,Omega.graduation_compatibility_sameCells}
 The equality of Lemma~\ref{LCompatGdTrOmega} does not, in general, come from an equality in $\mathsf{HSig}_{\gd}$.
 Its two sides are induced by the generalized hep-derivors $\bTr^{(n,\omega)}_{\sig{\Sigma}}\circ\bGd^{(n)}_{\sig{\Sigma}}\circ\bTr^{\htg(m,n)}_{\sig{\Sigma}}$ and $\bTr^{(m,\omega)}_{\sig{\Sigma}}\circ\bGd^{(m)}_{\sig{\Sigma}}$ from $\sig{\Sigma}^{\htg(m)}$ to $\sig{\Sigma}^{(\omega)}$, which have the same underlying derivor: both mappings on sorts send $(k,s)$ to $s$, and, since the truncation derivors are inclusions, both send every operation symbol of $\Sigma^{\htg(m)}$ to the term assigned to it in Definition~\ref{DGdDerivor}, which does not depend on the dimension of the graduation derivor.
 However, if $m<n$, then, by Definitions~\ref{DGenHepDerivorCompId}, \ref{DGdDerivor}, \ref{DTrDerivor} and~\ref{DTrDerivorOmega}, for every $s\in S$, the domain of sort $(k,s)$ of the first one is $\{(v^s_0,\src^n_s(v^s_0)),(v^s_0,\src^k_s(v^s_0))\}$, for every $k\leq m$, whereas that of the second one is $\{(v^s_0,\src^m_s(v^s_0)),(v^s_0,\src^k_s(v^s_0))\}$, if $k<m$, and $\{(v^s_0,\src^m_s(v^s_0))\}$, if $k=m$.
-Thus both generalized hep-derivors are equal if $m=n$, but not if $m<n$.
+Thus both generalized hep-derivors are equal if $m=n$, but not if $m<n$ and $S\neq\emptyset$.
 On every $\omega$-categorial $\sig{\Sigma}$-algebra both domains of sort $(k,s)$ select the $k$-cells of sort $s$, since every $k$-cell is an $m$-cell and every $m$-cell is an $n$-cell, by~(AB$^{k,m}$1) and~(AB$^{m,n}$1), see Remark~\ref{RSameCellsPattern}.
 \end{remark}
 
